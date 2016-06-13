@@ -1,0 +1,96 @@
+<div id="main-page" class="animated body ">
+    <div class="default-page">
+
+        <div id="wrapper">
+            <div [hidden]="!validToken()">
+                <nav id="sidebar" role="navigation" data-step="3" data-position="right"
+                     class="navbar-default navbar-static-side">
+                    <div class="sidebar-collapse menu-scroll">
+                        <ul id="side-menu" ng-menu="" class="nav admin-nav-main">
+                            <li class="user-panel">
+                                <div class="thumb">
+                                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" alt=""
+                                         class="img-circle"/></div>
+                                <div class="info">
+                                    <p>John Doe</p>
+                                    <ul class="list-inline list-unstyled">
+                                        <li><a ui-sref="extra-profile" data-hover="tooltip" title="Profile"><i
+                                                class="fa fa-user"></i></a></li>
+                                        <li><a ui-sref="email-inbox" data-hover="tooltip" title="Mail"><i
+                                                class="fa fa-envelope"></i></a></li>
+                                        <li><a href="javascript:void(0);" data-hover="tooltip" title="Setting"
+                                               data-toggle="modal"
+                                               data-target="#modal-config"><i class="fa fa-cog"></i></a></li>
+                                        <li><a ui-sref="extra-signin" data-hover="tooltip" title="Logout"><i
+                                                class="fa fa-sign-out"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                            <li>
+                                <a [routerLink]="['Home']">
+                                    <i class="fa fa-laptop fa-fw">
+                                        <div class="icon-bg bg-pink"></div>
+                                    </i>
+                                    <span class="menu-title">Home</span><span class="fa arrow"></span>
+                                </a>
+                            </li>
+                            <li><a href="javascript:void(0);"><i class="fa fa-sitemap fa-fw">
+                                <div class="icon-bg bg-dark"></div>
+                            </i><span class="menu-title">Multi-Level Dropdown</span><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="javascript:void(0);"><i class="fa fa-angle-right"></i><span
+                                            class="submenu-title">1 Level Item</span></a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-angle-right"></i><span
+                                            class="submenu-title">2 Level</span><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li><a href="javascript:void(0);"><i
+                                                    class="fa fa-angle-double-right"></i><span class="submenu-title">Third Level Item</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i
+                                                    class="fa fa-angle-double-right"></i><span class="submenu-title">Third Level Item</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a [routerLink]="['User']">
+                                    <i class="fa fa-laptop fa-fw">
+                                        <div class="icon-bg bg-pink"></div>
+                                    </i>
+                                    <span class="menu-title">Perfil</span><span class="fa arrow"></span>
+                                </a>
+                            </li>
+                            <li><a [routerLink]="['Empresa']" href="javascript:void(0);"><i class="fa fa-desktop fa-fw">
+                                <div class="icon-bg bg-pink"></div>
+                            </i><span class="menu-title">Empresa</span><span class="fa arrow"></span></a>
+                            </li>
+                            <li><a [routerLink]="['TipoEmpresa']" href="javascript:void(0);"><i
+                                    class="fa fa-desktop fa-fw">
+                                <div class="icon-bg bg-pink"></div>
+                            </i><span class="menu-title">Tipo Empresa</span><span class="fa arrow"></span></a>
+                            </li>
+                            <li><a [routerLink]="['TipoVehiculo']" href="javascript:void(0);"><i
+                                    class="fa fa-desktop fa-fw">
+                                <div class="icon-bg bg-pink"></div>
+                            </i><span class="menu-title">Tipo Vehiculo</span><span class="fa arrow"></span></a>
+                            </li>
+                            <li><a (click)="logout()"><i class="fa fa-desktop fa-fw">
+                                <div class="icon-bg bg-pink"></div>
+                            </i><span class="menu-title">Salir</span><span class="fa arrow"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="animated page-wrapper">
+                <div class="page-content">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

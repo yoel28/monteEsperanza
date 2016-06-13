@@ -1,0 +1,43 @@
+<div class="col-md-6 col-lg-6">
+    <div class="row">
+        <img src="app/assets/images/logo.png" class="img-responsive">
+    </div>
+    <div class="signup row">
+        <div class="header-content">
+            <h1>REGISTRO</h1>
+        </div>
+        <div class="container-fluid signup-form">
+            <form role="form" (submit)="signup($event, username.value, password.value,email.value,phone.value,name.value)">
+
+                <div class="form-group input-icon right"><i class="fa fa-user"></i>
+                    <input type="text" #username class="form-control" id="username" placeholder="Usuario">
+                </div>
+                <div class="form-group input-icon right"><i class="fa fa-user"></i>
+                    <input type="text" #name class="form-control" id="name" placeholder="Nombre">
+                </div>
+                <div class="form-group input-icon right"><i class="fa fa-envelope"></i>
+                    <input type="email" #email class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group input-icon right"><i class="fa fa-key"></i>
+                    <input type="password" #password class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group input-icon right"><i class="fa fa-phone"></i>
+                    <input type="text" #phone class="form-control" id="phone" placeholder="Telefono">
+                </div>
+
+
+                <button style="float:left;" class="btn btn-success btn-blue" (click)="onLogin()">
+                    <i class="fa fa-chevron-circle-left"></i> Inicio
+                </button>
+
+                <button style="float:right;" class="btn btn-success">
+                    <i class="fa fa-save"></i> Registrar
+                </button>
+            </form>
+        </div>
+        <div class="container-fluid">
+            <p>¿Olvido su contraseńa? <a (click)="recover()">Recuperar Aqui</a></p>
+            <p>¿Usuario nuevo? <a (click)="signup()">Registrese ahora</a></p>
+        </div>
+    </div>
+</div>

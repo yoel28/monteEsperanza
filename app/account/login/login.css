@@ -1,0 +1,16 @@
+.header-content{
+    padding: 15px 20px;
+    background: #e9e9e9;
+    border-radius: 0 !important;
+    text-align: center;
+    font-family: 'oswald';
+    font-size: 30px;
+    font-weight: bold;
+}
+.login {
+    background-color: white;
+}
+.login-form{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
