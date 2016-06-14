@@ -1,0 +1,39 @@
+{
+  "camion": {
+    "id": 1,
+    "icon": "https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg",
+    "empresa": "empresa1",
+    "peso": 13,
+    "placa": "ewd223",
+    "detailtipoVehiculo": "detalles",
+    "titletipoVehiculo": "titulo",
+    "saldoActual": 1223,
+    "saldoMinimo": 1234,
+    "recargas": [
+      {
+        "id": 1,
+        "dateCreated": "12/1341",
+        "quantify": 2124,
+        "reference": 21245,
+        "referenceDate": "deer",
+        "tipoRecarga": "detalle"
+      },
+      {
+        "id": 2,
+        "dateCreated": "12/1341",
+        "quantify": 2124,
+        "reference": 21245,
+        "referenceDate": "deer",
+        "tipoRecarga": "detalle"
+      },
+      {
+        "id": 3,
+        "dateCreated": "12/1341",
+        "quantify": 2124,
+        "reference": 21245,
+        "referenceDate": "deer",
+        "tipoRecarga": "detalle"
+      }
+    ]
+  }
+}

@@ -5,51 +5,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <script src="node_modules/jquery/dist/jquery.js"></script>
 
-  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/AdminLTE.min.css">
-  <link rel="stylesheet" href="css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+  <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
+  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
 
-
-
-  <link rel="stylesheet" href="assets/plugins/iCheck/square/blue.css">
-  <link rel="stylesheet" href="assets/plugins/pace/pace.min.css">
+  <link rel="stylesheet" href="assets/css/AdminLTE.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pink-blue.css">
 
-  <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
+  <link rel="stylesheet" href="assets/plugins/pace/pace.min.css">
   <script src="assets/plugins/pace/pace.min.js"></script>
-  <script src="assets/js/app.js"></script>
 
+
+  <script src="assets/js/app.js"></script>
 
   <!-- Polyfill(s) for older browsers -->
   <script src="node_modules/core-js/client/shim.min.js"></script>
   <script src="node_modules/zone.js/dist/zone.js"></script>
   <script src="node_modules/reflect-metadata/Reflect.js"></script>
   <script src="node_modules/systemjs/dist/system.src.js"></script>
-  <!-- 2. Configure SystemJS -->
   <script src="systemjs.config.js"></script>
   <script>
     System.import('app').catch(function(err){ console.error(err); });
   </script>
+
 </head>
-<!-- 3. Display the application -->
 <body class="hold-transition skin-blue sidebar-mini">
 
 <main>
     <my-app>Loading...</my-app>
 </main>
 
-<!-- Bootstrap 3.3.5 -->
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="assets/plugins/iCheck/icheck.min.js"></script>
-
 <script>
 $(document).ajaxStart(function () {
-Pace.restart();
+//Pace.restart();
 });
 </script>
 </body>

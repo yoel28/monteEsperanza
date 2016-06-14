@@ -8,14 +8,13 @@ import { AccountSignup }         from './account/account';
 import { Empresa }         from './empresa/empresa';
 import { TipoEmpresa }         from './tipoEmpresa/tipoEmpresa';
 import { TipoVehiculo }         from './tipoVehiculo/tipoVehiculo';
-import { Home }         from './home/home';
+import { Dashboard }         from './dashboard/dashboard';
 import { User }         from './user/user';
 
 @Component({
   selector: 'my-app',
-  //template: '<router-outlet></router-outlet>',
-  templateUrl:'app/dashboard/dashboard.html',
-  inputs: ['pageTitle', 'pageSubtitle'],
+  templateUrl: 'app/app.html',
+  styleUrls:['app/app.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS
@@ -23,18 +22,17 @@ import { User }         from './user/user';
 })
 @RouteConfig([
   { path: '/account/login',  name: 'AccountLogin',  component: AccountLogin, useAsDefault: true },
+    
   { path: '/account/signup',  name: 'AccountSignup',  component: AccountSignup},
-
+    
   { path: '/user',   name: 'User', component: User },
-  { path: '/home',   name: 'Home', component: Home },
+  { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/empresa',   name: 'Empresa', component: Empresa },
   { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
 
 ])
 export class AppComponent {
-  public pageTitle: String
-  public pageSubtitle: String
 
   constructor(private router: Router) {
       localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');

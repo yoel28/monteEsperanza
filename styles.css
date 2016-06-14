@@ -1,8 +1,8 @@
-/* Master Styles */
-
-/*-----------------------------------------------------------------------*/
 main{
   background-color: #0088CC;
   width: 100%;
   height: 100%;
+}
+.skin-blue .wrapper{
+  background-color: #e1e7da !important;
 }

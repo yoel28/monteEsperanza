@@ -1,28 +1,31 @@
-import { Component,ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
+import {RestController} from "../common/restController";
+
 
 //--------------------------LOGIN-------------------------------
 @Component({
     selector: 'login',
     templateUrl: 'app/account/login/login.html',
-    styleUrls: ['app/account/login/login.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['app/account/login/login.css']
 })
-export class AccountLogin {
+export class AccountLogin extends RestController{
     form: ControlGroup;
     username: Control;
     password: Control;
-    token:boolean = false;
 
-    constructor(private router: Router,public http: Http, private _formBuilder: FormBuilder) {
+    constructor(router: Router,http: Http, _formBuilder: FormBuilder) {
         if(localStorage.getItem('bearer'))
         {
-            let link = ['Home', {}];
-            this.router.navigate(link);
+            let link = ['AccountLogin', {}];
+            router.navigate(link);
         }
+        super(router,http);
+        this.setEndpoint("/users/");
+
         this.username = new Control("", Validators.compose([Validators.required]));
         this.password = new Control("", Validators.compose([Validators.required]));
 
@@ -35,14 +38,12 @@ export class AccountLogin {
     login(event: Event) {
         event.preventDefault();
         let body =JSON.stringify(this.form.value);
-
         this.http.post(localStorage.getItem('urlAPI')+'/login', body, { headers: contentHeaders })
             .subscribe(
                 response => {
                     localStorage.setItem('bearer',response.json().access_token);
                     contentHeaders.append('Authorization', 'Bearer '+localStorage.getItem('bearer'));
-                    this.token=true;
-                    let link = ['Home', {}];
+                    let link = ['Dashboard', {}];
                     this.router.navigate(link);
                 },
                 error => {
@@ -50,10 +51,6 @@ export class AccountLogin {
                     console.log(error.text());
                 }
             );
-    }
-    signup(){
-        let link = ['AccountSignup', {}];
-        this.router.navigate(link);
     }
 }
 
@@ -71,7 +68,7 @@ export class AccountSignup {
     constructor(private router: Router,public http: Http) {
         if(localStorage.getItem('bearer'))
         {
-            let link = ['Home', {}];
+            let link = ['Dashboard', {}];
             this.router.navigate(link);
         }
     }
@@ -90,11 +87,6 @@ export class AccountSignup {
                 }
             );
     }
-    onLogin(){
-        let link = ['AccountLogin', {}];
-        this.router.navigate(link);
-    }
-
 }
 
 

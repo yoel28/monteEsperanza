@@ -1,55 +1,41 @@
-/*
 import { Component } from '@angular/core';
-import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
-import { contentHeaders } from './common/headers';
+import { Router }           from '@angular/router-deprecated';
+import { Http } from '@angular/http';
+import {HttpUtils} from "../common/http-utils";
 
-import { AccountLogin }         from './account/account';
-import { AccountSignup }         from './account/account';
-
-import { Empresa }         from './empresa/empresa';
-import { TipoEmpresa }         from './tipoEmpresa/tipoEmpresa';
-import { TipoVehiculo }         from './tipoVehiculo/tipoVehiculo';
-import { Home }         from './home/home';
-import { User }         from './user/user';
 
 @Component({
-    selector: 'dashboard',
-    inputs: ['pageTitle', 'pageSubtitle'],
-    directives: [ROUTER_DIRECTIVES],
-    providers: [
-        ROUTER_PROVIDERS
-    ]
+    selector: 'home',
+    templateUrl: 'app/dashboard/dashboard.html',
+    styleUrls: ['app/dashboard/dashboard.css']
 })
-@RouteConfig([
-    { path: '/account/login',  name: 'AccountLogin',  component: AccountLogin, useAsDefault: true },
-    { path: '/account/signup',  name: 'AccountSignup',  component: AccountSignup},
+export class Dashboard {
+    dataCamion:any = [];
+    httputils:HttpUtils;
+    endpoint:string;
 
-    { path: '/user',   name: 'User', component: User },
-    { path: '/home',   name: 'Home', component: Home },
-    { path: '/empresa',   name: 'Empresa', component: Empresa },
-    { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
-    { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
-
-])
-export class AppComponent {
-    public pageTitle: String
-    public pageSubtitle: String
-
-    constructor(private router: Router) {
-        localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
+    constructor(router: Router,http: Http) {
+        if(!localStorage.getItem('bearer'))
+        {
+            let link = ['AccountLogin', {}];
+            router.navigate(link);
+        }
+        this.endpoint="/users/";
+        this.httputils = new HttpUtils(http);
     }
-    logout() {
-        localStorage.removeItem('bearer');
-        contentHeaders.delete('Authorization');
-        let link = ['AccountLogin', {}];
-        this.router.navigate(link);
-
+    getCamion(camion:string){
+        //this.httputils.onLoadList("/camion/"+camion,this.data,this.error);
+        this.httputils.onLoadList("consultas/DetalleCamion.json",this.dataCamion,this.error,true);
     }
-    validToken(){
-        if(localStorage.getItem('bearer'))
-            return true;
-        return false;
+    getDataCamion(){
+        if(this.dataCamion.length)
+            return false;
+        return true;
     }
 
+    error=function(err){
+        console.log(err);
+    }
 }
-*/
+
+

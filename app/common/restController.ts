@@ -1,33 +1,21 @@
-import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
-import {HttpUtils} from "../common/http-utils";
+import {HttpUtils} from "./http-utils";
 
-@Component({
-    selector: 'user',
-    templateUrl: 'app/user/user.html',
-    styleUrls: [
-        'app/user/user.css'
-    ],
-
-})
-export class User{
+export class RestController{
     data:any = [];
     httputils:HttpUtils;
     endpoint:string;
 
-    constructor( router: Router, http: Http) {
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            router.navigate(link);
-        }
-        this.endpoint="/users/";
-        this.httputils = new HttpUtils(http);
-        this.getLoad();
+    constructor(public router: Router,public http: Http) {
+        this.httputils = new HttpUtils(this.http);
+    }
+    setEndpoint(end){
+        this.endpoint=end;
     }
 
     error=function(err){
+
         console.log(err);
     }
 
@@ -52,5 +40,4 @@ export class User{
         let body = JSON.stringify({username, password,email,phone,name});
         this.httputils.onSave(this.endpoint,body,this.data,this.error);
     }
-
 }
