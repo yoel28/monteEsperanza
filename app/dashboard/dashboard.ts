@@ -26,11 +26,12 @@ export class Dashboard {
     getCamion(camion:string){
         //this.httputils.onLoadList("/camion/"+camion,this.data,this.error);
         this.httputils.onLoadList("consultas/DetalleCamion.json",this.dataCamion,this.error,true);
+        console.log("Peticion GetCamion "+camion);
     }
     getDataCamion(){
-        if(this.dataCamion.length)
-            return false;
-        return true;
+        if(this.dataCamion.camion)
+            return true;
+        return false;
     }
 
     error=function(err){

@@ -18,21 +18,65 @@
             </div>
         </div>
 
-        <div *ngIf="getDataCamion()">
-
-        </div>
-        <div class="row col-lg-12">
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="profile">
-                        <div style="margin-bottom: 15px" class="row">
-                            <figure>
-                                <img src="{{dataCamion.icon}}" alt="" style="display: inline-block" class="img-responsive img-circle">
-                            </figure>
+        <div *ngIf="dataCamion.id">
+            <div class="row col-lg-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="profile col-lg-2" >
+                            <div style="margin-bottom: 15px" class="row">
+                                <figure>
+                                    <img src="{{dataCamion.icon}}" alt="" style="display: inline-block" class="img-responsive img-circle">
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <table class="table table-hover col-lg-6" style="font-size: 12px;">
+                                <tbody>
+                                <tr>
+                                    <td><strong>ID: </strong>{{dataCamion.id}}</td>
+                                    <td><strong>PESO:</strong>{{dataCamion.peso}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EMPRESA:</strong> {{dataCamion.empresa}}</td>
+                                    <td><strong>DETALLE:</strong>{{dataCamion.detailtipoVehiculo}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PLACA:</strong>{{dataCamion.placa}}</td>
+                                    <td><strong>TIPO:</strong>{{dataCamion.titletipoVehiculo}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+                <!--Fin de Datos de  camion-->
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha Efectiva</th>
+                        <th>Referencia</th>
+                        <th>Fecha de Transaccion</th>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let recarga of dataCamion.recargas">
+                        <tr>
+                            <td>{{recarga.id}}</td>
+                            <td>{{recarga.dateCreated}}</td>
+                            <td>{{recarga.reference}}</td>
+                            <td>{{recarga.referenceDate}}</td>
+                            <td>{{recarga.tipoRecarga}}</td>
+                            <td>{{recarga.quantify}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
             </div>
+
         </div>
     </section>
 </div>

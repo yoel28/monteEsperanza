@@ -27,11 +27,12 @@ var Dashboard = (function () {
     }
     Dashboard.prototype.getCamion = function (camion) {
         this.httputils.onLoadList("consultas/DetalleCamion.json", this.dataCamion, this.error, true);
+        console.log("Peticion GetCamion " + camion);
     };
     Dashboard.prototype.getDataCamion = function () {
-        if (this.dataCamion.length)
-            return false;
-        return true;
+        if (this.dataCamion.camion)
+            return true;
+        return false;
     };
     Dashboard = __decorate([
         core_1.Component({

@@ -1,5 +1,5 @@
 {
-  "name": "AdminJS",
+  "name": "MonteEsperanza",
   "version": "1.0.0",
   "scripts": {
     "prestart": "npm install",
