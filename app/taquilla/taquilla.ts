@@ -47,9 +47,8 @@ export class Taquilla {
         let json = Object.assign({"vehicle": {id: this.dataCamion.id}},this.form.value);
         let body = JSON.stringify(json);
         
-        this.httputils.onSave("/recarga/",body,this.dataCamion,this.error);
-
-//        this.dataCamion.recargas.push(this.form.value);
+        //TODO: this.httputils.onSave("/recarga/",body,this.dataCamion,this.error);
+        this.dataCamion.recargas.push(json);
     }
     getCamion(camion:string){
         //TODO Consulta Real
