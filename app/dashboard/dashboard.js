@@ -25,15 +25,6 @@ var Dashboard = (function () {
         this.endpoint = "/users/";
         this.httputils = new http_utils_1.HttpUtils(http);
     }
-    Dashboard.prototype.getCamion = function (camion) {
-        this.httputils.onLoadList("consultas/DetalleCamion.json", this.dataCamion, this.error, true);
-        console.log("Peticion GetCamion " + camion);
-    };
-    Dashboard.prototype.getDataCamion = function () {
-        if (this.dataCamion.camion)
-            return true;
-        return false;
-    };
     Dashboard = __decorate([
         core_1.Component({
             selector: 'home',

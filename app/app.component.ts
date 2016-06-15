@@ -10,6 +10,7 @@ import { TipoEmpresa }         from './tipoEmpresa/tipoEmpresa';
 import { TipoVehiculo }         from './tipoVehiculo/tipoVehiculo';
 import { Dashboard }         from './dashboard/dashboard';
 import { User }         from './user/user';
+import { Taquilla }         from './taquilla/taquilla';
 
 @Component({
   selector: 'my-app',
@@ -27,6 +28,7 @@ import { User }         from './user/user';
     
   { path: '/user',   name: 'User', component: User },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
+  { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
   { path: '/empresa',   name: 'Empresa', component: Empresa },
   { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },

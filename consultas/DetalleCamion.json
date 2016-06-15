@@ -1,11 +1,16 @@
 {
   "id": 1,
-  "icon": "https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg",
-  "empresa": "empresa1",
+  "icon": "assets/img/guest.jpg",
+
+  "empresaAddress": "direcccion wiiiii",
+  "empresaName": "Empresa oye wey",
+  "empresaPhone": "123456",
+  "empresaRuc": "j-dfg123456",
+
   "peso": 313,
   "placa": "ewd223",
-  "detailtipoVehiculo": "detalles",
-  "titletipoVehiculo": "titulo",
+  "detailtipoVehiculo": "FORD 350",
+  "titletipoVehiculo": "CAMION",
   "saldoActual": 1223,
   "saldoMinimo": 1234,
   "recargas": [

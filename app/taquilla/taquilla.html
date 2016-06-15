@@ -1,0 +1,202 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h2>
+            Taquilla
+        </h2>
+    </section>
+    <section class="content">
+        <div class="row col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="input-group input-group-sm">
+                <input #findCamion type="text" class="form-control" placeholder="Ingrese PLACA o RFID del camion">
+                <span class="input-group-btn">
+                    <button (click)="getCamion(findCamion.value)" type="button" class="btn btn-info btn-flat"><i
+                            class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+
+        <div *ngIf="dataCamion.id">
+            <div class="row col-lg-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row"><h3><i class="fa fa-truck fa-lg"></i> <strong> CAMIOM</strong></h3></div>
+
+                        <div class="profile col-lg-2">
+                            <div style="margin-bottom: 15px" class="row">
+                                <figure>
+                                    <img src="{{dataCamion.icon}}" alt="" style="display: inline-block"
+                                         class="img-responsive img-bordered">
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <td><strong>RUC: </strong>{{dataCamion.empresaRuc}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NOMBRE: </strong>{{dataCamion.empresaName}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>DIRECCION:</strong> {{dataCamion.empresaAddress}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>TELEFONO:</strong>{{dataCamion.empresaPhone}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-3">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <td><strong>PLACA: </strong>{{dataCamion.placa}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PESO: </strong>{{dataCamion.peso}} lbs</td>
+                                </tr>
+                                <tr>
+                                    <td>{{dataCamion.titletipoVehiculo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{dataCamion.detailtipoVehiculo}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!--Fin de Datos de  camion-->
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha Efectiva</th>
+                            <th>Referencia</th>
+                            <th>Fecha de Transaccion</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let recarga of dataCamion.recargas">
+                        <tr>
+                            <td>{{recarga.id}}</td>
+                            <td>{{recarga.dateCreated}}</td>
+                            <td>{{recarga.reference}}</td>
+                            <td>{{recarga.referenceDate}}</td>
+                            <td>{{recarga.tipoRecarga}}</td>
+                            <td>{{recarga.quantify}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <h3>Metodos de recarga disponibles:</h3>
+                            <div class="btn-group">
+                                <img src="assets/img/credit/american-express.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/cirrus.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/mastercard.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/maestro.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/visa.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/visa.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/visa.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/visa.png" class="img-responsive btn" alt="">
+                                <img src="assets/img/credit/visa.png" class="img-responsive btn" alt="">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <h3>Estado de cuenta</h3>
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <td><strong>Saldo Minimo: </strong></td>
+                                    <td>{{dataCamion.saldoMinimo}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Saldo Actual: </strong></td>
+                                    <td>{{dataCamion.saldoActual}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row pull-right">
+                                <button type="button" class="btn  btn-blue">
+                                    <i class="fa  fa-download fa-lg"></i> Generar PDF
+                                </button>
+                                <button type="button" class="btn  btn-success" data-toggle="modal" data-target="#modalRecarga">
+                                    <i class="fa  fa-money fa-lg"></i> Recargar Saldo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRecarga" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">REALIZAR RECARGA</h4>
+            </div>
+            <div class="modal-body">
+                <figure class="text-center">
+                    <img src="{{dataCamion.icon}}" alt=""class="img-responsive img-camion-modal">
+                </figure>
+                <form role="form" [ngFormModel]="form" (submit)="getRecarga($event)">
+
+                    <div class="btn-group">
+
+                        <input id="minimal-radio-1" type="radio" name="minimal-radio" class="hide"/>
+                        <input id="minimal-radio-2" type="radio" name="minimal-radio" class="hide"/>
+                        <input id="minimal-radio-3" type="radio" name="minimal-radio" class="hide"/>
+
+                        <label for="minimal-radio-1"><img src="assets/img/credit/american-express.png" class="img-responsive btn {{}}" alt=""></label>
+                        <label for="minimal-radio-2"><img src="assets/img/credit/cirrus.png" class="img-responsive btn" alt=""></label>
+                        <label for="minimal-radio-3"><img src="assets/img/credit/mastercard.png" class="img-responsive btn" alt=""></label>
+
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-money"></i>
+                        <input id="cntrlQuantify" ngControl="quantify" class="form-control" #quantify
+                               placeholder="Cantidad" name="quantify" type="number" >
+                        <div class="control-msgs" *ngIf="quantify.dirty && !quantify.valid && !quantify.pending">
+                            <p *ngIf="quantify.errors.required">Cantidad Requerido</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-location-arrow"></i>
+                        <input id="cntrlReference" ngControl="reference" class="form-control" #reference
+                               placeholder="Referencia" name="reference" type="text" maxlength="20">
+                        <div class="control-msgs" *ngIf="reference.dirty && !reference.valid && !reference.pending">
+                            <p *ngIf="reference.errors.required">Referencia Requerida</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-calendar"></i>
+                        <input id="cntrlReferenceDate" ngControl="referenceDate" class="form-control" #referenceDate
+                               placeholder="Fecha de la Referencia" name="referenceDate" type="date">
+                        <div class="control-msgs" *ngIf="referenceDate.dirty && !referenceDate.valid && !referenceDate.pending">
+                            <p *ngIf="referenceDate.errors.required">Fecha de Referencia Requerida</p>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button (click)="getRecarga($event)" data-dismiss="modal" type="button" class="btn btn-primary" id="cntrlsubmit" [disabled]="!form.valid">
+                    <i class="fa fa-save"></i>
+                    Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

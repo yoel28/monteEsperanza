@@ -20,11 +20,8 @@
   <link rel="stylesheet" href="assets/plugins/pace/pace.min.css">
   <script src="assets/plugins/pace/pace.min.js"></script>
 
-
   <script src="assets/js/app.js"></script>
 
-  <!-- Polyfill(s) for older browsers -->
-  <script src="node_modules/core-js/client/shim.min.js"></script>
   <script src="node_modules/zone.js/dist/zone.js"></script>
   <script src="node_modules/reflect-metadata/Reflect.js"></script>
   <script src="node_modules/systemjs/dist/system.src.js"></script>
@@ -33,18 +30,28 @@
     System.import('app').catch(function(err){ console.error(err); });
   </script>
 
+  <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+  <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+
+
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-
 <main>
     <my-app>Loading...</my-app>
 </main>
 
 <script>
 $(document).ajaxStart(function () {
-//Pace.restart();
+ Pace.restart();
 });
 </script>
+<script>
+  webshims.setOptions('waitReady', false);
+  webshims.setOptions('forms-ext', {types: 'date'});
+  webshims.polyfill('forms forms-ext');
+</script>
+
 </body>
 
 </html>

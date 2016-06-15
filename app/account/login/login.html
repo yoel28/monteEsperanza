@@ -1,34 +1,43 @@
-<div class="wrapper" style="background-color: white;">
+<div class="wrapper login-content" >
     <div class="login-box">
         <div class="login-logo">
-            <img src="assets/img/logo.png" class="img-responsive">
+            <img src="assets/img/logo-blanco.png" class="img-responsive img-logo">
         </div>
-        <div class="login-box-body">
-            <p class="login-box-msg">INICIAR SESION</p>
-            <form [ngFormModel]="form" (submit)="login($event)">
-                <fieldset>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-user"></i>
-                        <input id="cntrlUsername" ngControl="username" class="form-control" #username
-                               placeholder="Usuario" name="username" type="text" autofocus maxlength="20">
-                        <div class="control-msgs" *ngIf="username.dirty && !username.valid && !username.pending">
-                            <p *ngIf="username.errors.required">Username is required.</p>
+        <div class="row form-content">
+
+        <div class="header-login text-center">
+            <div class="login-box-body">
+                <h4>INICIAR SESION</h4>
+            </div>
+        </div>
+        <div class="form-login">
+            <div class="login-box-body">
+                <form [ngFormModel]="form" (submit)="login($event)" >
+                    <fieldset>
+                        <div class="form-group input-icon right">
+                            <i class="fa fa-user"></i>
+                            <input id="cntrlUsername" ngControl="username" class="form-control" #username
+                                   placeholder="Usuario" name="username" type="text" autofocus maxlength="20">
+                            <div class="control-msgs" *ngIf="username.dirty && !username.valid && !username.pending">
+                                <p *ngIf="username.errors.required">Username is required.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-key"></i>
-                        <input id="cntrlPassword" ngControl="password" class="form-control" #password
-                               placeholder="Contraseña" name="password" type="password" value="" maxlength="20">
-                        <div class="control-msgs" *ngIf="password.dirty && !password.valid && !password.pending">
-                            <p *ngIf="password.errors.required">Password is required.</p>
+                        <div class="form-group input-icon right">
+                            <i class="fa fa-key"></i>
+                            <input id="cntrlPassword" ngControl="password" class="form-control" #password
+                                   placeholder="Contraseña" name="password" type="password" value="" maxlength="20">
+                            <div class="control-msgs" *ngIf="password.dirty && !password.valid && !password.pending">
+                                <p *ngIf="password.errors.required">Password is required.</p>
+                            </div>
                         </div>
-                    </div>
-                    <button id="cntrlsubmit" type="submit" [disabled]="!form.valid"
-                            class="btn btn-lg btn-success btn-block">Entrar
-                    </button>
-                </fieldset>
-            </form>
-            <p>¿Olvido su contraseńa? <a href="#" (click)="recover()">Recuperar Aqui</a></p>
+                        <button id="cntrlsubmit" type="submit" [disabled]="!form.valid" class="btn  btn-success pull-right">
+                            Entrar <i class="fa  fa-chevron-circle-right"></i>
+                        </button>
+                    </fieldset>
+                </form>
+                <p>¿Olvido su contraseńa? <a href="#" (click)="recover()">Recuperar Aqui</a></p>
+            </div>
+        </div>
         </div>
     </div>
 </div>

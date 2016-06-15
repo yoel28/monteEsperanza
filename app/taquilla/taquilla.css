@@ -1,0 +1,18 @@
+.content-wrapper{
+    background-color: white;
+}
+.table{
+    font-size: 12px;
+}
+.modal-title{
+    color: #0a819c;
+}
+@media (min-width: 768px){
+    .modal-dialog {
+        width: 400px !important;
+    }
+}
+.img-camion-modal{
+    display: inline-block;
+    max-height: 100px;
+}
