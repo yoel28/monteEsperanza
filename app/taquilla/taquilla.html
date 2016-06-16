@@ -10,64 +10,101 @@
             <div class="input-group input-group-sm">
                 <input #findCamion type="text" class="form-control" placeholder="Ingrese PLACA o RFID del camion">
                 <span class="input-group-btn">
-                    <button (click)="getCamion(findCamion.value)" type="button" class="btn btn-info btn-flat"><i
+                    <button (click)="getVehicles(findCamion.value)" type="button" class="btn btn-info btn-flat"><i
                             class="fa fa-search"></i></button>
                 </span>
             </div>
         </div>
 
-        <div *ngIf="dataCamion.id">
+        <div *ngIf="dataVehicles.count" class="col-lg-10">
+            <table class="table table-hover">
+                <tbody>
+                <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
+                    <td>
+                        <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.ico'}}"
+                             style="display: inline-block" class="img-responsive img-find">
+                        <strong>{{vehicle.companyName}}</strong>
+                        <strong> RUC: </strong>{{vehicle.companyRuc}}
+                    </td>
+                    <td>
+                    <td>
+                        <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.ico'}}"
+                             style="display: inline-block" class="img-responsive img-find">
+                        <strong>Placa: </strong>{{vehicle.plate}}
+                        <strong> RFID: </strong>{{vehicle.tagRFID}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="dataTruck.id">
             <div class="row col-lg-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <div class="row"><h3><i class="fa fa-truck fa-lg"></i> <strong> CAMI&Oacute;N</strong></h3></div>
+                        <div class="row"><h3><i class="fa fa-truck fa-lg"></i> <strong> CAMI&Oacute;N</strong></h3>
+                        </div>
 
                         <div class="profile col-lg-2">
                             <div style="margin-bottom: 15px" class="row">
                                 <figure>
-                                    <img src="{{dataCamion.icon}}" alt="" style="display: inline-block"
-                                         class="img-responsive img-bordered">
+                                    <img src="{{dataTruck.image?dataTruck.image:'/assets/img/truck-guest.ico'}}" alt=""
+                                         style="display: inline-block" class="img-responsive img-bordered">
                                 </figure>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>EMPRESA</th>
+                                </tr>
+                                </thead>
                                 <tbody>
                                 <tr>
-                                    <td><strong>RUC: </strong>{{dataCamion.empresaRuc}}</td>
+                                    <td>{{dataTruck.companyName}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>NOMBRE: </strong>{{dataCamion.empresaName}}</td>
+                                    <td><strong>RUC: </strong>{{dataTruck.companyRuc}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>DIRECCION:</strong> {{dataCamion.empresaAddress}}</td>
+                                    <td><strong>DIRECCION:</strong> {{dataTruck.companyAddress}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>TELEFONO:</strong>{{dataCamion.empresaPhone}}</td>
+                                    <td><strong>TELEFONO:</strong>{{dataTruck.companyPhone}}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-lg-3">
                             <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>CAMION</th>
+                                </tr>
+                                </thead>
                                 <tbody>
                                 <tr>
-                                    <td><strong>PLACA: </strong>{{dataCamion.placa}}</td>
+                                    <td><strong>PLACA: </strong>{{dataTruck.plate}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>PESO: </strong>{{dataCamion.peso}} lbs</td>
+                                    <td><strong>PESO: </strong>{{dataTruck.weight}} lbs</td>
                                 </tr>
                                 <tr>
-                                    <td>{{dataCamion.titletipoVehiculo}}</td>
+                                    <td><strong>MARCA: </strong>
+                                        {{dataTruck.vehicleTypeTitle?dataTruck.vehicleTypeTitle:"NO DISPONIBLE"}}
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>{{dataCamion.detailtipoVehiculo}}</td>
+                                    <td><strong>DETALLE: </strong>
+                                        {{dataTruck.vehicleTypeDetail?dataTruck.vehicleTypeDetail:"NO DISPONIBLE"}}
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div><!--Fin de Datos de  camion-->
                     <table class="table table-hover table-bordered">
+
                         <thead>
                         <tr>
                             <th>#</th>
@@ -78,14 +115,16 @@
                             <th>Monto</th>
                         </tr>
                         </thead>
-                        <tbody *ngFor="let recarga of dataCamion.recargas">
+                        <tbody *ngFor="let recharges of dataTruck.recharges">
                         <tr>
-                            <td>{{recarga.id}}</td>
-                            <td>{{recarga.dateCreated}}</td>
-                            <td>{{recarga.reference}}</td>
-                            <td>{{recarga.referenceDate}}</td>
-                            <td>{{recarga.tipoRecarga}}</td>
-                            <td>{{recarga.quantify}}</td>
+                            <td>{{recharges.id}}</td>
+                            <td>{{recharges.dateCreated}}</td>
+                            <td>{{recharges.reference}}</td>
+                            <td>{{recharges.referenceDate}}</td>
+                            <td>
+                                <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
+                            </td>
+                            <td>{{recharges.quantity}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -107,11 +146,11 @@
                                 <tbody>
                                 <tr>
                                     <td><strong>Saldo Minimo: </strong></td>
-                                    <td>{{dataCamion.saldoMinimo}}</td>
+                                    <td>{{dataTruck.minBalance}}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Saldo Actual: </strong></td>
-                                    <td>{{dataCamion.saldoActual}}</td>
+                                    <td>{{dataTruck.balance}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -119,7 +158,8 @@
                                 <button type="button" class="btn  btn-blue">
                                     <i class="fa  fa-download fa-lg"></i> Generar PDF
                                 </button>
-                                <button type="button" class="btn  btn-success" data-toggle="modal" data-target="#modalRecarga">
+                                <button type="button" class="btn  btn-success" data-toggle="modal"
+                                        data-target="#modalRecarga">
                                     <i class="fa  fa-money fa-lg"></i> Recargar Saldo
                                 </button>
                             </div>
@@ -136,33 +176,33 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">REALIZAR RECARGA</h4>
             </div>
             <div class="modal-body">
                 <figure class="text-center">
-                    <img src="{{dataCamion.icon}}" alt=""class="img-responsive img-camion-modal">
+                    <img src="{{dataTruck.image?dataTruck.image:'/assets/img/truck-guest.ico'}}" alt=""
+                         style="display: inline-block" class="img-responsive img-camion-modal">
                 </figure>
                 <form role="form" [ngFormModel]="form" (submit)="getRecarga($event)">
 
-                    <div class="btn-group">
 
-                        <input id="minimal-radio-1" type="radio" name="minimal-radio" class="hide"/>
-                        <input id="minimal-radio-2" type="radio" name="minimal-radio" class="hide"/>
-                        <input id="minimal-radio-3" type="radio" name="minimal-radio" class="hide"/>
-
-                        <label for="minimal-radio-1"><img src="assets/img/credit/american-express.png" class="img-responsive btn " alt=""></label>
-                        <label for="minimal-radio-2"><img src="assets/img/credit/cirrus.png" class="img-responsive btn" alt=""></label>
-                        <label for="minimal-radio-3"><img src="assets/img/credit/mastercard.png" class="img-responsive btn" alt=""></label>
-
+                    <div class="btn-group rechargeTypes">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let type of rechargeTypes.list">
+                            <i class="{{type.icon}} btn fa-lg" [class.red]="rechargeType.id==type.id"
+                               (click)="rechargeType=type">
+                                {{type.title}}
+                            </i>
+                        </div>
                     </div>
 
                     <div class="form-group input-icon right">
                         <i class="fa fa-money"></i>
-                        <input id="cntrlQuantify" ngControl="quantify" class="form-control" #quantify
-                               placeholder="Cantidad" name="quantify" type="number" >
-                        <div class="control-msgs" *ngIf="quantify.dirty && !quantify.valid && !quantify.pending">
-                            <p *ngIf="quantify.errors.required">Cantidad Requerido</p>
+                        <input id="cntrlQuantity" ngControl="quantity" class="form-control" #quantity
+                               placeholder="Cantidad" name="quantity" type="number">
+                        <div class="control-msgs" *ngIf="quantity.dirty && !quantity.valid && !quantity.pending">
+                            <p *ngIf="quantity.errors.required">Cantidad Requerida</p>
                         </div>
                     </div>
 
@@ -179,7 +219,8 @@
                         <i class="fa fa-calendar"></i>
                         <input id="cntrlReferenceDate" ngControl="referenceDate" class="form-control" #referenceDate
                                placeholder="Fecha de la Referencia" name="referenceDate" type="date">
-                        <div class="control-msgs" *ngIf="referenceDate.dirty && !referenceDate.valid && !referenceDate.pending">
+                        <div class="control-msgs"
+                             *ngIf="referenceDate.dirty && !referenceDate.valid && !referenceDate.pending">
                             <p *ngIf="referenceDate.errors.required">Fecha de Referencia Requerida</p>
                         </div>
                     </div>
@@ -188,7 +229,8 @@
 
             </div>
             <div class="modal-footer">
-                <button (click)="getRecarga($event)" data-dismiss="modal" type="button" class="btn btn-primary" id="cntrlsubmit" [disabled]="!form.valid">
+                <button (click)="getRecharge($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                        id="cntrlsubmit" [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
                     Registrar
                 </button>

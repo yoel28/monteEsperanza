@@ -1,14 +1,43 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            BIENVENIDOS A MONTE ESPERANZA
-        </h1>
-        <h2>
-            QUE DESEAS REALIZAR...
-        </h2>
+        <div class="row">
+            <div class="col-lg-3">
+                <img src="/assets/img/dashboard/chama.png" class="img-responsive ">
+            </div>
+            <div class="col-lg-8">
+                <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1>
+                <h3 class="subtitle">QUE DESEA REALIZAR</h3>
+                <div class="text-center title">
+                    <div class="col-lg-3 btn">
+                        <img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">
+                        <h6>VEHICULO</h6>
+                    </div>
+                    <div class="col-lg-3 btn">
+                        <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
+                        <h6>INGRESOS</h6>
+                    </div>
+                    <div class="col-lg-3 btn">
+                        <img src="/assets/img/dashboard/libro.png" class="actions-dashboard">
+                        <h6>LIBRO</h6>
+                    </div>
+                    <div class="col-lg-3 btn" (click)="goTaquilla()" >
+                        <img src="/assets/img/dashboard/taquilla.png" class="actions-dashboard">
+                        <h6>TAQUILLA</h6>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </section>
     <section class="content">
+
+        <chart [options]="options" (load)="saveChart($event.context)">
+            <series (hide)="onSeriesHide($event.context)">
+                <point (select)="onPointSelect($event.context)"></point>
+            </series>
+        </chart>
+        <button (click)="addPoint()">Click to add random points</button>
 
     </section>
 </div>

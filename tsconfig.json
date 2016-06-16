@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "build/",
+    //"outDir": "build/",
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -15,5 +15,4 @@
     "node_modules",
     "build"
   ]
-
 }

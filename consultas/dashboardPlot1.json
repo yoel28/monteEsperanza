@@ -1,0 +1,8 @@
+// suma de todos los negativos (resultado positivo)
+//get /dashboard/plot/2/year
+//get /dashboard/plot/2/year/month
+{
+  "ton":[12,12,12,12,12],
+  "vehicles":[12,12,12,12,12],
+  "balance":[12,12,12,12,12]
+}

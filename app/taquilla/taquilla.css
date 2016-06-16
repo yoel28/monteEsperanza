@@ -9,10 +9,25 @@
 }
 @media (min-width: 768px){
     .modal-dialog {
-        width: 400px !important;
+        width: 420px !important;
     }
 }
 .img-camion-modal{
     display: inline-block;
     max-height: 100px;
+}
+.rechargeTypes > i{
+    font-size: 11pt;
+}
+.red {
+    color: red;
+}
+.img-find{
+    width: 32px;
+}
+.submenu-config{
+    border: 1px solid #BDBBBB !important;
+}
+.rechargeTypes{
+    margin-bottom: 10pt;
 }

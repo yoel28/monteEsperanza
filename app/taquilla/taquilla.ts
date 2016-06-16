@@ -11,15 +11,18 @@ import {HttpUtils} from "../common/http-utils";
     styleUrls: ['app/taquilla/taquilla.css']
 })
 export class Taquilla {
-    dataCamion:any = {};
+    dataVehicles:any = {};
+    dataTruck:any = {};
+
     httputils:HttpUtils;
-    endpoint:string;
 
     form: ControlGroup;
-    quantify: Control;
+    quantity: Control;
     reference: Control;
     referenceDate: Control;
-    vehiculo: Control;
+
+    rechargeTypes:any = []; //Arreglo con todos los tipos de regarga
+    rechargeType:any = {}; //tipo de recarga selecccionada
 
 
     constructor(router: Router,http: Http,_formBuilder: FormBuilder) {
@@ -29,32 +32,42 @@ export class Taquilla {
             router.navigate(link);
         }
         //TODO Enpoint Real
-        this.endpoint="/users/";
         this.httputils = new HttpUtils(http);
 
-        this.quantify = new Control("", Validators.compose([Validators.required]));
+        this.quantity = new Control("", Validators.compose([Validators.required]));
         this.reference = new Control("", Validators.compose([Validators.required]));
         this.referenceDate = new Control("", Validators.compose([Validators.required]));
 
         this.form = _formBuilder.group({
-            quantify: this.quantify,
+            quantity: this.quantity,
             reference: this.reference,
             referenceDate: this.referenceDate,
         });
+        this.getRechargeTypes();
     }
-    getRecarga(event: Event) {
 
-        let json = Object.assign({"vehicle": {id: this.dataCamion.id}},this.form.value);
+    getRecharge(event: Event) {
+        let json = Object.assign({"vehicle": {id: this.dataTruck.id},"rechargeType":{id:this.rechargeType.id}},this.form.value);
         let body = JSON.stringify(json);
-        
-        //TODO: this.httputils.onSave("/recarga/",body,this.dataCamion,this.error);
-        this.dataCamion.recargas.push(json);
+        let that =  this;
+        let successCallback= response => {
+            that.getVehicle(that.dataTruck.id);
+        }
+        this.httputils.doPost('/recharges',body,successCallback,this.error);
     }
-    getCamion(camion:string){
-        //TODO Consulta Real
-        //this.httputils.onLoadList("/camion/"+camion,this.data,this.error);
-        this.httputils.onLoadList("consultas/DetalleCamion.json",this.dataCamion,this.error,true);
-        console.log("Peticion GetCamion "+camion);
+
+    getVehicle(truckId:string){
+        this.httputils.onLoadList("/vehicles/"+truckId,this.dataTruck,this.error);
+        this.dataVehicles = {};
+    }
+
+    getVehicles(camion:string){
+        this.dataTruck = {};
+        this.httputils.onLoadList("/vehicles/search/"+camion,this.dataVehicles,this.error);
+    }
+
+    getRechargeTypes(){
+        this.httputils.onLoadList("/type/recharges?where=[['op':'ne','field':'enabled','value':false]]",this.rechargeTypes,this.error);
     }
     error=function(err){
         console.log(err);

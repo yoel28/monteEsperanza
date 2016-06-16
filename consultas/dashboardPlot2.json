@@ -1,0 +1,28 @@
+//get /dashboard/plot/2/year
+//get /dashboard/plot/2/year/[month]
+[
+  {
+    "title":"efectivo",
+    "detail":"detalle de efectivo",
+    "icon":"fa fa-money",
+    "count":134
+  },
+  {
+    "title":"tranferencia",
+    "detail":"transferecniaa",
+    "icon":"fa fa-refresh",
+    "count":1341
+  },
+  {
+    "title":"ingreso bruto",
+    "detail":"sumatoria de todos los positivos",
+    "icon":"fa fa-plus",
+    "count":100000000
+  },
+  {
+    "title":"ingreso neto",
+    "detail":"sumatoria de todos los negativos",
+    "icon":"fa fa-all",
+    "count":10000
+  }
+]

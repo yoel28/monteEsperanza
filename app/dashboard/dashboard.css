@@ -1,0 +1,21 @@
+.content-header{
+    background: url('assets/img/fondo.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.title{
+    font-weight: bolder;
+    color: black;
+}
+.subtitle{
+    color: black;
+}
+.actions-dashboard{
+    height: 80pt;
+    padding: 10pt;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5pt;
+}

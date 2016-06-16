@@ -1,0 +1,35 @@
+// /users/ GET
+[
+  {
+    "id":1,
+    "accountLocked":true,
+    "companyName":null,
+    "companyRuc":null,
+    "dateCreated":null,
+    "email":null,
+    "enabled":true,
+    "image":null,
+    "name":null,
+    "phone":null,
+    "username":null,
+    "companyTonCount":12223,
+    "companyVehiclesCount":12,
+    "companyBalance":1223
+  },
+  {
+    "id":2,
+    "accountLocked":true,
+    "companyName":null,
+    "companyRuc":null,
+    "dateCreated":null,
+    "email":null,
+    "enabled":true,
+    "image":null,
+    "name":null,
+    "phone":null,
+    "username":null,
+    "companyTonCount":12223,
+    "companyVehiclesCount":12,
+    "companyBalance":1223
+  }
+]
