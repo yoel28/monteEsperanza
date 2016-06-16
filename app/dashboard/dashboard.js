@@ -12,7 +12,6 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var http_1 = require('@angular/http');
 var http_utils_1 = require("../common/http-utils");
-var angular2_highcharts_1 = require('angular2-highcharts');
 var Dashboard = (function () {
     function Dashboard(router, http) {
         this.router = router;
@@ -57,7 +56,6 @@ var Dashboard = (function () {
     Dashboard = __decorate([
         core_1.Component({
             selector: 'home',
-            directives: [angular2_highcharts_1.CHART_DIRECTIVES],
             templateUrl: 'app/dashboard/dashboard.html',
             styleUrls: ['app/dashboard/dashboard.css']
         }), 

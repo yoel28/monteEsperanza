@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {HttpUtils} from "../common/http-utils";
-import { CHART_DIRECTIVES } from 'angular2-highcharts';
+//import { CHART_DIRECTIVES } from 'angular2-highcharts';
 
 
 @Component({
     selector: 'home',
-    directives: [CHART_DIRECTIVES],
+//    directives: [CHART_DIRECTIVES],
     templateUrl: 'app/dashboard/dashboard.html',
     styleUrls: ['app/dashboard/dashboard.css']
 })
