@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         files: [{
             expand: true,    // ingresar a las subcarpetas
             cwd: './',  // ruta de nuestro javascript fuente          
-            src: ["**/*.js","!node_modules/**"],     // patrón relativo a cwd
+            src: ["**/*.js","!node_modules/**","!build/**"],     // patrón relativo a cwd
             dest: 'build/'  // destino de los archivos compresos
             //ext: ".js"
         }]
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
             files: [{
             expand: true,
             cwd: './',
-            src: ["**/*.css","!node_modules/**"],
+            src: ["**/*.css","!node_modules/**","!build/**"],
             dest: 'build/'
             }]
         }
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             files: [{
                 expand: true,
                 cwd: './',
-                src: ["**/*.html","!node_modules/**"],
+                src: ["**/*.html","!node_modules/**","!build/**"],
                 dest: 'build/'
             }]
         }

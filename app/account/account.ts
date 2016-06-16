@@ -20,7 +20,7 @@ export class AccountLogin extends RestController{
     constructor(router: Router,http: Http, _formBuilder: FormBuilder) {
         if(localStorage.getItem('bearer'))
         {
-            let link = ['AccountLogin', {}];
+            let link = ['Dashboard', {}];
             router.navigate(link);
         }
         super(router,http);

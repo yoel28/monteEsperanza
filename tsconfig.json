@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "build/",
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,5 +10,10 @@
     "experimentalDecorators": true,
     "removeComments": true,
     "noImplicitAny": false
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+
 }
