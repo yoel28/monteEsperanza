@@ -110,9 +110,9 @@ export class HttpUtils {
         }
         this.doDelete(endpoint,successCallback,errorCallback,isEndpointAbsolute);
     }
-    onUpdate(endpoint:string,body,list, errorCallback = null,isEndpointAbsolute = false) {
+    onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false) {
         let successCallback= response => {
-
+            Object.assign(data, response.json());
         }
         this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }

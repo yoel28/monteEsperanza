@@ -6,31 +6,32 @@
         </h2>
     </section>
     <section class="content">
-        <div class="row col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12">
             <div class="input-group input-group-sm">
-                <input #findCamion type="text" class="form-control" placeholder="Ingrese PLACA o RFID del camion">
+                <input #findCamion type="text" class="form-control" placeholder="Ingrese PLACA / RFID / RUC " value="{{search}}">
                 <span class="input-group-btn">
-                    <button (click)="getVehicles(findCamion.value)" type="button" class="btn btn-info btn-flat"><i
-                            class="fa fa-search"></i></button>
+                    <button (click)="getVehicles(findCamion.value)" type="button" class="btn btn-info btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
                 </span>
             </div>
         </div>
 
-        <div *ngIf="dataVehicles.count" class="col-lg-10">
+        <div *ngIf="dataVehicles.count" class="col-lg-10 col-lg-offset-1">
             <table class="table table-hover">
                 <tbody>
                 <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
                     <td>
                         <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.ico'}}"
                              style="display: inline-block" class="img-responsive img-find">
-                        <strong>{{vehicle.companyName}}</strong>
+                        <strong>{{vehicle.companyName}}</strong><br>
                         <strong> RUC: </strong>{{vehicle.companyRuc}}
                     </td>
                     <td>
                     <td>
                         <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.ico'}}"
                              style="display: inline-block" class="img-responsive img-find">
-                        <strong>Placa: </strong>{{vehicle.plate}}
+                        <strong>Placa: </strong>{{vehicle.plate}}<br>
                         <strong> RFID: </strong>{{vehicle.tagRFID}}
                     </td>
                 </tr>

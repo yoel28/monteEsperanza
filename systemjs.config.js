@@ -11,7 +11,8 @@
     'rxjs':                       'node_modules/rxjs',
     'angular2-jwt':               'node_modules/angular2-jwt',
     'notifications':              'node_modules/angular2-notifications',
-    'angular2-highcharts':        'node_modules/angular2-highcharts',
+    'highcharts':                 'node_modules/highcharts',
+    'ng2-highcharts':             'node_modules/ng2-highcharts'
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -21,7 +22,8 @@
     'angular2-in-memory-web-api': { defaultExtension: 'js' },
     'angular2-jwt':               { main:  'angular2-jwt.js',defaultExtension: 'js' },
     'notifications':              { main: 'components.js', defaultExtension: 'js' },
-    'angular2-highcharts':        { main: 'index.js', defaultExtension: 'js' }
+    'ng2-highcharts':             { defaultExtension: 'js' },
+    'highcharts':             { defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',

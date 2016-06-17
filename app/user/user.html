@@ -10,7 +10,7 @@
 
     <section class="content">
         <div class="row">
-            <div *ngFor="let user of data">
+            <div *ngFor="let user of data.list">
             <div class="col-lg-4">
                 <div class="panel">
                     <div class="panel-body">
@@ -49,47 +49,47 @@
 
                                 <div class="col-xs-12 col-sm-4 text-center">
                                     <figure>
-                                        <img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" alt="" style="display: inline-block" class="img-responsive img-circle">
-                                        <figcaption class="ratings">
-                                            <p><a href="javascript:void(0);"><span class="fa fa-star"></span></a><a
-                                                    href="javascript:void(0);"><span class="fa fa-star"></span></a><a
-                                                    href="javascript:void(0);"><span class="fa fa-star"></span></a><a
-                                                    href="javascript:void(0);"><span class="fa fa-star"></span></a><a
-                                                    href="javascript:void(0);"><span class="fa fa-star-o"></span></a>
-                                            </p>
-                                        </figcaption>
+                                        <img src="{{user.image?user.image:'/assets/img/user-guest.png'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
+                                        <!--<figcaption class="ratings">-->
+                                            <!--<p><a href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
+                                                    <!--href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
+                                                    <!--href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
+                                                    <!--href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
+                                                    <!--href="javascript:void(0);"><span class="fa fa-star-o"></span></a>-->
+                                            <!--</p>-->
+                                        <!--</figcaption>-->
                                     </figure>
                                 </div>
                                 <div class="col-xs-12 col-sm-8">
-                                    <h3>{{user.username}}</h3>
+                                    <h2>{{user.username}}</h2>
 
                                     <p><strong>Id:</strong>{{user.id}}</p>
                                     <p><strong>Nombre:</strong> {{user.name}}</p>
-                                    <p><strong>Telefonos:</strong>{{user.phone}} </p>
                                 </div>
                                 <div class="col-xs-12 col-sm-8 col-lg-12">
+                                    <p><strong>Telefonos:</strong>{{user.phone}} </p>
                                     <p><strong>Email:</strong> {{user.email}}</p>
-                                    <p><strong>Empresa:</strong> {{user.empresa}}</p>
+                                    <p><strong>Empresa:</strong> {{user.companyName}}</p>
 
                                     <p>
-                                        <button *ngIf="!user.accountLocked" class="btn btn-green btn-sm">Habilitado</button>
-                                        <button *ngIf="user.accountLocked" class="btn btn-red btn-sm">Bloqueado</button>
+                                        <button (click)="onPatch('accountLocked',user)" *ngIf="!user.accountLocked" class="btn btn-green btn-sm">Verificado</button>
+                                        <button (click)="onPatch('accountLocked',user)" *ngIf="user.accountLocked"  class="btn btn-red btn-sm">Sin Verificar</button>
 
-                                        <button *ngIf="user.enabled" class="btn btn-green btn-sm">Verificado</button>
-                                        <button *ngIf="!user.enabled" class="btn btn-red btn-sm">Sin Verificar</button>
+                                        <button (click)="onPatch('enabled',user)" *ngIf="user.enabled" class="btn btn-green btn-sm">Habilitado</button>
+                                        <button (click)="onPatch('enabled',user)" *ngIf="!user.enabled" class="btn btn-red btn-sm">Bloqueado</button>
                                     </p>
                                 </div>
                             </div>
                             <div class="row text-center divider">
                                 <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h2><strong> 20,7K</strong></h2>
+                                    <h4><strong>{{user.companyKgCount?user.companyKgCount:"N/A"}}</strong></h4>
                                     <p>
-                                        <small>Tonealadas</small>
+                                        <small>Descargas</small>
                                     </p>
                                     <button class="btn btn-yellow btn-block">Registro</button>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h2><strong>43</strong></h2>
+                                    <h4><strong>{{user.companyVehiclesCount?user.companyVehiclesCount:"N/A"}}</strong></h4>
                                     <p>
                                         <small>Camiones</small>
                                     </p>
@@ -97,11 +97,11 @@
 
                                 </div>
                                 <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h2><strong>245</strong></h2>
+                                    <h4><strong>{{user.companyBalance?user.companyBalance:"0"}}$</strong></h4>
                                     <p>
                                         <small>Saldo</small>
                                     </p>
-                                    <button class="btn btn-yellow btn-block">Taquilla</button>
+                                    <button (click)="goTaquilla(user.companyRuc)" class="btn btn-yellow btn-block">Taquilla</button>
                                 </div>
                             </div>
                         </div>

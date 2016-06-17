@@ -28,7 +28,7 @@ export class AccountLogin extends RestController{
 
         this.username = new Control("", Validators.compose([Validators.required]));
         this.password = new Control("", Validators.compose([Validators.required]));
-
+        
         this.form = _formBuilder.group({
             username: this.username,
             password: this.password,

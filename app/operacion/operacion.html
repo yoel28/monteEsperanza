@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tipo Vehiculo</h3>
+                    <h3 class="box-title">Operaciones</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
@@ -18,18 +18,20 @@
                             <thead>
                             <tr data-title="email">
                                 <th>ID</th>
-                                <th>Titulo</th>
-                                <th>Detalle </th>
-                                <th>Icono </th>
+                                <th>Recarga</th>
+                                <th>Vehiculo </th>
+                                <th>Peso Entrada </th>
+                                <th>Peso Salida</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
-                                <td> <i class="{{data.icon}}"></i> <span accessKey="icon" contenteditable="true" (blur)="onUpdate($event,data)">{{data.icon}}</span></td>
+                                <td (blur)="onUpdate($event,data)" accessKey="recharge" contenteditable="true">{{data.recharge}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="vehicle" contenteditable="true">{{data.vehicle}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="weightIn" contenteditable="true">{{data.weightIn}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="weightOut" contenteditable="true">{{data.weightOut}}</td>
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
@@ -59,28 +61,37 @@
 
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlTitle" ngControl="title" class="form-control" #title
-                               placeholder="Titulo" name="title" type="text">
-                        <div class="control-msgs" *ngIf="title.dirty && !title.valid && !title.pending">
-                            <p *ngIf="title.errors.required">Titulo Requerido</p>
+                        <input id="cntrlRecharge" ngControl="recharge" class="form-control" #recharge
+                               placeholder="Recarga" name="recharge" type="text">
+                        <div class="control-msgs" *ngIf="recharge.dirty && !recharge.valid && !recharge.pending">
+                            <p *ngIf="recharge.errors.required">Requerido</p>
                         </div>
                     </div>
                     <div class="form-group input-icon right">
-                        <i class="fa fa-image"></i>
-                        <input id="cntrlDetail" ngControl="detail" class="form-control" #detail
-                               placeholder="Detalle" name="detail" type="text">
-                        <div class="control-msgs" *ngIf="detail.dirty && !detail.valid && !detail.pending">
-                            <p *ngIf="detail.errors.required">Detalle Requerido</p>
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlVehicle" ngControl="vehicle" class="form-control" #vehicle
+                               placeholder="Vehiculo" name="vehicle" type="text">
+                        <div class="control-msgs" *ngIf="vehicle.dirty && !vehicle.valid && !vehicle.pending">
+                            <p *ngIf="vehicle.errors.required">Requerido</p>
                         </div>
                     </div>
                     <div class="form-group input-icon right">
-                        <i class="fa fa-image"></i>
-                        <input id="cntrlIcon" ngControl="icon" class="form-control" #icon
-                               placeholder="Icono" name="icon" type="text">
-                        <div class="control-msgs" *ngIf="icon.dirty && !icon.valid && !icon.pending">
-                            <p *ngIf="icon.errors.required">Icono Requerido</p>
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlWeightIn" ngControl="weightIn" class="form-control" #weightIn
+                               placeholder="peso de entrada" name="weightIn" type="text">
+                        <div class="control-msgs" *ngIf="weightIn.dirty && !weightIn.valid && !weightIn.pending">
+                            <p *ngIf="weightIn.errors.required">Requerido</p>
                         </div>
                     </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlWeightOut" ngControl="weightOut" class="form-control" #weightOut
+                               placeholder="peso de Salida" name="weightOut" type="text">
+                        <div class="control-msgs" *ngIf="weightOut.dirty && !weightOut.valid && !weightOut.pending">
+                            <p *ngIf="weightOut.errors.required">Requerido</p>
+                        </div>
+                    </div>
+
 
                 </form>
 

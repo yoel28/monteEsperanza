@@ -8,7 +8,7 @@ import { AppComponent }   from './app.component';
 
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,
-    //provide((LocationStrategy).toClass(HashLocationStrategy)),
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     provide(AuthHttp, {
         useFactory: (http) => {
             return new AuthHttp(new AuthConfig({

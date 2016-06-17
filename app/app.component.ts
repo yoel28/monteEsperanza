@@ -11,6 +11,11 @@ import { TipoVehiculo }         from './tipoVehiculo/tipoVehiculo';
 import { Dashboard }         from './dashboard/dashboard';
 import { User }         from './user/user';
 import { Taquilla }         from './taquilla/taquilla';
+import { Operacion }         from './operacion/operacion';
+import { Parametro }         from './parametro/parametro';
+import { Regla }         from './regla/regla';
+import { TipoRecarga }         from './tipoRecarga/tipoRecarga';
+import { TagRfid }         from './tagRfid/tagRfid';
 
 @Component({
   selector: 'my-app',
@@ -29,9 +34,15 @@ import { Taquilla }         from './taquilla/taquilla';
   { path: '/user',   name: 'User', component: User },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
+  { path: '/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
   { path: '/empresa',   name: 'Empresa', component: Empresa },
+  { path: '/operacion',   name: 'Operacion', component: Operacion },
+  { path: '/parametro',   name: 'Parametro', component: Parametro },
+  { path: '/regla',   name: 'Regla', component: Regla },
+  { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
   { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
+  { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
 
 ])
 export class AppComponent {

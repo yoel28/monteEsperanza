@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
+import { Router,RouteParams }           from '@angular/router-deprecated';
 import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
 import { Http } from '@angular/http';
 import {HttpUtils} from "../common/http-utils";
@@ -20,12 +20,13 @@ export class Taquilla {
     quantity: Control;
     reference: Control;
     referenceDate: Control;
+    search;
 
     rechargeTypes:any = []; //Arreglo con todos los tipos de regarga
     rechargeType:any = {}; //tipo de recarga selecccionada
 
 
-    constructor(router: Router,http: Http,_formBuilder: FormBuilder) {
+    constructor(params:RouteParams,router: Router,http: Http,_formBuilder: FormBuilder) {
         if(!localStorage.getItem('bearer'))
         {
             let link = ['AccountLogin', {}];
@@ -44,6 +45,15 @@ export class Taquilla {
             referenceDate: this.referenceDate,
         });
         this.getRechargeTypes();
+        if(params.get('search'))
+        {
+            this.getVehicles(params.get('search'));
+            this.search = params.get('search');
+        }
+
+        
+
+
     }
 
     getRecharge(event: Event) {

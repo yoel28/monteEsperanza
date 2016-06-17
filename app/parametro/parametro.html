@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tipo Vehiculo</h3>
+                    <h3 class="box-title">Parametros</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
@@ -18,18 +18,19 @@
                             <thead>
                             <tr data-title="email">
                                 <th>ID</th>
-                                <th>Titulo</th>
-                                <th>Detalle </th>
-                                <th>Icono </th>
+                                <th>Clave</th>
+                                <th>Valor</th>
+                                <th>Tipo </th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
-                                <td> <i class="{{data.icon}}"></i> <span accessKey="icon" contenteditable="true" (blur)="onUpdate($event,data)">{{data.icon}}</span></td>
+                                <td (blur)="onUpdate($event,data)" accessKey="key" contenteditable="true">{{data.key}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="value" contenteditable="true">{{data.value}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="type" contenteditable="true">{{data.type}}</td>
+
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
@@ -59,28 +60,29 @@
 
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlTitle" ngControl="title" class="form-control" #title
-                               placeholder="Titulo" name="title" type="text">
-                        <div class="control-msgs" *ngIf="title.dirty && !title.valid && !title.pending">
-                            <p *ngIf="title.errors.required">Titulo Requerido</p>
+                        <input id="cntrlKey" ngControl="key" class="form-control" #key
+                               placeholder="Clave" name="key" type="text">
+                        <div class="control-msgs" *ngIf="key.dirty && !key.valid && !key.pending">
+                            <p *ngIf="key.errors.required">Requerido</p>
                         </div>
                     </div>
                     <div class="form-group input-icon right">
-                        <i class="fa fa-image"></i>
-                        <input id="cntrlDetail" ngControl="detail" class="form-control" #detail
-                               placeholder="Detalle" name="detail" type="text">
-                        <div class="control-msgs" *ngIf="detail.dirty && !detail.valid && !detail.pending">
-                            <p *ngIf="detail.errors.required">Detalle Requerido</p>
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlValue" ngControl="value" class="form-control" #value
+                               placeholder="Valor" name="value" type="text">
+                        <div class="control-msgs" *ngIf="value.dirty && !value.valid && !value.pending">
+                            <p *ngIf="value.errors.required">Requerido</p>
                         </div>
                     </div>
                     <div class="form-group input-icon right">
-                        <i class="fa fa-image"></i>
-                        <input id="cntrlIcon" ngControl="icon" class="form-control" #icon
-                               placeholder="Icono" name="icon" type="text">
-                        <div class="control-msgs" *ngIf="icon.dirty && !icon.valid && !icon.pending">
-                            <p *ngIf="icon.errors.required">Icono Requerido</p>
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlType" ngControl="type" class="form-control" #type
+                               placeholder="Tipo" name="type" type="text">
+                        <div class="control-msgs" *ngIf="type.dirty && !type.valid && !type.pending">
+                            <p *ngIf="type.errors.required">Requerido</p>
                         </div>
                     </div>
+
 
                 </form>
 

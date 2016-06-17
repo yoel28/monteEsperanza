@@ -16,7 +16,7 @@ export class User{
     httputils:HttpUtils;
     endpoint:string;
 
-    constructor( router: Router, http: Http) {
+    constructor(public router: Router, http: Http) {
         if(!localStorage.getItem('bearer'))
         {
             let link = ['AccountLogin', {}];
@@ -50,7 +50,25 @@ export class User{
     onSave(event, username, password,email,phone,name) {
         event.preventDefault();
         let body = JSON.stringify({username, password,email,phone,name});
-        this.httputils.onSave(this.endpoint,body,this.data,this.error);
+        this.httputils.onSave(this.endpoint,body,this.data.list,this.error);
+    }
+    goTaquilla(companyRuc:string)
+    {
+        let link = ['TaquillaSearh', {search:companyRuc}];
+        this.router.navigate(link);
+    }
+    onPatch(field,data,value?){
+        let json = {}
+        if(value)
+            json[field] = value;
+        else
+            json[field] = !data[field];
+
+        let body = JSON.stringify(json);
+
+        this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
+
+        
     }
 
 }

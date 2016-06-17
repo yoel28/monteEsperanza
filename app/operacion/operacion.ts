@@ -6,12 +6,12 @@ import {HttpUtils} from "../common/http-utils";
 
 //--------------------------LOGIN-------------------------------
 @Component({
-    selector: 'tipoEmpresa',
-    templateUrl: 'app/tipoEmpresa/tipoEmpresa.html',
-    styleUrls: ['app/tipoEmpresa/tipoEmpresa.css']
+    selector: 'operacion',
+    templateUrl: 'app/operacion/operacion.html',
+    styleUrls: ['app/operacion/operacion.css']
 })
-export class TipoEmpresa {
-    tipoEmpresa:any=[];
+export class Operacion {
+    dataList:any=[];
     httputils:HttpUtils;
     endpoint:string;
 
@@ -22,45 +22,54 @@ export class TipoEmpresa {
             let link = ['AccountLogin', {}];
             this.router.navigate(link);
         }
-        this.endpoint="/type/companies/";
+        this.endpoint="/operations/";
         this.httputils = new HttpUtils(http);
-        this.getTipoEmpresas();
+        this.loadData();
 
-        this.title = new Control("", Validators.compose([Validators.required]));
-        this.icon = new Control("", Validators.compose([Validators.required]));
+        this.recharge = new Control("", Validators.compose([Validators.required]));
+        this.vehicle = new Control("", Validators.compose([Validators.required]));
+        this.weightIn = new Control("", Validators.compose([Validators.required]));
+        this.weightOut = new Control("", Validators.compose([Validators.required]));
+
+
+
         this.form = _formBuilder.group({
-            title: this.title,
-            icon: this.icon,
+            recharge: this.recharge,
+            vehicle: this.vehicle,
+            weightIn: this.weightIn,
+            weightOut: this.weightOut,
         });
     }
     error=function(err){
         console.log(err);
     }
 
-    getTipoEmpresas(){
+    loadData(){
         event.preventDefault();
-        this.httputils.onLoadList(this.endpoint,this.tipoEmpresa,this.error);
+        this.httputils.onLoadList(this.endpoint,this.dataList,this.error);
     }
     onUpdate(event,data){
         //event.preventDefault();
         if(data[event.target.accessKey]!=event.target.innerHTML){
             data[event.target.accessKey] = event.target.innerHTML;
             let body = JSON.stringify(data);
-            this.httputils.onUpdate(this.endpoint+data.id,body,data,this.error);
+            this.httputils.onUpdate(this.endpoint+data.id,body,this.dataList,this.error);
         }
     }
     onDelete(event,id){
         event.preventDefault();
-        this.httputils.onDelete(this.endpoint+id, id, this.tipoEmpresa, this.error);
+        this.httputils.onDelete(this.endpoint+id, id, this.dataList, this.error);
     }
 
     form: ControlGroup;
-    title: Control;
-    icon: Control;
-
+    recharge: Control;
+    vehicle: Control;
+    weightIn: Control;
+    weightOut: Control;
+    
     onSave(event: Event) {
         event.preventDefault();
         let body = JSON.stringify(this.form.value);
-        this.httputils.onSave(this.endpoint,body,this.tipoEmpresa,this.error);
+        this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
     }
 }
