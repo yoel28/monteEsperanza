@@ -1,43 +1,46 @@
-import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
+import { Router }           from '@angular/router-deprecated';
+import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
 import {HttpUtils} from "./http-utils";
 
 export class RestController{
-    data:any = [];
+    dataList:any = [];
     httputils:HttpUtils;
     endpoint:string;
+    form: ControlGroup;
 
-    constructor(public router: Router,public http: Http) {
-        this.httputils = new HttpUtils(this.http);
+    constructor(public http: Http) {
+        this.httputils = new HttpUtils(http);
     }
-    setEndpoint(end){
-        this.endpoint=end;
+    setEndpoint(endpoint:string){
+        this.endpoint=endpoint;
     }
-
-    error=function(err){
-
+    setForm(form:ControlGroup){
+        this.form =form;
+    }
+    error(err){
         console.log(err);
     }
-
-    getLoad(){
-        this.httputils.onLoadList(this.endpoint, this.data, this.error);
-    }
-
-    onDelete(event,id){
+    
+    loadData(){
         event.preventDefault();
-        this.httputils.onDelete(this.endpoint+id, id, this.data, this.error);
-    }
+        this.httputils.onLoadList(this.endpoint,this.dataList,this.error);
+    };
     onUpdate(event,data){
         event.preventDefault();
-        if(data[event.target.id]!=event.target.innerHTML){
-            data[event.target.id] = event.target.innerHTML;
+        if(data[event.target.accessKey]!=event.target.innerHTML){
+            data[event.target.accessKey] = event.target.innerHTML;
             let body = JSON.stringify(data);
-            this.httputils.onUpdate(this.endpoint+data.id,body,this.data,this.error);
+            this.httputils.onUpdate(this.endpoint+data.id,body,this.dataList,this.error);
         }
     }
-    onSave(event, username, password,email,phone,name) {
+    onDelete(event,id){
         event.preventDefault();
-        let body = JSON.stringify({username, password,email,phone,name});
-        this.httputils.onSave(this.endpoint,body,this.data,this.error);
+        this.httputils.onDelete(this.endpoint+id, id, this.dataList, this.error);
+    }
+    onSave(event: Event) {
+        event.preventDefault();
+        let body = JSON.stringify(this.form.value);
+        this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
     }
 }
