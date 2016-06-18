@@ -3,73 +3,54 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
 import {HttpUtils} from "../common/http-utils";
+import {RestController} from "../common/restController";
 
-//--------------------------LOGIN-------------------------------
 @Component({
     selector: 'operacion',
     templateUrl: 'app/operacion/operacion.html',
     styleUrls: ['app/operacion/operacion.css']
 })
-export class Operacion {
+export class Operacion extends RestController{
     dataList:any=[];
     httputils:HttpUtils;
-    endpoint:string;
-
-
-    constructor(public router: Router,public http: Http, _formBuilder: FormBuilder) {
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
-        this.endpoint="/operations/";
-        this.httputils = new HttpUtils(http);
-        this.loadData();
-
-        this.recharge = new Control("", Validators.compose([Validators.required]));
-        this.vehicle = new Control("", Validators.compose([Validators.required]));
-        this.weightIn = new Control("", Validators.compose([Validators.required]));
-        this.weightOut = new Control("", Validators.compose([Validators.required]));
-
-
-
-        this.form = _formBuilder.group({
-            recharge: this.recharge,
-            vehicle: this.vehicle,
-            weightIn: this.weightIn,
-            weightOut: this.weightOut,
-        });
-    }
-    error=function(err){
-        console.log(err);
-    }
-
-    loadData(){
-        event.preventDefault();
-        this.httputils.onLoadList(this.endpoint,this.dataList,this.error);
-    }
-    onUpdate(event,data){
-        //event.preventDefault();
-        if(data[event.target.accessKey]!=event.target.innerHTML){
-            data[event.target.accessKey] = event.target.innerHTML;
-            let body = JSON.stringify(data);
-            this.httputils.onUpdate(this.endpoint+data.id,body,this.dataList,this.error);
-        }
-    }
-    onDelete(event,id){
-        event.preventDefault();
-        this.httputils.onDelete(this.endpoint+id, id, this.dataList, this.error);
-    }
 
     form: ControlGroup;
+
     recharge: Control;
     vehicle: Control;
     weightIn: Control;
     weightOut: Control;
     
-    onSave(event: Event) {
-        event.preventDefault();
-        let body = JSON.stringify(this.form.value);
-        this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
+    
+    constructor(public router: Router,public http: Http, public _formBuilder: FormBuilder) {
+        super(http);
+        this.validTokens();
+        this.setEndpoint('/operations/');
+        this.httputils = new HttpUtils(http);
+        this.loadData();
     }
+
+    initForm(){
+        this.recharge = new Control("", Validators.compose([Validators.required]));
+        this.vehicle = new Control("", Validators.compose([Validators.required]));
+        this.weightIn = new Control("", Validators.compose([Validators.required]));
+        this.weightOut = new Control("", Validators.compose([Validators.required]));
+
+        this.form = this._formBuilder.group({
+            recharge: this.recharge,
+            vehicle: this.vehicle,
+            weightIn: this.weightIn,
+            weightOut: this.weightOut,
+        });
+
+        this.setForm(this.form);
+    }
+    validTokens(){
+        if(!localStorage.getItem('bearer'))
+        {
+            let link = ['AccountLogin', {}];
+            this.router.navigate(link);
+        }
+    }
+    
 }
