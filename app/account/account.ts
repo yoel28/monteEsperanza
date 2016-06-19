@@ -4,6 +4,7 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
 import {RestController} from "../common/restController";
+import {HttpUtils} from "../common/http-utils";
 
 
 //--------------------------LOGIN-------------------------------
@@ -13,44 +14,48 @@ import {RestController} from "../common/restController";
     styleUrls: ['app/account/login/login.css']
 })
 export class AccountLogin extends RestController{
+
+    httputils:HttpUtils;
+
     form: ControlGroup;
     username: Control;
     password: Control;
 
-    constructor(router: Router,http: Http, _formBuilder: FormBuilder) {
-        if(localStorage.getItem('bearer'))
-        {
-            let link = ['Dashboard', {}];
-            router.navigate(link);
-        }
-        super(router,http);
-        this.setEndpoint("/users/");
-
+    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder) {
+        super(http);
+        this.validTokens();
+        this.setEndpoint("/login");
+        this.httputils = new HttpUtils(http);
+        this.initForm();
+    }
+    initForm(){
         this.username = new Control("", Validators.compose([Validators.required]));
         this.password = new Control("", Validators.compose([Validators.required]));
-        
-        this.form = _formBuilder.group({
+
+        this.form = this._formBuilder.group({
             username: this.username,
             password: this.password,
         });
     }
 
+    validTokens(){
+        if(localStorage.getItem('bearer'))
+        {
+            let link = ['Dashboard', {}];
+            this.router.navigate(link);
+        }
+    }
+
     login(event: Event) {
         event.preventDefault();
         let body =JSON.stringify(this.form.value);
-        this.http.post(localStorage.getItem('urlAPI')+'/login', body, { headers: contentHeaders })
-            .subscribe(
-                response => {
-                    localStorage.setItem('bearer',response.json().access_token);
-                    contentHeaders.append('Authorization', 'Bearer '+localStorage.getItem('bearer'));
-                    let link = ['Dashboard', {}];
-                    this.router.navigate(link);
-                },
-                error => {
-                    alert(error.text());
-                    console.log(error.text());
-                }
-            );
+        let successCallback= response => {
+            localStorage.setItem('bearer',response.json().access_token);
+            contentHeaders.append('Authorization', 'Bearer '+localStorage.getItem('bearer'));
+            let link = ['Dashboard', {}];
+            this.router.navigate(link);
+        };
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 }
 

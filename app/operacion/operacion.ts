@@ -27,6 +27,7 @@ export class Operacion extends RestController{
         this.validTokens();
         this.setEndpoint('/operations/');
         this.httputils = new HttpUtils(http);
+        this.initForm();
         this.loadData();
     }
 
