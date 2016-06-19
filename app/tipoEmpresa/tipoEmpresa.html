@@ -24,7 +24,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr *ngFor="let data of tipoEmpresa" >
+                                <tr *ngFor="let data of dataList" >
                                     <td>{{data.id}}</td>
                                     <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
                                     <td  ><i accessKey="icon" contenteditable="true" (blur)="onUpdate($event,data)" class="{{data.icon}}"></i></td>
