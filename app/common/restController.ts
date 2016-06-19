@@ -4,6 +4,7 @@ import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common'
 import {HttpUtils} from "./http-utils";
 
 export class RestController{
+
     dataList:any = [];
     httputils:HttpUtils;
     endpoint:string;
@@ -15,13 +16,10 @@ export class RestController{
     setEndpoint(endpoint:string){
         this.endpoint=endpoint;
     }
-    setForm(form:ControlGroup){
-        this.form =form;
-    }
     error(err){
         console.log(err);
     }
-    
+
     loadData(){
         event.preventDefault();
         this.httputils.onLoadList(this.endpoint,this.dataList,this.error);

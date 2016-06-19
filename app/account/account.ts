@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
+import  {FormBuilder, Validators, Control} from '@angular/common';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
@@ -15,9 +15,6 @@ import {HttpUtils} from "../common/http-utils";
 })
 export class AccountLogin extends RestController{
 
-    httputils:HttpUtils;
-
-    form: ControlGroup;
     username: Control;
     password: Control;
 
@@ -25,10 +22,10 @@ export class AccountLogin extends RestController{
         super(http);
         this.validTokens();
         this.setEndpoint("/login");
-        this.httputils = new HttpUtils(http);
         this.initForm();
     }
     initForm(){
+
         this.username = new Control("", Validators.compose([Validators.required]));
         this.password = new Control("", Validators.compose([Validators.required]));
 

@@ -11,10 +11,6 @@ import {RestController} from "../common/restController";
     styleUrls: ['app/operacion/operacion.css']
 })
 export class Operacion extends RestController{
-    dataList:any=[];
-    httputils:HttpUtils;
-
-    form: ControlGroup;
 
     recharge: Control;
     vehicle: Control;
@@ -26,12 +22,12 @@ export class Operacion extends RestController{
         super(http);
         this.validTokens();
         this.setEndpoint('/operations/');
-        this.httputils = new HttpUtils(http);
         this.initForm();
         this.loadData();
     }
 
     initForm(){
+
         this.recharge = new Control("", Validators.compose([Validators.required]));
         this.vehicle = new Control("", Validators.compose([Validators.required]));
         this.weightIn = new Control("", Validators.compose([Validators.required]));
@@ -44,7 +40,6 @@ export class Operacion extends RestController{
             weightOut: this.weightOut,
         });
 
-        this.setForm(this.form);
     }
     validTokens(){
         if(!localStorage.getItem('bearer'))
