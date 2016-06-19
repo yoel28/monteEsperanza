@@ -41,4 +41,11 @@ export class RestController{
         let body = JSON.stringify(this.form.value);
         this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
     }
+    onPatch(field,data,value?){
+        event.preventDefault();
+        let json = {}
+        json[field] = value?value:!data[field];
+        let body = JSON.stringify(json);
+        this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
+    }
 }
