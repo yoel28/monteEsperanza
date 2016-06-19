@@ -4,7 +4,8 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
 import {RestController} from "../common/restController";
-import {HttpUtils} from "../common/http-utils";
+import {globalService} from "../common/globalService";
+
 
 
 //--------------------------LOGIN-------------------------------
@@ -18,7 +19,7 @@ export class AccountLogin extends RestController{
     username: Control;
     password: Control;
 
-    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder) {
+    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder,public myglobal:globalService) {
         super(http);
         this.validTokens();
         this.setEndpoint("/login");
@@ -49,6 +50,7 @@ export class AccountLogin extends RestController{
         let successCallback= response => {
             localStorage.setItem('bearer',response.json().access_token);
             contentHeaders.append('Authorization', 'Bearer '+localStorage.getItem('bearer'));
+            this.myglobal.user = response.json();
             let link = ['Dashboard', {}];
             this.router.navigate(link);
         };
