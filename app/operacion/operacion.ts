@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
-import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
-import {HttpUtils} from "../common/http-utils";
+import  {FormBuilder, Validators, Control} from '@angular/common';
 import {RestController} from "../common/restController";
 
 @Component({
