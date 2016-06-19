@@ -3,6 +3,7 @@ import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import  {FormBuilder, Validators, Control} from '@angular/common';
 import {RestController} from "../common/restController";
+import {globalService} from "../common/globalService";
 
 @Component({
     selector: 'user',
@@ -20,13 +21,12 @@ export class User extends RestController{
     password: Control;
     phone: Control;
 
-    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder) {
+    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder,public myglobal:globalService) {
         super(http);
         this.validTokens();
         this.setEndpoint('/users/');
         this.initForm();
         this.loadData();
-
     }
     validTokens(){
         if(!localStorage.getItem('bearer'))
@@ -57,5 +57,5 @@ export class User extends RestController{
         let link = ['TaquillaSearh', {search:companyRuc}];
         this.router.navigate(link);
     }
-    
+
 }
