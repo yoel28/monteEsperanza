@@ -10,7 +10,7 @@
 
     <section class="content">
         <div class="row">
-            <div *ngFor="let user of data.list">
+            <div *ngFor="let user of dataList.list">
             <div class="col-lg-4">
                 <div class="panel">
                     <div class="panel-body">
@@ -72,11 +72,15 @@
                                     <p><strong>Empresa:</strong> {{user.companyName}}</p>
 
                                     <p>
-                                        <button (click)="onPatch('accountLocked',user)" *ngIf="!user.accountLocked" class="btn btn-green btn-sm">Verificado</button>
-                                        <button (click)="onPatch('accountLocked',user)" *ngIf="user.accountLocked"  class="btn btn-red btn-sm">Sin Verificar</button>
+                                        <button (click)="onPatch('accountLocked',user)" class="btn btn-sm"
+                                                [class.btn-green]="!user.accountLocked" [class.btn-red]="user.accountLocked">
+                                            {{user.accountLocked?"Sin Verificar":"Verificado"}}
+                                        </button>
 
-                                        <button (click)="onPatch('enabled',user)" *ngIf="user.enabled" class="btn btn-green btn-sm">Habilitado</button>
-                                        <button (click)="onPatch('enabled',user)" *ngIf="!user.enabled" class="btn btn-red btn-sm">Bloqueado</button>
+                                        <button (click)="onPatch('enabled',user)" class="btn btn-sm"
+                                                [class.btn-green]="user.enabled" [class.btn-red]="!user.enabled">
+                                            {{user.enabled?"Habilitado":"Bloqueado"}}
+                                        </button>
                                     </p>
                                 </div>
                             </div>

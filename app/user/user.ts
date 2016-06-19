@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
-import {HttpUtils} from "../common/http-utils";
+import  {FormBuilder, Validators, Control} from '@angular/common';
+import {RestController} from "../common/restController";
 
 @Component({
     selector: 'user',
@@ -11,64 +12,50 @@ import {HttpUtils} from "../common/http-utils";
     ],
 
 })
-export class User{
-    data:any = [];
-    httputils:HttpUtils;
-    endpoint:string;
+export class User extends RestController{
 
-    constructor(public router: Router, http: Http) {
+    username: Control;
+    name: Control;
+    email: Control;
+    password: Control;
+    phone: Control;
+
+    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder) {
+        super(http);
+        this.validTokens();
+        this.setEndpoint('/users/');
+        this.initForm();
+        this.loadData();
+
+    }
+    validTokens(){
         if(!localStorage.getItem('bearer'))
         {
             let link = ['AccountLogin', {}];
-            router.navigate(link);
-        }
-        this.endpoint="/users/";
-        this.httputils = new HttpUtils(http);
-        this.getLoad();
-    }
-
-    error=function(err){
-        console.log(err);
-    }
-
-    getLoad(){
-        this.httputils.onLoadList(this.endpoint, this.data, this.error);
-    }
-
-    onDelete(event,id){
-        event.preventDefault();
-        this.httputils.onDelete(this.endpoint+id, id, this.data, this.error);
-    }
-    onUpdate(event,data){
-        event.preventDefault();
-        if(data[event.target.id]!=event.target.innerHTML){
-            data[event.target.id] = event.target.innerHTML;
-            let body = JSON.stringify(data);
-            this.httputils.onUpdate(this.endpoint+data.id,body,this.data,this.error);
+            this.router.navigate(link);
         }
     }
-    onSave(event, username, password,email,phone,name) {
-        event.preventDefault();
-        let body = JSON.stringify({username, password,email,phone,name});
-        this.httputils.onSave(this.endpoint,body,this.data.list,this.error);
+    initForm(){
+
+        this.username = new Control("", Validators.compose([Validators.required]));
+        this.name = new Control("", Validators.compose([Validators.required]));
+        this.email = new Control("", Validators.compose([Validators.required]));
+        this.password = new Control("", Validators.compose([Validators.required]));
+        this.phone = new Control("", Validators.compose([Validators.required]));
+
+        this.form = this._formBuilder.group({
+            username: this.username,
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            phone: this.phone,
+        });
+
     }
     goTaquilla(companyRuc:string)
     {
         let link = ['TaquillaSearh', {search:companyRuc}];
         this.router.navigate(link);
     }
-    onPatch(field,data,value?){
-        let json = {}
-        if(value)
-            json[field] = value;
-        else
-            json[field] = !data[field];
-
-        let body = JSON.stringify(json);
-
-        this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
-
-        
-    }
-
+    
 }
