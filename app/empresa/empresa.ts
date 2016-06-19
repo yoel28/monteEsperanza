@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
-import { Http, Headers } from '@angular/http';
-import { contentHeaders } from '../common/headers';
+import { Http } from '@angular/http';
+import  {FormBuilder, Validators, Control} from '@angular/common';
+import {RestController} from "../common/restController";
 
 //--------------------------LOGIN-------------------------------
 @Component({
@@ -9,28 +10,26 @@ import { contentHeaders } from '../common/headers';
     templateUrl: 'app/empresa/empresa.html',
     styleUrls: ['app/empresa/empresa.css']
 })
-export class Empresa {
-    empresa:any;
+export class Empresa extends RestController{
 
-    constructor(private router: Router,public http: Http) {
+    
+
+    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder) {
+        super(http);
+        this.validTokens();
+        this.setEndpoint('/empresas/');
+        this.initForm();
+        this.loadData();
+    }
+    validTokens(){
         if(!localStorage.getItem('bearer'))
         {
             let link = ['AccountLogin', {}];
             this.router.navigate(link);
         }
-        this.getEmpresas()
     }
-    getEmpresas(){
-        event.preventDefault();
-        this.http.get(localStorage.getItem('urlAPI')+'/empresas',{headers:contentHeaders})
-            .subscribe(
-                response => {
-                    this.empresa=response.json();
-                },
-                error =>{
+    initForm(){
 
-                }
-            );
     }
 
 }
