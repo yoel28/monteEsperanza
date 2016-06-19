@@ -12,7 +12,6 @@
     'notifications':              'node_modules/angular2-notifications',
     'highcharts':                 'node_modules/highcharts',
     'ng2-highcharts':             'node_modules/ng2-highcharts',
-    'highcharts/highstock.src':   'node_modules/highcharts/highstock.js'
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
