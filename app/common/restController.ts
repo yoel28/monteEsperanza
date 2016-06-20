@@ -39,7 +39,6 @@ export class RestController{
         this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
     }
     onPatch(field,data,value?){
-        event.preventDefault();
         let json = {};
         json[field] = value?value:!data[field];
         let body = JSON.stringify(json);
