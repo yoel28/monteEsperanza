@@ -7,8 +7,8 @@ import {HttpUtils} from "../common/http-utils";
 
 @Component({
     selector: 'taquilla',
-    templateUrl: 'app/taquilla/taquilla.html',
-    styleUrls: ['app/taquilla/taquilla.css']
+    templateUrl: 'app/taquilla/index.html',
+    styleUrls: ['app/taquilla/style.css']
 })
 export class Taquilla {
     dataVehicles:any = {};
