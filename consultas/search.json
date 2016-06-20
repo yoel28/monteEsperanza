@@ -1,0 +1,9 @@
+{
+  "list": [
+    {"id":1, "icon":"fa fa-user" , "name":"nombre 1", "detail":"detalle del objeto1"},
+    {"id":2, "icon":"fa fa-money" , "name":"nombre 2", "detail":"detalle del objeto2"},
+    {"id":3, "image":"assets/img/user-guest.png" , "name":"nombre 3", "detail":"detalle del objeto3"},
+    {"id":4, "image":"assets/img/user-guest.png" , "name":"nombre 4", "detail":"detalle del objeto4"}
+  ],
+  "count": 10
+}
