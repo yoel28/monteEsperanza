@@ -9,7 +9,6 @@
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#TipoEmpresaSave">
                             Agregar
                         </button>
-                        <tipoEmpresa-save idModal="TipoEmpresaSave" (save)="Guardar($event)"> </tipoEmpresa-save>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -41,3 +40,5 @@
         </div>
     </section>
 </div>
+
+<tipoEmpresa-save idModal="TipoEmpresaSave" (save)="onSave($event)"> </tipoEmpresa-save>

@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
-import {TipoEmpresaSave} from "./tipoEmpresaSave";
+import {TipoEmpresaSave} from "./methods";
 
 @Component({
     selector: 'tipoEmpresa',
