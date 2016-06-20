@@ -1,8 +1,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            {{title}}
-            <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#saveUser">
                 <i class="fa fa-plus"></i> Nuevo
             </button>
         </h1>
@@ -116,46 +115,4 @@
         </div>
     </section>
 </div>
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
-            </div>
-            <div class="modal-body">
-
-                <form role="form">
-
-                    <div class="form-group input-icon right"><i class="fa fa-user"></i>
-                        <input type="text" #username class="form-control" id="username" placeholder="Usuario">
-                    </div>
-                    <div class="form-group input-icon right"><i class="fa fa-user"></i>
-                        <input type="text" #name class="form-control" id="name" placeholder="Nombre">
-                    </div>
-                    <div class="form-group input-icon right"><i class="fa fa-envelope"></i>
-                        <input type="email" #email class="form-control" id="email" placeholder="Email">
-                    </div>
-                    <div class="form-group input-icon right"><i class="fa fa-key"></i>
-                        <input type="password" #password class="form-control" id="password" placeholder="Password">
-                    </div>
-                    <div class="form-group input-icon right"><i class="fa fa-phone"></i>
-                        <input type="text" #phone class="form-control" id="phone" placeholder="Telefono">
-                    </div>
-
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
-                <button (click)="onSave($event, username.value, password.value,email.value,phone.value,name.value)"
-                        data-dismiss="modal" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Registrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<user-save idModal="saveUser" (save)="onSave($event)"> </user-save>

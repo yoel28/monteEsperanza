@@ -1,0 +1,69 @@
+<div class="modal fade" id="{{idModal}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-user"></i>
+                        <input id="cntrlUsername" ngControl="username" class="form-control" #username
+                               placeholder="Usuario" name="username" type="text">
+                        <div class="control-msgs" *ngIf="username.dirty && !username.valid && !username.pending">
+                            <p *ngIf="username.errors.required">Requerido</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-user"></i>
+                        <input id="cntrlName" ngControl="name" class="form-control" #name
+                               placeholder="Nombre" name="name" type="text">
+                        <div class="control-msgs" *ngIf="name.dirty && !name.valid && !name.pending">
+                            <p *ngIf="name.errors.required">Requerido</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-envelope"></i>
+                        <input id="cntrlEmail" ngControl="email" class="form-control" #email
+                               placeholder="Email" name="email" type="email">
+                        <div class="control-msgs" *ngIf="email.dirty && !email.valid && !email.pending">
+                            <p *ngIf="email.errors.required">Requerido</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-key"></i>
+                        <input id="cntrlPassword" ngControl="password" class="form-control" #password
+                               placeholder="Contrasena" name="password" type="password">
+                        <div class="control-msgs" *ngIf="password.dirty && !password.valid && !password.pending">
+                            <p *ngIf="password.errors.required">Requerido</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-phone"></i>
+                        <input id="cntrlPhone" ngControl="phone" class="form-control" #phone
+                               placeholder="Telefono" name="phone" type="text">
+                        <div class="control-msgs" *ngIf="phone.dirty && !phone.valid && !phone.pending">
+                            <p *ngIf="phone.errors.required">Requerido</p>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                        id="cntrlsubmit" [disabled]="!form.valid">
+                    <i class="fa fa-save"></i>
+                    Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
