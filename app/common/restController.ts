@@ -1,6 +1,5 @@
 import { Http} from '@angular/http';
-import { Router }           from '@angular/router-deprecated';
-import  {FormBuilder, Validators, Control, ControlGroup,} from '@angular/common';
+import  {ControlGroup,} from '@angular/common';
 import {HttpUtils} from "./http-utils";
 
 export class RestController{
@@ -8,7 +7,6 @@ export class RestController{
     dataList:any = [];
     httputils:HttpUtils;
     endpoint:string;
-    form: ControlGroup;
 
     constructor(public http: Http) {
         this.httputils = new HttpUtils(http);
@@ -36,14 +34,13 @@ export class RestController{
         event.preventDefault();
         this.httputils.onDelete(this.endpoint+id, id, this.dataList, this.error);
     }
-    onSave(event: Event) {
-        event.preventDefault();
-        let body = JSON.stringify(this.form.value);
+    onSave(data:ControlGroup){
+        let body = JSON.stringify(data.value);
         this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
     }
     onPatch(field,data,value?){
         event.preventDefault();
-        let json = {}
+        let json = {};
         json[field] = value?value:!data[field];
         let body = JSON.stringify(json);
         this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
