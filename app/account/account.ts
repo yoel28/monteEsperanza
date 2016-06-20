@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import  {FormBuilder, Validators, Control} from '@angular/common';
+import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import { contentHeaders } from '../common/headers';
@@ -16,6 +16,7 @@ import {globalService} from "../common/globalService";
 })
 export class AccountLogin extends RestController{
 
+    form: ControlGroup;
     username: Control;
     password: Control;
 
