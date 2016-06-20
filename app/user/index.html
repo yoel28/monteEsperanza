@@ -68,8 +68,17 @@
                                 <div class="col-xs-12 col-sm-8 col-lg-12">
                                     <p><strong>Telefonos:</strong>{{user.phone}} </p>
                                     <p><strong>Email:</strong> {{user.email}}</p>
-                                    <p><strong>Empresa:</strong> {{user.companyName}}</p>
+                                    <p><strong>Empresa:</strong> {{user.companyName}}
 
+                                        <button (click)="userSelect = user.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchEmpresa">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+
+                                        <button (click)="userSelect = user.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#newEmpresa">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+
+                                    </p>
                                     <p>
                                         <button (click)="onPatch('accountLocked',user)" class="btn btn-sm"
                                                 [class.btn-green]="!user.accountLocked" [class.btn-red]="user.accountLocked">
@@ -115,4 +124,7 @@
         </div>
     </section>
 </div>
+
 <user-save idModal="saveUser" (save)="onSave($event)"> </user-save>
+<empresa-save idModal="newEmpresa" (save)="assignCompany($event)"> </empresa-save>
+<search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>
