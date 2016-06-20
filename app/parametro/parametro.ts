@@ -1,38 +1,22 @@
 import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
-import  {FormBuilder, Validators, Control} from '@angular/common';
 import {RestController} from "../common/restController";
+import {ParametroSave} from "./methods";
 
 @Component({
     selector: 'parametro',
-    templateUrl: 'app/parametro/parametro.html',
-    styleUrls: ['app/parametro/parametro.css']
+    templateUrl: 'app/parametro/index.html',
+    styleUrls: ['app/parametro/style.css'],
+    directives:[ParametroSave]
 })
 export class Parametro extends RestController{
 
-    key: Control;
-    value: Control;
-    type: Control;
-
-    constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder) {
+    constructor(public router: Router,public http: Http) {
         super(http);
         this.validTokens();
         this.setEndpoint('/params/');
-        this.initForm();
         this.loadData();
-    }
-    initForm(){
-
-        this.key = new Control("", Validators.compose([Validators.required]));
-        this.value = new Control("", Validators.compose([Validators.required]));
-        this.type = new Control("", Validators.compose([Validators.required]));
-
-        this.form = this._formBuilder.group({
-            key: this.key,
-            value: this.value,
-            type: this.type,
-        });
     }
     validTokens(){
         if(!localStorage.getItem('bearer'))

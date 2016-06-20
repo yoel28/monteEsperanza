@@ -1,0 +1,47 @@
+<div class="modal fade" id="{{idModal}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlKey" ngControl="key" class="form-control" #key
+                               placeholder="Clave" name="key" type="text">
+                        <div class="control-msgs" *ngIf="key.dirty && !key.valid && !key.pending">
+                            <p *ngIf="key.errors.required">Requerido</p>
+                        </div>
+                    </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlValue" ngControl="value" class="form-control" #value
+                               placeholder="Valor" name="value" type="text">
+                        <div class="control-msgs" *ngIf="value.dirty && !value.valid && !value.pending">
+                            <p *ngIf="value.errors.required">Requerido</p>
+                        </div>
+                    </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input id="cntrlType" ngControl="type" class="form-control" #type
+                               placeholder="Tipo" name="type" type="text">
+                        <div class="control-msgs" *ngIf="type.dirty && !type.valid && !type.pending">
+                            <p *ngIf="type.errors.required">Requerido</p>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                        id="cntrlsubmit" [disabled]="!form.valid">
+                    <i class="fa fa-save"></i>
+                    Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
