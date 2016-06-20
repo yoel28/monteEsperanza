@@ -15,7 +15,7 @@ export class Empresa extends RestController{
     constructor(public router: Router,public http: Http) {
         super(http);
         this.validTokens();
-        this.setEndpoint('/empresas/');
+        this.setEndpoint('/companies/');
         this.loadData();
     }
     validTokens(){
