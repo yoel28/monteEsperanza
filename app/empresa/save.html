@@ -17,6 +17,14 @@
                             <p *ngIf="name.errors.required">Requerido</p>
                         </div>
                     </div>
+                    <div *ngIf="companyTypes.count" class="form-group">
+                        <ng-select [allowClear]="true"
+                                   [items]="items"
+                                   (data)="refreshValue($event)"
+                                   placeholder="Seleccione un tipo de empresa">
+
+                        </ng-select>
+                    </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
                         <input id="cntrlRuc" ngControl="ruc" class="form-control" #ruc
@@ -58,11 +66,8 @@
                             <p *ngIf="image.errors.required">Requerido</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <select class="selectpicker">
-                            <option data-icon="glyphicon-heart">Ketchup</option>
-                        </select>
-                    </div>
+
+                    <pre>{{value.id}}</pre>
 
                 </form>
             </div>
