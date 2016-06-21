@@ -6353,12 +6353,6 @@ fieldset[disabled] .btn-white.active {
   -moz-border-radius: 0 !important;
   border-radius: 0 !important;
 }
-.dropdown-menu {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-}
 .dropdown-menu li a {
   color: #777777;
   padding: 9px 10px;

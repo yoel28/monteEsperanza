@@ -12,6 +12,8 @@
     'notifications':              'node_modules/angular2-notifications',
     'highcharts':                 'node_modules/highcharts',
     'ng2-highcharts':             'node_modules/ng2-highcharts',
+    'ng2-select':                 'node_modules/ng2-select',
+    'ng2-bootstrap':              'node_modules/ng2-bootstrap',
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -22,6 +24,8 @@
     'notifications':              { main: 'components.js', defaultExtension: 'js' },
     'ng2-highcharts':             { defaultExtension: 'js' },
     'highcharts':                 { defaultExtension: 'js' },
+    'ng2-select':                 { defaultExtension: 'js' },
+    'ng2-bootstrap':              { main: 'ng2-bootstrap',defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',
