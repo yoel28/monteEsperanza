@@ -62,11 +62,11 @@ export class EmpresaSave extends RestController{
         let successCallback= response => {
             Object.assign(this.companyTypes, response.json());
             this.companyTypes.list.forEach(obj=>{
-                this.items.push({id:obj.id,text:"<i class='"+obj.icon+"'></i> <strong>"+obj.name+"</strong> "+obj.detail});
+                let icon = obj.icon?obj.icon:'fa fa-building-o';
+                this.items.push({id:obj.id,text:"<i class='"+icon+"'></i> <strong>"+obj.title+"</strong> "+obj.detail});
             });
         };
-        //TODO:this.httputils.doGet('/type/companies/search',successCallback,this.error);
-        this.httputils.doGet('consultas/searchTipoCompania.json',successCallback,this.error,true);
+        this.httputils.doGet('/search/type/companies/',successCallback,this.error);
     }
     submitForm(){
         let successCallback= response => {
@@ -77,11 +77,7 @@ export class EmpresaSave extends RestController{
     }
 
     public items:any = [];
-
-    private value:any = {};
-
     public refreshValue(value:any):void {
-        this.value = value;
         this.companyType.updateValue(value.id);
     }
 }
