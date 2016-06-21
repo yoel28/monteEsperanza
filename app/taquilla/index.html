@@ -92,12 +92,12 @@
                                 </tr>
                                 <tr>
                                     <td><strong>MARCA: </strong>
-                                        {{dataTruck.vehicleTypeTitle?dataTruck.vehicleTypeTitle:"NO DISPONIBLE"}}
+                                        {{dataTruck.vehicleTypeTitle?dataTruck.vehicleTypeTitle:"N/A"}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>DETALLE: </strong>
-                                        {{dataTruck.vehicleTypeDetail?dataTruck.vehicleTypeDetail:"NO DISPONIBLE"}}
+                                        {{dataTruck.vehicleTypeDetail?dataTruck.vehicleTypeDetail:"N/A"}}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -113,6 +113,7 @@
                             <th>Referencia</th>
                             <th>Fecha de Transaccion</th>
                             <th>Tipo</th>
+                            <th>Peso</th>
                             <th>Monto</th>
                         </tr>
                         </thead>
@@ -125,6 +126,7 @@
                             <td>
                                 <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                             </td>
+                            <td>{{recharges.weight}}</td>
                             <td>{{recharges.quantity}}</td>
                         </tr>
                         </tbody>

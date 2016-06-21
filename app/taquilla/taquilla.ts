@@ -73,7 +73,7 @@ export class Taquilla {
 
     getVehicles(camion:string){
         this.dataTruck = {};
-        this.httputils.onLoadList("/vehicles/search/"+camion,this.dataVehicles,this.error);
+        this.httputils.onLoadList("/search/vehicles/"+camion,this.dataVehicles,this.error);
     }
 
     getRechargeTypes(){
