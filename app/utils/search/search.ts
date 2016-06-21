@@ -21,7 +21,7 @@ export class Search extends RestController{
     }
     getSearch(search){
         //TODO: this.httputils.onLoadList(this.endpointForm+search,this.dataList,this.error);
-        this.httputils.onLoadList(this.params.endpointForm,this.dataList,this.error,true);
+        this.httputils.onLoadList(this.params.endpointForm,this.dataList,this.error);
     }
     getData(data){
         this.result.emit(data);
