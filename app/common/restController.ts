@@ -32,11 +32,11 @@ export class RestController{
     }
     onDelete(event,id){
         event.preventDefault();
-        this.httputils.onDelete(this.endpoint+id, id, this.dataList, this.error);
+        this.httputils.onDelete(this.endpoint+id, id, this.dataList.list, this.error);
     }
     onSave(data:ControlGroup){
         let body = JSON.stringify(data.value);
-        this.httputils.onSave(this.endpoint,body,this.dataList,this.error);
+        this.httputils.onSave(this.endpoint,body,this.dataList.list,this.error);
     }
     onPatch(field,data,value?){
         let json = {};
