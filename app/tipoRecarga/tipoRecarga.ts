@@ -26,4 +26,7 @@ export class TipoRecarga extends RestController{
             this.router.navigate(link);
         }
     }
+    assignTipoRecarga(data){
+        this.dataList.list.push(data);
+    }
 }

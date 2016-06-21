@@ -8,28 +8,30 @@
             </div>
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlTitle" ngControl="title" class="form-control" #title
-                               placeholder="Titulo" name="title" type="text">
-                        <div class="control-msgs" *ngIf="title.dirty && !title.valid && !title.pending">
-                            <p *ngIf="title.errors.required">Titulo Requerido</p>
+                        <input ngControl="title" class="form-control" [(ngModel)]="title.value"  #name="ngForm" placeholder="Titulo" type="text">
+                        <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-image"></i>
-                        <input id="cntrlDetail" ngControl="detail" class="form-control" #detail
-                               placeholder="Detalle" name="detail" type="text">
-                        <div class="control-msgs" *ngIf="detail.dirty && !detail.valid && !detail.pending">
-                            <p *ngIf="detail.errors.required">Detalle Requerido</p>
+                        <input ngControl="detail" class="form-control" [(ngModel)]="detail.value" #detail="ngForm" placeholder="Detalle" type="text">
+                        <div [hidden]="detail.valid || detail.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-image"></i>
-                        <input id="cntrlIcon" ngControl="icon" class="form-control" #icon
-                               placeholder="Icono" name="icon" type="text">
-                        <div class="control-msgs" *ngIf="icon.dirty && !icon.valid && !icon.pending">
-                            <p *ngIf="icon.errors.required">Icono Requerido</p>
+                    <div class="form-group">
+                        <ng-select [allowClear]="true"
+                                   [items]="items"
+                                   (data)="refreshValue($event)"
+                                   placeholder="Seleccione un Icono">
+
+                        </ng-select>
+                        <div [hidden]="icon.valid || icon.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                 </form>
