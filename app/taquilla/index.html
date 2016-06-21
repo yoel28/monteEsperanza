@@ -7,14 +7,16 @@
     </section>
     <section class="content">
         <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12">
-            <div class="input-group input-group-sm">
-                <input #findCamion type="text" class="form-control" placeholder="Ingrese PLACA / RFID / RUC " value="{{search}}">
-                <span class="input-group-btn">
-                    <button (click)="getVehicles(findCamion.value)" type="button" class="btn btn-info btn-flat">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
-            </div>
+            <form role="form" (submit)="getVehicles(findCamion.value)">
+                <div class="input-group input-group-sm">
+                    <input  #findCamion type="text" class="form-control" placeholder="Ingrese PLACA / RFID / RUC " value="{{search}}">
+                    <span class="input-group-btn">
+                        <button (click)="getVehicles(findCamion.value)" type="button" class="btn btn-info btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
         </div>
 
         <div *ngIf="dataVehicles.count" class="col-lg-10 col-lg-offset-1">
@@ -22,17 +24,25 @@
                 <tbody>
                 <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
                     <td>
-                        <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.ico'}}"
-                             style="display: inline-block" class="img-responsive img-find">
-                        <strong>{{vehicle.companyName}}</strong><br>
-                        <strong> RUC: </strong>{{vehicle.companyRuc}}
+                        <div class="col-lg-2">
+                            <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.ico'}}"
+                                 style="display: inline-block" class="img-responsive img-find">
+                        </div>
+                        <div>
+                            <strong>{{vehicle.companyName}}</strong><br>
+                            <strong> RUC: </strong>{{vehicle.companyRuc}}
+                        </div>
                     </td>
                     <td>
                     <td>
-                        <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.ico'}}"
-                             style="display: inline-block" class="img-responsive img-find">
-                        <strong>Placa: </strong>{{vehicle.plate}}<br>
-                        <strong> RFID: </strong>{{vehicle.tagRFID}}
+                        <div class="col-lg-2">
+                            <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.ico'}}"
+                                 style="display: inline-block" class="img-responsive img-find">
+                        </div>
+                        <div>
+                            <strong>Placa: </strong>{{vehicle.plate}}<br>
+                            <strong> RFID: </strong>{{vehicle.tagRFID}}
+                        </div>
                     </td>
                 </tr>
                 </tbody>
