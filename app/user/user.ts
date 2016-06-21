@@ -40,9 +40,9 @@ export class User extends RestController{
     public searchEmpresa={
         title:"Empresa",
         idModal:"searchEmpresa",
-        endpointForm:"consultas/search.json",
+        endpointForm:"/search/companies/",
         placeholderForm:"Ingrese el RUC de la empresa",
-        labelForm:{name:"Nombre: ",detail:"Detalle: "},
+        labelForm:{name:"Nombre: ",detail:"RUC: "},
     }
 
     assignCompany(data){

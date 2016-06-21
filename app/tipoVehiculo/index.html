@@ -25,7 +25,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let data of dataList" >
+                            <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
