@@ -1,0 +1,35 @@
+<div class="row mtxl">
+    <div class="col-lg-12">
+        <div class="timeline-centered timeline-sm bg-">
+
+            <article *ngFor="let data of dataList.list; let i=index; let last = last" class="timeline-entry" [class.left-aligned]="i%2">
+                <div class="timeline-entry-inner">
+                    <time class="timeline-time">
+                        <span>{{ data.dateCreated | fecha | date:'h:mma' }}</span>
+                        <span>{{ data.dateCreated | fecha | date:'dd-MM-yyyy' }}</span>
+                    </time>
+                    <div class="timeline-icon {{color[data.rechargeTypeIcon]}} ">
+                        <i class="{{data.rechargeTypeIcon}}"></i>
+                    </div>
+                    <div class="timeline-label {{color[data.rechargeTypeIcon]}}">
+                        <h4 class="timeline-title">
+                            {{data.rechargeTypeTitle}}: {{data.quantity}}$
+                            Ref: {{data.reference}}
+                        </h4>
+                        <p>
+                            <strong>Fecha de Referencia: </strong>{{data.referenceDate | fecha | date:'dd-MM-yyyy' }}<br/>
+                            <strong>Peso: </strong> {{data.weight?data.weight:"N/A"}}<br/>
+                            <strong>Placa: </strong>{{data.vehiclePlate}}<br/>
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article *ngIf="offset+1 < dataList.count" class="timeline-entry">
+                <div class="timeline-entry-inner">
+                    <div (click)="addtimeLine()" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);" class="timeline-icon btn"><i class="fa fa-plus"></i></div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
