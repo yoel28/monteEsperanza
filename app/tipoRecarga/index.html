@@ -30,7 +30,7 @@
                                 <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
                                 <td> <i class="{{data.icon}}"></i> <span accessKey="icon" contenteditable="true" (blur)="onUpdate($event,data)">{{data.icon}}</span></td>
-                                <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                                <td> <i *ngIf="data.enabled" (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
                         </table>
