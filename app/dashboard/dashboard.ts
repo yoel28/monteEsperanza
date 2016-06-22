@@ -3,6 +3,7 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {HttpUtils} from "../common/http-utils";
 import { Ng2Highcharts } from 'ng2-highcharts/ng2-highcharts';
+import {RecargaTimeLine} from "../recarga/methods";
 import match = require("core-js/fn/symbol/match");
 
 
@@ -10,8 +11,7 @@ import match = require("core-js/fn/symbol/match");
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
     styleUrls: ['app/dashboard/dashboard.css'],
-    directives: [Ng2Highcharts],
-
+    directives: [Ng2Highcharts,RecargaTimeLine],
 })
 export class Dashboard {
     dataCamion:any = [];
