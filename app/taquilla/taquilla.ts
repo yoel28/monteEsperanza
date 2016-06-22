@@ -43,6 +43,10 @@ export class Taquilla extends RestController{
         this.dataTruck = {};
         this.httputils.onLoadList("/search/vehicles/"+camion,this.dataVehicles,this.error);
     }
+    assignRecarga(data){
+        this.dataTruck.balance+=data.quantity;
+        this.dataTruck.recharges.push(data);
+    }
 }
 
 
