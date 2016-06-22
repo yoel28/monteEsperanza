@@ -19,7 +19,7 @@
             </form>
         </div>
 
-        <div *ngIf="dataVehicles.count" class="col-lg-10 col-lg-offset-1">
+        <div *ngIf="dataVehicles.count" class="row col-lg-10 col-lg-offset-1">
             <table class="table table-hover">
                 <tbody>
                 <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
@@ -172,7 +172,7 @@
                                     <i class="fa  fa-download fa-lg"></i> Generar PDF
                                 </button>
                                 <button type="button" class="btn  btn-success" data-toggle="modal"
-                                        data-target="#modalRecarga">
+                                        data-target="#saveRecarga">
                                     <i class="fa  fa-money fa-lg"></i> Recargar Saldo
                                 </button>
                             </div>
@@ -180,74 +180,7 @@
                     </div>
                 </div>
             </div>
+            <recarga-save  idModal="saveRecarga" [idVehicle]="dataTruck.id" (save)="assignRecarga($event)"> </recarga-save>
         </div>
     </section>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalRecarga" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">REALIZAR RECARGA</h4>
-            </div>
-            <div class="modal-body">
-                <figure class="text-center">
-                    <img src="{{dataTruck.image?dataTruck.image:'/assets/img/truck-guest.ico'}}" alt=""
-                         style="display: inline-block" class="img-responsive img-camion-modal">
-                </figure>
-                <form role="form" [ngFormModel]="form" (submit)="getRecarga($event)">
-
-
-                    <div class="btn-group rechargeTypes">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let type of rechargeTypes.list">
-                            <i class="{{type.icon}} btn fa-lg" [class.red]="rechargeType.id==type.id"
-                               (click)="rechargeType=type">
-                                {{type.title}}
-                            </i>
-                        </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-money"></i>
-                        <input id="cntrlQuantity" ngControl="quantity" class="form-control" #quantity
-                               placeholder="Cantidad" name="quantity" type="number">
-                        <div class="control-msgs" *ngIf="quantity.dirty && !quantity.valid && !quantity.pending">
-                            <p *ngIf="quantity.errors.required">Cantidad Requerida</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-location-arrow"></i>
-                        <input id="cntrlReference" ngControl="reference" class="form-control" #reference
-                               placeholder="Referencia" name="reference" type="text" maxlength="20">
-                        <div class="control-msgs" *ngIf="reference.dirty && !reference.valid && !reference.pending">
-                            <p *ngIf="reference.errors.required">Referencia Requerida</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-calendar"></i>
-                        <input id="cntrlReferenceDate" ngControl="referenceDate" class="form-control" #referenceDate
-                               placeholder="Fecha de la Referencia" name="referenceDate" type="date">
-                        <div class="control-msgs"
-                             *ngIf="referenceDate.dirty && !referenceDate.valid && !referenceDate.pending">
-                            <p *ngIf="referenceDate.errors.required">Fecha de Referencia Requerida</p>
-                        </div>
-                    </div>
-
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button (click)="getRecharge($event)" data-dismiss="modal" type="button" class="btn btn-primary"
-                        id="cntrlsubmit" [disabled]="!form.valid">
-                    <i class="fa fa-save"></i>
-                    Registrar
-                </button>
-            </div>
-        </div>
-    </div>
 </div>
