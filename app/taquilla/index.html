@@ -34,7 +34,6 @@
                         </div>
                     </td>
                     <td>
-                    <td>
                         <div class="col-lg-2">
                             <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.ico'}}"
                                  style="display: inline-block" class="img-responsive img-find">
@@ -132,7 +131,7 @@
                             <td>{{recharges.id}}</td>
                             <td>{{recharges.dateCreated}}</td>
                             <td>{{recharges.reference}}</td>
-                            <td>{{recharges.referenceDate}}</td>
+                            <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy h:mma'}}</td>
                             <td>
                                 <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                             </td>

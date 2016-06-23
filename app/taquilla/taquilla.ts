@@ -4,10 +4,12 @@ import  {FormBuilder} from '@angular/common';
 import { Http } from '@angular/http';
 import {RecargaSave} from "../recarga/methods";
 import {RestController} from "../common/restController";
+import {Fecha} from "../utils/pipe";
 
 
 @Component({
     selector: 'taquilla',
+    pipes: [Fecha],
     templateUrl: 'app/taquilla/index.html',
     styleUrls: ['app/taquilla/style.css'],
     directives:[RecargaSave]
