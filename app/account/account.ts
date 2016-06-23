@@ -16,6 +16,7 @@ import {globalService} from "../common/globalService";
 })
 export class AccountLogin extends RestController{
 
+    public submitForm:boolean=false;
     form: ControlGroup;
     username: Control;
     password: Control;
@@ -36,7 +37,6 @@ export class AccountLogin extends RestController{
             password: this.password,
         });
     }
-
     validTokens(){
         if(localStorage.getItem('bearer'))
         {
@@ -44,17 +44,22 @@ export class AccountLogin extends RestController{
             this.router.navigate(link);
         }
     }
-
     login(event: Event) {
         event.preventDefault();
         let body =JSON.stringify(this.form.value);
+        this.submitForm=true;
+        let errorLogin = error=>{
+            this.submitForm=false;
+        }
         let successCallback= response => {
+            this.submitForm=false;
             localStorage.setItem('bearer',response.json().access_token);
             contentHeaders.append('Authorization', 'Bearer '+localStorage.getItem('bearer'));
             this.myglobal.user = response.json();
             let link = ['Dashboard', {}];
             this.router.navigate(link);
         };
-        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
+        this.httputils.doPost(this.endpoint,body,successCallback,errorLogin);
     }
+
 }

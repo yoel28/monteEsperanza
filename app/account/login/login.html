@@ -12,25 +12,23 @@
         </div>
         <div class="form-login">
             <div class="login-box-body">
-                <form [ngFormModel]="form" (submit)="login($event)" >
+                <form role="form" [ngFormModel]="form" (submit)="login($event)" >
                     <fieldset>
                         <div class="form-group input-icon right">
                             <i class="fa fa-user"></i>
-                            <input id="cntrlUsername" ngControl="username" class="form-control" #username
-                                   placeholder="Usuario" name="username" type="text" autofocus maxlength="20">
-                            <div class="control-msgs" *ngIf="username.dirty && !username.valid && !username.pending">
-                                <p *ngIf="username.errors.required">Username is required.</p>
+                            <input ngControl="username" class="form-control" [(ngModel)]="username.value"  #username="ngForm" placeholder="Usuario / Email" type="text">
+                            <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
+                               Por favor ingrese un usuario valido
                             </div>
                         </div>
                         <div class="form-group input-icon right">
                             <i class="fa fa-key"></i>
-                            <input id="cntrlPassword" ngControl="password" class="form-control" #password
-                                   placeholder="Contraseña" name="password" type="password" value="" maxlength="20">
-                            <div class="control-msgs" *ngIf="password.dirty && !password.valid && !password.pending">
-                                <p *ngIf="password.errors.required">Password is required.</p>
+                            <input ngControl="password" class="form-control" [(ngModel)]="password.value"  #password="ngForm" placeholder="Contraseña" type="password">
+                            <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+                                Por favor una contraseña
                             </div>
                         </div>
-                        <button id="cntrlsubmit" type="submit" [disabled]="!form.valid" class="btn  btn-success pull-right">
+                        <button id="cntrlsubmit" type="submit" [disabled]="!form.valid || submitForm" class="btn  btn-success pull-right">
                             Entrar <i class="fa  fa-chevron-circle-right"></i>
                         </button>
                     </fieldset>
