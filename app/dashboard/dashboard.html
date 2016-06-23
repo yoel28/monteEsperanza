@@ -26,9 +26,7 @@
                         <h6>TAQUILLA</h6>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </section>
     <section class="content">
@@ -55,18 +53,15 @@
                         <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>- -->
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body" >
                     <div >
                         <div class="col-md-8" *ngIf="dataArea.series.length>0">
                             <div [ng2-highcharts]="dataArea" ></div>
                         </div>
-                        <!-- /.col -->
                         <div class="col-md-4">
                             <p class="text-center">
                                 <strong>Balance</strong>
                             </p>
-
                             <div class="progress-group" *ngFor="let data of dataPlot" >
                                 <span class="progress-text"><i class="{{data.icon}}"></i> &nbsp;{{data.title}}</span>
                                 <span class="progress-number">{{data.quantity }}/ {{dataPlot.total}}</span>
@@ -75,16 +70,11 @@
                                     <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
                                 </div>
                             </div>
-                            <!-- /.progress-group -->
                         </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
                 </div>
-                <!-- ./box-body -->
             </div>
-            <!-- /.box -->
         </div>
-        <recarga-timeline> </recarga-timeline>
+        <recarga-timeline [params]="paramsTimeLine"> </recarga-timeline>
     </section>
 </div>

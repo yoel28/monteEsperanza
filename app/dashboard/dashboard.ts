@@ -5,6 +5,7 @@ import {HttpUtils} from "../common/http-utils";
 import { Ng2Highcharts } from 'ng2-highcharts/ng2-highcharts';
 import {RecargaTimeLine} from "../recarga/methods";
 import match = require("core-js/fn/symbol/match");
+import {RestController} from "../common/restController";
 
 
 @Component({
@@ -13,10 +14,15 @@ import match = require("core-js/fn/symbol/match");
     styleUrls: ['app/dashboard/dashboard.css'],
     directives: [Ng2Highcharts,RecargaTimeLine],
 })
-export class Dashboard {
+export class Dashboard extends RestController{
     dataCamion:any = [];
     httputils:HttpUtils;
     endpoint:string;
+
+    public paramsTimeLine={
+        'offset':0,
+        'max':3,
+    };
     
     dataArea={
         chart: {
@@ -38,24 +44,24 @@ export class Dashboard {
     };
 
     constructor(public router: Router,http: Http) {
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            router.navigate(link);
-        }
-        this.endpoint="/users/";
-        this.httputils = new HttpUtils(http);
+        super(http);
+        this.validTokens();
         this.getPlot1();
         this.getPlot2();
     }
-
-    error=function(err){
-        console.log(err);
+    validTokens(){
+        if(!localStorage.getItem('bearer'))
+        {
+            let link = ['AccountLogin', {}];
+            this.router.navigate(link);
+        }
     }
+
     goTaquilla(){
         let link = ['Taquilla', {}];
         this.router.navigate(link);
     }
+
     dataPlot:any=[];
     getPlot1(){
         let successCallback= response => {
@@ -64,10 +70,8 @@ export class Dashboard {
                 Object.assign(this.dataArea.xAxis.categories, response.json().categories);
         }
         this.httputils.doGet("/dashboards/plot/1/2016",successCallback,this.error)
-
     }
     getPlot2(){
-
         let successCallback= response => {
             Object.assign(this.dataPlot, response.json());
             this.dataPlot.total=0;
@@ -79,7 +83,6 @@ export class Dashboard {
         }
         this.httputils.doGet("/dashboards/plot/2/2016",successCallback,this.error)
     }
-    
 
 }
 
