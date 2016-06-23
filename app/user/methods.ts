@@ -27,7 +27,7 @@ export class UserSave{
     }
     initForm(){
 
-        this.username = new Control("", Validators.compose([Validators.required]));
+        this.username = new Control("", Validators.compose([Validators.required,Validators.maxLength(10)]));
         this.name = new Control("", Validators.compose([Validators.required]));
         this.email = new Control("", Validators.compose([Validators.required]));
         this.password = new Control("", Validators.compose([Validators.required]));
