@@ -15,6 +15,7 @@ import { Regla }         from './regla/regla';
 import { TipoRecarga }         from './tipoRecarga/tipoRecarga';
 import { Recarga }         from './recarga/recarga';
 import { TagRfid }         from './tagRfid/tagRfid';
+import { Vehiculo }         from './vehiculo/vehiculo';
 import {globalService} from "./common/globalService";
 
 @Component({
@@ -32,6 +33,7 @@ import {globalService} from "./common/globalService";
   { path: '/users',   name: 'User', component: User },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
+  { path: '/vehiculos',   name: 'Vehiculo', component: Vehiculo },
   { path: '/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
   { path: '/empresas',   name: 'Empresa', component: Empresa },
   { path: '/operacion',   name: 'Operacion', component: Operacion },
@@ -48,8 +50,8 @@ export class AppComponent {
 
   constructor(private router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    //localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
+    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
   }
   logout() {
     localStorage.removeItem('bearer');
