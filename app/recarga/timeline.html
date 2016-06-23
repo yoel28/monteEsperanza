@@ -1,5 +1,5 @@
 <div class="row mtxl">
-    <div class="col-lg-12">
+    <div class="col-lg-10 col-lg-offset-1">
         <div class="timeline-centered timeline-sm bg-">
 
             <article *ngFor="let data of dataList.list; let i=index; let last = last" class="timeline-entry" [class.left-aligned]="i%2">
@@ -25,9 +25,9 @@
                 </div>
             </article>
 
-            <article *ngIf="offset+1 < dataList.count" class="timeline-entry">
+            <article *ngIf="params.offset+1 < dataList.count" class="timeline-entry">
                 <div class="timeline-entry-inner">
-                    <div (click)="addtimeLine()" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);" class="timeline-icon btn"><i class="fa fa-plus"></i></div>
+                    <div (click)="addtimeLine()" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);" class="timeline-icon"><i class="fa fa-plus"></i></div>
                 </div>
             </article>
         </div>

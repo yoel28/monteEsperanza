@@ -80,8 +80,14 @@ export class RecargaSave extends RestController{
 })
 export class RecargaTimeLine extends RestController{
 
-    public offset:number=0;
-    public max:number =2;
+    // Formato de entrada
+    // params={
+    //     'offset':0,
+    //     'max':5,
+    //     'where':'where[["op":"eq","field":"id","value":"1"]]'
+    // };
+
+    public params:any={};
 
     public color= {
         'fa fa-cc-amex': 'bg-black',
@@ -102,25 +108,26 @@ export class RecargaTimeLine extends RestController{
     constructor(public http:Http,public _formBuilder: FormBuilder) {
         super(http);
         this.setEndpoint('/recharges/');
+
+    }
+    ngOnInit() {
         this.loadData();
     }
     loadData(){
         event.preventDefault();
-        let where:string ="where[['op':'eq','field':'id','value':'1']]";
-        this.httputils.onLoadList(this.endpoint+`?sort=id&order=desc&max=${this.max}`,this.dataList,this.error);
+        this.httputils.onLoadList(this.endpoint+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
     }
     addtimeLine(){
         event.preventDefault();
         let successCallback= response => {
-            //Object.assign(this.dataList.list,this.dataList.list, response.json().list);
             response.json().list.forEach(obj=>{
                 this.dataList.list.push(obj);
             });
             this.dataList.count = response.json().count;
         }
-        this.offset+=this.max;
-        if(this.offset < this.dataList.count)
-            this.httputils.doGet(this.endpoint+`?sort=id&order=desc&offset=${this.offset}&max=${this.max}`,successCallback,this.error)
+        this.params.offset+=this.params.max;
+        if(this.params.offset < this.dataList.count)
+            this.httputils.doGet(this.endpoint+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,successCallback,this.error)
     }
 
 }
