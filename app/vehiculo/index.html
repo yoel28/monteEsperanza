@@ -1,0 +1,68 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Vehiculos</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saveVehiculo">
+                            Agregar
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" >
+                    <div>
+                        <table class="table table-striped table-hover tarjeta">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Placa</th>
+                                <th>Peso</th>
+                                <th>RFID</th>
+                                <th>Saldo Min</th>
+                                <th>Balance</th>
+                                <th>Tipo Vehiculo</th>
+                                <th>Compañia</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let data of dataList.list" >
+                                <td>{{data.id}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="plate" contenteditable="true">{{data.plate}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="weight" contenteditable="true">{{data.weight}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="rfid" contenteditable="true">{{data.tagRFID?data.tagRFID:'N/A'}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="minBalance" contenteditable="true">{{data.minBalance}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="balance" contenteditable="true">{{data.balance}}</td>
+                                <td>
+                                    <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
+                                    <strong>{{data.vehicleTypeTitle}}</strong><br/>
+                                    {{data.vehicleTypeDetail}}
+                                </td>
+                                <td>
+                                    <div class="pull-left">
+                                        <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
+                                    </div>
+                                    <div class="pull-right">
+                                        <strong>{{data.companyName}}</strong><br/>
+                                        <strong>RUC: </strong>{{data.companyRuc}}<br/>
+                                        <strong>Telefono: </strong>{{data.companyPhone}}<br/>
+                                    </div>
+
+                                </td>
+
+                                <td> <img src="{{data.image?data.image:'/assets/img/truck-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle img-form"></td>
+                                <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<vehiculo-save idModal="saveVehiculo" (save)="assignVehiculo($event)"> </vehiculo-save>

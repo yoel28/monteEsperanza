@@ -1,0 +1,57 @@
+<div class="modal fade" id="{{idModal}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+                    <div *ngIf="vehicleTypes.count" class="form-group">
+                        <ng-select [allowClear]="true"
+                                   [items]="items"
+                                   (data)="refreshValue($event)"
+                                   placeholder="Seleccione un tipo de vehiculo">
+                        </ng-select>
+                    </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input ngControl="plate" class="form-control" [(ngModel)]="plate.value"  #plate="ngForm" placeholder="Placa" type="text">
+                        <div [hidden]="plate.valid || plate.pristine" class="alert alert-danger">
+                            El campo contiene errores
+                        </div>
+                    </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input ngControl="weight" class="form-control" [(ngModel)]="weight.value"  #weight="ngForm" placeholder="Peso" type="number">
+                        <div [hidden]="weight.valid || weight.pristine" class="alert alert-danger">
+                            El campo contiene errores
+                        </div>
+                    </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input ngControl="minBalance" class="form-control" [(ngModel)]="minBalance.value"  #minBalance="ngForm" placeholder="Balance Minimo" type="number">
+                        <div [hidden]="minBalance.valid || minBalance.pristine" class="alert alert-danger">
+                            El campo contiene errores
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{company.value?company.value:"Seleccione una empresa"}}
+                        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchEmpresa">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                        id="cntrlsubmit" [disabled]="!form.valid">
+                    <i class="fa fa-save"></i>
+                    Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>
