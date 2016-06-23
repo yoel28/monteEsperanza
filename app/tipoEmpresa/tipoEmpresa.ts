@@ -25,4 +25,7 @@ export class TipoEmpresa extends RestController{
             this.router.navigate(link);
         }
     }
+    assignTipoEmpresa(data){
+        this.dataList.list.push(data);
+    }
 }
