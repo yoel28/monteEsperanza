@@ -7,3 +7,7 @@
 .main-footer-container{
     background-color: #222d32 !important;
 }
+.truncate{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

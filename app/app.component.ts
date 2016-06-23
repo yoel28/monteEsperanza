@@ -3,6 +3,7 @@ import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angula
 import { contentHeaders } from './common/headers';
 
 import { AccountLogin }         from './account/account';
+import { AccountActivate }         from './account/account';
 import { Empresa }         from './empresa/empresa';
 import { TipoEmpresa }         from './tipoEmpresa/tipoEmpresa';
 import { TipoVehiculo }         from './tipoVehiculo/tipoVehiculo';
@@ -29,7 +30,7 @@ import {globalService} from "./common/globalService";
 })
 @RouteConfig([
   { path: '/account/login',  name: 'AccountLogin',  component: AccountLogin, useAsDefault: true },
-
+  { path: '/account/active/:id/:token',  name: 'AccountActivate',  component: AccountActivate },
   { path: '/users',   name: 'User', component: User },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
