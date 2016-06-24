@@ -35,6 +35,11 @@ export class User extends RestController{
         let link = ['TaquillaSearh', {search:companyRuc}];
         this.router.navigate(link);
     }
+    goTimeLine(companyRuc:string)
+    {
+        let link = ['EmpresaTimeLine', {ruc:companyRuc}];
+        this.router.navigate(link);
+    }
 
 
     public searchEmpresa={

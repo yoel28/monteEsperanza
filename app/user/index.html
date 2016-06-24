@@ -23,22 +23,16 @@
                                         </button>
                                         <ul role="menu" class="dropdown-menu text-left submenu-config">
                                             <li>
-                                                <a href="javascript:void(0);">
-                                                    <span class="fa fa-envelope"></span>
-                                                    &nbsp;Enviar Email
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);">
+                                                <a href="javascript:void(0);" (click)="onPatch('accountLocked',user)">
                                                     <span class="fa fa-list"></span>
-                                                    &nbsp;Borrar
+                                                    {{user.accountLocked?"Verificar":"No Verificado"}}
                                                 </a>
                                             </li>
                                             <li class="divider"></li>
                                             <li>
-                                                <a href="javascript:void(0);">
+                                                <a (click)="onPatch('enabled',user)" href="javascript:void(0);">
                                                     <span class="fa fa-warning"></span>
-                                                    &nbsp;Bloquear
+                                                    {{user.enabled?"Bloquear":"Habilitar"}}
                                                 </a>
                                             </li>
                                         </ul>
@@ -96,7 +90,7 @@
                                     <p>
                                         <small>Descargas</small>
                                     </p>
-                                    <button class="btn btn-yellow btn-block">Registro</button>
+                                    <button (click)="goTimeLine(user.companyRuc)" class="btn btn-yellow btn-block">Registro</button>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 emphasis">
                                     <h4><strong>{{user.companyVehiclesCount?user.companyVehiclesCount:"N/A"}}</strong></h4>
