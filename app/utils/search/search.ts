@@ -20,8 +20,8 @@ export class Search extends RestController{
         this.result = new EventEmitter();
     }
     getSearch(search){
-        //TODO: this.httputils.onLoadList(this.endpointForm+search,this.dataList,this.error);
-        this.httputils.onLoadList(this.params.endpointForm,this.dataList,this.error);
+
+        this.httputils.onLoadList(this.params.endpointForm+search,this.dataList,this.error);
     }
     getData(data){
         this.result.emit(data);
