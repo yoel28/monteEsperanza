@@ -7,16 +7,18 @@
                 <h4 class="modal-title" id="myModalLabel">Buscar {{params.title}}</h4>
             </div>
             <div class="modal-body row">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <div class="input-group input-group-sm">
-                        <input #search type="text" class="form-control" placeholder="{{params.placeholderForm}}">
-                        <span class="input-group-btn">
-                            <button (click)="getSearch(search.value)" type="button" class="btn btn-info btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
+                <form role="form" (submit)="getSearch(search.value)">
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <div class="input-group input-group-sm">
+                            <input #search type="text" class="form-control" placeholder="{{params.placeholderForm}}">
+                            <span class="input-group-btn">
+                                <button (click)="getSearch(search.value)" type="button" class="btn btn-info btn-flat">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <div *ngIf="dataList.count" class="col-lg-10 col-lg-offset-1">
                     <table class="table table-hover">
                         <tbody>
@@ -40,9 +42,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-
+                    <div class="btn-group pull-right">
+                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                            {{val}}
+                        </button>
+                    </div>
             </div>
-
         </div>
     </div>
 </div>

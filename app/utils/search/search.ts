@@ -11,6 +11,15 @@ import {RestController} from "../../common/restController";
 })
 export class Search extends RestController{
 
+    // Parametro de entrada
+    // public searchVehiculo={
+    //     title:"Vehiculo",
+    //     idModal:"searchVehiculo",
+    //     endpointForm:"/search/vehicles/",
+    //     placeholderForm:"Ingrese la placa",
+    //     labelForm:{name:"Nombre: ",detail:": "},
+    // }
+
     public params:any={};
     public result:any;
 
@@ -20,8 +29,8 @@ export class Search extends RestController{
         this.result = new EventEmitter();
     }
     getSearch(search){
-
-        this.httputils.onLoadList(this.params.endpointForm+search,this.dataList,this.error);
+        this.endpoint=this.params.endpointForm+search
+        this.loadData();
     }
     getData(data){
         this.result.emit(data);
