@@ -10,8 +10,8 @@ import {globalService} from "../common/globalService";
 //--------------------------LOGIN-------------------------------
 @Component({
     selector: 'login',
-    templateUrl: 'app/account/login/login.html',
-    styleUrls: ['app/account/login/login.css']
+    templateUrl: 'app/account/login/index.html',
+    styleUrls: ['app/account/style.css']
 })
 export class AccountLogin extends RestController {
 
@@ -62,15 +62,17 @@ export class AccountLogin extends RestController {
         };
         this.httputils.doPost(this.endpoint, body, successCallback, errorLogin);
     }
+    recover(){
+        let link = ['AccountRecover', {}];
+        this.router.navigate(link);
+    }
 
 }
-
-
 //-----------------------ACTIVAR------------------------------
 @Component({
     selector: 'activate',
     templateUrl: 'app/account/activate/index.html',
-    styleUrls: ['app/account/activate/style.css']
+    styleUrls: ['app/account/style.css']
 })
 export class AccountActivate extends RestController {
     mensaje:string;
@@ -94,3 +96,63 @@ export class AccountActivate extends RestController {
         this.router.navigate(link);
     }
 }
+//-------------------------Recover-------------------------
+@Component({
+    selector: 'recover',
+    templateUrl: 'app/account/recover/index.html',
+    styleUrls: ['app/account/style.css']
+})
+export class AccountRecover extends RestController {
+
+    form:ControlGroup;
+    username:Control;
+
+    constructor(public router:Router, public http:Http, public _formBuilder:FormBuilder) {
+        super(http);
+        this.setEndpoint('/users/recover/');
+        this.initForm();
+    }
+    initForm() {
+        this.username = new Control("", Validators.compose([Validators.required]));
+        this.form = this._formBuilder.group({
+            username: this.username,
+        });
+    }
+
+    recoverPassword(){
+
+    }
+    onLogin(){
+        let link = ['AccountLogin', {}];
+        this.router.navigate(link);
+    }
+}
+//-------------------------Recover Password-------------------------
+@Component({
+    selector: 'recoverPassword',
+    templateUrl: 'app/account/recoverPassword/index.html',
+    styleUrls: ['app/account/style.css']
+})
+export class AccountRecoverPassword extends RestController {
+
+    form:ControlGroup;
+    password:Control;
+
+    constructor(public params:RouteParams, public router:Router, public http:Http, public _formBuilder:FormBuilder) {
+        super(http);
+        this.setEndpoint('/users/recoverPassword/' + params.get('id') + "?access_token=" + params.get('token'));
+        this.initForm();
+    }
+    initForm() {
+        this.password = new Control("", Validators.compose([Validators.required,Validators.minLength(4)]));
+        this.form = this._formBuilder.group({
+            password: this.password,
+        });
+    }
+
+    onLogin(){
+        let link = ['AccountLogin', {}];
+        this.router.navigate(link);
+    }
+}
+
