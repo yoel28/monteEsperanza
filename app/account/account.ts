@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
 import {contentHeaders} from '../common/headers';
 import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 
 //--------------------------LOGIN-------------------------------
@@ -20,7 +21,7 @@ export class AccountLogin extends RestController {
     username:Control;
     password:Control;
 
-    constructor(public router:Router, public http:Http, public _formBuilder:FormBuilder, public myglobal:globalService) {
+    constructor(public router:Router, public http:Http, public _formBuilder:FormBuilder, public myglobal:globalService,public toastr: ToastsManager) {
         super(http);
         this.validTokens();
         this.setEndpoint("/login");
@@ -51,6 +52,7 @@ export class AccountLogin extends RestController {
         this.submitForm = true;
         let errorLogin = error=> {
             this.submitForm = false;
+            this.toastr.error('Usuario o contraseña invalida');
         }
         let successCallback = response => {
             this.submitForm = false;
