@@ -1,26 +1,33 @@
 import { Http} from '@angular/http';
 import  {ControlGroup,} from '@angular/common';
 import {HttpUtils} from "./http-utils";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+
 
 export class RestController{
 
     dataList:any = [];
     httputils:HttpUtils;
     endpoint:string;
+    offset=0;
+    max=5;
+    page:any=[];
 
-    constructor(public http: Http) {
+    constructor(public http: Http,public toastr?: ToastsManager) {
         this.httputils = new HttpUtils(http);
     }
     setEndpoint(endpoint:string){
         this.endpoint=endpoint;
     }
     error(err){
+        if(this.toastr)
+            this.toastr.error(err);
         console.log(err);
     }
 
-    loadData(){
-        event.preventDefault();
-        this.httputils.onLoadList(this.endpoint,this.dataList,this.error);
+    loadData(offset=0){
+        this.offset=offset;
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset,this.dataList,this.max,this.error);
     };
     onUpdate(event,data){
         event.preventDefault();

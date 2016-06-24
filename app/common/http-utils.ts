@@ -93,9 +93,17 @@ export class HttpUtils {
         this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 
-    onLoadList(endpoint:string, list, errorCallback = null,isEndpointAbsolute = false) {
+    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false) {
         let successCallback= response => {
             Object.assign(list, response.json());
+            if(list.count)
+            {
+                list['page']=[];
+                for (var i=1;i<=Math.round(list.count/max);i++)
+                {
+                    list['page'].push(i);
+                }
+            }
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
