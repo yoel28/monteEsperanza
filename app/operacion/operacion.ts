@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
+import  {OperacionSave} from "./methods";
 
 @Component({
     selector: 'operacion',
     templateUrl: 'app/operacion/index.html',
-    styleUrls: ['app/operacion/style.css']
+    styleUrls: ['app/operacion/style.css'],
+    directives:[OperacionSave]
 })
 export class Operacion extends RestController{
 
@@ -23,6 +25,9 @@ export class Operacion extends RestController{
             let link = ['AccountLogin', {}];
             this.router.navigate(link);
         }
+    }
+    assignOperacion(data){
+        this.dataList.list.push(data);
     }
     
 }

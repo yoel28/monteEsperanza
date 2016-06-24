@@ -1,5 +1,7 @@
 import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {RestController} from "../common/restController";
+import {Http} from "@angular/http";
 
 @Component({
     selector: 'operacion-save',
@@ -8,7 +10,7 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
     inputs:['idModal'],
     outputs:['save'],
 })
-export class OperacionSave{
+export class OperacionSave extends RestController{
 
     public idModal:string;
     public save:any;
@@ -19,7 +21,9 @@ export class OperacionSave{
     weightIn: Control;
     weightOut: Control;
 
-    constructor(public _formBuilder: FormBuilder) {
+    constructor(public _formBuilder: FormBuilder,public http:Http) {
+        super(http);
+        this.setEndpoint('/operations/');
         this.initForm();
         this.save = new EventEmitter();
     }
@@ -37,6 +41,10 @@ export class OperacionSave{
         });
     }
     submitForm(){
-        this.save.emit(this.form);
+        let successCallback= response => {
+            this.save.emit(response.json());
+        };
+        let body = JSON.stringify(this.form.value);
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 }
