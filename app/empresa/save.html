@@ -58,13 +58,45 @@
                             <p *ngIf="address.errors.required">Requerido</p>
                         </div>
                     </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input id="cntrlImage" ngControl="image" class="form-control" #image
-                               placeholder="Imagen" name="image" type="text">
-                        <div class="control-msgs" *ngIf="image.dirty && !image.valid && !image.pending">
-                            <p *ngIf="image.errors.required">Requerido</p>
-                        </div>
+                    <div class="form-group">
+                        <img [src]="src" [hidden]="!src">
+                        <input type="file" image-upload (imageSelected)="selected($event)" [resizeOptions]="resizeOptions">
+
+                        <!--<div>-->
+                            <!--<label for="file-pb" class="ui small black button right icon upload-button">-->
+                                <!--<i class="ion-document icon"></i>-->
+                                <!--Choose file-->
+                            <!--</label>-->
+                            <!--<input type="file"-->
+                                   <!--id="file-pb"-->
+                                   <!--style="display:none;"-->
+                                   <!--[ng-file-select]="options"-->
+                                   <!--(onUpload)="handleUpload($event)">-->
+                        <!--</div>-->
+
+                        <!--<div *ngIf="uploadFile">-->
+                            <!--Progress: {{ uploadProgress }}%-->
+                        <!--</div>-->
+                        <!--<div *ngIf="uploadFile">-->
+                            <!--<div class="ui indicating olive progress">-->
+                                <!--<div class="bar" [style.width]="uploadProgress + '%'"></div>-->
+                                <!--<div class="label">Uploading file ({{ uploadProgress }}%)</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div>-->
+                            <!--Response: <br/>{{ uploadFile | json }}-->
+                        <!--</div>-->
+
+                        <!--<input type="file" ng2FileSelect [uploader]="uploader" />-->
+                        <!--<button *ngFor="let item of uploader.queue" type="button" class="btn btn-success btn-xs pull-right"-->
+                                <!--(click)="item.upload()" >-->
+                            <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
+                        <!--</button>-->
+                        <!--Queue progress:-->
+                        <!--<div class="progress" style="">-->
+                            <!--<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>-->
+                        <!--</div>-->
                     </div>
 
                 </form>
