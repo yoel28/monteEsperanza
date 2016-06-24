@@ -30,15 +30,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let data of dataList.list" >
+                            <tr *ngFor="let data of dataList.list">
                                 <td>{{data.id}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="plate" contenteditable="true">{{data.plate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weight" contenteditable="true">{{data.weight}}</td>
-                                <td {{data.tagRFID?data.tagRFID:'N/A'}}
+                                <td> {{ data.tagRFID ? data.tagRFID:"N/A"}}
 
                                 </td>
                                 <td (blur)="onUpdate($event,data)" accessKey="minBalance" contenteditable="true">{{data.minBalance}}</td>
-                                <td >{{data.balance}}</td>
+                                <td> {{data.balance}}</td>
                                 <td>
                                     <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
                                     <strong>{{data.vehicleTypeTitle}}</strong><br/>
@@ -63,6 +63,9 @@
                         </table>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
     </section>

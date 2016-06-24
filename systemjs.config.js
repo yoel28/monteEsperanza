@@ -14,6 +14,9 @@
     'ng2-highcharts':             'node_modules/ng2-highcharts',
     'ng2-select':                 'node_modules/ng2-select',
     'ng2-bootstrap':              'node_modules/ng2-bootstrap',
+    'ng2-file-upload':            'node_modules/ng2-file-upload',
+    'ng2-uploader':               'node_modules/ng2-uploader',
+    'ng2-imageupload':            'node_modules/ng2-imageupload'
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -25,7 +28,10 @@
     'ng2-highcharts':             { defaultExtension: 'js' },
     'highcharts':                 { defaultExtension: 'js' },
     'ng2-select':                 { defaultExtension: 'js' },
+    'ng2-file-upload':            { main:'ng2-file-upload',defaultExtension: 'js' },
+    'ng2-uploader':               { main:'ng2-uploader',defaultExtension: 'js' },
     'ng2-bootstrap':              { main: 'ng2-bootstrap',defaultExtension: 'js' },
+    'ng2-imageupload':            { main: 'index.js',defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',
