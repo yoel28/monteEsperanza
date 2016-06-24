@@ -3,6 +3,7 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
 import {TagSave} from "./methods";
+import fill = require("core-js/fn/array/fill");
 
 @Component({
     selector: 'tagRfid',
@@ -17,7 +18,14 @@ export class TagRfid extends RestController{
         this.validTokens();
         this.setEndpoint('/rfids/');
         this.loadData();
+
+        //this.page = Array(3).fill(4);//op op:ilike
+
     }
+    public page:any;
+    public arr:any=[];
+    public num:number = 20;
+
     validTokens(){
         if(!localStorage.getItem('bearer'))
         {
@@ -28,4 +36,10 @@ export class TagRfid extends RestController{
     assignTag(data){
         this.dataList.list.push(data);
     }
+
+    loadData(offset=0,max=5){
+        event.preventDefault();
+        this.httputils.onLoadList(this.endpoint+"?max="+max+"&offset="+offset,this.dataList,this.error);
+    };
+
 }
