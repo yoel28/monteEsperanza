@@ -3,11 +3,8 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
-import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload/ng2-file-upload';
-import {UPLOAD_DIRECTIVES} from 'ng2-uploader/ng2-uploader';
 import {ImageUpload, ImageResult, ResizeOptions} from 'ng2-imageupload';
-
-
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 
 @Component({
@@ -35,16 +32,12 @@ export class EmpresaSave extends RestController{
     public companyTypes:any=[];
     
     
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+        super(http,toastr);
         this.setEndpoint('/companies/');
         this.loadDataCompanyTypes();
         this.initForm();
         this.save = new EventEmitter();
-
-        // this.uploadProgress = 0;
-        // this.uploadResponse = {};
-        // this.zone = new NgZone({ enableLongStackTrace: false });
     }
     
     initForm(){
@@ -106,39 +99,5 @@ export class EmpresaSave extends RestController{
             || imageResult.dataURL;
         this.image.updateValue(this.src);
     }
-
-    // public URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
-    // public uploader:FileUploader = new FileUploader({url: this.URL});
-    // public hasBaseDropZoneOver:boolean = false;
-    // public hasAnotherDropZoneOver:boolean = false;
-    //
-    // public fileOverBase(e:any):void {
-    //     this.hasBaseDropZoneOver = e;
-    // }
-    //
-    // public fileOverAnother(e:any):void {
-    //     this.hasAnotherDropZoneOver = e;
-    // }
-    // uploadFile: any;
-    // uploadProgress: number;
-    // uploadResponse: Object;
-    // zone: NgZone;
-    // options: Object = {
-    //     url: 'http://localhost:10050/upload'
-    // };
-    //
-    //
-    //
-    // handleUpload(data): void {
-    //     this.uploadFile = data;
-    //     this.zone.run(() => {
-    //         this.uploadProgress = data.progress.percent;
-    //     });
-    //     let resp = data.response;
-    //     if (resp) {
-    //         resp = JSON.parse(resp);
-    //         this.uploadResponse = resp;
-    //     }
-    // }
 }
 
