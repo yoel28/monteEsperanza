@@ -4,6 +4,7 @@ import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Fecha} from "../utils/pipe";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({
     selector: 'recarga-save',
@@ -28,8 +29,8 @@ export class RecargaSave extends RestController{
 
     rechargeTypes:any = []; //Arreglo con todos los tipos de regarga
 
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+        super(http,toastr);
         this.setEndpoint('/recharges/');
         this.getRechargeTypes();
         this.initForm();
@@ -84,7 +85,7 @@ export class RecargaTimeLine extends RestController{
     // params={
     //     'offset':0,
     //     'max':5,
-    //     'where':'where[["op":"eq","field":"id","value":"1"]]'
+    //     'ruc':'123'
     // };
 
     public params:any={};
@@ -107,7 +108,7 @@ export class RecargaTimeLine extends RestController{
     
     constructor(public http:Http,public _formBuilder: FormBuilder) {
         super(http);
-        this.setEndpoint('/recharges/');
+        this.setEndpoint('/search/recharges/');
 
     }
     ngOnInit() {
@@ -115,7 +116,7 @@ export class RecargaTimeLine extends RestController{
     }
     loadData(){
         event.preventDefault();
-        this.httputils.onLoadList(this.endpoint+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
+        this.httputils.onLoadList(this.endpoint+this.params.ruc+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
     }
     addtimeLine(){
         event.preventDefault();
