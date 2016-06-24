@@ -25,4 +25,7 @@ export class TagRfid extends RestController{
             this.router.navigate(link);
         }
     }
+    assignTag(data){
+        this.dataList.list.push(data);
+    }
 }

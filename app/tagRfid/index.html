@@ -24,9 +24,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let data of dataList" >
+                            <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="vehicle" contenteditable="true">{{data.vehicle}}</td>
+                                <td >{{data.vehicle}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="number" contenteditable="true">{{data.number}}</td>
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
@@ -41,4 +41,4 @@
     </section>
 </div>
 
-<tag-save idModal="saveTag" (save)="onSave($event)"> </tag-save>
+<tag-save idModal="saveTag" (save)="assignTag($event)"> </tag-save>

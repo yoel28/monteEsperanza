@@ -1,5 +1,7 @@
 import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {RestController} from "../common/restController";
+import {Http} from "@angular/http";
 
 @Component({
     selector: 'tag-save',
@@ -8,7 +10,7 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
     inputs:['idModal'],
     outputs:['save'],
 })
-export class TagSave{
+export class TagSave extends RestController{
 
     public idModal:string;
     public save:any;
@@ -18,7 +20,9 @@ export class TagSave{
     number: Control;
 
 
-    constructor(public _formBuilder: FormBuilder) {
+    constructor(public http:Http,public _formBuilder: FormBuilder) {
+        super(http);
+        this.setEndpoint('/rfids/');
         this.initForm();
         this.save = new EventEmitter();
     }
@@ -32,6 +36,10 @@ export class TagSave{
         });
     }
     submitForm(){
-        this.save.emit(this.form);
+        let successCallback= response => {
+            this.save.emit(response.json());
+        };
+        let body = JSON.stringify(this.form.value);
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 }
