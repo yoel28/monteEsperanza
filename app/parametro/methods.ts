@@ -3,6 +3,7 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 
 @Component({
@@ -23,8 +24,8 @@ export class ParametroSave extends RestController{
     value: Control;
     type: Control;
 
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+        super(http,toastr);
         this.setEndpoint('/params/');
         this.initForm();
         this.save = new EventEmitter();
