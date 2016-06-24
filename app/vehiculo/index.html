@@ -34,9 +34,11 @@
                                 <td>{{data.id}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="plate" contenteditable="true">{{data.plate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weight" contenteditable="true">{{data.weight}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="rfid" contenteditable="true">{{data.tagRFID?data.tagRFID:'N/A'}}</td>
+                                <td {{data.tagRFID?data.tagRFID:'N/A'}}
+
+                                </td>
                                 <td (blur)="onUpdate($event,data)" accessKey="minBalance" contenteditable="true">{{data.minBalance}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="balance" contenteditable="true">{{data.balance}}</td>
+                                <td >{{data.balance}}</td>
                                 <td>
                                     <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
                                     <strong>{{data.vehicleTypeTitle}}</strong><br/>

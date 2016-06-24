@@ -29,5 +29,12 @@ export class Vehiculo extends RestController{
     assignVehiculo(data){
         this.dataList.list.push(data);
     }
+    public searchTag={
+        title:"Tag RFID",
+        idModal:"searchTag",
+        endpointForm:"rfids?where[['op':'isNull','field':'vehicle']]",
+        placeholderForm:"Seleccione un Tag",
+        labelForm:{name:"Nombre: ",detail:"Detalle: "},
+    }
 
 }

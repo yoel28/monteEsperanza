@@ -27,6 +27,8 @@ export class VehiculoSave extends RestController{
     vehicleType: Control;
     company: Control;
 
+    dataCompany:string;
+
 
     constructor(public http:Http,public _formBuilder: FormBuilder) {
         super(http);
@@ -89,6 +91,7 @@ export class VehiculoSave extends RestController{
     }
     assignCompany(data){
         this.company.updateValue(data.id);
+        this.dataCompany=data.title+", RUC: "+data.detail;
     }
 
 }
