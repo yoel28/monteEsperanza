@@ -28,8 +28,8 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="recharge" contenteditable="true">{{data.recharge}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="vehicle" contenteditable="true">{{data.vehicle}}</td>
+                                <td> Ref: {{data.rechargeReference}}, {{data.rechargeQuantity}}$</td>
+                                <td >{{data.vehiclePlate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weightIn" contenteditable="true">{{data.weightIn}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weightOut" contenteditable="true">{{data.weightOut}}</td>
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
@@ -39,6 +39,13 @@
                     </div>
                 </div>
                 <!-- ./box-body -->
+                <div class="box-footer with-border">
+                    <div class="btn-group pull-right">
+                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                            {{val}}
+                        </button>
+                    </div>
+                </div>
             </div>
             <!-- /.box -->
         </div>

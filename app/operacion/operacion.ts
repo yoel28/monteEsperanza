@@ -3,6 +3,7 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
 import  {OperacionSave} from "./methods";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({
     selector: 'operacion',
@@ -12,8 +13,8 @@ import  {OperacionSave} from "./methods";
 })
 export class Operacion extends RestController{
 
-    constructor(public router: Router,public http: Http) {
-        super(http);
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
+        super(http,toastr);
         this.validTokens();
         this.setEndpoint('/operations/');
         this.loadData();
