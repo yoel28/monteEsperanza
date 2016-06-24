@@ -1,14 +1,19 @@
 import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
+import {RestController} from "../common/restController";
+import {Http} from "@angular/http";
+
 
 @Component({
     selector: 'parametro-save',
     templateUrl: 'app/parametro/save.html',
     styleUrls: ['app/parametro/style.css'],
     inputs:['idModal'],
+    directives:[SELECT_DIRECTIVES],
     outputs:['save'],
 })
-export class ParametroSave{
+export class ParametroSave extends RestController{
 
     public idModal:string;
     public save:any;
@@ -18,7 +23,9 @@ export class ParametroSave{
     value: Control;
     type: Control;
 
-    constructor(public _formBuilder: FormBuilder) {
+    constructor(public http:Http,public _formBuilder: FormBuilder) {
+        super(http);
+        this.setEndpoint('/params/');
         this.initForm();
         this.save = new EventEmitter();
     }
@@ -33,8 +40,18 @@ export class ParametroSave{
             type: this.type,
         });
     }
+    public items:any=['String','Long','Double','Date'];
+
+    public refreshValue(value:any):void {
+        this.type.updateValue(value.id);
+    }
+
     submitForm(){
-        this.save.emit(this.form);
+        let successCallback= response => {
+            this.save.emit(response.json());
+        };
+        let body = JSON.stringify(this.form.value);
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 }
 

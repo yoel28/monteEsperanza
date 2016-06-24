@@ -25,4 +25,8 @@ export class Parametro extends RestController{
             this.router.navigate(link);
         }
     }
+    assignParametro(data){
+        this.dataList.list.push(data);
+    }
+
 }
