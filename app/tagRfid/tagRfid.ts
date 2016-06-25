@@ -39,7 +39,7 @@ export class TagRfid extends RestController{
         endpointForm:"/search/vehicles/",
         placeholderForm:"Ingrese la placa del vehiculo",
         labelForm:{name:"Placa: ",detail:"Empresa: "},
-        where:"&where=[['op':'isNull','field':'tagRFID']]"
+        where:"&where=[['op':'isNull','field':'tag.id']]"
     }
     //asignar tag a vehiculo
     assignVehicle(data){
