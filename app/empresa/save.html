@@ -10,11 +10,10 @@
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
 
                     <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input id="cntrlName" ngControl="name" class="form-control" #name
-                               placeholder="Nombre" name="name" type="text">
-                        <div class="control-msgs" *ngIf="name.dirty && !name.valid && !name.pending">
-                            <p *ngIf="name.errors.required">Requerido</p>
+                        <i class="fa fa-building"></i>
+                        <input ngControl="name" class="form-control" [(ngModel)]="name.value"  #name="ngForm" placeholder="Nombre" type="text">
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div *ngIf="companyTypes.count" class="form-group">
@@ -27,35 +26,31 @@
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlRuc" ngControl="ruc" class="form-control" #ruc
-                               placeholder="RUC" name="ruc" type="text">
-                        <div class="control-msgs" *ngIf="ruc.dirty && !ruc.valid && !ruc.pending">
-                            <p *ngIf="ruc.errors.required">Requerido</p>
+                        <input ngControl="ruc" class="form-control" [(ngModel)]="ruc.value"  #ruc="ngForm" placeholder="RUC" type="number">
+                        <div [hidden]="ruc.valid || ruc.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlResponsiblePerson" ngControl="responsiblePerson" class="form-control" #responsiblePerson
-                               placeholder="Persona Responsable" name="responsiblePerson" type="text">
-                        <div class="control-msgs" *ngIf="responsiblePerson.dirty && !responsiblePerson.valid && !responsiblePerson.pending">
-                            <p *ngIf="responsiblePerson.errors.required">Requerido</p>
+                        <input ngControl="responsiblePerson" class="form-control" [(ngModel)]="responsiblePerson.value"  #responsiblePerson="ngForm" placeholder="Persona Responsable" type="text">
+                        <div [hidden]="responsiblePerson.valid || responsiblePerson.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlPhone" ngControl="phone" class="form-control" #phone
-                               placeholder="Telefono" name="phone" type="text">
-                        <div class="control-msgs" *ngIf="phone.dirty && !phone.valid && !phone.pending">
-                            <p *ngIf="phone.errors.required">Requerido</p>
+                        <input ngControl="phone" class="form-control" [(ngModel)]="phone.value"  #phone="ngForm" placeholder="Telefono" type="number">
+                        <div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
 
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlAddress" ngControl="address" class="form-control" #address
-                               placeholder="Direccion" name="address" type="text">
-                        <div class="control-msgs" *ngIf="address.dirty && !address.valid && !address.pending">
-                            <p *ngIf="address.errors.required">Requerido</p>
+                        <input ngControl="address" class="form-control" [(ngModel)]="address.value"  #address="ngForm" placeholder="Direccion" type="text">
+                        <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div class="form-group">

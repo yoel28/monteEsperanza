@@ -1,101 +1,117 @@
 <div class="content-wrapper">
-    <section class="content-header">
-        <h1>
-            <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#saveEmpresa">
-                <i class="fa fa-plus"></i> Nuevo
-            </button>
-        </h1>
-    </section>
-
     <section class="content">
-        <div class="row">
-            <div *ngFor="let data of dataList.list">
-                <div class="col-lg-4">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div class="profile">
-                                <div style="margin-bottom: 15px" class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#saveEmpresa">
+                        <i class="fa fa-plus"></i> Nuevo
+                    </button>
 
-                                        <div class="btn-group dropdown pull-right">
-                                            <button type="button" data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-gears fa-lg"></i>
-                                            </button>
-                                            <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                                <li>
-                                                    <a (click)="onPatch('enabled',data)" href="javascript:void(0);">
-                                                        <span class="fa fa-warning"></span>
-                                                        &nbsp;{{data.enabled?"Habilitado":"Bloqueado"}}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                    <div class="pull-right">
+                        <div class="btn-group pull-right">
+                            <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                                {{val}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" >
+                    <div *ngFor="let data of dataList.list">
+                        <div class="col-lg-4">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="profile">
+                                        <div style="margin-bottom: 15px" class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="btn-group dropdown pull-right">
+                                                    <button type="button" data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-gears fa-lg"></i>
+                                                    </button>
+                                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                                        <li>
+                                                            <a (click)="onPatch('enabled',data)" href="javascript:void(0);">
+                                                                <span class="fa fa-warning"></span>
+                                                                &nbsp;{{data.enabled?"Habilitar":"Bloquear"}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-4 text-center">
+                                                <figure>
+                                                    <img src="{{data.image?data.image:'/assets/img/company-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
+                                                </figure>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8">
+                                                <h2>{{data.name}}</h2>
+                                                <p><strong>RUC: </strong>{{data.ruc}} </p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8 col-lg-12">
+                                                <p><strong>Responsable:</strong>{{data.responsiblePerson}} </p>
+                                                <p><strong>Telefonos:</strong>{{data.phone}} </p>
+                                                <p><strong>Direccion:</strong> {{data.address}}</p>
+                                                <p><strong>Tipo:</strong> {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
+
+                                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTipoEmpresa">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+
+                                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#saveTipoEmpresa">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </p>
+                                                <p>
+                                                    <button (click)="onPatch('enabled',data)" class="btn btn-sm"
+                                                            [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
+                                                        {{data.enabled?"Habilitado":"Bloqueado"}}
+                                                    </button>
+                                                </p>
+                                            </div>
                                         </div>
+                                        <div class="row text-center divider">
+                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                                <h4><strong>{{data.weightCount?data.weightCount:"N/A"}}</strong></h4>
+                                                <p>
+                                                    <small>Descargas</small>
+                                                </p>
+                                                <button (click)="goTimeLine(data.ruc)" class="btn btn-yellow btn-block">Registro</button>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                                <h4><strong>{{data.vehiclesCount?data.vehiclesCount:"N/A"}}</strong></h4>
+                                                <p>
+                                                    <small>Camiones</small>
+                                                </p>
+                                                <button class="btn btn-yellow btn-block">Camion</button>
 
-                                    </div>
-
-                                    <div class="col-xs-12 col-sm-4 text-center">
-                                        <figure>
-                                            <img src="{{data.image?data.image:'/assets/img/company-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
-                                        </figure>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-8">
-                                        <h2>{{data.name}}</h2>
-                                        <p><strong>RUC: </strong>{{data.ruc}} </p>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-8 col-lg-12">
-                                        <p><strong>Responsable:</strong>{{data.responsiblePerson}} </p>
-                                        <p><strong>Telefonos:</strong>{{data.phone}} </p>
-                                        <p><strong>Direccion:</strong> {{data.address}}</p>
-                                        <p><strong>Tipo:</strong> {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
-
-                                            <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTipoEmpresa">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-
-                                            <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#saveTipoEmpresa">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </p>
-                                        <p>
-                                            <button (click)="onPatch('enabled',data)" class="btn btn-sm"
-                                                    [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
-                                                {{data.enabled?"Habilitado":"Bloqueado"}}
-                                            </button>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row text-center divider">
-                                    <div class="col-xs-12 col-sm-4 emphasis">
-                                        <h4><strong>{{data.weightCount?data.weightCount:"N/A"}}</strong></h4>
-                                        <p>
-                                            <small>Descargas</small>
-                                        </p>
-                                        <button (click)="goTimeLine(data.ruc)" class="btn btn-yellow btn-block">Registro</button>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-4 emphasis">
-                                        <h4><strong>{{data.vehiclesCount?data.vehiclesCount:"N/A"}}</strong></h4>
-                                        <p>
-                                            <small>Camiones</small>
-                                        </p>
-                                        <button class="btn btn-yellow btn-block">Camion</button>
-
-                                    </div>
-                                    <div class="col-xs-12 col-sm-4 emphasis">
-                                        <h4><strong>{{data.balance?data.balance:"0"}}$</strong></h4>
-                                        <p>
-                                            <small>Saldo</small>
-                                        </p>
-                                        <button (click)="goTaquilla(data.ruc)" class="btn btn-yellow btn-block">Taquilla</button>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                                <h4><strong>{{data.balance?data.balance:"0"}}$</strong></h4>
+                                                <p>
+                                                    <small>Saldo</small>
+                                                </p>
+                                                <button (click)="goTaquilla(data.ruc)" class="btn btn-yellow btn-block">Taquilla</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- ./box-body -->
+                <div class="box-footer with-border">
+
+                </div>
             </div>
+            <!-- /.box -->
         </div>
     </section>
 </div>
+
 
 <tipoEmpresa-save idModal="saveTipoEmpresa" (save)="assignTipoEmpresa($event)"> </tipoEmpresa-save>
 <empresa-save idModal="saveEmpresa" (save)="assignEmpresa($event)"> </empresa-save>
