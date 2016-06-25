@@ -19,9 +19,10 @@ export class RestController{
     setEndpoint(endpoint:string){
         this.endpoint=endpoint;
     }
-    error(err){
+
+    error= err => {
         if(this.toastr)
-            this.toastr.error(err);
+            this.toastr.error(err.json().message);
         console.log(err);
     }
 

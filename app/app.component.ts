@@ -60,8 +60,8 @@ export class AppComponent {
 
   constructor(private router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
-    //localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
-    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
+    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
   }
   logout() {
     localStorage.removeItem('bearer');
