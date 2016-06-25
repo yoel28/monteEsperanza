@@ -17,19 +17,17 @@
                         </ng-select>
                     </div>
                     <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input id="cntrlKey" ngControl="key" class="form-control" #key
-                               placeholder="Clave" name="key" type="text">
-                        <div class="control-msgs" *ngIf="key.dirty && !key.valid && !key.pending">
-                            <p *ngIf="key.errors.required">Requerido</p>
+                        <i class="fa fa-key"></i>
+                        <input ngControl="key" class="form-control" [(ngModel)]="key.value"  #key="ngForm" placeholder="Clave" type="text">
+                        <div [hidden]="key.valid || key.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlValue" ngControl="value" class="form-control" #value
-                               placeholder="Valor" name="value" type="text">
-                        <div class="control-msgs" *ngIf="value.dirty && !value.valid && !value.pending">
-                            <p *ngIf="value.errors.required">Requerido</p>
+                        <input ngControl="value" class="form-control" [(ngModel)]="value.value"  #value="ngForm" placeholder="Valor" type="text">
+                        <div [hidden]="value.valid || value.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                 </form>
