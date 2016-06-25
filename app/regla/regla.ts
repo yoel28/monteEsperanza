@@ -25,4 +25,7 @@ export class Regla extends RestController{
             this.router.navigate(link);
         }
     }
+    assignRule(data){
+        this.dataList.list.push(data);
+    }
 }

@@ -10,18 +10,16 @@
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlRule" ngControl="rule" class="form-control" #rule
-                               placeholder="Regla" name="rule" type="text">
-                        <div class="control-msgs" *ngIf="rule.dirty && !rule.valid && !rule.pending">
-                            <p *ngIf="rule.errors.required">Requerido</p>
+                        <input ngControl="rule" class="form-control" [(ngModel)]="rule.value"  #rule="ngForm" placeholder="Regla" type="text">
+                        <div [hidden]="rule.valid || rule.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-image"></i>
-                        <input id="cntrlName" ngControl="name" class="form-control" #name
-                               placeholder="Nombre" name="name" type="text">
-                        <div class="control-msgs" *ngIf="name.dirty && !name.valid && !name.pending">
-                            <p *ngIf="name.errors.required">Requerido</p>
+                        <input ngControl="name" class="form-control" [(ngModel)]="name.value"  #name="ngForm" placeholder="Nombre" type="text">
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                 </form>

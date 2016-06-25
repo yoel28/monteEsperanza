@@ -1,5 +1,8 @@
 import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {RestController} from "../common/restController";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Http} from "@angular/http";
 
 @Component({
     selector: 'regla-save',
@@ -8,7 +11,7 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
     inputs:['idModal'],
     outputs:['save'],
 })
-export class ReglaSave{
+export class ReglaSave extends RestController{
 
     public idModal:string;
     public save:any;
@@ -18,7 +21,9 @@ export class ReglaSave{
     name: Control;
 
 
-    constructor(public _formBuilder: FormBuilder) {
+    constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager) {
+        super(http,toastr);
+        this.setEndpoint('/rules/');
         this.initForm();
         this.save = new EventEmitter();
     }
@@ -32,7 +37,11 @@ export class ReglaSave{
         });
     }
     submitForm(){
-        this.save.emit(this.form);
+        let successCallback= response => {
+            this.save.emit(response.json());
+        };
+        let body = JSON.stringify(this.form.value);
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 }
 
