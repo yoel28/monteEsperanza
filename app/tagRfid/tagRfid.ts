@@ -3,14 +3,14 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
 import {TagSave} from "./methods";
-import fill = require("core-js/fn/array/fill");
-import forEach = require("core-js/fn/array/for-each");
+import {Search} from "../utils/search/search";
+
 
 @Component({
     selector: 'tagRfid',
     templateUrl: 'app/tagRfid/index.html',
     styleUrls: ['app/tagRfid/style.css'],
-    directives:[TagSave],
+    directives:[TagSave,Search],
 })
 export class TagRfid extends RestController{
 
@@ -30,5 +30,20 @@ export class TagRfid extends RestController{
     }
     assignTag(data){
         this.dataList.list.push(data);
+    }
+    //Buscar vehiculos sin tag ---------------------------------------------
+    public dataSelect:string;
+    public searchVehicle={
+        title:"Vehiculo",
+        idModal:"searchVehicle",
+        endpointForm:"/search/vehicles/",
+        placeholderForm:"Ingrese la placa del vehiculo",
+        labelForm:{name:"Placa: ",detail:"Empresa: "},
+        where:"&where=[['op':'isNull','field':'tagRFID']]"
+    }
+    //asignar tag a vehiculo
+    assignVehicle(data){
+        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+        this.onPatch('vehicle',this.dataList.list[index],data.id);
     }
 }
