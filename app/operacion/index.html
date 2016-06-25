@@ -28,10 +28,10 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td> Ref: {{data.rechargeReference}}, {{data.rechargeQuantity}}$</td>
+                                <td> Ref: {{data.rechargeReference || "N/A"}}, {{data.rechargeQuantity || "N/A"}}$</td>
                                 <td >{{data.vehiclePlate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weightIn" contenteditable="true">{{data.weightIn}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="weightOut" contenteditable="true">{{data.weightOut}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="weightOut" contenteditable="true">{{data.weightOut || "N/A"}}</td>
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>

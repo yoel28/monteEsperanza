@@ -10,7 +10,7 @@
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
 
                     <div class="form-group">
-                        <strong>Vehiculo: </strong>{{dataVehicle?dataVehicle:"Buscar Vehiculo"}}
+                        <strong>Vehiculo: </strong>{{dataVehicle || "Buscar Vehiculo"}}
                         <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchVehicle">
                             <i class="fa fa-search"></i>
                         </button>
@@ -18,10 +18,9 @@
 
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input id="cntrlWeightIn" ngControl="weightIn" class="form-control" #weightIn
-                               placeholder="peso de entrada" name="weightIn" type="text">
-                        <div class="control-msgs" *ngIf="weightIn.dirty && !weightIn.valid && !weightIn.pending">
-                            <p *ngIf="weightIn.errors.required">Requerido</p>
+                        <input ngControl="weightIn" class="form-control" [(ngModel)]="weightIn.value"  #weightIn="ngForm" placeholder="Peso de Entrada" type="number">
+                        <div [hidden]="weightIn.valid || weightIn.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
 
