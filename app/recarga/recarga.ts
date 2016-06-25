@@ -3,9 +3,12 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
 import {RecargaSave} from "./methods";
+import {Fecha} from "../utils/pipe";
+
 
 @Component({
     selector: 'recarga',
+    pipes: [Fecha],
     templateUrl: 'app/recarga/index.html',
     styleUrls: ['app/recarga/style.css'],
     directives:[RecargaSave]

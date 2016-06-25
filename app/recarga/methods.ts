@@ -5,12 +5,13 @@ import {RestController} from "../common/restController";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Fecha} from "../utils/pipe";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Search} from "../utils/search/search";
 
 @Component({
     selector: 'recarga-save',
     templateUrl: 'app/recarga/save.html',
     styleUrls: ['app/recarga/style.css'],
-    directives: [SELECT_DIRECTIVES],
+    directives: [SELECT_DIRECTIVES,Search],
     outputs:['save'],
 })
 export class RecargaSave extends RestController{
@@ -71,6 +72,19 @@ export class RecargaSave extends RestController{
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 
+    //asignar vehiculo----------------------------------
+    public searchVehicle={
+        title:"Vehiculo",
+        idModal:"searchVehicle",
+        endpointForm:"/search/vehicles/",
+        placeholderForm:"Ingrese la placa",
+        labelForm:{name:"Placa: ",detail:"Empresa: "},
+    }
+    public dataVehicle:string;
+    assignVehicle(data){
+        this.vehicle.updateValue(data.id);
+        this.dataVehicle="Placa: "+data.title+", Empresa: "+data.detail;
+    }
 }
 @Component({
     selector: 'recarga-timeline',

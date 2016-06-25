@@ -18,12 +18,11 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="!idVehicle" class="form-group input-icon right">
-                        <i class="fa fa-car"></i>
-                        <input ngControl="vehicle" class="form-control" [(ngModel)]="vehicle.value"  #vehicle="ngForm" placeholder="Vehiculo" type="text">
-                        <div [hidden]="vehicle.valid || vehicle.pristine" class="alert alert-danger">
-                            El campo contiene errores
-                        </div>
+                    <div *ngIf="!idVehicle" class="form-group">
+                            <strong>Vehiculo: </strong>{{dataVehicle || "Buscar Vehiculo"}}
+                            <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchVehicle">
+                                <i class="fa fa-search"></i>
+                            </button>
                     </div>
 
                     <div class="form-group input-icon right">
@@ -60,3 +59,4 @@
         </div>
     </div>
 </div>
+<search  [params]="searchVehicle" (result)="assignVehicle($event)"></search>
