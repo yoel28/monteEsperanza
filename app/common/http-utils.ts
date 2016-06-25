@@ -99,7 +99,7 @@ export class HttpUtils {
             if(list.count)
             {
                 list['page']=[];
-                for (var i=1;i<=Math.round(list.count/max);i++)
+                for (var i=1;i<=Math.ceil(list.count/max);i++)
                 {
                     list['page'].push(i);
                 }

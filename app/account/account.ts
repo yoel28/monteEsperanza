@@ -59,6 +59,7 @@ export class AccountLogin extends RestController {
             localStorage.setItem('bearer', response.json().access_token);
             contentHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('bearer'));
             this.myglobal.user = response.json();
+            this.myglobal.getUser();
             let link = ['Dashboard', {}];
             this.router.navigate(link);
         };
