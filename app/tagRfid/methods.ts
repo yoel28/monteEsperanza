@@ -16,7 +16,6 @@ export class TagSave extends RestController{
     public save:any;
 
     form: ControlGroup;
-    vehicle: Control;
     number: Control;
 
 
@@ -27,11 +26,9 @@ export class TagSave extends RestController{
         this.save = new EventEmitter();
     }
     initForm(){
-        this.vehicle = new Control("", Validators.compose([Validators.required]));
         this.number = new Control("", Validators.compose([Validators.required]));
 
         this.form = this._formBuilder.group({
-            vehicle: this.vehicle,
             number: this.number,
         });
     }

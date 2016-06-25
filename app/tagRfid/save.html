@@ -9,19 +9,10 @@
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
                     <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input id="cntrlVehicle" ngControl="vehicle" class="form-control" #vehicle
-                               placeholder="Vehiculo" name="vehicle" type="text">
-                        <div class="control-msgs" *ngIf="vehicle.dirty && !vehicle.valid && !vehicle.pending">
-                            <p *ngIf="vehicle.errors.required">Requerido</p>
-                        </div>
-                    </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-image"></i>
-                        <input id="cntrlNumber" ngControl="number" class="form-control" #number
-                               placeholder="Numero" name="number" type="text">
-                        <div class="control-msgs" *ngIf="number.dirty && !number.valid && !number.pending">
-                            <p *ngIf="number.errors.required">Requerido</p>
+                        <i class="fa fa-key"></i>
+                        <input ngControl="number" class="form-control" [(ngModel)]="number.value"  #number="ngForm" placeholder="Numero" type="number">
+                        <div [hidden]="number.valid || number.pristine" class="alert alert-danger">
+                            El campo contiene errores
                         </div>
                     </div>
                 </form>

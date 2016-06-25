@@ -26,7 +26,20 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td >{{data.vehicle}}</td>
+                                <td >
+                                    <div *ngIf="data.vehiclePlate">
+                                        <img src="{{data.vehicleImage || 'assets/img/truck-guest.ico'}}" class="img-responsive img-form pull-left">
+                                        <strong>Placa: </strong>{{data.vehiclePlate}}<br/>
+                                        <strong>Balance: </strong>{{data.vehicleBalance}}<br/>
+                                        <strong>Peso: </strong>{{data.vehicleWeight}}
+                                    </div>
+                                    <div *ngIf="!data.vehiclePlate">
+                                        Asignar Vehiculo
+                                        <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchVehicle">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td (blur)="onUpdate($event,data)" accessKey="number" contenteditable="true">{{data.number}}</td>
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
@@ -49,3 +62,4 @@
 </div>
 
 <tag-save idModal="saveTag" (save)="assignTag($event)"> </tag-save>
+<search  [params]="searchVehicle" (result)="assignVehicle($event)"></search>
