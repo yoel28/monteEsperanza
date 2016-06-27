@@ -22,7 +22,6 @@ export class Taquilla extends RestController{
     constructor(params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder) {
         super(http);
         this.validTokens();
-
         if(params.get('search'))
         {
             this.getVehicles(params.get('search'));
@@ -36,18 +35,31 @@ export class Taquilla extends RestController{
             this.router.navigate(link);
         }
     }
+
     getVehicle(truckId:string){
-        this.httputils.onLoadList("/vehicles/"+truckId,this.dataTruck,this.error);
+        let successCallback= response => {
+            Object.assign(this.dataTruck, response.json());
+            this.dataTruck['recharges']=[];
+            this.loadData();
+        }
+        this.httputils.doGet("/vehicles/"+truckId,successCallback,this.error)
         this.dataVehicles = {};
     }
+    loadData(offset=0){
+        this.offset=offset;
+        this.endpoint="/search/recharges";
+        this.httputils.onLoadList(this.endpoint+"?where=[['op':'eq','field':'vehicle.id','value':"+this.dataTruck.id+"l]]"+"&max="+this.max+"&offset="+this.offset,this.dataList,this.max,this.error);
+    };
 
-    getVehicles(camion:string){
+    getVehicles(camion:string,offset=0){
+        this.offset=offset;
         this.dataTruck = {};
-        this.httputils.onLoadList("/search/vehicles/"+camion,this.dataVehicles,this.error);
+        this.httputils.onLoadList("/search/vehicles/"+camion+"?max="+this.max+"&offset="+this.offset, this.dataVehicles,this.max,this.error);
+
     }
     assignRecarga(data){
         this.dataTruck.balance+=data.quantity;
-        this.dataTruck.recharges.push(data);
+        this.dataList.list.unshift(data);
     }
 }
 

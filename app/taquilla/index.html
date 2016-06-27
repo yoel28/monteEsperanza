@@ -45,7 +45,20 @@
                     </td>
                 </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <div class="btn-group pull-right">
+                                <button (click)="getVehicles(findCamion.value,max*(val-1))" *ngFor="let val of dataVehicles.page" type="button" class="btn btn-default">
+                                    {{val}}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+
             </table>
+
         </div>
         <div *ngIf="dataTruck.id">
             <div class="row col-lg-12">
@@ -126,7 +139,7 @@
                             <th>Monto</th>
                         </tr>
                         </thead>
-                        <tbody *ngFor="let recharges of dataTruck.recharges">
+                        <tbody *ngFor="let recharges of dataList.list">
                         <tr>
                             <td>{{recharges.id}}</td>
                             <td>{{recharges.dateCreated}}</td>
@@ -139,6 +152,17 @@
                             <td>{{recharges.quantity}}</td>
                         </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    <div class="btn-group pull-right">
+                                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                                            {{val}}
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
