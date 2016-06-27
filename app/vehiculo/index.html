@@ -1,6 +1,5 @@
 <div class="content-wrapper">
     <section class="content">
-        <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Vehiculos</h3>
@@ -24,7 +23,7 @@
                                 <th>Saldo Min</th>
                                 <th>Balance</th>
                                 <th>Tipo Vehiculo</th>
-                                <th>Compañia</th>
+                                <th>Empresa</th>
                                 <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
@@ -35,7 +34,9 @@
                                 <td (blur)="onUpdate($event,data)" accessKey="plate" contenteditable="true">{{data.plate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weight" contenteditable="true">{{data.weight}}</td>
                                 <td> {{ data.tagRFID ? data.tagRFID:"N/A"}}
-
+                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTag">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </td>
                                 <td (blur)="onUpdate($event,data)" accessKey="minBalance" contenteditable="true">{{data.minBalance}}</td>
                                 <td> {{data.balance}}</td>
@@ -60,14 +61,23 @@
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10">
+                                    <div class="btn-group pull-right">
+                                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                                            {{val}}
+                                        </button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
-
-
-
             </div>
-        </div>
     </section>
 </div>
 <vehiculo-save idModal="saveVehiculo" (save)="assignVehiculo($event)"> </vehiculo-save>
+<search  [params]="searchTag" (result)="assignTag($event)"></search>

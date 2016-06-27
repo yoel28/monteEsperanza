@@ -4,6 +4,7 @@ import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Search} from "../utils/search/search";
+import {ImageUpload, ResizeOptions, ImageResult} from "ng2-imageupload/index";
 
 
 @Component({
@@ -12,7 +13,8 @@ import {Search} from "../utils/search/search";
     styleUrls: ['app/vehiculo/style.css'],
     inputs:['idModal'],
     outputs:['save',''],
-    directives:[SELECT_DIRECTIVES,Search]
+    directives:[SELECT_DIRECTIVES,Search,ImageUpload]
+
 })
 export class VehiculoSave extends RestController{
 
@@ -26,6 +28,8 @@ export class VehiculoSave extends RestController{
     weight: Control;
     vehicleType: Control;
     company: Control;
+    image: Control;
+
 
     dataCompany:string;
 
@@ -44,6 +48,7 @@ export class VehiculoSave extends RestController{
         this.weight = new Control("", Validators.compose([Validators.required]));
         this.vehicleType = new Control("", Validators.compose([Validators.required]));
         this.company = new Control("", Validators.compose([Validators.required]));
+        this.image = new Control("", Validators.compose([Validators.required]));
 
         this.form = this._formBuilder.group({
             plate: this.plate,
@@ -51,6 +56,7 @@ export class VehiculoSave extends RestController{
             weight: this.weight,
             vehicleType: this.vehicleType,
             company: this.company,
+            image: this.image,
         });
 
     }
@@ -92,6 +98,19 @@ export class VehiculoSave extends RestController{
     assignCompany(data){
         this.company.updateValue(data.id);
         this.dataCompany=data.title+", RUC: "+data.detail;
+    }
+    //----------imagen------------------------------------------------
+    src: string = "";
+    resizeOptions: ResizeOptions = {
+        resizeMaxHeight: 60,
+        resizeMaxWidth: 60
+    };
+
+    selected(imageResult: ImageResult) {
+        this.src = imageResult.resized
+            && imageResult.resized.dataURL
+            || imageResult.dataURL;
+        this.image.updateValue(this.src);
     }
 
 }

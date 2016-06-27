@@ -3,15 +3,15 @@ import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
 import {VehiculoSave} from "./methods";
+import {Search} from "../utils/search/search"
+import {Json} from "@angular/platform-browser/src/facade/lang";
 @Component({
     selector: 'vehiculo',
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/style.css'],
-    directives: [VehiculoSave],
+    directives: [VehiculoSave,Search],
 })
 export class Vehiculo extends RestController{
-
-    public dataSelect:string;
 
     constructor(public router: Router,public http: Http) {
         super(http);
@@ -29,12 +29,26 @@ export class Vehiculo extends RestController{
     assignVehiculo(data){
         this.dataList.list.push(data);
     }
+
+    //Buscar tag sin vehiculo ---------------------------------------------
+    public dataSelect:string;
+
     public searchTag={
-        title:"Tag RFID",
+        title:"Tag",
         idModal:"searchTag",
-        endpointForm:"rfids?where[['op':'isNull','field':'vehicle']]",
+        endpointForm:"/search/rfids/",
         placeholderForm:"Seleccione un Tag",
-        labelForm:{name:"Nombre: ",detail:"Detalle: "},
+        labelForm:{name:"Numero: ",detail:"Detalle: "},
+        where:"&where=[['op':'isNull','field':'vehicle.id']]"
+    }
+    //asignar tag a vehiculo
+    assignTag(data){
+        let successCallBack = response=>{
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+            this.dataList.list[index].tagRFID = response.json().number;
+        }
+        let body=Json.stringify({'vehicle':this.dataSelect})
+        this.httputils.doPut('/rfids/'+data.id,body,successCallBack,this.error)
     }
 
 }
