@@ -1,6 +1,6 @@
 <div class="content-wrapper">
     <section class="content">
-        <div class="col-md-12">
+        <div class="">
             <div class="box">
                 <div class="box-header with-border">
                     <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#saveEmpresa">
@@ -46,15 +46,15 @@
                                                     <img src="{{data.image?data.image:'/assets/img/company-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
                                                 </figure>
                                             </div>
-                                            <div class="col-xs-12 col-sm-8">
-                                                <h2>{{data.name}}</h2>
-                                                <p><strong>RUC: </strong>{{data.ruc}} </p>
+                                            <div class="col-xs-12 col-sm-8 empresa-title truncate">
+                                                <h4 >{{data.name}}</h4>
                                             </div>
                                             <div class="col-xs-12 col-sm-8 col-lg-12">
-                                                <p><strong>Responsable:</strong>{{data.responsiblePerson}} </p>
-                                                <p><strong>Telefonos:</strong>{{data.phone}} </p>
-                                                <p><strong>Direccion:</strong> {{data.address}}</p>
-                                                <p><strong>Tipo:</strong> {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
+                                                <p class="truncate"><strong>RUC: </strong>{{data.ruc}} </p>
+                                                <p class="truncate"><strong>Responsable:</strong>{{data.responsiblePerson}} </p>
+                                                <p class="truncate"><strong>Telefonos:</strong>{{data.phone}} </p>
+                                                <p class="truncate "><strong>Direccion:</strong> {{data.address}}</p>
+                                                <p class="truncate"><strong>Tipo:</strong> {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
 
                                                     <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTipoEmpresa">
                                                         <i class="fa fa-search"></i>

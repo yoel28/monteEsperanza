@@ -2,3 +2,11 @@
     border: 1px solid rgba(39, 39, 39, 0.18);
     border-radius: 10px !important;
 }
+.truncate{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.empresa-title{
+    max-height: 60pt;
+    min-height: 60pt;
+}

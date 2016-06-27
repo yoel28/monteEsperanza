@@ -10,7 +10,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 @Component({
     selector: 'empresa-save',
     templateUrl: 'app/empresa/save.html',
-    styleUrls: ['app/empresa/style.css'],
+    styleUrls: ['app/empresa/style.css','app/empresa/fileinput.min.css'],
     directives: [SELECT_DIRECTIVES,ImageUpload],
     inputs:['idModal'],
     outputs:['save'],

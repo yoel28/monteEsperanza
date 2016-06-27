@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {Router, RouteParams}           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -30,6 +30,7 @@ export class Empresa extends RestController{
         super(http,toastr);
         this.validTokens();
         this.setEndpoint('/companies/');
+        this.max = 9;
         this.loadData();
     }
     validTokens(){
@@ -68,11 +69,22 @@ export class Empresa extends RestController{
 export class EmpresaTimeLine extends RestController{
     public paramsTimeLine={
         'offset':0,
-        'max':3,
+        'max':8,
         'ruc':''
     };
     constructor(params:RouteParams,public router: Router,http: Http) {
         super(http);
         this.paramsTimeLine.ruc = params.get('ruc');
+    }
+
+    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+    scrollToBottom(): void {
+        try {
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+            console.log ("bottom wii");
+        } catch(err) { }
+    }
+    ngAfterViewChecked() {
+        this.scrollToBottom();
     }
 }
