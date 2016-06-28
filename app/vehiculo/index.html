@@ -34,9 +34,15 @@
                                 <td (blur)="onUpdate($event,data)" accessKey="plate" contenteditable="true">{{data.plate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weight" contenteditable="true">{{data.weight}}</td>
                                 <td> {{ data.tagRFID ? data.tagRFID:"N/A"}}
-                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTag">
+
+                                    <button *ngIf="!data.tagRFID" (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTag">
                                         <i class="fa fa-search"></i>
                                     </button>
+
+                                    <button *ngIf="data.tagRFID" (click)="releaseTag(data)" type="button" class="btn btn-sm" >
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+
                                 </td>
                                 <td (blur)="onUpdate($event,data)" accessKey="minBalance" contenteditable="true">{{data.minBalance}}</td>
                                 <td> {{data.balance}}</td>
@@ -47,7 +53,7 @@
                                 </td>
                                 <td>
                                     <div class="pull-left">
-                                        <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
+                                        <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" class="img-responsive img-circle img-list">
                                     </div>
                                     <div class="pull-right">
                                         <strong>{{data.companyName}}</strong><br/>

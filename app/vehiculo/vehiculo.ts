@@ -46,9 +46,18 @@ export class Vehiculo extends RestController{
         let successCallBack = response=>{
             let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
             this.dataList.list[index].tagRFID = response.json().number;
+            this.dataList.list[index].tagId = response.json().id;
         }
         let body=Json.stringify({'vehicle':this.dataSelect})
         this.httputils.doPut('/rfids/'+data.id,body,successCallBack,this.error)
+    }
+    //liberar tag
+    releaseTag(data){
+        let successCallback= response => {
+            data.tagRFID=null;
+        };
+        let body = JSON.stringify({'vehicle':null})
+        this.httputils.doPut('/rfids/'+data.tagId,body,successCallback,this.error)
     }
 
 }
