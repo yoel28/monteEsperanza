@@ -36,7 +36,7 @@ import {globalService} from "./common/globalService";
   { path: '/account/login',  name: 'AccountLogin',  component: AccountLogin, useAsDefault: true },
   { path: '/account/active/:id/:token',  name: 'AccountActivate',  component: AccountActivate },
   { path: '/account/recover',  name: 'AccountRecover',  component: AccountRecover },
-  { path: '/account/recoverPassword/:id/:tocken',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
+  { path: '/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
   { path: '/users',   name: 'User', component: User },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
@@ -54,6 +54,7 @@ import {globalService} from "./common/globalService";
   { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
+  { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent {
@@ -61,9 +62,11 @@ export class AppComponent {
   constructor(private router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
     localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
+    localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
     //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
   }
   logout() {
+    event.preventDefault();
     localStorage.removeItem('bearer');
     contentHeaders.delete('Authorization');
     let link = ['AccountLogin', {}];
