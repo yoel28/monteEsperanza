@@ -21,6 +21,7 @@ import { TipoRecarga }         from './tipoRecarga/tipoRecarga';
 import { Recarga }         from './recarga/recarga';
 import { TagRfid }         from './tagRfid/tagRfid';
 import { Vehiculo }         from './vehiculo/vehiculo';
+import { Permission }         from './permission/permissions';
 import {globalService} from "./common/globalService";
 
 @Component({
@@ -47,6 +48,7 @@ import {globalService} from "./common/globalService";
   { path: '/empresas/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
+  { path: '/permisos',   name: 'Permisos', component: Permission },
   { path: '/parametro',   name: 'Parametro', component: Parametro },
   { path: '/regla',   name: 'Regla', component: Regla },
   { path: '/recargas',   name: 'Recarga', component: Recarga },
@@ -66,7 +68,7 @@ export class AppComponent {
     //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
   }
   logout() {
-    event.preventDefault();
+    //event.preventDefault();
     localStorage.removeItem('bearer');
     contentHeaders.delete('Authorization');
     let link = ['AccountLogin', {}];
