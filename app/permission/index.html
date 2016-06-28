@@ -1,0 +1,53 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Permisos</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#savePermiso">
+                            Agregar
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" >
+                    <div>
+                        <table class="table table-striped table-hover tarjeta">
+                            <thead>
+                            <tr data-title="email">
+                                <th>ID</th>
+                                <th>Modulo</th>
+                                <th>Titulo</th>
+                                <th>Detalle</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let data of dataList.list" >
+                                <td>{{data.id}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="module" contenteditable="true">{{data.module}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
+                                <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
+
+                                <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- ./box-body -->
+                <div class="box-footer with-border">
+                    <div class="btn-group pull-right">
+                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                            {{val}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </section>
+</div>
+<permiso-save idModal="savePermiso" (save)="assignPermiso($event)"> </permiso-save>
