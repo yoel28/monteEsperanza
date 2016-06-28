@@ -4,6 +4,12 @@
   <title>Monte Esperanza</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 1. Load libraries -->
+  <!--[if IE]><script src="node_modules/core-js/client/shim.min.js"></script><![endif]-->
+  <script src="https://afarkas.github.io/webshim/js-webshim/minified/polyfiller.js"></script>
+
+
   <link rel="icon" type="image/icon" href="assets/img/favicon.ico" >
   <script src="node_modules/jquery/dist/jquery.js"></script>
 
@@ -34,29 +40,30 @@
 
   <script src="node_modules/highcharts/highcharts.js"></script>
 
-  <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
-  <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
 
   <link href="node_modules/ng2-toastr/bundles/ng2-toastr.min.css" rel="stylesheet" />
   <script src="node_modules/ng2-toastr/bundles/ng2-toastr.min.js"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+
 <main>
     <my-app>Loading...</my-app>
 </main>
+<script>
+  webshim.setOptions('forms-ext', {
+    replaceUI: 'auto'
+  });
+  //set language/UI dateformat || or use lang attribute on html element
+  //webshims.activeLang('hu'); // hu == hungary
 
+  webshim.polyfill('forms forms-ext');
+</script>
 <script>
 $(document).ajaxStart(function () {
  Pace.restart();
 });
 </script>
-<script>
-  webshims.setOptions('waitReady', false);
-  webshims.setOptions('forms-ext', {types: 'date'});
-  webshims.polyfill('forms forms-ext');
-</script>
-
 </body>
 
 </html>
