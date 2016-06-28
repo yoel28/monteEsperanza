@@ -131,7 +131,7 @@ export class AccountRecover extends RestController {
         this.httputils.doGet(this.endpoint+this.username.value,successCallback,this.error,true);
     }
     onLogin(){
-        event.preventDefault();
+        //event.preventDefault(); 
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }
@@ -159,7 +159,7 @@ export class AccountRecoverPassword extends RestController {
         });
     }
     recoverPassword(){
-        event.preventDefault();
+        //event.preventDefault(); 
         let body = JSON.stringify({'password':this.password.value});
         let successCallback= response => {
             this.toastr.success('Contrasena Actualizada','Solicitud Procesada.');
@@ -170,7 +170,7 @@ export class AccountRecoverPassword extends RestController {
     }
 
     onLogin(){
-        event.preventDefault();
+        //event.preventDefault(); 
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }

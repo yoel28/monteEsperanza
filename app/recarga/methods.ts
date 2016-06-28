@@ -129,11 +129,11 @@ export class RecargaTimeLine extends RestController{
         this.loadData();
     }
     loadData(){
-        event.preventDefault();
+        //event.preventDefault(); 
         this.httputils.onLoadList(this.endpoint+this.params.ruc+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
     }
     addtimeLine(){
-        event.preventDefault();
+        //event.preventDefault(); 
         let successCallback= response => {
             response.json().list.forEach(obj=>{
                 this.dataList.list.push(obj);
