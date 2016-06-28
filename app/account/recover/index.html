@@ -16,9 +16,9 @@
                         <fieldset>
                             <div class="form-group input-icon right">
                                 <i class="fa fa-user"></i>
-                                <input ngControl="username" class="form-control" [(ngModel)]="username.value"  #username="ngForm" placeholder="Usuario / Email" type="text">
+                                <input ngControl="username" class="form-control" [(ngModel)]="username.value"  #username="ngForm" placeholder="Email" type="email">
                                 <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
-                                    Por favor ingrese un Usuario / Email valido
+                                    Por favor ingrese un Email valido
                                 </div>
                             </div>
                             <button style="float:left;" class="btn btn-success btn-blue pull-left" (click)="onLogin()">

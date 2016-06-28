@@ -110,9 +110,9 @@ export class AccountRecover extends RestController {
     form:ControlGroup;
     username:Control;
 
-    constructor(public router:Router, public http:Http, public _formBuilder:FormBuilder) {
-        super(http);
-        this.setEndpoint('/users/recover/');
+    constructor(public router:Router, public http:Http, public _formBuilder:FormBuilder,public toastr: ToastsManager) {
+        super(http,toastr);
+        this.setEndpoint(localStorage.getItem('url')+'/users/recover/');
         this.initForm();
     }
     initForm() {
@@ -121,11 +121,17 @@ export class AccountRecover extends RestController {
             username: this.username,
         });
     }
-
-    recoverPassword(){
-
+    recoverPassword(event){
+        event.preventDefault();
+        let successCallback= response => {
+            this.toastr.success('Correo Enviado','Solicitud Procesada.');
+            let link = ['AccountLogin', {}];
+            this.router.navigate(link);
+        }
+        this.httputils.doGet(this.endpoint+this.username.value,successCallback,this.error,true);
     }
     onLogin(){
+        event.preventDefault();
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }
@@ -141,9 +147,9 @@ export class AccountRecoverPassword extends RestController {
     form:ControlGroup;
     password:Control;
 
-    constructor(public params:RouteParams, public router:Router, public http:Http, public _formBuilder:FormBuilder) {
-        super(http);
-        this.setEndpoint('/users/recoverPassword/' + params.get('id') + "?access_token=" + params.get('token'));
+    constructor(public params:RouteParams, public router:Router, public http:Http, public _formBuilder:FormBuilder,public toastr: ToastsManager) {
+        super(http,toastr);
+        this.setEndpoint('/users/' + params.get('id') + "?access_token=" + params.get('token'));
         this.initForm();
     }
     initForm() {
@@ -152,8 +158,19 @@ export class AccountRecoverPassword extends RestController {
             password: this.password,
         });
     }
+    recoverPassword(){
+        event.preventDefault();
+        let body = JSON.stringify({'password':this.password.value});
+        let successCallback= response => {
+            this.toastr.success('Contrasena Actualizada','Solicitud Procesada.');
+            let link = ['AccountLogin', {}];
+            this.router.navigate(link);
+        }
+        this.httputils.doPut(this.endpoint,body,successCallback,this.error)
+    }
 
     onLogin(){
+        event.preventDefault();
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }
