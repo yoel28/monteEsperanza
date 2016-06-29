@@ -8,8 +8,8 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({
     selector: 'permiso-save',
-    templateUrl: 'app/permission/save.html',
-    styleUrls: ['app/permission/style.css'],
+    templateUrl: 'app/permiso/save.html',
+    styleUrls: ['app/permiso/style.css'],
     inputs:['idModal'],
     directives:[SELECT_DIRECTIVES],
     outputs:['save'],

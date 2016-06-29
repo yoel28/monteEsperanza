@@ -21,7 +21,8 @@ import { TipoRecarga }         from './tipoRecarga/tipoRecarga';
 import { Recarga }         from './recarga/recarga';
 import { TagRfid }         from './tagRfid/tagRfid';
 import { Vehiculo }         from './vehiculo/vehiculo';
-import { Permission }         from './permission/permissions';
+import { Permiso }         from './permiso/permiso';
+import { PermisosRol }         from './permiso/permiso';
 import {globalService} from "./common/globalService";
 
 @Component({
@@ -48,7 +49,8 @@ import {globalService} from "./common/globalService";
   { path: '/empresas/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
-  { path: '/permisos',   name: 'Permisos', component: Permission },
+  { path: '/permisos',   name: 'Permiso', component: Permiso },
+  { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
   { path: '/parametro',   name: 'Parametro', component: Parametro },
   { path: '/regla',   name: 'Regla', component: Regla },
   { path: '/recargas',   name: 'Recarga', component: Recarga },
