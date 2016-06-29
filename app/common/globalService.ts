@@ -12,6 +12,13 @@ export class globalService extends RestController{
     
     constructor(public http:Http,public toastr: ToastsManager) {
         super(http,toastr);
+
+        if (typeof(Storage) !== "undefined") {
+            console.log("habemus localstorage")
+        } else {
+            console.log("no habemus localstorage")
+        }
+
         if(localStorage.getItem('bearer')){
             this.getUser();
         }
