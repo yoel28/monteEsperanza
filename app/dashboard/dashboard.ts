@@ -47,6 +47,8 @@ export class Dashboard extends RestController{
     constructor(public router: Router,http: Http,public toastr: ToastsManager) {
         super(http,toastr);
         this.validTokens();
+    }
+    ngOnInit(){
         this.getPlot1();
         this.getPlot2();
     }
