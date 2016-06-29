@@ -17,7 +17,9 @@
     'ng2-file-upload':            'node_modules/ng2-file-upload',
     'ng2-uploader':               'node_modules/ng2-uploader',
     'ng2-imageupload':            'node_modules/ng2-imageupload',
-    'ng2-toastr':                 'node_modules/ng2-toastr'
+    'ng2-toastr':                 'node_modules/ng2-toastr',
+    'jquery' :                    'node_modules/jquery/dist',
+    'semantic' :                  'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js'
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -34,6 +36,9 @@
     'ng2-bootstrap':              { main: 'ng2-bootstrap',defaultExtension: 'js' },
     'ng2-imageupload':            { main: 'index.js',defaultExtension: 'js' },
     'ng2-toastr':                 { defaultExtension: 'js' },
+    'jquery':                     { main: 'jquery.min.js', defaultExtension: 'js' },
+
+
   };
   var ngPackageNames = [
     'common',
