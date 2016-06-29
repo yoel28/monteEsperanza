@@ -6,7 +6,7 @@ import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF} from '@angular/c
 import { globalService }   from './common/globalService';
 import { AppComponent }   from './app.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+import 'semantic';
 
 enableProdMode();
 bootstrap(AppComponent, [
