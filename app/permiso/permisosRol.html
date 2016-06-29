@@ -3,13 +3,22 @@
         <div class="box">
             <div class="box-header with-border">
                 <div *ngIf="dataRoles.count" class="col-lg-4">
-                    <ng-select [allowClear]="true"
-                               [items]="items"
-                               (data)="refreshValue($event)"
-                               placeholder="Seleccione un Rol">
-
-                    </ng-select>
+                    <select  [(ngModel)]="roleSelect"  (ngModelChange)="setRole($event)"  sm-dropdown name="Select name" class="ui fluid search selection dropdown">
+                        <option value="">Search...</option>
+                        <option *ngFor="let n of items"  [attr.value]="n.id" >{{n.text}}</option>
+                    </select>
                 </div>
+                <div class="col-lg-2">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#saveRol">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm" (click)="loadRoles()">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
+                </div>
+
             </div>
             <div class="box-body with-border">
                 <div *ngIf="role.id" class="row col-lg-10 col-lg-offset-1">
@@ -19,7 +28,7 @@
                             <span *ngFor="let data of dataPermissionsAll.list">
                                 <span *ngIf="data.module == mod">
                                     <label  class="checkbox-inline">
-                                    <input type="checkbox" value="{{data.id}}" [checked]="existsPermission(data.id)" [disabled]="!data.enabled">
+                                    <input (click)="assignPermission(data.id)" class="check" type="checkbox" value="{{data.id}}" [checked]="existsPermission(data.id)" [disabled]="!data.enabled">
                                         {{data.title}}
                                     </label>
                                 </span>
@@ -28,8 +37,24 @@
                     </div>
                 </div>
             </div>
-            <div class="box-footer with-border"></div>
+            <div *ngIf="role.id" class="box-footer with-border">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-sm" (click)="selectPermission(true)">
+                        <i class="fa fa-plus"></i>&nbsp;Agregar Todos
+                    </button>
+                    <button type="button" class="btn btn-sm" (click)="selectPermission(false)">
+                        <i class="fa fa-minus"></i>&nbsp;Eliminar Todos
+                    </button>
+
+                    <button type="button" class="btn btn-sm" (click)="savePermissions()">
+                        <i class="fa fa-save"></i>&nbsp;Guardar
+                    </button>
+
+                </div>
+            </div>
 
         </div>
     </section>
 </div>
+<rol-save idModal="saveRol" (save)="assignRol($event)"> </rol-save>
+
