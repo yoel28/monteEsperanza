@@ -132,8 +132,8 @@ export class RecargaTimeLine extends RestController{
         //event.preventDefault(); 
         this.httputils.onLoadList(this.endpoint+this.params.ruc+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
     }
-    addtimeLine(){
-        //event.preventDefault(); 
+    addtimeLine(event){
+        event.preventDefault();
         let successCallback= response => {
             response.json().list.forEach(obj=>{
                 this.dataList.list.push(obj);
@@ -145,4 +145,34 @@ export class RecargaTimeLine extends RestController{
             this.httputils.doGet(this.endpoint+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,successCallback,this.error)
     }
 
+}
+
+@Component({
+    selector: 'recarga-factura',
+    templateUrl: 'app/recarga/facturas.html',
+    styleUrls: ['app/recarga/style.css'],
+    inputs:['params'],
+    pipes: [Fecha],
+})
+export class RecargaFactura extends RestController{
+    // public params={
+    //     'dateStart':'27-06-2016',
+    //     'dateEnd':'27-06-2016',
+    // };
+    public params:any={};
+
+    constructor(public http:Http,public _formBuilder: FormBuilder) {
+        super(http);
+        this.setEndpoint('/search/recharges/');
+    }
+    ngOnInit() {
+        this.max = 10;
+        this.endpoint+="?where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+                               "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
+        this.loadData();
+    }
+    loadData(offset=0){
+        this.offset=offset;
+        this.httputils.onLoadList(this.endpoint+`&max=${this.max}&offset=${this.offset}`,this.dataList,this.max,this.error);
+    }
 }
