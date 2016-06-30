@@ -21,15 +21,22 @@
                                 <th>Modulo</th>
                                 <th>Titulo</th>
                                 <th>Detalle</th>
+                                <th>Bloqueado</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="module" contenteditable="true">{{data.module}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
+                                <td>{{data.module}}</td>
+                                <td>{{data.title}}</td>
+                                <td>{{data.detail}}</td>
+                                <td>
+                                    <button (click)="onPatch('enabled',data)" class="btn btn-sm"
+                                            [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
+                                        {{data.enabled?"Habilitado":"Bloqueado"}}
+                                    </button>
+                                </td>
 
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>

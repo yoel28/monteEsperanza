@@ -6,6 +6,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {PermisoSave} from "./methods";
 import {RolSave} from "../rol/methods";
 import {SELECT_DIRECTIVES} from "ng2-select/ng2-select";
+import {globalService} from "../common/globalService";
 
 @Component({
     selector: 'permission',
@@ -18,8 +19,6 @@ export class Permiso extends RestController{
     constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
         super(http,toastr);
         this.validTokens();
-        this.setEndpoint('/permissions/');
-        this.loadData();
     }
     validTokens(){
         if(!localStorage.getItem('bearer'))
@@ -27,6 +26,11 @@ export class Permiso extends RestController{
             let link = ['AccountLogin', {}];
             this.router.navigate(link);
         }
+    }
+    ngOnInit(){
+        this.setEndpoint('/permissions/');
+        this.max = 30;
+        this.loadData();
     }
     assignPermiso(data){
         this.dataList.list.unshift(data);
@@ -50,9 +54,11 @@ export class SMDropdown {
 })
 export class PermisosRol extends RestController {
 
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.validTokens();
+    }
+    ngOnInit(){
         this.loadPermissions();
         this.loadRoles();
     }
@@ -96,7 +102,7 @@ export class PermisosRol extends RestController {
             Object.assign(this.dataPermissionsAll, response.json());
             this.findModules();
         };
-        this.httputils.doGet('/permissions?sort=module&order=asc',successCallback,this.error)
+        this.httputils.doGet('/permissions?sort=module&order=asc&max=1000',successCallback,this.error)
     }
     //Verificar Existencia del permiso
     public existsPermission(id){
@@ -150,6 +156,10 @@ export class PermisosRol extends RestController {
             this.toastr.success('Guardado con éxito')
         }
         this.httputils.doPost('/role/'+this.role.id+'/permissions/',body,successCallback,this.error)
+    }
+    //Cargar mis permisos
+    loadMyPermissions(){
+        this.myglobal.myPermissions();
     }
 
 }

@@ -8,13 +8,16 @@
                         <option *ngFor="let n of items"  [attr.value]="n.id" >{{n.text}}</option>
                     </select>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <div class="pull-right">
                         <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#saveRol">
                             <i class="fa fa-plus"></i>
                         </button>
                         <button type="button" class="btn btn-sm" (click)="loadRoles()">
                             <i class="fa fa-refresh"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm" (click)="loadMyPermissions()">
+                            <i class="fa fa-list"></i>&nbsp;Cargar mis permisos
                         </button>
                     </div>
                 </div>
@@ -25,14 +28,16 @@
                     <div *ngFor="let mod of modules">
                         <div class="row">
                             <h4>{{mod}}</h4>
-                            <span *ngFor="let data of dataPermissionsAll.list">
+                            <div *ngFor="let data of dataPermissionsAll.list">
                                 <span *ngIf="data.module == mod">
-                                    <label  class="checkbox-inline">
-                                    <input (click)="assignPermission(data.id)" class="check" type="checkbox" value="{{data.id}}" [checked]="existsPermission(data.id)" [disabled]="!data.enabled">
-                                        {{data.title}}
-                                    </label>
+                                    <div class="col-lg-4">
+                                        <label>
+                                        <input (click)="assignPermission(data.id)" type="checkbox" value="{{data.id}}" [checked]="existsPermission(data.id)" >
+                                            {{data.title}}&nbsp;({{data.id}})
+                                        </label>
+                                    </div>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
