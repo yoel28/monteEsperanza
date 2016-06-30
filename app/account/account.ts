@@ -65,7 +65,8 @@ export class AccountLogin extends RestController {
         };
         this.httputils.doPost(this.endpoint, body, successCallback, errorLogin);
     }
-    recover(){
+    recover(event){
+        event.preventDefault();
         let link = ['AccountRecover', {}];
         this.router.navigate(link);
     }
