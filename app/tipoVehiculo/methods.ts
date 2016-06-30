@@ -1,5 +1,8 @@
 import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
+import {RestController} from "../common/restController";
+import {Http} from "@angular/http";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({
     selector: 'tipoVehiculo-save',
@@ -8,7 +11,7 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
     inputs:['idModal'],
     outputs:['save'],
 })
-export class TipoVehiculoSave{
+export class TipoVehiculoSave extends RestController{
 
     public idModal:string;
     public save:any;
@@ -19,9 +22,12 @@ export class TipoVehiculoSave{
     icon: Control;
 
 
-    constructor(public _formBuilder: FormBuilder) {
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
+        super(http,toastr);
         this.initForm();
+        this.setEndpoint('/type/vehicles/');
         this.save = new EventEmitter();
+
     }
     initForm(){
 
@@ -38,7 +44,11 @@ export class TipoVehiculoSave{
     }
 
     submitForm(){
-        this.save.emit(this.form);
+        let successCallback= response => {
+            this.save.emit(response.json());
+        };
+        let body = JSON.stringify(this.form.value);
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
 }
 

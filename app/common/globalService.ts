@@ -50,8 +50,6 @@ export class globalService extends RestController{
         let successCallback= response => {
             Object.assign(this.permissions,response.json());
             localStorage.setItem('permissions',response.json());
-            console.log(this.user);
-            console.log(this.permissions);
         };
         this.httputils.doGet('/current/permissions/',successCallback,this.error);
     }

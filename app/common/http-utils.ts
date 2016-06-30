@@ -1,9 +1,10 @@
 import {Http} from '@angular/http';
 import {contentHeaders} from '../common/headers';
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 export class HttpUtils {
 
-    constructor(public http:Http) {
+    constructor(public http:Http,public toastr?: ToastsManager) {
     }
 
     createEndpoint(endpoint:string,isAbosulte=false){
@@ -89,6 +90,8 @@ export class HttpUtils {
         let successCallback= response => {
             if(list != null)
                 list.push( response.json())
+            if(this.toastr)
+                this.toastr.success('Guardado con éxito','Notificacion')
         }
         this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
@@ -104,6 +107,8 @@ export class HttpUtils {
                     list['page'].push(i);
                 }
             }
+            if(this.toastr)
+                this.toastr.success('Carga realizada con éxito','Notificacion')
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
@@ -115,12 +120,16 @@ export class HttpUtils {
                 if(index!=-1)
                     list.splice(index,1);
             }
+            if(this.toastr)
+                this.toastr.success('Borrado con éxito','Notificacion')
         }
         this.doDelete(endpoint,successCallback,errorCallback,isEndpointAbsolute);
     }
     onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false) {
         let successCallback= response => {
             Object.assign(data, response.json());
+            if(this.toastr)
+                this.toastr.success('Actualizado con éxito','Notificacion')
         }
         this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }

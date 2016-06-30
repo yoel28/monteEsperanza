@@ -2,6 +2,7 @@ import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({
     selector: 'tipoEmpresa-save',
@@ -21,8 +22,8 @@ export class TipoEmpresaSave extends RestController{
     detail: Control;
 
 
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
+        super(http,toastr);
         this.initForm();
         this.save = new EventEmitter();
         this.setEndpoint('/type/companies/');

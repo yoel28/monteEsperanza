@@ -3,18 +3,23 @@ import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
 import {VehiculoSave} from "./methods";
+import {EmpresaSave} from "../empresa/methods";
+import {TipoVehiculoSave} from "../tipoVehiculo/methods";
+import {TagSave} from "../tagRfid/methods";
 import {Search} from "../utils/search/search"
 import {Json} from "@angular/platform-browser/src/facade/lang";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+
 @Component({
     selector: 'vehiculo',
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/style.css'],
-    directives: [VehiculoSave,Search],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave],
 })
 export class Vehiculo extends RestController{
 
-    constructor(public router: Router,public http: Http) {
-        super(http);
+    constructor(public router: Router,public http: Http,public toastr?: ToastsManager) {
+        super(http,toastr);
         this.validTokens();
         this.setEndpoint('/vehicles/');
         this.loadData();
@@ -58,6 +63,57 @@ export class Vehiculo extends RestController{
         };
         let body = JSON.stringify({'vehicle':null})
         this.httputils.doPut('/rfids/'+data.tagId,body,successCallback,this.error)
+    }
+    //asignar tag nuevo
+    assignTagNuevo(data){
+        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+        if(this.dataList.list[index].tagRFID)
+        {
+            let successCallback= response => {
+                this.assignTag(data);
+            };
+            let body = JSON.stringify({'vehicle':null})
+            this.httputils.doPut('/rfids/'+this.dataList.list[index].tagId,body,successCallback,this.error)
+        }
+        else
+            this.assignTag(data);
+    }
+
+
+    //Buscar tipo vehiculo ---------------------------------------------
+    public searchTipoVehiculo={
+        title:"Tipo Vehiculo",
+        idModal:"searchTipoVehiculo",
+        endpointForm:"/search/type/vehicles",
+        placeholderForm:"Seleccione un Tipo de vehiculo",
+        labelForm:{name:"Numero: ",detail:"Detalle: "}
+    }
+    //asignar tag a vehiculo
+    assignTipoVehiculo(data){
+        let successCallBack = response=>{
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+            this.dataList.list[index] = response.json();
+        }
+        let body=Json.stringify({'vehicleType':data.id})
+        this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
+    }
+
+    //Buscar Empresa ---------------------------------------------
+    public searchEmpresa={
+        title:"Empresa Nueva",
+        idModal:"searchEmpresaNueva",
+        endpointForm:"/search/companies/",
+        placeholderForm:"Ingrese el RUC de la empresa",
+        labelForm:{name:"Nombre: ",detail:"RUC: "},
+    }
+    //asignar empresa
+    assignEmpresa(data){
+        let successCallBack = response=>{
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+            this.dataList.list[index] = response.json();
+        }
+        let body=Json.stringify({'company':data.id})
+        this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
     }
 
 }

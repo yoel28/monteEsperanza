@@ -14,7 +14,7 @@ export class RestController{
     page:any=[];
 
     constructor(public http: Http,public toastr?: ToastsManager) {
-        this.httputils = new HttpUtils(http);
+        this.httputils = new HttpUtils(http,toastr || null);
     }
     setEndpoint(endpoint:string){
         this.endpoint=endpoint;
@@ -33,9 +33,11 @@ export class RestController{
     onUpdate(event,data){
         event.preventDefault();
         if(data[event.target.accessKey]!=event.target.innerHTML){
-            data[event.target.accessKey] = event.target.innerHTML;
-            let body = JSON.stringify(data);
-            this.httputils.onUpdate(this.endpoint+data.id,body,this.dataList,this.error);
+            //data[event.target.accessKey] = event.target.innerHTML;
+            let json = {};
+            json[event.target.accessKey] = event.target.innerHTML;
+            let body = JSON.stringify(json);
+            this.httputils.onUpdate(this.endpoint+data.id,body,data,this.error);
         }
     }
     onDelete(event,id){

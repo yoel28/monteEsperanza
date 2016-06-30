@@ -33,16 +33,28 @@
                                 <td>{{data.id}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="plate" contenteditable="true">{{data.plate}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="weight" contenteditable="true">{{data.weight}}</td>
-                                <td> {{ data.tagRFID ? data.tagRFID:"N/A"}}
+                                <td>
+                                    {{ data.tagRFID ? data.tagRFID:"N/A"}}
+                                    <div class="row">
+                                        <div class="box-tools pull-right">
+                                            <button *ngIf="data.tagRFID" (click)="releaseTag(data)"
+                                                    type="button" class="btn btn-box-tool" >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
 
-                                    <button *ngIf="!data.tagRFID" (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTag">
-                                        <i class="fa fa-search"></i>
-                                    </button>
+                                            <button (click)="dataSelect = data.id"
+                                                    data-toggle="modal" data-target="#saveTagVehiculo"
+                                                    type="button" class="btn btn-box-tool">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
 
-                                    <button *ngIf="data.tagRFID" (click)="releaseTag(data)" type="button" class="btn btn-sm" >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-
+                                            <button *ngIf="!data.tagRFID" (click)="dataSelect = data.id"
+                                                    data-toggle="modal" data-target="#searchTag"
+                                                    type="button" class="btn btn-box-tool" >
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td (blur)="onUpdate($event,data)" accessKey="minBalance" contenteditable="true">{{data.minBalance}}</td>
                                 <td> {{data.balance}}</td>
@@ -50,19 +62,50 @@
                                     <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
                                     <strong>{{data.vehicleTypeTitle}}</strong><br/>
                                     {{data.vehicleTypeDetail}}
+
+                                    <div class="row">
+                                        <div class="box-tools pull-right">
+                                            <button (click)="dataSelect = data.id"
+                                                    data-toggle="modal" data-target="#saveTipoVehiculoAdd"
+                                                    type="button" class="btn btn-box-tool">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+
+                                            <button (click)="dataSelect = data.id"
+                                                    data-toggle="modal" data-target="#searchTipoVehiculo"
+                                                    type="button" class="btn btn-box-tool" >
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
-                                    <div class="pull-left">
-                                        <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" class="img-responsive img-circle img-list">
+                                    <div class="row">
+                                        <div class="pull-left">
+                                            <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" class="img-responsive img-circle img-list">
+                                        </div>
+                                        <div class="pull-right">
+                                            <strong>{{data.companyName}}</strong><br/>
+                                            <strong>RUC: </strong>{{data.companyRuc}}<br/>
+                                            <strong>Telefono: </strong>{{data.companyPhone}}<br/>
+                                        </div>
                                     </div>
-                                    <div class="pull-right">
-                                        <strong>{{data.companyName}}</strong><br/>
-                                        <strong>RUC: </strong>{{data.companyRuc}}<br/>
-                                        <strong>Telefono: </strong>{{data.companyPhone}}<br/>
-                                    </div>
+                                    <div class="row">
+                                        <div class="box-tools pull-right">
+                                            <button (click)="dataSelect = data.id"
+                                                    data-toggle="modal" data-target="#saveEmpresaAdd"
+                                                    type="button" class="btn btn-box-tool">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
 
+                                            <button (click)="dataSelect = data.id"
+                                                    data-toggle="modal" data-target="#searchEmpresaNueva"
+                                                    type="button" class="btn btn-box-tool" >
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
-
                                 <td> <img src="{{data.image?data.image:'/assets/img/truck-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle img-form"></td>
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
@@ -86,4 +129,10 @@
     </section>
 </div>
 <vehiculo-save idModal="saveVehiculo" (save)="assignVehiculo($event)"> </vehiculo-save>
+<empresa-save idModal="saveEmpresaAdd" (save)="assignEmpresa($event)"> </empresa-save>
+<tag-save idModal="saveTagVehiculo" (save)="assignTagNuevo($event)"> </tag-save>
+<tipoVehiculo-save idModal="saveTipoVehiculoAdd" (save)="assignTipoVehiculo($event)"> </tipoVehiculo-save>
+
 <search  [params]="searchTag" (result)="assignTag($event)"></search>
+<search  [params]="searchTipoVehiculo" (result)="assignTipoVehiculo($event)"></search>
+<search  [params]="searchEmpresa" (result)="assignEmpresa($event)"></search>
