@@ -40,20 +40,53 @@
                             <div [ng2-highcharts]="dataArea" ></div>
                         </div>
                         <div class="col-md-4">
-                            <p class="text-center">
-                                <strong>Balance</strong>
-                            </p>
-                            <div class="progress-group" *ngFor="let data of dataPlot" >
-                                <span class="progress-text"><i class="{{data.icon}}"></i> &nbsp;{{data.title}}</span>
-                                <span class="progress-number">{{data.quantity }}/ {{dataPlot.total}}</span>
+                            <div class="row">
+                                <p class="text-center">
+                                    <strong>Balance</strong>
+                                </p>
+                                <div class="progress-group" *ngFor="let data of dataPlot" >
+                                    <span class="progress-text"><i class="{{data.icon}}"></i> &nbsp;{{data.title}}</span>
+                                    <span class="progress-number">{{data.quantity }}/ {{dataPlot.total}}</span>
 
-                                <div class="progress sm">
-                                    <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <p class="text-center">
+                                    <strong>Consultar Facturas</strong>
+                                </p>
+                                <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
+                                    <div class="form-group input-icon right">
+                                        Inicio
+                                        <i class="fa fa-calendar"></i>
+                                        <input ngControl="dateStart" class="form-control" [(ngModel)]="dateStart.value"  #dateStart="ngForm" placeholder="Inicio" type="date">
+                                        <div [hidden]="dateStart.valid || dateStart.pristine" class="alert alert-danger">
+                                            Seleccione una fecha de incio
+                                        </div>
+                                    </div>
+                                    <div class="form-group input-icon right">
+                                        Fin
+                                        <i class="fa fa-calendar"></i>
+                                        <input ngControl="dateEnd" class="form-control" [(ngModel)]="dateEnd.value"  #dateEnd="ngForm" placeholder="Fin" type="date">
+                                        <div [hidden]="dateEnd.valid || dateEnd.pristine" class="alert alert-danger">
+                                            Seleccione una fecha fin
+                                        </div>
+                                    </div>
+                                    <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
+                                            id="cntrlsubmit" [disabled]="!form.valid">
+                                        <i class="fa fa-bank"></i>
+                                        Consultar
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div *ngIf="consultar" [class.box]="consultar">
+                <recarga-factura [params]="paramsFactura"> </recarga-factura>
             </div>
         </div>
         <recarga-timeline *ngIf="myglobal.existsPermission('28')" [params]="paramsTimeLine"> </recarga-timeline>

@@ -4,17 +4,19 @@ import { Http } from '@angular/http';
 import {HttpUtils} from "../common/http-utils";
 import { Ng2Highcharts } from 'ng2-highcharts/ng2-highcharts';
 import {RecargaTimeLine} from "../recarga/methods";
+import {RecargaFactura} from "../recarga/methods";
 import match = require("core-js/fn/symbol/match");
 import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
-
+import {ControlGroup, Control, Validators, FormBuilder} from "@angular/common";
+import moment from 'moment/moment';
 
 @Component({
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
     styleUrls: ['app/dashboard/dashboard.css'],
-    directives: [Ng2Highcharts,RecargaTimeLine],
+    directives: [Ng2Highcharts,RecargaTimeLine,RecargaFactura],
 })
 export class Dashboard extends RestController{
     dataCamion:any = [];
@@ -45,11 +47,12 @@ export class Dashboard extends RestController{
         title : { text : 'Uso del vertedero' },
     };
 
-    constructor(public router: Router,http: Http,public toastr: ToastsManager,public myglobal:globalService) {
+    constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.validTokens();
     }
     ngOnInit(){
+        this.initForm();
         this.getPlot1();
         this.getPlot2();
     }
@@ -89,6 +92,30 @@ export class Dashboard extends RestController{
         this.httputils.doGet("/dashboards/plot/2/2016",successCallback,this.error)
     }
 
+    //consultar Facturas
+    form: ControlGroup;
+    dateStart:Control;
+    dateEnd:Control;
+    initForm(){
+        this.dateStart = new Control("", Validators.compose([Validators.required]));
+        this.dateEnd = new Control("", Validators.compose([Validators.required]));
+
+        this.form = this._formBuilder.group({
+            dateStart: this.dateStart,
+            dateEnd: this.dateEnd,
+        });
+    }
+    public paramsFactura:any={};
+    public consultar=false;
+    loadFacturas(event){
+        event.preventDefault();
+
+        this.paramsFactura={
+            'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
+            'dateEnd':   moment(this.dateEnd.value.toString()).format('DD-MM-YYYY'),
+        };
+        this.consultar=true;
+    }
 }
 
 
