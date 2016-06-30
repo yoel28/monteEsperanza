@@ -7,6 +7,7 @@ import {RecargaTimeLine} from "../recarga/methods";
 import match = require("core-js/fn/symbol/match");
 import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {globalService} from "../common/globalService";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class Dashboard extends RestController{
 
     public paramsTimeLine={
         'offset':0,
-        'max':3,
+        'max':5,
         'ruc':''
     };
     dataArea={
@@ -44,7 +45,7 @@ export class Dashboard extends RestController{
         title : { text : 'Uso del vertedero' },
     };
 
-    constructor(public router: Router,http: Http,public toastr: ToastsManager) {
+    constructor(public router: Router,http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.validTokens();
     }
@@ -60,7 +61,8 @@ export class Dashboard extends RestController{
         }
     }
 
-    goTaquilla(){
+    goTaquilla(event){
+        event.preventDefault();
         let link = ['Taquilla', {}];
         this.router.navigate(link);
     }

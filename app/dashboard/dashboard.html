@@ -8,19 +8,19 @@
                 <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1>
                 <h3 class="subtitle">QUE DESEA REALIZAR</h3>
                 <div class="text-center title">
-                    <div class="col-lg-3 btn">
+                    <div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn">
                         <img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">
                         <h6>VEHICULO</h6>
                     </div>
-                    <div class="col-lg-3 btn">
+                    <div *ngIf="myglobal.existsPermission('13')" class="col-lg-3 btn">
                         <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
                         <h6>INGRESOS</h6>
                     </div>
-                    <div class="col-lg-3 btn">
+                    <div *ngIf="myglobal.existsPermission('11')" class="col-lg-3 btn">
                         <img src="/assets/img/dashboard/libro.png" class="actions-dashboard">
                         <h6>LIBRO</h6>
                     </div>
-                    <div class="col-lg-3 btn" (click)="goTaquilla()">
+                    <div *ngIf="myglobal.existsPermission('10')" class="col-lg-3 btn" (click)="goTaquilla($event)">
                         <img src="/assets/img/dashboard/taquilla.png" class="actions-dashboard">
                         <h6>TAQUILLA</h6>
                     </div>
@@ -29,7 +29,7 @@
         </div>
     </section>
     <section class="content">
-        <div class="col-md-12">
+        <div *ngIf="myglobal.existsPermission('27')" >
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">An&aacute;lisis de Gesti&oacute;n</h3>
@@ -56,6 +56,6 @@
                 </div>
             </div>
         </div>
-        <recarga-timeline [params]="paramsTimeLine"> </recarga-timeline>
+        <recarga-timeline *ngIf="myglobal.existsPermission('28')" [params]="paramsTimeLine"> </recarga-timeline>
     </section>
 </div>
