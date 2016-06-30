@@ -18,6 +18,7 @@
     'ng2-uploader':               'node_modules/ng2-uploader',
     'ng2-imageupload':            'node_modules/ng2-imageupload',
     'ng2-toastr':                 'node_modules/ng2-toastr',
+    'moment':                     'node_modules/moment',
     'jquery' :                    'node_modules/jquery/dist',
     'semantic' :                  'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js'
 
@@ -35,6 +36,7 @@
     'ng2-uploader':               { main:'ng2-uploader',defaultExtension: 'js' },
     'ng2-bootstrap':              { main: 'ng2-bootstrap',defaultExtension: 'js' },
     'ng2-imageupload':            { main: 'index.js',defaultExtension: 'js' },
+    'moment':                     { main: 'moment.js',defaultExtension: 'js' },
     'ng2-toastr':                 { defaultExtension: 'js' },
     'jquery':                     { main: 'jquery.min.js', defaultExtension: 'js' },
 

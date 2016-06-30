@@ -29,6 +29,7 @@
     "highcharts": "^4.2.5",
     "jquery": "2.1.4",
     "modernizr": "^3.3.1",
+    "moment": "^2.13.0",
     "ng2-bootstrap": "^1.0.17",
     "ng2-file-upload": "^1.0.3",
     "ng2-highcharts": "^0.3.4",
