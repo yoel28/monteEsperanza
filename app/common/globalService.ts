@@ -34,15 +34,26 @@ export class globalService extends RestController{
             Object.assign(this.user, response.json());
             let successCallback2= response => {
                 Object.assign(this.user,this.user,response.json().list[0]);
-                let successCallback3= response => {
-                    Object.assign(this.permissions,response.json());
-                    localStorage.setItem('permissions',response.json());
-                };
-                this.httputils.doGet('/current/permissions/',successCallback3,error);
+                this.myPermissions();
             };
             this.httputils.doGet('/users?where=[["op":"eq","field":"username","value":"'+this.user.username+'"]]', successCallback2,error);
         };
         this.httputils.doGet('/validate',successCallback,error);
+    }
+    existsPermission(id){
+        let index = this.permissions.findIndex(obj => obj.id == id);
+        if(index > -1)
+            return true;
+        return false;
+    }
+    myPermissions(){
+        let successCallback= response => {
+            Object.assign(this.permissions,response.json());
+            localStorage.setItem('permissions',response.json());
+            console.log(this.user);
+            console.log(this.permissions);
+        };
+        this.httputils.doGet('/current/permissions/',successCallback,this.error);
     }
     
 }
