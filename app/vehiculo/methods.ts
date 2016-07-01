@@ -12,7 +12,7 @@ import {ImageUpload, ResizeOptions, ImageResult} from "ng2-imageupload/index";
     templateUrl: 'app/vehiculo/save.html',
     styleUrls: ['app/vehiculo/style.css'],
     inputs:['idModal'],
-    outputs:['save',''],
+    outputs:['save'],
     directives:[SELECT_DIRECTIVES,Search,ImageUpload]
 
 })
@@ -63,6 +63,7 @@ export class VehiculoSave extends RestController{
     submitForm(){
         let successCallback= response => {
             this.save.emit(response.json());
+            
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);

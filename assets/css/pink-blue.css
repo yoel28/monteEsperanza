@@ -6793,7 +6793,7 @@ fieldset[disabled] .btn-white.active {
   color: #ec5d92;
 }
 .input-mini {
-  width: 45px !important;
+  width: 45px ;
 }
 .input-xsmall {
   width: 80px !important;

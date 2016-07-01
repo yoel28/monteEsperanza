@@ -52,6 +52,6 @@ export class RestController{
         let json = {};
         json[field] = value?value:!data[field];
         let body = JSON.stringify(json);
-        this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
+        return this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
     }
 }

@@ -11,7 +11,7 @@
 
                     <div class="form-group input-icon right">
                         <i class="fa fa-building"></i>
-                        <input ngControl="name" class="form-control" [(ngModel)]="name.value"  #name="ngForm" placeholder="Nombre" type="text">
+                        <input ngControl="name" class="form-control" [(ngModel)]="name.value"  placeholder="Nombre" type="text">
                         <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                             El campo contiene errores
                         </div>

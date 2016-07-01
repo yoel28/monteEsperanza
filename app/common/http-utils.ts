@@ -131,6 +131,6 @@ export class HttpUtils {
             if(this.toastr)
                 this.toastr.success('Actualizado con éxito','Notificacion')
         }
-        this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
+       return this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 }
