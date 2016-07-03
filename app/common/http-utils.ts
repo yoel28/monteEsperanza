@@ -89,7 +89,7 @@ export class HttpUtils {
     onSave(endpoint:string, body,list, errorCallback = null,isEndpointAbsolute = false) {
         let successCallback= response => {
             if(list != null)
-                list.push( response.json())
+                list.unshift( response.json())
             if(this.toastr)
                 this.toastr.success('Guardado con éxito','Notificacion')
         }
@@ -125,7 +125,7 @@ export class HttpUtils {
         }
         this.doDelete(endpoint,successCallback,errorCallback,isEndpointAbsolute);
     }
-    onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false) {
+    onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false){
         let successCallback= response => {
             Object.assign(data, response.json());
             if(this.toastr)

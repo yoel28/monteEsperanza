@@ -52,6 +52,15 @@ export class RestController{
         let json = {};
         json[field] = value?value:!data[field];
         let body = JSON.stringify(json);
-        return this.httputils.onUpdate(this.endpoint+data.id,body, data,this.error);
+        return (this.httputils.onUpdate(this.endpoint + data.id, body, data, this.error));
+    }
+    onEditable(field,data,value,endpoint){
+        let json = {};
+        json[field] = value;
+        let body = JSON.stringify(json);
+        let error = err => {
+            this.toastr.error(err.json().message);
+        };
+        return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
     }
 }
