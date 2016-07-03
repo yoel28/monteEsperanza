@@ -31,9 +31,9 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList.list">
-                                <td><a x-editable [xEndpoint]="endpoint" [data]="data" [rules]="rules" field="id">{{data.id}}</a></td>
-                                <td><a x-editable [xEndpoint]="endpoint" [data]="data" (success)="onPatch($event)"  [rules]="rules" field="plate" >{{data.plate}}</a></td>
-                                <td><a x-editable [xEndpoint]="endpoint" [data]="data" [rules]="rules" field="weight" >{{data.weight}}</a></td>
+                                <td>{{data.id}}</td>
+                                <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="plate" >{{data.plate}}</a></td>
+                                <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="weight" >{{data.weight}}</a></td>
                                 <td>
                                     {{ data.tagRFID ? data.tagRFID:"N/A"}}
                                     <div class="row">
@@ -57,8 +57,8 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td ><a x-editable [xEndpoint]="endpoint" [data]="data" [rules]="rules" field="minBalance" ></a></td>
-                                <td ><a x-editable [xEndpoint]="endpoint" [data]="data" [rules]="rules" field="balance" ></a></td>
+                                <td ><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="minBalance" ></a></td>
+                                <td ><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="balance" ></a></td>
                                 <td>
                                     <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
                                     <strong>{{data.vehicleTypeTitle}}</strong><br/>

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Directive,EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
@@ -9,44 +9,8 @@ import {TagSave} from "../tagRfid/methods";
 import {Search} from "../utils/search/search"
 import {Json} from "@angular/platform-browser/src/facade/lang";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {Control, FormBuilder, ControlGroup} from "@angular/common";
-
-
-
-declare var jQuery:any;
-@Directive({
-    selector: "[x-editable]",
-    inputs:['data','rules','field','xEndpoint'],
-    outputs:['success']
-})
-export class Xeditable extends RestController{
-    public success :any;
-    public data:any={};
-    public rules:any={};
-    public field:string;
-    public xEndpoint:any;
-    
-    constructor(public el: ElementRef,public http: Http,public toastr: ToastsManager) {
-        super(http,toastr);
-        this.success= new EventEmitter();
-    }
-    ngOnInit(){
-        let that = this;
-        this.setEndpoint(this.xEndpoint);
-        jQuery(this.el.nativeElement).editable({
-            type: that.rules[that.field].type || 'text',
-            value: that.data[that.field] || "N/A",
-            disabled: that.rules[that.field].disabled? that.rules[that.field].disabled : ( that.data.enabled? !that.data.enabled:false),
-            display: that.rules[that.field].display || null,
-            showbuttons:false,
-            validate: function( newValue) {
-                let val=that.success.emit([that.field, that.data, newValue]);
-                return  val;
-             // return  that.onPatch(that.field,that.data,newValue);
-            }
-        });
-    }
-}
+import {FormBuilder} from "@angular/common";
+import {Xeditable} from "../common/xeditable";
 
 @Component({
     selector: 'vehiculo',
@@ -81,9 +45,17 @@ export class Vehiculo extends RestController{
     assignVehiculo(data){
          this.dataList.list.push(data);
     }
-    
-    onPatch(event){
-        return super.onPatch(event[0],event[1],event[2])
+
+    onPatch2(event){
+        return new Promise<any>((resolve, reject) => {
+            super.onPatch(event[0],event[1],event[2]).then(
+                function (value) {
+                    resolve(value);
+                }, function (reason) {
+                    reject (reason);
+                }
+            );
+        });
     }
 
     //Buscar tag sin vehiculo ---------------------------------------------
