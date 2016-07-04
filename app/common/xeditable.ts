@@ -1,4 +1,4 @@
-import {ElementRef, Directive, EventEmitter} from "@angular/core";
+import {ElementRef, Directive, EventEmitter, Component} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {HttpUtils} from "../common/http-utils";
@@ -53,15 +53,14 @@ export class Xfile {
     }
     ngOnInit() {
         jQuery(this.el.nativeElement).fileinput({
-            language: "es",
             browseLabel: 'Imagen',
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-            maxFilePreviewSize: 10240,
             showCaption: false,
             showRemove: false,
             showUpload: false,
+            showPreview: false,
         });
     }
 }
@@ -80,5 +79,59 @@ export class PullBottom {
     }
 }
 
+@Directive({
+    selector: "[x-cropit]",
+    outputs:   ['saveImagen'],
+})
+export class Xcropit {
+    public saveImagen:any;
+    constructor(public el:ElementRef) {
+        this.saveImagen = new EventEmitter();
+    }
+    ngOnInit() {
+        let that = jQuery(this.el.nativeElement);
+        let _this = this;
+        that.find('.cropit-preview').css({
+            'background-color': '#f8f8f8',
+            'background-size': 'cover',
+            'border': '1px solid #ccc',
+            'border-radius': '3px',
+            'margin-top': '7px',
+            'width': '150px',
+            'height': '150px',
+        })
+        that.find('.cropit-preview-image-container').css({'cursor': 'move'})
+        that.find('.image-size-label').css({'margin-top': '10px'})
+        that.find('input, .export').css({'display':'block'})
+        that.find('button').css({'margin-top':'10px'})
+
+        that.cropit({
+            onImageLoaded:function () {
+                let imageData = that.cropit('export');
+                if(imageData)
+                    _this.saveImagen.emit(imageData);
+            },
+            onOffsetChange:function () {
+                let imageData = that.cropit('export');
+                if(imageData)
+                    _this.saveImagen.emit(imageData);
+            },
+        });
+        that.find('.rotate-cw').click(function(event) {
+            event.preventDefault();
+            that.cropit('rotateCW');
+            let imageData = that.cropit('export');
+            if(imageData)
+                _this.saveImagen.emit(imageData);
+        });
+        that.find('.rotate-ccw').click(function(event) {
+            event.preventDefault();
+            that.cropit('rotateCCW');
+            let imageData = that.cropit('export');
+            if(imageData)
+                _this.saveImagen.emit(imageData);
+        });
+    }
+}
 
 
