@@ -20,28 +20,24 @@ export class OperacionSave extends RestController{
     public save:any;
 
     form: ControlGroup;
-    //recharge: Control;
     vehicle: Control;
     weightIn: Control;
-    //weightOut: Control;
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager) {
         super(http,toastr);
         this.setEndpoint('/operations/');
-        this.initForm();
         this.save = new EventEmitter();
     }
+    ngOnInit(){
+        this.initForm();
+    }
     initForm(){
-        //this.recharge = new Control("", Validators.compose([Validators.required]));
         this.vehicle = new Control("", Validators.compose([Validators.required]));
         this.weightIn = new Control("", Validators.compose([Validators.required]));
-        //this.weightOut = new Control("", Validators.compose([Validators.required]));
 
         this.form = this._formBuilder.group({
-            //recharge: this.recharge,
             vehicle: this.vehicle,
             weightIn: this.weightIn,
-          //  weightOut: this.weightOut,
         });
     }
     submitForm(){
