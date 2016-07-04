@@ -3,15 +3,15 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
-import {ImageUpload, ImageResult, ResizeOptions} from 'ng2-imageupload';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Xfile, Xcropit} from "../common/xeditable";
 
 
 @Component({
     selector: 'empresa-save',
     templateUrl: 'app/empresa/save.html',
     styleUrls: ['app/empresa/style.css','app/empresa/fileinput.min.css'],
-    directives: [SELECT_DIRECTIVES,ImageUpload],
+    directives: [SELECT_DIRECTIVES,Xfile,Xcropit],
     inputs:['idModal'],
     outputs:['save'],
 })
@@ -84,20 +84,10 @@ export class EmpresaSave extends RestController{
     public refreshValue(value:any):void {
         this.companyType.updateValue(value.id);
     }
-
-    //----------imagen------------------------------------------------
-
-    src: string = "";
-    resizeOptions: ResizeOptions = {
-        resizeMaxHeight: 100,
-        resizeMaxWidth: 100
-    };
-
-    selected(imageResult: ImageResult) {
-        this.src = imageResult.resized
-            && imageResult.resized.dataURL
-            || imageResult.dataURL;
-        this.image.updateValue(this.src);
+    //formulario de imagen
+    changeImage(data){
+        this.image.updateValue(data);
     }
+
 }
 

@@ -33,7 +33,7 @@
                                                         <li>
                                                             <a (click)="onPatch('enabled',data)" href="javascript:void(0);">
                                                                 <span class="fa fa-warning"></span>
-                                                                &nbsp;{{data.enabled?"Habilitar":"Bloquear"}}
+                                                                &nbsp;{{data.enabled?"Bloquear":"Habilitar"}}
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -47,20 +47,34 @@
                                                 </figure>
                                             </div>
                                             <div class="col-xs-12 col-sm-8 empresa-title truncate">
-                                                <h4 >{{data.name}}</h4>
+                                                <h4>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="name" ></a>
+                                                </h4>
                                             </div>
                                             <div class="col-xs-12 col-sm-8 col-lg-12">
-                                                <p class="truncate"><strong>RUC: </strong>{{data.ruc}} </p>
-                                                <p class="truncate"><strong>Responsable:</strong>{{data.responsiblePerson}} </p>
-                                                <p class="truncate"><strong>Telefonos:</strong>{{data.phone}} </p>
-                                                <p class="truncate "><strong>Direccion:</strong> {{data.address}}</p>
+                                                <p class="truncate">
+                                                    <strong>RUC: </strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="ruc" ></a>
+                                                </p>
+                                                <p class="truncate">
+                                                    <strong>Responsable:</strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="responsiblePerson" ></a>
+                                                </p>
+                                                <p class="truncate">
+                                                    <strong>Telefonos:</strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="phone" ></a>
+                                                </p>
+                                                <p class="truncate ">
+                                                    <strong>Direccion:</strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="address" ></a>
+                                                </p>
                                                 <p class="truncate"><strong>Tipo:</strong> {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
 
-                                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchTipoEmpresa">
+                                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#searchTipoEmpresa">
                                                         <i class="fa fa-search"></i>
                                                     </button>
 
-                                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#saveTipoEmpresa">
+                                                    <button (click)="dataSelect = data.id" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#saveTipoEmpresa">
                                                         <i class="fa fa-plus"></i>
                                                     </button>
                                                 </p>

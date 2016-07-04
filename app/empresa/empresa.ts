@@ -7,14 +7,33 @@ import {TipoEmpresaSave} from "../tipoEmpresa/methods";
 import {Search} from "../utils/search/search";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RecargaTimeLine} from "../recarga/methods";
+import {Xeditable} from "../common/xeditable";
 
 @Component({
     selector: 'empresa',
     templateUrl: 'app/empresa/index.html',
     styleUrls: ['app/empresa/style.css'],
-    directives:[EmpresaSave,TipoEmpresaSave,Search]
+    directives:[EmpresaSave,TipoEmpresaSave,Search,Xeditable]
 })
 export class Empresa extends RestController{
+    
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
+        super(http,toastr);
+        this.setEndpoint('/companies/');
+    }
+    ngOnInit(){
+        this.validTokens();
+        this.max = 9;
+        this.loadData();
+    }
+    public rules={
+        'id': {'type':'text','disabled':true,'display':false,'title':'' },
+        'name':{'type':'text','display':null,'title':'Nombre de la empresa','mode':'inline'},
+        'ruc':{'type':'text','display':null,'title':'Ruc de la empresa','mode':'inline' },
+        'responsiblePerson':{'type':'text','display':null,'title':'Persona Responsable','mode':'inline'},
+        'phone':{'type':'number','display':null,'title':'Telefono','mode':'inline'},
+        'address':{'type':'text','display':null,'title':'Direccion','mode':'inline'},
+    };
 
     public dataSelect:string;
 
@@ -25,14 +44,7 @@ export class Empresa extends RestController{
         placeholderForm:"Ingrese el tipo empresa",
         labelForm:{name:"Nombre: ",detail:"Detalle: "},
     }
-
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
-        super(http,toastr);
-        this.validTokens();
-        this.setEndpoint('/companies/');
-        this.max = 9;
-        this.loadData();
-    }
+    
     validTokens(){
         if(!localStorage.getItem('bearer'))
         {
@@ -40,20 +52,23 @@ export class Empresa extends RestController{
             this.router.navigate(link);
         }
     }
+
     assignTipoEmpresa(data){
         let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
         this.onPatch('companyType',this.dataList.list[index],data.id);
     }
+
     assignEmpresa(data){
-        this.dataList.list.push(data);
+        this.dataList.list.unshift(data);
+        this.dataList.list.pop();
     }
-    goTaquilla(companyRuc:string)
-    {
+
+    goTaquilla(companyRuc:string) {
         let link = ['TaquillaSearh', {search:companyRuc}];
         this.router.navigate(link);
     }
-    goTimeLine(companyRuc:string)
-    {
+
+    goTimeLine(companyRuc:string) {
         let link = ['EmpresaTimeLine', {ruc:companyRuc}];
         this.router.navigate(link);
     }
