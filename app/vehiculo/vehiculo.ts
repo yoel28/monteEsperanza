@@ -44,7 +44,7 @@ export class Vehiculo extends RestController{
         }
     }
     assignVehiculo(data){
-         this.dataList.list.unshift(data);
+        this.dataList.list.unshift(data);
         this.dataList.list.pop();
     }
 
