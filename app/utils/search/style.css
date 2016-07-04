@@ -1,6 +1,9 @@
 .img-search{
-    width: 32pt;
+    width: 50pt;
 }
 .i-search{
-    font-size: 32pt;
+    font-size: 60pt;
+}
+.form-margin{
+    margin-bottom: 10pt;
 }

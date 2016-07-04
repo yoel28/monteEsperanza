@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body row">
                 <form role="form" (submit)="getSearch(search.value)">
-                    <div class="col-lg-10 col-lg-offset-1">
+                    <div class="col-lg-10 col-lg-offset-1 form-margin">
                         <div class="input-group input-group-sm">
                             <input #search type="text" class="form-control" placeholder="{{params.placeholderForm}}">
                             <span class="input-group-btn">
@@ -31,7 +31,7 @@
                                 <strong>{{params.labelForm.name}} {{data.title}}</strong><br>
                                 {{params.labelForm.detail}} {{data.detail}}
                             </td>
-                            <td>
+                            <td style="vertical-align: middle;">
                                 <button (click)="getData(data)" data-dismiss="modal" type="button" class="btn btn-success">
                                     <i class="fa fa-check"></i>
                                 </button>
@@ -40,9 +40,13 @@
                         </tbody>
                     </table>
                 </div>
+                <div *ngIf="!dataList.count" class="col-lg-10 col-lg-offset-1">
+                    {{dataList.count==0?"No se encontro resultados":"Ingrese valor para buscar"}}
+                </div>
+
             </div>
             <div class="modal-footer">
-                    <div class="btn-group pull-right">
+                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
                         <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                             {{val}}
                         </button>
