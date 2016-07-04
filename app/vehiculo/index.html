@@ -40,22 +40,19 @@
                                         <div pull-bottom class="row">
                                             <div class="box-tools pull-right">
                                                 <button *ngIf="data.tagRFID" (click)="releaseTag(data)"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Liberar">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-minus text-red"></i>
                                                 </button>
 
                                                 <button (click)="dataSelect = data.id"
                                                         data-toggle="modal" data-target="#saveTagVehiculo"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Nuevo">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-plus text-green"></i>
                                                 </button>
 
                                                 <button *ngIf="!data.tagRFID" (click)="dataSelect = data.id"
                                                         data-toggle="modal" data-target="#searchTag"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Buscar">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-search text-blue"></i>
                                                 </button>
                                             </div>
@@ -74,15 +71,13 @@
                                             <div class="box-tools pull-right">
                                                 <button (click)="dataSelect = data.id"
                                                         data-toggle="modal" data-target="#saveTipoVehiculoAdd"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Nuevo">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-plus text-green"></i>
                                                 </button>
 
                                                 <button (click)="dataSelect = data.id"
                                                         data-toggle="modal" data-target="#searchTipoVehiculo"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Buscar">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-search text-blue"></i>
                                                 </button>
                                             </div>
@@ -105,15 +100,13 @@
                                             <div class="box-tools pull-right">
                                                 <button (click)="dataSelect = data.id"
                                                         data-toggle="modal" data-target="#saveEmpresaAdd"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Nuevo">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-plus text-green"></i>
                                                 </button>
 
                                                 <button (click)="dataSelect = data.id"
                                                         data-toggle="modal" data-target="#searchEmpresaNueva"
-                                                        type="button" class="btn btn-box-tool"
-                                                        data-toggle="tooltip" title="Buscar">
+                                                        type="button" class="btn btn-box-tool">
                                                     <i class="fa fa-search text-blue"></i>
                                                 </button>
                                             </div>
@@ -121,7 +114,7 @@
                                     </div>
                                 </td>
                                 <td> <img src="{{data.image?data.image:'/assets/img/truck-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle img-form"></td>
-                                <td style="vertical-align: middle"> <i data-toggle="tooltip" title="Eliminar" (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                                <td style="vertical-align: middle"> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
                             <tfoot>
