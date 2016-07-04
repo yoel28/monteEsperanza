@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-group btn">
                         <img [src]="src" [hidden]="!src">
-                        <input type="file" image-upload (imageSelected)="selected($event)" [resizeOptions]="resizeOptions">
+                        <input type="file" accept="image/png, image/jpeg" image-upload (imageSelected)="selected($event)" [resizeOptions]="resizeOptions">
                     </div>
 
                 </form>
