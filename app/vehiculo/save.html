@@ -9,45 +9,69 @@
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
                     <div class="row">
-                    <div class="col-lg-6">
-                    <div *ngIf="vehicleTypes.count" class="form-group">
-                        <ng-select [allowClear]="true"
-                                   [items]="items"
-                                   (data)="refreshValue($event)"
-                                   placeholder="Seleccione un tipo de vehiculo">
-                        </ng-select>
-                    </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input ngControl="plate" class="form-control" [(ngModel)]="plate.value"  #plate="ngForm" placeholder="Placa" type="text">
-                        <div [hidden]="plate.valid || plate.pristine" class="alert alert-danger">
-                            El campo contiene errores
+                        <div class="col-lg-6">
+                            <div *ngIf="vehicleTypes.count" class="form-group">
+                                <ng-select [allowClear]="true"
+                                           [items]="items"
+                                           (data)="refreshValue($event)"
+                                           placeholder="Seleccione un tipo de vehiculo">
+                                </ng-select>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-list"></i>
+                                <input ngControl="plate" class="form-control" [(ngModel)]="plate.value" #plate="ngForm"
+                                       placeholder="Placa" type="text">
+                                <div [hidden]="plate.valid || plate.pristine" class="alert alert-danger">
+                                    El campo contiene errores
+                                </div>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-list"></i>
+                                <input ngControl="weight" class="form-control" [(ngModel)]="weight.value"
+                                       #weight="ngForm" placeholder="Peso" type="number">
+                                <div [hidden]="weight.valid || weight.pristine" class="alert alert-danger">
+                                    El campo contiene errores
+                                </div>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-list"></i>
+                                <input ngControl="minBalance" class="form-control" [(ngModel)]="minBalance.value"
+                                       #minBalance="ngForm" placeholder="Balance Minimo" type="number">
+                                <div [hidden]="minBalance.valid || minBalance.pristine" class="alert alert-danger">
+                                    El campo contiene errores
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <strong>Empresa: </strong>{{dataCompany || ""}}
+                                <button type="button" class="btn btn-sm" data-toggle="modal"
+                                        data-target="#searchEmpresa">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input ngControl="weight" class="form-control" [(ngModel)]="weight.value"  #weight="ngForm" placeholder="Peso" type="number">
-                        <div [hidden]="weight.valid || weight.pristine" class="alert alert-danger">
-                            El campo contiene errores
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div x-cropit id="image-cropper" (saveImagen)="changeImage($event)">
+                                        <div class="cropit-preview center-block"></div>
+                                        <div class="col-lg-12" style="margin-top: 10pt;">
+                                            <div class="col-lg-6">
+                                                <input type="range" class="cropit-image-zoom-input" />
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input x-file type="file" class="cropit-image-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="center-block">
+                                                <button class="btn btn-success fa fa-rotate-left rotate-ccw"></button>
+                                                <button class="btn btn-success fa fa-rotate-right rotate-cw"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-list"></i>
-                        <input ngControl="minBalance" class="form-control" [(ngModel)]="minBalance.value"  #minBalance="ngForm" placeholder="Balance Minimo" type="number">
-                        <div [hidden]="minBalance.valid || minBalance.pristine" class="alert alert-danger">
-                            El campo contiene errores
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <strong>Empresa: </strong>{{dataCompany || ""}}
-                        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchEmpresa">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <input id="avatar-1" name="avatar-1" image-upload accept="image/*" (imageSelected)="selected($event)" [resizeOptions]="resizeOptions" x-file type="file" class="file-loading">
-                    </div>
                     </div>
                 </form>
             </div>
@@ -61,4 +85,4 @@
         </div>
     </div>
 </div>
-<search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>
+<search [params]="searchEmpresa" (result)="assignCompany($event)"></search>
