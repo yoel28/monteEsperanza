@@ -31,6 +31,7 @@ export class Xeditable {
             disabled: that.rules[that.field].disabled ? that.rules[that.field].disabled : ( that.data.enabled ? !that.data.enabled : false),
             display: that.rules[that.field].display || null,
             showbuttons: false,
+            mode: that.rules[that.field].mode || 'inline',
             validate: function (newValue) {
                 that.function(that.field, that.data, newValue, that.endpoint).then(
                     function (value) {
