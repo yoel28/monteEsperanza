@@ -45,3 +45,40 @@ export class Xeditable {
 }
 
 
+@Directive({
+    selector: "[x-file]"
+})
+export class Xfile {
+    constructor(public el:ElementRef) {
+    }
+    ngOnInit() {
+        jQuery(this.el.nativeElement).fileinput({
+            language: "es",
+            browseLabel: 'Imagen',
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+            maxFilePreviewSize: 10240,
+            showCaption: false,
+            showRemove: false,
+            showUpload: false,
+        });
+    }
+}
+
+@Directive({
+    selector: "[pull-bottom]"
+})
+export class PullBottom {
+    constructor(public el:ElementRef) {
+    }
+    ngOnInit() {
+        let that = jQuery(this.el.nativeElement);
+        let val = that.parent().parent().height() - that.parent().height();
+        that.css('margin-top',val > 0 ? val : 20);
+
+    }
+}
+
+
+
