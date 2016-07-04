@@ -8,6 +8,8 @@
             </div>
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+                    <div class="row">
+                    <div class="col-lg-6">
                     <div *ngIf="vehicleTypes.count" class="form-group">
                         <ng-select [allowClear]="true"
                                    [items]="items"
@@ -37,14 +39,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <strong>Empresa: </strong>{{dataCompany?dataCompany:"Buscar empresa"}}
+                        <strong>Empresa: </strong>{{dataCompany || ""}}
                         <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchEmpresa">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
-                    <div class="form-group btn">
-                        <img [src]="src" [hidden]="!src">
-                        <input type="file" image-upload (imageSelected)="selected($event)" [resizeOptions]="resizeOptions">
+                    </div>
+                    <div class="col-lg-6">
+                        <input id="avatar-1" name="avatar-1" image-upload accept="image/*" (imageSelected)="selected($event)" [resizeOptions]="resizeOptions" x-file type="file" class="file-loading">
+                    </div>
                     </div>
                 </form>
             </div>

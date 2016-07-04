@@ -35,80 +35,93 @@
                                 <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="plate" >{{data.plate}}</a></td>
                                 <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="weight" >{{data.weight}}</a></td>
                                 <td>
-                                    {{ data.tagRFID ? data.tagRFID:"N/A"}}
-                                    <div class="row">
-                                        <div class="box-tools pull-right">
-                                            <button *ngIf="data.tagRFID" (click)="releaseTag(data)"
-                                                    type="button" class="btn btn-box-tool" >
-                                                <i class="fa fa-minus"></i>
-                                            </button>
+                                    <div>
+                                        {{ data.tagRFID ? data.tagRFID:"N/A"}}
+                                        <div pull-bottom class="row">
+                                            <div class="box-tools pull-right">
+                                                <button *ngIf="data.tagRFID" (click)="releaseTag(data)"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Liberar">
+                                                    <i class="fa fa-minus text-red"></i>
+                                                </button>
 
-                                            <button (click)="dataSelect = data.id"
-                                                    data-toggle="modal" data-target="#saveTagVehiculo"
-                                                    type="button" class="btn btn-box-tool">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
+                                                <button (click)="dataSelect = data.id"
+                                                        data-toggle="modal" data-target="#saveTagVehiculo"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Nuevo">
+                                                    <i class="fa fa-plus text-green"></i>
+                                                </button>
 
-                                            <button *ngIf="!data.tagRFID" (click)="dataSelect = data.id"
-                                                    data-toggle="modal" data-target="#searchTag"
-                                                    type="button" class="btn btn-box-tool" >
-                                                <i class="fa fa-search"></i>
-                                            </button>
+                                                <button *ngIf="!data.tagRFID" (click)="dataSelect = data.id"
+                                                        data-toggle="modal" data-target="#searchTag"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Buscar">
+                                                    <i class="fa fa-search text-blue"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td ><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="minBalance" ></a></td>
-                                <td ><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="balance" ></a></td>
+                                <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="minBalance" ></a></td>
+                                <td>{{data.balance || "N/A"}}</td>
                                 <td>
-                                    <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
-                                    <strong>{{data.vehicleTypeTitle}}</strong><br/>
-                                    {{data.vehicleTypeDetail}}
+                                    <div>
+                                        <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}" ></i>
+                                        <strong>{{data.vehicleTypeTitle}}</strong><br/>
+                                        {{data.vehicleTypeDetail}}
 
-                                    <div class="row">
-                                        <div class="box-tools pull-right">
-                                            <button (click)="dataSelect = data.id"
-                                                    data-toggle="modal" data-target="#saveTipoVehiculoAdd"
-                                                    type="button" class="btn btn-box-tool">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
+                                        <div pull-bottom class="row">
+                                            <div class="box-tools pull-right">
+                                                <button (click)="dataSelect = data.id"
+                                                        data-toggle="modal" data-target="#saveTipoVehiculoAdd"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Nuevo">
+                                                    <i class="fa fa-plus text-green"></i>
+                                                </button>
 
-                                            <button (click)="dataSelect = data.id"
-                                                    data-toggle="modal" data-target="#searchTipoVehiculo"
-                                                    type="button" class="btn btn-box-tool" >
-                                                <i class="fa fa-search"></i>
-                                            </button>
+                                                <button (click)="dataSelect = data.id"
+                                                        data-toggle="modal" data-target="#searchTipoVehiculo"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Buscar">
+                                                    <i class="fa fa-search text-blue"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="row">
-                                        <div class="pull-left">
-                                            <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" class="img-responsive img-circle img-list">
+                                    <div>
+                                        <div class="row">
+                                            <div class="pull-left">
+                                                <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.ico'}}" class="img-responsive img-circle img-list">
+                                            </div>
+                                            <div class="pull-right">
+                                                <strong>{{data.companyName}}</strong><br/>
+                                                <strong>RUC: </strong>{{data.companyRuc}}<br/>
+                                                <strong>Telefono: </strong>{{data.companyPhone}}<br/>
+                                            </div>
                                         </div>
-                                        <div class="pull-right">
-                                            <strong>{{data.companyName}}</strong><br/>
-                                            <strong>RUC: </strong>{{data.companyRuc}}<br/>
-                                            <strong>Telefono: </strong>{{data.companyPhone}}<br/>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="box-tools pull-right">
-                                            <button (click)="dataSelect = data.id"
-                                                    data-toggle="modal" data-target="#saveEmpresaAdd"
-                                                    type="button" class="btn btn-box-tool">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
+                                        <div pull-bottom class="row">
+                                            <div class="box-tools pull-right">
+                                                <button (click)="dataSelect = data.id"
+                                                        data-toggle="modal" data-target="#saveEmpresaAdd"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Nuevo">
+                                                    <i class="fa fa-plus text-green"></i>
+                                                </button>
 
-                                            <button (click)="dataSelect = data.id"
-                                                    data-toggle="modal" data-target="#searchEmpresaNueva"
-                                                    type="button" class="btn btn-box-tool" >
-                                                <i class="fa fa-search"></i>
-                                            </button>
+                                                <button (click)="dataSelect = data.id"
+                                                        data-toggle="modal" data-target="#searchEmpresaNueva"
+                                                        type="button" class="btn btn-box-tool"
+                                                        data-toggle="tooltip" title="Buscar">
+                                                    <i class="fa fa-search text-blue"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td> <img src="{{data.image?data.image:'/assets/img/truck-guest.ico'}}" alt="" style="display: inline-block" class="img-responsive img-circle img-form"></td>
-                                <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                                <td style="vertical-align: middle"> <i data-toggle="tooltip" title="Eliminar" (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
                             <tfoot>

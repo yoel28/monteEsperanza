@@ -5,6 +5,7 @@ import {Http} from "@angular/http";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Search} from "../utils/search/search";
 import {ImageUpload, ResizeOptions, ImageResult} from "ng2-imageupload/index";
+import {Xfile} from "../common/xeditable";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {ImageUpload, ResizeOptions, ImageResult} from "ng2-imageupload/index";
     styleUrls: ['app/vehiculo/style.css'],
     inputs:['idModal'],
     outputs:['save'],
-    directives:[SELECT_DIRECTIVES,Search,ImageUpload]
+    directives:[SELECT_DIRECTIVES,Search,ImageUpload,Xfile]
 
 })
 export class VehiculoSave extends RestController{

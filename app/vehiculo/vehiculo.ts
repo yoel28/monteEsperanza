@@ -10,15 +10,58 @@ import {Search} from "../utils/search/search"
 import {Json} from "@angular/platform-browser/src/facade/lang";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {FormBuilder} from "@angular/common";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable,PullBottom} from "../common/xeditable";
 
+declare var jQuery:any;
 @Component({
     selector: 'vehiculo',
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/style.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,PullBottom],
 })
 export class Vehiculo extends RestController{
+
+    filesToUpload: Array<File>;
+    public src:string;
+    fileChangeEvent(fileInput: any){
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+        let reader = new FileReader();
+        let that=this;
+        reader.onload = function(){
+            let ratio = 1;
+            let maxWidth = 80;
+            let maxHeight = 80;
+
+            let img = new Image();
+            img.src = reader.result;
+
+            let canvas = <HTMLCanvasElement> document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+
+            let canvasCopy = <HTMLCanvasElement> document.createElement("canvas");
+            var ctxCopy = canvasCopy.getContext("2d");
+
+            if (img.width > maxWidth)
+                ratio = maxWidth / img.width;
+            else
+                if (img.height > maxHeight)
+                    ratio = maxHeight / img.height;
+
+            canvasCopy.width = img.width;
+            canvasCopy.height = img.height;
+
+            ctxCopy.drawImage(img, 0, 0);
+
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+
+            ctx.drawImage(canvasCopy, 0, 0, canvas.width,canvas.height);
+
+            that.src = canvas.toDataURL();
+
+        };
+        reader.readAsDataURL(this.filesToUpload[0]);
+    }
 
     public rules={
         'id': {'type':'text','disabled':true,'display':false,'title':'' },
@@ -43,19 +86,8 @@ export class Vehiculo extends RestController{
         }
     }
     assignVehiculo(data){
-         this.dataList.list.push(data);
-    }
-
-    onPatch2(event){
-        return new Promise<any>((resolve, reject) => {
-            super.onPatch(event[0],event[1],event[2]).then(
-                function (value) {
-                    resolve(value);
-                }, function (reason) {
-                    reject (reason);
-                }
-            );
-        });
+         this.dataList.list.unshift(data);
+        this.dataList.list.pop();
     }
 
     //Buscar tag sin vehiculo ---------------------------------------------
