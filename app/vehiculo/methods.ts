@@ -4,17 +4,16 @@ import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Search} from "../utils/search/search";
-import {ImageUpload, ResizeOptions, ImageResult} from "ng2-imageupload/index";
-import {Xfile} from "../common/xeditable";
+import {Xfile,Xcropit} from "../common/xeditable";
 
 
 @Component({
     selector: 'vehiculo-save',
     templateUrl: 'app/vehiculo/save.html',
-    styleUrls: ['app/vehiculo/style.css'],
+    styleUrls: ['app/vehiculo/styleVehiculo.css'],
     inputs:['idModal'],
     outputs:['save'],
-    directives:[SELECT_DIRECTIVES,Search,ImageUpload,Xfile]
+    directives:[SELECT_DIRECTIVES,Search,Xfile,Xcropit]
 
 })
 export class VehiculoSave extends RestController{
@@ -101,19 +100,12 @@ export class VehiculoSave extends RestController{
         this.company.updateValue(data.id);
         this.dataCompany=data.title+", RUC: "+data.detail;
     }
-    //----------imagen------------------------------------------------
-    src: string = "";
-    resizeOptions: ResizeOptions = {
-        resizeMaxHeight: 60,
-        resizeMaxWidth: 60
-    };
-
-    selected(imageResult: ImageResult) {
-        this.src = imageResult.resized
-            && imageResult.resized.dataURL
-            || imageResult.dataURL;
-        this.image.updateValue(this.src);
+    //formulario de imagen
+    changeImage(data){
+        this.image.updateValue(data);
     }
 
+    
+    
 }
 
