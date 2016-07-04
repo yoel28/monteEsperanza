@@ -25,6 +25,7 @@
     "angular2-jwt": "0.1.14",
     "angular2-notifications": "^0.1.57",
     "bootstrap": "3.3.5",
+    "bootstrap-fileinput": "^4.2.8",
     "font-awesome": "4.4.0",
     "highcharts": "^4.2.5",
     "jquery": "2.1.4",
