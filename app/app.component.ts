@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, provide} from '@angular/core';
 import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { contentHeaders } from './common/headers';
 
@@ -25,6 +25,7 @@ import { Vehiculo }         from './vehiculo/vehiculo';
 import { Permiso }         from './permiso/permiso';
 import { PermisosRol }         from './permiso/permiso';
 import {globalService} from "./common/globalService";
+import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 
 @Component({
   selector: 'my-app',
@@ -32,7 +33,8 @@ import {globalService} from "./common/globalService";
   styleUrls:['app/app.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [
-    ROUTER_PROVIDERS
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, {useClass: HashLocationStrategy})
   ]
 })
 @RouteConfig([
@@ -68,10 +70,10 @@ export class AppComponent {
 
   constructor(private router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
-    localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    //localStorage.setItem('url','http://192.168.0.91:8080');
+    //localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
+    //localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    localStorage.setItem('url','http://192.168.0.91:8080');
     router.subscribe(this.successHandler, this.failureHandler);
   }
   successHandler(){
