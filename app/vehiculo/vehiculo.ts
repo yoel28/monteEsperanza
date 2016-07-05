@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
@@ -20,7 +20,10 @@ declare var jQuery:any;
     directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,PullBottom],
 })
 export class Vehiculo extends RestController{
-    
+
+    @ViewChild(Search)
+    modal:Search;
+
     public rules={
         'id': {'type':'text','disabled':true,'display':false,'title':'' },
         'plate':{'type':'text','display':null,'title':'Placa del vehiculo' },
@@ -68,6 +71,7 @@ export class Vehiculo extends RestController{
             let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
             this.dataList.list[index].tagRFID = response.json().number;
             this.dataList.list[index].tagId = response.json().id;
+            this.modal.dataList=[];
         }
         let body=Json.stringify({'vehicle':this.dataSelect})
         this.httputils.doPut('/rfids/'+data.id,body,successCallBack,this.error)
@@ -109,6 +113,7 @@ export class Vehiculo extends RestController{
         let successCallBack = response=>{
             let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
             this.dataList.list[index] = response.json();
+            this.modal.dataList=[];
         }
         let body=Json.stringify({'vehicleType':data.id})
         this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
@@ -127,6 +132,7 @@ export class Vehiculo extends RestController{
         let successCallBack = response=>{
             let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
             this.dataList.list[index] = response.json();
+            this.modal.dataList=[];
         }
         let body=Json.stringify({'company':data.id})
         this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
