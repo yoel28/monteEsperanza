@@ -27,9 +27,15 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="key" contenteditable="true">{{data.key}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="value" contenteditable="true">{{data.value}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="type" contenteditable="true">{{data.type}}</td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="key" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="value" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="type" ></a>
+                                </td>
 
                                 <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
@@ -39,7 +45,7 @@
                 </div>
                 <!-- ./box-body -->
                 <div class="box-footer with-border">
-                    <div class="btn-group pull-right">
+                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
                         <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                             {{val}}
                         </button>
