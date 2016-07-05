@@ -10,7 +10,7 @@ import {Xfile, Xcropit} from "../common/xeditable";
 @Component({
     selector: 'empresa-save',
     templateUrl: 'app/empresa/save.html',
-    styleUrls: ['app/empresa/style.css','app/empresa/fileinput.min.css'],
+    styleUrls: ['app/empresa/style.css'],
     directives: [SELECT_DIRECTIVES,Xfile,Xcropit],
     inputs:['idModal'],
     outputs:['save'],
