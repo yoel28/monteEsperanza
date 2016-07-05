@@ -2,13 +2,16 @@
     <section class="content">
         <div class="box">
             <div class="box-header with-border">
+                <div class="col-lg-12 margin-bottom">
+                    <h4>Lista de control de accesso</h4>
+                </div>
                 <div *ngIf="dataRoles.count" class="col-lg-4">
-                    <select  [(ngModel)]="roleSelect"  (ngModelChange)="setRole($event)"  sm-dropdown name="Select name" class="ui fluid search selection dropdown">
-                        <option value="">Search...</option>
+                    <select [(ngModel)]="roleSelect"  (ngModelChange)="setRole($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                        <option data-hidden="true"></option>
                         <option *ngFor="let n of items"  [attr.value]="n.id" >{{n.text}}</option>
                     </select>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 margin-bottom">
                     <div class="pull-left">
                         <button type="button" class="btn btn-success fa fa-plus" data-toggle="modal" data-target="#saveRol"></button>
                         <button type="button" class="btn btn-success fa fa-refresh" (click)="loadRoles()"></button>
@@ -16,6 +19,9 @@
                             &nbsp;Cargar mis permisos
                         </button>
                     </div>
+                </div>
+                <div *ngIf="!role.id" class="col-lg-10 text-red ">
+                    Seleccione un rol
                 </div>
             </div>
             <div class="box-body with-border">
