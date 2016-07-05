@@ -8,8 +8,8 @@
             </div>
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
-                    <div class="form-group">
-                        <div class="btn-group rechargeTypes">
+                    <div class="form-group row">
+                        <div class="btn-group rechargeTypes center-block">
                             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let type of rechargeTypes.list">
                                 <i class="{{type.icon}} btn fa-lg" [class.red]="rechargeType.value==type.id"
                                    (click)="setRechargeType(type.id)">
