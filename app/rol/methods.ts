@@ -42,6 +42,7 @@ export class RolSave extends RestController{
         let successCallback= response => {
             this.save.emit(response.json());
         };
+        this.authority.updateValue("ROLE_"+this.authority.value.toUpperCase())
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }

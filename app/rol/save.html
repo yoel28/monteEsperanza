@@ -7,10 +7,10 @@
                 <h4 class="modal-title" id="myModalLabel">Agregar</h4>
             </div>
             <div class="modal-body">
-                <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-key"></i>
-                        <input ngControl="authority" class="form-control" [(ngModel)]="authority.value"  #authority="ngForm" placeholder="Nombre" type="text">
+                <form role="form" [ngFormModel]="form" >
+                    <div class="input-group input-icon right form-group">
+                        <span class="input-group-addon" id="prefijo">ROLE_</span>
+                        <input type="text" class="form-control" aria-describedby="prefijo" ngControl="authority" [(ngModel)]="authority.value"  #authority="ngForm" placeholder="Nombre">
                         <div [hidden]="authority.valid || authority.pristine" class="alert alert-danger">
                             El campo contiene errores
                         </div>
