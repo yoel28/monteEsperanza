@@ -31,8 +31,10 @@ export class Vehiculo extends RestController{
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder) {
         super(http,toastr);
-        this.validTokens();
         this.setEndpoint('/vehicles/');
+    }
+    ngOnInit(){
+        this.validTokens();
         this.loadData();
     }
 

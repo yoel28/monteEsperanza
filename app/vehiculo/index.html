@@ -32,8 +32,12 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list">
                                 <td>{{data.id}}</td>
-                                <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="plate" >{{data.plate}}</a></td>
-                                <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="weight" >{{data.weight}}</a></td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="plate" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="weight" ></a>
+                                </td>
                                 <td>
                                     <div>
                                         {{ data.tagRFID ? data.tagRFID:"N/A"}}
@@ -59,7 +63,9 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="minBalance" ></a></td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="minBalance" ></a>
+                                </td>
                                 <td>{{data.balance || "N/A"}}</td>
                                 <td>
                                     <div>
