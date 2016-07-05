@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -13,6 +13,8 @@ import {Search} from "../utils/search/search";
     directives:[TagSave,Search],
 })
 export class TagRfid extends RestController{
+    @ViewChild(Search)
+    modal:Search;
 
     constructor(public router: Router,public http: Http) {
         super(http);
@@ -45,5 +47,6 @@ export class TagRfid extends RestController{
     assignVehicle(data){
         let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
         this.onPatch('vehicle',this.dataList.list[index],data.id);
+        this.modal.dataList=[];
     }
 }
