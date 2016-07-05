@@ -1,122 +1,132 @@
 <div class="content-wrapper">
-    <section class="content-header">
-        <h1>
-            <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#saveUser">
-                <i class="fa fa-plus"></i> Nuevo
-            </button>
-        </h1>
-    </section>
-
     <section class="content">
-        <div class="row">
-            <div *ngFor="let user of dataList.list">
-            <div class="col-lg-4">
-                <div class="panel">
-                    <div class="panel-body">
-                        <div class="profile">
-                            <div style="margin-bottom: 15px" class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="">
+            <div class="box">
+                <div class="box-header with-border">
+                    <button type="button" class="btn btn-primary btn-sm btn-green" data-toggle="modal" data-target="#saveUser">
+                        <i class="fa fa-plus"></i> Nuevo
+                    </button>
 
-                                    <div class="btn-group dropdown pull-right">
-                                        <button type="button" data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-gears fa-lg"></i>
-                                        </button>
-                                        <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                            <li>
-                                                <a href="javascript:void(0);" (click)="onPatch('accountLocked',user)">
-                                                    <span class="fa fa-list"></span>
-                                                    {{user.accountLocked?"Verificar":"No Verificado"}}
-                                                </a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li>
-                                                <a (click)="onPatch('enabled',user)" href="javascript:void(0);">
-                                                    <span class="fa fa-warning"></span>
-                                                    {{user.enabled?"Bloquear":"Habilitar"}}
-                                                </a>
-                                            </li>
-                                        </ul>
+                    <div class="pull-right">
+                        <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
+                            <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                                {{val}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" >
+                    <div *ngFor="let user of dataList.list">
+                        <div class="col-lg-4">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="profile">
+                                        <div style="margin-bottom: 15px" class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="btn-group dropdown pull-right">
+                                                    <button type="button" data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-gears fa-lg"></i>
+                                                    </button>
+                                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                                        <li>
+                                                            <a href="javascript:void(0);" (click)="onPatch('accountLocked',user)">
+                                                                <span class="fa fa-list"></span>
+                                                                {{user.accountLocked?"Verificar":"No Verificado"}}
+                                                            </a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li>
+                                                            <a (click)="onPatch('enabled',user)" href="javascript:void(0);">
+                                                                <span class="fa fa-warning"></span>
+                                                                {{user.enabled?"Bloquear":"Habilitar"}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-4 text-center">
+                                                <figure>
+                                                    <img src="{{user.image?user.image:'/assets/img/user-guest.png'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
+                                                </figure>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8">
+                                                <h2 class="truncate">{{user.username}}</h2>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8 col-lg-12">
+                                                <p>
+                                                    <strong>Nombre:</strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="name" ></a>
+                                                </p>
+                                                <p>
+                                                    <strong>Telefonos:</strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="phone" ></a>
+                                                </p>
+                                                <p>
+                                                    <strong>Email:</strong>
+                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="email" ></a>
+                                                </p>
+                                                <p><strong>Empresa:</strong> {{user.companyName}}
+                                                    <button (click)="userSelect = user.id" type="button" class="btn btn-success fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></button>
+                                                    <button (click)="userSelect = user.id" type="button" class="btn btn-success fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></button>
+                                                </p>
+                                                <p>
+                                                    <button (click)="onPatch('accountLocked',user)" class="btn btn-sm"
+                                                            [class.btn-green]="!user.accountLocked" [class.btn-red]="user.accountLocked">
+                                                        {{user.accountLocked?"Sin Verificar":"Verificado"}}
+                                                    </button>
+
+                                                    <button (click)="onPatch('enabled',user)" class="btn btn-sm"
+                                                            [class.btn-green]="user.enabled" [class.btn-red]="!user.enabled">
+                                                        {{user.enabled?"Habilitado":"Bloqueado"}}
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row text-center divider">
+                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                                <h4><strong>{{user.companyWeightCount?user.companyWeightCount:"N/A"}}</strong></h4>
+                                                <p>
+                                                    <small>Descargas</small>
+                                                </p>
+                                                <button (click)="goTimeLine(user.companyRuc)" class="btn btn-yellow btn-block">Registro</button>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                                <h4><strong>{{user.companyVehiclesCount?user.companyVehiclesCount:"N/A"}}</strong></h4>
+                                                <p>
+                                                    <small>Camiones</small>
+                                                </p>
+                                                <button class="btn btn-yellow btn-block">Camion</button>
+
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                                <h4><strong>{{user.companyBalance?user.companyBalance:"0"}}$</strong></h4>
+                                                <p>
+                                                    <small>Saldo</small>
+                                                </p>
+                                                <button (click)="goTaquilla(user.companyRuc)" class="btn btn-yellow btn-block">Taquilla</button>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                </div>
-
-                                <div class="col-xs-12 col-sm-4 text-center">
-                                    <figure>
-                                        <img src="{{user.image?user.image:'/assets/img/user-guest.png'}}" alt="" style="display: inline-block" class="img-responsive img-circle">
-                                        <!--<figcaption class="ratings">-->
-                                            <!--<p><a href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
-                                                    <!--href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
-                                                    <!--href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
-                                                    <!--href="javascript:void(0);"><span class="fa fa-star"></span></a><a-->
-                                                    <!--href="javascript:void(0);"><span class="fa fa-star-o"></span></a>-->
-                                            <!--</p>-->
-                                        <!--</figcaption>-->
-                                    </figure>
-                                </div>
-                                <div class="col-xs-12 col-sm-8">
-                                    <h2 class="truncate">{{user.username}}</h2>
-                                </div>
-                                <div class="col-xs-12 col-sm-8 col-lg-12">
-                                    <p><strong>Nombre:</strong> {{user.name}}</p>
-                                    <p><strong>Telefonos:</strong>{{user.phone}} </p>
-                                    <p><strong>Email:</strong> {{user.email}}</p>
-                                    <p><strong>Empresa:</strong> {{user.companyName}}
-
-                                        <button (click)="userSelect = user.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#searchEmpresa">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-
-                                        <button (click)="userSelect = user.id" type="button" class="btn btn-sm" data-toggle="modal" data-target="#newEmpresa">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-
-                                    </p>
-                                    <p>
-                                        <button (click)="onPatch('accountLocked',user)" class="btn btn-sm"
-                                                [class.btn-green]="!user.accountLocked" [class.btn-red]="user.accountLocked">
-                                            {{user.accountLocked?"Sin Verificar":"Verificado"}}
-                                        </button>
-
-                                        <button (click)="onPatch('enabled',user)" class="btn btn-sm"
-                                                [class.btn-green]="user.enabled" [class.btn-red]="!user.enabled">
-                                            {{user.enabled?"Habilitado":"Bloqueado"}}
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row text-center divider">
-                                <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h4><strong>{{user.companyWeightCount?user.companyWeightCount:"N/A"}}</strong></h4>
-                                    <p>
-                                        <small>Descargas</small>
-                                    </p>
-                                    <button (click)="goTimeLine(user.companyRuc)" class="btn btn-yellow btn-block">Registro</button>
-                                </div>
-                                <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h4><strong>{{user.companyVehiclesCount?user.companyVehiclesCount:"N/A"}}</strong></h4>
-                                    <p>
-                                        <small>Camiones</small>
-                                    </p>
-                                    <button class="btn btn-yellow btn-block">Camion</button>
-
-                                </div>
-                                <div class="col-xs-12 col-sm-4 emphasis">
-                                    <h4><strong>{{user.companyBalance?user.companyBalance:"0"}}$</strong></h4>
-                                    <p>
-                                        <small>Saldo</small>
-                                    </p>
-                                    <button (click)="goTaquilla(user.companyRuc)" class="btn btn-yellow btn-block">Taquilla</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- ./box-body -->
+                <div class="box-footer with-border">
+
+                </div>
             </div>
-        </div>
+            <!-- /.box -->
         </div>
     </section>
 </div>
 
-<user-save idModal="saveUser" (save)="onSave($event)"> </user-save>
+
+<user-save idModal="saveUser" (save)="assignUser($event)"> </user-save>
 <empresa-save idModal="newEmpresa" (save)="assignCompany($event)"> </empresa-save>
 <search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>

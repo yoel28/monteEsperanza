@@ -4,3 +4,7 @@
 .submenu-config{
     border: 1px solid #BDBBBB !important;
 }
+.panel{
+    border: 1px solid rgba(39, 39, 39, 0.18);
+    border-radius: 10px !important;
+}

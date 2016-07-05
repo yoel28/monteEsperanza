@@ -1,6 +1,9 @@
 import { Component,EventEmitter } from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
-import {ResizeOptions, ImageUpload, ImageResult} from "ng2-imageupload/index";
+import {Http} from "@angular/http";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {RestController} from "../common/restController";
+import {Xfile, Xcropit} from "../common/xeditable";
 
 @Component({
     selector: 'user-save',
@@ -8,9 +11,9 @@ import {ResizeOptions, ImageUpload, ImageResult} from "ng2-imageupload/index";
     styleUrls: ['app/user/style.css'],
     inputs:['idModal'],
     outputs:['save'],
-    directives:[ImageUpload]
+    directives:[Xfile,Xcropit]
 })
-export class UserSave{
+export class UserSave extends RestController{
 
     public idModal:string;
     public save:any;
@@ -24,8 +27,10 @@ export class UserSave{
     image: Control;
 
 
-    constructor(public _formBuilder: FormBuilder) {
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
+        super(http,toastr);
         this.initForm();
+        this.setEndpoint('/users/');
         this.save = new EventEmitter();
     }
     initForm(){
@@ -48,19 +53,14 @@ export class UserSave{
 
     }
     submitForm(){
-        this.save.emit(this.form);
+        let successCallback= response => {
+            this.save.emit(response.json());
+        };
+        let body = JSON.stringify(this.form.value);
+        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
-    //----------imagen------------------------------------------------
-    src: string = "";
-    resizeOptions: ResizeOptions = {
-        resizeMaxHeight: 60,
-        resizeMaxWidth: 60
-    };
-
-    selected(imageResult: ImageResult) {
-        this.src = imageResult.resized
-            && imageResult.resized.dataURL
-            || imageResult.dataURL;
-        this.image.updateValue(this.src);
+    //formulario de imagen
+    changeImage(data){
+        this.image.updateValue(data);
     }
 }

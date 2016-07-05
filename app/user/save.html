@@ -8,54 +8,72 @@
             </div>
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-user"></i>
-                        <input id="cntrlUsername" ngControl="username" class="form-control" #username
-                               placeholder="Usuario" name="username" type="text">
-                        <div class="control-msgs" *ngIf="username.dirty && !username.valid && !username.pending">
-                            <p *ngIf="username.errors.required">Requerido</p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-user"></i>
+                                <input id="cntrlUsername" ngControl="username" class="form-control" #username
+                                       placeholder="Usuario" name="username" type="text">
+                                <div class="control-msgs" *ngIf="username.dirty && !username.valid && !username.pending">
+                                    <p *ngIf="username.errors.required">Requerido</p>
+                                </div>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-user"></i>
+                                <input id="cntrlName" ngControl="name" class="form-control" #name
+                                       placeholder="Nombre" name="name" type="text">
+                                <div class="control-msgs" *ngIf="name.dirty && !name.valid && !name.pending">
+                                    <p *ngIf="name.errors.required">Requerido</p>
+                                </div>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-envelope"></i>
+                                <input id="cntrlEmail" ngControl="email" class="form-control" #email
+                                       placeholder="Email" name="email" type="email">
+                                <div class="control-msgs" *ngIf="email.dirty && !email.valid && !email.pending">
+                                    <p *ngIf="email.errors.required">Requerido</p>
+                                </div>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-key"></i>
+                                <input id="cntrlPassword" ngControl="password" class="form-control" #password
+                                       placeholder="Contrasena" name="password" type="password">
+                                <div class="control-msgs" *ngIf="password.dirty && !password.valid && !password.pending">
+                                    <p *ngIf="password.errors.required">Requerido</p>
+                                </div>
+                            </div>
+                            <div class="form-group input-icon right">
+                                <i class="fa fa-phone"></i>
+                                <input id="cntrlPhone" ngControl="phone" class="form-control" #phone
+                                       placeholder="Telefono" name="phone" type="number">
+                                <div class="control-msgs" *ngIf="phone.dirty && !phone.valid && !phone.pending">
+                                    <p *ngIf="phone.errors.required">Requerido</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-user"></i>
-                        <input id="cntrlName" ngControl="name" class="form-control" #name
-                               placeholder="Nombre" name="name" type="text">
-                        <div class="control-msgs" *ngIf="name.dirty && !name.valid && !name.pending">
-                            <p *ngIf="name.errors.required">Requerido</p>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div x-cropit id="image-cropper" (saveImagen)="changeImage($event)">
+                                        <div class="cropit-preview center-block"></div>
+                                        <div class="col-lg-12" style="margin-top: 10pt;">
+                                            <div class="col-lg-6">
+                                                <input type="range" class="cropit-image-zoom-input" />
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input x-file type="file" class="cropit-image-input" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="center-block">
+                                                <button class="btn btn-success fa fa-rotate-left rotate-ccw"></button>
+                                                <button class="btn btn-success fa fa-rotate-right rotate-cw"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-envelope"></i>
-                        <input id="cntrlEmail" ngControl="email" class="form-control" #email
-                               placeholder="Email" name="email" type="email">
-                        <div class="control-msgs" *ngIf="email.dirty && !email.valid && !email.pending">
-                            <p *ngIf="email.errors.required">Requerido</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-key"></i>
-                        <input id="cntrlPassword" ngControl="password" class="form-control" #password
-                               placeholder="Contrasena" name="password" type="password">
-                        <div class="control-msgs" *ngIf="password.dirty && !password.valid && !password.pending">
-                            <p *ngIf="password.errors.required">Requerido</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group input-icon right">
-                        <i class="fa fa-phone"></i>
-                        <input id="cntrlPhone" ngControl="phone" class="form-control" #phone
-                               placeholder="Telefono" name="phone" type="number">
-                        <div class="control-msgs" *ngIf="phone.dirty && !phone.valid && !phone.pending">
-                            <p *ngIf="phone.errors.required">Requerido</p>
-                        </div>
-                    </div>
-                    <div class="form-group btn">
-                        <img [src]="src" [hidden]="!src">
-                        <input type="file" image-upload (imageSelected)="selected($event)" [resizeOptions]="resizeOptions">
                     </div>
 
                 </form>
