@@ -15,6 +15,7 @@ import { Dashboard }         from './dashboard/dashboard';
 import { User }         from './user/user';
 import { Taquilla }         from './taquilla/taquilla';
 import { Operacion }         from './operacion/operacion';
+import { Profile }         from './profile/profile';
 import { Rol }         from './rol/rol';
 import { Parametro }         from './parametro/parametro';
 import { Regla }         from './regla/regla';
@@ -49,6 +50,7 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
   { path: '/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
 
   { path: '/empresas',   name: 'Empresa', component: Empresa },
+  { path: '/perfil',   name: 'Profile', component: Profile },
   { path: '/empresas/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
@@ -70,10 +72,10 @@ export class AppComponent {
 
   constructor(private router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
-    //localStorage.setItem('urlAPI','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080/api');
+    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
     //localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
-    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    localStorage.setItem('url','http://192.168.0.91:8080');
+    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    //localStorage.setItem('url','http://192.168.0.91:8080');
     router.subscribe(this.successHandler, this.failureHandler);
   }
   successHandler(){
