@@ -4,3 +4,16 @@
 .img-list{
     width: 32pt;
 }
+.tarjeta{
+    border: 1px solid #bdbdbd;
+}
+.submenu-config{
+    border: 1px solid #BDBBBB !important;
+}
+.panel{
+    border: 1px solid rgba(39, 39, 39, 0.18);
+    border-radius: 10px !important;
+}
+.divider-form{
+    padding-top: 10pt;
+}

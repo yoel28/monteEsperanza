@@ -34,6 +34,7 @@ export class Vehiculo extends RestController{
         this.setEndpoint('/vehicles/');
     }
     ngOnInit(){
+        this.max = 12;
         this.validTokens();
         this.loadData();
     }
