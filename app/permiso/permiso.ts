@@ -7,19 +7,27 @@ import {PermisoSave} from "./methods";
 import {RolSave} from "../rol/methods";
 import {SELECT_DIRECTIVES} from "ng2-select/ng2-select";
 import {globalService} from "../common/globalService";
+import {Xeditable, SMDropdown} from "../common/xeditable";
+
 
 @Component({
     selector: 'permission',
     templateUrl: 'app/permiso/index.html',
     styleUrls: ['app/permiso/style.css'],
-    directives:[PermisoSave]
+    directives:[PermisoSave,Xeditable]
 })
 export class Permiso extends RestController{
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
         super(http,toastr);
-        this.validTokens();
+        this.setEndpoint('/permissions/');
     }
+    public rules={
+        'id': {'type':'text','disabled':true,'display':false,'title':'' },
+        'title':{'type':'text','display':null,'title':'Titulo','mode':'inline'},
+        'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline' },
+        'module':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
+    };
     validTokens(){
         if(!localStorage.getItem('bearer'))
         {
@@ -28,23 +36,15 @@ export class Permiso extends RestController{
         }
     }
     ngOnInit(){
-        this.setEndpoint('/permissions/');
+        this.validTokens();
         this.max = 30;
         this.loadData();
     }
     assignPermiso(data){
         this.dataList.list.unshift(data);
+        this.dataList.list.pop();
     }
 
-}
-declare var jQuery:any;
-@Directive({
-    selector: "[sm-dropdown]"
-})
-export class SMDropdown {
-    constructor(el: ElementRef) {
-        jQuery(el.nativeElement).dropdown();
-    }
 }
 @Component({
     selector: 'permission-role',

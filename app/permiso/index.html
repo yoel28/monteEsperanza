@@ -28,9 +28,15 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td>{{data.module}}</td>
-                                <td>{{data.title}}</td>
-                                <td>{{data.detail}}</td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="module" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="title" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="detail" ></a>
+                                </td>
                                 <td>
                                     <button (click)="onPatch('enabled',data)" class="btn btn-sm"
                                             [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
@@ -38,7 +44,7 @@
                                     </button>
                                 </td>
 
-                                <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                                <td style="vertical-align: middle;"> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
                         </table>
@@ -46,7 +52,7 @@
                 </div>
                 <!-- ./box-body -->
                 <div class="box-footer with-border">
-                    <div class="btn-group pull-right">
+                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
                         <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                             {{val}}
                         </button>
