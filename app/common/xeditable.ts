@@ -32,6 +32,7 @@ export class Xeditable {
             display: that.rules[that.field].display || null,
             showbuttons: false,
             mode: that.rules[that.field].mode || 'inline',
+            source:that.rules[that.field].source || null,
             validate: function (newValue) {
                 that.function(that.field, that.data, newValue, that.endpoint).then(
                     function (value) {
@@ -41,6 +42,7 @@ export class Xeditable {
                     }
                 );
             }
+
         });
     }
 }
