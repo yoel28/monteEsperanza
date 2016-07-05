@@ -10,31 +10,29 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#saveRol">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                        <button type="button" class="btn btn-sm" (click)="loadRoles()">
-                            <i class="fa fa-refresh"></i>
-                        </button>
-                        <button type="button" class="btn btn-sm" (click)="loadMyPermissions()">
-                            <i class="fa fa-list"></i>&nbsp;Cargar mis permisos
+                        <button type="button" class="btn btn-success fa fa-plus" data-toggle="modal" data-target="#saveRol"></button>
+                        <button type="button" class="btn btn-success fa fa-refresh" (click)="loadRoles()"></button>
+                        <button type="button" class="btn btn-success fa fa-list" (click)="loadMyPermissions()">
+                            &nbsp;Cargar mis permisos
                         </button>
                     </div>
                 </div>
-
             </div>
             <div class="box-body with-border">
                 <div *ngIf="role.id" class="row col-lg-10 col-lg-offset-1">
-                    <div *ngFor="let mod of modules">
-                        <div class="row">
+                    <div *ngFor="let mod of modules" class="margin-bottom">
+                        <div class="row modulo">
                             <h4>{{mod}}</h4>
                             <div *ngFor="let data of dataPermissionsAll.list">
                                 <span *ngIf="data.module == mod">
-                                    <div class="col-lg-4">
-                                        <label>
-                                        <input (click)="assignPermission(data.id)" type="checkbox" value="{{data.id}}" [checked]="existsPermission(data.id)" >
-                                            {{data.title}}&nbsp;({{data.id}})
-                                        </label>
+                                    <div class="col-lg-4 padding-bottom">
+                                         <label>
+                                            <div class="material-switch">
+                                                <input (click)="assignPermission(data.id)" value="{{data.id}}" [attr.id]="data.id" type="checkbox" [checked]="existsPermission(data.id)"/>
+                                                <label [attr.for]="data.id" class="label-success"></label>
+                                                &nbsp;<strong>{{data.title}}</strong>&nbsp;[{{data.id}}]
+                                            </div>
+                                         </label>
                                     </div>
                                 </span>
                             </div>
@@ -44,14 +42,14 @@
             </div>
             <div *ngIf="role.id" class="box-footer with-border">
                 <div class="pull-right">
-                    <button type="button" class="btn btn-sm" (click)="selectPermission(true)">
+                    <button type="button" class="btn btn-success" (click)="selectPermission(true)">
                         <i class="fa fa-plus"></i>&nbsp;Agregar Todos
                     </button>
-                    <button type="button" class="btn btn-sm" (click)="selectPermission(false)">
+                    <button type="button" class="btn btn-success" (click)="selectPermission(false)">
                         <i class="fa fa-minus"></i>&nbsp;Eliminar Todos
                     </button>
 
-                    <button type="button" class="btn btn-sm" (click)="savePermissions()">
+                    <button type="button" class="btn btn-success" (click)="savePermissions()">
                         <i class="fa fa-save"></i>&nbsp;Guardar
                     </button>
 
