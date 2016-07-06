@@ -10,14 +10,14 @@ import {Search} from "../utils/search/search"
 import {Json} from "@angular/platform-browser/src/facade/lang";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {FormBuilder} from "@angular/common";
-import {Xeditable,PullBottom} from "../common/xeditable";
+import {Xeditable} from "../common/xeditable";
 
 declare var jQuery:any;
 @Component({
     selector: 'vehiculo',
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,PullBottom],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable],
 })
 export class Vehiculo extends RestController{
 
