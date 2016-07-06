@@ -93,7 +93,7 @@ export class HttpUtils {
             if(this.toastr)
                 this.toastr.success('Guardado con éxito','Notificacion')
         }
-        this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
+        return this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 
     onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false) {
