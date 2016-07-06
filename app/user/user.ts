@@ -26,6 +26,7 @@ export class User extends RestController{
     ngOnInit(){
         this.validTokens();
         this.loadData();
+        this.loadRoles();
     }
     public rules={
         'id': {'type':'text','disabled':true,'display':false,'title':'id' },
@@ -34,6 +35,9 @@ export class User extends RestController{
         'email':{'type':'email','display':null,'title':'Correo' },
         'password':{'type':'password','display':null,'title':'Contrasena' },
         'phone':{'type':'number','display':null,'title':'Telefono' },
+        'roles':{'type':'checklist','display':null,'title':'Rol','mode':'popup','showbuttons':true,
+            'source': []
+        },
     }
 
     validTokens(){
@@ -71,6 +75,17 @@ export class User extends RestController{
         this.dataList.list.unshift(data);
         this.dataList.list.pop();
     }
-   
 
+    //Cargar Roles
+    public dataRoles:any=[];
+    loadRoles(){
+        let that = this;
+        let successCallback= response => {
+            Object.assign(that.dataRoles, response.json());
+            that.dataRoles.list.forEach(obj=>{
+                that.rules.roles.source.push({'value':obj.id,'text':obj.authority});
+            });
+        };
+        this.httputils.doGet('/roles/',successCallback,this.error)
+    }
 }

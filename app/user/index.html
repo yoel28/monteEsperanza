@@ -44,24 +44,11 @@
                                                         </li>
                                                         <li class="divider"></li>
                                                         <li>
-                                                            <a data-toggle="modal" [attr.data-target]="'#delete'+user.id"  href="#">
+                                                            <a data-toggle="modal" [attr.data-target]="'#myModal'+user.id"  href="#">
                                                                 <span class="fa fa-trash"></span>
                                                                 Eliminar
                                                             </a>
                                                         </li>
-                                                        <div [attr.id]="'delete'+user.id" class="modal hide fade" role="dialog" >
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-body">
-                                                                        Esta Seguro que desea eliminar el usuario <strong>{{user.username}}</strong>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button (click)="onDelete($event,user.id)" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Borrar</button>
-                                                                        <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </ul>
                                                 </div>
 
@@ -89,8 +76,8 @@
                                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="email" ></a>
                                                 </p>
                                                 <p><strong>Empresa:</strong> {{user.companyName}}
-                                                    <button (click)="userSelect = user.id" type="button" class="btn btn-success fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></button>
-                                                    <button (click)="userSelect = user.id" type="button" class="btn btn-success fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></button>
+                                                    <a (click)="userSelect = user.id" class="btn btn-box-tools text-blue fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></a>
+                                                    <a (click)="userSelect = user.id" class="btn btn-box-tools text-green fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></a>
                                                 </p>
                                                 <p>
                                                     <button (click)="onPatch('accountLocked',user)" class="btn btn-sm"
@@ -102,6 +89,10 @@
                                                             [class.btn-green]="user.enabled" [class.btn-red]="!user.enabled">
                                                         {{user.enabled?"Habilitado":"Bloqueado"}}
                                                     </button>
+                                                </p>
+                                                <p *ngIf="dataRoles && dataRoles.count>0">
+                                                    <strong>Rol:</strong>
+                                                    <a x-editable [endpoint]="'/users/'+user.id+'/roles'" [function]="onEditableRole" [data]="user" [rules]="rules" field="roles" ></a>
                                                 </p>
                                             </div>
                                         </div>
@@ -143,6 +134,26 @@
             <!-- /.box -->
         </div>
     </section>
+</div>
+
+<div *ngIf="dataList.list">
+    <div *ngFor="let user of dataList.list" class="modal fade" [attr.id]="'myModal'+user.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-red text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+                </div>
+                <div class="modal-body">
+                    ¿ Estás seguro que deseas eliminar a <strong>{{user.username}}</strong> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button (click)="onDelete($event,user.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
