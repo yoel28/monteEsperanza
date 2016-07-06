@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {HttpUtils} from "../common/http-utils";
@@ -98,24 +98,42 @@ export class Dashboard extends RestController{
     dateEnd:Control;
     initForm(){
         this.dateStart = new Control("", Validators.compose([Validators.required]));
-        this.dateEnd = new Control("", Validators.compose([Validators.required]));
+        this.dateEnd = new Control("");
 
         this.form = this._formBuilder.group({
             dateStart: this.dateStart,
             dateEnd: this.dateEnd,
         });
     }
+
+    @ViewChild(RecargaFactura)
+    recargaFactura:RecargaFactura;
+
     public paramsFactura:any={};
     public consultar=false;
     loadFacturas(event){
         event.preventDefault();
 
+        if(!this.dateEnd.value)
+        {
+            this.dateEnd.updateValue(moment(this.dateStart.value.toString()).format('YYYY-MM-DD'));
+            this.dateEnd.updateValue(moment(this.dateEnd.value).add(1, 'days'));
+        }
+
         this.paramsFactura={
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
             'dateEnd':   moment(this.dateEnd.value.toString()).format('DD-MM-YYYY'),
         };
+        if(this.recargaFactura)
+        {
+            this.recargaFactura.params = this.paramsFactura;
+            this.recargaFactura.cargar();
+        }
+
         this.consultar=true;
+        this.dateEnd.updateValue("");
     }
+
 }
 
 
