@@ -94,6 +94,12 @@ export class AppComponent {
     this.router.navigate(link);
 
   }
+  profile(event) {
+    event.preventDefault();
+    let link = ['Profile', {}];
+    this.router.navigate(link);
+
+  }
   validToken(){
     if(localStorage.getItem('bearer'))
         return true;
