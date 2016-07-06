@@ -15,3 +15,32 @@ export class Fecha{
         return val;
     }
 }
+@Pipe({
+    name : "divide",
+    
+})
+export class Divide{
+    transform(data,splice){
+        let value:any=[];
+        let count:number=0;
+        let index=0;
+        try{
+            data.forEach((obj)=>{
+                if(splice <= count)
+                {
+                    count=0;
+                    index++;
+                }
+                if(!value[index])
+                    value[index]=[];
+                value[index].push(obj);
+                count++;
+
+            })
+
+        }catch (e){
+
+        }
+        return value;
+    }
+}
