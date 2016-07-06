@@ -30,7 +30,7 @@ export class Xeditable {
             value: that.data[that.field] || "N/A",
             disabled: that.rules[that.field].disabled ? that.rules[that.field].disabled : ( that.data.enabled ? !that.data.enabled : false),
             display: that.rules[that.field].display || null,
-            showbuttons: false,
+            showbuttons: that.rules[that.field].showbuttons || false,
             mode: that.rules[that.field].mode || 'inline',
             source:that.rules[that.field].source || null,
             validate: function (newValue) {
@@ -42,7 +42,6 @@ export class Xeditable {
                     }
                 );
             }
-
         });
     }
 }
@@ -58,8 +57,8 @@ export class Xfile {
         jQuery(this.el.nativeElement).fileinput({
             browseLabel: 'Imagen',
             previewFileType: "image",
-            browseClass: "btn btn-success",
-            browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+            browseClass: "btn btn-blue",
+            browseIcon: "<i class=\"fa fa-image\"></i> ",
             showCaption: false,
             showRemove: false,
             showUpload: false,
