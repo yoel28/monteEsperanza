@@ -26,7 +26,7 @@
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                                                 <div class="btn-group dropdown pull-right">
-                                                    <button type="button" data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                                    <button type="button" data-toggle="dropdown" class="btn btn-box-tool dropdown-toggle" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-gears fa-lg"></i>
                                                     </button>
                                                     <ul role="menu" class="dropdown-menu text-left submenu-config">
@@ -36,13 +36,32 @@
                                                                 {{user.accountLocked?"Verificar":"No Verificado"}}
                                                             </a>
                                                         </li>
-                                                        <li class="divider"></li>
                                                         <li>
                                                             <a (click)="onPatch('enabled',user)" href="javascript:void(0);">
                                                                 <span class="fa fa-warning"></span>
                                                                 {{user.enabled?"Bloquear":"Habilitar"}}
                                                             </a>
                                                         </li>
+                                                        <li class="divider"></li>
+                                                        <li>
+                                                            <a data-toggle="modal" [attr.data-target]="'#delete'+user.id"  href="#">
+                                                                <span class="fa fa-trash"></span>
+                                                                Eliminar
+                                                            </a>
+                                                        </li>
+                                                        <div [attr.id]="'delete'+user.id" class="modal hide fade" role="dialog" >
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body">
+                                                                        Esta Seguro que desea eliminar el usuario <strong>{{user.username}}</strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button (click)="onDelete($event,user.id)" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Borrar</button>
+                                                                        <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </ul>
                                                 </div>
 
