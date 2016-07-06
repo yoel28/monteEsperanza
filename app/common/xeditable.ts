@@ -69,25 +69,13 @@ export class Xfile {
 }
 
 @Directive({
-    selector: "[pull-bottom]"
-})
-export class PullBottom {
-    constructor(public el:ElementRef) {
-    }
-    ngOnInit() {
-        let that = jQuery(this.el.nativeElement);
-        let val = that.parent().parent().height() - that.parent().height();
-        that.css('margin-top',val > 0 ? val : 20);
-
-    }
-}
-
-@Directive({
     selector: "[x-cropit]",
+    inputs: ['imageSrc'],
     outputs:   ['saveImagen'],
 })
 export class Xcropit {
     public saveImagen:any;
+    public imageSrc:string;
     constructor(public el:ElementRef) {
         this.saveImagen = new EventEmitter();
     }
@@ -119,6 +107,7 @@ export class Xcropit {
                 if(imageData)
                     _this.saveImagen.emit(imageData);
             },
+            imageState: { src: _this.imageSrc || "" }
         });
         that.find('.rotate-cw').click(function(event) {
             event.preventDefault();
