@@ -19,9 +19,10 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                    <div *ngFor="let data of dataList.list">
-                        <div class="col-lg-4">
+                <div *ngIf="dataList.list" class="box-body" >
+                    <div *ngFor="let vehList of dataList.list | divide:3 " class="row">
+                        <div *ngFor="let data of vehList">
+                            <div class="col-lg-4">
                             <div class="panel">
                                 <div class="panel-body">
                                     <div class="profile">
@@ -153,6 +154,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

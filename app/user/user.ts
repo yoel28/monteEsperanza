@@ -8,9 +8,11 @@ import {Search} from "../utils/search/search";
 import {EmpresaSave} from "../empresa/methods";
 import {Xeditable} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Divide} from "../utils/pipe";
 
 @Component({
     selector: 'user',
+    pipes : [Divide],
     templateUrl: 'app/user/index.html',
     styleUrls: ['app/user/style.css'],
     directives: [UserSave,Search,EmpresaSave,Xeditable],
@@ -18,6 +20,8 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 export class User extends RestController{
     
     public userSelect:string;
+    public divRow="<div class='row'>";
+    public divClose="</div>";
 
     constructor(public router: Router,public http: Http,public myglobal:globalService,public toastr: ToastsManager) {
         super(http,toastr);
@@ -25,6 +29,7 @@ export class User extends RestController{
     }
     ngOnInit(){
         this.validTokens();
+        this.max=6;
         this.loadData();
         this.loadRoles();
     }

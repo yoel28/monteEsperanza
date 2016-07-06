@@ -16,9 +16,10 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body" >
-                    <div *ngFor="let user of dataList.list">
-                        <div class="col-lg-4">
+                <div *ngIf="dataList.list" class="box-body" >
+                    <div *ngFor="let userList of dataList.list | divide:3 " class="row">
+                        <div *ngFor="let user of userList">
+                            <div class="col-lg-4">
                             <div class="panel">
                                 <div class="panel-body">
                                     <div class="profile">
@@ -91,28 +92,22 @@
                                                     </button>
                                                 </p>
                                                 <p *ngIf="dataRoles && dataRoles.count>0">
-                                                    <strong>Rol:</strong>
-                                                    <a x-editable [endpoint]="'/users/'+user.id+'/roles'" [function]="onEditableRole" [data]="user" [rules]="rules" field="roles" ></a>
+                                                    <strong class="col-lg-2">Rol:</strong>
+                                                    <span class="col-lg-10">
+                                                        <a x-editable [endpoint]="'/users/'+user.id+'/roles'" [function]="onEditableRole" [data]="user" [rules]="rules" field="roles" ></a>
+                                                    </span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="row text-center divider">
-                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                            <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6 emphasis">
                                                 <h4><strong>{{user.companyWeightCount?user.companyWeightCount:"N/A"}}</strong></h4>
                                                 <p>
                                                     <small>Descargas</small>
                                                 </p>
                                                 <button (click)="goTimeLine(user.companyRuc)" class="btn btn-yellow btn-block">Registro</button>
                                             </div>
-                                            <div class="col-xs-12 col-sm-4 emphasis">
-                                                <h4><strong>{{user.companyVehiclesCount?user.companyVehiclesCount:"N/A"}}</strong></h4>
-                                                <p>
-                                                    <small>Camiones</small>
-                                                </p>
-                                                <button class="btn btn-yellow btn-block">Camion</button>
-
-                                            </div>
-                                            <div class="col-xs-12 col-sm-4 emphasis">
+                                            <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6 emphasis">
                                                 <h4><strong>{{user.companyBalance?user.companyBalance:"0"}}$</strong></h4>
                                                 <p>
                                                     <small>Saldo</small>
@@ -123,6 +118,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

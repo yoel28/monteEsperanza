@@ -11,10 +11,12 @@ import {Json} from "@angular/platform-browser/src/facade/lang";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {FormBuilder} from "@angular/common";
 import {Xeditable} from "../common/xeditable";
+import {Divide} from "../utils/pipe";
 
 declare var jQuery:any;
 @Component({
     selector: 'vehiculo',
+    pipes:[Divide],
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/styleVehiculo.css'],
     directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable],

@@ -8,9 +8,11 @@ import {Search} from "../utils/search/search";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RecargaTimeLine} from "../recarga/methods";
 import {Xeditable} from "../common/xeditable";
+import {Divide} from "../utils/pipe";
 
 @Component({
     selector: 'empresa',
+    pipes:[Divide],
     templateUrl: 'app/empresa/index.html',
     styleUrls: ['app/empresa/style.css'],
     directives:[EmpresaSave,TipoEmpresaSave,Search,Xeditable]
