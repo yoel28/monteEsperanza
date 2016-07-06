@@ -1,0 +1,17 @@
+.image-profile{
+    background-color: rgba(128, 128, 128, 0.06);
+    padding: 2pt 0pt 10pt;
+    border-radius: 5pt;
+    margin-bottom: 10pt;
+}
+.separacion-empresa{
+    margin-top: 10pt;
+    padding-top: 10pt;
+}
+.rotate-cw ,.rotate-ccw{
+    margin: 0px !important;
+}
+.margenes{
+    margin-bottom: 10pt;
+    margin-top: 10pt;
+}
