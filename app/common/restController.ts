@@ -63,4 +63,17 @@ export class RestController{
         };
         return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
     }
+    onEditableRole(field,data,value,endpoint){
+        let json = {};
+        json[field] = value;
+        let body = JSON.stringify(json);
+        let error = err => {
+            this.toastr.error(err.json().message);
+        };
+        let successCallback= response => {
+            if(this.toastr)
+                this.toastr.success('Guardado con éxito','Notificacion')
+        }
+        return (this.httputils.doPost(endpoint, body,successCallback, error));
+    }
 }
