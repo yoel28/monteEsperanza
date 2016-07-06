@@ -5,14 +5,14 @@ import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {Search} from "../utils/search/search";
 import {EmpresaSave} from "../empresa/methods";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable, Xcropit, Xfile} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 @Component({
     selector: 'profile',
     templateUrl: 'app/profile/index.html',
     styleUrls: ['app/profile/style.css'],
-    directives: [Xeditable],
+    directives: [Xeditable,Xcropit,Search,EmpresaSave,Xfile],
 })
 export class Profile extends RestController{
     
@@ -45,5 +45,11 @@ export class Profile extends RestController{
         let link = ['TaquillaSearh', {search:companyRuc}];
         this.router.navigate(link);
     }
-    
+    public image:string;
+    changeImage(data){
+        this.image=data;
+    }
+    loadImage(){
+        this.onPatch('image',this.myglobal.user,this.image);
+    }
 }

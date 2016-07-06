@@ -2,12 +2,145 @@
     <section class="content">
         <div class="box">
             <div class="box-header with-border">
-
+                <h4>Perfil</h4>
             </div>
             <div class="box-body">
+                <div *ngIf="myglobal.user.id" class="col-lg-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="profile">
+                                <div style="margin-bottom: 15px" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
+                                        <div class="btn-group dropdown pull-right">
+                                            <button type="button" data-toggle="dropdown"
+                                                    class="btn btn-box-tool dropdown-toggle" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                <i class="fa fa-gears fa-lg"></i>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                                <li>
+                                                    <a href="javascript:void(0);"
+                                                       (click)="onPatch('accountLocked',myglobal.user)">
+                                                        <span class="fa fa-list"></span>
+                                                        {{myglobal.user.accountLocked?"Verificar":"No Verificado"}}
+                                                    </a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a (click)="onPatch('enabled',myglobal.user)"
+                                                       href="javascript:void(0);">
+                                                        <span class="fa fa-warning"></span>
+                                                        {{myglobal.user.enabled?"Bloquear":"Habilitar"}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <figure>
+                                            <div [imageSrc]="myglobal.user.image" x-cropit id="image-cropper" (saveImagen)="changeImage($event)">
+                                                <div class="cropit-preview center-block"></div>
+                                                <div class="col-lg-12" style="margin-top: 10pt;">
+                                                    <div class="col-lg-6">
+                                                        <input type="range" class="cropit-image-zoom-input" />
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input x-file type="file" class="cropit-image-input" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="center-block">
+                                                        <button class="btn btn-success fa fa-rotate-left rotate-ccw"></button>
+                                                        <button class="btn btn-success fa fa-rotate-right rotate-cw"></button>
+                                                        <button (click)="loadImage()" class="btn btn-success fa fa-upload upload"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <h2 class="truncate">{{myglobal.user.username}}</h2>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8 col-lg-12">
+                                        <p>
+                                            <strong>Nombre:</strong>
+                                            <a x-editable [endpoint]="endpoint" [function]="onEditable"
+                                               [data]="myglobal.user" [rules]="rules" field="name"></a>
+                                        </p>
+                                        <p>
+                                            <strong>Telefonos:</strong>
+                                            <a x-editable [endpoint]="endpoint" [function]="onEditable"
+                                               [data]="myglobal.user" [rules]="rules" field="phone"></a>
+                                        </p>
+                                        <p>
+                                            <strong>Email:</strong>
+                                            <a x-editable [endpoint]="endpoint" [function]="onEditable"
+                                               [data]="myglobal.user" [rules]="rules" field="email"></a>
+                                        </p>
+                                        <p><strong>Empresa:</strong> {{myglobal.user.companyName}}
+                                            <button (click)="userSelect = myglobal.user.id" type="button"
+                                                    class="btn btn-box-tool fa fa-search text-blue" data-toggle="modal"
+                                                    data-target="#searchEmpresa"></button>
+                                            <button (click)="userSelect = myglobal.user.id" type="button"
+                                                    class="btn btn-box-tool fa fa-plus text-green" data-toggle="modal"
+                                                    data-target="#newEmpresa"></button>
+                                        </p>
+                                        <p>
+                                            <button (click)="onPatch('accountLocked',myglobal.user)" class="btn btn-sm"
+                                                    [class.btn-green]="!myglobal.user.accountLocked"
+                                                    [class.btn-red]="myglobal.user.accountLocked">
+                                                {{myglobal.user.accountLocked?"Sin Verificar":"Verificado"}}
+                                            </button>
+
+                                            <button (click)="onPatch('enabled',myglobal.user)" class="btn btn-sm"
+                                                    [class.btn-green]="myglobal.user.enabled"
+                                                    [class.btn-red]="!myglobal.user.enabled">
+                                                {{myglobal.user.enabled?"Habilitado":"Bloqueado"}}
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row text-center divider">
+                                    <div class="col-xs-12 col-sm-4 emphasis">
+                                        <h4><strong>{{myglobal.user.companyWeightCount?myglobal.user.companyWeightCount:"N/A"}}</strong>
+                                        </h4>
+                                        <p>
+                                            <small>Descargas</small>
+                                        </p>
+                                        <button (click)="goTimeLine(myglobal.user.companyRuc)"
+                                                class="btn btn-yellow btn-block">Registro
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 emphasis">
+                                        <h4><strong>{{myglobal.user.companyVehiclesCount?myglobal.user.companyVehiclesCount:"N/A"}}</strong>
+                                        </h4>
+                                        <p>
+                                            <small>Camiones</small>
+                                        </p>
+                                        <button class="btn btn-yellow btn-block">Camion</button>
+
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 emphasis">
+                                        <h4>
+                                            <strong>{{myglobal.user.companyBalance?myglobal.user.companyBalance:"0"}}$</strong>
+                                        </h4>
+                                        <p>
+                                            <small>Saldo</small>
+                                        </p>
+                                        <button (click)="goTaquilla(myglobal.user.companyRuc)"
+                                                class="btn btn-yellow btn-block">Taquilla
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="box-footer" >
+            <div class="box-footer">
 
             </div>
         </div>
