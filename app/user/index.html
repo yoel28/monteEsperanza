@@ -7,6 +7,10 @@
                         <i class="fa fa-plus"></i> Nuevo
                     </button>
 
+                    <button type="button" class="btn btn-primary btn-green" data-toggle="modal" [attr.data-target]="'#'+params.idModal">
+                        <i class="fa fa-search"></i> Filtrar
+                    </button>
+
                     <div class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
                             <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
@@ -156,3 +160,4 @@
 <user-save idModal="saveUser" (save)="assignUser($event)"> </user-save>
 <empresa-save idModal="newEmpresa" (save)="assignCompany($event)"> </empresa-save>
 <search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>
+<filter  [rules]="rules" [params]="params" (where)="loadWhere($event)"></filter>

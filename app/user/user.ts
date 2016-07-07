@@ -5,6 +5,7 @@ import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {UserSave} from "./methods";
 import {Search} from "../utils/search/search";
+import {Filter} from "../utils/filter/filter";
 import {EmpresaSave} from "../empresa/methods";
 import {Xeditable} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -15,14 +16,12 @@ import {Divide} from "../utils/pipe";
     pipes : [Divide],
     templateUrl: 'app/user/index.html',
     styleUrls: ['app/user/style.css'],
-    directives: [UserSave,Search,EmpresaSave,Xeditable],
+    directives: [UserSave,Search,EmpresaSave,Xeditable,Filter],
 })
 export class User extends RestController{
     
     public userSelect:string;
-    public divRow="<div class='row'>";
-    public divClose="</div>";
-
+    
     constructor(public router: Router,public http: Http,public myglobal:globalService,public toastr: ToastsManager) {
         super(http,toastr);
         this.setEndpoint('/users/');
@@ -34,16 +33,22 @@ export class User extends RestController{
         this.loadRoles();
     }
     public rules={
-        'id': {'type':'text','disabled':true,'display':false,'title':'id' },
-        'username':{'type':'text','display':null,'title':'Nombre de usuario' },
-        'name':{'type':'text','display':null,'title':'nombre' },
-        'email':{'type':'email','display':null,'title':'Correo' },
-        'password':{'type':'password','display':null,'title':'Contrasena' },
-        'phone':{'type':'number','display':null,'title':'Telefono' },
-        'roles':{'type':'checklist','display':null,'title':'Rol','mode':'popup','showbuttons':true,
+        'id': {'type':'text','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
+        'username':{'type':'text','display':null,'title':'Nombre de usuario','placeholder':'Usuario','search':true},
+        'name':{'type':'text','display':null,'title':'nombre','placeholder':'Nombre de usuario','search':true},
+        'companie':{'type':'object','display':null,'title':'nombre','placeholder':'Nombre de compañia','search':true},
+        'email':{'type':'email','display':null,'title':'Correo','placeholder':'Correo','search':true},
+        'password':{'type':'password','display':null,'title':'Contrasena','placeholder':'Contrasena','search':false},
+        'phone':{'type':'number','display':null,'title':'Telefono','placeholder':'Telefono','search':true},
+        'roles':{'type':'object','display':null,'title':'Rol','mode':'popup','showbuttons':true,'placeholder':'Roles','search':false,
             'source': []
         },
     }
+    public params:any={
+        title:"Buscar Usuarios",
+        idModal:"modalFilterUser",
+        endpointForm:"",
+    };
 
     validTokens(){
         if(!localStorage.getItem('bearer'))
@@ -92,5 +97,14 @@ export class User extends RestController{
             });
         };
         this.httputils.doGet('/roles/',successCallback,this.error)
+    }
+    //Cargar Where del filter
+    loadWhere(data){
+        let dataWhere="["
+        Object.keys(data.values).forEach( key=>{
+              if(data.values[key]!="")
+                  data
+                  
+        })
     }
 }
