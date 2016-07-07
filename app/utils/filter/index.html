@@ -1,0 +1,45 @@
+<div class="modal fade" [attr.id]="params.idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{params.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+                    <div *ngFor="let key of keys">
+                        <div *ngIf="rules[key].search">
+                            <div class="col-lg-12">
+                                <div class="form-group input-icon right">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <i class="{{rules[key].icon || 'fa fa-list'}}"></i>
+                                            <input ngControl="{{key}}" class="form-control" [(ngModel)]="data[key].value" placeholder="{{rules[key].placeholder}}" type="{{rules[key].type}}">
+                                            <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
+                                                El campo contiene errores
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <select [(ngModel)]="data[key+'Cond']"  (ngModelChange)="setCondicion($event,key)" sm-dropdown class="ui fluid search selection dropdown">
+                                            <option *ngFor="let n of loadCondition(rules[key].type)"  [attr.value]="n.id" >{{n.text}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                        id="cntrlsubmit" [disabled]="!form.valid">
+                    <i class="fa fa-filter"></i>
+                    Filtrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
