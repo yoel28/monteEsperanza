@@ -12,6 +12,7 @@ export class RestController{
     offset=0;
     max=5;
     page:any=[];
+    where:string="";
 
     constructor(public http: Http,public toastr?: ToastsManager) {
         this.httputils = new HttpUtils(http,toastr || null);
@@ -28,7 +29,7 @@ export class RestController{
 
     loadData(offset=0){
         this.offset=offset;
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset,this.dataList,this.max,this.error);
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error);
     };
     onUpdate(event,data){
         event.preventDefault();
