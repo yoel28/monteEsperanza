@@ -34,7 +34,7 @@
                 </tbody>
             </table>
         </div>
-        <div *ngIf="dataList && dataList.count == 0 ">
+        <div *ngIf="dataList && dataList.count == 0">
             <div class="alert alert-warning alert-dismissable">
                 <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
                     <strong><i class="fa fa-warning"></i></strong> No se encontraron facturas.
@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="box-footer with-border">
-        <div class="btn-group pull-right">
+        <div *ngIf="dataList && dataList.count > 0" class="btn-group pull-right">
             <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                 {{val}}
             </button>

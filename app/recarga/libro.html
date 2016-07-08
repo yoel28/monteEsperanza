@@ -1,0 +1,100 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">
+                    <strong>LIBRO: </strong>
+                </h4>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form role="form" [ngFormModel]="form" (submit)="loadLibro($event)">
+                            <div class="form-group input-icon right col-lg-3">
+                                <div class="row">
+                                    Inicio
+                                    <i class="fa fa-calendar"></i>
+                                    <input ngControl="dateStart" class="form-control" [(ngModel)]="dateStart.value"  #dateStart="ngForm" placeholder="Inicio" type="date">
+                                    <div [hidden]="dateStart.valid || dateStart.pristine" class="alert alert-danger">
+                                        Seleccione una fecha de incio
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group input-icon right col-lg-3 col-lg-offset-1">
+                                <div class="row">
+                                    Fin
+                                    <i class="fa fa-calendar"></i>
+                                    <input ngControl="dateEnd" class="form-control" [(ngModel)]="dateEnd.value"  #dateEnd="ngForm" placeholder="Fin" type="date">
+                                    <div [hidden]="dateEnd.valid || dateEnd.pristine" class="alert alert-danger">
+                                        Seleccione una fecha fin
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 center-margin">
+                                <button (click)="loadLibro($event)" type="button" class="btn btn-success pull-right"
+                                        id="cntrlsubmit" [disabled]="!form.valid">
+                                    <i class="fa fa-bank"></i>
+                                    Consultar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div  class="col-lg-12">
+                    <div *ngIf=" dataList && dataList.count > 0 ">
+                        <table class="table table-hover table-bordered">
+
+                            <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th >Fecha</th>
+                                <th>Referencia</th>
+                                <th>Fecha de Transaccion</th>
+                                <th>Tipo y Detalle</th>
+                                <th>Debe</th>
+                                <th>Haber</th>
+                            </tr>
+                            </thead>
+                            <tbody *ngFor="let recharges of dataList.list">
+                            <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
+                                <td>{{recharges.id}}</td>
+                                <td>{{recharges.dateCreated| fecha | date:'dd-MM-yyyy, h:m'}}</td>
+                                <td>{{recharges.reference}}</td>
+                                <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
+                                    {{recharges.weight?recharges.weight+"Kg.":"&nbsp;"}}
+                                </td>
+                                <td>{{recharges.rechargeTypeId!=4?recharges.quantity:"&nbsp;"}}</td>
+                                <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1):"&nbsp;"}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot *ngIf="dataList && dataList.page.length > 1">
+                            <tr>
+                                <td colspan="7">
+                                    <div class="btn-group pull-right">
+                                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                                            {{val}}
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div *ngIf="dataList && dataList.count == 0">
+                        <div class="alert alert-warning alert-dismissable">
+                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                            <strong><i class="fa fa-warning"></i></strong> No se encontraron facturas.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </section>
+</div>

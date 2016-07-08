@@ -1,0 +1,50 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">
+                    <strong>INGRESOS: </strong>
+                </h4>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
+                        <div class="form-group input-icon right col-lg-6">
+                            <div class="row">
+                                Inicio
+                                <i class="fa fa-calendar"></i>
+                                <input ngControl="dateStart" class="form-control" [(ngModel)]="dateStart.value"  #dateStart="ngForm" placeholder="Inicio" type="date">
+                                <div [hidden]="dateStart.valid || dateStart.pristine" class="alert alert-danger">
+                                    Seleccione una fecha de incio
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group input-icon right col-lg-6">
+                            <div class="row">
+                                Fin
+                                <i class="fa fa-calendar"></i>
+                                <input ngControl="dateEnd" class="form-control" [(ngModel)]="dateEnd.value"  #dateEnd="ngForm" placeholder="Fin" type="date">
+                                <div [hidden]="dateEnd.valid || dateEnd.pristine" class="alert alert-danger">
+                                    Seleccione una fecha fin
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col-lg-12">
+                                <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
+                                        id="cntrlsubmit" [disabled]="!form.valid">
+                                    <i class="fa fa-bank"></i>
+                                    Consultar
+                                </button>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="consultar" >
+                <recarga-factura [params]="paramsFactura"> </recarga-factura>
+            </div>
+        </div>
+    </section>
+</div>
