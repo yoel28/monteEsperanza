@@ -102,11 +102,11 @@ export class Filter {
                 {'id':'eq','text':'Igual que'},
                 {'id':'ne','text':'Diferente que'},
                 {'id':'%like%','text': 'Contiene'},
-                {'id':'%like','text': 'Comienza con'},
-                {'id':'like%','text': 'Termina en'},
+                {'id':'like%','text': 'Comienza con'},
+                {'id':'%like','text': 'Termina en'},
                 {'id':'%ilike%','text': 'Contiene(i)'},
-                {'id':'%ilike','text': 'Comienza con(i)'},
-                {'id':'ilike%','text': 'Termina en(i)'}
+                {'id':'ilike%','text': 'Comienza con(i)'},
+                {'id':'%ilike','text': 'Termina en(i)'}
             ],
             'number':[
                 {'id':'eq','text':'Igual que'},
@@ -132,11 +132,11 @@ export class Filter {
                 {'id':'eq','text':'Igual que'},
                 {'id':'ne','text':'Diferente que'},
                 {'id':'%like%','text': 'Contiene'},
-                {'id':'%like','text': 'Comienza con'},
-                {'id':'like%','text': 'Termina en'},
+                {'id':'like%','text': 'Comienza con'},
+                {'id':'%like','text': 'Termina en'},
                 {'id':'%ilike%','text': 'Contiene(i)'},
-                {'id':'%ilike','text': 'Comienza con(i)'},
-                {'id':'ilike%','text': 'Termina en(i)'}
+                {'id':'ilike%','text': 'Comienza con(i)'},
+                {'id':'%ilike','text': 'Termina en(i)'}
             ],
         }
 }
