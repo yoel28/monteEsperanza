@@ -36,11 +36,10 @@ export class User extends RestController{
         'id': {'type':'text','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
         'username':{'type':'text','display':null,'title':'Nombre de usuario','placeholder':'Usuario','search':true},
         'name':{'type':'text','display':null,'title':'nombre','placeholder':'Nombre de usuario','search':true},
-        'companie':{'type':'object','display':null,'title':'nombre','placeholder':'Nombre de compañia','search':true},
         'email':{'type':'email','display':null,'title':'Correo','placeholder':'Correo','search':true},
         'password':{'type':'password','display':null,'title':'Contrasena','placeholder':'Contrasena','search':false},
         'phone':{'type':'number','display':null,'title':'Telefono','placeholder':'Telefono','search':true},
-        'roles':{'type':'object','display':null,'title':'Rol','mode':'popup','showbuttons':true,'placeholder':'Roles','search':false,
+        'roles':{'type':'checklist','display':null,'title':'Rol','mode':'popup','showbuttons':true,'placeholder':'Roles','search':false,
             'source': []
         },
     }
@@ -100,11 +99,15 @@ export class User extends RestController{
     }
     //Cargar Where del filter
     loadWhere(data){
-        let dataWhere="["
-        Object.keys(data.values).forEach( key=>{
-              if(data.values[key]!="")
-                  data
+        let dataWhere="";
+        Object.keys(this.rules).forEach( key=>{
+              if(data.value[key] && data.value[key]!="")
+                  dataWhere+="['op':'"+data.value[key+'Cond']+"'," +
+                              "'field':'"+key+"'," +
+                                "'value':'"+data.value[key]+"'],";
                   
         })
+        this.where="&where=["+dataWhere.slice(0,-1)+"]";
+        this.loadData();
     }
 }
