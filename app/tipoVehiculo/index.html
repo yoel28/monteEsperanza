@@ -5,14 +5,14 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Tipo Vehiculo</h3>
 
-                    <div class="box-tools pull-right">
+                    <div *ngIf="myglobal.existsPermission('30')"  class="box-tools pull-right">
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saveTipoVehiculo">
                             Agregar
                         </button>
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body" >
+                <div *ngIf="myglobal.existsPermission('32')" class="box-body" >
                     <div>
                         <table class="table table-striped table-hover tarjeta">
                             <thead>
@@ -21,7 +21,7 @@
                                 <th>Titulo</th>
                                 <th>Detalle </th>
                                 <th>Icono </th>
-                                <th>Acciones</th>
+                                <th *ngIf="myglobal.existsPermission('34')">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -30,7 +30,7 @@
                                 <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
                                 <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
                                 <td> <i class="{{data.icon}}"></i> <span accessKey="icon" contenteditable="true" (blur)="onUpdate($event,data)">{{data.icon}}</span></td>
-                                <td> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                                <td *ngIf="myglobal.existsPermission('34')"> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
                             </tr>
                             </tbody>
                         </table>
