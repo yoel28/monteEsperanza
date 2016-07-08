@@ -25,6 +25,7 @@
     "angular2-jwt": "0.1.14",
     "angular2-notifications": "^0.1.57",
     "bootstrap": "3.3.5",
+    "bootstrap-datetimepicker": "0.0.7",
     "bootstrap-fileinput": "^4.2.8",
     "cropit": "^0.5.1",
     "font-awesome": "4.4.0",
