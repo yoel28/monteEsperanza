@@ -20,7 +20,8 @@ import { Rol }         from './rol/rol';
 import { Parametro }         from './parametro/parametro';
 import { Regla }         from './regla/regla';
 import { TipoRecarga }         from './tipoRecarga/tipoRecarga';
-import { Recarga }         from './recarga/recarga';
+import {Recarga, RecargaLibro}         from './recarga/recarga';
+import { RecargaIngresos }         from './recarga/recarga';
 import { TagRfid }         from './tagRfid/tagRfid';
 import { Vehiculo }         from './vehiculo/vehiculo';
 import { Permiso }         from './permiso/permiso';
@@ -55,12 +56,14 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
   { path: '/roles',   name: 'Rol', component: Rol },
+  { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
   { path: '/parametro',   name: 'Parametro', component: Parametro },
   { path: '/regla',   name: 'Regla', component: Regla },
   { path: '/recargas',   name: 'Recarga', component: Recarga },
+  { path: '/libro',   name: 'RecargaLibro', component: RecargaLibro },
   { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
   { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
