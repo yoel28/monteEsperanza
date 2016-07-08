@@ -2,6 +2,8 @@ import {ElementRef, Directive, EventEmitter, Component} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {HttpUtils} from "../common/http-utils";
+import moment from 'moment/moment';
+
 
 declare var jQuery:any;
 @Directive({
@@ -34,13 +36,16 @@ export class Xeditable {
             mode: that.rules[that.field].mode || 'inline',
             source:that.rules[that.field].source || null,
             validate: function (newValue) {
-                that.function(that.field, that.data, newValue, that.endpoint).then(
-                    function (value) {
-                        return;
-                    }, function (reason) {
-                        jQuery(that.el.nativeElement).editable('setValue', that.data[that.field], true);
-                    }
-                );
+                if(that.function)
+                {
+                    that.function(that.field, that.data, newValue, that.endpoint).then(
+                        function (value) {
+                            return;
+                        }, function (reason) {
+                            jQuery(that.el.nativeElement).editable('setValue', that.data[that.field], true);
+                        }
+                    );
+                }
             }
         });
     }
@@ -131,6 +136,34 @@ export class Xcropit {
 export class SMDropdown {
     constructor(el: ElementRef) {
         jQuery(el.nativeElement).dropdown();
+    }
+}
+
+@Directive({
+    selector: "[datepicker]",
+    inputs:['format'],
+    outputs:['fecha']
+})
+export class Datepicker {
+    public format:string;
+    public fecha:any;
+    constructor(el: ElementRef) {
+        this.fecha = new EventEmitter();
+        let that = this;
+        jQuery(el.nativeElement).datepicker({
+            format: "mm/yyyy",
+            startView: 2,
+            minViewMode: 1,
+            maxViewMode: 2,
+            todayBtn: "linked",
+            language: "es",
+            forceParse: true,
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery(el.nativeElement).datepicker().on('changeDate', function (ev) {
+            that.fecha.emit(moment(ev.date).format('YYYY/MM'));
+        })
     }
 }
 
