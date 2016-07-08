@@ -49,18 +49,50 @@ export class Filter {
         this.keys = Object.keys(this.rules);
     }
 
-    submitForm(data) {
+    submitForm(event) {
+        event.preventDefault();
         let dataWhere="";
+        let that=this
         Object.keys(this.rules).forEach( key=>{
-            if(data.value[key] && data.value[key]!="")
-                dataWhere+="['op':'"+data.value[key+'Cond']+"'," +
-                    "'field':'"+key+"'," +
-                    "'value':'"+data.value[key]+"'],";
+            if(this.form.value[key] && this.form.value[key]!="")
+            {
+                let value="";
+                let op="";
+
+                value= that.form.value[key];
+
+                if(that.form.value[key+'Cond'].substr(-1)=="%" && that.form.value[key+'Cond'].substr(0,1)=="%"){
+                    op=that.form.value[key+'Cond'].substr(1,that.form.value[key+'Cond'].length -2)
+                    value = "%25"+value+"%25";
+                }
+                else if(that.form.value[key+'Cond'].substr(0,1)=="%")
+                {
+                    op=that.form.value[key+'Cond'].substr(1)
+                    value = "%25"+value;
+                }
+                else if(that.form.value[key+'Cond'].substr(-1)=="%")
+                {
+                    op=that.form.value[key+'Cond'].slice(0,-1);
+                    value = value+"%25";
+                }
+                else
+                    op=that.form.value[key+'Cond']
+
+                if(that.rules[key].type !='number')
+                    value = "'"+value+"'";
+
+
+
+
+
+
+                dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
+            }
+
         });
+        dataWhere="&where=["+dataWhere.slice(0,-1)+"]";
 
-        this.where="&where=["+dataWhere.slice(0,-1)+"]";
-
-        this.where.emit(this.form);
+        this.where.emit(dataWhere);
     }
     setCondicion(cond,id){
         (<Control>this.form.controls[id+'Cond']).updateValue(cond);

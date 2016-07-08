@@ -33,7 +33,7 @@ export class User extends RestController{
         this.loadRoles();
     }
     public rules={
-        'id': {'type':'text','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
+        'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
         'username':{'type':'text','display':null,'title':'Nombre de usuario','placeholder':'Usuario','search':true},
         'name':{'type':'text','display':null,'title':'nombre','placeholder':'Nombre de usuario','search':true},
         'email':{'type':'email','display':null,'title':'Correo','placeholder':'Correo','search':true},
@@ -44,7 +44,7 @@ export class User extends RestController{
         },
     }
     public params:any={
-        title:"Buscar Usuarios",
+        title:"Filtrar Usuarios",
         idModal:"modalFilterUser",
         endpointForm:"",
     };
@@ -98,16 +98,8 @@ export class User extends RestController{
         this.httputils.doGet('/roles/',successCallback,this.error)
     }
     //Cargar Where del filter
-    loadWhere(data){
-        let dataWhere="";
-        Object.keys(this.rules).forEach( key=>{
-              if(data.value[key] && data.value[key]!="")
-                  dataWhere+="['op':'"+data.value[key+'Cond']+"'," +
-                              "'field':'"+key+"'," +
-                                "'value':'"+data.value[key]+"'],";
-                  
-        })
-        this.where="&where=["+dataWhere.slice(0,-1)+"]";
+    loadWhere(where){
+        this.where = where;
         this.loadData();
     }
 }
