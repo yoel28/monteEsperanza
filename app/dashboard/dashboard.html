@@ -8,15 +8,15 @@
                 <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1>
                 <h3 class="subtitle">QUE DESEA REALIZAR</h3>
                 <div class="text-center title">
-                    <div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn">
+                    <div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn" (click)="goVehiculos($event)">
                         <img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">
                         <h6>VEHICULO</h6>
                     </div>
-                    <div *ngIf="myglobal.existsPermission('13')" class="col-lg-3 btn">
+                    <div *ngIf="myglobal.existsPermission('13')" class="col-lg-3 btn" (click)="goFactura($event)">
                         <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
                         <h6>INGRESOS</h6>
                     </div>
-                    <div *ngIf="myglobal.existsPermission('11')" class="col-lg-3 btn">
+                    <div *ngIf="myglobal.existsPermission('11')" class="col-lg-3 btn" (click)="goLibro($event)">
                         <img src="/assets/img/dashboard/libro.png" class="actions-dashboard">
                         <h6>LIBRO</h6>
                     </div>
@@ -35,19 +35,25 @@
                     <h3 class="box-title">An&aacute;lisis de Gesti&oacute;n</h3>
                 </div>
                 <div class="box-body" >
-                    <div >
-                        <div class="col-md-8" *ngIf="dataArea.series.length>0">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="input-append date">
+                                <input datepicker (fecha)="loadFechaPlot($event)" type="text" class="form-control span2"><span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-8" *ngIf="dataArea.series.length>0">
                             <div [ng2-highcharts]="dataArea" ></div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-3 col-lg-offset-1">
                             <div class="row">
                                 <p class="text-center">
                                     <strong>Balance</strong>
                                 </p>
                                 <div class="progress-group" *ngFor="let data of dataPlot" >
-                                    <span class="progress-text"><i class="{{data.icon}}"></i> &nbsp;{{data.title}}</span>
-                                    <span class="progress-number">{{data.quantity }}/ {{dataPlot.total}}</span>
-
+                                    <span class="progress-text"><i class="{{data.icon}}"></i>&nbsp;{{data.title}}</span>
+                                    <span class="progress-number">{{data.quantity}}/ {{dataPlot.total}}</span>
                                     <div class="progress sm">
                                         <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
                                     </div>

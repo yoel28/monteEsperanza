@@ -10,18 +10,23 @@ import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {ControlGroup, Control, Validators, FormBuilder} from "@angular/common";
+import {Datepicker} from "../common/xeditable";
 import moment from 'moment/moment';
 
 @Component({
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
     styleUrls: ['app/dashboard/dashboard.css'],
-    directives: [Ng2Highcharts,RecargaTimeLine,RecargaFactura],
+    directives: [Ng2Highcharts,RecargaTimeLine,RecargaFactura,Datepicker],
 })
 export class Dashboard extends RestController{
+
+
     dataCamion:any = [];
     httputils:HttpUtils;
     endpoint:string;
+    plotDate="2016/02"
+
 
     public paramsTimeLine={
         'offset':0,
@@ -69,15 +74,38 @@ export class Dashboard extends RestController{
         let link = ['Taquilla', {}];
         this.router.navigate(link);
     }
+    goFactura(event){
+        event.preventDefault();
+        let link = ['RecargaIngresos', {}];
+        this.router.navigate(link);
+    }
+    goVehiculos(event){
+        event.preventDefault();
+        let link = ['Vehiculo', {}];
+        this.router.navigate(link);
+    }
+    goLibro(event){
+        event.preventDefault();
+        let link = ['RecargaLibro', {}];
+        this.router.navigate(link);
+    }
 
     dataPlot:any=[];
+    @ViewChild(Ng2Highcharts)
+    chartElement: Ng2Highcharts;
     getPlot1(){
+        let that=this;
         let successCallback= response => {
-            Object.assign(this.dataArea.series, response.json().series);
+            that.dataArea.series = response.json().series;
             if(response.json().categories)
-                Object.assign(this.dataArea.xAxis.categories, response.json().categories);
+                that.dataArea.xAxis.categories= response.json().categories;
+            if(that.chartElement){
+                that.chartElement.chart.series[0].setData(response.json().series[0].data,true);
+                that.chartElement.chart.series[1].setData(response.json().series[1].data,true);
+                that.chartElement.chart.series[2].setData(response.json().series[2].data,true);
+            }
         }
-        this.httputils.doGet("/dashboards/plot/1/2016",successCallback,this.error)
+        this.httputils.doGet("/dashboards/plot/1/"+this.plotDate,successCallback,this.error)
     }
     getPlot2(){
         let successCallback= response => {
@@ -89,7 +117,7 @@ export class Dashboard extends RestController{
                 else val.quantity *= -1;
             })
         }
-        this.httputils.doGet("/dashboards/plot/2/2016",successCallback,this.error)
+        this.httputils.doGet("/dashboards/plot/2/"+this.plotDate,successCallback,this.error)
     }
 
     //consultar Facturas
@@ -133,6 +161,13 @@ export class Dashboard extends RestController{
         this.consultar=true;
         this.dateEnd.updateValue("");
     }
+    loadFechaPlot(data){
+        this.plotDate=data;
+        this.getPlot1();
+        this.getPlot2();
+    }
+    
+    
 
 }
 
