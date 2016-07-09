@@ -20,6 +20,8 @@
     'ng2-toastr':                 'node_modules/ng2-toastr',
     'moment':                     'node_modules/moment',
     'jquery' :                    'node_modules/jquery/dist',
+    'angular2-highcharts' :       'node_modules/angular2-highcharts',
+    'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js',
     'semantic' :                  'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js'
 
   };
@@ -39,6 +41,7 @@
     'moment':                     { main: 'moment.js',defaultExtension: 'js' },
     'ng2-toastr':                 { defaultExtension: 'js' },
     'jquery':                     { main: 'jquery.min.js', defaultExtension: 'js' },
+    'angular2-highcharts' :       { main: 'index',format: 'cjs', defaultExtension: 'js' }
 
 
   };
