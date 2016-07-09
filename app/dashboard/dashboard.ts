@@ -1,23 +1,22 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {HttpUtils} from "../common/http-utils";
-import { Ng2Highcharts } from 'ng2-highcharts/ng2-highcharts';
 import {RecargaTimeLine} from "../recarga/methods";
 import {RecargaFactura} from "../recarga/methods";
-import match = require("core-js/fn/symbol/match");
 import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {ControlGroup, Control, Validators, FormBuilder} from "@angular/common";
 import {Datepicker} from "../common/xeditable";
 import moment from 'moment/moment';
+import { CHART_DIRECTIVES } from 'angular2-highcharts';
 
 @Component({
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
     styleUrls: ['app/dashboard/dashboard.css'],
-    directives: [Ng2Highcharts,RecargaTimeLine,RecargaFactura,Datepicker],
+    directives: [RecargaTimeLine,RecargaFactura,Datepicker,CHART_DIRECTIVES],
 })
 export class Dashboard extends RestController{
 
@@ -25,8 +24,7 @@ export class Dashboard extends RestController{
     dataCamion:any = [];
     httputils:HttpUtils;
     endpoint:string;
-    plotDate="2016/02"
-
+    plotDate="2016/02";
 
     public paramsTimeLine={
         'offset':0,
@@ -91,21 +89,23 @@ export class Dashboard extends RestController{
     }
 
     dataPlot:any=[];
-    @ViewChild(Ng2Highcharts)
-    chartElement: Ng2Highcharts;
     getPlot1(){
         let that=this;
         let successCallback= response => {
             that.dataArea.series = response.json().series;
             if(response.json().categories)
                 that.dataArea.xAxis.categories= response.json().categories;
-            if(that.chartElement){
-                that.chartElement.chart.series[0].setData(response.json().series[0].data,true);
-                that.chartElement.chart.series[1].setData(response.json().series[1].data,true);
-                that.chartElement.chart.series[2].setData(response.json().series[2].data,true);
+            if(that.chart){
+                that.chart.series[0].setData(that.dataArea.series[0].data)
+                that.chart.series[1].setData(that.dataArea.series[1].data)
+                that.chart.series[2].setData(that.dataArea.series[2].data)
             }
         }
         this.httputils.doGet("/dashboards/plot/1/"+this.plotDate,successCallback,this.error)
+    }
+    chart:any;
+    saveInstance(chartInstance) {
+        this.chart = chartInstance;
     }
     getPlot2(){
         let successCallback= response => {
