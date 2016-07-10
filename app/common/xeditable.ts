@@ -8,7 +8,7 @@ import moment from 'moment/moment';
 declare var jQuery:any;
 @Directive({
     selector: "[x-editable]",
-    inputs: ['data', 'rules', 'field', 'function', 'endpoint'],
+    inputs: ['data', 'rules', 'field', 'function', 'endpoint','disabled'],
     outputs: ['success']
 })
 export class Xeditable {
@@ -19,6 +19,7 @@ export class Xeditable {
     public endpoint:string;
     public function:any;
     public httputils:HttpUtils;
+    public disabled:boolean;
 
     constructor(public el:ElementRef, public http:Http, public toastr?:ToastsManager) {
         this.success = new EventEmitter();
@@ -27,10 +28,13 @@ export class Xeditable {
 
     ngOnInit() {
         let that = this;
+        if(that.disabled==null)
+            that.disabled = that.rules[that.field].disabled!=null ? that.rules[that.field].disabled : ( that.data.enabled ? !that.data.enabled : false)
+
         jQuery(this.el.nativeElement).editable({
             type: that.rules[that.field].type || 'text',
             value: that.data[that.field] || "N/A",
-            disabled: that.rules[that.field].disabled ? that.rules[that.field].disabled : ( that.data.enabled ? !that.data.enabled : false),
+            disabled: that.disabled,
             display: that.rules[that.field].display || null,
             showbuttons: that.rules[that.field].showbuttons || false,
             mode: that.rules[that.field].mode || 'inline',
