@@ -17,3 +17,17 @@
 .divider-form{
     padding-top: 10pt;
 }
+.separacion{
+    margin-bottom: 10pt;
+}
+.rotate-cw ,.rotate-ccw{
+    margin: 0px !important;
+}
+.margenes{
+    margin-bottom: 10pt;
+    margin-top: 10pt;
+}
+.boton-guardar{
+    padding: 8pt;
+    margin-top: 0px !important;
+}
