@@ -55,7 +55,7 @@
                         <i class="fa fa-minus"></i>&nbsp;Eliminar Todos
                     </button>
 
-                    <button type="button" class="btn btn-success" (click)="savePermissions()">
+                    <button *ngIf="myglobal.existsPermission('40')" type="button" class="btn btn-success" (click)="savePermissions()">
                         <i class="fa fa-save"></i>&nbsp;Guardar
                     </button>
 
