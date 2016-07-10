@@ -47,13 +47,22 @@
                         </table>
                     </div>
                 </div>
-                <!-- ./box-body -->
+                <div *ngIf="myglobal.existsPermission('32')" class="box-footer with-border">
+                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
+                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                            {{val}}
+                        </button>
+                    </div>
+                </div>
             </div>
             <!-- /.box -->
         </div>
     </section>
 </div>
-<tipoVehiculo-save idModal="saveTipoVehiculo" (save)="onSave($event)"> </tipoVehiculo-save>
+
+<div *ngIf="myglobal.existsPermission('30')">
+    <tipoVehiculo-save idModal="saveTipoVehiculo" (save)="assignTipoEmpresa($event)"> </tipoVehiculo-save>
+</div>
 
 <div *ngIf="dataList.list && myglobal.existsPermission('34')">
     <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

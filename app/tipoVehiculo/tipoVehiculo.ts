@@ -14,7 +14,7 @@ import {Xeditable} from "../common/xeditable";
     directives: [TipoVehiculoSave,Xeditable],
 })
 export class TipoVehiculo extends RestController{
-    
+
     public rules={
         'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
         'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
@@ -43,5 +43,8 @@ export class TipoVehiculo extends RestController{
             let link = ['AccountLogin', {}];
             this.router.navigate(link);
         }
+    }
+    assignTipoEmpresa(data){
+        this.dataList.list.unshift(data);
     }
 }
