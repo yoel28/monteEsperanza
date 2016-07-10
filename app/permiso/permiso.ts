@@ -18,14 +18,14 @@ import {Xeditable, SMDropdown} from "../common/xeditable";
 })
 export class Permiso extends RestController{
 
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/permissions/');
     }
     public rules={
         'id': {'type':'text','disabled':true,'display':false,'title':'' },
         'title':{'type':'text','display':null,'title':'Titulo','mode':'inline'},
-        'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline' },
+        'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline','showbuttons':true },
         'module':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
     };
     validTokens(){
