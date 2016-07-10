@@ -80,6 +80,11 @@ export class User extends RestController{
         let index = this.dataList.list.findIndex(obj => obj.id == this.userSelect);
         this.onPatch('company',this.dataList.list[index],data.id);
     }
+    releaseCompany(data){
+        let index = this.dataList.list.findIndex(obj => obj.id == data.id);
+        let body = JSON.stringify({'company':null});
+        return (this.httputils.onUpdate(this.endpoint + data.id, body, data, this.error));
+    }
     assignUser(data){
         this.dataList.list.unshift(data);
         this.dataList.list.pop();
