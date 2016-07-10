@@ -27,10 +27,21 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
                                 <td>{{data.id}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="title" contenteditable="true">{{data.title}}</td>
-                                <td (blur)="onUpdate($event,data)" accessKey="detail" contenteditable="true">{{data.detail}}</td>
-                                <td> <i class="{{data.icon}}"></i> <span accessKey="icon" contenteditable="true" (blur)="onUpdate($event,data)">{{data.icon}}</span></td>
-                                <td *ngIf="myglobal.existsPermission('34')"> <i (click)="onDelete($event,data.id)" class="fa fa-trash fa-lg btn"></i></td>
+                                <td>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('35')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="title" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('35')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="detail" ></a>
+                                </td>
+                                <td>
+                                    <i class="{{data.icon}}"></i>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('35')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="icon" ></a>
+                                </td>
+                                <td *ngIf="myglobal.existsPermission('34')">
+                                    <a data-toggle="modal" [attr.data-target]="'#myModal'+data.id"  href="#">
+                                        <i class="fa fa-trash fa-lg btn"></i>
+                                    </a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -43,3 +54,23 @@
     </section>
 </div>
 <tipoVehiculo-save idModal="saveTipoVehiculo" (save)="onSave($event)"> </tipoVehiculo-save>
+
+<div *ngIf="dataList.list && myglobal.existsPermission('34')">
+    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-red text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+                </div>
+                <div class="modal-body">
+                    ¿ Estás seguro que deseas eliminar a <strong>{{data.title}}</strong> ({{data.detail}})?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button (click)="onDelete($event,data.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
