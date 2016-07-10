@@ -24,8 +24,10 @@ export class ReglaSave extends RestController{
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager) {
         super(http,toastr);
         this.setEndpoint('/rules/');
-        this.initForm();
         this.save = new EventEmitter();
+    }
+    ngOnInit(){
+        this.initForm();
     }
     initForm(){
         this.rule = new Control("", Validators.compose([Validators.required]));
