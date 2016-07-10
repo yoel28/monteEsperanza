@@ -48,7 +48,6 @@
                                                                 {{user.enabled?"Bloquear":"Habilitar"}}
                                                             </a>
                                                         </li>
-                                                        <li class="divider"></li>
                                                         <li *ngIf="myglobal.existsPermission('59')">
                                                             <a data-toggle="modal" [attr.data-target]="'#myModal'+user.id"  href="#">
                                                                 <span class="fa fa-trash"></span>
