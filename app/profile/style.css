@@ -15,3 +15,7 @@
     margin-bottom: 10pt;
     margin-top: 10pt;
 }
+.boton-guardar{
+    padding: 8pt;
+    margin-top: 0px !important;
+}
