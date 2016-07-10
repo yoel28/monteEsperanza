@@ -7,7 +7,7 @@ import {UserSave} from "./methods";
 import {Search} from "../utils/search/search";
 import {Filter} from "../utils/filter/filter";
 import {EmpresaSave} from "../empresa/methods";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable, Xcropit, Xfile} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Divide} from "../utils/pipe";
 
@@ -16,7 +16,7 @@ import {Divide} from "../utils/pipe";
     pipes : [Divide],
     templateUrl: 'app/user/index.html',
     styleUrls: ['app/user/style.css'],
-    directives: [UserSave,Search,EmpresaSave,Xeditable,Filter],
+    directives: [UserSave,Search,EmpresaSave,Xeditable,Filter,Xcropit,Xfile],
 })
 export class User extends RestController{
     
@@ -106,5 +106,15 @@ export class User extends RestController{
     loadWhere(where){
         this.where = where;
         this.loadData();
+    }
+    public image:any=[];
+    changeImage(data,id){
+        if(this.image[id]==null)
+            this.image[id]=[];
+        this.image[id]=data;
+    }
+    loadImage(event,user){
+        event.preventDefault();
+        this.onPatch('image',user,this.image[user.id]);
     }
 }
