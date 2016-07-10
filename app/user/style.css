@@ -8,3 +8,24 @@
     border: 1px solid rgba(39, 39, 39, 0.18);
     border-radius: 10px !important;
 }
+
+.image-profile{
+    background-color: rgba(128, 128, 128, 0.06);
+    padding: 2pt 0pt 10pt;
+    border-radius: 5pt;
+    margin-bottom: 10pt;
+}
+.separacion{
+    margin-bottom: 10pt;
+}
+.rotate-cw ,.rotate-ccw{
+    margin: 0px !important;
+}
+.margenes{
+    margin-bottom: 10pt;
+    margin-top: 10pt;
+}
+.boton-guardar{
+    padding: 8pt;
+    margin-top: 0px !important;
+}
