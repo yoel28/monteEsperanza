@@ -10,8 +10,9 @@ import {Search} from "../utils/search/search"
 import {Json} from "@angular/platform-browser/src/facade/lang";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {FormBuilder} from "@angular/common";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
+import {globalService} from "../common/globalService";
 
 declare var jQuery:any;
 @Component({
@@ -19,7 +20,7 @@ declare var jQuery:any;
     pipes:[Divide],
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile],
 })
 export class Vehiculo extends RestController{
 
@@ -34,7 +35,7 @@ export class Vehiculo extends RestController{
         'balance':{'type':'number','display':null,'title':'B' },
     }
 
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder) {
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/vehicles/');
     }
@@ -138,6 +139,18 @@ export class Vehiculo extends RestController{
         }
         let body=Json.stringify({'company':data.id})
         this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
+    }
+
+    //cambiar imagen
+    public image:any=[];
+    changeImage(data,id){
+        if(this.image[id]==null)
+            this.image[id]=[];
+        this.image[id]=data;
+    }
+    loadImage(event,user){
+        event.preventDefault();
+        this.onPatch('image',user,this.image[user.id]);
     }
 
 }
