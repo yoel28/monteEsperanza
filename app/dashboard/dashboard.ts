@@ -52,19 +52,11 @@ export class Dashboard extends RestController{
 
     constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
-        this.validTokens();
     }
     ngOnInit(){
         this.initForm();
         this.getPlot1();
         this.getPlot2();
-    }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
     }
 
     goTaquilla(event){
