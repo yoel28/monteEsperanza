@@ -27,10 +27,12 @@ export class User extends RestController{
         this.setEndpoint('/users/');
     }
     ngOnInit(){
-        this.validTokens();
-        this.max=6;
-        this.loadData();
-        this.loadRoles();
+        if(this.myglobal.existsPermission('57')){
+            this.max=6;
+            this.loadData();
+        }
+        if(this.myglobal.existsPermission('64'))
+            this.loadRoles();
     }
     public rules={
         'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
@@ -48,14 +50,7 @@ export class User extends RestController{
         idModal:"modalFilterUser",
         endpointForm:"",
     };
-
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
-    }
+    
     goTaquilla(companyRuc:string)
     {
         let link = ['TaquillaSearh', {search:companyRuc}];
