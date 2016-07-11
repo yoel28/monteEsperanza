@@ -73,24 +73,57 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 ])
 export class AppComponent {
 
-  constructor(private router: Router,public myglobal:globalService) {
+  public saveUrl:string;
+
+  constructor(public router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
     localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
     //localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
     //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
     //localStorage.setItem('url','http://192.168.0.91:8080');
-    router.subscribe(this.successHandler, this.failureHandler);
-  }
-  successHandler(){
-    console.log("entro");
+    let that=this;
+    router.subscribe(
+        function(data){
+          if(that.isPublic() && !localStorage.getItem('bearer')){
+            that.myglobal.init=true;
+          }
+          else if(that.isPublic() && localStorage.getItem('bearer'))
+          {
+              let link = ['Dashboard', {}];
+              that.router.navigate(link);
+          }
+          else if(!that.isPublic() && !localStorage.getItem('bearer'))
+          {
+              that.saveUrl = that.router.currentInstruction.component.routeName;
+              let link = ['AccountLogin', {}];
+              that.router.navigate(link);
+          }
+          else if(that.saveUrl)
+          {
+              let link = [that.saveUrl, {}];
+              that.saveUrl = null;
+              that.router.navigate(link);
 
+          }
+
+        },function(error){
+          console.log("entro2");
+        }
+    );
   }
-  failureHandler(){
-    console.log("entro2");
+
+  public urlPublic=['account/login'];
+  public isPublic(){
+    let data = this.router.currentInstruction.component.urlPath;
+    let index = this.urlPublic.findIndex(obj=>obj == data);
+    if(index>-1)
+        return true;
+    return false;
   }
 
   logout(event) {
     event.preventDefault();
+    this.myglobal.init=false;
     localStorage.removeItem('bearer');
     contentHeaders.delete('Authorization');
     let link = ['AccountLogin', {}];
