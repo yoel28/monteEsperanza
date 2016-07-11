@@ -56,18 +56,10 @@ export class PermisosRol extends RestController {
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
-        this.validTokens();
     }
     ngOnInit(){
         this.loadPermissions();
         this.loadRoles();
-    }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
     }
     //Cargar Roles
     public items:any = [];
