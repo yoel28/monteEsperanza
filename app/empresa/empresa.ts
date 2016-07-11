@@ -7,19 +7,20 @@ import {TipoEmpresaSave} from "../tipoEmpresa/methods";
 import {Search} from "../utils/search/search";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RecargaTimeLine} from "../recarga/methods";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
+import {globalService} from "../common/globalService";
 
 @Component({
     selector: 'empresa',
     pipes:[Divide],
     templateUrl: 'app/empresa/index.html',
     styleUrls: ['app/empresa/style.css'],
-    directives:[EmpresaSave,TipoEmpresaSave,Search,Xeditable]
+    directives:[EmpresaSave,TipoEmpresaSave,Search,Xeditable,Xfile,Xcropit]
 })
 export class Empresa extends RestController{
     
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager) {
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/companies/');
     }
@@ -73,6 +74,17 @@ export class Empresa extends RestController{
     goTimeLine(companyRuc:string) {
         let link = ['EmpresaTimeLine', {ruc:companyRuc}];
         this.router.navigate(link);
+    }
+    //cambiar imagen de una empresa
+    public image:any=[];
+    changeImage(data,id){
+        if(this.image[id]==null)
+            this.image[id]=[];
+        this.image[id]=data;
+    }
+    loadImage(event,data){
+        event.preventDefault();
+        this.onPatch('image',data,this.image[data.id]);
     }
 
 }
