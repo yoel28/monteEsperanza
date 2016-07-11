@@ -9,6 +9,7 @@ export class globalService extends RestController{
     version:string = "1.0.0";
     user:any=[];
     permissions:any=[];
+    init=false;
     
     constructor(public http:Http,public toastr: ToastsManager) {
         super(http,toastr);
@@ -24,17 +25,18 @@ export class globalService extends RestController{
         }
     }
     getUser(){
+        let that=this;
         let error= response => {
-            this.toastr.error('Tu Sesion Expiro','Ocurrio un error');
+            that.toastr.error('Tu Sesion Expiro','Ocurrio un error');
             localStorage.removeItem('bearer');
             contentHeaders.delete('Authorization');
         };
 
         let successCallback= response => {
-            Object.assign(this.user, response.json());
+            Object.assign(that.user, response.json());
             let successCallback2= response => {
-                Object.assign(this.user,this.user,response.json().list[0]);
-                this.myPermissions();
+                Object.assign(that.user,that.user,response.json().list[0]);
+                that.myPermissions();
             };
             this.httputils.doGet('/users?where=[["op":"eq","field":"username","value":"'+this.user.username+'"]]', successCallback2,error);
         };
@@ -47,11 +49,12 @@ export class globalService extends RestController{
         return false;
     }
     myPermissions(){
+        let that = this;
         let successCallback= response => {
-            Object.assign(this.permissions,response.json());
-            localStorage.setItem('permissions',response.json());
+            Object.assign(that.permissions,response.json());
+            that.init=true;
         };
-        this.httputils.doGet('/current/permissions/',successCallback,this.error);
+        return this.httputils.doGet('/current/permissions/',successCallback,this.error);
     }
     
 }
