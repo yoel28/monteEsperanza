@@ -23,8 +23,9 @@ export class AccountLogin extends RestController {
 
     constructor(public router:Router, public http:Http, public _formBuilder:FormBuilder, public myglobal:globalService,public toastr: ToastsManager) {
         super(http);
-        this.validTokens();
         this.setEndpoint("/login");
+    }
+    ngOnInit(){
         this.initForm();
     }
 
@@ -38,14 +39,7 @@ export class AccountLogin extends RestController {
             password: this.password,
         });
     }
-
-    validTokens() {
-        if (localStorage.getItem('bearer')) {
-            let link = ['Dashboard', {}];
-            this.router.navigate(link);
-        }
-    }
-
+    
     login(event:Event) {
         event.preventDefault();
         let body = JSON.stringify(this.form.value);
@@ -56,6 +50,7 @@ export class AccountLogin extends RestController {
         }
         let successCallback = response => {
             this.submitForm = false;
+            this.myglobal.init=false;
             localStorage.setItem('bearer', response.json().access_token);
             contentHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('bearer'));
             this.myglobal.user = response.json();
