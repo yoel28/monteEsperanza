@@ -148,9 +148,9 @@ export class Vehiculo extends RestController{
             this.image[id]=[];
         this.image[id]=data;
     }
-    loadImage(event,user){
+    loadImage(event,data){
         event.preventDefault();
-        this.onPatch('image',user,this.image[user.id]);
+        this.onPatch('image',data,this.image[data.id]);
     }
 
 }
