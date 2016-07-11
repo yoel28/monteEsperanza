@@ -38,7 +38,8 @@ export class globalService extends RestController{
                 Object.assign(that.user,that.user,response.json().list[0]);
                 that.myPermissions();
             };
-            this.httputils.doGet('/users?where=[["op":"eq","field":"username","value":"'+this.user.username+'"]]', successCallback2,error);
+            let where = encodeURI('[["op":"eq","field":"username","value":"'+this.user.username+'"]]');
+            this.httputils.doGet('/users?where='+where, successCallback2,error);
         };
         this.httputils.doGet('/validate',successCallback,error);
     }
