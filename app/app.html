@@ -1,5 +1,4 @@
-<div class="wrapper">
-
+<div class="wrapper" *ngIf="myglobal.init">
     <div *ngIf="validToken()">
         <header class="main-header">
             <a href="index.html" class="logo">
@@ -119,7 +118,6 @@
             <!-- /.sidebar -->
         </aside>
     </div>
-
     <router-outlet></router-outlet>
 </div>
 <div class="main-footer-container" *ngIf="validToken()">
