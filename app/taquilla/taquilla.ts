@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import {RecargaSave} from "../recarga/methods";
 import {RestController} from "../common/restController";
 import {Fecha} from "../utils/pipe";
+import {globalService} from "../common/globalService";
 
 
 @Component({
@@ -19,23 +20,16 @@ export class Taquilla extends RestController{
     dataTruck:any = {};
     search;
 
-    constructor(params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder) {
+    constructor(public params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder,public myglobal:globalService) {
         super(http);
-        this.validTokens();
-        if(params.get('search'))
+    }
+    ngOnInit(){
+        if(this.params.get('search'))
         {
-            this.getVehicles(params.get('search'));
-            this.search = params.get('search');
+            this.getVehicles(this.params.get('search'));
+            this.search = this.params.get('search');
         }
     }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
-    }
-
     getVehicle(truckId:string){
         let successCallback= response => {
             Object.assign(this.dataTruck, response.json());
