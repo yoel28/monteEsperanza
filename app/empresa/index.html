@@ -3,153 +3,189 @@
         <div class="">
             <div class="box">
                 <div class="box-header with-border">
-                    <button *ngIf="myglobal.existsPermission('68')" type="button" class="btn btn-primary btn-green" data-toggle="modal" data-target="#saveEmpresa">
+                    <button *ngIf="myglobal.existsPermission('68')" type="button" class="btn btn-primary btn-green"
+                            data-toggle="modal" data-target="#saveEmpresa">
                         <i class="fa fa-plus"></i> Nuevo
                     </button>
-                    <button *ngIf="myglobal.existsPermission('91')" type="button" class="btn btn-primary btn-blue" data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
+                    <button *ngIf="myglobal.existsPermission('91')" type="button" class="btn btn-primary btn-blue"
+                            data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                         <i class="fa fa-filter"></i>&nbsp;Filtrar
                     </button>
 
                     <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="pull-right">
-                        <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
-                            <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                        <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
+                             class="btn-group pull-right">
+                            <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button"
+                                    class="btn btn-default">
                                 {{val}}
                             </button>
                         </div>
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="box-body" >
+                <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="box-body">
                     <div *ngFor="let empList of dataList.list | divide:3 " class="row">
                         <div *ngFor="let data of empList">
                             <div class="col-lg-4">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <div class="profile">
-                                        <div style="margin-bottom: 15px" class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="btn-group dropdown pull-right">
-                                                    <button type="button" data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-gears fa-lg"></i>
-                                                    </button>
-                                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                                        <li *ngIf="myglobal.existsPermission('84')">
-                                                            <a (click)="onPatch('enabled',data)" href="javascript:void(0);">
-                                                                <span class="fa fa-warning"></span>
-                                                                &nbsp;{{data.enabled?"Bloquear":"Habilitar"}}
-                                                            </a>
-                                                        </li>
-                                                        <li *ngIf="myglobal.existsPermission('82')">
-                                                            <a data-toggle="modal" [attr.data-target]="'#myModal'+data.id"  href="#">
-                                                                <span class="fa fa-trash"></span>
-                                                                &nbsp;Eliminar
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <div class="profile">
+                                            <div style="margin-bottom: 15px" class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="btn-group dropdown pull-right">
+                                                        <button type="button" data-toggle="dropdown"
+                                                                class="btn btn-white dropdown-toggle"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fa fa-gears fa-lg"></i>
+                                                        </button>
+                                                        <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                                            <li *ngIf="myglobal.existsPermission('84') && myglobal.existsPermission('83')">
+                                                                <a (click)="onPatch('enabled',data)"
+                                                                   href="javascript:void(0);">
+                                                                    <span class="fa fa-warning"></span>
+                                                                    &nbsp;{{data.enabled?"Bloquear":"Habilitar"}}
+                                                                </a>
+                                                            </li>
+                                                            <li *ngIf="myglobal.existsPermission('82')">
+                                                                <a data-toggle="modal"
+                                                                   [attr.data-target]="'#myModal'+data.id" href="#">
+                                                                    <span class="fa fa-trash"></span>
+                                                                    &nbsp;Eliminar
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center separacion">
+                                                    <figure>
+                                                        <div [imageSrc]="data.image || '/assets/img/company-guest.ico'"
+                                                             x-cropit
+                                                             (saveImagen)="changeImage($event,data.id)">
+                                                            <div class="cropit-preview center-block"></div>
+                                                            <div class="col-lg-12 margenes"
+                                                                 [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                                <div class="col-lg-6">
+                                                                    <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
+                                                                    <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <input type="range"
+                                                                           class="cropit-image-zoom-input"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12"
+                                                                 [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                                <div class="col-lg-6">
+                                                                    <input x-file type="file"
+                                                                           class="cropit-image-input"/>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <button (click)="loadImage($event,data)"
+                                                                            class="btn btn-success pull-right fa fa-save upload boton-guardar">
+                                                                        &nbsp;Guardar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </figure>
                                                 </div>
 
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center separacion">
-                                                <figure>
-                                                    <div [imageSrc]="data.image || '/assets/img/company-guest.ico'" x-cropit
-                                                         (saveImagen)="changeImage($event,data.id)">
-                                                        <div class="cropit-preview center-block"></div>
-                                                        <div class="col-lg-12 margenes" [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))" >
-                                                            <div class="col-lg-6">
-                                                                <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
-                                                                <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <input type="range" class="cropit-image-zoom-input"/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12" [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
-                                                            <div class="col-lg-6">
-                                                                <input x-file type="file" class="cropit-image-input"/>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <button (click)="loadImage($event,data)"
-                                                                        class="btn btn-success pull-right fa fa-save upload boton-guardar">
-                                                                    &nbsp;Guardar
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </div>
+                                                <div class="col-xs-12 col-sm-8 col-lg-12">
+                                                    <p>
+                                                        <strong>
+                                                            <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                               [endpoint]="endpoint" [function]="onEditable"
+                                                               [data]="data" [rules]="rules" field="name"></a>
+                                                        </strong>
+                                                    </p>
+                                                    <p class="truncate">
+                                                        <strong>RUC: </strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="ruc"></a>
+                                                    </p>
+                                                    <p class="truncate">
+                                                        <strong>Responsable:</strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="responsiblePerson"></a>
+                                                    </p>
+                                                    <p class="truncate">
+                                                        <strong>Telefonos:</strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="phone"></a>
+                                                    </p>
+                                                    <p class="truncate ">
+                                                        <strong>Direccion:</strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="address"></a>
+                                                    </p>
+                                                    <p class="truncate"><strong>Tipo:</strong>
+                                                        {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
 
-                                            <div class="col-xs-12 col-sm-8 col-lg-12">
-                                                <p>
-                                                    <strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="name" ></a>
-                                                    </strong>
-                                                </p>
-                                                <p class="truncate">
-                                                    <strong>RUC: </strong>
-                                                    <a x-editable [disabled]="!myglobal.existsPermission('83')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="ruc" ></a>
-                                                </p>
-                                                <p class="truncate">
-                                                    <strong>Responsable:</strong>
-                                                    <a x-editable [disabled]="!myglobal.existsPermission('83')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="responsiblePerson" ></a>
-                                                </p>
-                                                <p class="truncate">
-                                                    <strong>Telefonos:</strong>
-                                                    <a x-editable [disabled]="!myglobal.existsPermission('83')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="phone" ></a>
-                                                </p>
-                                                <p class="truncate ">
-                                                    <strong>Direccion:</strong>
-                                                    <a x-editable [disabled]="!myglobal.existsPermission('83')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="address" ></a>
-                                                </p>
-                                                <p class="truncate"><strong>Tipo:</strong> {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
-
-                                                    <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')" (click)="dataSelect = data.id"
-                                                            type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#searchTipoEmpresa">
+                                                        <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
+                                                                (click)="dataSelect = data.id"
+                                                                type="button" class="btn btn-box-tool"
+                                                                data-toggle="modal" data-target="#searchTipoEmpresa">
                                                             <i class="fa fa-search text-blue"></i>
-                                                    </button>
+                                                        </button>
 
-                                                    <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')" (click)="dataSelect = data.id"
-                                                            type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#saveTipoEmpresa">
+                                                        <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')"
+                                                                (click)="dataSelect = data.id"
+                                                                type="button" class="btn btn-box-tool"
+                                                                data-toggle="modal" data-target="#saveTipoEmpresa">
                                                             <i class="fa fa-plus text-green"></i>
-                                                    </button>
-                                                </p>
-                                                <p>
-                                                    <button (click)="onPatch('enabled',data)" class="btn btn-sm"
-                                                            [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled"
-                                                            [disabled]="!(myglobal.existsPermission('83') && myglobal.existsPermission('84'))"
-                                                    >
-                                                        {{data.enabled?"Habilitado":"Bloqueado"}}
-                                                    </button>
-                                                </p>
+                                                        </button>
+                                                    </p>
+                                                    <p>
+                                                        <button (click)="onPatch('enabled',data)" class="btn btn-sm"
+                                                                [class.btn-green]="data.enabled"
+                                                                [class.btn-red]="!data.enabled"
+                                                                [disabled]="!(myglobal.existsPermission('83') && myglobal.existsPermission('84'))"
+                                                        >
+                                                            {{data.enabled?"Habilitado":"Bloqueado"}}
+                                                        </button>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div *ngIf="myglobal.existsPermission('87')" class="row text-center divider">
-                                            <div class="col-xs-12 col-sm-4 emphasis">
-                                                <h4><strong>{{data.weightCount?data.weightCount:"N/A"}}</strong></h4>
-                                                <p>
-                                                    <small>Descargas</small>
-                                                </p>
-                                                <button (click)="goTimeLine(data.ruc)" class="btn btn-yellow btn-block">Registro</button>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-4 emphasis">
-                                                <h4><strong>{{data.vehiclesCount?data.vehiclesCount:"N/A"}}</strong></h4>
-                                                <p>
-                                                    <small>Camiones</small>
-                                                </p>
-                                                <button class="btn btn-yellow btn-block">Camion</button>
+                                            <div *ngIf="myglobal.existsPermission('87')"
+                                                 class="row text-center divider">
+                                                <div class="col-xs-12 col-sm-4 emphasis">
+                                                    <h4><strong>{{data.weightCount?data.weightCount:"N/A"}}</strong>
+                                                    </h4>
+                                                    <p>
+                                                        <small>Descargas</small>
+                                                    </p>
+                                                    <button (click)="goTimeLine(data.ruc)"
+                                                            class="btn btn-yellow btn-block">Registro
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 emphasis">
+                                                    <h4><strong>{{data.vehiclesCount?data.vehiclesCount:"N/A"}}</strong>
+                                                    </h4>
+                                                    <p>
+                                                        <small>Camiones</small>
+                                                    </p>
+                                                    <button class="btn btn-yellow btn-block">Camion</button>
 
-                                            </div>
-                                            <div class="col-xs-12 col-sm-4 emphasis">
-                                                <h4><strong>{{data.balance?data.balance:"0"}}$</strong></h4>
-                                                <p>
-                                                    <small>Saldo</small>
-                                                </p>
-                                                <button (click)="goTaquilla(data.ruc)" class="btn btn-yellow btn-block">Taquilla</button>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 emphasis">
+                                                    <h4><strong>{{data.balance?data.balance:"0"}}$</strong></h4>
+                                                    <p>
+                                                        <small>Saldo</small>
+                                                    </p>
+                                                    <button (click)="goTaquilla(data.ruc)"
+                                                            class="btn btn-yellow btn-block">Taquilla
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -159,35 +195,43 @@
     </section>
 </div>
 
-<div *ngIf="myglobal.existsPermission('37')">
-    <tipoEmpresa-save idModal="saveTipoEmpresa" (save)="assignTipoEmpresa($event)"> </tipoEmpresa-save>
+<div *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')">
+    <tipoEmpresa-save idModal="saveTipoEmpresa" (save)="assignTipoEmpresa($event)"></tipoEmpresa-save>
 </div>
+
 <div *ngIf="myglobal.existsPermission('68')">
-    <empresa-save idModal="saveEmpresa" (save)="assignEmpresa($event)"> </empresa-save>
+    <empresa-save idModal="saveEmpresa" (save)="assignEmpresa($event)"></empresa-save>
 </div>
+
 <div *ngIf="dataList.list && myglobal.existsPermission('82')">
-    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header btn-red text-center">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i
+                            class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
                     ¿ Estás seguro que deseas eliminar a <strong>{{data.name}}</strong> RUC:{{data.ruc}} ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onDelete($event,data.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
+                    <button (click)="onDelete($event,data.id)" data-dismiss="modal" type="button"
+                            class="btn btn-red fa fa-trash">&nbsp;Eliminar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="myglobal.existsPermission('85')">
-    <search  [params]="searchTipoEmpresa" (result)="assignTipoEmpresa($event)"></search>
-</div>
-<div *ngIf="myglobal.existsPermission('91')">
-    <filter  [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+
+<div *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')">
+    <search [params]="searchTipoEmpresa" (result)="assignTipoEmpresa($event)"></search>
 </div>
 
+<div *ngIf="myglobal.existsPermission('91')">
+    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+</div>
