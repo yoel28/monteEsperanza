@@ -5,6 +5,7 @@ import {RestController} from "../common/restController";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Xfile, Xcropit} from "../common/xeditable";
+import {globalService} from "../common/globalService";
 
 
 @Component({
@@ -32,12 +33,18 @@ export class EmpresaSave extends RestController{
     public companyTypes:any=[];
     
     
-    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
-        this.setEndpoint('/companies/');
-        this.loadDataCompanyTypes();
-        this.initForm();
         this.save = new EventEmitter();
+    }
+    ngOnInit(){
+        if(this.myglobal.existsPermission('68')){
+            this.setEndpoint('/companies/');
+            this.initForm();
+        }
+        if(this.myglobal.existsPermission('36')) {
+            this.loadDataCompanyTypes();
+        }
     }
     
     initForm(){
@@ -63,6 +70,7 @@ export class EmpresaSave extends RestController{
     submitForm(){
         let successCallback= response => {
             this.save.emit(response.json());
+            this.toastr.success('Guardado con éxito','Notificacion')
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
