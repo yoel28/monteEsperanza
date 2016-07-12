@@ -46,50 +46,60 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <div class="col-lg-8" *ngIf="dataArea.series.length>0">
-                            <chart [options]="dataArea" (load)="saveInstance($event.context)"></chart>
-                        </div>
-                        <div class="col-lg-3 col-lg-offset-1">
-                            <div class="row">
-                                <p class="text-center">
-                                    <strong>Balance</strong>
-                                </p>
-                                <div class="progress-group" *ngFor="let data of dataPlot" >
-                                    <span class="progress-text"><i class="{{data.icon}}"></i>&nbsp;{{data.title}}</span>
-                                    <span class="progress-number">{{data.quantity}}/ {{dataPlot.total}}</span>
-                                    <div class="progress sm">
-                                        <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
+                        <div>
+                            <div class="col-lg-8" *ngIf="dataAreaPlot1.series.length>0">
+                                <chart [options]="dataAreaPlot1" (load)="saveInstance($event.context,'plot1')"></chart>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-1">
+                                <div class="row">
+                                    <p class="text-center">
+                                        <strong>Balance</strong>
+                                    </p>
+                                    <div class="progress-group" *ngFor="let data of dataPlot" >
+                                        <span class="progress-text"><i class="{{data.icon}}"></i>&nbsp;{{data.title}}</span>
+                                        <span class="progress-number">{{data.quantity}}/ {{dataPlot.total}}</span>
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <p class="text-center">
-                                    <strong>Consultar Facturas</strong>
-                                </p>
-                                <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
-                                    <div class="padding-bottom">
-                                        <div class="input-group date">
-                                            <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,1)" value="Ingresar un periodo inicial" type="text" class="form-control">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </span>
+                                <div class="row">
+                                    <p class="text-center">
+                                        <strong>Consultar Facturas</strong>
+                                    </p>
+                                    <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
+                                        <div class="padding-bottom">
+                                            <div class="input-group date">
+                                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,1)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="padding-bottom">
-                                        <div class="input-group date">
-                                            <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo inicial" type="text" class="form-control">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </span>
+                                        <div class="padding-bottom">
+                                            <div class="input-group date">
+                                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
-                                            id="cntrlsubmit" [disabled]="!form.valid">
-                                        <i class="fa fa-bank"></i>
-                                        Consultar
-                                    </button>
-                                </form>
+                                        <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
+                                                id="cntrlsubmit" [disabled]="!form.valid">
+                                            <i class="fa fa-bank"></i>
+                                            Consultar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-lg-8" *ngIf="dataAreaPlot2.series.length>0">
+                                <chart [options]="dataAreaPlot2" (load)="saveInstance($event.context,'plot2')"></chart>
+                            </div>
+                            <div class="col-lg-8" *ngIf="dataAreaPlot3.series.length>0">
+                                <chart [options]="dataAreaPlot3" (load)="saveInstance($event.context,'plot3')"></chart>
                             </div>
                         </div>
                     </div>
