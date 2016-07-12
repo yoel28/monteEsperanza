@@ -149,24 +149,38 @@ export class SMDropdown {
     outputs:['fecha']
 })
 export class Datepicker {
-    public format:string;
+    // public format={
+    //     format: "mm/yyyy",
+    //     startView: 2,
+    //     minViewMode: 1,
+    //     maxViewMode: 2,
+    //     todayBtn: "linked",
+    //     language: "es",
+    //     forceParse: true,
+    //     autoclose: true,
+    //     todayHighlight: true,
+    //     return: 'YYYY/MM',
+    // }
+    public format:any = {};
     public fecha:any;
-    constructor(el: ElementRef) {
+    constructor(public el: ElementRef) {
         this.fecha = new EventEmitter();
+    }
+    ngOnInit(){
         let that = this;
-        jQuery(el.nativeElement).datepicker({
-            format: "mm/yyyy",
-            startView: 2,
-            minViewMode: 1,
-            maxViewMode: 2,
-            todayBtn: "linked",
-            language: "es",
-            forceParse: true,
-            autoclose: true,
-            todayHighlight: true,
+        jQuery(this.el.nativeElement).datepicker({
+            format: that.format.format,
+            startView: that.format.startView,
+            minViewMode: that.format.minViewMode,
+            maxViewMode: that.format.maxViewMode,
+            todayBtn: that.format.todayBtn,
+            language: that.format.language,
+            forceParse: that.format.forceParse,
+            autoclose: that.format.autoclose,
+            todayHighlight: that.format.todayHighlight,
         });
-        jQuery(el.nativeElement).datepicker().on('changeDate', function (ev) {
-            that.fecha.emit(moment(ev.date).format('YYYY/MM'));
+        jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
+            that.fecha.emit(moment(ev.date).format(that.format.return));
         })
     }
 }
