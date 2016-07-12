@@ -23,6 +23,8 @@ export class PermisoSave extends RestController{
     title: Control;
     detail: Control;
     module: Control;
+    controlador: Control;
+    accion: Control;
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
         super(http,toastr);
@@ -34,11 +36,15 @@ export class PermisoSave extends RestController{
         this.title = new Control("", Validators.compose([Validators.required]));
         this.detail = new Control("", Validators.compose([Validators.required]));
         this.module = new Control("", Validators.compose([Validators.required]));
+        this.controlador = new Control("");
+        this.accion = new Control("");
 
         this.form = this._formBuilder.group({
             title: this.title,
             detail: this.detail,
             module: this.module,
+            controlador: this.controlador,
+            accion: this.accion,
         });
     }
 
