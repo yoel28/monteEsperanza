@@ -4,6 +4,7 @@ import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search"
+import {globalService} from "../common/globalService";
 
 
 @Component({
@@ -23,12 +24,12 @@ export class OperacionSave extends RestController{
     vehicle: Control;
     weightIn: Control;
 
-    constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager) {
+    constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
-        this.setEndpoint('/operations/');
         this.save = new EventEmitter();
     }
     ngOnInit(){
+        this.setEndpoint('/operations/');
         this.initForm();
     }
     initForm(){
