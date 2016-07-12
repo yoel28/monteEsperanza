@@ -27,6 +27,8 @@ export class Permiso extends RestController{
         'title':{'type':'text','display':null,'title':'Titulo','mode':'inline'},
         'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline','showbuttons':true },
         'module':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
+        'controlador':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
+        'accion':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
     };
     validTokens(){
         if(!localStorage.getItem('bearer'))
