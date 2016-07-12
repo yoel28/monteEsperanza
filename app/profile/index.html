@@ -29,7 +29,7 @@
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a (click)="onPatch('enabled',myglobal.user)"
+                                                    <a (click)="onLock('enabled',myglobal.user)"
                                                        href="javascript:void(0);">
                                                         <span class="fa fa-warning"></span>
                                                         {{myglobal.user.enabled?"Bloquear":"Habilitar"}}
@@ -67,7 +67,7 @@
                                             <div *ngIf="myglobal.user.companyId">
                                                 <div class="pull-left">
                                                     <figure>
-                                                        <img src="{{myglobal.user.companyImage?user.companyImage:'/assets/img/company-guest.ico'}}"
+                                                        <img src="{{myglobal.user.companyImage?user.companyImage:'/assets/img/company-guest.png'}}"
                                                              class="img-responsive img-circle img-list">
                                                     </figure>
                                                     <div class="box-tools">

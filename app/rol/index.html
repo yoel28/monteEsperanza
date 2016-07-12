@@ -30,7 +30,7 @@
                                     <a x-editable [disabled]="!myglobal.existsPermission('51')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="authority" ></a>
                                 </td>
                                 <td *ngIf="myglobal.existsPermission('52')">
-                                    <button (click)="onPatch('enabled',data)" class="btn btn-sm"
+                                    <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                             [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
                                         {{data.enabled?"Habilitado":"Bloqueado"}}
                                     </button>

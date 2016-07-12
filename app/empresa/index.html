@@ -40,7 +40,7 @@
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu text-left submenu-config">
                                                             <li *ngIf="myglobal.existsPermission('84') && myglobal.existsPermission('83')">
-                                                                <a (click)="onPatch('enabled',data)"
+                                                                <a (click)="onLock('enabled',data)"
                                                                    href="javascript:void(0);">
                                                                     <span class="fa fa-warning"></span>
                                                                     &nbsp;{{data.enabled?"Bloquear":"Habilitar"}}
@@ -59,7 +59,7 @@
                                                 </div>
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center separacion">
                                                     <figure>
-                                                        <div [imageSrc]="data.image || '/assets/img/company-guest.ico'"
+                                                        <div [imageSrc]="data.image || '/assets/img/company-guest.png'"
                                                              x-cropit
                                                              (saveImagen)="changeImage($event,data.id)">
                                                             <div class="cropit-preview center-block"></div>
@@ -141,7 +141,7 @@
                                                         </button>
                                                     </p>
                                                     <p>
-                                                        <button (click)="onPatch('enabled',data)" class="btn btn-sm"
+                                                        <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                                                 [class.btn-green]="data.enabled"
                                                                 [class.btn-red]="!data.enabled"
                                                                 [disabled]="!(myglobal.existsPermission('83') && myglobal.existsPermission('84'))"

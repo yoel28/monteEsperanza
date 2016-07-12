@@ -43,7 +43,7 @@
                                                             </a>
                                                         </li>
                                                         <li *ngIf="myglobal.existsPermission('61')">
-                                                            <a (click)="onPatch('enabled',user)" href="javascript:void(0);">
+                                                            <a (click)="onLock('enabled',user)" href="javascript:void(0);">
                                                                 <span class="fa fa-warning"></span>
                                                                 {{user.enabled?"Bloquear":"Habilitar"}}
                                                             </a>
@@ -115,7 +115,7 @@
                                                         {{user.accountLocked?"Sin Verificar":"Verificado"}}
                                                     </button>
 
-                                                    <button *ngIf="myglobal.existsPermission('61')" (click)="onPatch('enabled',user)" class="btn btn-sm"
+                                                    <button *ngIf="myglobal.existsPermission('61')" (click)="onLock('enabled',user)" class="btn btn-sm"
                                                             [class.btn-green]="user.enabled" [class.btn-red]="!user.enabled">
                                                         {{user.enabled?"Habilitado":"Bloqueado"}}
                                                     </button>

@@ -25,7 +25,7 @@
                 <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
                     <td>
                         <div class="col-lg-2">
-                            <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.ico'}}"
+                            <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.png'}}"
                                  style="display: inline-block" class="img-responsive img-find">
                         </div>
                         <div>
@@ -35,7 +35,7 @@
                     </td>
                     <td>
                         <div class="col-lg-2">
-                            <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.ico'}}"
+                            <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.png'}}"
                                  style="display: inline-block" class="img-responsive img-find">
                         </div>
                         <div>
@@ -70,7 +70,7 @@
                         <div class="profile col-lg-2">
                             <div style="margin-bottom: 15px" class="row">
                                 <figure>
-                                    <img src="{{dataTruck.image || '/assets/img/truck-guest.ico'}}" alt=""
+                                    <img src="{{dataTruck.image || '/assets/img/truck-guest.png'}}" alt=""
                                          style="display: inline-block" class="img-responsive img-bordered">
                                 </figure>
                             </div>
