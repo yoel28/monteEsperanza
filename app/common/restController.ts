@@ -55,6 +55,12 @@ export class RestController{
         let body = JSON.stringify(json);
         return (this.httputils.onUpdate(this.endpoint + data.id, body, data, this.error));
     }
+    onLock(field,data){
+        let json = {};
+        json[field] = !data[field];
+        let body = JSON.stringify(json);
+        return (this.httputils.onUpdate("/lock"+this.endpoint + data.id, body, data, this.error));
+    }
     onEditable(field,data,value,endpoint){
         let json = {};
         json[field] = value;
