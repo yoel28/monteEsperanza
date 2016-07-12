@@ -35,7 +35,7 @@ export class Empresa extends RestController {
 
     public rules = {
         'id': {
-            'type': 'text',
+            'type': 'number',
             'disabled': true,
             'display': false,
             'title': 'id',
