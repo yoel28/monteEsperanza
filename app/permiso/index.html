@@ -20,6 +20,8 @@
                                 <th>Modulo</th>
                                 <th>Titulo</th>
                                 <th>Detalle</th>
+                                <th>Controlador</th>
+                                <th>Accion</th>
                                 <th *ngIf="myglobal.existsPermission('46')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('43')">Acciones</th>
                             </tr>
@@ -35,6 +37,12 @@
                                 </td>
                                 <td>
                                     <a x-editable [disabled]="!myglobal.existsPermission('44')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="detail" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('44')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="controlador" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('44')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="accion" ></a>
                                 </td>
                                 <td *ngIf="myglobal.existsPermission('46')">
                                     <button (click)="onPatch('enabled',data)" class="btn btn-sm"
