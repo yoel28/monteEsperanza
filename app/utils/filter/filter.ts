@@ -63,17 +63,17 @@ export class Filter {
 
                 if(that.form.value[key+'Cond'].substr(-1)=="%" && that.form.value[key+'Cond'].substr(0,1)=="%"){
                     op=that.form.value[key+'Cond'].substr(1,that.form.value[key+'Cond'].length -2)
-                    value = "%25"+value+"%25";
+                    value = "%"+value+"%";
                 }
                 else if(that.form.value[key+'Cond'].substr(0,1)=="%")
                 {
                     op=that.form.value[key+'Cond'].substr(1)
-                    value = "%25"+value;
+                    value = "%"+value;
                 }
                 else if(that.form.value[key+'Cond'].substr(-1)=="%")
                 {
                     op=that.form.value[key+'Cond'].slice(0,-1);
-                    value = value+"%25";
+                    value = value+"%";
                 }
                 else
                     op=that.form.value[key+'Cond']
@@ -81,16 +81,12 @@ export class Filter {
                 if(that.rules[key].type !='number')
                     value = "'"+value+"'";
 
-
-
-
-
-
                 dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
             }
 
         });
-        dataWhere="&where=["+dataWhere.slice(0,-1)+"]";
+        let where = encodeURI("["+dataWhere.slice(0,-1)+"]");
+        dataWhere="&where="+where;
 
         this.where.emit(dataWhere);
     }
