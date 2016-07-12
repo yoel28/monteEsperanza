@@ -37,8 +37,11 @@
                 <div class="box-body" >
                     <div class="row">
                         <div class="col-lg-4">
-                            <div class="input-append date">
-                                <input datepicker (fecha)="loadFechaPlot($event)" type="text" class="form-control span2"><span class="add-on"><i class="icon-th"></i></span>
+                            <div class="input-group date">
+                                <input datepicker [format]="formatDate" (fecha)="loadFechaPlot($event)" value="Ingresar un periodo" type="text" class="form-control">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -64,22 +67,23 @@
                                     <strong>Consultar Facturas</strong>
                                 </p>
                                 <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
-                                    <div class="form-group input-icon right">
-                                        Inicio
-                                        <i class="fa fa-calendar"></i>
-                                        <input ngControl="dateStart" class="form-control" [(ngModel)]="dateStart.value"  #dateStart="ngForm" placeholder="Inicio" type="date">
-                                        <div [hidden]="dateStart.valid || dateStart.pristine" class="alert alert-danger">
-                                            Seleccione una fecha de incio
+                                    <div class="padding-bottom">
+                                        <div class="input-group date">
+                                            <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,1)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="form-group input-icon right">
-                                        Fin
-                                        <i class="fa fa-calendar"></i>
-                                        <input ngControl="dateEnd" class="form-control" [(ngModel)]="dateEnd.value"  #dateEnd="ngForm" placeholder="Fin" type="date">
-                                        <div [hidden]="dateEnd.valid || dateEnd.pristine" class="alert alert-danger">
-                                            Seleccione una fecha fin
+                                    <div class="padding-bottom">
+                                        <div class="input-group date">
+                                            <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
                                         </div>
                                     </div>
+
                                     <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
                                             id="cntrlsubmit" [disabled]="!form.valid">
                                         <i class="fa fa-bank"></i>
@@ -95,6 +99,8 @@
                 <recarga-factura [params]="paramsFactura"> </recarga-factura>
             </div>
         </div>
-        <recarga-timeline *ngIf="myglobal.existsPermission('28')" [params]="paramsTimeLine"> </recarga-timeline>
+        <div *ngIf="myglobal.existsPermission('28')">
+            <recarga-timeline  [params]="paramsTimeLine"> </recarga-timeline>
+        </div>
     </section>
 </div>
