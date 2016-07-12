@@ -29,24 +29,6 @@ export class Dashboard extends RestController {
         'max': 5,
         'ruc': ''
     };
-    dataArea = {
-        chart: {
-            type: 'area',
-        },
-        xAxis: {
-            categories: [],
-        },
-        yAxis: {
-            title: {
-                text: "Cantidad",
-            },
-        },
-        credits: {
-            enabled: false
-        },
-        series: [],
-        title: {text: 'Uso del vertedero'},
-    };
 
     constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);
@@ -55,7 +37,7 @@ export class Dashboard extends RestController {
     ngOnInit() {
         if (this.myglobal.existsPermission('27')) {
             this.initForm();
-            this.getPlot1();
+            this.getPlots();
             this.getPlot2();
         }
     }
@@ -86,25 +68,100 @@ export class Dashboard extends RestController {
 
     dataPlot:any = [];
 
-    getPlot1() {
+    dataAreaPlot1 = {
+        chart: {
+            type: 'area',
+        },
+        xAxis: {
+            categories: [],
+        },
+        yAxis: {
+            title: {
+                text: "Cantidad",
+            },
+        },
+        credits: {
+            enabled: false
+        },
+        series: [],
+        title: {text: 'Balance General'},
+    };
+    dataAreaPlot2 = {
+        chart: {
+            type: 'area',
+        },
+        xAxis: {
+            categories: [],
+        },
+        yAxis: {
+            title: {
+                text: "Cantidad",
+            },
+        },
+        credits: {
+            enabled: false
+        },
+        series: [],
+        title: {text: 'Uso del vertedero'},
+    };
+    dataAreaPlot3 = {
+        chart: {
+            type: 'area',
+        },
+        xAxis: {
+            categories: [],
+        },
+        yAxis: {
+            title: {
+                text: "Cantidad",
+            },
+        },
+        credits: {
+            enabled: false
+        },
+        series: [],
+        title: {text: 'Uso del vertedero'},
+    };
+
+    getPlots() {
         let that = this;
         let successCallback = response => {
-            that.dataArea.series = response.json().series;
-            if (response.json().categories)
-                that.dataArea.xAxis.categories = response.json().categories;
-            if (that.chart) {
-                that.chart.series[0].setData(that.dataArea.series[0].data)
-                that.chart.series[1].setData(that.dataArea.series[1].data)
-                that.chart.series[2].setData(that.dataArea.series[2].data)
+            if(that.chart['plot1']) {
+                that.chart['plot1'].series[0].setData(response.json().series[0].data)
             }
+            else {
+                if (response.json().categories)
+                    that.dataAreaPlot1.xAxis.categories = response.json().categories;
+                that.dataAreaPlot1.series.push(response.json().series[0]);
+            }
+
+            if(that.chart['plot2']) {
+                that.chart['plot2'].series[0].setData(response.json().series[1].data)
+            }
+            else {
+                if (response.json().categories)
+                    that.dataAreaPlot2.xAxis.categories = response.json().categories;
+                that.dataAreaPlot2.series.push(response.json().series[1]);
+            }
+
+            if(that.chart['plot3']) {
+                that.chart['plot3'].series[0].setData(response.json().series[2].data)
+            }
+            else {
+                if (response.json().categories)
+                    that.dataAreaPlot3.xAxis.categories = response.json().categories;
+                that.dataAreaPlot3.series.push(response.json().series[2]);
+            }
+
         }
         this.httputils.doGet("/dashboards/plot/1/" + this.plotDate, successCallback, this.error)
     }
 
-    chart:any;
+    chart:any=[];
 
-    saveInstance(chartInstance) {
-        this.chart = chartInstance;
+    saveInstance(chartInstance,index) {
+        this.chart[index]=[];
+        this.chart[index] = chartInstance;
     }
 
     getPlot2() {
@@ -188,7 +245,7 @@ export class Dashboard extends RestController {
 
     loadFechaPlot(data) {
         this.plotDate = data;
-        this.getPlot1();
+        this.getPlots();
         this.getPlot2();
     }
 
