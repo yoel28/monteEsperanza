@@ -29,6 +29,20 @@
                             El campo contiene errores
                         </div>
                     </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input ngControl="controlador" class="form-control" [(ngModel)]="controlador.value"  #controlador="ngForm" placeholder="Controlador" type="text">
+                        <div [hidden]="controlador.valid || controlador.pristine" class="alert alert-danger">
+                            El campo contiene errores
+                        </div>
+                    </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input ngControl="accion" class="form-control" [(ngModel)]="accion.value"  #accion="ngForm" placeholder="Accion" type="text">
+                        <div [hidden]="accion.valid || accion.pristine" class="alert alert-danger">
+                            El campo contiene errores
+                        </div>
+                    </div>
                 </form>
 
             </div>
