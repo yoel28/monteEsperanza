@@ -4,6 +4,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
 import {Xfile, Xcropit} from "../common/xeditable";
+import {globalService} from "../common/globalService";
 
 @Component({
     selector: 'user-save',
@@ -26,12 +27,15 @@ export class UserSave extends RestController{
     phone: Control;
     image: Control;
 
-
-    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
-        this.initForm();
-        this.setEndpoint('/users/');
         this.save = new EventEmitter();
+    }
+    ngOnInit(){
+        if(this.myglobal.existsPermission('58')){
+            this.setEndpoint('/users/');
+            this.initForm();
+        }
     }
     initForm(){
 
@@ -55,6 +59,7 @@ export class UserSave extends RestController{
     submitForm(){
         let successCallback= response => {
             this.save.emit(response.json());
+            this.toastr.success('Guardado con éxito','Notificacion')
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
