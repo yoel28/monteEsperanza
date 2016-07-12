@@ -10,7 +10,7 @@
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input ngControl="title" class="form-control" [(ngModel)]="title.value"  #title="ngForm" placeholder="Titulo" type="text">
+                        <input ngControl="title" class="form-control" [(ngModel)]="title.value"  #title="ngForm" placeholder="Título" type="text">
                         <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
                             El campo contiene errores
                         </div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input ngControl="module" class="form-control" [(ngModel)]="module.value"  #module="ngForm" placeholder="Modulo" type="text">
+                        <input ngControl="module" class="form-control" [(ngModel)]="module.value"  #module="ngForm" placeholder="Módulo" type="text">
                         <div [hidden]="module.valid || module.pristine" class="alert alert-danger">
                             El campo contiene errores
                         </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
-                        <input ngControl="accion" class="form-control" [(ngModel)]="accion.value"  #accion="ngForm" placeholder="Accion" type="text">
+                        <input ngControl="accion" class="form-control" [(ngModel)]="accion.value"  #accion="ngForm" placeholder="Acción" type="text">
                         <div [hidden]="accion.valid || accion.pristine" class="alert alert-danger">
                             El campo contiene errores
                         </div>

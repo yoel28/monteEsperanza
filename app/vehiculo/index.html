@@ -87,7 +87,7 @@
                                                        [data]="data" [rules]="rules" field="weight"></a>
                                                 </p>
                                                 <p>
-                                                    <strong>Balance Minimo:</strong>
+                                                    <strong>Balance M&iacute;nimo:</strong>
                                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
                                                        [data]="data" [rules]="rules" field="minBalance"></a>
                                                 </p>
@@ -142,7 +142,7 @@
 
                                                 </p>
                                                 <p *ngIf="myglobal.existsPermission('73')">
-                                                    <button (click)="onPatch('enabled',user)" class="btn btn-sm"
+                                                    <button (click)="onPatch('enabled',data)" class="btn btn-sm"
                                                             [class.btn-green]="data.enabled"
                                                             [class.btn-red]="!data.enabled">
                                                         {{data.enabled?"Habilitado":"Bloqueado"}}

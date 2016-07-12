@@ -46,7 +46,7 @@ export class AccountLogin extends RestController {
         this.submitForm = true;
         let errorLogin = error=> {
             this.submitForm = false;
-            this.toastr.error('Usuario o contraseña invalida');
+            this.toastr.error('Usuario o contraseña inválida');
         }
         let successCallback = response => {
             this.submitForm = false;
@@ -158,7 +158,7 @@ export class AccountRecoverPassword extends RestController {
         //event.preventDefault(); 
         let body = JSON.stringify({'password':this.password.value});
         let successCallback= response => {
-            this.toastr.success('Contrasena Actualizada','Solicitud Procesada.');
+            this.toastr.success('Contraseña Actualizada','Solicitud Procesada.');
             let link = ['AccountLogin', {}];
             this.router.navigate(link);
         }

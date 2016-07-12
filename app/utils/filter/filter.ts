@@ -80,6 +80,8 @@ export class Filter {
 
                 if(that.rules[key].type !='number')
                     value = "'"+value+"'";
+                if(that.rules[key].double)
+                    value=value+"d";
 
                 dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
             }

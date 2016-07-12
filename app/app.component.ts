@@ -77,9 +77,9 @@ export class AppComponent {
 
   constructor(public router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
     //localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
     //localStorage.setItem('url','http://192.168.0.91:8080');
     let that=this;
     router.subscribe(

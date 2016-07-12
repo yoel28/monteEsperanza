@@ -163,12 +163,13 @@ export class Datepicker {
     // }
     public format:any = {};
     public fecha:any;
+    public element:any;
     constructor(public el: ElementRef) {
         this.fecha = new EventEmitter();
     }
     ngOnInit(){
         let that = this;
-        jQuery(this.el.nativeElement).datepicker({
+        that.element = jQuery(this.el.nativeElement).datepicker({
             format: that.format.format,
             startView: that.format.startView,
             minViewMode: that.format.minViewMode,
@@ -181,6 +182,12 @@ export class Datepicker {
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
             that.fecha.emit(moment(ev.date).format(that.format.return));
+        })
+        jQuery('#formato').click(function (ev) {
+            jQuery(that.el.nativeElement).datepicker({
+                format: "yyyy",
+            })
+
         })
     }
 }

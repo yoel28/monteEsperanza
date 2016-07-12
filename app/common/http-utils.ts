@@ -91,7 +91,7 @@ export class HttpUtils {
             if(list != null)
                 list.unshift( response.json())
             if(this.toastr)
-                this.toastr.success('Guardado con éxito','Notificacion')
+                this.toastr.success('Guardado con éxito','Notificación')
         }
         return this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
@@ -108,7 +108,7 @@ export class HttpUtils {
                 }
             }
             if(this.toastr)
-                this.toastr.success('Carga realizada con éxito','Notificacion')
+                this.toastr.success('Carga realizada con éxito','Notificación')
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
@@ -121,7 +121,7 @@ export class HttpUtils {
                     list.splice(index,1);
             }
             if(this.toastr)
-                this.toastr.success('Borrado con éxito','Notificacion')
+                this.toastr.success('Borrado con éxito','Notificación')
         }
         this.doDelete(endpoint,successCallback,errorCallback,isEndpointAbsolute);
     }
@@ -129,7 +129,7 @@ export class HttpUtils {
         let successCallback= response => {
             Object.assign(data, response.json());
             if(this.toastr)
-                this.toastr.success('Actualizado con éxito','Notificacion')
+                this.toastr.success('Actualizado con éxito','Notificación')
         }
        return this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }

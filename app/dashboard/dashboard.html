@@ -6,11 +6,11 @@
             </div>
             <div class="col-lg-8">
                 <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1>
-                <h3 class="subtitle">QUE DESEA REALIZAR</h3>
+                <h3 class="subtitle">¿QU&Eacute; DESEA REALIZAR?</h3>
                 <div class="text-center title">
                     <div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn" (click)="goVehiculos($event)">
                         <img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">
-                        <h6>VEHICULO</h6>
+                        <h6>VEH&Iacute;CULO</h6>
                     </div>
                     <div *ngIf="myglobal.existsPermission('13')" class="col-lg-3 btn" (click)="goFactura($event)">
                         <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
@@ -38,11 +38,22 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="input-group date">
-                                <input datepicker [format]="formatDate" (fecha)="loadFechaPlot($event)" value="Ingresar un periodo" type="text" class="form-control">
+                                <input [class.hide]="msgLabel" datepicker [format]="formatDate1" (fecha)="loadFechaPlot($event)" value="Ingresar un periodo" type="text" class="form-control">
+                                <input [class.hide]="!msgLabel" datepicker [format]="formatDate2" (fecha)="loadFechaPlot($event)" value="Ingresar un periodo" type="text" class="form-control">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                             </div>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>
+                                <div class="material-switch">
+                                    <input (click)="cambiar()" id="formato" [attr.accesskey]="msgLabel" type="checkbox"/>
+                                    <label for="formato" class="label-success"></label>
+                                    <span>&nbsp;{{msgLabel?"Año":"Mes/Año"}}</span>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -78,7 +89,7 @@
                                         </div>
                                         <div class="padding-bottom">
                                             <div class="input-group date">
-                                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo final" type="text" class="form-control">
                                                 <span class="input-group-addon">
                                                     <i class="glyphicon glyphicon-calendar"></i>
                                                 </span>

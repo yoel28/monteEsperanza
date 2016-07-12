@@ -49,10 +49,10 @@
             <div *ngIf="role.id" class="box-footer with-border">
                 <div class="pull-right">
                     <button type="button" class="btn btn-success" (click)="selectPermission(true)">
-                        <i class="fa fa-plus"></i>&nbsp;Agregar Todos
+                        <i class="fa fa-plus"></i>&nbsp;Agregar todos
                     </button>
                     <button type="button" class="btn btn-success" (click)="selectPermission(false)">
-                        <i class="fa fa-minus"></i>&nbsp;Eliminar Todos
+                        <i class="fa fa-minus"></i>&nbsp;Eliminar odos
                     </button>
 
                     <button *ngIf="myglobal.existsPermission('40')" type="button" class="btn btn-success" (click)="savePermissions()">

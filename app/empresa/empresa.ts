@@ -69,17 +69,17 @@ export class Empresa extends RestController {
         'phone': {
             'type': 'number',
             'display': null,
-            'title': 'Telefono',
-            'placeholder': 'Telefono',
+            'title': 'Teléfono',
+            'placeholder': 'Teléfono',
             'mode': 'inline',
             'search': true
         },
         'address': {
             'type': 'text',
             'display': null,
-            'title': 'Direccion',
+            'title': 'Dirección',
             'mode': 'inline',
-            'placeholder': 'Direccion',
+            'placeholder': 'Dirección',
             'search': true
         },
     };
@@ -87,10 +87,10 @@ export class Empresa extends RestController {
     public dataSelect:string;
 
     public searchTipoEmpresa = {
-        title: "Tipo Empresa",
+        title: "Tipo de empresa",
         idModal: "searchTipoEmpresa",
         endpointForm: "/search/type/companies/",
-        placeholderForm: "Ingrese el tipo empresa",
+        placeholderForm: "Ingrese el tipo de empresa",
         labelForm: {name: "Nombre: ", detail: "Detalle: "},
     }
 
@@ -130,7 +130,7 @@ export class Empresa extends RestController {
 
     //Cargar Where del filter
     public paramsFilter:any = {
-        title: "Filtrar Empresas",
+        title: "Filtrar empresas",
         idModal: "modalFilterCompanies",
         endpointForm: "",
     };

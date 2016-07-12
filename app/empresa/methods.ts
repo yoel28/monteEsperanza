@@ -70,7 +70,7 @@ export class EmpresaSave extends RestController{
     submitForm(){
         let successCallback= response => {
             this.save.emit(response.json());
-            this.toastr.success('Guardado con éxito','Notificacion')
+            this.toastr.success('Guardado con éxito','Notificación')
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);

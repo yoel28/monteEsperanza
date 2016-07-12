@@ -14,7 +14,7 @@
                                 <ng-select [allowClear]="true"
                                            [items]="items"
                                            (data)="refreshValue($event)"
-                                           placeholder="Seleccione un tipo de vehiculo">
+                                           placeholder="Seleccione un tipo de vehículo">
                                 </ng-select>
                             </div>
                             <div class="form-group input-icon right">
@@ -36,14 +36,14 @@
                             <div class="form-group input-icon right">
                                 <i class="fa fa-list"></i>
                                 <input ngControl="minBalance" class="form-control" [(ngModel)]="minBalance.value"
-                                       #minBalance="ngForm" placeholder="Balance Minimo" type="number">
+                                       #minBalance="ngForm" placeholder="Balance Mínimo" type="number">
                                 <div [hidden]="minBalance.valid || minBalance.pristine" class="alert alert-danger">
                                     El campo contiene errores
                                 </div>
                             </div>
                             <div class="form-group">
                                 <strong>Empresa: </strong>{{dataCompany || ""}}
-                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                                <button type="button" class="btn btn-box-tool text-blue" data-toggle="modal"
                                         data-target="#searchEmpresa">
                                     <i class="fa fa-search"></i>
                                 </button>

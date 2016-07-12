@@ -197,7 +197,7 @@ export class Dashboard extends RestController {
 
     public paramsFactura:any = {};
     public consultar = false;
-    public formatDate = {
+    public formatDate1 = {
         format: "mm/yyyy",
         startView: 2,
         minViewMode: 1,
@@ -208,6 +208,18 @@ export class Dashboard extends RestController {
         autoclose: true,
         todayHighlight: true,
         return: 'YYYY/MM',
+    }
+    public formatDate2 = {
+        format: "yyyy",
+        startView: 2,
+        minViewMode: 2,
+        maxViewMode: 2,
+        todayBtn: "linked",
+        language: "es",
+        forceParse: true,
+        autoclose: true,
+        todayHighlight: true,
+        return: 'YYYY',
     }
     public formatDateFact = {
         format: "dd/mm/yyyy",
@@ -255,6 +267,10 @@ export class Dashboard extends RestController {
         else
             this.dateEnd.updateValue(data)
 
+    }
+    public msgLabel:boolean;
+    cambiar(){
+        this.msgLabel=!this.msgLabel;
     }
 
 
