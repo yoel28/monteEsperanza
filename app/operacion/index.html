@@ -4,17 +4,19 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Operaciones</h3>
 
-                <div *ngIf="myglobal.existsPermission('98')" class="box-tools pull-right">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                <div class="pull-right">
+                    <button *ngIf="myglobal.existsPermission('98')"
+                            type="button" class="btn btn-primary" data-toggle="modal"
                             data-target="#saveOperacion">
-                        &nbsp;Agregar
+                        <i class="fa fa-plus"></i>&nbsp;Agregar
+                    </button>
+                    <button *ngIf="myglobal.existsPermission('97')"
+                            type="button" class="btn btn-blue "
+                            data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
+                        <i class="fa fa-filter"></i>&nbsp;Filtrar
                     </button>
                 </div>
 
-                <button *ngIf="myglobal.existsPermission('97')" type="button" class="btn btn-primary btn-blue"
-                        data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
-                    <i class="fa fa-filter"></i>&nbsp;Filtrar
-                </button>
             </div>
             <!-- /.box-header -->
             <div *ngIf="myglobal.existsPermission('93')" class="box-body">
