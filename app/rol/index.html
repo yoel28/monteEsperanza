@@ -5,9 +5,15 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Roles</h3>
 
-                    <div *ngIf="myglobal.existsPermission('49')" class="box-tools pull-right">
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saveRol">
-                            Agregar
+                    <div class="box-tools pull-right">
+                        <button *ngIf="myglobal.existsPermission('49')" type="button"
+                                class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saveRol">
+                            <i class="fa fa-plus"></i>&nbsp;Agregar
+                        </button>
+                        <button *ngIf="myglobal.existsPermission('119')"
+                                type="button" class="btn btn-blue "
+                                data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
+                            <i class="fa fa-filter"></i>&nbsp;Filtrar
                         </button>
                     </div>
                 </div>
@@ -53,6 +59,14 @@
                         </button>
                     </div>
                 </div>
+
+                <div *ngIf="!myglobal.existsPermission('48')" class="box-body">
+                    <div class="btn-red padding-error">
+                        <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                        No tiene permisos para listar los roles
+                    </div>
+                </div>
+
             </div>
             <!-- /.box -->
         </div>
