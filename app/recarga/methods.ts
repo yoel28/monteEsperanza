@@ -122,16 +122,15 @@ export class RecargaTimeLine extends RestController{
         'fa fa-truck': 'bg-green',
     };
     
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr:ToastsManager, public myglobal:globalService) {
+        super(http,toastr);
         this.setEndpoint('/search/recharges/');
-
     }
     ngOnInit() {
-        this.loadData();
+        if(this.myglobal.existsPermission('109'))
+            this.loadData();
     }
     loadData(){
-        //event.preventDefault(); 
         this.httputils.onLoadList(this.endpoint+this.params.ruc+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
     }
     addtimeLine(event){
