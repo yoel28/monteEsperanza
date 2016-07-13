@@ -154,9 +154,8 @@ export class EmpresaTimeLine extends RestController {
         'max': 8,
         'ruc': ''
     };
-
-    constructor(params:RouteParams, public router:Router, http:Http) {
-        super(http);
+    constructor(params:RouteParams, public router:Router, http:Http, public toastr:ToastsManager, public myglobal:globalService) {
+        super(http,toastr);
         this.paramsTimeLine.ruc = params.get('ruc');
     }
 }
