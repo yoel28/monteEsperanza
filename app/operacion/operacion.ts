@@ -16,6 +16,7 @@ import {Filter} from "../utils/filter/filter";
 })
 export class Operacion extends RestController{
 
+    public dataSelect:any={};
     constructor(public router: Router,public http: Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/operations/');
