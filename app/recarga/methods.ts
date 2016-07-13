@@ -162,18 +162,20 @@ export class RecargaFactura extends RestController{
     // };
     public params:any={};
 
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
+        super(http,toastr);
         this.setEndpoint('/search/recharges/');
     }
     ngOnInit() {
-        this.max = 10;
-        this.cargar()
+        if(this.myglobal.existsPermission('109')){
+            this.max = 10;
+            this.cargar()
+        }
     }
     public cargar(){
         this.endpoint="/search/recharges/?where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
             "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
-
+        this.endpoint = encodeURI(this.endpoint);
         this.loadData();
     }
     loadData(offset=0){
