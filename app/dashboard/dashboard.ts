@@ -22,7 +22,7 @@ export class Dashboard extends RestController {
     dataCamion:any = [];
     httputils:HttpUtils;
     endpoint:string;
-    plotDate = "2016/02";
+    plotDate = "2016";
 
     public paramsTimeLine = {
         'offset': 0,
@@ -84,7 +84,7 @@ export class Dashboard extends RestController {
             enabled: false
         },
         series: [],
-        title: {text: 'Balance General'},
+        title: {text: 'Balance General (Dinero)'},
     };
     dataAreaPlot2 = {
         chart: {
@@ -102,7 +102,7 @@ export class Dashboard extends RestController {
             enabled: false
         },
         series: [],
-        title: {text: 'Uso del vertedero'},
+        title: {text: 'Uso del vertedero (Camiones)'},
     };
     dataAreaPlot3 = {
         chart: {
@@ -120,7 +120,7 @@ export class Dashboard extends RestController {
             enabled: false
         },
         series: [],
-        title: {text: 'Uso del vertedero'},
+        title: {text: 'Descargas en el vertedero'},
     };
 
     getPlots() {
@@ -128,6 +128,7 @@ export class Dashboard extends RestController {
         let successCallback = response => {
             if(that.chart['plot1']) {
                 that.chart['plot1'].series[0].setData(response.json().series[0].data)
+                that.chart['plot1'].xAxis[0].setCategories(response.json().categories)
             }
             else {
                 if (response.json().categories)
@@ -137,6 +138,7 @@ export class Dashboard extends RestController {
 
             if(that.chart['plot2']) {
                 that.chart['plot2'].series[0].setData(response.json().series[1].data)
+                that.chart['plot2'].xAxis[0].setCategories(response.json().categories)
             }
             else {
                 if (response.json().categories)
@@ -146,6 +148,7 @@ export class Dashboard extends RestController {
 
             if(that.chart['plot3']) {
                 that.chart['plot3'].series[0].setData(response.json().series[2].data)
+                that.chart['plot3'].xAxis[0].setCategories(response.json().categories)
             }
             else {
                 if (response.json().categories)
@@ -268,7 +271,7 @@ export class Dashboard extends RestController {
             this.dateEnd.updateValue(data)
 
     }
-    public msgLabel:boolean;
+    public msgLabel:boolean=true;
     cambiar(){
         this.msgLabel=!this.msgLabel;
     }
