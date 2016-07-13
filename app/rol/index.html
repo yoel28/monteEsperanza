@@ -7,7 +7,7 @@
 
                     <div class="box-tools pull-right">
                         <button *ngIf="myglobal.existsPermission('49')" type="button"
-                                class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saveRol">
+                                class="btn btn-primary" data-toggle="modal" data-target="#saveRol">
                             <i class="fa fa-plus"></i>&nbsp;Agregar
                         </button>
                         <button *ngIf="myglobal.existsPermission('119')"
@@ -93,4 +93,7 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="myglobal.existsPermission('119')">
+    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
 </div>
