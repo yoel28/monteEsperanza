@@ -15,13 +15,13 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
     directives: [Xeditable,Xcropit,Search,EmpresaSave,Xfile],
 })
 export class Profile extends RestController{
-    
+    public userSelect:string;
     constructor(public router: Router,public http: Http,public myglobal:globalService,public toastr: ToastsManager) {
         super(http,toastr);
         this.setEndpoint('/users/');
     }
     ngOnInit(){
-        this.validTokens();
+
     }
     public rules={
         'id': {'type':'text','disabled':true,'display':false,'title':'id' },
@@ -30,14 +30,6 @@ export class Profile extends RestController{
         'email':{'type':'email','display':null,'title':'Correo' },
         'password':{'type':'password','display':null,'title':'Contrasena' },
         'phone':{'type':'number','display':null,'title':'Telefono' },
-    }
-
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
     }
     
     goTaquilla(companyRuc:string)
@@ -52,4 +44,15 @@ export class Profile extends RestController{
     loadImage(){
         this.onPatch('image',this.myglobal.user,this.image);
     }
+    public searchEmpresa = {
+        title: "Empresa",
+        idModal: "searchEmpresa",
+        endpointForm: "/search/companies/",
+        placeholderForm: "Ingrese el RUC de la empresa",
+        labelForm: {name: "Nombre: ", detail: "RUC: "},
+    }
+    assignCompany(data) {
+        this.onPatch('company', this.myglobal.user, data.id);
+    }
+
 }
