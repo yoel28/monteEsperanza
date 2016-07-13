@@ -77,14 +77,16 @@ export class PermisosRol extends RestController {
     public items:any = [];
     public dataRoles:any=[];
     loadRoles(){
-        let successCallback= response => {
-            Object.assign(this.dataRoles, response.json());
-            this.items=[];
-            this.dataRoles.list.forEach(obj=>{
-                this.items.push({id:obj.id,text:obj.authority});
-            });
-        };
-        this.httputils.doGet('/roles/',successCallback,this.error)
+        if(this.myglobal.existsPermission('48')){
+            let successCallback= response => {
+                Object.assign(this.dataRoles, response.json());
+                this.items=[];
+                this.dataRoles.list.forEach(obj=>{
+                    this.items.push({id:obj.id,text:obj.authority});
+                });
+            };
+            this.httputils.doGet('/roles/',successCallback,this.error)
+        }
     }
 
     //Cargar Rol Seleccionado
