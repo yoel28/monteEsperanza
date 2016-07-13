@@ -34,8 +34,11 @@ export class Parametro extends RestController{
         },
     };
     ngOnInit(){
-        this.max = 10;
-        this.loadData();
+        if(this.myglobal.existsPermission('99')){
+            this.max = 10;
+            this.loadData();
+        }
+
     }
     assignParametro(data){
         this.dataList.list.unshift(data);
