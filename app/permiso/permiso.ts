@@ -8,13 +8,14 @@ import {RolSave} from "../rol/methods";
 import {SELECT_DIRECTIVES} from "ng2-select/ng2-select";
 import {globalService} from "../common/globalService";
 import {Xeditable, SMDropdown} from "../common/xeditable";
+import {Filter} from "../utils/filter/filter";
 
 
 @Component({
     selector: 'permission',
     templateUrl: 'app/permiso/index.html',
     styleUrls: ['app/permiso/style.css'],
-    directives:[PermisoSave,Xeditable]
+    directives:[PermisoSave,Xeditable,Filter]
 })
 export class Permiso extends RestController{
 
@@ -23,29 +24,33 @@ export class Permiso extends RestController{
         this.setEndpoint('/permissions/');
     }
     public rules={
-        'id': {'type':'text','disabled':true,'display':false,'title':'' },
-        'title':{'type':'text','display':null,'title':'Titulo','mode':'inline'},
-        'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline','showbuttons':true },
-        'module':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
-        'controlador':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
-        'accion':{'type':'text','display':null,'title':'Modulo','mode':'inline' },
+        'id': {'type':'number','disabled':true,'display':false,'title':'Identificador','placeholder': 'Identificador', 'search': true },
+        'title':{'type':'text','display':null,'title':'Titulo','mode':'inline','placeholder': 'Titulo', 'search': true},
+        'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline','showbuttons':true,'placeholder': 'Detalle', 'search': true},
+        'module':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Modulo', 'search': true},
+        'controlador':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Controlador', 'search': true},
+        'accion':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Accion', 'search': true},
     };
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
-    }
     ngOnInit(){
-        this.validTokens();
-        this.max = 30;
-        this.loadData();
+        if(this.myglobal.existsPermission('41')){
+            this.max = 30;
+            this.loadData();
+        }
     }
     assignPermiso(data){
         this.dataList.list.unshift(data);
         this.dataList.list.pop();
     }
+    public paramsFilter:any = {
+        title: "Filtrar permisos",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+    loadWhere(where) {
+        this.where = where;
+        this.loadData();
+    }
+
 
 }
 @Component({
