@@ -10,36 +10,6 @@
                         <div class="panel-body">
                             <div class="profile">
                                 <div style="margin-bottom: 15px" class="row">
-
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                        <div class="btn-group dropdown pull-right">
-                                            <button type="button" data-toggle="dropdown"
-                                                    class="btn btn-box-tool dropdown-toggle" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <i class="fa fa-gears fa-lg"></i>
-                                            </button>
-                                            <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                                <li>
-                                                    <a href="javascript:void(0);"
-                                                       (click)="onPatch('accountLocked',myglobal.user)">
-                                                        <span class="fa fa-list"></span>
-                                                        {{myglobal.user.accountLocked?"Verificar":"No Verificado"}}
-                                                    </a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a (click)="onLock('enabled',myglobal.user)"
-                                                       href="javascript:void(0);">
-                                                        <span class="fa fa-warning"></span>
-                                                        {{myglobal.user.enabled?"Bloquear":"Habilitar"}}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
-
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                         <div class="">
                                             <h2 class="truncate">{{myglobal.user.username}}</h2>
@@ -67,15 +37,17 @@
                                             <div *ngIf="myglobal.user.companyId">
                                                 <div class="pull-left">
                                                     <figure>
-                                                        <img src="{{myglobal.user.companyImage?user.companyImage:'/assets/img/company-guest.png'}}"
+                                                        <img src="{{myglobal.user.companyImage?myglobal.user.companyImage:'/assets/img/company-guest.png'}}"
                                                              class="img-responsive img-circle img-list">
                                                     </figure>
                                                     <div class="box-tools">
-                                                        <button (click)="userSelect = myglobal.user.id" type="button"
+                                                        <button *ngIf="myglobal.existsPermission('80')"
+                                                                (click)="userSelect = myglobal.user.id" type="button"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
                                                                 data-toggle="modal"
                                                                 data-target="#searchEmpresa"></button>
-                                                        <button (click)="userSelect = myglobal.user.id" type="button"
+                                                        <button *ngIf="myglobal.existsPermission('68')"
+                                                                (click)="userSelect = myglobal.user.id" type="button"
                                                                 class="btn btn-box-tool fa fa-plus text-green"
                                                                 data-toggle="modal"
                                                                 data-target="#newEmpresa"></button>
@@ -89,11 +61,6 @@
                                                     <strong>Balance: </strong>{{myglobal.user.companyBalance}}<br/>
                                                 </div>
                                             </div>
-                                            
-                                            
-                                            
-                                            
-                                            
                                         </div>
                                     </div>
 
@@ -134,9 +101,13 @@
                     </div>
                 </div>
             </div>
-            <div class="box-footer">
-
-            </div>
         </div>
     </section>
+</div>
+<div *ngIf="myglobal.existsPermission('80')">
+    <search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>
+</div>
+
+<div *ngIf="myglobal.existsPermission('68')">
+    <empresa-save idModal="newEmpresa" (save)="assignCompany($event)"> </empresa-save>
 </div>
