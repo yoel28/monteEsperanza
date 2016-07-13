@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
-                    <div class="form-group row">
+                    <div *ngIf="myglobal.existsPermission('116')" class="form-group row">
                         <div class="btn-group rechargeTypes center-block">
                             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let type of rechargeTypes.list">
                                 <i class="{{type.icon}} btn fa-lg" [class.red]="rechargeType.value==type.id"
@@ -18,11 +18,25 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="!myglobal.existsPermission('116')">
+                        <div class="btn-red form-group padding-error">
+                            <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                            No tiene permisos para listar los tipos de recargas
+                        </div>
+                    </div>
                     <div *ngIf="!idVehicle" class="form-group">
+                        <div *ngIf="myglobal.existsPermission('69')">
                             <strong>Veh&iacute;culo: </strong>{{dataVehicle || "Buscar Vehículo"}}
                             <button type="button" class="btn btn-box-tool text-blue" data-toggle="modal" data-target="#searchVehicle">
                                 <i class="fa fa-search"></i>
                             </button>
+                        </div>
+                        <div *ngIf="!myglobal.existsPermission('69')">
+                            <div class="btn-red form-group padding-error">
+                                <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                                No tiene permisos para listar los vehiculos
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group input-icon right">
@@ -59,4 +73,6 @@
         </div>
     </div>
 </div>
-<search  [params]="searchVehicle" (result)="assignVehicle($event)"></search>
+<div *ngIf="!myglobal.existsPermission('69')">
+    <search  [params]="searchVehicle" (result)="assignVehicle($event)"></search>
+</div>
