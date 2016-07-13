@@ -11,7 +11,7 @@
   <script src="node_modules/zone.js/dist/zone.js"></script>
   <script src="node_modules/reflect-metadata/Reflect.js"></script>
 
-  <!--script src="node_modules/core-js/client/shim.min.js"></script-->
+  <script src="node_modules/webshim/js-webshim/minified/polyfiller.js"></script>
 
   <script src="https://afarkas.github.io/webshim/js-webshim/minified/polyfiller.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css" />
@@ -59,10 +59,7 @@
     <my-app>Loading...</my-app>
 </main>
 <script>
-  webshim.setOptions('forms-ext', {
-    replaceUI: 'auto'
-  });
-  webshim.polyfill('forms forms-ext');
+  webshims.polyfill();
 </script>
 <script>
   $(document).ajaxStart(function () {
