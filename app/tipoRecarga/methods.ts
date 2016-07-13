@@ -3,6 +3,8 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {globalService} from "../common/globalService";
 
 @Component({
     selector: 'tipoRecarga-save',
@@ -22,12 +24,14 @@ export class TipoRecargaSave extends RestController{
     detail: Control;
     icon: Control;
 
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
-        super(http);
+    constructor(public http:Http,public _formBuilder: FormBuilder, public toastr:ToastsManager, public myglobal:globalService) {
+        super(http,toastr);
         this.setEndpoint('/type/recharges/');
+        this.save = new EventEmitter();
+    }
+    ngOnInit(){
         this.initForm();
         this.initSelect();
-        this.save = new EventEmitter();
     }
     initForm(){
         this.title = new Control("", Validators.compose([Validators.required, Validators.maxLength(15)]));
@@ -57,11 +61,14 @@ export class TipoRecargaSave extends RestController{
         this.icon.updateValue(value.id);
     }
     submitForm(){
-        let successCallback= response => {
-            this.save.emit(response.json());
-        };
-        let body = JSON.stringify(this.form.value);
-        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
+        if(this.myglobal.existsPermission('125')){
+            let successCallback= response => {
+                this.save.emit(response.json());
+                this.toastr.success('Guardado con éxito','Notificación')
+            };
+            let body = JSON.stringify(this.form.value);
+            this.httputils.doPost(this.endpoint,body,successCallback,this.error);
+        }
     }
 }
 
