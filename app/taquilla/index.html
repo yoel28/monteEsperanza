@@ -6,7 +6,7 @@
         </h2>
     </section>
     <section class="box-body">
-        <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12">
+        <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12 padding-bottom">
             <form role="form" (submit)="getVehicles(findCamion.value)">
                 <div class="input-group input-group-sm">
                     <input  #findCamion type="text" class="form-control" placeholder="Ingrese PLACA / RFID / RUC " value="{{search}}">
@@ -18,8 +18,14 @@
                 </div>
             </form>
         </div>
+        <div *ngIf="!myglobal.existsPermission('69')" class="col-lg-12">
+            <div class="btn-red padding-error">
+                <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                No tiene permisos para listar los vehiculos
+            </div>
+        </div>
 
-        <div *ngIf="dataVehicles.count" class="row col-lg-10 col-lg-offset-1">
+        <div *ngIf="dataVehicles.count && myglobal.existsPermission('69')" class="row col-lg-10 col-lg-offset-1">
             <table class="table table-hover">
                 <tbody>
                 <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
@@ -126,44 +132,55 @@
                             </table>
                         </div>
                     </div><!--Fin de Datos de  camion-->
-                    <table class="table table-hover table-bordered">
+                    <div *ngIf="myglobal.existsPermission('109')">
+                        <table class="table table-hover table-bordered">
 
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Fecha Efectiva</th>
-                            <th>Referencia</th>
-                            <th>Fecha de Transacci&oacute;n</th>
-                            <th>Tipo</th>
-                            <th>Peso</th>
-                            <th>Monto</th>
-                        </tr>
-                        </thead>
-                        <tbody *ngFor="let recharges of dataList.list">
-                        <tr>
-                            <td>{{recharges.id}}</td>
-                            <td>{{recharges.dateCreated}}</td>
-                            <td>{{recharges.reference}}</td>
-                            <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
-                            <td>
-                                <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
-                            </td>
-                            <td>{{recharges.weight}}</td>
-                            <td>{{recharges.quantity}}</td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Fecha Efectiva</th>
+                                <th>Referencia</th>
+                                <th>Fecha de Transacci&oacute;n</th>
+                                <th>Tipo</th>
+                                <th>Peso</th>
+                                <th>Monto</th>
+                            </tr>
+                            </thead>
+                            <tbody *ngFor="let recharges of dataList.list">
+                            <tr>
+                                <td>{{recharges.id}}</td>
+                                <td>{{recharges.dateCreated}}</td>
+                                <td>{{recharges.reference}}</td>
+                                <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
+                                </td>
+                                <td>{{recharges.weight}}</td>
+                                <td>{{recharges.quantity}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
                             <tr>
                                 <td colspan="7">
-                                    <div class="btn-group pull-right">
+                                    <div *ngIf="dataList.count==0">
+                                        No tiene recargas asociadas
+                                    </div>
+                                    <div *ngIf="dataList.count>0" class="btn-group pull-right">
                                         <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                                             {{val}}
                                         </button>
                                     </div>
                                 </td>
                             </tr>
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div *ngIf="!myglobal.existsPermission('109')">
+                        <div class="btn-red padding-error">
+                            <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                            No tiene permisos para listar las recargas
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <h3>M&eacute;todos de recarga disponibles:</h3>
@@ -194,8 +211,8 @@
                                 <button type="button" class="btn  btn-blue">
                                     <i class="fa  fa-download fa-lg"></i> Generar PDF
                                 </button>
-                                <button type="button" class="btn  btn-success" data-toggle="modal"
-                                        data-target="#saveRecarga">
+                                <button type="button" class="btn  btn-success" data-toggle="modal" data-target="#saveRecarga"
+                                        *ngIf="myglobal.existsPermission('111')">
                                     <i class="fa  fa-money fa-lg"></i> Recargar Saldo
                                 </button>
                             </div>
@@ -203,7 +220,9 @@
                     </div>
                 </div>
             </div>
-            <recarga-save  idModal="saveRecarga" [idVehicle]="dataTruck.id" (save)="assignRecarga($event)"> </recarga-save>
+            <div *ngIf="myglobal.existsPermission('111')">
+                <recarga-save  idModal="saveRecarga" [idVehicle]="dataTruck.id" (save)="assignRecarga($event)"> </recarga-save>
+            </div>
         </div>
     </section>
 </div>
