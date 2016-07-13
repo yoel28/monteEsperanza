@@ -7,31 +7,47 @@ import {Fecha} from "../utils/pipe";
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import moment from 'moment/moment';
+import {globalService} from "../common/globalService";
+import {Filter} from "../utils/filter/filter";
+import {Xeditable} from "../common/xeditable";
 
 @Component({
     selector: 'recarga',
     pipes: [Fecha],
     templateUrl: 'app/recarga/index.html',
     styleUrls: ['app/recarga/style.css'],
-    directives:[RecargaSave]
+    directives:[RecargaSave,Xeditable,Filter]
 })
 export class Recarga extends RestController{
-    
-    constructor(public router: Router,public http: Http) {
-        super(http);
-        this.validTokens();
+    public rules={
+        'id': {'type':'number','disabled':true,'display':false,'title':'','placeholder': 'Identificador', 'search': true},
+        'quantity':{'type':'number','display':null,'title':'Key','mode':'inline','placeholder': 'Cantidad', 'search': true,'double':true},
+        'reference':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Referencia', 'search': true},
+    };
+
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
+        super(http,toastr);
         this.setEndpoint('/recharges/');
-        this.loadData();
     }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
+    ngOnInit(){
+        if(this.myglobal.existsPermission('109')){
+            this.max = 30;
+            this.loadData();
         }
     }
     assignRecarga(data){
-        this.dataList.list.push(data);
+        this.dataList.list.unshift(data);
+        this.dataList.list.pop();
+    }
+    //Cargar Where del filter
+    public paramsFilter:any = {
+        title: "Filtrar recargas",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+    loadWhere(where) {
+        this.where = where;
+        this.loadData();
     }
 }
 
