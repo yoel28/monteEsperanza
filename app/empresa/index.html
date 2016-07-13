@@ -39,7 +39,7 @@
                                                             <i class="fa fa-gears fa-lg"></i>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                                            <li *ngIf="myglobal.existsPermission('84') && myglobal.existsPermission('83')">
+                                                            <li *ngIf="myglobal.existsPermission('84')">
                                                                 <a (click)="onLock('enabled',data)"
                                                                    href="javascript:void(0);">
                                                                     <span class="fa fa-warning"></span>
@@ -144,7 +144,7 @@
                                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                                                 [class.btn-green]="data.enabled"
                                                                 [class.btn-red]="!data.enabled"
-                                                                [disabled]="!(myglobal.existsPermission('83') && myglobal.existsPermission('84'))"
+                                                                [disabled]="!(myglobal.existsPermission('84'))"
                                                         >
                                                             {{data.enabled?"Habilitado":"Bloqueado"}}
                                                         </button>
