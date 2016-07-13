@@ -64,14 +64,18 @@ export class RecargaSave extends RestController{
         this.rechargeType.updateValue(id);
     }
     getRechargeTypes(){
-        this.httputils.onLoadList("/type/recharges?where=[['op':'ne','field':'enabled','value':false]]",this.rechargeTypes,this.error);
+        let where = encodeURI("[['op':'ne','field':'enabled','value':false]]")
+        this.httputils.onLoadList("/type/recharges?where="+where,this.rechargeTypes,this.error);
     }
     submitForm(){
-        let successCallback= response => {
-            this.save.emit(response.json());
-        };
-        let body = JSON.stringify(this.form.value);
-        this.httputils.doPost(this.endpoint,body,successCallback,this.error);
+        if(this.myglobal.existsPermission('111')) {
+            let successCallback = response => {
+                this.save.emit(response.json());
+                this.toastr.success('Guardado con éxito','Notificación')
+            };
+            let body = JSON.stringify(this.form.value);
+            this.httputils.doPost(this.endpoint, body, successCallback, this.error);
+        }
     }
 
     //asignar vehiculo----------------------------------
