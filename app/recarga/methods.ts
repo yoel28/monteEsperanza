@@ -6,6 +6,7 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Fecha} from "../utils/pipe";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search";
+import {globalService} from "../common/globalService";
 
 @Component({
     selector: 'recarga-save',
@@ -30,16 +31,17 @@ export class RecargaSave extends RestController{
 
     rechargeTypes:any = []; //Arreglo con todos los tipos de regarga
 
-    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/recharges/');
-        this.getRechargeTypes();
-        this.initForm();
         this.save = new EventEmitter();
     }
     ngOnInit() {
         if(this.idVehicle)
             this.vehicle.updateValue(this.idVehicle);
+        if(this.myglobal.existsPermission('116'))
+            this.getRechargeTypes();
+        this.initForm();
     }
 
     initForm(){
