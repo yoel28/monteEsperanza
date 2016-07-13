@@ -1,7 +1,14 @@
 <div class="content-wrapper">
     <section class="content">
         <h4 class="box-title"><strong>RUC: </strong>{{paramsTimeLine.ruc}}</h4>
-        <recarga-timeline [params]="paramsTimeLine"> </recarga-timeline>
-
+        <div *ngIf="myglobal.existsPermission('109')" >
+            <recarga-timeline [params]="paramsTimeLine"> </recarga-timeline>
+        </div>
+        <div *ngIf="!myglobal.existsPermission('109')">
+            <div class="btn-red padding-error">
+                <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                No tiene permisos para listar recargas
+            </div>
+        </div>
     </section>
 </div>
