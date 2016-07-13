@@ -84,7 +84,7 @@ export class Empresa extends RestController {
         },
     };
 
-    public dataSelect:string;
+    public dataSelect:any={};
 
     public searchTipoEmpresa = {
         title: "Tipo de empresa",

@@ -31,7 +31,8 @@
                                     <div class="panel-body">
                                         <div class="profile">
                                             <div style="margin-bottom: 15px" class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div *ngIf="myglobal.existsPermission('84') || myglobal.existsPermission('82')"
+                                                     class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="btn-group dropdown pull-right">
                                                         <button type="button" data-toggle="dropdown"
                                                                 class="btn btn-white dropdown-toggle"
@@ -48,7 +49,8 @@
                                                             </li>
                                                             <li *ngIf="myglobal.existsPermission('82')">
                                                                 <a data-toggle="modal"
-                                                                   [attr.data-target]="'#myModal'+data.id" href="#">
+                                                                   (click)="dataSelect = data"
+                                                                   [attr.data-target]="'#modalDelete'" href="#">
                                                                     <span class="fa fa-trash"></span>
                                                                     &nbsp;Eliminar
                                                                 </a>
@@ -203,8 +205,8 @@
     <empresa-save idModal="saveEmpresa" (save)="assignEmpresa($event)"></empresa-save>
 </div>
 
-<div *ngIf="dataList.list && myglobal.existsPermission('82')">
-    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog"
+<div *ngIf="myglobal.existsPermission('82')">
+    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -215,11 +217,11 @@
                             class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas eliminar a <strong>{{data.name}}</strong> RUC:{{data.ruc}} ?
+                    ¿ Estás seguro que deseas eliminar a <strong>{{dataSelect.name}}</strong> RUC:{{dataSelect.ruc}} ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onDelete($event,data.id)" data-dismiss="modal" type="button"
+                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
                             class="btn btn-red fa fa-trash">&nbsp;Eliminar
                     </button>
                 </div>
