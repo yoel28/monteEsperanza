@@ -19,6 +19,8 @@ import {Filter} from "../utils/filter/filter";
 })
 export class Permiso extends RestController{
 
+    public dataSelect:any={};
+
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/permissions/');
@@ -61,12 +63,15 @@ export class Permiso extends RestController{
 })
 export class PermisosRol extends RestController {
 
+    public dataSelect:any={};
+
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
     }
     ngOnInit(){
         this.loadPermissions();
-        this.loadRoles();
+        if(this.myglobal.existsPermission('48'))
+            this.loadRoles();
     }
     //Cargar Roles
     public items:any = [];

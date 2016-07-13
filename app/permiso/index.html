@@ -58,7 +58,8 @@
                                 </td>
 
                                 <td *ngIf="myglobal.existsPermission('43')" style="vertical-align: middle;">
-                                    <a data-toggle="modal" [attr.data-target]="'#myModal'+data.id"  href="#">
+                                    <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                       (click)="dataSelect = data" href="#">
                                         <i class="fa fa-trash fa-lg btn"></i>
                                     </a>
                                 </td>
@@ -82,7 +83,7 @@
     <permiso-save idModal="savePermiso" (save)="assignPermiso($event)"> </permiso-save>
 </div>
 <div *ngIf="dataList.list && myglobal.existsPermission('43')">
-    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header btn-red text-center">
@@ -90,11 +91,11 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas eliminar a <strong>{{data.title}}</strong> ({{data.detail}})?
+                    ¿ Estás seguro que deseas eliminar a <strong>{{dataSelect.module}}</strong> {{dataSelect.title}} ({{dataSelect.detail}})?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onDelete($event,data.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
+                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
                 </div>
             </div>
         </div>
