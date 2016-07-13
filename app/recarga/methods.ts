@@ -37,11 +37,11 @@ export class RecargaSave extends RestController{
         this.save = new EventEmitter();
     }
     ngOnInit() {
+        this.initForm();
         if(this.idVehicle)
             this.vehicle.updateValue(this.idVehicle);
         if(this.myglobal.existsPermission('116'))
             this.getRechargeTypes();
-        this.initForm();
     }
 
     initForm(){
