@@ -141,5 +141,9 @@ export class AppComponent {
         return true;
     return false;
   }
+    loadPermisos(event){
+        event.preventDefault();
+        this.myglobal.myPermissions();
+    }
 
 }
