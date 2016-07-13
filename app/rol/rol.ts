@@ -6,12 +6,13 @@ import {RolSave} from "./methods";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Xeditable} from "../common/xeditable";
+import {Filter} from "../utils/filter/filter";
 
 @Component({
     selector: 'rol',
     templateUrl: 'app/rol/index.html',
     styleUrls: ['app/rol/style.css'],
-    directives:[RolSave,Xeditable]
+    directives:[RolSave,Xeditable,Filter]
 })
 export class Rol extends RestController{
 
@@ -24,18 +25,26 @@ export class Rol extends RestController{
         this.setEndpoint('/roles/');
     }
     ngOnInit(){
-        this.validTokens();
-        this.loadData();
-    }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
+        if (this.myglobal.existsPermission('48')) {
+            this.loadData();
         }
     }
     assignRol(data){
         this.dataList.list.unshift(data);
+        this.dataList.list.pop();
+    }
+    //Cargar Where del filter
+    public paramsFilter:any = {
+        title: "Filtrar roles",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+
+    loadWhere(where) {
+        this.where = where;
+        if (this.myglobal.existsPermission('48')) {
+            this.loadData();
+        }
     }
 
 }
