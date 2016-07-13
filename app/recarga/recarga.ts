@@ -61,20 +61,11 @@ export class Recarga extends RestController{
 })
 export class RecargaIngresos extends RestController{
 
-    constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+    constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
-        this.validTokens();
     }
     ngOnInit() {
         this.initForm();
-    }
-
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
     }
     //consultar Facturas
     form: ControlGroup;
@@ -108,7 +99,8 @@ export class RecargaIngresos extends RestController{
         if(this.recargaFactura)
         {
             this.recargaFactura.params = this.paramsFactura;
-            this.recargaFactura.cargar();
+            if(this.myglobal.existsPermission('109'))
+                this.recargaFactura.cargar();
         }
 
         this.consultar=true;
@@ -125,12 +117,11 @@ export class RecargaIngresos extends RestController{
 })
 export class RecargaLibro extends RestController{
 
-    constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
+    constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/search/recharges');
     }
     ngOnInit() {
-        this.validTokens();
         this.initForm();
     }
     initForm(){
@@ -142,14 +133,6 @@ export class RecargaLibro extends RestController{
             dateEnd: this.dateEnd,
         });
     }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
-        }
-    }
-
     //consultar Libro
     form: ControlGroup;
     dateStart:Control;
@@ -168,10 +151,12 @@ export class RecargaLibro extends RestController{
             'dateEnd':   moment(this.dateEnd.value.toString()).format('DD-MM-YYYY'),
         };
         this.dateEnd.updateValue("");
-        this.where = "&where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-                     "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]&order=asc";
+        let where ="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+                    "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]&order=asc";
+        this.where = "&where="+encodeURI(where);
         this.max=100;
-        this.loadData();
+        if(this.myglobal.existsPermission('109'))
+            this.loadData();
     }
 
 }

@@ -42,54 +42,61 @@
                     </div>
                 </div>
                 <div  class="col-lg-12">
-                    <div *ngIf=" dataList && dataList.count > 0 ">
-                        <table class="table table-hover table-bordered">
+                    <div *ngIf="myglobal.existsPermission('109')">
+                        <div *ngIf=" dataList && dataList.count > 0 ">
+                            <table class="table table-hover table-bordered">
 
-                            <thead>
-                            <tr>
-                                <th>&nbsp;</th>
-                                <th >Fecha</th>
-                                <th>Referencia</th>
-                                <th>Fecha de Transaccion</th>
-                                <th>Tipo y Detalle</th>
-                                <th>Debe</th>
-                                <th>Haber</th>
-                            </tr>
-                            </thead>
-                            <tbody *ngFor="let recharges of dataList.list">
-                            <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
-                                <td>{{recharges.id}}</td>
-                                <td>{{recharges.dateCreated| fecha | date:'dd-MM-yyyy, h:m'}}</td>
-                                <td>{{recharges.reference}}</td>
-                                <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
-                                <td>
-                                    <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
-                                    {{recharges.weight?recharges.weight+"Kg.":"&nbsp;"}}
-                                </td>
-                                <td>{{recharges.rechargeTypeId!=4?recharges.quantity:"&nbsp;"}}</td>
-                                <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1):"&nbsp;"}}</td>
-                            </tr>
-                            </tbody>
-                            <tfoot *ngIf="dataList && dataList.page.length > 1">
-                            <tr>
-                                <td colspan="7">
-                                    <div class="btn-group pull-right">
-                                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
-                                            {{val}}
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div *ngIf="dataList && dataList.count == 0">
-                        <div class="alert alert-warning alert-dismissable">
-                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                            <strong><i class="fa fa-warning"></i></strong> No se encontraron facturas.
+                                <thead>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th >Fecha</th>
+                                    <th>Referencia</th>
+                                    <th>Fecha de Transaccion</th>
+                                    <th>Tipo y Detalle</th>
+                                    <th>Debe</th>
+                                    <th>Haber</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngFor="let recharges of dataList.list">
+                                <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
+                                    <td>{{recharges.id}}</td>
+                                    <td>{{recharges.dateCreated| fecha | date:'dd-MM-yyyy, h:m'}}</td>
+                                    <td>{{recharges.reference}}</td>
+                                    <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
+                                        {{recharges.weight?recharges.weight+"Kg.":"&nbsp;"}}
+                                    </td>
+                                    <td>{{recharges.rechargeTypeId!=4?recharges.quantity:"&nbsp;"}}</td>
+                                    <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1):"&nbsp;"}}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="dataList && dataList.page.length > 1">
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="btn-group pull-right">
+                                            <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                                                {{val}}
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div *ngIf="dataList && dataList.count == 0">
+                            <div class="alert alert-warning alert-dismissable">
+                                <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                <strong><i class="fa fa-warning"></i></strong> No se encontraron facturas.
+                            </div>
                         </div>
                     </div>
-
+                    <div *ngIf="!myglobal.existsPermission('109')">
+                        <div class="btn-red padding-error">
+                            <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                            No tiene permisos para listar el libro
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
