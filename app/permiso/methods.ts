@@ -28,9 +28,11 @@ export class PermisoSave extends RestController{
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
         super(http,toastr);
+        this.save = new EventEmitter();
+    }
+    ngOnInit(){
         this.setEndpoint('/permissions/');
         this.initForm();
-        this.save = new EventEmitter();
     }
     initForm(){
         this.title = new Control("", Validators.compose([Validators.required]));
@@ -51,6 +53,7 @@ export class PermisoSave extends RestController{
     submitForm(){
         let successCallback= response => {
             this.save.emit(response.json());
+            this.toastr.success('Guardado con éxito','Notificación')
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
