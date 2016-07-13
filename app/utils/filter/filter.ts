@@ -136,6 +136,10 @@ export class Filter {
                 {'id':'ilike%','text': 'Comienza con(i)'},
                 {'id':'%ilike','text': 'Termina en(i)'}
             ],
+            'select': [//TODO: hacer un select para este parametro
+                {'id':'eq','text':'Igual que'},
+                {'id':'ne','text':'Diferente que'},
+            ],
         }
 }
 
