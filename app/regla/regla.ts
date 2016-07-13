@@ -6,15 +6,16 @@ import {ReglaSave} from "./methods";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Xeditable} from "../common/xeditable";
+import {Filter} from "../utils/filter/filter";
 
 @Component({
     selector: 'regla',
     templateUrl: 'app/regla/index.html',
     styleUrls: ['app/regla/style.css'],
-    directives : [ReglaSave,Xeditable]
+    directives : [ReglaSave,Xeditable,Filter]
 })
 export class Regla extends RestController{
-
+    public dataSelect:any={};
     public rules={
         'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
         'rule':{'type':'text','display':null,'title':'Regla','placeholder':'regla','search':true},
@@ -26,17 +27,23 @@ export class Regla extends RestController{
         this.setEndpoint('/rules/');
     }
     ngOnInit(){
-        this.validTokens();
-        this.loadData();
-    }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
+        if (this.myglobal.existsPermission('53')) {
+            this.loadData();
         }
     }
     assignRule(data){
         this.dataList.list.unshift(data);
     }
+    //Cargar Where del filter
+    public paramsFilter:any = {
+        title: "Filtrar Reglas",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+
+    loadWhere(where) {
+        this.where = where;
+        this.loadData();
+    }
+
 }
