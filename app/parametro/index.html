@@ -57,7 +57,8 @@
                                 </td>
 
                                 <td *ngIf="myglobal.existsPermission('101')">
-                                    <a data-toggle="modal" [attr.data-target]="'#myModal'+data.id" href="#">
+                                    <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                       (click)="dataSelect = data" href="#">
                                         <span class="fa fa-trash fa-lg btn"></span>
                                     </a>
                                 </td>
@@ -84,8 +85,8 @@
     <parametro-save idModal="saveParametro" (save)="assignParametro($event)"> </parametro-save>
 </div>
 
-<div *ngIf="dataList.list && myglobal.existsPermission('101')">
-    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog"
+<div *ngIf="myglobal.existsPermission('101')">
+    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -96,11 +97,11 @@
                             class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas eliminar el parametro <strong>{{data.key}}</strong> ?
+                    ¿ Estás seguro que deseas eliminar el parametro <strong>{{dataSelect.key}}</strong> ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onDelete($event,data.id)" data-dismiss="modal" type="button"
+                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
                             class="btn btn-red fa fa-trash">&nbsp;Eliminar
                     </button>
                 </div>
