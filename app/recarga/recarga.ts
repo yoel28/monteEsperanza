@@ -9,7 +9,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import moment from 'moment/moment';
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable, Datepicker} from "../common/xeditable";
 
 @Component({
     selector: 'recarga',
@@ -55,7 +55,7 @@ export class Recarga extends RestController{
 
 @Component({
     selector: 'ingresos',
-    directives:[RecargaFactura],
+    directives:[RecargaFactura,Datepicker],
     templateUrl: 'app/recarga/ingresos.html',
     styleUrls: ['app/recarga/style.css'],
 })
@@ -67,6 +67,26 @@ export class RecargaIngresos extends RestController{
     ngOnInit() {
         this.initForm();
     }
+
+    public formatDateFact = {
+        format: "dd/mm/yyyy",
+        startView: 2,
+        minViewMode: 0,
+        maxViewMode: 2,
+        language: "es",
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+        return: 'DD/MM/YYYY',
+    }
+
+    loadFechaFac(data, field) {
+        if (field == 1)
+            this.dateStart.updateValue(data)
+        else
+            this.dateEnd.updateValue(data)
+    }
+
     //consultar Facturas
     form: ControlGroup;
     dateStart:Control;
