@@ -10,12 +10,18 @@
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div *ngIf="vehicleTypes.count" class="form-group">
+                            <div *ngIf="vehicleTypes.count && myglobal.existsPermission('32')" class="form-group">
                                 <ng-select [allowClear]="true"
                                            [items]="items"
                                            (data)="refreshValue($event)"
                                            placeholder="Seleccione un tipo de vehículo">
                                 </ng-select>
+                            </div>
+                            <div *ngIf="!myglobal.existsPermission('32')" class="form-group">
+                                <div class="btn-red padding-error">
+                                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                                    No tiene permisos para listar los tipos de vehiculos
+                                </div>
                             </div>
                             <div class="form-group input-icon right">
                                 <i class="fa fa-list"></i>
@@ -41,12 +47,20 @@
                                     El campo contiene errores
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div *ngIf="myglobal.existsPermission('80')" class="form-group">
                                 <strong>Empresa: </strong>{{dataCompany || ""}}
-                                <button type="button" class="btn btn-box-tool text-blue" data-toggle="modal"
+                                <button  type="button" class="btn btn-box-tool text-blue" data-toggle="modal"
                                         data-target="#searchEmpresa">
                                     <i class="fa fa-search"></i>
                                 </button>
+                            </div>
+                            <div *ngIf="!myglobal.existsPermission('80')" class="form-group">
+                                <div *ngIf="!myglobal.existsPermission('109')">
+                                    <div class="btn-red padding-error">
+                                        <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                                        No tiene permisos para listar las empresas
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
