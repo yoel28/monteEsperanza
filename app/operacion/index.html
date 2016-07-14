@@ -26,6 +26,7 @@
                         <tr data-title="email">
                             <th>ID</th>
                             <th>Recarga</th>
+                            <th>Monto</th>
                             <th>Vehiculo</th>
                             <th>Peso Entrada</th>
                             <th>Peso Salida</th>
@@ -35,7 +36,8 @@
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
                             <td>{{data.id}}</td>
-                            <td> Ref: {{data.rechargeReference || "N/A"}}, {{data.rechargeQuantity || "N/A"}}$</td>
+                            <td> Ref: {{data.rechargeReference || "N/A"}}</td>
+                            <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "N/A"}}</td>
                             <td>{{data.vehiclePlate}}</td>
                             <td>
                                 <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data"
