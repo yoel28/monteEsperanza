@@ -5,6 +5,8 @@ import {Http} from "@angular/http";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {Search} from "../utils/search/search";
 import {Xfile,Xcropit} from "../common/xeditable";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {globalService} from "../common/globalService";
 
 
 @Component({
@@ -34,12 +36,15 @@ export class VehiculoSave extends RestController{
     dataCompany:string;
 
 
-    constructor(public http:Http,public _formBuilder: FormBuilder) {
+    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager, public myglobal:globalService) {
         super(http);
-        this.initForm();
         this.save = new EventEmitter();
         this.setEndpoint('/vehicles/');
-        this.loadDataVehicleTypes();
+    }
+    ngOnInit(){
+        this.initForm();
+        if(this.myglobal.existsPermission('32'))
+            this.loadDataVehicleTypes();
     }
     initForm(){
 
@@ -63,7 +68,7 @@ export class VehiculoSave extends RestController{
     submitForm(){
         let successCallback= response => {
             this.save.emit(response.json());
-            
+            this.toastr.success('Guardado con éxito','Notificación')
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
