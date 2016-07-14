@@ -32,6 +32,17 @@ export class Operacion extends RestController{
         'id': {'type':'number','disabled':true,'display':false,'title':'','search': true,'placeholder': 'Identificador',},
         'weightIn':{'type':'number','display':null,'title':'Peso de Entrada','mode':'inline','search': true,'placeholder': 'Peso de entrada','double':true},
         'weightOut':{'type':'number','display':null,'title':'Peso de Salida','mode':'inline','search': true,'placeholder': 'Peso de salida','double':true},
+        'vehicle':{
+            'type':'text',
+            'search': true,
+            'placeholder':'ingrese la placa del vehículo',
+            'title':'Buscar vehículo',
+            'label':{'title':"Placa: ",'detail':"Empresa: "},
+            'endpoint':"/search/vehicles/",
+            'where':'',
+            'icon':'fa fa-truck',
+            'object':true
+        },
     };
 
     assignOperacion(data){
