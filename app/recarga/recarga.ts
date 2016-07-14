@@ -132,6 +132,7 @@ export class RecargaIngresos extends RestController{
 @Component({
     selector: 'libro',
     pipes: [Fecha],
+    directives:[Datepicker],
     templateUrl: 'app/recarga/libro.html',
     styleUrls: ['app/recarga/style.css'],
 })
@@ -144,6 +145,25 @@ export class RecargaLibro extends RestController{
     ngOnInit() {
         this.initForm();
     }
+    public formatDateFact = {
+        format: "dd/mm/yyyy",
+        startView: 2,
+        minViewMode: 0,
+        maxViewMode: 2,
+        language: "es",
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+        return: 'DD/MM/YYYY',
+    }
+
+    loadFechaFac(data, field) {
+        if (field == 1)
+            this.dateStart.updateValue(data)
+        else
+            this.dateEnd.updateValue(data)
+    }
+
     initForm(){
         this.dateStart = new Control("", Validators.compose([Validators.required]));
         this.dateEnd = new Control("");
