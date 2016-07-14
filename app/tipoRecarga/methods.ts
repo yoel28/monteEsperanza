@@ -48,7 +48,7 @@ export class TipoRecargaSave extends RestController{
         'fa fa-cc-amex','fa fa-cc-mastercard','fa fa-credit-card',
         'fa fa-cc-diners-club','fa fa-cc-paypal','fa fa-google-wallet',
         'fa fa-cc-discover','fa fa-cc-stripe','fa fa-paypal',
-        'fa fa-cc-jcb', 'fa fa-cc-visa','fa fa-money'
+        'fa fa-cc-jcb', 'fa fa-cc-visa','fa fa-money','fa fa-refresh'
     ];
     initSelect(){
         this.icons.forEach(obj=>{
