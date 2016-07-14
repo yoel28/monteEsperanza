@@ -3,7 +3,7 @@
         <div class="">
             <div class="box">
                 <div class="box-header with-border">
-
+                    <h3 class="box-title">Usuarios</h3>
                     <button *ngIf="myglobal.existsPermission('58')" type="button" class="btn btn-primary btn-green" data-toggle="modal" data-target="#saveUser">
                         <i class="fa fa-plus"></i> Nuevo
                     </button>
@@ -31,7 +31,8 @@
                                         <div style="margin-bottom: 15px" class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                                <div class="btn-group dropdown pull-right">
+                                                <div *ngIf="myglobal.existsPermission('62') || myglobal.existsPermission('61') || myglobal.existsPermission('59')"
+                                                        class="btn-group dropdown pull-right">
                                                     <button type="button" data-toggle="dropdown" class="btn btn-box-tool dropdown-toggle" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-gears fa-lg"></i>
                                                     </button>
@@ -49,7 +50,8 @@
                                                             </a>
                                                         </li>
                                                         <li *ngIf="myglobal.existsPermission('59')">
-                                                            <a data-toggle="modal" [attr.data-target]="'#myModal'+user.id"  href="#">
+                                                            <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                                               (click)="dataSelect = user" href="#">
                                                                 <span class="fa fa-trash"></span>
                                                                 Eliminar
                                                             </a>
@@ -65,7 +67,7 @@
                                                     <div [imageSrc]="user.image || '/assets/img/user-guest.png'" x-cropit
                                                          (saveImagen)="changeImage($event,user.id)">
                                                         <div class="cropit-preview center-block"></div>
-                                                        <div class="col-lg-12 margenes" [hidden]="!myglobal.existsPermission('67')" >
+                                                        <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('67') && myglobal.existsPermission('60'))" >
                                                             <div class="col-lg-6">
                                                                 <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                 <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
@@ -74,7 +76,7 @@
                                                                 <input type="range" class="cropit-image-zoom-input"/>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12" [hidden]="!myglobal.existsPermission('67')">
+                                                        <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('67') && myglobal.existsPermission('60'))">
                                                             <div class="col-lg-6">
                                                                 <input x-file type="file" class="cropit-image-input"/>
                                                             </div>
@@ -105,9 +107,9 @@
                                                     <a x-editable [disabled]="!myglobal.existsPermission('60')" [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="email" ></a>
                                                 </p>
                                                 <p><strong>Empresa:</strong> {{user.companyName}}
-                                                    <a *ngIf="myglobal.existsPermission('63')" (click)="userSelect = user.id" class="btn btn-box-tools text-blue fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></a>
-                                                    <a *ngIf="myglobal.existsPermission('68')" (click)="userSelect = user.id" class="btn btn-box-tools text-green fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></a>
-                                                    <a *ngIf="user.companyId && myglobal.existsPermission('65')" (click)="releaseCompany(user)" class="btn btn-box-tools text-red fa fa-minus"></a>
+                                                    <a *ngIf="myglobal.existsPermission('63') && myglobal.existsPermission('60') && myglobal.existsPermission('80')" (click)="dataSelect = user" class="btn btn-box-tools text-blue fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></a>
+                                                    <a *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63') " (click)="dataSelect = user" class="btn btn-box-tools text-green fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></a>
+                                                    <a *ngIf="user.companyId && myglobal.existsPermission('65') && myglobal.existsPermission('60')" (click)="releaseCompany(user)" class="btn btn-box-tools text-red fa fa-minus"></a>
                                                 </p>
                                                 <p>
                                                     <button *ngIf="myglobal.existsPermission('62')"  (click)="onPatch('accountLocked',user)" class="btn btn-sm"
@@ -123,9 +125,10 @@
                                                 <p *ngIf="dataRoles && dataRoles.count>0">
                                                     <strong class="col-lg-2">Rol:</strong>
                                                     <span class="col-lg-10">
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('64')" [endpoint]="'/users/'+user.id+'/roles'" [function]="onEditableRole" [data]="user" [rules]="rules" field="roles" ></a>
+                                                        <a x-editable [disabled]="!(myglobal.existsPermission('64') && myglobal.existsPermission('60'))" [endpoint]="'/users/'+user.id+'/roles'" [function]="onEditableRole" [data]="user" [rules]="rules" field="roles" ></a>
                                                     </span>
                                                 </p>
+
                                             </div>
                                         </div>
                                         <div class="row text-center divider">
@@ -151,6 +154,12 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="!myglobal.existsPermission('57')" class="box-body">
+                    <div class="btn-red padding-error">
+                        <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                        No tiene permiso para listar los usuarios
+                    </div>
+                </div>
                 <!-- ./box-body -->
                 <div class="box-footer with-border">
 
@@ -162,7 +171,7 @@
 </div>
 
 <div *ngIf="dataList.list && myglobal.existsPermission('59')">
-    <div *ngFor="let user of dataList.list" class="modal fade" [attr.id]="'myModal'+user.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header btn-red text-center">
@@ -170,11 +179,11 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas eliminar a <strong>{{user.username}}</strong> ?
+                    ¿ Estás seguro que deseas eliminar a <strong>{{dataSelect.username}}</strong> ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onDelete($event,user.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
+                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
                 </div>
             </div>
         </div>
@@ -185,11 +194,11 @@
     <user-save idModal="saveUser" (save)="assignUser($event)"> </user-save>
 </div>
 
-<div *ngIf="myglobal.existsPermission('68')">
+<div *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63')">
     <empresa-save idModal="newEmpresa" (save)="assignCompany($event)"> </empresa-save>
 </div>
 
-<div *ngIf="myglobal.existsPermission('63')">
+<div *ngIf="myglobal.existsPermission('63') && myglobal.existsPermission('60') && myglobal.existsPermission('80')">
     <search  [params]="searchEmpresa" (result)="assignCompany($event)"></search>
 </div>
 
