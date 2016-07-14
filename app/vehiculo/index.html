@@ -3,12 +3,12 @@
         <div class="">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Empresas</h3>
+                    <h3 class="box-title">Veh&iacute;culo</h3>
                     <button *ngIf="myglobal.existsPermission('70')" type="button" class="btn btn-primary btn-green" data-toggle="modal" data-target="#saveVehiculo">
                         <i class="fa fa-plus"></i>&nbsp;Nuevo
                     </button>
 
-                    <button *ngIf="myglobal.existsPermission('134')" type="button" class="btn btn-primary btn-blue" data-toggle="modal" [attr.data-target]="'#'+params.idModal">
+                    <button *ngIf="myglobal.existsPermission('134')" type="button" class="btn btn-primary btn-blue" data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                         <i class="fa fa-filter"></i>&nbsp;Filtrar
                     </button>
 
@@ -220,7 +220,7 @@
     <vehiculo-save idModal="saveVehiculo" (save)="assignVehiculo($event)"></vehiculo-save>
 </div>
 <div *ngIf="myglobal.existsPermission('134')">
-    <filter  [rules]="rules" [params]="params" (where)="loadWhere($event)"></filter>
+    <filter  [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
 </div>
 <div *ngIf="dataList.list && myglobal.existsPermission('71')">
     <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
