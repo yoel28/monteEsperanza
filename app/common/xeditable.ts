@@ -179,6 +179,11 @@ export class Datepicker {
             forceParse: that.format.forceParse,
             autoclose: that.format.autoclose,
             todayHighlight: that.format.todayHighlight,
+            beforeShowYear: function (date){
+                if (date.getFullYear() < 2016) {
+                    return false;
+                }
+            }
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
             if(that.format.return)
