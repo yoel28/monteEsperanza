@@ -48,6 +48,24 @@ export class TipoRecarga extends RestController{
             'mode': 'inline',
             'search': true
         },
+        'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
+            'source': [
+                {'value':'fa fa-cc-amex','text':'American express'},
+                {'value':'fa fa-cc-mastercard','text':'Master card'},
+                {'value':'fa fa-credit-card','text':'Credit card'},
+                {'value':'fa fa-cc-diners-club','text':'Diners club'},
+                {'value':'fa fa-cc-paypal','text':'Paypal'},
+                {'value':'fa fa-google-wallet','text':'Google wallet'},
+                {'value':'fa fa-cc-discover','text':'Discover'},
+                {'value':'fa fa-cc-stripe','text':'Stripe'},
+                {'value':'fa fa-paypal','text':'Paypal'},
+                {'value':'fa fa-cc-jcb','text':'Jcb'},
+                {'value':'fa fa-cc-visa','text':'Visa'},
+                {'value':'fa fa-money','text':'Money'},
+                {'value':'fa fa-refresh','text':'Transfer'}
+            ]
+        },
+
     }
     ngOnInit() {
         if(this.myglobal.existsPermission('116'))
