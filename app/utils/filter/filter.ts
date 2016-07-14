@@ -2,12 +2,13 @@ import {Component, EventEmitter} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import forEach = require("core-js/fn/array/for-each");
 import {SMDropdown} from "../../common/xeditable";
+import {Search} from "../search/search";
 
 @Component({
     selector: 'filter',
     templateUrl: 'app/utils/filter/index.html',
     styleUrls: ['app/utils/filter/style.css'],
-    directives:[SMDropdown],
+    directives:[SMDropdown,Search],
     inputs: ['rules', 'params'],
     outputs: ['where'],
 })
@@ -42,13 +43,41 @@ export class Filter {
 
                 this.data[key+'Cond'] = [];
                 this.data[key+'Cond'] = new Control("eq");
-                //(<Control>this.form.controls[key+'Cond']).updateValue('eg');
+                
+                if(this.rules[key].object){
+                    this.search[key] = {}
+
+                    this.search[key]={
+                        'title':this.rules[key].title||'Sin titulo',
+                        'idModal':"search"+key,
+                        'endpointForm':this.rules[key].endpoint,
+                        'placeholderForm':this.rules[key].placeholder,
+                        'labelForm':{'name':this.rules[key].label.title,'detail':this.rules[key].label.detail},
+                        'where':"&where="+encodeURI("["+this.rules[key].where+"]")
+                    };
+                }
             }
         });
         this.form = this._formBuilder.group(this.data);
         this.keys = Object.keys(this.rules);
     }
-
+    public search:any={};
+    assignSearch(event){
+        console.log("llego"+event);
+    }
+    
+    // public search=
+    //
+    //     {
+    //         title:"Vehiculo",
+    //         idModal:"searchVehicle",
+    //         endpointForm:"/search/vehicles/",
+    //         placeholderForm:"Ingrese la placa del vehiculo",
+    //         labelForm:{'name':"Placa: ",'detail':"Empresa: "},
+    //         where:"&where="+encodeURI("[['op':'isNull','field':'tag.id']]")
+    //     }
+    
+    
     submitForm(event) {
         event.preventDefault();
         let dataWhere="";
