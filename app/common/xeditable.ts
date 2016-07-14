@@ -181,7 +181,10 @@ export class Datepicker {
             todayHighlight: that.format.todayHighlight,
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
-            that.fecha.emit(moment(ev.date).format(that.format.return));
+            if(that.format.return)
+                that.fecha.emit(moment(ev.date).format(that.format.return));
+            else
+                that.fecha.emit(ev.date);
         })
         jQuery('#formato').click(function (ev) {
             jQuery(that.el.nativeElement).datepicker({
