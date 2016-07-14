@@ -47,7 +47,9 @@ export class Operacion extends RestController{
 
     loadWhere(where) {
         this.where = where;
-        this.loadData();
+        if (this.myglobal.existsPermission('93')) {
+            this.loadData();
+        }
     }
     
 }
