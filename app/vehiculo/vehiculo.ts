@@ -13,6 +13,7 @@ import {FormBuilder} from "@angular/common";
 import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
+import {Filter} from "../utils/filter/filter";
 
 declare var jQuery:any;
 @Component({
@@ -20,7 +21,7 @@ declare var jQuery:any;
     pipes:[Divide],
     templateUrl: 'app/vehiculo/index.html',
     styleUrls: ['app/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter],
 })
 export class Vehiculo extends RestController{
 
@@ -28,11 +29,11 @@ export class Vehiculo extends RestController{
     modal:Search;
 
     public rules={
-        'id': {'type':'text','disabled':true,'display':false,'title':'' },
-        'plate':{'type':'text','display':null,'title':'Placa del vehiculo' },
-        'weight':{'type':'number','display':null,'title':'Peso del vehiculo' },
-        'minBalance':{'disabled':false,'display':null,'title':'Balance minimo' },
-        'balance':{'type':'number','display':null,'title':'B' },
+        'id': {'type':'number','disabled':true,'display':false,'title':'','search': true,'placeholder': 'Identificador'},
+        'plate':{'type':'text','display':null,'title':'Placa del vehiculo','search': true,'placeholder': 'Placa'},
+        'weight':{'type':'number','display':null,'title':'Peso del vehiculo','search': true,'placeholder': 'Peso'},
+        'minBalance':{'type':'number','display':null,'title':'Balance minimo','search': true,'placeholder': 'Balance minimo'},
+        'balance':{'type':'number','display':null,'title':'Balance','search': true,'placeholder': 'Balance'},
     }
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder,public myglobal:globalService) {
@@ -40,25 +41,32 @@ export class Vehiculo extends RestController{
         this.setEndpoint('/vehicles/');
     }
     ngOnInit(){
-        this.max = 12;
-        this.validTokens();
-        this.loadData();
-    }
-
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
+        if (this.myglobal.existsPermission('69')) {
+            this.max = 12;
+            this.loadData();
         }
     }
+    //parametros del filtro
+    public paramsFilter:any = {
+        title: "Filtrar vehiculos",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+
+    loadWhere(where) {
+        this.where = where;
+        if (this.myglobal.existsPermission('69')) {
+            this.loadData();
+        }
+    }
+
     assignVehiculo(data){
         this.dataList.list.unshift(data);
         this.dataList.list.pop();
     }
 
     //Buscar tag sin vehiculo ---------------------------------------------
-    public dataSelect:string;
+    public dataSelect:any={};
 
     public searchTag={
         title:"Tag",
@@ -66,30 +74,32 @@ export class Vehiculo extends RestController{
         endpointForm:"/search/rfids/",
         placeholderForm:"Seleccione un Tag",
         labelForm:{name:"Numero: ",detail:"Detalle: "},
-        where:"&where=[['op':'isNull','field':'vehicle.id']]"
+        where:"&where="+encodeURI("[['op':'isNull','field':'vehicle.id']]")
     }
     //asignar tag a vehiculo
     assignTag(data){
         let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
             this.dataList.list[index].tagRFID = response.json().number;
             this.dataList.list[index].tagId = response.json().id;
             this.modal.dataList=[];
         }
-        let body=Json.stringify({'vehicle':this.dataSelect})
+        let body=Json.stringify({'vehicle':this.dataSelect.id})
         this.httputils.doPut('/rfids/'+data.id,body,successCallBack,this.error)
     }
     //liberar tag
     releaseTag(data){
         let successCallback= response => {
             data.tagRFID=null;
+            this.toastr.success('Tag liberado','Notificación')
+
         };
         let body = JSON.stringify({'vehicle':null})
         this.httputils.doPut('/rfids/'+data.tagId,body,successCallback,this.error)
     }
     //asignar tag nuevo
     assignTagNuevo(data){
-        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
         if(this.dataList.list[index].tagRFID)
         {
             let successCallback= response => {
@@ -114,17 +124,17 @@ export class Vehiculo extends RestController{
     //asignar tag a vehiculo
     assignTipoVehiculo(data){
         let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
             this.dataList.list[index] = response.json();
             this.modal.dataList=[];
         }
         let body=Json.stringify({'vehicleType':data.id})
-        this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
+        this.httputils.doPut('/vehicles/'+this.dataSelect.id,body,successCallBack,this.error)
     }
 
     //Buscar Empresa ---------------------------------------------
     public searchEmpresa={
-        title:"Empresa Nueva",
+        title:"Empresa nueva",
         idModal:"searchEmpresaNueva",
         endpointForm:"/search/companies/",
         placeholderForm:"Ingrese el RUC de la empresa",
@@ -133,12 +143,12 @@ export class Vehiculo extends RestController{
     //asignar empresa
     assignEmpresa(data){
         let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect);
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
             this.dataList.list[index] = response.json();
             this.modal.dataList=[];
         }
         let body=Json.stringify({'company':data.id})
-        this.httputils.doPut('/vehicles/'+this.dataSelect,body,successCallBack,this.error)
+        this.httputils.doPut('/vehicles/'+this.dataSelect.id,body,successCallBack,this.error)
     }
 
     //cambiar imagen
