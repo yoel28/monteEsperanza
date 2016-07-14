@@ -19,6 +19,11 @@
                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
                                                 El campo contiene errores
                                             </div>
+                                            <button *ngIf="rules[key].object"
+                                                    type="button" class="btn btn-box-tool fa fa-search text-blue"
+                                                    data-toggle="modal"
+                                                    [attr.data-target]="'#search'+key">
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -27,6 +32,9 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div *ngIf="rules[key].object">
+                                <search  [params]="search[key]" (result)="assignSearch($event)"></search>
                             </div>
                         </div>
                     </div>
