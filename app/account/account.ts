@@ -90,7 +90,8 @@ export class AccountActivate extends RestController {
         }
         this.httputils.doGet(this.endpoint, successCallback, errorCallback)
     }
-    onLogin(){
+    onLogin(event){
+        event.preventDefault();
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }
@@ -126,8 +127,8 @@ export class AccountRecover extends RestController {
         }
         this.httputils.doGet(this.endpoint+this.username.value,successCallback,this.error,true);
     }
-    onLogin(){
-        //event.preventDefault(); 
+    onLogin(event){
+        event.preventDefault();
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }
@@ -154,8 +155,8 @@ export class AccountRecoverPassword extends RestController {
             password: this.password,
         });
     }
-    recoverPassword(){
-        //event.preventDefault(); 
+    recoverPassword(event){
+        event.preventDefault();
         let body = JSON.stringify({'password':this.password.value});
         let successCallback= response => {
             this.toastr.success('Contraseña Actualizada','Solicitud Procesada.');
@@ -165,8 +166,8 @@ export class AccountRecoverPassword extends RestController {
         this.httputils.doPut(this.endpoint,body,successCallback,this.error)
     }
 
-    onLogin(){
-        //event.preventDefault(); 
+    onLogin(event){
+        event.preventDefault();
         let link = ['AccountLogin', {}];
         this.router.navigate(link);
     }

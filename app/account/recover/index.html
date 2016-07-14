@@ -21,7 +21,7 @@
                                     Por favor ingrese un Email valido
                                 </div>
                             </div>
-                            <button style="float:left;" class="btn btn-success btn-blue pull-left" (click)="onLogin()">
+                            <button style="float:left;" class="btn btn-success btn-blue pull-left" (click)="onLogin($event)">
                                 <i class="fa fa-chevron-circle-left"></i> Inicio
                             </button>
                             <button id="cntrlsubmit" type="submit" [disabled]="!form.valid" class="btn  btn-success pull-right">
