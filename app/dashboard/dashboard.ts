@@ -234,29 +234,25 @@ export class Dashboard extends RestController {
         forceParse: true,
         autoclose: true,
         todayHighlight: true,
-        return: 'DD/MM/YYYY',
     }
 
     loadFacturas(event) {
         event.preventDefault();
-
+        let final=this.dateEnd.value;
         if (!this.dateEnd.value) {
-            this.dateEnd.updateValue(moment(this.dateStart.value.toString()).format('YYYY-MM-DD'));
-            this.dateEnd.updateValue(moment(this.dateEnd.value).add(1, 'days'));
+            final = (moment(this.dateStart.value).add(1, 'days'));
         }
 
         this.paramsFactura = {
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
-            'dateEnd': moment(this.dateEnd.value.toString()).format('DD-MM-YYYY'),
+            'dateEnd': moment(final.toString()).format('DD-MM-YYYY'),
         };
         if (this.recargaFactura) {
             this.recargaFactura.params = this.paramsFactura;
             if(this.myglobal.existsPermission('109'))
                 this.recargaFactura.cargar();
         }
-
         this.consultar = true;
-        this.dateEnd.updateValue("");
     }
 
     loadFechaPlot(data) {
