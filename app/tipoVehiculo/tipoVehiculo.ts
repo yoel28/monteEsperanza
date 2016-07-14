@@ -6,12 +6,13 @@ import {TipoVehiculoSave} from "./methods";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Xeditable} from "../common/xeditable";
+import {Filter} from "../utils/filter/filter";
 
 @Component({
     selector: 'tipoVehiculo',
     templateUrl: 'app/tipoVehiculo/index.html',
     styleUrls: ['app/tipoVehiculo/style.css'],
-    directives: [TipoVehiculoSave,Xeditable],
+    directives: [TipoVehiculoSave,Xeditable,Filter],
 })
 export class TipoVehiculo extends RestController{
 
@@ -28,23 +29,29 @@ export class TipoVehiculo extends RestController{
             ]
         },
     }
-    
+    public dataSelect:any={};
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/type/vehicles/');
     }
     ngOnInit(){
-        this.validTokens();
-        this.loadData();
-    }
-    validTokens(){
-        if(!localStorage.getItem('bearer'))
-        {
-            let link = ['AccountLogin', {}];
-            this.router.navigate(link);
+        if (this.myglobal.existsPermission('32')) {
+            this.loadData();
         }
     }
     assignTipoEmpresa(data){
         this.dataList.list.unshift(data);
+    }
+    public paramsFilter:any = {
+        title: "Filtrar tipos de vehiculos",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+
+    loadWhere(where) {
+        this.where = where;
+        if (this.myglobal.existsPermission('32')) {
+            this.loadData();
+        }
     }
 }
