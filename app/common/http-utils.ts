@@ -87,16 +87,18 @@ export class HttpUtils {
     }
 
     onSave(endpoint:string, body,list, errorCallback = null,isEndpointAbsolute = false) {
+        let that = this;
         let successCallback= response => {
             if(list != null)
                 list.unshift( response.json())
-            if(this.toastr)
-                this.toastr.success('Guardado con éxito','Notificación')
+            if(that.toastr)
+                that.toastr.success('Guardado con éxito','Notificación')
         }
         return this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 
     onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false) {
+        let that = this;
         let successCallback= response => {
             Object.assign(list, response.json());
             if(list.count)
@@ -107,29 +109,31 @@ export class HttpUtils {
                     list['page'].push(i);
                 }
             }
-            if(this.toastr)
-                this.toastr.success('Carga realizada con éxito','Notificación')
+            if(that.toastr)
+                that.toastr.success('Carga realizada con éxito','Notificación')
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
 
     onDelete(endpoint:string,id, list ,errorCallback = null,isEndpointAbsolute = false) {
+        let that = this;
         let successCallback= response => {
             if(list != null){
                 let index = list.findIndex(obj => obj.id == id);
                 if(index!=-1)
                     list.splice(index,1);
             }
-            if(this.toastr)
-                this.toastr.success('Borrado con éxito','Notificación')
+            if(that.toastr)
+                that.toastr.success('Borrado con éxito','Notificación')
         }
         this.doDelete(endpoint,successCallback,errorCallback,isEndpointAbsolute);
     }
     onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false){
+        let that = this;
         let successCallback= response => {
             Object.assign(data, response.json());
-            if(this.toastr)
-                this.toastr.success('Actualizado con éxito','Notificación')
+            if(that.toastr)
+                that.toastr.success('Actualizado con éxito','Notificación')
         }
        return this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
