@@ -5,11 +5,19 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Tipo de veh&iacute;culo</h3>
 
-                    <div *ngIf="myglobal.existsPermission('30')"  class="box-tools pull-right">
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saveTipoVehiculo">
-                            Agregar
+                    <div class="pull-right">
+                        <button *ngIf="myglobal.existsPermission('30')"
+                                type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#saveTipoVehiculo">
+                            <i class="fa fa-plus"></i>&nbsp;Agregar
+                        </button>
+                        <button *ngIf="myglobal.existsPermission('133')"
+                                type="button" class="btn btn-blue "
+                                data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
+                            <i class="fa fa-filter"></i>&nbsp;Filtrar
                         </button>
                     </div>
+
                 </div>
                 <!-- /.box-header -->
                 <div *ngIf="myglobal.existsPermission('32')" class="box-body" >
@@ -21,6 +29,7 @@
                                 <th>T&iacute;tulo</th>
                                 <th>Detalle </th>
                                 <th>Icono </th>
+                                <th *ngIf="myglobal.existsPermission('132')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('34')">Acciones</th>
                             </tr>
                             </thead>
@@ -37,8 +46,15 @@
                                     <i class="{{data.icon}}"></i>
                                     <a x-editable [disabled]="!myglobal.existsPermission('35')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="icon" ></a>
                                 </td>
+                                <td *ngIf="myglobal.existsPermission('132')">
+                                    <button (click)="onLock('enabled',data)" class="btn btn-sm"
+                                            [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
+                                        {{data.enabled?"Habilitado":"Bloqueado"}}
+                                    </button>
+                                </td>
                                 <td *ngIf="myglobal.existsPermission('34')">
-                                    <a data-toggle="modal" [attr.data-target]="'#myModal'+data.id"  href="#">
+                                    <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                       (click)="dataSelect = data" href="#">
                                         <i class="fa fa-trash fa-lg btn"></i>
                                     </a>
                                 </td>
@@ -54,6 +70,12 @@
                         </button>
                     </div>
                 </div>
+                <div *ngIf="!myglobal.existsPermission('32')" class="box-body" >
+                    <div class="btn-red padding-error">
+                        <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                        No tiene permisos para listar los tipos de veh&iacute;culos
+                    </div>
+                </div>
             </div>
             <!-- /.box -->
         </div>
@@ -63,9 +85,12 @@
 <div *ngIf="myglobal.existsPermission('30')">
     <tipoVehiculo-save idModal="saveTipoVehiculo" (save)="assignTipoEmpresa($event)"> </tipoVehiculo-save>
 </div>
+<div *ngIf="myglobal.existsPermission('133')">
+    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+</div>
 
 <div *ngIf="dataList.list && myglobal.existsPermission('34')">
-    <div *ngFor="let data of dataList.list" class="modal fade" [attr.id]="'myModal'+data.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header btn-red text-center">
@@ -73,11 +98,11 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas eliminar a <strong>{{data.title}}</strong> ({{data.detail}})?
+                    ¿ Estás seguro que deseas eliminar a <strong>{{dataSelect.title}}</strong> ({{dataSelect.detail}})?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onDelete($event,data.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
+                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal"  type="button" class="btn btn-red fa fa-trash">&nbsp;Eliminar</button>
                 </div>
             </div>
         </div>
