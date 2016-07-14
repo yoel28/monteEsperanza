@@ -251,7 +251,8 @@ export class Dashboard extends RestController {
         };
         if (this.recargaFactura) {
             this.recargaFactura.params = this.paramsFactura;
-            this.recargaFactura.cargar();
+            if(this.myglobal.existsPermission('109'))
+                this.recargaFactura.cargar();
         }
 
         this.consultar = true;
