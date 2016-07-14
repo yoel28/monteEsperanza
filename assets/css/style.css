@@ -46,3 +46,6 @@
 .input-icon i > .ng-invalid {
   color: #d9534f;
 }
+.dropdown-menu {
+  z-index: 10000 !important;
+}
