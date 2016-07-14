@@ -7,12 +7,13 @@ import {Fecha} from "../utils/pipe";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search";
 import {globalService} from "../common/globalService";
+import {Datepicker} from "../common/xeditable";
 
 @Component({
     selector: 'recarga-save',
     templateUrl: 'app/recarga/save.html',
     styleUrls: ['app/recarga/style.css'],
-    directives: [SELECT_DIRECTIVES,Search],
+    directives: [SELECT_DIRECTIVES,Search,Datepicker],
     outputs:['save'],
 })
 export class RecargaSave extends RestController{
@@ -76,6 +77,20 @@ export class RecargaSave extends RestController{
             let body = JSON.stringify(this.form.value);
             this.httputils.doPost(this.endpoint, body, successCallback, this.error);
         }
+    }
+    public formatDateFact = {
+        format: "dd/mm/yyyy",
+        startView: 2,
+        minViewMode: 0,
+        maxViewMode: 2,
+        language: "es",
+        forceParse: false,
+        autoclose: true,
+        todayHighlight: true,
+    }
+
+    loadFechaFac(data) {
+        this.referenceDate.updateValue(data)
     }
 
     //asignar vehiculo----------------------------------
