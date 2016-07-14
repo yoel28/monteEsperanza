@@ -13,10 +13,11 @@
                         <div class="form-group input-icon right col-lg-6">
                             <div class="row">
                                 Inicio
-                                <i class="fa fa-calendar"></i>
-                                <input ngControl="dateStart" class="form-control" [(ngModel)]="dateStart.value"  #dateStart="ngForm" placeholder="Inicio" type="date">
-                                <div [hidden]="dateStart.valid || dateStart.pristine" class="alert alert-danger">
-                                    Seleccione una fecha de incio
+                                <div class="input-group date">
+                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,1)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
                             </div>
 
@@ -24,10 +25,11 @@
                         <div class="form-group input-icon right col-lg-6">
                             <div class="row">
                                 Fin
-                                <i class="fa fa-calendar"></i>
-                                <input ngControl="dateEnd" class="form-control" [(ngModel)]="dateEnd.value"  #dateEnd="ngForm" placeholder="Fin" type="date">
-                                <div [hidden]="dateEnd.valid || dateEnd.pristine" class="alert alert-danger">
-                                    Seleccione una fecha fin
+                                <div class="input-group date">
+                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo final" type="text" class="form-control">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
