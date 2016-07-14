@@ -20,7 +20,7 @@ import {Divide} from "../utils/pipe";
 })
 export class User extends RestController {
 
-    public userSelect:string;
+    public dataSelect:any={};
 
     constructor(public router:Router, public http:Http, public myglobal:globalService, public toastr:ToastsManager) {
         super(http, toastr);
@@ -32,7 +32,7 @@ export class User extends RestController {
             this.max = 6;
             this.loadData();
         }
-        if (this.myglobal.existsPermission('64'))
+        if (this.myglobal.existsPermission('48'))
             this.loadRoles();
     }
 
@@ -104,7 +104,7 @@ export class User extends RestController {
     }
 
     assignCompany(data) {
-        let index = this.dataList.list.findIndex(obj => obj.id == this.userSelect);
+        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
         this.onPatch('company', this.dataList.list[index], data.id);
     }
 
@@ -136,7 +136,9 @@ export class User extends RestController {
     //Cargar Where del filter
     loadWhere(where) {
         this.where = where;
-        this.loadData();
+        if (this.myglobal.existsPermission('57')) {
+            this.loadData();
+        }
     }
 
     public image:any = [];
