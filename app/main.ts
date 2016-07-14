@@ -9,7 +9,7 @@ import { ToastsManager,ToastOptions } from 'ng2-toastr/ng2-toastr';
 import 'semantic';
 
 let options = {
-    toastLife: 7000,
+    toastLife: 4000,
 };
 
 enableProdMode();
