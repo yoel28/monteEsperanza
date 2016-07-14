@@ -44,6 +44,7 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
   { path: '/account/active/:id/:token',  name: 'AccountActivate',  component: AccountActivate },
   { path: '/account/recover',  name: 'AccountRecover',  component: AccountRecover },
   { path: '/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
+
   { path: '/users',   name: 'User', component: User },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
@@ -112,9 +113,9 @@ export class AppComponent {
     );
   }
 
-  public urlPublic=['account/login'];
+  public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
   public isPublic(){
-    let data = this.router.currentInstruction.component.urlPath;
+    let data = this.router.currentInstruction.component.routeName;
     let index = this.urlPublic.findIndex(obj=>obj == data);
     if(index>-1)
         return true;
