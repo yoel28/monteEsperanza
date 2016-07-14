@@ -70,7 +70,16 @@ export class Dashboard extends RestController {
 
     dataAreaPlot1 = {
         chart: {
-            type: 'area',
+            renderTo: 'chartcontainer1',
+            type: 'line',
+            // backgroundColor: {
+            //     linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+            //     stops: [
+            //         [0, 'rgb(255, 255, 255)'],
+            //         [1, 'rgb(200, 200, 255)']
+            //     ]
+            // },
+
         },
         xAxis: {
             categories: [],
@@ -79,6 +88,9 @@ export class Dashboard extends RestController {
             title: {
                 text: "Cantidad",
             },
+        },
+        tooltip: {
+            pointFormat: '{series.name} producido <b>{point.y:,.0f}</b>$'
         },
         credits: {
             enabled: false
@@ -88,7 +100,15 @@ export class Dashboard extends RestController {
     };
     dataAreaPlot2 = {
         chart: {
+            renderTo: 'chartcontainer2',
             type: 'area',
+            // backgroundColor: {
+            //     linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+            //     stops: [
+            //         [0, 'rgb(255, 255, 255)'],
+            //         [1, 'rgb(200, 200, 255)']
+            //     ]
+            // },
         },
         xAxis: {
             categories: [],
@@ -97,6 +117,9 @@ export class Dashboard extends RestController {
             title: {
                 text: "Cantidad",
             },
+        },
+        tooltip: {
+            pointFormat: 'Cantidad de {series.name} <br/> que ingresaron <b>{point.y:,.0f}</b>'
         },
         credits: {
             enabled: false
@@ -106,7 +129,15 @@ export class Dashboard extends RestController {
     };
     dataAreaPlot3 = {
         chart: {
+            renderTo: 'chartcontainer3',
             type: 'area',
+            // backgroundColor: {
+            //     linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+            //     stops: [
+            //         [0, 'rgb(255, 255, 255)'],
+            //         [1, 'rgb(200, 200, 255)']
+            //     ]
+            // },
         },
         xAxis: {
             categories: [],
@@ -115,6 +146,9 @@ export class Dashboard extends RestController {
             title: {
                 text: "Cantidad",
             },
+        },
+        tooltip: {
+            pointFormat: 'Cantidad de {series.name} <br/> que se descargaron <b>{point.y:,.0f} Kg.</b>'
         },
         credits: {
             enabled: false
