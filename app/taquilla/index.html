@@ -7,55 +7,41 @@
     </section>
     <section class="box-body">
         <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12 padding-bottom">
-            <form role="form" (submit)="getVehicles(findCamion.value)">
+            <form role="form" (submit)="getCompanies(findCompany.value)">
                 <div class="input-group input-group-sm">
-                    <input  #findCamion type="text" class="form-control" placeholder="Ingrese PLACA / RFID / RUC " value="{{search}}">
+                    <input  #findCompany type="text" class="form-control" placeholder="Ingrese el RUC de la empresa" value="{{search}}">
                     <span class="input-group-btn">
-                        <button (click)="getVehicles(findCamion.value)" type="button" class="btn btn-info btn-flat">
+                        <button (click)="getCompanies(findCompany.value)" type="button" class="btn btn-info btn-flat">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
                 </div>
             </form>
         </div>
-        <div *ngIf="!myglobal.existsPermission('69')" class="col-lg-12">
+        <div *ngIf="!myglobal.existsPermission('80')" class="col-lg-12">
             <div class="btn-red padding-error">
                 <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
-                No tiene permisos para listar los vehiculos
+                No tiene permisos para listar las empresas
             </div>
         </div>
 
-        <div *ngIf="dataVehicles.count && myglobal.existsPermission('69')" class="row col-lg-10 col-lg-offset-1">
+        <div *ngIf="dataCompanies.count && myglobal.existsPermission('80')" class="row col-lg-10 col-lg-offset-1">
             <table class="table table-hover">
                 <tbody>
-                <tr *ngFor="let vehicle of dataVehicles.list" (click)="getVehicle(vehicle.id)">
+                <tr *ngFor="let company of dataCompanies.list" (click)="getCompany(company.id)">
                     <td>
-                        <div class="col-lg-2">
-                            <img src="{{vehicle.companyImage?vehicle.companyImage:'/assets/img/company-guest.png'}}"
-                                 style="display: inline-block" class="img-responsive img-find">
-                        </div>
-                        <div>
-                            <strong>{{vehicle.companyName}}</strong><br>
-                            <strong> RUC: </strong>{{vehicle.companyRuc}}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="col-lg-2">
-                            <img src="{{vehicle.image?vehicle.image:'/assets/img/truck-guest.png'}}"
-                                 style="display: inline-block" class="img-responsive img-find">
-                        </div>
-                        <div>
-                            <strong>Placa: </strong>{{vehicle.plate}}<br>
-                            <strong> RFID: </strong>{{vehicle.tagRFID}}
-                        </div>
+                            <img src="{{company.image?company.image:'/assets/img/company-guest.png'}}"
+                                 style="display: inline-block" class="img-responsive img-find pull-left">
+                            <strong>&nbsp;Nombre:</strong>&nbsp;{{company.title}}
+                            <strong>&nbsp;RUC:</strong>&nbsp;{{company.detail}}
                     </td>
                 </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="2">
-                            <div class="btn-group pull-right">
-                                <button (click)="getVehicles(findCamion.value,max*(val-1))" *ngFor="let val of dataVehicles.page" type="button" class="btn btn-default">
+                        <td>
+                            <div *ngIf="dataCompanies.page && dataCompanies.page.length > 1 && dataCompanies.count > 0" class="btn-group pull-right">
+                                <button (click)="getCompanies(findCompany.value,max*(val-1))" *ngFor="let val of dataCompanies.page" type="button" class="btn btn-default">
                                     {{val}}
                                 </button>
                             </div>
@@ -66,7 +52,8 @@
             </table>
 
         </div>
-        <div *ngIf="dataTruck.id">
+
+        <div *ngIf="dataCompany?.id">
             <div class="row col-lg-12">
                 <div class="panel">
                     <div class="panel-body">
@@ -76,12 +63,12 @@
                         <div class="profile col-lg-2">
                             <div style="margin-bottom: 15px" class="row">
                                 <figure>
-                                    <img src="{{dataTruck.image || '/assets/img/truck-guest.png'}}" alt=""
+                                    <img src="{{dataCompany.image || '/assets/img/company-guest.png'}}" alt=""
                                          style="display: inline-block" class="img-responsive img-bordered">
                                 </figure>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -90,44 +77,44 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{{dataTruck.companyName}}</td>
+                                    <td>{{dataCompany.name}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>RUC: </strong>{{dataTruck.companyRuc}}</td>
+                                    <td><strong>RUC: </strong>{{dataCompany.ruc}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>DIRECCI&Oacute;N:</strong> {{dataTruck.companyAddress}}</td>
+                                    <td><strong>DIRECCI&Oacute;N:</strong> {{dataCompany.address}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>TEL&Eacute;FONO:</strong>{{dataTruck.companyPhone}}</td>
+                                    <td><strong>TEL&Eacute;FONO:</strong>{{dataCompany.phone}}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>CAMI&Oacute;N</th>
+                                    <th>DETALLE</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><strong>PLACA: </strong>{{dataTruck.plate}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>PESO: </strong>{{dataTruck.weight}} lbs</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>MARCA: </strong>
-                                        {{dataTruck.vehicleTypeTitle?dataTruck.vehicleTypeTitle:"N/A"}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>DETALLE: </strong>
-                                        {{dataTruck.vehicleTypeDetail?dataTruck.vehicleTypeDetail:"N/A"}}
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><strong>TIPO: </strong>
+                                            <i class="{{dataCompany.companyTypeIcon}}"></i>
+                                            {{dataCompany.companyTypeTitle}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RESPONSABLE: </strong>
+                                            {{dataCompany.responsiblePerson}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>VEHICULOS REGISTRADO: </strong>
+                                            {{dataCompany.vehiclesCount}}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -199,11 +186,11 @@
                                 <tbody>
                                 <tr>
                                     <td><strong>Saldo M&iacute;nimo: </strong></td>
-                                    <td>{{dataTruck.minBalance}}</td>
+                                    <td>{{dataCompany.minBalance}}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Saldo Actual: </strong></td>
-                                    <td>{{dataTruck.balance}}</td>
+                                    <td>{{dataCompany.balance}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -221,7 +208,7 @@
                 </div>
             </div>
             <div *ngIf="myglobal.existsPermission('111')">
-                <recarga-save  idModal="saveRecarga" [idVehicle]="dataTruck.id" (save)="assignRecarga($event)"> </recarga-save>
+                <recarga-save  idModal="saveRecarga" [idCompany]="dataCompany.id" (save)="assignRecarga($event)"> </recarga-save>
             </div>
         </div>
     </section>
