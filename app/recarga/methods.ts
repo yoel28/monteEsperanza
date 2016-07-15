@@ -19,12 +19,12 @@ import {Datepicker} from "../common/xeditable";
 export class RecargaSave extends RestController{
 
     @Input() idModal:string;
-    @Input() idVehicle:string;
+    @Input() idCompany:string;
 
     public save:any;
 
     form: ControlGroup;
-    vehicle: Control;
+    company: Control;
     quantity: Control;
     reference: Control;
     referenceDate: Control;
@@ -39,8 +39,8 @@ export class RecargaSave extends RestController{
     }
     ngOnInit() {
         this.initForm();
-        if(this.idVehicle)
-            this.vehicle.updateValue(this.idVehicle);
+        if(this.idCompany)
+            this.company.updateValue(this.idCompany);
         if(this.myglobal.existsPermission('116'))
             this.getRechargeTypes();
     }
@@ -48,7 +48,7 @@ export class RecargaSave extends RestController{
     initForm(){
 
         this.quantity = new Control("", Validators.compose([Validators.required]));
-        this.vehicle = new Control("", Validators.compose([Validators.required]));
+        this.company = new Control("", Validators.compose([Validators.required]));
         this.reference = new Control("", Validators.compose([Validators.required]));
         this.referenceDate = new Control("", Validators.compose([Validators.required]));
         this.rechargeType = new Control("", Validators.compose([Validators.required]));
@@ -57,7 +57,7 @@ export class RecargaSave extends RestController{
             quantity: this.quantity,
             reference: this.reference,
             referenceDate: this.referenceDate,
-            vehicle: this.vehicle,
+            company: this.company,
             rechargeType: this.rechargeType,
         });
     }
@@ -93,18 +93,18 @@ export class RecargaSave extends RestController{
         this.referenceDate.updateValue(data)
     }
 
-    //asignar vehiculo----------------------------------
-    public searchVehicle={
-        title:"Vehiculo",
-        idModal:"searchVehicle",
-        endpointForm:"/search/vehicles/",
-        placeholderForm:"Ingrese la placa",
-        labelForm:{name:"Placa: ",detail:"Empresa: "},
+    //asignar compania----------------------------------
+    public searchCompany={
+        title:"Compañia",
+        idModal:"searchCompany",
+        endpointForm:"/search/companies/",
+        placeholderForm:"Ingrese el RUC",
+        labelForm:{title:"Nombre: ",detail:"RUC: "},
     }
-    public dataVehicle:string;
-    assignVehicle(data){
-        this.vehicle.updateValue(data.id);
-        this.dataVehicle="Placa: "+data.title+", Empresa: "+data.detail;
+    public dataCompany:string;
+    assignCompany(data){
+        this.company.updateValue(data.id);
+        this.dataCompany="Nombre: "+data.title+", RUC: "+data.detail;
     }
 }
 @Component({
