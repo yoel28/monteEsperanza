@@ -17,8 +17,8 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
     directives:[RecargaSave]
 })
 export class Taquilla extends RestController{
-    dataVehicles:any = {};
-    dataTruck:any = {};
+    dataCompany:any = {};
+    dataCompanies:any = {};
     search;
 
     constructor(public params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
@@ -27,40 +27,40 @@ export class Taquilla extends RestController{
     ngOnInit(){
         if(this.params.get('search'))
         {
-            if(this.myglobal.existsPermission('69'))
-                this.getVehicles(this.params.get('search'));
+            if(this.myglobal.existsPermission('80'))
+                this.getCompanies(this.params.get('search'));
             this.search = this.params.get('search');
         }
     }
-    getVehicle(truckId:string){
-        if(this.myglobal.existsPermission('69')){
+    getCompany(companyId:string){
+        if(this.myglobal.existsPermission('80')){
             let successCallback= response => {
-                Object.assign(this.dataTruck, response.json());
-                this.dataTruck['recharges']=[];
+                Object.assign(this.dataCompany, response.json());
                 this.loadData();
             }
-            this.httputils.doGet("/vehicles/"+truckId,successCallback,this.error)
-            this.dataVehicles = {};
+            this.httputils.doGet("/companies/"+companyId,successCallback,this.error)
+            this.dataCompanies = {};
         }
     }
     loadData(offset=0){
         if(this.myglobal.existsPermission('109')) {
             this.offset = offset;
             this.endpoint = "/search/recharges";
-            let where = encodeURI("[['op':'eq','field':'vehicle.id','value':" + this.dataTruck.id + "l]]")
+            let where = encodeURI("[['op':'eq','field':'company.id','value':" + this.dataCompany.id + "l]]")
             this.httputils.onLoadList(this.endpoint + "?where=" + where + "&max=" + this.max + "&offset=" + this.offset, this.dataList, this.max, this.error);
         }
     };
 
-    getVehicles(camion:string,offset=0){
-        if(this.myglobal.existsPermission('69')) {
+    getCompanies(companies:string,offset=0){
+        if(this.myglobal.existsPermission('80')) {
             this.offset = offset;
-            this.dataTruck = {};
-            this.httputils.onLoadList("/search/vehicles/" + camion + "?max=" + this.max + "&offset=" + this.offset, this.dataVehicles, this.max, this.error);
+            this.dataCompanies = {};
+            this.dataCompany={};
+            this.httputils.onLoadList("/search/companies/" + companies + "?max=" + this.max + "&offset=" + this.offset, this.dataCompanies, this.max, this.error);
         }
     }
     assignRecarga(data){
-        this.dataTruck.balance+=data.quantity;
+        this.dataCompanies.balance+=data.quantity;
         this.dataList.list.unshift(data);
     }
 }
