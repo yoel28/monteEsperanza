@@ -92,13 +92,22 @@ export class Filter extends RestController{
         this.loadForm();
     }
     loadForm() {
+        let that = this;
         Object.keys(this.rules).forEach((key)=> {
-            if (this.rules[key].search) {
-                this.data[key] = [];
-                this.data[key] = new Control("");
+            if (that.rules[key].search) {
+                that.data[key] = [];
+                that.data[key] = new Control("");
 
-                this.data[key+'Cond'] = [];
-                this.data[key+'Cond'] = new Control("eq");
+                that.data[key+'Cond'] = [];
+                that.data[key+'Cond'] = new Control("eq");
+                if(that.rules[key].object)
+                {
+                    that.data[key].valueChanges.subscribe((value: string) => {
+                        that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
+                        this.search=that.rules[key];
+                        that.loadData();
+                    });
+                }
             }
         });
         this.form = this._formBuilder.group(this.data);
@@ -113,7 +122,7 @@ export class Filter extends RestController{
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
         event.preventDefault();
-        this.setEndpoint(this.search.paramsSearch.endpoint+value)
+        this.setEndpoint(this.search.paramsSearch.endpoint+value);
         this.loadData();
     }
     //accion al dar click en el boton de cerrar el formulario
