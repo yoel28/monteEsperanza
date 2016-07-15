@@ -74,7 +74,7 @@
     <operacion-save idModal="saveOperacion" (save)="assignOperacion($event)"></operacion-save>
 </div>
 <div *ngIf="myglobal.existsPermission('97')">
-    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 <div *ngIf="myglobal.existsPermission('94')">
     <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"

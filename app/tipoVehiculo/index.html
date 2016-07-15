@@ -86,7 +86,7 @@
     <tipoVehiculo-save idModal="saveTipoVehiculo" (save)="assignTipoEmpresa($event)"> </tipoVehiculo-save>
 </div>
 <div *ngIf="myglobal.existsPermission('133')">
-    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 
 <div *ngIf="dataList.list && myglobal.existsPermission('34')">

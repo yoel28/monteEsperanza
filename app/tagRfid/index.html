@@ -92,7 +92,7 @@
     <tag-save idModal="saveTag" (save)="assignTag($event)"> </tag-save>
 </div>
 <div *ngIf="myglobal.existsPermission('121')">
-    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 <div *ngIf="myglobal.existsPermission('69')">
     <search  [params]="searchVehicle" (result)="assignVehicle($event)"></search>

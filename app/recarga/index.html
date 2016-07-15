@@ -25,7 +25,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Veh&iacute;culo</th>
+                                <th>Empresa</th>
                                 <th>Referencia</th>
                                 <th>Detalle</th>
                                 <th>Fecha</th>
@@ -76,7 +76,7 @@
     <recarga-save idModal="saveRecarga" (save)="assignRecarga($event)"> </recarga-save>
 </div>
 <div *ngIf="myglobal.existsPermission('110')">
-    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 
 <div *ngIf="dataList.list && myglobal.existsPermission('113')">

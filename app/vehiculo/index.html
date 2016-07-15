@@ -220,7 +220,7 @@
     <vehiculo-save idModal="saveVehiculo" (save)="assignVehiculo($event)"></vehiculo-save>
 </div>
 <div *ngIf="myglobal.existsPermission('134')">
-    <filter  [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+    <filter  [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 <div *ngIf="dataList.list && myglobal.existsPermission('71')">
     <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

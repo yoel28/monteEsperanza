@@ -95,5 +95,5 @@
     </div>
 </div>
 <div *ngIf="myglobal.existsPermission('119')">
-    <filter [rules]="rules" [params]="paramsFilter" (where)="loadWhere($event)"></filter>
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
