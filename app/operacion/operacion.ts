@@ -34,14 +34,19 @@ export class Operacion extends RestController{
         'weightOut':{'type':'number','display':null,'title':'Peso de Salida','mode':'inline','search': true,'placeholder': 'Peso de salida','double':true},
         'vehicle':{
             'type':'text',
-            'search': true,
-            'placeholder':'ingrese la placa del vehículo',
+            'key':'vehicle',
+            'paramsSearch': {
+                'label':{'title':"Placa: ",'detail':"Empresa: "},
+                'endpoint':"/search/vehicles/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png',
+                'field':'vehicle.id',
+            },
+            'search':true,
+            'object':true,
             'title':'Buscar vehículo',
-            'label':{'title':"Placa: ",'detail':"Empresa: "},
-            'endpoint':"/search/vehicles/",
-            'where':'',
+            'placeholder':'ingrese la placa del vehículo',
             'icon':'fa fa-truck',
-            'object':true
         },
     };
 
