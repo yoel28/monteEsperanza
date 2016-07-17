@@ -106,6 +106,12 @@
                                                     <strong>Email:</strong>
                                                     <a x-editable [disabled]="!myglobal.existsPermission('60')" [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="email" ></a>
                                                 </p>
+                                                <p *ngIf="myglobal.existsPermission('60')">
+                                                    <strong>Contrase&ntilde;a:</strong>
+                                                    <a x-editable [disabled]="!myglobal.existsPermission('60')" [endpoint]="endpoint" [function]="onEditable" [data]="user" [rules]="rules" field="password" ></a>
+                                                </p>
+
+
                                                 <p><strong>Empresa:</strong> {{user.companyName}}
                                                     <a *ngIf="myglobal.existsPermission('63') && myglobal.existsPermission('60') && myglobal.existsPermission('80')" (click)="dataSelect = user" class="btn btn-box-tools text-blue fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></a>
                                                     <a *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63') " (click)="dataSelect = user" class="btn btn-box-tools text-green fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></a>
