@@ -63,9 +63,10 @@ export class User extends RestController {
         'password': {
             'type': 'password',
             'display': null,
-            'title': 'Contrasena',
+            'title': 'Contraseña',
             'placeholder': 'Contraseña',
-            'search': false
+            'search': false,
+            'showbuttons':true,
         },
         'phone': {'type': 'number', 'display': null, 'title': 'Telefono', 'placeholder': 'Teléfono', 'search': true},
         'roles': {
