@@ -28,7 +28,7 @@ export class Profile extends RestController{
         'username':{'type':'text','display':null,'title':'Nombre de usuario' },
         'name':{'type':'text','display':null,'title':'nombre' },
         'email':{'type':'email','display':null,'title':'Correo' },
-        'password':{'type':'password','display':null,'title':'Contrasena' },
+        'password':{'type':'password','display':null,'title':'Contrasena','showbuttons':true },
         'phone':{'type':'number','display':null,'title':'Telefono' },
     }
     
