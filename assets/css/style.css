@@ -49,3 +49,6 @@
 .dropdown-menu {
   z-index: 10000 !important;
 }
+.object-invalid{
+  border-left: 3px solid #a94442 !important; /* red */
+}
