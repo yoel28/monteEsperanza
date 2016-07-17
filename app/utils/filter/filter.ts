@@ -79,6 +79,7 @@ export class Filter extends RestController{
     }
     //Lista de id search
     public searchId:any={};
+    public findControl:string="";//variable en el value del search
     //formulario generado
     form:ControlGroup;
     data:any = [];
@@ -103,9 +104,21 @@ export class Filter extends RestController{
                 if(that.rules[key].object)
                 {
                     that.data[key].valueChanges.subscribe((value: string) => {
-                        that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
-                        this.search=that.rules[key];
-                        that.loadData();
+                        if(value.length > 0){
+                            that.search=that.rules[key];
+                            that.findControl = value;
+                            that.dataList=[];
+                            that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
+                            if( !that.searchId[key]){
+                                that.loadData();
+                            }
+                            else if(that.searchId[key].title != value){
+                                that.loadData();
+                            }
+                            else{
+                                that.search = [];
+                            }
+                        }
                     });
                 }
             }
@@ -133,8 +146,9 @@ export class Filter extends RestController{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]=data.id;
+        this.searchId[this.search.key]={'id':data.id,'title':data.title};
         (<Control>this.form.controls[this.search.key]).updateValue(data.title);
+        this.dataList=[];
     }
     
     // public search=
@@ -181,7 +195,7 @@ export class Filter extends RestController{
                 
                 if(that.rules[key].object)
                 {
-                    value = this.searchId[key];
+                    value = this.searchId[key].id || null;
                     key = that.rules[key].paramsSearch.field;
                 }
 
