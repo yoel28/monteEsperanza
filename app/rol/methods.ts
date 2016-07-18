@@ -42,13 +42,6 @@ export class RolSave extends RestController{
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
     }
-    //Opciones de habilitar
-    public items:any=[{id:true,text:"Habilitado"},{id:false,text:"Deshabilitado"}];
-
-    public refreshValue(value:any):void {
-        if(value.id)
-            this.enabled.updateValue(value.id);
-    }
 }
 
 

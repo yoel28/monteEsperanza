@@ -105,7 +105,7 @@
                                                 </p>
                                                 <p>
                                                     Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
-
+                                                    <label>
 
                                                         <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('72')"
                                                                 (click)="releaseTag(data)"
@@ -126,13 +126,14 @@
                                                                 type="button" class="btn btn-box-tool">
                                                             <i class="fa fa-search text-blue"></i>
                                                         </button>
-
+                                                    </label>
                                                 </p>
                                                 <p>
+                                                    Tipo:&nbsp;
                                                     <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}"></i>
-                                                    <strong>{{data.vehicleTypeTitle}}</strong><br/>
+                                                    <strong>{{data.vehicleTypeTitle}}</strong>
                                                     {{data.vehicleTypeDetail}}
-
+                                                    <label>
 
                                                         <button (click)="dataSelect = data"
                                                                 *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('30')"
@@ -147,7 +148,7 @@
                                                                 type="button" class="btn btn-box-tool">
                                                             <i class="fa fa-search text-blue"></i>
                                                         </button>
-
+                                                    </label>
                                                 </p>
                                                 <p *ngIf="myglobal.existsPermission('73')">
                                                     <button (click)="onLock('enabled',data)" class="btn btn-sm"

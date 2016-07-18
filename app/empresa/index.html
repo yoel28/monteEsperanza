@@ -127,20 +127,21 @@
                                                     </p>
                                                     <p class="truncate"><strong>Tipo:</strong>
                                                         {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
+                                                        <label>
+                                                            <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
+                                                                    (click)="dataSelect = data.id"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    data-toggle="modal" data-target="#searchTipoEmpresa">
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
 
-                                                        <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
-                                                                (click)="dataSelect = data.id"
-                                                                type="button" class="btn btn-box-tool"
-                                                                data-toggle="modal" data-target="#searchTipoEmpresa">
-                                                            <i class="fa fa-search text-blue"></i>
-                                                        </button>
-
-                                                        <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')"
-                                                                (click)="dataSelect = data.id"
-                                                                type="button" class="btn btn-box-tool"
-                                                                data-toggle="modal" data-target="#saveTipoEmpresa">
-                                                            <i class="fa fa-plus text-green"></i>
-                                                        </button>
+                                                            <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')"
+                                                                    (click)="dataSelect = data.id"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    data-toggle="modal" data-target="#saveTipoEmpresa">
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+                                                        </label>
                                                     </p>
                                                     <p>
                                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
