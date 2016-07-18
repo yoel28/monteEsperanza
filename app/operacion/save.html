@@ -12,20 +12,20 @@
                         <form role="form" [ngFormModel]="form" (submit)="submitForm($event)" [class.col-lg-7]="search.object">
                             <div *ngFor="let key of keys">
                                     <div *ngIf="!rules[key].object || (rules[key].object && myglobal.existsPermission(rules[key].permissions))" class="col-lg-12">
-                                        <div class="form-group input-icon right row">
+                                        <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="row">
                                                     <div class="col-lg-10">
-                                                        <div class="row" [class.object-invalid]="
+                                                        <div class="input-group input-icon right form-group" [class.object-invalid]="
                                                             rules[key].object && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].title != data[key].value) || !searchId[key])
                                                         ">
-                                                            <i class="{{rules[key].icon || 'fa fa-list'}}"></i>
-
+                                                            <i class="{{rules[key].icon || 'fa fa-list'}} z-index"></i>
+                                                            <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}</span>
                                                             <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
                                                                    [(ngModel)]="data[key].value"
                                                                    placeholder="{{rules[key].placeholder}}"
-                                                                   type="{{rules[key].type}}">
+                                                                   type="{{rules[key].type}}" [attr.aria-describedby]="key">
 
                                                             <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                         [(ngModel)]="data[key].value"
