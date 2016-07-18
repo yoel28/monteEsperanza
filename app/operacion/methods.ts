@@ -38,8 +38,8 @@ export class OperacionSave extends RestController{
             },
             'icon':'fa fa-truck',
             'object':true,
-            'title':'Buscar vehículo',
-            'placeholder':'ingrese la placa del vehículo',
+            'title':'Vehículo',
+            'placeholder':'Ingrese la placa del vehículo',
             'permissions':'69',
             'msg':{
                 'error':'El vehiculo contiene errores',
@@ -59,7 +59,7 @@ export class OperacionSave extends RestController{
             },
             'icon':'fa fa-building',
             'object':true,
-            'title':'Buscar Empresa',
+            'title':'Cliente',
             'placeholder':'Ingrese el RUC de la empresa',
             'permissions':'80',
             'msg':{
@@ -74,18 +74,39 @@ export class OperacionSave extends RestController{
             'permissions':'80',
             'paramsSearch': {
                 'label':{'title':"Tipo: ",'detail':"Detalle: "},
-                'endpoint':"/search/trashType/",
+                'endpoint':"/search/type/trash/",
                 'where':'',
                 'imageGuest':'/assets/img/company-guest.png',
                 'field':'trashType.id',
             },
             'icon':'fa fa-trash',
             'object':true,
-            'title':'Buscar tipo de basura',
+            'title':'Basura',
             'placeholder':'Ingrese el tipo de basura',
             'msg':{
                 'error':'El tipo de basura contiene errores',
                 'notAuthorized':'No tiene permisos de listar los tipos de basura',
+            },
+        },
+        'route':{
+            'type':'text',
+            'required':true,
+            'key':'route',
+            'paramsSearch': {
+                'label':{'title':"Ruta: ",'detail':"Detalle: "},
+                'endpoint':"/search/route/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png',
+                'field':'route.id',
+            },
+            'icon':'fa fa-random',
+            'object':true,
+            'title':'Ruta',
+            'placeholder':'Ingrese la ruta',
+            'permissions':'69',
+            'msg':{
+                'error':'La ruta contiene errores',
+                'notAuthorized':'No tiene permisos de listar las rutas',
             },
         },
         'weightIn':{
@@ -93,6 +114,7 @@ export class OperacionSave extends RestController{
             'required':true,
             'key':'weightIn',
             'icon':'fa fa-balance-scale',
+            'title':'Peso E.',
             'placeholder':'Ingrese el peso de entrada',
             'msg':{
                 'error':'El peso debe ser numerico',
@@ -102,6 +124,7 @@ export class OperacionSave extends RestController{
             'type':'textarea',
             'key':'description',
             'icon':'fa fa-font',
+            'title':'Comentarios',
             'placeholder':'Ingrese un comentario',
             'msg':{
                 'error':'El comentario contiene errores',
