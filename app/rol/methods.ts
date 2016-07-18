@@ -21,7 +21,6 @@ export class RolSave extends RestController{
 
     form: ControlGroup;
     authority: Control;
-    enabled: Control;
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
         super(http,toastr);
@@ -31,11 +30,8 @@ export class RolSave extends RestController{
     }
     initForm(){
         this.authority = new Control("", Validators.compose([Validators.required]));
-        this.enabled = new Control("", Validators.compose([Validators.required]));
-
         this.form = this._formBuilder.group({
             authority: this.authority,
-            enabled: this.enabled,
         });
     }
     submitForm(){

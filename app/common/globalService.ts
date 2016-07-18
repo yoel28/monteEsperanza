@@ -27,7 +27,7 @@ export class globalService extends RestController{
     getUser(){
         let that=this;
         let error= response => {
-            that.toastr.error('Tu Sesion Expiro','Ocurrio un error');
+            that.toastr.error('Tu Sesión Expiró','Ocurrió un error');
             localStorage.removeItem('bearer');
             contentHeaders.delete('Authorization');
         };

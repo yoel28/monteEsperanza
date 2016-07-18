@@ -1,55 +1,62 @@
-<div class="modal fade" [attr.id]="idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" [attr.id]="params.idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" [class.modal-lg]="search.object" >
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Agregar entrada</h4>
+                <h4 class="modal-title" id="myModalLabel">{{params.title}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
                         <form role="form" [ngFormModel]="form" (submit)="submitForm($event)" [class.col-lg-7]="search.object">
                             <div *ngFor="let key of keys">
-                                    <div *ngIf="!rules[key].object || (rules[key].object && myglobal.existsPermission(rules[key].permissions))" class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-10">
-                                                        <div class="input-group input-icon right form-group" [class.object-invalid]="
+                                <div *ngIf="!rules[key].object || (rules[key].object && myglobal.existsPermission(rules[key].permissions))" class="col-lg-12">
+                                    <div class="form-group input-icon right">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-10">
+                                                    <div class="input-group input-icon right form-group" [class.object-invalid]="
                                                             rules[key].object && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].title != data[key].value) || !searchId[key])
                                                         ">
-                                                            <i class="{{rules[key].icon || 'fa fa-list'}} z-index"></i>
-                                                            <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}</span>
-                                                            <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
-                                                                   [(ngModel)]="data[key].value"
-                                                                   placeholder="{{rules[key].placeholder}}"
-                                                                   type="{{rules[key].type}}" [attr.aria-describedby]="key">
+                                                        <i class="{{rules[key].icon}} z-index"></i>
 
-                                                            <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
-                                                                        [(ngModel)]="data[key].value"
-                                                                        placeholder="{{rules[key].placeholder}}"
-                                                                        ></textarea>
+                                                        <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}</span>
+                                                        <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
+                                                               [(ngModel)]="data[key].value"
+                                                               placeholder="{{rules[key].placeholder}}"
+                                                               type="{{rules[key].type}}" [attr.aria-describedby]="key">
 
-                                                            <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
-                                                                {{rules[key].msg.error || 'El campo contiene errores'}}
-                                                            </div>
+                                                        <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
+                                                                  [(ngModel)]="data[key].value"
+                                                                  placeholder="{{rules[key].placeholder}}">
+
+                                                        </textarea>
+
+                                                        <select *ngIf="rules[key].type == 'select'" [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown">
+                                                            <option data-hidden="true"></option>
+                                                            <option *ngFor="let n of rules[key].source"  [attr.value]="n.id" >{{n.text}}</option>
+                                                        </select>
+
+                                                        <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
+                                                            {{rules[key].msg.error || 'El campo contiene errores'}}
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2 padding-top-4">
-                                                        <button *ngIf="rules[key].object"
-                                                                class="btn btn-box-tool fa fa-search text-blue"
-                                                                (click)="getLoadSearch($event,rules[key])">
-                                                        </button>
-                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 padding-top-4">
+                                                    <button *ngIf="rules[key].object"
+                                                            class="btn btn-box-tool fa fa-search text-blue"
+                                                            (click)="getLoadSearch($event,rules[key])">
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="rules[key].object && !myglobal.existsPermission(rules[key].permissions)" class="col-lg-12">
-                                        {{rules[key].msg.notAuthorized || 'Acceso no autorizado'}}
-                                    </div>
+                                </div>
+                                <div *ngIf="rules[key].object && !myglobal.existsPermission(rules[key].permissions)" class="col-lg-12">
+                                    {{rules[key].msg.notAuthorized || 'Acceso no autorizado'}}
+                                </div>
                             </div>
                         </form>
                         <div [class.col-lg-5]="search.object" *ngIf="search.object">
@@ -111,11 +118,6 @@
                         id="cntrlsubmit" [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
                     Registrar
-                </button>
-                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-success"
-                        id="cntrl" [disabled]="!form.valid">
-                    <i class="fa fa-save"></i>
-                    Salida
                 </button>
             </div>
         </div>

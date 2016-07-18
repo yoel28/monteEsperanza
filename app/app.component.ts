@@ -28,6 +28,9 @@ import { Permiso }         from './permiso/permiso';
 import { PermisosRol }         from './permiso/permiso';
 import {globalService} from "./common/globalService";
 import {LocationStrategy, HashLocationStrategy} from "@angular/common";
+import {TipoBasura} from "./tipoBasura/tipoBasura";
+import {Antenna} from "./antena/antenna";
+import {Ruta} from "./ruta/ruta";
 
 @Component({
   selector: 'my-app',
@@ -66,9 +69,12 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
   { path: '/recargas',   name: 'Recarga', component: Recarga },
   { path: '/libro',   name: 'RecargaLibro', component: RecargaLibro },
   { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
+  { path: '/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
   { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
+  { path: '/antenas',   name: 'Antenna', component: Antenna },
+  { path: '/rutas',   name: 'Ruta', component: Ruta },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -79,7 +85,7 @@ export class AppComponent {
   constructor(public router: Router,public myglobal:globalService) {
     //TODO:Cambiar URL a PRODUCCION
     localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-    //localStorage.setItem('url','http://ec2-54-197-11-239.compute-1.amazonaws.com:8080');
+      localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
     //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
     //localStorage.setItem('url','http://192.168.0.91:8080');
     let that=this;

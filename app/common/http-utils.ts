@@ -109,8 +109,6 @@ export class HttpUtils {
                     list['page'].push(i);
                 }
             }
-            if(that.toastr)
-                that.toastr.success('Carga realizada con éxito','Notificación')
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }

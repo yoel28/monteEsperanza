@@ -18,7 +18,7 @@
                                 <i class="fa fa-user"></i>
                                 <input ngControl="username" class="form-control" [(ngModel)]="username.value"  #username="ngForm" placeholder="Email" type="email">
                                 <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
-                                    Por favor ingrese un Email valido
+                                    Por favor ingrese un correo v&aacute;lido
                                 </div>
                             </div>
                             <button style="float:left;" class="btn btn-success btn-blue pull-left" (click)="onLogin($event)">

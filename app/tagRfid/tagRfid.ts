@@ -26,19 +26,11 @@ export class TagRfid extends RestController{
         this.setEndpoint('/rfids/');
     }
     public rules = {
-        'id': {
-            'type': 'number',
-            'disabled': true,
-            'display': false,
-            'title': 'id',
-            'placeholder': 'Identificador',
-            'search': true
-        },
         'number': {
             'type': 'text',
             'display': null,
-            'title': 'Numero del Tag',
-            'placeholder': 'Numero del Tag',
+            'title': 'Número del Tag',
+            'placeholder': 'Número del Tag',
             'mode': 'inline',
             'search': true
         },
