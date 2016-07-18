@@ -24,8 +24,8 @@
                     <table class="table table-striped table-hover tarjeta">
                         <thead>
                         <tr data-title="email">
-                            <th>ID</th>
-                            <th>Recarga</th>
+                            <th>Cliente</th>
+                            <th>Referencia</th>
                             <th>Monto</th>
                             <th>Vehiculo</th>
                             <th>Peso Entrada</th>
@@ -35,9 +35,9 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
-                            <td>{{data.id}}</td>
-                            <td> Ref: {{data.rechargeReference || "N/A"}}</td>
-                            <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "N/A"}}</td>
+                            <td> {{data.companyName}}</td>
+                            <td> {{data.rechargeReference || "-"}}</td>
+                            <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "-"}}</td>
                             <td>{{data.vehiclePlate}}</td>
                             <td>
                                 <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data"
