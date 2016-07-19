@@ -42,8 +42,8 @@ export class OperacionSave extends RestController{
             'placeholder':'Ingrese la placa del vehículo',
             'permissions':'69',
             'msg':{
-                'error':'El vehiculo contiene errores',
-                'notAuthorized':'No tiene permisos de listar los vehiculos',
+                'error':'El vehículo contiene errores',
+                'notAuthorized':'No tiene permisos de listar los vehículos',
             },
         },
         'company':{
@@ -60,11 +60,11 @@ export class OperacionSave extends RestController{
             'icon':'fa fa-building',
             'object':true,
             'title':'Cliente',
-            'placeholder':'Ingrese el RUC de la empresa',
+            'placeholder':'Ingrese el RUC del cliente',
             'permissions':'80',
             'msg':{
-                'error':'la empresa contiene errores',
-                'notAuthorized':'No tiene permisos de listar las empresas',
+                'error':'El cliente contiene errores',
+                'notAuthorized':'No tiene permisos de listar los clientes',
             },
         },
         'trashType':{
