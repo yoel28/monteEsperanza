@@ -13,3 +13,6 @@
 .z-index{
     z-index:1;
 }
+.alert{
+    margin-bottom: 0px !important;
+}
