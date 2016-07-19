@@ -18,7 +18,7 @@ export class Rol extends RestController{
 
     public rules={
         'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
-        'authority':{'type':'text','display':null,'title':'Titulo','placeholder':'authority','search':true},
+        'authority':{'type':'text','display':null,'title':'Titulo','placeholder':'Nombre del perfil','search':true},
     }
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {
         super(http,toastr);
