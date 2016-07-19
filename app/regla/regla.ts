@@ -17,8 +17,7 @@ import {Filter} from "../utils/filter/filter";
 export class Regla extends RestController{
     public dataSelect:any={};
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
-        'rule':{'type':'text','display':null,'title':'Regla','placeholder':'regla','search':true},
+        'rule':{'type':'text','display':null,'title':'Regla','placeholder':'Regla','search':true},
         'name':{'type':'text','display':null,'title':'Nombre','placeholder':'Nombre','search':true},
     };
 
