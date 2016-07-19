@@ -38,20 +38,20 @@
                                                     </button>
                                                     <ul role="menu" class="dropdown-menu text-left submenu-config">
                                                         <li *ngIf="myglobal.existsPermission('62')" >
-                                                            <a href="javascript:void(0);" (click)="onPatch('accountLocked',user)">
+                                                            <a (click)="onPatch('accountLocked',user)">
                                                                 <span class="fa fa-list"></span>
                                                                 {{user.accountLocked?"Verificar":"No Verificado"}}
                                                             </a>
                                                         </li>
                                                         <li *ngIf="myglobal.existsPermission('61')">
-                                                            <a (click)="onLock('enabled',user)" href="javascript:void(0);">
+                                                            <a (click)="onLock('enabled',user)">
                                                                 <span class="fa fa-warning"></span>
                                                                 {{user.enabled?"Bloquear":"Habilitar"}}
                                                             </a>
                                                         </li>
                                                         <li *ngIf="myglobal.existsPermission('59')">
                                                             <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                                                               (click)="dataSelect = user" href="#">
+                                                               (click)="dataSelect = user">
                                                                 <span class="fa fa-trash"></span>
                                                                 Eliminar
                                                             </a>
