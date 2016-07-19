@@ -193,9 +193,12 @@ export class RecargaLibro extends RestController{
                     "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+recharge+"]&order=asc";
         this.where = "&where="+encodeURI(where);
         this.max=100;
-        if(this.myglobal.existsPermission('109'))
+        if(this.myglobal.existsPermission('109')){
             this.loadData();
+            this.httputils.onLoadList('/total/recharges?where='+encodeURI(where),this.rechargeTotal,this.max,this.error);
+        }
     }
+    public rechargeTotal:any={}
     public idRecharge:string;
     public rechargeTypes:any={};
     getRechargeTypes(){
