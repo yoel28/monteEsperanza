@@ -1,14 +1,82 @@
 <div class="content-wrapper">
     <section class="content">
-        <h4 class="box-title"><strong>RUC: </strong>{{paramsTimeLine.ruc}}</h4>
-        <div *ngIf="myglobal.existsPermission('109')" >
-            <recarga-timeline [params]="paramsTimeLine"> </recarga-timeline>
-        </div>
-        <div *ngIf="!myglobal.existsPermission('109')">
-            <div class="btn-red padding-error">
-                <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
-                No tiene permisos para listar recargas
+            <section class="box-header">
+            <div *ngIf="dataCompany.id" class="row col-lg-12">
+                <div class="panel" style="background-color: #f4f4f4;">
+                    <div class="panel-body">
+                        <div class="profile col-lg-2">
+                            <div style="margin-bottom: 15px" class="row">
+                                <figure>
+                                    <img src="{{dataCompany.image || '/assets/img/company-guest.png'}}" alt=""
+                                         style="display: inline-block" class="img-responsive img-bordered">
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>EMPRESA</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{dataCompany.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RUC: </strong>{{dataCompany.ruc}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>DIRECCI&Oacute;N:</strong> {{dataCompany.address}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>TEL&Eacute;FONO:</strong>{{dataCompany.phone}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-4">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>DETALLE</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><strong>TIPO: </strong>
+                                        <i class="{{dataCompany.companyTypeIcon}}"></i>
+                                        {{dataCompany.companyTypeTitle}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RESPONSABLE: </strong>
+                                        {{dataCompany.responsiblePerson}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>VEHICULOS REGISTRADO: </strong>
+                                        {{dataCompany.vehiclesCount}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!--Fin de Datos de  camion-->
+                </div>
             </div>
-        </div>
+
+        </section>
+            <section class="box-body">
+            <div *ngIf="myglobal.existsPermission('109')" >
+                <recarga-timeline [params]="paramsTimeLine"> </recarga-timeline>
+            </div>
+            <div *ngIf="!myglobal.existsPermission('109')">
+                <div class="btn-red padding-error">
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                    No tiene permisos para listar recargas
+                </div>
+            </div>
+        </section>
     </section>
 </div>
