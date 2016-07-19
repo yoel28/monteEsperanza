@@ -74,6 +74,14 @@ export class Empresa extends RestController {
             'mode': 'inline',
             'search': true
         },
+        'minBalance': {
+            'type': 'number',
+            'display': null,
+            'title': 'Balance mínimo',
+            'placeholder': 'Balance mínimo',
+            'mode': 'inline',
+            'search': true
+        },
         'address': {
             'type': 'text',
             'display': null,
