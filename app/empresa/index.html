@@ -125,10 +125,6 @@
                                                            [data]="data" [rules]="rules" field="minBalance"></a>
                                                     </p>
                                                     <p>
-                                                        <strong>Balance:</strong>
-                                                        {{data.balance || "N/A"}}
-                                                    </p>
-                                                    <p>
                                                         <strong>Direcci&oacute;n:</strong>
                                                         <a x-editable [disabled]="!myglobal.existsPermission('83')"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
