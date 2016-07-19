@@ -28,8 +28,7 @@ export class Taquilla extends RestController{
         if(this.params.get('search'))
         {
             if(this.myglobal.existsPermission('80'))
-                this.getCompanies(this.params.get('search'));
-            this.search = this.params.get('search');
+                this.getCompany(this.params.get('search'));
         }
     }
     getCompany(companyId:string){
