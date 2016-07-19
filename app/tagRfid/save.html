@@ -10,7 +10,7 @@
                 <form role="form" [ngFormModel]="form">
                     <div class="form-group input-icon right">
                         <i class="fa fa-key"></i>
-                        <input ngControl="number" class="form-control" [(ngModel)]="number.value"  #number="ngForm" placeholder="Número" type="text">
+                        <input ngControl="number" class="form-control" [(ngModel)]="number.value"  #number="ngForm" placeholder="Codigo EPC" type="text">
                         <div [hidden]="number.valid || number.pristine" class="alert alert-danger">
                             El campo contiene errores
                         </div>
