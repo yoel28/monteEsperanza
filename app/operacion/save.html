@@ -55,6 +55,7 @@
                         <div [class.col-lg-5]="search.object" *ngIf="search.object">
                             <form role="form" (submit)="getSearch($event,find.value)">
                                 <div class="col-lg-12 form-margin">
+                                    <strong>{{search.title}}</strong><br/>
                                     <div class="input-group input-group-sm">
                                         <input #find type="text" class="form-control"
                                                placeholder="{{ search.placeholder}}" value="{{findControl}}">
