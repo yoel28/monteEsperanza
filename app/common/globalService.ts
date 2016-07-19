@@ -30,6 +30,7 @@ export class globalService extends RestController{
             that.toastr.error('Tu Sesión Expiró','Ocurrió un error');
             localStorage.removeItem('bearer');
             contentHeaders.delete('Authorization');
+            window.location = <any>"http://vertedero.aguaseo.com";
         };
 
         let successCallback= response => {
