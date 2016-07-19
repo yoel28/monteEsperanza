@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
+import {Router, RouteParams}           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
 import {VehiculoSave} from "./methods";
@@ -36,12 +36,14 @@ export class Vehiculo extends RestController{
         'balance':{'type':'number','display':null,'title':'Balance','search': true,'placeholder': 'Balance'},
     }
 
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder,public myglobal:globalService) {
+    constructor(public params:RouteParams,public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/vehicles/');
     }
     ngOnInit(){
         if (this.myglobal.existsPermission('69')) {
+            if(this.params.get('companyId'))
+                this.where="&where="+encodeURI('[["op":"eq","field":"company","value":'+this.params.get('companyId')+']]');
             this.max = 12;
             this.loadData();
         }
