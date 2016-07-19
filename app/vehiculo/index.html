@@ -95,15 +95,6 @@
                                                        [data]="data" [rules]="rules" field="weight"></a>
                                                 </p>
                                                 <p>
-                                                    <strong>Balance M&iacute;nimo:</strong>
-                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
-                                                       [data]="data" [rules]="rules" field="minBalance"></a>
-                                                </p>
-                                                <p>
-                                                    <strong>Balance:</strong>
-                                                    {{data.balance || "N/A"}}
-                                                </p>
-                                                <p>
                                                     Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
                                                     <label>
 
