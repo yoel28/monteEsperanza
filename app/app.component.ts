@@ -52,6 +52,7 @@ import {Ruta} from "./ruta/ruta";
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
   { path: '/vehiculos',   name: 'Vehiculo', component: Vehiculo },
+  { path: '/vehiculos/:companyId',   name: 'VehiculoCompany', component: Vehiculo },
   { path: '/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
 
   { path: '/empresas',   name: 'Empresa', component: Empresa },
