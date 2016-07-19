@@ -37,3 +37,7 @@
 .padding-bottom{
     padding-bottom: 10pt;
 }
+.norecharges{
+    color:red;
+    font-size: 15pt;
+}
