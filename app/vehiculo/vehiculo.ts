@@ -43,7 +43,7 @@ export class Vehiculo extends RestController{
     ngOnInit(){
         if (this.myglobal.existsPermission('69')) {
             if(this.params.get('companyId'))
-                this.where="&where="+encodeURI('[["op":"eq","field":"company","value":'+this.params.get('companyId')+']]');
+                this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
             this.max = 12;
             this.loadData();
         }
