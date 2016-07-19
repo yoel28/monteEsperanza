@@ -101,31 +101,40 @@
                                                                [data]="data" [rules]="rules" field="name"></a>
                                                         </strong>
                                                     </p>
-                                                    <p class="truncate">
+                                                    <p>
                                                         <strong>RUC: </strong>
                                                         <a x-editable [disabled]="!myglobal.existsPermission('83')"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="rules" field="ruc"></a>
                                                     </p>
-                                                    <p class="truncate">
+                                                    <p>
                                                         <strong>Responsable:</strong>
                                                         <a x-editable [disabled]="!myglobal.existsPermission('83')"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="rules" field="responsiblePerson"></a>
                                                     </p>
-                                                    <p class="truncate">
+                                                    <p>
                                                         <strong>Tel&eacute;fonos:</strong>
                                                         <a x-editable [disabled]="!myglobal.existsPermission('83')"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="rules" field="phone"></a>
                                                     </p>
-                                                    <p class="truncate ">
+                                                    <p>
+                                                        <strong>Balance M&iacute;nimo:</strong>
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('83')"
+                                                           [data]="data" [rules]="rules" field="minBalance"></a>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Balance:</strong>
+                                                        {{data.balance || "N/A"}}
+                                                    </p>
+                                                    <p>
                                                         <strong>Direcci&oacute;n:</strong>
                                                         <a x-editable [disabled]="!myglobal.existsPermission('83')"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="rules" field="address"></a>
                                                     </p>
-                                                    <p class="truncate"><strong>Tipo:</strong>
+                                                    <p><strong>Tipo:</strong>
                                                         {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
                                                         <label>
                                                             <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
