@@ -139,6 +139,7 @@ export class RecargaLibro extends RestController{
     }
     ngOnInit() {
         this.initForm();
+        this.getRechargeTypes();
     }
     public formatDateFact = {
         format: "dd/mm/yyyy",
@@ -148,6 +149,7 @@ export class RecargaLibro extends RestController{
         language: "es",
         forceParse: false,
         autoclose: true,
+        todayBtn: "linked",
         todayHighlight: true,
     }
 
@@ -183,13 +185,24 @@ export class RecargaLibro extends RestController{
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
             'dateEnd': moment(final.toString()).format('DD-MM-YYYY'),
         };
+        let recharge=""
+        if(this.idRecharge && this.idRecharge!="-1")
+            recharge=",['op':'eq','field':'rechargeType.id','value':"+this.idRecharge+"]"
 
         let where ="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-                    "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]&order=asc";
+                    "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+recharge+"]&order=asc";
         this.where = "&where="+encodeURI(where);
         this.max=100;
         if(this.myglobal.existsPermission('109'))
             this.loadData();
+    }
+    public idRecharge:string;
+    public rechargeTypes:any={};
+    getRechargeTypes(){
+        this.httputils.onLoadList("/type/recharges",this.rechargeTypes,this.error);
+    }
+    setType(data){
+        this.idRecharge=data;
     }
 
 }
