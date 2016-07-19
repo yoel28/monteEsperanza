@@ -31,6 +31,8 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {TipoBasura} from "./tipoBasura/tipoBasura";
 import {Antenna} from "./antena/antenna";
 import {Ruta} from "./ruta/ruta";
+import {RestController} from "./common/restController";
+import {Http} from "@angular/http";
 
 @Component({
   selector: 'my-app',
@@ -79,16 +81,17 @@ import {Ruta} from "./ruta/ruta";
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
-export class AppComponent {
+export class AppComponent extends RestController{
 
   public saveUrl:string;
 
-  constructor(public router: Router,public myglobal:globalService) {
+  constructor(public router: Router,http: Http,public myglobal:globalService) {
+      super(http)
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-      localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    //localStorage.setItem('url','http://192.168.0.91:8080');
+    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+      localStorage.setItem('url','http://192.168.0.91:8080');
     let that=this;
     router.subscribe(
         function(data){
@@ -131,9 +134,11 @@ export class AppComponent {
 
   logout(event) {
     event.preventDefault();
+    this.httputils.onSave('/logout',null,null);
     this.myglobal.init=false;
     localStorage.removeItem('bearer');
     contentHeaders.delete('Authorization');
+
     let link = ['AccountLogin', {}];
     this.router.navigate(link);
 
