@@ -168,8 +168,18 @@ export class EmpresaTimeLine extends RestController {
         'max': 8,
         'ruc': ''
     };
+    public dataCompany:any={};
     constructor(params:RouteParams, public router:Router, http:Http, public toastr:ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.paramsTimeLine.ruc = params.get('ruc');
+        this.getCompany(this.paramsTimeLine.ruc);
+    }
+    getCompany(companyRuc:string){
+        if(this.myglobal.existsPermission('80')){
+            let successCallback= response => {
+                Object.assign(this.dataCompany, response.json().list[0]);
+            }
+            this.httputils.doGet("/companies/?where=[['op':'eq','field':'ruc','value':'"+companyRuc+"']]",successCallback,this.error)
+        }
     }
 }
