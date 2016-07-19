@@ -208,6 +208,15 @@ export class Filter extends RestController{
 
         this.whereFilter.emit(dataWhere);
     }
+    //reset
+    onReset(event) {
+        event.preventDefault();
+        this.keys.forEach(key=>{
+            (<Control>this.form.controls[key]).updateValue("");
+            (<Control>this.form.controls[key]).setErrors(null);
+        })
+        this.whereFilter.emit("");
+    }
     //guardar condicion en el formulario
     setCondicion(cond,id){
         (<Control>this.form.controls[id+'Cond']).updateValue(cond);

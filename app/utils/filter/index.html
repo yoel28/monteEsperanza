@@ -110,7 +110,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                <button (click)="onReset($event)" data-dismiss="modal" type="reset" class="btn btn-primary">
+                    <i class="fa fa-refresh"></i>
+                    Limpiar
+                </button>
+                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-success"
                         id="cntrlsubmit" [disabled]="!form.valid">
                     <i class="fa fa-filter"></i>
                     Filtrar
