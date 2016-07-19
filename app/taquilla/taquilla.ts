@@ -59,7 +59,8 @@ export class Taquilla extends RestController{
         }
     }
     assignRecarga(data){
-        this.dataCompanies.balance+=data.quantity;
+        this.dataCompany.balance+=data.quantity;
+        this.dataList.count+=1;
         this.dataList.list.unshift(data);
     }
 }
