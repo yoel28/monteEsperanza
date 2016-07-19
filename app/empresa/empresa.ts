@@ -109,6 +109,12 @@ export class Empresa extends RestController {
         this.router.navigate(link);
     }
 
+    goVehiculo(event,companyid:string) {
+        event.preventDefault();
+        let link = ['VehiculoCompany', {'companyId': companyid}];
+        this.router.navigate(link);
+    }
+
     goTimeLine(companyRuc:string) {
         let link = ['EmpresaTimeLine', {ruc: companyRuc}];
         this.router.navigate(link);
