@@ -145,14 +145,14 @@
                                                 <p>
                                                     <small>Descargas</small>
                                                 </p>
-                                                <button (click)="goTimeLine(user.companyRuc)" class="btn btn-yellow btn-block">Registro</button>
+                                                <button [disabled]="!user.companyId" (click)="goTimeLine(user.companyRuc)" class="btn btn-yellow btn-block">Registro</button>
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6 emphasis">
                                                 <h4><strong>{{user.companyBalance?user.companyBalance:"0"}}$</strong></h4>
                                                 <p>
                                                     <small>Saldo</small>
                                                 </p>
-                                                <button (click)="goTaquilla(user.companyRuc)" class="btn btn-yellow btn-block">Taquilla</button>
+                                                <button [disabled]="!user.companyId" (click)="goTaquilla(user.companyId)" class="btn btn-yellow btn-block">Taquilla</button>
                                             </div>
                                         </div>
                                     </div>
