@@ -48,7 +48,7 @@ export class Parametro extends RestController{
     }
     //Cargar Where del filter
     public paramsFilter:any = {
-        title: "Filtrar Parametros",
+        title: "Filtrar parámetros",
         idModal: "modalFilter",
         endpointForm: "",
     };
