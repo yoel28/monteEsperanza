@@ -139,6 +139,7 @@ export class RecargaTimeLine extends RestController{
         'fa fa-cc-visa': 'bg-pink',
         'fa fa-money': 'bg-violet',
         'fa fa-truck': 'bg-green',
+        'fa fa-refresh': 'bg-ivonne',
     };
     
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr:ToastsManager, public myglobal:globalService) {
