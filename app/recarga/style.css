@@ -16,3 +16,11 @@
 .bg-ivonne::after{
     border-color: transparent #c8f3d7 transparent transparent !important;
 }
+.recargas{
+    color: blue;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+    padding-bottom: 15px;
+}
+.titulo-recarga{
+    color: rgba(0, 0, 0, 0.5);font-size: 12pt;
+}

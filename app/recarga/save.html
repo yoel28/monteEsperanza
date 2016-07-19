@@ -8,7 +8,10 @@
             </div>
             <div class="modal-body">
                 <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
-                    <div *ngIf="myglobal.existsPermission('116')" class="form-group row">
+                    <div *ngIf="myglobal.existsPermission('116')" class="form-group row text-center recargas">
+                        <label class="titulo-recarga">
+                            Tipo de recarga
+                        </label>
                         <div class="btn-group rechargeTypes center-block">
                             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let type of rechargeTypes.list">
                                 <i class="{{type.icon}} btn fa-lg" [class.red]="rechargeType.value==type.id"
