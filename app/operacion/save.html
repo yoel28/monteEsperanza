@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form role="form" [ngFormModel]="form" (submit)="submitForm($event)" [class.col-lg-7]="search.object">
+                        <form role="form" [ngFormModel]="form"  [class.col-lg-7]="search.object">
                             <div *ngFor="let key of keys">
                                     <div *ngIf="!rules[key].object || (rules[key].object && myglobal.existsPermission(rules[key].permissions))" class="col-lg-12">
                                         <div class="row">
@@ -21,7 +21,9 @@
                                                             ((searchId[key] && searchId[key].title != data[key].value) || !searchId[key])
                                                         ">
                                                             <i class="{{rules[key].icon || 'fa fa-list'}} z-index"></i>
-                                                            <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}</span>
+                                                            <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
+                                                            <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
+                                                            </span>
                                                             <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
                                                                    [(ngModel)]="data[key].value"
                                                                    placeholder="{{rules[key].placeholder}}"

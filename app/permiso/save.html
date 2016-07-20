@@ -7,7 +7,7 @@
                 <h4 class="modal-title" id="myModalLabel">Agregar</h4>
             </div>
             <div class="modal-body">
-                <form role="form" [ngFormModel]="form" (submit)="submitForm($event)">
+                <form role="form" [ngFormModel]="form" >
                     <div class="form-group input-icon right">
                         <i class="fa fa-list"></i>
                         <input ngControl="title" class="form-control" [(ngModel)]="title.value"  #title="ngForm" placeholder="Título" type="text">
