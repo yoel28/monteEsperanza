@@ -112,7 +112,7 @@
                                                 </p>
 
 
-                                                <p><strong>Empresa:</strong> {{user.companyName}}
+                                                <p><strong>Cliente:</strong> {{user.companyName}}
                                                     <label>
                                                         <a *ngIf="myglobal.existsPermission('63') && myglobal.existsPermission('60') && myglobal.existsPermission('80')" (click)="dataSelect = user" class="btn btn-box-tools text-blue fa fa-search" data-toggle="modal" data-target="#searchEmpresa"></a>
                                                         <a *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63') " (click)="dataSelect = user" class="btn btn-box-tools text-green fa fa-plus" data-toggle="modal" data-target="#newEmpresa"></a>

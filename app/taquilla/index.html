@@ -9,7 +9,7 @@
         <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12 padding-bottom">
             <form role="form" (submit)="getCompanies(findCompany.value)">
                 <div class="input-group input-group-sm">
-                    <input  #findCompany type="text" class="form-control" placeholder="Ingrese el RUC de la empresa" value="{{search}}">
+                    <input  #findCompany type="text" class="form-control" placeholder="Ingrese el RUC del cliente" value="{{search}}">
                     <span class="input-group-btn">
                         <button (click)="getCompanies(findCompany.value)" type="button" class="btn btn-info btn-flat">
                             <i class="fa fa-search"></i>
@@ -21,7 +21,7 @@
         <div *ngIf="!myglobal.existsPermission('80')" class="col-lg-12">
             <div class="btn-red padding-error">
                 <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
-                No tiene permisos para listar las empresas
+                No tiene permisos para listar los clientes
             </div>
         </div>
 
@@ -69,7 +69,7 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>EMPRESA</th>
+                                    <th>CLIENTE</th>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -29,7 +29,7 @@
                     </div>
                     <div *ngIf="!idCompany" class="form-group">
                         <div *ngIf="myglobal.existsPermission('80')">
-                            <strong>Empresa: </strong>{{dataCompany || "Buscar Empresa"}}
+                            <strong>Cliente: </strong>{{dataCompany || "Buscar Cliente"}}
                             <button type="button" class="btn btn-box-tool text-blue" data-toggle="modal" [attr.data-target]="'#'+searchCompany.idModal">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -37,7 +37,7 @@
                         <div *ngIf="!myglobal.existsPermission('80')">
                             <div class="btn-red form-group padding-error">
                                 <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
-                                No tiene permisos para listar las empresas
+                                No tiene permisos para listar los clientes
                             </div>
                         </div>
                     </div>
