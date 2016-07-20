@@ -1,0 +1,8 @@
+
+  {
+    "vehicleId":1,
+    "vehiclePlate":"ABCD",
+    "companyId":1,
+    "companyName":"Empresa Cliente",
+    "weightIn":123
+  }

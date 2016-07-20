@@ -1,0 +1,15 @@
+[
+  {
+    "vehicleId":1,
+    "vehiclePlate":"ABCD",
+    "companyId":1,
+    "companyName":"Empresa Cliente",
+    "typeTrashId":1,
+    "typeTrashName":"Tipo de basura",
+    "routeId":1,
+    "routeName":"Ruta 1",
+    "weightIn":123,
+    "weightOut":123,
+    "id":12
+  }
+]
