@@ -28,6 +28,7 @@ export class OperacionSave extends RestController{
         'vehicle':{
             'type':'text',
             'required':true,
+            'readOnly':false,
             'key':'vehicle',
             'paramsSearch': {
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
@@ -50,6 +51,7 @@ export class OperacionSave extends RestController{
             'type':'text',
             'required':true,
             'key':'company',
+            'readOnly':false,
             'paramsSearch': {
                 'label':{'title':"Nombre: ",'detail':"RUC: "},
                 'endpoint':"/search/companies/",
@@ -71,6 +73,7 @@ export class OperacionSave extends RestController{
             'type':'text',
             'required':true,
             'key':'trashType',
+            'readOnly':false,
             'permissions':'136',
             'paramsSearch': {
                 'label':{'title':"Tipo: ",'detail':"Detalle: "},
@@ -92,6 +95,7 @@ export class OperacionSave extends RestController{
             'type':'text',
             'required':true,
             'key':'route',
+            'readOnly':false,
             'paramsSearch': {
                 'label':{'title':"Ruta: ",'detail':"Detalle: "},
                 'endpoint':"/search/routes/",
@@ -113,9 +117,21 @@ export class OperacionSave extends RestController{
             'type':'number',
             'required':true,
             'key':'weightIn',
+            'readOnly':false,
             'icon':'fa fa-balance-scale',
             'title':'Peso E.',
             'placeholder':'Ingrese el peso de entrada',
+            'msg':{
+                'error':'El peso debe ser numerico',
+            },
+        },
+        'weightOut':{
+            'type':'number',
+            'key':'weightOut',
+            'readOnly':false,
+            'icon':'fa fa-balance-scale',
+            'title':'Peso S.',
+            'placeholder':'Peso de salida',
             'msg':{
                 'error':'El peso debe ser numerico',
             },
@@ -183,6 +199,12 @@ export class OperacionSave extends RestController{
     submitForm(){
         let that = this;
         let successCallback= response => {
+            Object.keys(that.form.controls).forEach((key) => {
+                (<Control>that.form.controls[key]).updateValue("");
+                (<Control>that.form.controls[key]).setErrors(null);
+                if(that.rules[key].readOnly)
+                    that.rules[key].readOnly=false;
+            });
             that.save.emit(response.json());
             that.toastr.success('Guardado con éxito','Notificación')
         };
@@ -224,4 +246,56 @@ export class OperacionSave extends RestController{
         (<Control>this.form.controls[this.search.key]).updateValue(data.title);
         this.dataList=[];
     }
+    public dataIn:any={};
+    public antenaEnabled:boolean=false;
+    inAntena(event){
+        event.preventDefault();
+        this.antenaEnabled=true;
+        let that = this;
+        let successCallback= response => {
+            let data=response.json();
+            that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
+            (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
+            that.rules['vehicle'].readOnly=true;
+
+            that.searchId['company']={'id':data.companyId,'title':data.companyName};
+            (<Control>this.form.controls['company']).updateValue(data.companyName);
+            that.rules['company'].readOnly=true;
+
+            (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
+            that.rules['weightIn'].readOnly=true;
+        }
+        this.httputils.doGet('consultas/in.json',successCallback,this.error,true)
+    }
+    outAntena(event){
+        event.preventDefault();
+        let that = this;
+        this.antenaEnabled=true;
+        let successCallback= response => {
+            let data=response.json()[0];
+            that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
+            (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
+            that.rules['vehicle'].readOnly=true;
+
+            that.searchId['company']={'id':data.companyId,'title':data.companyName};
+            (<Control>this.form.controls['company']).updateValue(data.companyName);
+            that.rules['company'].readOnly=true;
+
+            that.searchId['trashType']={'id':data.typeTrashId,'title':data.typeTrashName};
+            (<Control>this.form.controls['trashType']).updateValue(data.typeTrashName);
+            that.rules['trashType'].readOnly=true;
+
+            that.searchId['route']={'id':data.routeId,'title':data.routeName};
+            (<Control>this.form.controls['route']).updateValue(data.routeName);
+            that.rules['route'].readOnly=true;
+
+            (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
+            that.rules['weightIn'].readOnly=true;
+
+            (<Control>this.form.controls['weightOut']).updateValue(data.weightOut);
+            that.rules['weightOut'].readOnly=true;
+        }
+        this.httputils.doGet('consultas/out.json',successCallback,this.error,true)
+    }
 }
+
