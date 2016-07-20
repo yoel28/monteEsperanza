@@ -26,7 +26,7 @@
                         <table class="table table-striped table-hover tarjeta">
                             <thead>
                             <tr data-title="email">
-                                <th>ID</th>
+
                                 <th>T&iacute;tulo</th>
                                 <th>Referencia</th>
                                 <th>Detalle</th>
@@ -36,7 +36,7 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
-                                <td>{{data.id}}</td>
+
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="title"
                                        [disabled]="!myglobal.existsPermission('152')"></a>

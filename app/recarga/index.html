@@ -24,7 +24,7 @@
                         <table class="table table-striped table-hover tarjeta">
                             <thead>
                             <tr>
-                                <th>ID</th>
+
                                 <th>Empresa</th>
                                 <th>Referencia</th>
                                 <th>Detalle</th>
@@ -35,7 +35,7 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
-                                <td>{{data.id}}</td>
+
                                 <td>{{data.vehiclePlate}}</td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="reference"
@@ -91,7 +91,7 @@
                             class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas eliminar la recarga <strong>{{dataSelect.id}}</strong> Ref: {{dataSelect.reference}} ?
+                    ¿ Estás seguro que deseas eliminar la recarga <strong>{{dataSelect.reference}} </strong> ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>

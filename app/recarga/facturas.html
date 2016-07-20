@@ -10,7 +10,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>ID</th>
+
                     <th>Registrado</th>
                     <th>Recarga</th>
                     <th>Vehiculo</th>
@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let data of dataList.list">
-                    <td>{{data.id}}</td>
+
                     <td>{{data.dateCreated | fecha | date:'dd-MM-yyyy, h:mma' }}</td>
                     <td>
                         <strong> <i class="{{data.rechargeTypeIcon}}"></i>&nbsp;{{data.rechargeTypeTitle}}</strong><br/>

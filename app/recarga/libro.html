@@ -50,7 +50,6 @@
 
                                 <thead>
                                 <tr>
-                                    <th>&nbsp;</th>
                                     <th >Fecha</th>
                                     <th>Referencia</th>
                                     <th>Fecha de Transaccion</th>
@@ -61,7 +60,6 @@
                                 </thead>
                                 <tbody *ngFor="let recharges of dataList.list">
                                 <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
-                                    <td>{{recharges.id}}</td>
                                     <td>{{recharges.dateCreated| fecha | date:'dd-MM-yyyy, h:m'}}</td>
                                     <td>{{recharges.reference}}</td>
                                     <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>

@@ -121,7 +121,6 @@
 
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Fecha Efectiva</th>
                                 <th>Referencia</th>
                                 <th>Fecha de Transacci&oacute;n</th>
@@ -132,7 +131,6 @@
                             </thead>
                             <tbody *ngFor="let recharges of dataList.list">
                             <tr>
-                                <td>{{recharges.id}}</td>
                                 <td>{{recharges.dateCreated}}</td>
                                 <td>{{recharges.reference}}</td>
                                 <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
