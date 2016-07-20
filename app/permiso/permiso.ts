@@ -33,11 +33,20 @@ export class Permiso extends RestController{
         'controlador':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Controlador', 'search': true},
         'accion':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Accion', 'search': true},
     };
+    public modalIn:boolean=true;
     ngOnInit(){
+
+    }
+    loadPage(){
+        this.modalIn=false;
         if(this.myglobal.existsPermission('41')){
             this.max = 30;
             this.loadData();
         }
+    }
+    onDashboard(){
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
     }
     assignPermiso(data){
         this.dataList.list.unshift(data);
