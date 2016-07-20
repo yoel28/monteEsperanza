@@ -33,7 +33,7 @@ export class Xeditable {
 
         jQuery(this.el.nativeElement).editable({
             type: that.rules[that.field].type || 'text',
-            value: that.data[that.field] || "N/A",
+            value: that.data[that.field] || (that.field=='password'?"":"N/A"),
             disabled: that.disabled,
             display: that.rules[that.field].display || null,
             showbuttons: that.rules[that.field].showbuttons || false,
