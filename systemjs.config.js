@@ -22,7 +22,8 @@
     'jquery' :                    'node_modules/jquery/dist',
     'angular2-highcharts' :       'node_modules/angular2-highcharts',
     //'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js',
-    'semantic' :                  'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js'
+    'semantic' :                  'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js',
+    'angular2-websocket' :       'node_modules/angular2-websocket',
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -41,7 +42,8 @@
     'moment':                     { main: 'moment.js',defaultExtension: 'js' },
     'ng2-toastr':                 { defaultExtension: 'js' },
     'jquery':                     { main: 'jquery.min.js', defaultExtension: 'js' },
-    'angular2-highcharts' :       { main: 'index',format: 'cjs', defaultExtension: 'js' }
+    'angular2-highcharts' :       { main: 'index',format: 'cjs', defaultExtension: 'js' },
+    'angular2-websocket' :        { main: 'angular2-websocket.js', defaultExtension: 'js' }
 
 
   };
