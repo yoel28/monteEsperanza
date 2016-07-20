@@ -27,7 +27,9 @@
                                                             <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
                                                                    [(ngModel)]="data[key].value"
                                                                    placeholder="{{rules[key].placeholder}}"
-                                                                   type="{{rules[key].type}}" [attr.aria-describedby]="key">
+                                                                   type="{{rules[key].type}}" [attr.aria-describedby]="key"
+                                                                   [readonly]="rules[key].readOnly"
+                                                            >
 
                                                             <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                         [(ngModel)]="data[key].value"
@@ -40,7 +42,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 padding-top-4">
-                                                        <button *ngIf="rules[key].object"
+                                                        <button *ngIf="rules[key].object && !rules[key].readOnly"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
                                                                 (click)="getLoadSearch($event,rules[key])">
                                                         </button>
@@ -115,9 +117,12 @@
                     <i class="fa fa-save"></i>
                     Registrar
                 </button>
-                <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-success"
-                        id="cntrl" [disabled]="!form.valid">
-                    <i class="fa fa-save"></i>
+                <button (click)="inAntena($event)" type="button" class="btn btn-success" id="cntrlIn">
+                    <i class="fa fa-sign-in"></i>
+                    Entrada
+                </button>
+                <button (click)="outAntena($event)" type="button" class="btn btn-success" id="cntrlOut">
+                    <i class="fa fa-sign-out"></i>
                     Salida
                 </button>
             </div>
