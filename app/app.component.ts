@@ -73,7 +73,7 @@ import {Http} from "@angular/http";
   { path: '/libro',   name: 'RecargaLibro', component: RecargaLibro },
   { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
   { path: '/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
-  { path: '/tipoCliente',   name: 'TipoEmpresa', component: TipoEmpresa },
+  { path: '/grupo',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
   { path: '/antenas',   name: 'Antenna', component: Antenna },
@@ -158,11 +158,13 @@ export class AppComponent extends RestController{
         event.preventDefault();
         this.myglobal.myPermissions();
     }
-    activeMenuId:any={};
+    activeMenuId:string;
     activeMenu(event,id){
         event.preventDefault();
-        this.activeMenuId[id]=!this.activeMenuId[id];
-        return this.activeMenuId[id];
+        if(this.activeMenuId==id)
+            this.activeMenuId="";
+        else
+            this.activeMenuId=id;
 
     }
 
