@@ -260,7 +260,6 @@ export class OperacionSave extends RestController{
 
             that.searchId['company']={'id':data.companyId,'title':data.companyName};
             (<Control>this.form.controls['company']).updateValue(data.companyName);
-            that.rules['company'].readOnly=true;
 
             (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
             that.rules['weightIn'].readOnly=true;
