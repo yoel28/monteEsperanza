@@ -63,8 +63,7 @@ export class Vehiculo extends RestController{
     }
 
     assignVehiculo(data){
-        this.dataList.list.unshift(data);
-        this.dataList.list.pop();
+        Object.assign(this.dataList.list[0],data);
     }
 
     //Buscar tag sin vehiculo ---------------------------------------------

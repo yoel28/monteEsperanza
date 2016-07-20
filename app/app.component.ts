@@ -1,6 +1,7 @@
 import {Component, provide} from '@angular/core';
 import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { contentHeaders } from './common/headers';
+import {$WebSocket} from 'angular2-websocket/angular2-websocket';
 
 import { AccountLogin }         from './account/account';
 import { AccountRecover }         from './account/account';
@@ -88,10 +89,11 @@ export class AppComponent extends RestController{
   constructor(public router: Router,http: Http,public myglobal:globalService) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-    localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    //localStorage.setItem('url','http://192.168.0.91:8080');
+    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    localStorage.setItem('url','http://192.168.0.91:8080');
+    localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
         function(data){
@@ -121,6 +123,8 @@ export class AppComponent extends RestController{
           console.log("entro2");
         }
     );
+
+      this.onSocket();
   }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -167,5 +171,23 @@ export class AppComponent extends RestController{
             this.activeMenuId=id;
 
     }
+    ws: $WebSocket;
+    onSocket(){
+        //this.ws = new $WebSocket("ws://192.168.0.91:9090/stomp");
+        let wp = new WebSocket("ws://192.168.0.91:9090/stomp","/topic/chat");
+
+        /*
+        this.ws.connect();
+        //this.ws.send("hola");
+        this.ws.getDataStream().subscribe(
+            res => {
+                console.log(res);
+            },
+            function(e) { console.log('Error: ' + e.message); },
+            function() { console.log('Completed'); }
+        );*/
+
+    }
+
 
 }
