@@ -57,9 +57,9 @@ import {Http} from "@angular/http";
   { path: '/vehiculos/:companyId',   name: 'VehiculoCompany', component: Vehiculo },
   { path: '/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
 
-  { path: '/empresas',   name: 'Empresa', component: Empresa },
+  { path: '/cliente',   name: 'Empresa', component: Empresa },
   { path: '/perfil',   name: 'Profile', component: Profile },
-  { path: '/empresas/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
+  { path: '/cliente/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
   { path: '/roles',   name: 'Rol', component: Rol },
@@ -73,7 +73,7 @@ import {Http} from "@angular/http";
   { path: '/libro',   name: 'RecargaLibro', component: RecargaLibro },
   { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
   { path: '/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
-  { path: '/tipoEmpresa',   name: 'TipoEmpresa', component: TipoEmpresa },
+  { path: '/tipoCliente',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
   { path: '/antenas',   name: 'Antenna', component: Antenna },
