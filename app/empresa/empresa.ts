@@ -108,8 +108,7 @@ export class Empresa extends RestController {
     }
 
     assignEmpresa(data) {
-        this.dataList.list.unshift(data);
-        this.dataList.list.pop();
+        Object.assign(this.dataList.list[0],data);
     }
 
     goTaquilla(companyRuc:string) {
