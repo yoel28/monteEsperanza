@@ -44,7 +44,7 @@ export class UserSave extends RestController{
         this.email = new Control("", Validators.compose([Validators.required]));
         this.password = new Control("", Validators.compose([Validators.required]));
         this.phone = new Control("", Validators.compose([Validators.required]));
-        this.image = new Control("", Validators.compose([Validators.required]));
+        this.image = new Control("");
 
         this.form = this._formBuilder.group({
             username: this.username,

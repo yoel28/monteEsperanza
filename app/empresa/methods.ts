@@ -54,7 +54,7 @@ export class EmpresaSave extends RestController{
         this.responsiblePerson = new Control("", Validators.compose([Validators.required]));
         this.phone = new Control("", Validators.compose([Validators.required]));
         this.address = new Control("", Validators.compose([Validators.required]));
-        this.image = new Control("", Validators.compose([Validators.required]));
+        this.image = new Control("");
         this.companyType = new Control("", Validators.compose([Validators.required]));
         
         this.form = this._formBuilder.group({

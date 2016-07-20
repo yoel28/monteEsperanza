@@ -53,7 +53,7 @@ export class VehiculoSave extends RestController{
         this.weight = new Control("", Validators.compose([Validators.required]));
         this.vehicleType = new Control("", Validators.compose([Validators.required]));
         this.company = new Control("", Validators.compose([Validators.required]));
-        this.image = new Control("", Validators.compose([Validators.required]));
+        this.image = new Control("");
 
         this.form = this._formBuilder.group({
             plate: this.plate,
