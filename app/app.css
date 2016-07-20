@@ -11,3 +11,6 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.treeview-menu{
+    margin-top: -2px !important;
+}
