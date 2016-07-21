@@ -214,6 +214,8 @@ export class Filter extends RestController{
         this.keys.forEach(key=>{
             (<Control>this.form.controls[key]).updateValue("");
             (<Control>this.form.controls[key]).setErrors(null);
+
+            (<Control>this.form.controls[key+'Cond']).updateValue("eq");
         })
         this.whereFilter.emit("");
     }
