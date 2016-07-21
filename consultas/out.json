@@ -4,10 +4,10 @@
     "vehiclePlate":"ABCD",
     "companyId":1,
     "companyName":"Empresa Cliente",
-    "typeTrashId":1,
-    "typeTrashName":"Tipo de basura",
+    "trashTypeId":1,
+    "trashTypeTitle":"Tipo de basura",
     "routeId":1,
-    "routeName":"Ruta 1",
+    "routeTitle":"Ruta 1",
     "weightIn":123,
     "weightOut":123,
     "id":12
