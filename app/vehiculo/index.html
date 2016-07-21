@@ -24,170 +24,170 @@
                 </div>
                 <!-- /.box-header -->
                 <div *ngIf="dataList.list && myglobal.existsPermission('69')" class="box-body" >
-                    <div *ngFor="let vehList of dataList.list | divide:3 " class="row">
-                        <div *ngFor="let data of vehList">
+                    <div *ngFor="let i of [0,3]" class="row">
+                        <div *ngFor="let data of dataList.list | slice:i:i+3">
                             <div class="col-lg-4">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <div class="profile">
-                                        <div style="margin-bottom: 15px" class="row">
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <div *ngIf="myglobal.existsPermission('73') || myglobal.existsPermission('71')"
-                                                        class="btn-group dropdown pull-right">
-                                                    <button type="button" data-toggle="dropdown"
-                                                            class="btn btn-box-tool dropdown-toggle" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                        <i class="fa fa-gears fa-lg"></i>
-                                                    </button>
-                                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                                        <li *ngIf="myglobal.existsPermission('73')">
-                                                            <a (click)="onLock('enabled',data)">
-                                                                <span class="fa fa-warning"></span>
-                                                                {{data.enabled?"Bloquear":"Habilitar"}}
-                                                            </a>
-                                                        </li>
-                                                        <li *ngIf="myglobal.existsPermission('71')">
-                                                            <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                                                               (click)="dataSelect = data" >
-                                                                <span class="fa fa-trash"></span>
-                                                                &nbsp;Eliminar
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center separacion">
-                                                <figure>
-                                                    <div [imageSrc]="data.image || '/assets/img/truck-guest.png'" x-cropit
-                                                         (saveImagen)="changeImage($event,data.id)">
-                                                        <div class="cropit-preview center-block"></div>
-                                                        <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))" >
-                                                            <div class="col-lg-6">
-                                                                <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
-                                                                <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <input type="range" class="cropit-image-zoom-input"/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))">
-                                                            <div class="col-lg-6">
-                                                                <input x-file type="file" class="cropit-image-input"/>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <button (click)="loadImage($event,data)"
-                                                                        class="btn btn-success pull-right fa fa-save upload boton-guardar">
-                                                                    &nbsp;Guardar
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <div class="profile">
+                                            <div style="margin-bottom: 15px" class="row">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div *ngIf="myglobal.existsPermission('73') || myglobal.existsPermission('71')"
+                                                         class="btn-group dropdown pull-right">
+                                                        <button type="button" data-toggle="dropdown"
+                                                                class="btn btn-box-tool dropdown-toggle" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            <i class="fa fa-gears fa-lg"></i>
+                                                        </button>
+                                                        <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                                            <li *ngIf="myglobal.existsPermission('73')">
+                                                                <a (click)="onLock('enabled',data)">
+                                                                    <span class="fa fa-warning"></span>
+                                                                    {{data.enabled?"Bloquear":"Habilitar"}}
+                                                                </a>
+                                                            </li>
+                                                            <li *ngIf="myglobal.existsPermission('71')">
+                                                                <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                                                   (click)="dataSelect = data" >
+                                                                    <span class="fa fa-trash"></span>
+                                                                    &nbsp;Eliminar
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                </figure>
-                                            </div>
+                                                </div>
 
-                                            <div class="col-xs-12 col-sm-8 col-lg-12">
-                                                <strong class="truncate">{{data.plate}}</strong>
-                                                <p>
-                                                    <strong>Peso:</strong>
-                                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
-                                                       [data]="data" [rules]="rules" field="weight"></a>
-                                                </p>
-                                                <p>
-                                                    Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
-                                                    <label>
-
-                                                        <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('72')"
-                                                                (click)="releaseTag(data)"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-minus text-red"></i>
-                                                        </button>
-
-                                                        <button (click)="dataSelect = data"
-                                                                *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('72')"
-                                                                data-toggle="modal" data-target="#saveTagVehiculo"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-plus text-green"></i>
-                                                        </button>
-
-                                                        <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')"
-                                                                (click)="dataSelect = data"
-                                                                data-toggle="modal" data-target="#searchTag"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-search text-blue"></i>
-                                                        </button>
-                                                    </label>
-                                                </p>
-                                                <p>
-                                                    Tipo:&nbsp;
-                                                    <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}"></i>
-                                                    <strong>{{data.vehicleTypeTitle}}</strong>
-                                                    {{data.vehicleTypeDetail}}
-                                                    <label>
-
-                                                        <button (click)="dataSelect = data"
-                                                                *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('30')"
-                                                                data-toggle="modal" data-target="#saveTipoVehiculoAdd"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-plus text-green"></i>
-                                                        </button>
-
-                                                        <button (click)="dataSelect = data"
-                                                                *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')"
-                                                                data-toggle="modal" data-target="#searchTipoVehiculo"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-search text-blue"></i>
-                                                        </button>
-                                                    </label>
-                                                </p>
-                                                <p *ngIf="myglobal.existsPermission('73')">
-                                                    <button (click)="onLock('enabled',data)" class="btn btn-sm"
-                                                            [class.btn-green]="data.enabled"
-                                                            [class.btn-red]="!data.enabled">
-                                                        {{data.enabled?"Habilitado":"Bloqueado"}}
-                                                    </button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 text-center divider divider-form">
-                                            <div *ngIf="!data.companyId">
-                                                No tiene un cliente asignado.
-                                            </div>
-                                            <div *ngIf="data.companyId">
-                                                <div class="pull-left">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center separacion">
                                                     <figure>
-                                                        <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.png'}}"
-                                                             class="img-responsive img-circle img-list">
+                                                        <div [imageSrc]="data.image || '/assets/img/truck-guest.png'" x-cropit
+                                                             (saveImagen)="changeImage($event,data.id)">
+                                                            <div class="cropit-preview center-block"></div>
+                                                            <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))" >
+                                                                <div class="col-lg-6">
+                                                                    <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
+                                                                    <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <input type="range" class="cropit-image-zoom-input"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))">
+                                                                <div class="col-lg-6">
+                                                                    <input x-file type="file" class="cropit-image-input"/>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <button (click)="loadImage($event,data)"
+                                                                            class="btn btn-success pull-right fa fa-save upload boton-guardar">
+                                                                        &nbsp;Guardar
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </figure>
-                                                    <div class="box-tools">
-
-                                                        <button (click)="dataSelect = data"
-                                                                *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
-                                                                data-toggle="modal" data-target="#saveEmpresaAdd"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-plus text-green"></i>
-                                                        </button>
-
-                                                        <button (click)="dataSelect = data"
-                                                                *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
-                                                                data-toggle="modal" data-target="#searchEmpresaNueva"
-                                                                type="button" class="btn btn-box-tool">
-                                                            <i class="fa fa-search text-blue"></i>
-                                                        </button>
-                                                    </div>
-
                                                 </div>
-                                                <div>
-                                                    <strong>{{data.companyName}}</strong><br/>
-                                                    <strong>RUC: </strong>{{data.companyRuc}}<br/>
-                                                    <strong>Telefono: </strong>{{data.companyPhone}}<br/>
+
+                                                <div class="col-xs-12 col-sm-8 col-lg-12">
+                                                    <strong class="truncate">{{data.plate}}</strong>
+                                                    <p>
+                                                        <strong>Peso:</strong>
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
+                                                           [data]="data" [rules]="rules" field="weight"></a>
+                                                    </p>
+                                                    <p>
+                                                        Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
+                                                        <label>
+
+                                                            <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('72')"
+                                                                    (click)="releaseTag(data)"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-minus text-red"></i>
+                                                            </button>
+
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('72')"
+                                                                    data-toggle="modal" data-target="#saveTagVehiculo"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+
+                                                            <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')"
+                                                                    (click)="dataSelect = data"
+                                                                    data-toggle="modal" data-target="#searchTag"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        Tipo:&nbsp;
+                                                        <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}"></i>
+                                                        <strong>{{data.vehicleTypeTitle}}</strong>
+                                                        {{data.vehicleTypeDetail}}
+                                                        <label>
+
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('30')"
+                                                                    data-toggle="modal" data-target="#saveTipoVehiculoAdd"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')"
+                                                                    data-toggle="modal" data-target="#searchTipoVehiculo"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
+                                                        </label>
+                                                    </p>
+                                                    <p *ngIf="myglobal.existsPermission('73')">
+                                                        <button (click)="onLock('enabled',data)" class="btn btn-sm"
+                                                                [class.btn-green]="data.enabled"
+                                                                [class.btn-red]="!data.enabled">
+                                                            {{data.enabled?"Habilitado":"Bloqueado"}}
+                                                        </button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 text-center divider divider-form">
+                                                <div *ngIf="!data.companyId">
+                                                    No tiene un cliente asignado.
+                                                </div>
+                                                <div *ngIf="data.companyId">
+                                                    <div class="pull-left">
+                                                        <figure>
+                                                            <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.png'}}"
+                                                                 class="img-responsive img-circle img-list">
+                                                        </figure>
+                                                        <div class="box-tools">
+
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
+                                                                    data-toggle="modal" data-target="#saveEmpresaAdd"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
+                                                                    data-toggle="modal" data-target="#searchEmpresaNueva"
+                                                                    type="button" class="btn btn-box-tool">
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div>
+                                                        <strong>{{data.companyName}}</strong><br/>
+                                                        <strong>RUC: </strong>{{data.companyRuc}}<br/>
+                                                        <strong>Telefono: </strong>{{data.companyPhone}}<br/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>

@@ -43,7 +43,7 @@ export class Vehiculo extends RestController{
         if (this.myglobal.existsPermission('69')) {
             if(this.params.get('companyId'))
                 this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
-            this.max = 12;
+            this.max = 6;
             this.loadData();
         }
     }
@@ -62,7 +62,8 @@ export class Vehiculo extends RestController{
     }
 
     assignVehiculo(data){
-        Object.assign(this.dataList.list[0],data);
+        this.dataList.list.unshift(data);
+        this.dataList.list.pop();
     }
 
     //Buscar tag sin vehiculo ---------------------------------------------
