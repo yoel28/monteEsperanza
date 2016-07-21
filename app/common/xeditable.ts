@@ -187,9 +187,9 @@ export class Datepicker {
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
             if(that.format.return)
-                that.fecha.emit(moment.utc(ev.date).format(that.format.return));
+                that.fecha.emit({'date':moment.utc(ev.date).format(that.format.return),'key':ev.target.accessKey});
             else
-                that.fecha.emit(ev.date);
+                that.fecha.emit({'date':ev.date,'key':ev.target.accessKey});
         })
         jQuery('#formato').click(function (ev) {
             jQuery(that.el.nativeElement).datepicker({
