@@ -6,7 +6,7 @@
         </h2>
     </section>
     <section class="box-body">
-        <div class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12 padding-bottom">
+        <div  class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12 padding-bottom noprint">
             <form role="form" (submit)="getCompanies(findCompany.value)">
                 <div class="input-group input-group-sm">
                     <input  #findCompany type="text" class="form-control" placeholder="Ingrese el RUC del cliente" value="{{search}}">
@@ -53,11 +53,11 @@
 
         </div>
 
-        <div *ngIf="dataCompany?.id">
-            <div class="row col-lg-12">
+        <div *ngIf="dataCompany?.id" class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <div class="profile col-lg-2">
+                        <div class="profile col-lg-2 col-md-2 col-xs-12 col-sm-2">
                             <div style="margin-bottom: 15px" class="row">
                                 <figure>
                                     <img src="{{dataCompany.image || '/assets/img/company-guest.png'}}" alt=""
@@ -65,7 +65,7 @@
                                 </figure>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-4 col-xs-6 col-sm-6">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -88,7 +88,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-4 col-xs-6 col-sm-6">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 noprint">
                             <h3>M&eacute;todos de recarga disponibles:</h3>
                             <div class="btn-group">
                                 <img src="assets/img/credit/american-express.png" class="img-responsive btn" alt="">
@@ -189,9 +189,9 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <div class="row pull-right">
-                                <button type="button" class="btn  btn-blue">
-                                    <i class="fa  fa-download fa-lg"></i> Generar PDF
+                            <div class="row pull-right noprint">
+                                <button (click)="onPrint($event)" type="button" class="btn  btn-blue">
+                                    <i class="fa  fa-print fa-lg"></i> Imprimir
                                 </button>
                                 <button type="button" class="btn  btn-success" data-toggle="modal" data-target="#saveRecarga"
                                         *ngIf="myglobal.existsPermission('111')">

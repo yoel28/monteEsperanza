@@ -63,6 +63,11 @@ export class Taquilla extends RestController{
         this.dataList.count+=1;
         this.dataList.list.unshift(data);
     }
+    onPrint(event){
+        event.preventDefault();
+        print();
+
+    }
 }
 
 
