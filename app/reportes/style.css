@@ -1,0 +1,17 @@
+.table-group{
+    background-color: rgba(0, 0, 0, 0.02);
+    margin-top: 10pt;
+    border-radius: 5pt;
+}
+.table-head{
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+}
+.title-companygroup{
+    margin-bottom: 10pt;
+    background-color: rgba(0, 0, 0, 0.34);
+    color: white;
+    font-size: 12pt;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
