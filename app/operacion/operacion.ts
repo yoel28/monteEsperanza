@@ -44,7 +44,7 @@ export class Operacion extends RestController{
             'search':true,
             'object':true,
             'title':'Buscar vehículo',
-            'placeholder':'ingrese la placa del vehículo',
+            'placeholder':'Ingrese la placa del vehículo',
             'icon':'fa fa-truck',
         },
     };
