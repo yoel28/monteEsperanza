@@ -79,11 +79,11 @@ export class RecargaIngresos extends RestController{
         todayHighlight: true,
     }
 
-    loadFechaFac(data, field) {
-        if (field == 1)
-            this.dateStart.updateValue(data)
+    loadFechaFac(data) {
+        if (data.key == "1")
+            this.dateStart.updateValue(data.date)
         else
-            this.dateEnd.updateValue(data)
+            this.dateEnd.updateValue(data.date)
     }
 
     //consultar Facturas
@@ -153,11 +153,11 @@ export class RecargaLibro extends RestController{
         todayHighlight: true,
     }
 
-    loadFechaFac(data, field) {
-        if (field == 1)
-            this.dateStart.updateValue(data)
+    loadFechaFac(data) {
+        if (data.key == "1")
+            this.dateStart.updateValue(data.date)
         else
-            this.dateEnd.updateValue(data)
+            this.dateEnd.updateValue(data.date)
     }
 
     initForm(){

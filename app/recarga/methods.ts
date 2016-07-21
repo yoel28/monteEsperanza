@@ -83,14 +83,15 @@ export class RecargaSave extends RestController{
         startView: 2,
         minViewMode: 0,
         maxViewMode: 2,
-        language: "es",
         forceParse: false,
+        language: "es",
+        todayBtn: "linked",
         autoclose: true,
         todayHighlight: true,
     }
 
     loadFechaFac(data) {
-        this.referenceDate.updateValue(data)
+        this.referenceDate.updateValue(data.date)
     }
 
     //asignar compania----------------------------------

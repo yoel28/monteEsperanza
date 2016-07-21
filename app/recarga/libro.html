@@ -14,14 +14,14 @@
                                     Inicio
                                     <div class="input-icon right">
                                         <i class="glyphicon glyphicon-calendar"></i>
-                                        <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,1)" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                        <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Ingresar un periodo inicial" type="text" class="form-control">
                                     </div>
                             </div>
                             <div class="form-group input-icon right col-lg-4">
                                 Fin
                                 <div class="input-icon right">
                                     <i class="glyphicon glyphicon-calendar"></i>
-                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event,2)" value="Ingresar un periodo final" type="text" class="form-control">
+                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="2" value="Ingresar un periodo final" type="text" class="form-control">
                                 </div>
                             </div>
                             <div *ngIf="rechargeTypes.list" class="form-group input-icon right col-lg-4">
