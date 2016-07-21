@@ -1,8 +1,6 @@
 import {Component, provide} from '@angular/core';
 import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { contentHeaders } from './common/headers';
-import {$WebSocket} from 'angular2-websocket/angular2-websocket';
-
 import { AccountLogin }         from './account/account';
 import { AccountRecover }         from './account/account';
 import { AccountActivate }         from './account/account';
@@ -34,6 +32,10 @@ import {Antenna} from "./antena/antenna";
 import {Ruta} from "./ruta/ruta";
 import {RestController} from "./common/restController";
 import {Http} from "@angular/http";
+import {ReporteGrupos} from "./reportes/reportes";
+
+declare var SockJS:any;
+declare var Stomp:any;
 
 @Component({
   selector: 'my-app',
@@ -65,6 +67,8 @@ import {Http} from "@angular/http";
   { path: '/operacion',   name: 'Operacion', component: Operacion },
   { path: '/roles',   name: 'Rol', component: Rol },
   { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
+    
+  { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
@@ -89,10 +93,10 @@ export class AppComponent extends RestController{
   constructor(public router: Router,http: Http,public myglobal:globalService) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-    localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    //localStorage.setItem('url','http://192.168.0.91:8080');
+    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    localStorage.setItem('url','http://192.168.0.91:8080');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
@@ -123,8 +127,7 @@ export class AppComponent extends RestController{
           console.log("entro2");
         }
     );
-
-      this.onSocket();
+     // this.onSocket();
   }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -172,18 +175,16 @@ export class AppComponent extends RestController{
 
     }
     onSocket(){
-        /*
-        let SockJS:any;
-        let sock = new SockJS("http://echo.websocket.org");
-        sock.onopen = function() {
-            console.log('open');
-            this._isClose = true;
-        };
+        let ws = new SockJS("http://192.168.0.91:8080/stomp");
+        let client = Stomp.over(ws);
 
-        sock.onmessage = (e) => {
-            e.messageReceived(e);
-        }
-        */
+        client.connect({}, function() {
+            //Subscribe to the 'chat' topic and define a function that is executed
+            //anytime a message is published to that topic by the server or another client.
+            client.subscribe("/topic/read", function(message) {
+                console.log(message)
+            });
+        });
 
 
     }
