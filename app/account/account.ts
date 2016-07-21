@@ -42,21 +42,22 @@ export class AccountLogin extends RestController {
     
     login(event:Event) {
         event.preventDefault();
+        let that=this;
         let body = JSON.stringify(this.form.value);
         this.submitForm = true;
         let errorLogin = error=> {
-            this.submitForm = false;
-            this.toastr.error('Usuario o contraseña inválida');
+            that.submitForm = false;
+            that.toastr.error('Usuario o contraseña inválida');
         }
         let successCallback = response => {
-            this.submitForm = false;
-            this.myglobal.init=false;
+            that.submitForm = false;
+            that.myglobal.init=false;
             localStorage.setItem('bearer', response.json().access_token);
             contentHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('bearer'));
-            this.myglobal.user = response.json();
-            this.myglobal.getUser();
+            that.myglobal.user = response.json();
+            that.myglobal.getUser();
             let link = ['Dashboard', {}];
-            this.router.navigate(link);
+            that.router.navigate(link);
         };
         this.httputils.doPost(this.endpoint, body, successCallback, errorLogin);
     }
