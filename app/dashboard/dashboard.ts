@@ -295,11 +295,11 @@ export class Dashboard extends RestController {
         this.getPlot2();
     }
 
-    loadFechaFac(data, field) {
-        if (field == 1)
-            this.dateStart.updateValue(data)
+    loadFechaFac(data) {
+        if (data.key == "1")
+            this.dateStart.updateValue(data.date);
         else
-            this.dateEnd.updateValue(data)
+            this.dateEnd.updateValue(data.date);
 
     }
     public msgLabel:boolean=true;
