@@ -115,6 +115,21 @@
                             <li *ngIf="myglobal.existsPermission('14')"><a href="#" [routerLink]="['Recarga']"><i class="fa fa-money"></i> <span>Recargas</span></a></li>
                         </ul>
                     </li>
+                    <li class="treeview" [class.active]="activeMenuId=='report'">
+                        <a (click)="activeMenu($event,'report')">
+                            <i class="fa fa-list"></i>
+                            <span>Reportes</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="#" [routerLink]="['ReporteGrupos']">
+                                    <i class="fa fa-user"></i>
+                                    <span>Grupos</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="treeview" [class.active]="activeMenuId=='access'">
                         <a (click)="activeMenu($event,'access')">
                             <i class="fa fa-gears"></i>
