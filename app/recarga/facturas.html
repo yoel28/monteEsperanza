@@ -22,13 +22,22 @@
                 <tbody>
                 <tr *ngFor="let data of dataList.list">
 
-                    <td>{{data.dateCreated | fecha | date:'dd-MM-yyyy, h:mma' }}</td>
+                    <td>
+                        {{data.dateCreated | fecha | date:'dd' }}/
+                        {{data.dateCreated | fecha | date:'MM' }}/
+                        {{data.dateCreated | fecha | date:'yyyy' }},
+                        {{data.dateCreated | fecha | date:'h:mma' }}
+                    </td>
                     <td>
                         <strong> <i class="{{data.rechargeTypeIcon}}"></i>&nbsp;{{data.rechargeTypeTitle}}</strong><br/>
                     </td>
                     <td>{{data.vehiclePlate}}</td>
                     <td>{{data.reference}}</td>
-                    <td>{{data.referenceDate | fecha | date:'dd-MM-yyyy' }}</td>
+                    <td>
+                        {{data.referenceDate | fecha | date:'dd' }}/
+                        {{data.referenceDate | fecha | date:'MM' }}/
+                        {{data.referenceDate | fecha | date:'yyyy' }}
+                    </td>
                     <td>{{data.quantity}} <span *ngIf="data.operationId"><strong>E/S: </strong>{{data.weightIn}}/{{data.weightOut}}</span></td>
                 </tr>
                 </tbody>

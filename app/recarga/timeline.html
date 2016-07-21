@@ -5,8 +5,12 @@
             <article *ngFor="let data of dataList.list; let i=index; let last = last" class="timeline-entry" [class.left-aligned]="i%2">
                 <div class="timeline-entry-inner">
                     <time class="timeline-time">
-                        <span>{{ data.dateCreated | fecha | date:'h:mma' }}</span>
-                        <span>{{ data.dateCreated | fecha | date:'dd-MM-yyyy' }}</span>
+                        <span>{{ data.dateCreated | fecha | date:"h:mma" }}</span>
+                        <span>
+                            {{ data.dateCreated | fecha | date:"dd" }}/
+                            {{ data.dateCreated | fecha | date:"MM" }}/
+                            {{ data.dateCreated | fecha | date:"yyyy" }}
+                        </span>
                     </time>
                     <div class="timeline-icon {{color[data.rechargeTypeIcon]}} ">
                         <i class="{{data.rechargeTypeIcon}}"></i>
@@ -17,7 +21,11 @@
                             Ref: {{data.reference}}
                         </h4>
                         <p>
-                            <strong>Fecha de Referencia: </strong>{{data.referenceDate | fecha | date:'dd-MM-yyyy' }}<br/>
+                            <strong>Fecha de Referencia: </strong>
+                                {{data.referenceDate|fecha|date:"dd"}}/
+                                {{data.referenceDate|fecha|date:"MM"}}/
+                                {{data.referenceDate|fecha|date:"yyyy"}}
+                            <br/>
                             <strong>Peso: </strong> {{data.weight?data.weight:"N/A"}}<br/>
                             <strong>Placa: </strong>{{data.vehiclePlate}}<br/>
                         </p>

@@ -131,9 +131,18 @@
                             </thead>
                             <tbody *ngFor="let recharges of dataList.list">
                             <tr>
-                                <td>{{recharges.dateCreated}}</td>
+                                <td>
+                                    {{recharges.dateCreated | fecha | date:'dd'}}/
+                                    {{recharges.dateCreated | fecha | date:'MM'}}/
+                                    {{recharges.dateCreated | fecha | date:'yyyy'}},
+                                    {{recharges.dateCreated | fecha | date:'h:mma'}}
+                                </td>
                                 <td>{{recharges.reference}}</td>
-                                <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
+                                <td>
+                                    {{recharges.referenceDate | fecha | date:'dd'}}/
+                                    {{recharges.referenceDate | fecha | date:'MM'}}/
+                                    {{recharges.referenceDate | fecha | date:'yyyy'}}
+                                </td>
                                 <td>
                                     <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                                 </td>

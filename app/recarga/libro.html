@@ -60,9 +60,18 @@
                                 </thead>
                                 <tbody *ngFor="let recharges of dataList.list">
                                 <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
-                                    <td>{{recharges.dateCreated| fecha | date:'dd-MM-yyyy, h:m'}}</td>
+                                    <td>
+                                        {{recharges.dateCreated| fecha | date:'dd'}}/
+                                        {{recharges.dateCreated| fecha | date:'MM'}}/
+                                        {{recharges.dateCreated| fecha | date:'yyyy'}},
+                                        {{recharges.dateCreated| fecha | date:'h:m'}}
+                                    </td>
                                     <td>{{recharges.reference}}</td>
-                                    <td>{{recharges.referenceDate | fecha | date:'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        {{recharges.referenceDate | fecha | date:'dd'}}/
+                                        {{recharges.referenceDate | fecha | date:'MM'}}/
+                                        {{recharges.referenceDate | fecha | date:'yyyy'}}
+                                    </td>
                                     <td>
                                         <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                                         {{recharges.weight?recharges.weight+"Kg.":"&nbsp;"}}
@@ -86,7 +95,7 @@
                         </div>
 
 
-                        <div *ngIf="rechargeTotal">
+                        <div *ngIf="rechargeTotal.debe">
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
@@ -102,7 +111,7 @@
                                         <td>TOTAL</td>
                                         <td>{{rechargeTotal.weightIn}}</td>
                                         <td>{{rechargeTotal.weightOut}}</td>
-                                        <td>{{rechargeTotal.debe}}</td>
+                                        <td>{{rechargeTotal.debe * -1}}</td>
                                         <td>{{rechargeTotal.haber}}</td>
 
                                     </tr>

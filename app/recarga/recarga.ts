@@ -73,6 +73,7 @@ export class RecargaIngresos extends RestController{
         minViewMode: 0,
         maxViewMode: 2,
         language: "es",
+        todayBtn: "linked",
         forceParse: false,
         autoclose: true,
         todayHighlight: true,
