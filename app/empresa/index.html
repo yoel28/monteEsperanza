@@ -24,8 +24,8 @@
                 </div>
                 <!-- /.box-header -->
                 <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="box-body">
-                    <div *ngFor="let empList of dataList.list | divide:3 " class="row">
-                        <div *ngFor="let data of empList">
+                    <div *ngFor="let i of [0,3]" class="row">
+                        <div *ngFor="let data of dataList.list | slice:i:i+3">
                             <div class="col-lg-4">
                                 <div class="panel">
                                     <div class="panel-body">

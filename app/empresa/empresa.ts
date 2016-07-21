@@ -28,7 +28,7 @@ export class Empresa extends RestController {
 
     ngOnInit() {
         if (this.myglobal.existsPermission('80')) {
-            this.max = 9;
+            this.max = 6;
             this.loadData();
         }
     }
@@ -100,7 +100,8 @@ export class Empresa extends RestController {
     }
 
     assignEmpresa(data) {
-        Object.assign(this.dataList.list[0],data);
+        this.dataList.list.unshift(data);
+        this.dataList.list.pop();
     }
 
     goTaquilla(companyRuc:string) {
