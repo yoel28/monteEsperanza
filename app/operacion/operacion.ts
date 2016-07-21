@@ -29,7 +29,6 @@ export class Operacion extends RestController{
     }
 
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'','search': true,'placeholder': 'Identificador',},
         'weightIn':{'type':'number','display':null,'title':'Peso de Entrada','mode':'inline','search': true,'placeholder': 'Peso de entrada','double':true},
         'weightOut':{'type':'number','display':null,'title':'Peso de Salida','mode':'inline','search': true,'placeholder': 'Peso de salida','double':true},
         'vehicle':{

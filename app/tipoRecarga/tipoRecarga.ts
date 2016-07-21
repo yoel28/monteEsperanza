@@ -24,14 +24,6 @@ export class TipoRecarga extends RestController{
     }
     public dataSelect:any={};
     public rules = {
-        'id': {
-            'type': 'number',
-            'disabled': true,
-            'display': false,
-            'title': 'id',
-            'placeholder': 'Identificador',
-            'search': true
-        },
         'title': {
             'type': 'text',
             'display': null,

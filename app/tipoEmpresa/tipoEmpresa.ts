@@ -19,7 +19,6 @@ export class TipoEmpresa extends RestController{
     public dataSelect:any={};
 
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
         'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
         'detail':{'type':'text','display':null,'title':'nombre','placeholder':'Detalle','search':true},
         'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',

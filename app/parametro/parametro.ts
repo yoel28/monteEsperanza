@@ -23,7 +23,6 @@ export class Parametro extends RestController{
         this.setEndpoint('/params/');
     }
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'','placeholder': 'Identificador', 'search': true},
         'key':{'type':'text','display':null,'title':'Key','mode':'inline','placeholder': 'Clave', 'search': true},
         'value':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Valor', 'search': true},
         'type':{'type':'select','display':null,'title':'Tipo','mode':'inline','placeholder': 'Tipo', 'search': true,

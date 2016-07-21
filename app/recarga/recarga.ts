@@ -20,7 +20,6 @@ import {Xeditable, Datepicker} from "../common/xeditable";
 })
 export class Recarga extends RestController{
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'','placeholder': 'Identificador', 'search': true},
         'quantity':{'type':'number','display':null,'title':'Key','mode':'inline','placeholder': 'Cantidad', 'search': true,'double':true},
         'reference':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Referencia', 'search': true},
     };

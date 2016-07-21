@@ -37,14 +37,6 @@ export class User extends RestController {
     }
 
     public rules = {
-        'id': {
-            'type': 'number',
-            'disabled': true,
-            'display': false,
-            'title': 'id',
-            'placeholder': 'Identificador',
-            'search': true
-        },
         'username': {
             'type': 'text',
             'display': null,

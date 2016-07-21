@@ -26,7 +26,6 @@ export class Permiso extends RestController{
         this.setEndpoint('/permissions/');
     }
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'Identificador','placeholder': 'Identificador', 'search': true },
         'title':{'type':'text','display':null,'title':'Titulo','mode':'inline','placeholder': 'Titulo', 'search': true},
         'detail':{'type':'textarea','display':null,'title':'Detalle','mode':'inline','showbuttons':true,'placeholder': 'Detalle', 'search': true},
         'module':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Modulo', 'search': true},

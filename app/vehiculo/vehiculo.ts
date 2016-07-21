@@ -29,7 +29,6 @@ export class Vehiculo extends RestController{
     modal:Search;
 
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'','search': true,'placeholder': 'Identificador'},
         'plate':{'type':'text','display':null,'title':'Placa del vehiculo','search': true,'placeholder': 'Placa'},
         'weight':{'type':'number','display':null,'title':'Peso del vehiculo','search': true,'placeholder': 'Peso'},
         'minBalance':{'type':'number','display':null,'title':'Balance minimo','search': true,'placeholder': 'Balance minimo'},

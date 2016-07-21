@@ -17,7 +17,6 @@ import {Filter} from "../utils/filter/filter";
 export class TipoVehiculo extends RestController{
 
     public rules={
-        'id': {'type':'number','disabled':true,'display':false,'title':'id','placeholder':'Identificador','search':true},
         'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
         'detail':{'type':'text','display':null,'title':'nombre','placeholder':'Nombre de usuario','search':true},
         'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
