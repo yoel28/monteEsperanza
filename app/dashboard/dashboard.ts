@@ -96,7 +96,7 @@ export class Dashboard extends RestController {
             enabled: false
         },
         series: [],
-        title: {text: 'Balance General (Dinero)'},
+        title: {text: 'Balance general (dinero)'},
     };
     dataAreaPlot2 = {
         chart: {
@@ -125,7 +125,7 @@ export class Dashboard extends RestController {
             enabled: false
         },
         series: [],
-        title: {text: 'Uso del vertedero (Camiones)'},
+        title: {text: 'Uso del vertedero (camiones)'},
     };
     dataAreaPlot3 = {
         chart: {
@@ -290,7 +290,7 @@ export class Dashboard extends RestController {
     }
 
     loadFechaPlot(data) {
-        this.plotDate = data;
+        this.plotDate = data.date;
         this.getPlots();
         this.getPlot2();
     }
