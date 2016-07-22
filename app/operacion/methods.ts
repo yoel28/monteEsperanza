@@ -31,7 +31,7 @@ export class OperacionSave extends RestController{
             'readOnly':false,
             'key':'vehicle',
             'paramsSearch': {
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
+                'label':{'title':"Empresa: ",'detail':"Placa: "},
                 'endpoint':"/search/vehicles/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
@@ -76,7 +76,7 @@ export class OperacionSave extends RestController{
             'readOnly':false,
             'permissions':'136',
             'paramsSearch': {
-                'label':{'title':"Tipo: ",'detail':"Detalle: "},
+                'label':{'title':"Tipo: ",'detail':"Referencia: "},
                 'endpoint':"/search/type/trash/",
                 'where':'',
                 'imageGuest':'/assets/img/trash-guest.png',
@@ -85,7 +85,7 @@ export class OperacionSave extends RestController{
             'icon':'fa fa-trash',
             'object':true,
             'title':'Basura',
-            'placeholder':'Ingrese el tipo de basura',
+            'placeholder':'Referencia del tipo de basura',
             'msg':{
                 'error':'El tipo de basura contiene errores',
                 'notAuthorized':'No tiene permisos de listar los tipos de basura',
@@ -97,7 +97,7 @@ export class OperacionSave extends RestController{
             'key':'route',
             'readOnly':false,
             'paramsSearch': {
-                'label':{'title':"Ruta: ",'detail':"Detalle: "},
+                'label':{'title':"Ruta: ",'detail':"Referencia: "},
                 'endpoint':"/search/routes/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
@@ -106,7 +106,7 @@ export class OperacionSave extends RestController{
             'icon':'fa fa-random',
             'object':true,
             'title':'Ruta',
-            'placeholder':'Ingrese la ruta',
+            'placeholder':'Referencia de la ruta',
             'permissions':'69',
             'msg':{
                 'error':'La ruta contiene errores',
@@ -129,6 +129,7 @@ export class OperacionSave extends RestController{
             'type':'number',
             'key':'weightOut',
             'readOnly':false,
+            'hidden':true,
             'icon':'fa fa-balance-scale',
             'title':'Peso S.',
             'placeholder':'Peso de salida',
@@ -160,7 +161,16 @@ export class OperacionSave extends RestController{
         let that = this;
         Object.keys(this.rules).forEach((key)=> {
                 that.data[key] = [];
-                if(that.rules[key].required)
+    
+                if(that.rules[key].required && that.rules[key].object)
+                {
+                    that.data[key] = new Control("",Validators.compose([Validators.required,
+                        (c:Control)=> {
+                            return (that.searchId[key] && that.searchId[key].title == c.value) ? null : {pattern: {valid: false}};
+                        }
+                    ]));
+                }
+                else if (that.rules[key].required)
                     that.data[key] = new Control("",Validators.compose([Validators.required]));
                 else
                     that.data[key] = new Control("");
@@ -202,6 +212,7 @@ export class OperacionSave extends RestController{
             Object.keys(that.form.controls).forEach((key) => {
                 (<Control>that.form.controls[key]).updateValue("");
                 (<Control>that.form.controls[key]).setErrors(null);
+                this.searchId={};
                 if(that.rules[key].readOnly)
                     that.rules[key].readOnly=false;
             });
@@ -242,8 +253,8 @@ export class OperacionSave extends RestController{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title};
-        (<Control>this.form.controls[this.search.key]).updateValue(data.title);
+        this.searchId[this.search.key]={'id':data.id,'title':data.detail};
+        (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
     public dataIn:any={};

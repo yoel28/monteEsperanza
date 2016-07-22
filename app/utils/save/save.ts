@@ -80,7 +80,15 @@ export class Save extends RestController{
         this.keys = Object.keys(this.rules);
         Object.keys(this.rules).forEach((key)=> {
             that.data[key] = [];
-            if(that.rules[key].required)
+            if(that.rules[key].required && that.rules[key].object)
+            {
+                that.data[key] = new Control("",Validators.compose([Validators.required,
+                    (c:Control)=> {
+                        return (that.searchId[key] && that.searchId[key].title == c.value) ? null : {pattern: {valid: false}};
+                    }
+                ]));
+            }
+            else if (that.rules[key].required)
                 that.data[key] = new Control("",Validators.compose([Validators.required]));
             else
                 that.data[key] = new Control("");
@@ -118,6 +126,13 @@ export class Save extends RestController{
     submitForm(){
         let that = this;
         let successCallback= response => {
+            Object.keys(that.form.controls).forEach((key) => {
+                (<Control>that.form.controls[key]).updateValue("");
+                (<Control>that.form.controls[key]).setErrors(null);
+                this.searchId={};
+                if(that.rules[key].readOnly)
+                    that.rules[key].readOnly=false;
+            });
             that.save.emit(response.json());
             that.toastr.success('Guardado con éxito','Notificación')
         };
@@ -155,8 +170,8 @@ export class Save extends RestController{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title};
-        (<Control>this.form.controls[this.search.key]).updateValue(data.title);
+        this.searchId[this.search.key]={'id':data.id,'title':data.detail};
+        (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
     //accion seleccionar un item de un select
