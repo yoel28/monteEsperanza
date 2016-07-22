@@ -31,6 +31,7 @@ export class ReporteGrupos extends RestController{
     }
     ngOnInit(){
         this.initForm();
+        this.getCompanyTypes();
     }
     initForm(){
         this.dateStart = new Control("", Validators.compose([Validators.required]));
@@ -72,9 +73,12 @@ export class ReporteGrupos extends RestController{
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
             'dateEnd': moment(final.toString()).format('DD-MM-YYYY'),
         };
+        let type=""
+        if(this.idCompanyType && this.idCompanyType!="-1")
+            type=",['op':'eq','field':'t.id','value':"+this.idCompanyType+"]"
         
         let where ="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
+            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+type+"]";
         
         this.where = "&where="+encodeURI(where);
         this.max=100;
@@ -83,14 +87,14 @@ export class ReporteGrupos extends RestController{
     }
     sumTotalPeso(id){
         let total=0;
-        this.dataList[id].recharges.forEach(val=>{
+        this.dataList.list[id].recharges.forEach(val=>{
             total+=(val.weightIn-val.weightOut);
         })
         return total;
     }
     sumTotalFact(id){
         let total=0;
-        this.dataList[id].recharges.forEach(val=>{
+        this.dataList.list[id].recharges.forEach(val=>{
             total+=(val.quantity);
         })
         return total;
@@ -102,5 +106,13 @@ export class ReporteGrupos extends RestController{
         popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
         popupWin.document.head.innerHTML = (document.head.innerHTML);
         popupWin.document.close();
+    }
+    public companyTypes:any={};
+    public idCompanyType:string="-1";
+    getCompanyTypes(){
+        this.httputils.onLoadList("/type/companies",this.companyTypes,this.error);
+    }
+    setType(data){
+        this.idCompanyType=data;
     }
 }
