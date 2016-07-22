@@ -142,13 +142,16 @@ export class AppComponent extends RestController{
 
   logout(event) {
     event.preventDefault();
-    this.httputils.onSave('/logout',null,null);
-    this.myglobal.init=false;
-    localStorage.removeItem('bearer');
-    contentHeaders.delete('Authorization');
+      let that = this;
+      let successCallback= response => {
+          this.myglobal.init=false;
+          localStorage.removeItem('bearer');
+          contentHeaders.delete('Authorization');
 
-    let link = ['AccountLogin', {}];
-    this.router.navigate(link);
+          let link = ['AccountLogin', {}];
+          this.router.navigate(link);
+      }
+      this.httputils.doPost('/logout',null,successCallback,this.error);
 
   }
   profile(event) {
