@@ -7,12 +7,14 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Xeditable} from "../common/xeditable";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
+import {Fecha} from "../utils/pipe";
 
 @Component({
     selector: 'operacion',
     templateUrl: 'app/operacion/index.html',
     styleUrls: ['app/operacion/style.css'],
-    directives:[OperacionSave,Xeditable,Filter]
+    directives:[OperacionSave,Xeditable,Filter],
+    pipes:[Fecha]
 })
 export class Operacion extends RestController{
 
@@ -66,5 +68,15 @@ export class Operacion extends RestController{
             this.loadData();
         }
     }
+    public operacionPrint:any={};
+    onPrint(){
+        var printContents = document.getElementById("operacion").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+    }
+
     
 }
