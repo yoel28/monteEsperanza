@@ -21,8 +21,9 @@
                                                             ((searchId[key] && searchId[key].title != data[key].value) || !searchId[key])
                                                         ">
                                                         <i class="{{rules[key].icon}} z-index"></i>
-                                                        <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}</span>
+                                                        <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
                                                         <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
+                                                        </span>
                                                         <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
                                                                [(ngModel)]="data[key].value"
                                                                placeholder="{{rules[key].placeholder}}"
