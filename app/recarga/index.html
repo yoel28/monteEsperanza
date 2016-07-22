@@ -36,7 +36,11 @@
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
 
-                                <td>{{data.vehiclePlate}}</td>
+                                <td>
+                                    <a class="btn" (click)="goTaquilla($event,data.companyId)">
+                                        {{data.companyRuc}}
+                                    </a>
+                                </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="reference"
                                        [disabled]="!myglobal.existsPermission('112')"></a>
