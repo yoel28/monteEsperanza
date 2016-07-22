@@ -156,6 +156,25 @@ export class Dashboard extends RestController {
         series: [],
         title: {text: 'Descargas en el vertedero'},
     };
+    dataAreaPlot4 = {
+        chart: {
+            renderTo: 'chartcontainer4',
+            type: 'area',
+        },
+        xAxis: {
+            categories: [],
+        },
+        yAxis: {
+            title: {
+                text: "Manejo de recargas",
+            },
+        },
+        credits: {
+            enabled: false
+        },
+        series: [],
+        title: {text: 'Flujo de caja'},
+    };
 
     getPlots() {
         let that = this;
@@ -202,14 +221,21 @@ export class Dashboard extends RestController {
     }
 
     getPlot2() {
+        let that = this;
         let successCallback = response => {
-            Object.assign(this.dataPlot, response.json());
-            this.dataPlot.total = 0;
-            this.dataPlot.forEach(val=> {
-                if (val.quantity > 0)
-                    this.dataPlot.total += val.quantity;
-                else val.quantity *= -1;
-            })
+            if(that.chart['plot4']) {
+
+                that.chart['plot4'].series.forEach((data,i)=>{
+                    data.setData(response.json().series[i].data);
+                });
+                that.chart['plot4'].xAxis[0].setCategories(response.json().categories)
+            }
+            else {
+                if (response.json().categories)
+                    that.dataAreaPlot4.xAxis.categories = response.json().categories;
+                that.dataAreaPlot4.series = response.json().series;
+            }
+
         }
         this.httputils.doGet("/dashboards/plot/2/" + this.plotDate, successCallback, this.error)
     }

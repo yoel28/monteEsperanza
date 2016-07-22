@@ -67,47 +67,30 @@
                             <div *ngIf="dataAreaPlot3.series.length>0" id="chartcontainer3" width='100%' class="padding-bottom col-lg-6">
                                 <chart [options]="dataAreaPlot3" (load)="saveInstance($event.context,'plot3')"></chart>
                             </div>
-
-                            <div class="col-lg-6">
-                                <div class="col-lg-12">
-                                    <p class="text-center">
-                                        <strong class="titulo-16">Balance</strong>
-                                    </p>
-                                    <div class="progress-group" *ngFor="let data of dataPlot" >
-                                        <span class="progress-text"><i class="{{data.icon}}"></i>&nbsp;{{data.title}}</span>
-                                        <span class="progress-number">{{data.quantity}}/ {{dataPlot.total}}</span>
-                                        <div class="progress sm">
-                                            <div class="progress-bar progress-bar-yellow" [style.width.%]="(data.quantity*100)/dataPlot.total"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <p class="text-center">
-                                        <strong class="titulo-16">Consultar facturas</strong>
-                                    </p>
-                                    <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
-                                        <div class="padding-bottom">
-                                            <div class="input-icon right">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" value="Ingresar un periodo inicial" type="text" class="form-control" accesskey="1">
-                                            </div>
-                                        </div>
-                                        <div class="padding-bottom">
-                                            <div class="input-icon right">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" value="Ingresar un periodo final" type="text" class="form-control" accesskey="2">
-                                            </div>
-                                        </div>
-
-                                        <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
-                                                id="cntrlsubmit" [disabled]="!form.valid">
-                                            <i class="fa fa-bank"></i>
-                                            Consultar
-                                        </button>
-                                    </form>
-                                </div>
+                            <div *ngIf="dataAreaPlot4.series.length>0" id="chartcontainer4" width='100%' class="padding-bottom col-lg-6">
+                                <chart [options]="dataAreaPlot4" (load)="saveInstance($event.context,'plot4')"></chart>
                             </div>
-
+                        </div>
+                    </div>
+                    <div class="col-lg-12 border">
+                        <div class="col-lg-3">
+                            <strong class="titulo-16">Consultar facturas</strong>
+                        </div>
+                        <div class="col-lg-7">
+                            <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
+                                <div datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" class="input-daterange input-group">
+                                    <input type="text" class="input-sm form-control" name="start" accessKey="1" />
+                                    <span class="input-group-addon">Hasta</span>
+                                    <input type="text" class="input-sm form-control" name="end" accessKey="2"/>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-2">
+                            <button (click)="loadFacturas($event)" type="button" class="btn btn-success"
+                                    id="cntrlsubmit" [disabled]="!form.valid">
+                                <i class="fa fa-bank"></i>
+                                Consultar
+                            </button>
                         </div>
                     </div>
                 </div>
