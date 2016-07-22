@@ -41,7 +41,7 @@ export class UserSave extends RestController{
 
         this.username = new Control("", Validators.compose([Validators.required,Validators.maxLength(10)]));
         this.name = new Control("", Validators.compose([Validators.required]));
-        this.email = new Control("", Validators.compose([Validators.required]));
+        this.email = new Control("", Validators.compose([Validators.required,this.validateEmail]));
         this.password = new Control("", Validators.compose([Validators.required]));
         this.phone = new Control("", Validators.compose([Validators.required]));
         this.image = new Control("");
@@ -55,6 +55,14 @@ export class UserSave extends RestController{
             image: this.image,
         });
 
+    }
+    validateEmail(c: Control) {
+        let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+        return EMAIL_REGEXP.test(c.value) ? null : {
+            validateEmail: {
+                valid: false
+            }
+        };
     }
     submitForm(){
         let successCallback= response => {
