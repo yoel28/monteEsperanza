@@ -49,6 +49,11 @@ export class Recarga extends RestController{
         this.where = where;
         this.loadData();
     }
+    goTaquilla(event,companyId:string) {
+        event.preventDefault();
+        let link = ['TaquillaSearh', {search: companyId}];
+        this.router.navigate(link);
+    }
 }
 
 
