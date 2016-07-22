@@ -35,7 +35,7 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
-                            <td> {{data.companyName}}</td>
+                            <td>{{data.companyName}}&nbsp;({{data.companyRUC}})</td>
                             <td> {{data.rechargeReference || "-"}}</td>
                             <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "-"}}</td>
                             <td>{{data.vehiclePlate}}</td>
