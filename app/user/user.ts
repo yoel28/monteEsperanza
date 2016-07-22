@@ -60,7 +60,7 @@ export class User extends RestController {
             'search': false,
             'showbuttons':true,
         },
-        'phone': {'type': 'number', 'display': null, 'title': 'Telefono', 'placeholder': 'Teléfono', 'search': true},
+        'phone': {'type': 'number', 'display': null, 'title': 'Telefono', 'placeholder': 'Teléfono', 'search': false},
         'roles': {
             'type': 'checklist',
             'display': null,

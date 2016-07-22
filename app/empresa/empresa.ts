@@ -64,7 +64,7 @@ export class Empresa extends RestController {
             'title': 'Teléfono',
             'placeholder': 'Teléfono',
             'mode': 'inline',
-            'search': true
+            'search': false
         },
         'minBalance': {
             'type': 'number',
