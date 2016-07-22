@@ -93,10 +93,11 @@ export class AppComponent extends RestController{
   constructor(public router: Router,http: Http,public myglobal:globalService) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
-    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-    //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
-    localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    localStorage.setItem('url','http://192.168.0.91:8080');
+    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
+      
+    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
+    //localStorage.setItem('url','http://192.168.0.91:8080');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
