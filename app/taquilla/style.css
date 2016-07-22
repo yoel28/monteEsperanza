@@ -41,8 +41,3 @@
     color:red;
     font-size: 15pt;
 }
-@media print {
-    .noprint{
-        display:none;
-    }
-}
