@@ -14,3 +14,9 @@
 .treeview-menu{
     margin-top: -2px !important;
 }
+
+@media print {
+    .noprint{
+        display:none;
+    }
+}
