@@ -193,11 +193,18 @@ export class RecargaFactura extends RestController{
             this.cargar()
         }
     }
+    public rechargeTotal:any={};
     public cargar(){
         this.endpoint="/search/recharges/?where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
             "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
+
+        let where="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
+
         this.endpoint = encodeURI(this.endpoint);
         this.loadData();
+
+        this.httputils.onLoadList('/total/recharges?where='+encodeURI(where),this.rechargeTotal,this.max,this.error);
     }
     loadData(offset=0){
         this.offset=offset;

@@ -42,6 +42,30 @@
                 </tr>
                 </tbody>
             </table>
+            <div *ngIf="rechargeTotal.debe">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Peso de entrada</th>
+                        <th>Peso de salida</th>
+                        <th>Debe</th>
+                        <th>Haber</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>TOTAL</td>
+                        <td>{{rechargeTotal.weightIn}}</td>
+                        <td>{{rechargeTotal.weightOut}}</td>
+                        <td>{{rechargeTotal.debe * -1}}</td>
+                        <td>{{rechargeTotal.haber}}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         <div *ngIf="dataList && dataList.count == 0">
             <div class="alert alert-warning alert-dismissable">
