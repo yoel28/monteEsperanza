@@ -30,7 +30,7 @@
                             <th>Veh&iacute;culo</th>
                             <th>Peso de entrada</th>
                             <th>Peso de salida</th>
-                            <th *ngIf="myglobal.existsPermission('94')">Acciones</th>
+                            <th *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157')">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,10 +47,15 @@
                                 <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                    [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightOut"></a>
                             </td>
-                            <td *ngIf="myglobal.existsPermission('94')" style="vertical-align: middle">
-                                <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                            <td *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157')" style="vertical-align: middle">
+                                <a *ngIf="myglobal.existsPermission('94')"
+                                   data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                    (click)="dataSelect = data" href="#">
-                                    <span class="fa fa-trash fa-lg btn"></span>
+                                   <span class="fa fa-trash fa-lg btn"></span>
+                                </a>
+                                <a *ngIf="myglobal.existsPermission('157') && data.rechargeId"
+                                   (click)="operacionPrint=data">
+                                   <span class="fa fa-print fa-lg btn"></span>
                                 </a>
                             </td>
                         </tr>
@@ -67,6 +72,104 @@
                     </button>
                 </div>
             </div>
+
+
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="operacionPrint.id" style="display: none">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="operacion">
+                    <div class="text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 head-fact">
+                        AGUASEO, S.A.<br/>
+                        RELLENO SANITARIO MONTE ESPERANZA<br/>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <span class="subrayar">FECHA:</span>&nbsp;
+                            {{operacionPrint.rechargeReferenceDate|fecha|date:"dd"}}/
+                            {{operacionPrint.rechargeReferenceDate|fecha|date:"MM"}}/
+                            {{operacionPrint.rechargeReferenceDate|fecha|date:"yyyy"}},
+                            {{operacionPrint.rechargeReferenceDate|fecha|date:"h:mma"}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <span class="subrayar">CLIENTE:</span>&nbsp;
+                            {{operacionPrint.companyRUC}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <span class="subrayar">COMPROBANTE:</span>&nbsp;
+                            {{operacionPrint.rechargeReference}}
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <span class="subrayar">OPERADOR:</span>&nbsp;
+                            {{operacionPrint.usernameCreator}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            {{operacionPrint.companyName}}
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <span class="subrayar">VEHÍCULO:</span>&nbsp;
+                        {{operacionPrint.vehiclePlate}}
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                         <span class="subrayar">RUTA:</span>&nbsp;
+                        {{operacionPrint.routeReference}}&nbsp;{{operacionPrint.routeTitle}}
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                         <span class="subrayar">DESECHO:</span>&nbsp;
+                        {{operacionPrint.trashTypeReference}}&nbsp;{{operacionPrint.trashTypeTitle}}
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                         <span class="subrayar">COMENTARIO:</span>&nbsp;
+                        {{operacionPrint.comment}}
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center detalle-title">
+                        DETALLE DE PEAJE
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 body-fact">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <span class="subrayar">PESO DE ENTRADA:</span>&nbsp;
+                                {{operacionPrint.weightIn}}
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <span class="subrayar">PESO NETO:</span>&nbsp;
+                                {{operacionPrint.weightIn - operacionPrint.weightOut}}
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <span class="subrayar">PESO DE SALIDA:</span>&nbsp;
+                                {{operacionPrint.weightOut}}
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <span class="subrayar">VALOR FACTURADO:</span>&nbsp;
+                                {{operacionPrint.rechargeQuantity*-1}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center borde-margin">
+                            FIRMA DEL CONDUCTOR
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center borde-margin col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+                            <span>FIRMA DEL OPERADOR DE LA BASCULA</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 text-center borde-margin">
+                            <span>FIRMA DEL INSPECTOR</span>
+                        </div>
+                    </div>
+                    {{onPrint()}}
+                </div>
+            </div>
+
+
+
+
+
         </div>
     </section>
 </div>
