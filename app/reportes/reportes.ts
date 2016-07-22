@@ -23,6 +23,7 @@ export class ReporteGrupos extends RestController{
     form: ControlGroup;
     dateStart:Control;
     dateEnd:Control;
+    fechaRegistro:any;
 
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
@@ -78,5 +79,27 @@ export class ReporteGrupos extends RestController{
         this.where = "&where="+encodeURI(where);
         this.max=100;
         this.loadData();
+        this.fechaRegistro = new Date();
+    }
+    sumTotalPeso(id){
+        let total=0;
+        this.dataList[id].recharges.forEach(val=>{
+            total+=(val.weightIn-val.weightOut);
+        })
+        return total;
+    }
+    sumTotalFact(id){
+        let total=0;
+        this.dataList[id].recharges.forEach(val=>{
+            total+=(val.quantity);
+        })
+        return total;
+    }
+    onPrint(){
+        var printContents = document.getElementById("reporte").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
     }
 }
