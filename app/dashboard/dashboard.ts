@@ -226,14 +226,26 @@ export class Dashboard extends RestController {
             if(that.chart['plot4']) {
 
                 that.chart['plot4'].series.forEach((data,i)=>{
-                    data.setData(response.json().series[i].data);
+                    let _data = response.json().series[i];
+                    if(_data.name=="Uso - Vertedero")
+                        _data.data.forEach((key,index)=>{
+                            _data.data[index]*=-1;
+                        })
+                    data.setData(_data.data);
+
                 });
                 that.chart['plot4'].xAxis[0].setCategories(response.json().categories)
             }
             else {
                 if (response.json().categories)
                     that.dataAreaPlot4.xAxis.categories = response.json().categories;
-                that.dataAreaPlot4.series = response.json().series;
+                let _data = response.json().series;
+
+                _data.forEach((key,x)=>{
+                    if(key.name=="Uso - Vertedero")
+                        key.data.forEach((val,y)=>{_data[x].data[y]*=-1;})
+                })
+                that.dataAreaPlot4.series = _data;
             }
 
         }
@@ -331,6 +343,12 @@ export class Dashboard extends RestController {
     public msgLabel:boolean=true;
     cambiar(){
         this.msgLabel=!this.msgLabel;
+    }
+    goOperaciones(event){
+        event.preventDefault();
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
+
     }
 
 
