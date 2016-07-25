@@ -30,6 +30,7 @@
                                 <th>Detalle</th>
                                 <th>Fecha</th>
                                 <th>Cantidad </th>
+                                <th *ngIf="myglobal.existsPermission('114')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('113')">Acciones</th>
                             </tr>
                             </thead>
@@ -37,8 +38,10 @@
                             <tr *ngFor="let data of dataList.list" >
 
                                 <td>
-                                    <a class="btn" (click)="goTaquilla($event,data.companyId)">
-                                        {{data.companyRuc}}
+                                    <a class="btn btn-box-tool"
+                                       (click)="goTaquilla($event,data.companyId)">
+                                       {{data.companyRuc}}
+                                       <i class="fa fa-external-link"></i>
                                     </a>
                                 </td>
                                 <td>
@@ -47,16 +50,31 @@
                                 </td>
                                 <td>
                                     <i class="{{data.rechargeTypeIcon}}"></i>&nbsp;{{data.rechargeTypeTitle}}
+                                    <label *ngIf="data.weight">
+                                       ({{data.weight}} Kg.)
+                                    </label>
                                 </td>
                                 <td>{{data.referenceDate | fecha | date:'dd-MM-yyyy' }}</td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="quantity"
                                        [disabled]="!myglobal.existsPermission('112')"></a>
                                 </td>
+                                <td *ngIf="myglobal.existsPermission('114')">
+                                    <button (click)="onLock('enabled',data)" class="btn btn-sm"
+                                            [class.btn-green]="data.enabled" [class.btn-red]="!data.enabled">
+                                        {{data.enabled?"Habilitado":"Bloqueado"}}
+                                    </button>
+                                </td>
+
+
                                 <td *ngIf="myglobal.existsPermission('113')">
                                     <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                        (click)="dataSelect = data" href="#">
                                         <span class="fa fa-trash fa-lg btn"></span>
+                                    </a>
+                                    <a *ngIf="myglobal.existsPermission('157') && data.operationId"
+                                       (click)="onPrint(data)">
+                                        <span class="fa fa-print fa-lg btn"></span>
                                     </a>
                                 </td>
                             </tr>
@@ -106,4 +124,7 @@
             </div>
         </div>
     </div>
+</div>
+<div  *ngIf="myglobal.existsPermission('157')">
+    <operacion-print [data]="operacionPrint"></operacion-print>
 </div>
