@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
-import  {OperacionSave} from "./methods";
+import  {OperacionSave, OperacionPrint} from "./methods";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Xeditable} from "../common/xeditable";
 import {globalService} from "../common/globalService";
@@ -13,7 +13,7 @@ import {Fecha} from "../utils/pipe";
     selector: 'operacion',
     templateUrl: 'app/operacion/index.html',
     styleUrls: ['app/operacion/style.css'],
-    directives:[OperacionSave,Xeditable,Filter],
+    directives:[OperacionSave,Xeditable,Filter,OperacionPrint],
     pipes:[Fecha]
 })
 export class Operacion extends RestController{
@@ -49,6 +49,22 @@ export class Operacion extends RestController{
             'placeholder':'Ingrese la placa del vehículo',
             'icon':'fa fa-truck',
         },
+        'company':{
+            'type':'text',
+            'key':'company',
+            'paramsSearch': {
+                'label':{'title':"Cliente: ",'detail':"RUC: "},
+                'endpoint':"/search/companies/",
+                'where':'',
+                'imageGuest':'/assets/img/company-guest.png',
+                'field':'company.id',
+            },
+            'search':true,
+            'object':true,
+            'title':'Buscar cliente',
+            'placeholder':'Ingrese el RUC del cliente',
+            'icon':'fa fa-building-o',
+        },
     };
 
     assignOperacion(data){
@@ -68,15 +84,12 @@ export class Operacion extends RestController{
             this.loadData();
         }
     }
-    public operacionPrint:any={};
-    onPrint(){
-        var printContents = document.getElementById("operacion").innerHTML;
-        var popupWin = window.open('', '_blank');
-        popupWin.document.open();
-        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
-        popupWin.document.head.innerHTML = (document.head.innerHTML);
-        popupWin.document.close();
+    @ViewChild(OperacionPrint)
+    operacionPrint:OperacionPrint;
+    onPrint(data){
+        if(this.operacionPrint)
+            this.operacionPrint.data=data
     }
 
-    
+
 }
