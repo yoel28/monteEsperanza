@@ -5,6 +5,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search";
 import {globalService} from "../common/globalService";
+import {Fecha} from "../utils/pipe";
 
 
 @Component({
@@ -116,6 +117,7 @@ export class OperacionSave extends RestController{
         'weightIn':{
             'type':'number',
             'required':true,
+            'double':true,
             'key':'weightIn',
             'readOnly':false,
             'icon':'fa fa-balance-scale',
@@ -130,6 +132,7 @@ export class OperacionSave extends RestController{
             'key':'weightOut',
             'readOnly':false,
             'hidden':true,
+            'double':true,
             'icon':'fa fa-balance-scale',
             'title':'Peso S.',
             'placeholder':'Peso de salida',
@@ -225,7 +228,9 @@ export class OperacionSave extends RestController{
             if(that.rules[key].object){
                 body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
             }
-
+            if(that.rules[key].double && body[key]!=""){
+                body[key]=parseFloat(body[key]);
+            }
 
         });
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
@@ -306,6 +311,31 @@ export class OperacionSave extends RestController{
             that.rules['weightOut'].readOnly=true;
         }
         this.httputils.doGet('consultas/out.json',successCallback,this.error,true)
+    }
+}
+
+
+@Component({
+    selector: 'operacion-print',
+    templateUrl: 'app/operacion/print.html',
+    styleUrls: ['app/operacion/style.css'],
+    inputs:['data'],
+    pipes:[Fecha],
+})
+export class OperacionPrint{
+    public data:any={};
+
+    constructor() {
+    }
+
+    onPrint(){
+        var printContents = document.getElementById("operacion").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+        this.data={};
     }
 }
 
