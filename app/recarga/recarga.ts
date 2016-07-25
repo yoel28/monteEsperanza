@@ -10,13 +10,14 @@ import moment from 'moment/moment';
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Xeditable, Datepicker} from "../common/xeditable";
+import {OperacionPrint} from "../operacion/methods";
 
 @Component({
     selector: 'recarga',
     pipes: [Fecha],
     templateUrl: 'app/recarga/index.html',
     styleUrls: ['app/recarga/style.css'],
-    directives:[RecargaSave,Xeditable,Filter]
+    directives:[RecargaSave,Xeditable,Filter,OperacionPrint]
 })
 export class Recarga extends RestController{
     public rules={
@@ -53,6 +54,16 @@ export class Recarga extends RestController{
         event.preventDefault();
         let link = ['TaquillaSearh', {search: companyId}];
         this.router.navigate(link);
+    }
+
+    @ViewChild(OperacionPrint)
+    operacionPrint:OperacionPrint;
+    onPrint(data){
+        let successCallback= response => {
+            if(this.operacionPrint)
+                this.operacionPrint.data=response.json();
+        };
+        this.httputils.doGet('/operations/'+data.operationId,successCallback,this.error)
     }
 }
 
