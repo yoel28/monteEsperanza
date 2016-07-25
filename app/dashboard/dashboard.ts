@@ -346,7 +346,7 @@ export class Dashboard extends RestController {
     }
     goOperaciones(event){
         event.preventDefault();
-        let link = ['Dashboard', {}];
+        let link = ['Operacion', {}];
         this.router.navigate(link);
 
     }
