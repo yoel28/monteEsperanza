@@ -76,9 +76,13 @@ export class ReporteGrupos extends RestController{
         let type=""
         if(this.idCompanyType && this.idCompanyType!="-1")
             type=",['op':'eq','field':'t.id','value':"+this.idCompanyType+"]"
+        let noGroup=""
+        if(this.idCompanyType && this.idCompanyType!="-2")
+            noGroup="&noGroup=true";
+
         
         let where ="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+type+"]";
+            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+type+"]"+noGroup;
         
         this.where = "&where="+encodeURI(where);
         this.max=100;
