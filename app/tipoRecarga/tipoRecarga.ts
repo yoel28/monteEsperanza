@@ -54,7 +54,8 @@ export class TipoRecarga extends RestController{
                 {'value':'fa fa-cc-jcb','text':'Jcb'},
                 {'value':'fa fa-cc-visa','text':'Visa'},
                 {'value':'fa fa-money','text':'Money'},
-                {'value':'fa fa-refresh','text':'Transfer'}
+                {'value':'fa fa-refresh','text':'Transfer'},
+                {'value':'fa fa-reply','text':'Reply'}
             ]
         },
 
