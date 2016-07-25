@@ -26,7 +26,6 @@ export class VehiculoSave extends RestController{
     form: ControlGroup;
 
     plate: Control;
-    minBalance: Control;
     weight: Control;
     vehicleType: Control;
     company: Control;
@@ -49,7 +48,6 @@ export class VehiculoSave extends RestController{
     initForm(){
 
         this.plate = new Control("", Validators.compose([Validators.required]));
-        this.minBalance = new Control("", Validators.compose([Validators.required]));
         this.weight = new Control("", Validators.compose([Validators.required]));
         this.vehicleType = new Control("", Validators.compose([Validators.required]));
         this.company = new Control("", Validators.compose([Validators.required]));
@@ -57,7 +55,6 @@ export class VehiculoSave extends RestController{
 
         this.form = this._formBuilder.group({
             plate: this.plate,
-            minBalance: this.minBalance,
             weight: this.weight,
             vehicleType: this.vehicleType,
             company: this.company,
