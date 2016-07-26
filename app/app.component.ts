@@ -1,4 +1,4 @@
-import {Component, provide} from '@angular/core';
+import {Component, provide, ViewChild} from '@angular/core';
 import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { contentHeaders } from './common/headers';
 import { AccountLogin }         from './account/account';
@@ -33,6 +33,8 @@ import {Ruta} from "./ruta/ruta";
 import {RestController} from "./common/restController";
 import {Http} from "@angular/http";
 import {ReporteGrupos} from "./reportes/reportes";
+import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {OperacionSave} from "./operacion/methods";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -41,7 +43,7 @@ declare var Stomp:any;
   selector: 'my-app',
   templateUrl: 'app/app.html',
   styleUrls:['app/app.css'],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES,OperacionSave],
   providers: [
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
@@ -181,17 +183,49 @@ export class AppComponent extends RestController{
     onSocket(){
         let ws = new SockJS("http://192.168.0.91:8080/stomp");
         let client = Stomp.over(ws);
+        let that=this;
 
         client.connect({}, function() {
-            //Subscribe to the 'chat' topic and define a function that is executed
-            //anytime a message is published to that topic by the server or another client.
             client.subscribe("/topic/read", function(message) {
-                console.log(message)
+                let str = JSON.parse(message.body);
+                if(str['entrada']){
+                    that.toastr.success('Placa: '+str['entrada'].vehiclePlate,' <i class="fa fa-truck"></i> Vehículo Entrando');
+                }
             });
         });
 
 
     }
+    @ViewChild(OperacionSave)
+    operacionSave:OperacionSave;
+
+    dataOperation:any={};
+    inAnt(event){
+        event.preventDefault();
+        let that= this;
+        let successCallback= response => {
+            that.dataOperation=response.json();
+            if(that.operacionSave)
+            {
+                that.operacionSave.inAntena(that.dataOperation['entrada']);
+            }
+
+        }
+        this.httputils.doGet('/in/operations',successCallback,this.error);
+    }
+    outAnt(event){
+        event.preventDefault();
+        let that= this;
+        let successCallback= response => {
+            that.dataOperation=response.json();
+            if(that.operacionSave)
+            {
+                that.operacionSave.outAntena(that.dataOperation['salida']);
+            }
+        }
+        this.httputils.doGet('/out/operations',successCallback,this.error);
+    }
+   
 
 
 }
