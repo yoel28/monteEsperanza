@@ -53,11 +53,11 @@
 
         </div>
 
-        <div *ngIf="dataCompany?.id" >
+        <div *ngIf="dataCompany?.id" id="taquilla">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <div class="profile col-lg-2 col-md-2 col-xs-12 col-sm-2">
+                        <div class="profile col-lg-2 col-md-2 col-xs-12 col-sm-2 noprint">
                             <div style="margin-bottom: 15px" class="row">
                                 <figure>
                                     <img src="{{dataCompany.image || '/assets/img/company-guest.png'}}" alt=""
@@ -156,9 +156,13 @@
                                     <div *ngIf="dataList.count==0" class="norecharges">
                                         No tiene recargas asociadas
                                     </div>
-                                    <div *ngIf="dataList.count>0" class="btn-group pull-right">
+                                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
+                                        class="btn-group pull-right">
                                         <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                                             {{val}}
+                                        </button>
+                                        <button (click)="loadAll($event)" type="button" class="btn btn-default">
+                                            <i class="fa fa-list"></i>
                                         </button>
                                     </div>
                                 </td>
