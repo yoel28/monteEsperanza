@@ -26,8 +26,13 @@
                                 {{data.referenceDate|fecha|date:"MM"}}/
                                 {{data.referenceDate|fecha|date:"yyyy"}}
                             <br/>
-                            <strong>Peso: </strong> {{data.weight?data.weight:"N/A"}}<br/>
-                            <strong>Placa: </strong>{{data.vehiclePlate}}<br/>
+                            <strong>Cliente:&nbsp;</strong>{{data.companyName}}&nbsp;({{data.companyRuc}})<br/>
+                            <span *ngIf="data.operationId">
+
+                                <strong>Placa del veh&iacute;culo: </strong>{{data.vehiclePlate}}<br/>
+                                <strong>Peso de entrada: </strong>{{data.weightIn}}<br/>
+                                <strong>Peso de salida: </strong>{{data.weightOut}}<br/>
+                            </span>
                         </p>
                     </div>
                 </div>
