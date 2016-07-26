@@ -12,7 +12,7 @@ import {Fecha} from "../utils/pipe";
     selector: 'operacion-save',
     templateUrl: 'app/operacion/save.html',
     styleUrls: ['app/operacion/style.css'],
-    inputs:['idModal'],
+    inputs:['idModal','inAnt'],
     outputs:['save'],
     directives:[Search],
 })
@@ -20,6 +20,7 @@ export class OperacionSave extends RestController{
 
     public idModal:string;
     public save:any;
+    public inAnt:any={};
 
     form:ControlGroup;
     data:any = [];
@@ -181,7 +182,7 @@ export class OperacionSave extends RestController{
                 if(that.rules[key].object)
                 {
                     that.data[key].valueChanges.subscribe((value: string) => {
-                        if(value.length > 0){
+                        if(value && value.length > 0){
                             that.search=that.rules[key];
                             that.findControl = value;
                             that.dataList=[];
@@ -209,7 +210,8 @@ export class OperacionSave extends RestController{
     public loadPage:boolean=false;
     public findControl:string="";
 
-    submitForm(){
+    submitForm(event){
+        event.preventDefault();
         let that = this;
         let successCallback= response => {
             Object.keys(that.form.controls).forEach((key) => {
@@ -234,6 +236,21 @@ export class OperacionSave extends RestController{
 
         });
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
+    }
+    patchForm(event){
+        event.preventDefault();
+        let that=this;
+        let json={}
+        json['comment'] = this.form.controls['comment'].value;
+        json['weightOut'] = parseFloat(this.form.controls['weightOut'].value);
+        let body = JSON.stringify(json);
+
+        let successCallback= response => {
+            if(that.toastr)
+                that.toastr.success('Actualizado con éxito','Notificación')
+        }
+        this.httputils.doPut('/operations/'+this.idOperacion,body,successCallback,this.error)
+
     }
     //objecto del search actual
     public search:any={};
@@ -264,53 +281,73 @@ export class OperacionSave extends RestController{
     }
     public dataIn:any={};
     public antenaEnabled:boolean=false;
-    inAntena(event){
-        event.preventDefault();
+
+    public listOperations=false;
+    inAntena(data){
+        this.readOnlyfalse();
         this.antenaEnabled=true;
         let that = this;
-        let successCallback= response => {
-            let data=response.json();
-            that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
-            (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
-            that.rules['vehicle'].readOnly=true;
 
-            that.searchId['company']={'id':data.companyId,'title':data.companyName};
-            (<Control>this.form.controls['company']).updateValue(data.companyName);
+        that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
+        (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
+        that.rules['vehicle'].readOnly=true;
 
-            (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
-            that.rules['weightIn'].readOnly=true;
-        }
-        this.httputils.doGet('consultas/in.json',successCallback,this.error,true)
+        that.searchId['company']={'id':data.companyId,'title':data.companyRuc};
+        (<Control>this.form.controls['company']).updateValue(data.companyRuc);
+
+        (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
     }
-    outAntena(event){
-        event.preventDefault();
-        let that = this;
-        this.antenaEnabled=true;
-        let successCallback= response => {
-            let data=response.json()[0];
-            that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
-            (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
-            that.rules['vehicle'].readOnly=true;
+    public idOperacion="-1";
+    getOperacion(data){
+        this.readOnlyfalse();
 
-            that.searchId['company']={'id':data.companyId,'title':data.companyName};
-            (<Control>this.form.controls['company']).updateValue(data.companyName);
-            that.rules['company'].readOnly=true;
+        this.idOperacion=data.id;
+        this.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
+        (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
+        this.rules['vehicle'].readOnly=true;
 
-            that.searchId['trashType']={'id':data.typeTrashId,'title':data.typeTrashName};
-            (<Control>this.form.controls['trashType']).updateValue(data.typeTrashName);
-            that.rules['trashType'].readOnly=true;
+        this.searchId['company']={'id':data.companyId,'title':data.companyRuc};
+        (<Control>this.form.controls['company']).updateValue(data.companyRuc);
+        this.rules['company'].readOnly=true;
 
-            that.searchId['route']={'id':data.routeId,'title':data.routeName};
-            (<Control>this.form.controls['route']).updateValue(data.routeName);
-            that.rules['route'].readOnly=true;
+        this.searchId['trashType']={'id':data.typeTrashId,'title':data.trashTypeReference};
+        (<Control>this.form.controls['trashType']).updateValue(data.trashTypeReference);
+        this.rules['trashType'].readOnly=true;
 
-            (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
-            that.rules['weightIn'].readOnly=true;
+        this.searchId['route']={'id':data.routeId,'title':data.routeReference};
+        (<Control>this.form.controls['route']).updateValue(data.routeReference);
+        this.rules['route'].readOnly=true;
 
-            (<Control>this.form.controls['weightOut']).updateValue(data.weightOut);
-            that.rules['weightOut'].readOnly=true;
+        (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
+        this.rules['weightIn'].readOnly=true;
+
+        (<Control>this.form.controls['weightOut']).updateValue(this.weightOut);
+        this.rules['weightOut'].readOnly=false;
+        this.rules['weightOut'].hidden=false;
+
+        (<Control>this.form.controls['comment']).updateValue(data.comment);
+
+        this.listOperations=false;
+    }
+    public weightOut:number;
+
+    readOnlyfalse(){
+        this.rules['vehicle'].readOnly=false;
+        this.rules['company'].readOnly=false;
+        this.rules['trashType'].readOnly=false;
+        this.rules['route'].readOnly=false;
+        this.rules['weightIn'].readOnly=false;
+        this.rules['weightOut'].hidden=true;
+        this.listOperations=false;
+    }
+
+    outAntena(data){
+        if(data.operations.length>1)
+        {
+            this.weightOut=data.weightOut;
+            Object.assign(this.dataList,data);
+            this.listOperations=true;
         }
-        this.httputils.doGet('consultas/out.json',successCallback,this.error,true)
     }
 }
 
