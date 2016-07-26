@@ -23,6 +23,23 @@ export class Recarga extends RestController{
     public rules={
         'quantity':{'type':'number','display':null,'title':'Key','mode':'inline','placeholder': 'Cantidad', 'search': true,'double':true},
         'reference':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Referencia', 'search': true},
+        'typeRecharges':{
+            'type':'text',
+            'key':'typeRecharges',
+            'paramsSearch': {
+                'label':{'title':"Nombre: ",'detail':"Detalle: "},
+                'endpoint':"/search/type/recharges/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png',
+                'field':'typeRecharge.id',
+                //FIXME:la columna no funciona
+            },
+            'search':true,
+            'object':true,
+            'title':'Buscar tipo de recarga',
+            'placeholder':'Ingrese el tipo de recarga',
+            'icon':'fa fa-money',
+        },
     };
     public dataSelect:any={};
 
