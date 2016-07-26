@@ -53,6 +53,7 @@ export class Taquilla extends RestController{
     getCompanies(companies:string,offset=0){
         if(this.myglobal.existsPermission('80')) {
             this.offset = offset;
+            this.max=5;
             this.dataCompanies = {};
             this.dataCompany={};
             this.httputils.onLoadList("/search/companies/" + companies + "?max=" + this.max + "&offset=" + this.offset, this.dataCompanies, this.max, this.error);
@@ -65,8 +66,18 @@ export class Taquilla extends RestController{
     }
     onPrint(event){
         event.preventDefault();
-        print();
+        var printContents = document.getElementById("taquilla").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
 
+    }
+    loadAll(event){
+        event.preventDefault();
+        this.max = this.dataList.count||1000;
+        this.loadData();
     }
 }
 
