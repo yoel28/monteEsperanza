@@ -67,5 +67,16 @@ export class globalService extends RestController{
         };
         this.httputils.doGet('/params?max=100',successCallback,this.error);
     }
+    getParams(key){
+        let that = this;
+        let valor="";
+        Object.keys(this.params).forEach(index=>{
+            if(that.params[index].key==key){
+                valor=that.params[index].value;
+                return;
+            }
+        })
+        return valor;
+    }
     
 }
