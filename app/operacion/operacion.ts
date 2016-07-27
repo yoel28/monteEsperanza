@@ -69,7 +69,8 @@ export class Operacion extends RestController{
 
     assignOperacion(data){
         this.dataList.list.unshift(data);
-        this.dataList.list.pop();
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
     }
 
     public paramsFilter:any = {
@@ -89,6 +90,19 @@ export class Operacion extends RestController{
     onPrint(data){
         if(this.operacionPrint)
             this.operacionPrint.data=data
+    }
+    onEditableWeight(field,data,value,endpoint){
+        let cond = this.myglobal.getParams('PesoE>PesoS');
+        if((field== 'weightOut' && cond=="true" && data.weightIn < value) || (field== 'weightIn' && cond=="true" && data.weightOut > value) || (cond!="true"))
+        {
+            let json = {};
+            json[field] = parseFloat(value);
+            let body = JSON.stringify(json);
+            let error = err => {
+                this.toastr.error(err.json().message);
+            };
+            return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
+        }
     }
 
 
