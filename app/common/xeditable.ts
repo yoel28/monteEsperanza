@@ -39,6 +39,7 @@ export class Xeditable {
             showbuttons: that.rules[that.field].showbuttons || false,
             mode: that.rules[that.field].mode || 'inline',
             source:that.rules[that.field].source || null,
+            step:that.rules[that.field].step||"any",
             validate: function (newValue) {
                 if(that.function)
                 {
