@@ -1,16 +1,20 @@
 <div class="content-wrapper">
     <section class="content-header">
         <div class="row">
-            <div class="col-lg-4 visible-lg">
+            <div class="col-lg-3 visible-lg">
                 <img src="/assets/img/dashboard/robot.png" class="img-responsive">
             </div>
-            <div class="col-lg-7">
-                <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1>
+            <div class="col-lg-8">
+                <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1><br/>
                 <h3 class="subtitle">¿QU&Eacute; DESEA REALIZAR?</h3>
-                <div class="text-center title">
-                    <div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn" (click)="goVehiculos($event)">
-                        <img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">
-                        <h6>VEH&Iacute;CULO</h6>
+                <div class="text-center title padding-top">
+                    <!--<div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn" (click)="goVehiculos($event)">-->
+                        <!--<img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">-->
+                        <!--<h6>VEH&Iacute;CULO</h6>-->
+                    <!--</div>-->
+                    <div *ngIf="myglobal.existsPermission('21')" class="col-lg-3 btn" (click)="goOperaciones($event)">
+                        <img src="/assets/img/dashboard/operacion.png" class="actions-dashboard">
+                        <h6>Operaciones</h6>
                     </div>
                     <div *ngIf="myglobal.existsPermission('13')" class="col-lg-3 btn" (click)="goFactura($event)">
                         <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
@@ -23,10 +27,6 @@
                     <div *ngIf="myglobal.existsPermission('10')" class="col-lg-3 btn" (click)="goTaquilla($event)">
                         <img src="/assets/img/dashboard/taquilla.png" class="actions-dashboard">
                         <h6>TAQUILLA</h6>
-                    </div>
-                    <div *ngIf="myglobal.existsPermission('21')" class="col-lg-3 btn" (click)="goOperaciones($event)">
-                        <img src="/assets/img/dashboard/operacion.png" class="actions-dashboard">
-                        <h6>Operaciones</h6>
                     </div>
                 </div>
             </div>
