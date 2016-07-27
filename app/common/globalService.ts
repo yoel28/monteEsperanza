@@ -8,6 +8,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 export class globalService extends RestController{
     version:string = "1.0.0";
     user:any=[];
+    params:any={};
     permissions:any=[];
     init=false;
     
@@ -38,6 +39,7 @@ export class globalService extends RestController{
             let successCallback2= response => {
                 Object.assign(that.user,that.user,response.json().list[0]);
                 that.myPermissions();
+                that.loadParams();
             };
             let where = encodeURI('[["op":"eq","field":"username","value":"'+this.user.username+'"]]');
             this.httputils.doGet('/users?where='+where, successCallback2,error);
@@ -57,6 +59,13 @@ export class globalService extends RestController{
             that.init=true;
         };
         return this.httputils.doGet('/current/permissions/',successCallback,this.error);
+    }
+    loadParams(){
+        let that = this;
+        let successCallback= response => {
+            Object.assign(that.params,response.json().list);
+        };
+        this.httputils.doGet('/params?max=100',successCallback,this.error);
     }
     
 }
