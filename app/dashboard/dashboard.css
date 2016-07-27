@@ -8,6 +8,7 @@
 .title{
     font-weight: bolder;
     color: black;
+    font-size: 14pt;
 }
 .subtitle{
     color: black;
@@ -75,4 +76,7 @@
 .border{
     border-top: 1px solid #ccc;
     padding-top: 10pt;
+}
+.padding-top{
+    padding-top: 15pt;
 }
