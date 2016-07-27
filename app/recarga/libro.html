@@ -10,21 +10,21 @@
                 <div class="row">
                     <div class="col-lg-9">
                         <form role="form" [ngFormModel]="form" (submit)="loadLibro($event)">
-                            <div class="form-group input-icon right col-lg-4">
+                            <div class="form-group input-icon right col-lg-3">
                                     Inicio
                                     <div class="input-icon right">
                                         <i class="glyphicon glyphicon-calendar"></i>
-                                        <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Ingresar un periodo inicial" type="text" class="form-control">
+                                        <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Periodo inicial" type="text" class="form-control">
                                     </div>
                             </div>
-                            <div class="form-group input-icon right col-lg-4">
+                            <div class="form-group input-icon right col-lg-3">
                                 Fin
                                 <div class="input-icon right">
                                     <i class="glyphicon glyphicon-calendar"></i>
-                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="2" value="Ingresar un periodo final" type="text" class="form-control">
+                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="2" value="Periodo final" type="text" class="form-control">
                                 </div>
                             </div>
-                            <div *ngIf="rechargeTypes.list" class="form-group input-icon right col-lg-4">
+                            <div *ngIf="rechargeTypes.list" class="form-group input-icon right col-lg-3">
                                 Tipo de recarga
                                 <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
                                     <option data-hidden="true" value="-1" >Todos</option>
@@ -33,7 +33,7 @@
                             </div>
 
 
-                            <div class="col-lg-3 center-margin">
+                            <div class="col-lg-3 center-margin padding-top">
                                 <button (click)="loadLibro($event)" type="button" class="btn btn-success pull-right"
                                         id="cntrlsubmit" [disabled]="!form.valid">
                                     <i class="fa fa-bank"></i>
@@ -50,16 +50,25 @@
 
                                 <thead>
                                 <tr>
-                                    <th >Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
                                     <th>Referencia</th>
                                     <th>Fecha de Transaccion</th>
-                                    <th>Tipo y Detalle</th>
+                                    <th>Tipo</th>
+                                    <th>Descargado</th>
                                     <th>Debe</th>
                                     <th>Haber</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngFor="let recharges of dataList.list">
                                 <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
+                                    <td>
+                                        <a class="btn btn-box-tool"
+                                           (click)="goTaquilla($event,recharges.companyId)">
+                                            {{recharges.companyName}}&nbsp;({{recharges.companyRuc}})
+                                            <i class="fa fa-external-link"></i>
+                                        </a>
+                                    </td>
                                     <td>
                                         {{recharges.dateCreated| fecha | date:'dd'}}/
                                         {{recharges.dateCreated| fecha | date:'MM'}}/
@@ -74,7 +83,9 @@
                                     </td>
                                     <td>
                                         <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
-                                        {{recharges.weight?recharges.weight+"Kg.":"&nbsp;"}}
+                                    </td>
+                                    <td>
+                                        {{recharges.weight || "&nbsp;"}}
                                     </td>
                                     <td>{{recharges.rechargeTypeId!=4?recharges.quantity:"&nbsp;"}}</td>
                                     <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1):"&nbsp;"}}</td>
@@ -102,8 +113,9 @@
                                     <th>&nbsp;</th>
                                     <th>Peso de entrada</th>
                                     <th>Peso de salida</th>
-                                    <th>Debe</th>
-                                    <th>Haber</th>
+                                    <th>Facturado</th>
+                                    <th><i class="fa fa-dollar text-green"></i>&nbsp;Saldo de clientes</th>
+                                    <th><i class="fa fa-dollar text-green"></i>&nbsp;Ingresos</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -113,6 +125,7 @@
                                         <td>{{rechargeTotal.weightOut}}</td>
                                         <td>{{rechargeTotal.debe * -1}}</td>
                                         <td>{{rechargeTotal.haber}}</td>
+                                        <td>{{(rechargeTotal.debe * -1)+ rechargeTotal.haber}}</td>
 
                                     </tr>
                                 </tbody>
