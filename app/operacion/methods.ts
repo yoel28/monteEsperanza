@@ -286,6 +286,7 @@ export class OperacionSave extends RestController{
     inAntena(data){
         this.readOnlyfalse();
         this.antenaEnabled=true;
+        this.idOperacion="-1";
         let that = this;
 
         that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
