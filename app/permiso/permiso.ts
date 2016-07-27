@@ -77,10 +77,22 @@ export class PermisosRol extends RestController {
         super(http,toastr);
     }
     ngOnInit(){
+
+    }
+    //advertencia
+    public modalIn:boolean=true;
+    loadPage(){
+        this.modalIn=false;
         this.loadPermissions();
         if(this.myglobal.existsPermission('48'))
             this.loadRoles();
     }
+    onDashboard(){
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
+    }
+
+
     //Cargar Roles
     public items:any = [];
     public dataRoles:any=[];

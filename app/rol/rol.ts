@@ -23,10 +23,21 @@ export class Rol extends RestController{
         super(http,toastr);
         this.setEndpoint('/roles/');
     }
-    ngOnInit(){
+    //advertencia
+    public modalIn:boolean=true;
+    loadPage(){
+        this.modalIn=false;
         if (this.myglobal.existsPermission('48')) {
             this.loadData();
         }
+    }
+    onDashboard(){
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
+    }
+
+    ngOnInit(){
+
     }
     assignRol(data){
         this.dataList.list.unshift(data);

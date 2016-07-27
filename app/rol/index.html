@@ -97,3 +97,27 @@
 <div *ngIf="myglobal.existsPermission('119')">
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
+
+<div class="modal fade" [class.in]="modalIn" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" [style.display]="modalIn?'block':'none'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header btn-red text-center">
+                <h4 class="modal-title"><i
+                        class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+            </div>
+            <div class="modal-body">
+                El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que está haciendo.
+            </div>
+            <div class="modal-footer">
+                <button (click)="onDashboard()" type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
+                    &nbsp;Salir
+                </button>
+
+                <button (click)="loadPage()"  data-dismiss="modal" type="button" class="btn btn-red fa fa-check">
+                    &nbsp;S&iacute;, estoy seguro
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
