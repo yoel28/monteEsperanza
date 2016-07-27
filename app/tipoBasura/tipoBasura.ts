@@ -98,6 +98,8 @@ export class TipoBasura extends RestController{
     }
     assignTipoBasura(data){
         this.dataList.list.unshift(data);
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
     }
     //Cargar Where del filter
     public paramsFilter:any = {

@@ -40,6 +40,8 @@ export class TipoVehiculo extends RestController{
     }
     assignTipoEmpresa(data){
         this.dataList.list.unshift(data);
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
     }
     public paramsFilter:any = {
         title: "Filtrar tipos de vehiculos",

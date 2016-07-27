@@ -40,7 +40,8 @@ export class TipoEmpresa extends RestController{
     }
     assignTipoEmpresa(data){
         this.dataList.list.unshift(data);
-        this.dataList.list.pop();
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
     }
     //Cargar Where del filter
     public paramsFilter:any = {
