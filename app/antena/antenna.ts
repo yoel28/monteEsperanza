@@ -41,7 +41,7 @@ export class Antenna extends RestController{
             'placeholder': 'Referencia',
             'search': true,
             'msg':{
-                'error':'la referencia contiene errores',
+                'error':'Este campo es obligatorio',
             }
         },
         'way':{
@@ -59,7 +59,7 @@ export class Antenna extends RestController{
                 {'value': 'salida', 'text': 'salida'},
             ],
             'msg':{
-                'error':'La dirección contiene errores',
+                'error':'Este campo es obligatorio',
             }
         },
     };
@@ -71,6 +71,8 @@ export class Antenna extends RestController{
     }
     assignAntenna(data){
         this.dataList.list.unshift(data);
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
     }
     //Cargar Where del filter
     public paramsFilter:any = {
