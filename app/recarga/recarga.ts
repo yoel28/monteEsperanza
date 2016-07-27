@@ -49,12 +49,14 @@ export class Recarga extends RestController{
     ngOnInit(){
         if(this.myglobal.existsPermission('109')){
             this.max = 30;
+            this.where="&where="+encodeURI("[['op':'isNull','field':'o.id']]");
             this.loadData();
         }
     }
     assignRecarga(data){
         this.dataList.list.unshift(data);
-        this.dataList.list.pop();
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
     }
     //Cargar Where del filter
     public paramsFilter:any = {
@@ -203,6 +205,11 @@ export class RecargaLibro extends RestController{
             dateStart: this.dateStart,
             dateEnd: this.dateEnd,
         });
+    }
+    goTaquilla(event,companyId:string) {
+        event.preventDefault();
+        let link = ['TaquillaSearh', {search: companyId}];
+        this.router.navigate(link);
     }
     //consultar Libro
     form: ControlGroup;
