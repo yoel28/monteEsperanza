@@ -26,9 +26,10 @@
                             <tr>
 
                                 <th>Cliente</th>
+                                <th>Fecha de transacci&oacute;n</th>
                                 <th>Referencia</th>
                                 <th>Detalle</th>
-                                <th>Fecha</th>
+                                <th>Fecha de referencia</th>
                                 <th>Cantidad </th>
                                 <th *ngIf="myglobal.existsPermission('114')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('113')">Acciones</th>
@@ -40,9 +41,14 @@
                                 <td>
                                     <a class="btn btn-box-tool"
                                        (click)="goTaquilla($event,data.companyId)">
-                                       {{data.companyRuc}}
+                                       ({{data.companyRuc}}) {{data.companyName}}
                                        <i class="fa fa-external-link"></i>
                                     </a>
+                                </td>
+                                <td>
+                                    {{data.dateCreated | fecha | date:'dd' }}/
+                                    {{data.dateCreated | fecha | date:'MM' }}/
+                                    {{data.dateCreated | fecha | date:'yyyy' }}
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="reference"
@@ -51,10 +57,14 @@
                                 <td>
                                     <i class="{{data.rechargeTypeIcon}}"></i>&nbsp;{{data.rechargeTypeTitle}}
                                     <label *ngIf="data.weight">
-                                       ({{data.weight}} Kg.)
+                                       ( {{data.weight}} {{data.metric}})
                                     </label>
                                 </td>
-                                <td>{{data.referenceDate | fecha | date:'dd-MM-yyyy' }}</td>
+                                <td>
+                                    {{data.referenceDate | fecha | date:'dd' }}/
+                                    {{data.referenceDate | fecha | date:'MM' }}/
+                                    {{data.referenceDate | fecha | date:'yyyy' }}
+                                </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="quantity"
                                        [disabled]="!myglobal.existsPermission('112')"></a>
