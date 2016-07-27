@@ -62,7 +62,7 @@ export class Operacion extends RestController{
             'search':true,
             'object':true,
             'title':'Buscar cliente',
-            'placeholder':'Ingrese el RUC del cliente',
+            'placeholder':'Ingrese el RUC o nombre del cliente',
             'icon':'fa fa-building-o',
         },
     };

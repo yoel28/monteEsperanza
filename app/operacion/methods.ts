@@ -64,7 +64,7 @@ export class OperacionSave extends RestController{
             'icon':'fa fa-building',
             'object':true,
             'title':'Cliente',
-            'placeholder':'Ingrese el RUC del cliente',
+            'placeholder':'Ingrese el RUC o nombre del cliente',
             'permissions':'80',
             'msg':{
                 'error':'El cliente contiene errores',
