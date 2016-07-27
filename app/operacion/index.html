@@ -42,11 +42,11 @@
                             <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "-"}}</td>
                             <td>{{data.vehiclePlate}}</td>
                             <td>
-                                <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
                                    [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightIn"></a>
                             </td>
                             <td>
-                                <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
                                    [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightOut"></a>
                             </td>
                             <td *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157')" style="vertical-align: middle">
