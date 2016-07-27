@@ -3,6 +3,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {HttpUtils} from "../common/http-utils";
 import moment from 'moment/moment';
+import {globalService} from "./globalService";
 
 
 declare var jQuery:any;
@@ -21,7 +22,7 @@ export class Xeditable {
     public httputils:HttpUtils;
     public disabled:boolean;
 
-    constructor(public el:ElementRef, public http:Http, public toastr?:ToastsManager) {
+    constructor(public el:ElementRef, public http:Http,public myglobal:globalService, public toastr?:ToastsManager) {
         this.success = new EventEmitter();
         this.httputils = new HttpUtils(http, toastr);
     }
