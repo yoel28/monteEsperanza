@@ -314,6 +314,9 @@ export class Dashboard extends RestController {
         if (!this.dateEnd.value) {
             final = (moment(this.dateStart.value).add(1, 'days'));
         }
+        else{
+            final = (moment(this.dateEnd.value).add(1, 'days'));
+        }
 
         this.paramsFactura = {
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),

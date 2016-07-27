@@ -31,8 +31,7 @@ export class Recarga extends RestController{
                 'endpoint':"/search/type/recharges/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
-                'field':'typeRecharge.id',
-                //FIXME:la columna no funciona
+                'field':'rechargeType.id',
             },
             'search':true,
             'object':true,
@@ -142,6 +141,9 @@ export class RecargaIngresos extends RestController{
         if (!this.dateEnd.value) {
             final = (moment(this.dateStart.value).add(1, 'days'));
         }
+        else{
+            final = (moment(this.dateEnd.value).add(1, 'days'));
+        }
 
         this.paramsFactura = {
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
@@ -212,6 +214,9 @@ export class RecargaLibro extends RestController{
         let final=this.dateEnd.value;
         if (!this.dateEnd.value) {
             final = (moment(this.dateStart.value).add(1, 'days'));
+        }
+        else{
+            final = (moment(this.dateEnd.value).add(1, 'days'));
         }
 
         this.params = {
