@@ -101,7 +101,8 @@
                     <li *ngIf="myglobal.existsPermission('3')"><a href="#" [routerLink]="['Taquilla']"><i class="fa fa-dollar"></i> <span>Taquilla</span></a></li>
 
                     <li class="treeview" [class.active]="activeMenuId=='trans'"
-                        *ngIf="myglobal.existsPermission('21') || myglobal.existsPermission('14')"
+                        *ngIf="myglobal.existsPermission('21') || myglobal.existsPermission('14')
+                        || myglobal.existsPermission('158') || myglobal.existsPermission('159')"
                     >
                         <a (click)="activeMenu($event,'trans')">
                             <i class="fa fa-gears"></i>
@@ -120,8 +121,10 @@
                                     <i class="fa fa-sign-out"></i> <span>Salida</span>
                                 </a>
                             </li>
-
                             <li *ngIf="myglobal.existsPermission('14')"><a href="#" [routerLink]="['Recarga']"><i class="fa fa-money"></i> <span>Recargas</span></a></li>
+                            <li *ngIf="myglobal.existsPermission('158')"><a href="#" [routerLink]="['RecargaIngresos']"><i class="fa fa-money"></i> <span>Ingresos</span></a></li>
+                            <li *ngIf="myglobal.existsPermission('159')"><a href="#" [routerLink]="['RecargaLibro']"><i class="fa fa-book"></i> <span>Libro</span></a></li>
+
                         </ul>
                     </li>
 
@@ -211,7 +214,7 @@
         <div class="pull-right hidden-xs">
             Aguaseo, C.A
         </div>
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2015 <a href="#">AGUASEO</a>.</strong> Todos los derechos reservados.
     </footer>
 </div>
 <!-- ./wrapper -->
