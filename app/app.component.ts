@@ -129,8 +129,7 @@ export class AppComponent extends RestController{
         },function(error){
           console.log("entro2");
         }
-    );
-     // this.onSocket();
+    );this.onSocket();
   }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -181,7 +180,7 @@ export class AppComponent extends RestController{
 
     }
     onSocket(){
-        let ws = new SockJS("http://192.168.0.91:8080/stomp");
+        let ws = new SockJS(localStorage.getItem("url")+"/stomp");
         let client = Stomp.over(ws);
         let that=this;
 
@@ -189,7 +188,7 @@ export class AppComponent extends RestController{
             client.subscribe("/topic/read", function(message) {
                 let str = JSON.parse(message.body);
                 if(str['entrada']){
-                    that.toastr.success('Placa: '+str['entrada'].vehiclePlate,' <i class="fa fa-truck"></i> Vehículo Entrando');
+                    that.toastr.success('Placa: '+str['entrada'].vehiclePlate,'Vehículo Entrando');
                 }
             });
         });
