@@ -132,12 +132,12 @@
                 <button *ngIf="idOperacion<0" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
-                    Agregar Entrada
+                    Agregar entrada
                 </button>
                 <button *ngIf="idOperacion>=0" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
-                    Agregar Salida
+                    Agregar salida
                 </button>
             </div>
         </div>
