@@ -92,7 +92,7 @@ export class AppComponent extends RestController{
 
   public saveUrl:string;
 
-  constructor(public router: Router,http: Http,public myglobal:globalService) {
+  constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
     localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
