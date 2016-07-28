@@ -86,3 +86,7 @@
 .bg-ivonne::after{
     border-color: transparent #c8f3d7 transparent transparent !important;
 }
+.info-box-text{
+    white-space: normal !important;
+    font-size: 12px !important;
+}
