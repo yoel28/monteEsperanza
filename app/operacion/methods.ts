@@ -343,12 +343,18 @@ export class OperacionSave extends RestController{
     }
 
     outAntena(data){
-        if(data.operations.length>1)
+        if(data.operations && data.operations.length>1)
         {
             this.weightOut=data.weightOut;
             Object.assign(this.dataList,data);
             this.listOperations=true;
         }
+    }
+    resetForm(){
+       /* (<Control>this.form.controls).forEach((name, control) => {
+            control.updateValue('');
+            control.setErrors(null);
+        });*/
     }
 }
 
