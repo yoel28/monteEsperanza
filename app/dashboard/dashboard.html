@@ -34,6 +34,21 @@
     </section>
     <section class="content">
         <div *ngIf="myglobal.existsPermission('27')" >
+
+            <div class="row" *ngIf="Total">
+                <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let total of Total">
+                    <div class="info-box">
+                                    <span class="info-box-icon {{color[total.icon]}}">
+                                        <i class="{{total.icon}}"></i>
+                                    </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">{{total.name}}</span>
+                            <span class="info-box-number">{{total.quantity}}&nbsp;<small>{{MONEY_METRIC_SHORT}}</small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">An&aacute;lisis de gesti&oacute;n</h3>
@@ -50,7 +65,7 @@
                         </div>
                         <div class="col-lg-3" style="padding-top: 5pt;">
                             <label>
-                                <div class="material-switch">
+                                <div class="material-switch ">
                                     <input (click)="cambiar()" id="formato" [attr.accesskey]="msgLabel" type="checkbox" [checked]="msgLabel"/>
                                     <label for="formato" class="label-success"></label>
                                     <span>&nbsp;{{msgLabel?"Año":"Mes/Año"}}</span>
