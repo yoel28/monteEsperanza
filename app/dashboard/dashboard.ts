@@ -68,93 +68,78 @@ export class Dashboard extends RestController {
 
     dataPlot:any = [];
 
+    public WEIGTH_METRIC_SHORT=this.myglobal.getParams('WEIGTH_METRIC_SHORT');
+    public WEIGTH_METRIC=this.myglobal.getParams('WEIGTH_METRIC');
+    public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
+    public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
+    public VEHICLE_METRIC_SHORT=this.myglobal.getParams('VEHICLE_METRIC_SHORT');
+    public VEHICLE_METRIC=this.myglobal.getParams('VEHICLE_METRIC');
+
     dataAreaPlot1 = {
         chart: {
             renderTo: 'chartcontainer1',
             type: 'column',
-            // backgroundColor: {
-            //     linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-            //     stops: [
-            //         [0, 'rgb(255, 255, 255)'],
-            //         [1, 'rgb(200, 200, 255)']
-            //     ]
-            // },
-
         },
         xAxis: {
             categories: [],
         },
         yAxis: {
             title: {
-                text: "Cantidad",
+                text:this.WEIGTH_METRIC,
             },
         },
         tooltip: {
-            pointFormat: '{series.name} producido <b>{point.y:,.0f}</b>$'
+            pointFormat: '{series.name} descargadas <b>{point.y:,.0f}</b>'+this.WEIGTH_METRIC_SHORT
         },
         credits: {
             enabled: false
         },
         series: [],
-        title: {text: 'Balance general (dinero)'},
+        title: {text: 'Descargas en el vertedero ('+this.WEIGTH_METRIC+')'},
     };
     dataAreaPlot2 = {
         chart: {
             renderTo: 'chartcontainer2',
             type: 'area',
-            // backgroundColor: {
-            //     linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-            //     stops: [
-            //         [0, 'rgb(255, 255, 255)'],
-            //         [1, 'rgb(200, 200, 255)']
-            //     ]
-            // },
         },
         xAxis: {
             categories: [],
         },
         yAxis: {
             title: {
-                text: "Cantidad",
+                text: this.MONEY_METRIC,
             },
         },
         tooltip: {
-            pointFormat: 'Cantidad de {series.name} <br/> que ingresaron <b>{point.y:,.0f}</b>'
+            pointFormat: '{series.name} <br/>Ingresaron <b>{point.y:,.0f}</b>'+this.MONEY_METRIC_SHORT
         },
         credits: {
             enabled: false
         },
         series: [],
-        title: {text: 'Uso del vertedero (camiones)'},
+        title: {text: 'Balance general ('+this.MONEY_METRIC+')'},
     };
     dataAreaPlot3 = {
         chart: {
             renderTo: 'chartcontainer3',
-            type: 'area',
-            // backgroundColor: {
-            //     linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-            //     stops: [
-            //         [0, 'rgb(255, 255, 255)'],
-            //         [1, 'rgb(200, 200, 255)']
-            //     ]
-            // },
+            type: 'line',
         },
         xAxis: {
             categories: [],
         },
         yAxis: {
             title: {
-                text: "Cantidad",
+                text: this.VEHICLE_METRIC,
             },
         },
         tooltip: {
-            pointFormat: 'Cantidad de {series.name} <br/> que se descargaron <b>{point.y:,.0f} Kg.</b>'
+            pointFormat: 'Cantidad de {series.name} <br/> que ingresaron <b>{point.y:,.0f}</b>'+this.VEHICLE_METRIC_SHORT
         },
         credits: {
             enabled: false
         },
         series: [],
-        title: {text: 'Descargas en el vertedero'},
+        title: {text: 'Uso de vertedero ('+this.VEHICLE_METRIC+')'},
     };
     dataAreaPlot4 = {
         chart: {
@@ -166,14 +151,17 @@ export class Dashboard extends RestController {
         },
         yAxis: {
             title: {
-                text: "Manejo de recargas",
+                text: this.MONEY_METRIC,
             },
+        },
+        tooltip: {
+            pointFormat: 'Ingreso {point.y:,.0f}'+this.MONEY_METRIC_SHORT+' en {series.name}'
         },
         credits: {
             enabled: false
         },
         series: [],
-        title: {text: 'Flujo de caja'},
+        title: {text: 'Flujo de caja ('+this.MONEY_METRIC+')'},
     };
 
     getPlots() {
