@@ -14,7 +14,7 @@
                     <th>Registrado</th>
                     <th>Recarga</th>
                     <th>Veh&iacute;culo</th>
-                    <th>Referencia</th>
+                    <th>#Ref o #Recibo</th>
                     <th>Fecha</th>
                     <th>Monto</th>
                 </tr>
@@ -49,8 +49,10 @@
                         <th>&nbsp;</th>
                         <th>Peso de entrada</th>
                         <th>Peso de salida</th>
-                        <th>Debe</th>
-                        <th>Haber</th>
+                        <th>Peso descargado</th>
+                        <th>Facturado</th>
+                        <th><i class="fa fa-dollar text-green"></i>&nbsp;Saldo de clientes</th>
+                        <th><i class="fa fa-dollar text-green"></i>&nbsp;Ingresos</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,7 +60,9 @@
                         <td>TOTAL</td>
                         <td>{{rechargeTotal.weightIn}}</td>
                         <td>{{rechargeTotal.weightOut}}</td>
+                        <td>{{rechargeTotal.weightIn - rechargeTotal.weightOut}}</td>
                         <td>{{rechargeTotal.debe * -1}}</td>
+                        <td>{{rechargeTotal.haber + rechargeTotal.debe}}</td>
                         <td>{{rechargeTotal.haber}}</td>
 
                     </tr>
