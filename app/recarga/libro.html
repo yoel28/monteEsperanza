@@ -61,7 +61,7 @@
                                 <tr>
                                     <th>Cliente</th>
                                     <th>Fecha de transacci&oacute;n</th>
-                                    <th>Referencia</th>
+                                    <th>#Ref o #Recibo</th>
                                     <th>Fecha de referencia</th>
                                     <th>Tipo</th>
                                     <th>Descargado</th>
@@ -94,7 +94,7 @@
                                         <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                                     </td>
                                     <td>
-                                        {{recharges.weight || "&nbsp;"}}
+                                        {{recharges.weight || "&nbsp;"}} {{recharges.metric}}
                                     </td>
                                     <td>{{recharges.rechargeTypeId!=4?recharges.quantity:"&nbsp;"}}</td>
                                     <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1):"&nbsp;"}}</td>
@@ -122,6 +122,7 @@
                                     <th>&nbsp;</th>
                                     <th>Peso de entrada</th>
                                     <th>Peso de salida</th>
+                                    <th>Peso descargado</th>
                                     <th>Facturado</th>
                                     <th><i class="fa fa-dollar text-green"></i>&nbsp;Saldo de clientes</th>
                                     <th><i class="fa fa-dollar text-green"></i>&nbsp;Ingresos</th>
@@ -132,8 +133,9 @@
                                         <td>TOTAL</td>
                                         <td>{{rechargeTotal.weightIn}}</td>
                                         <td>{{rechargeTotal.weightOut}}</td>
+                                        <td>{{rechargeTotal.weightIn - rechargeTotal.weightOut}}</td>
                                         <td>{{rechargeTotal.debe * -1}}</td>
-                                        <td>{{rechargeTotal.haber - rechargeTotal.debe}}</td>
+                                        <td>{{rechargeTotal.haber + rechargeTotal.debe}}</td>
                                         <td>{{rechargeTotal.haber}}</td>
 
                                     </tr>
