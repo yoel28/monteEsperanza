@@ -212,10 +212,12 @@ export class Filter extends RestController{
     onReset(event) {
         event.preventDefault();
         this.keys.forEach(key=>{
-            (<Control>this.form.controls[key]).updateValue("");
-            (<Control>this.form.controls[key]).setErrors(null);
+            if(this.form.controls[key]){
+                (<Control>this.form.controls[key]).updateValue("");
+                (<Control>this.form.controls[key]).setErrors(null);
 
-            (<Control>this.form.controls[key+'Cond']).updateValue("eq");
+                (<Control>this.form.controls[key+'Cond']).updateValue("eq");
+            }
         })
         this.whereFilter.emit("");
     }
