@@ -178,6 +178,56 @@ export class RecargaLibro extends RestController{
         this.initForm();
         this.getRechargeTypes();
     }
+
+    //lapso de fechas
+    public itemsFecha=[
+        {'id':'1','text':'Hoy'},
+        {'id':'2','text':'Semana actual'},
+        {'id':'3','text':'Mes actual'},
+        {'id':'4','text':'Mes anterior'},
+        {'id':'5','text':'Últimos 3 meses'},
+        {'id':'6','text':'Año actual'},
+    ]
+    setFecha(id){
+        //Thu Jul 09 2015 00:00:00 GMT-0400 (VET)
+        let day = moment().format('lll');
+        let val;
+        switch (id)
+        {
+            case "1" :
+                this.dateStart.updateValue(day);
+                break;
+            case "2" :
+                val=moment().format('e');
+                this.dateStart.updateValue(moment(day).subtract(val, 'days'));
+                this.dateEnd.updateValue(day);
+                break;
+            case "3" :
+                val=moment().format('D');
+                this.dateStart.updateValue((moment(day).subtract(val, 'days')).add(1,'days'));
+                this.dateEnd.updateValue(day);
+                break;
+            case "4" :
+                val=moment().format('D');
+                this.dateStart.updateValue(((moment(day).subtract(val, 'days')).subtract(1, 'month')).add(1,'days'));
+                this.dateEnd.updateValue(moment(day).subtract(val, 'days'));
+                break;
+            case "5" :
+                this.dateStart.updateValue((moment(day).subtract(3, 'month')).add(1,'days'));
+                this.dateEnd.updateValue(day);
+                break;
+            case "6" :
+                val=moment().format('MM');
+                this.dateStart.updateValue((moment(day).subtract(val, 'month')).add(1,'days'));
+                this.dateEnd.updateValue(day);
+                break;
+        }
+        if(id!='-1')
+            this.loadLibro();
+
+
+    }
+
     public formatDateFact = {
         format: "dd/mm/yyyy",
         startView: 2,
@@ -216,8 +266,9 @@ export class RecargaLibro extends RestController{
     dateStart:Control;
     dateEnd:Control;
     public params:any={};
-    loadLibro(event){
-        event.preventDefault();
+    loadLibro(event?){
+        if(event)
+            event.preventDefault();
         let final=this.dateEnd.value;
         if (!this.dateEnd.value) {
             final = (moment(this.dateStart.value).add(1, 'days'));
