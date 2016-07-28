@@ -196,6 +196,10 @@ export class Dashboard extends RestController {
                     that.dataAreaPlot3.xAxis.categories = response.json().categories;
                 that.dataAreaPlot3.series.push(response.json().series[2]);
             }
+            response.json().series[0].data.forEach(key=>{
+                this.Total[0].quantity+=key;
+            })
+
 
         }
         this.httputils.doGet("/dashboards/plot/1/" + this.plotDate, successCallback, this.error)
@@ -222,9 +226,22 @@ export class Dashboard extends RestController {
         'fa fa-money': 'bg-violet',
         'fa fa-truck': 'bg-green',
         'fa fa-refresh': 'bg-ivonne',
+        'fa fa-truck 0': 'bg-aqua',
+        'fa fa-line-chart 1': 'bg-red',
+        'fa fa-money 2': 'bg-green',
+        'fa fa-dollar 3': 'bg-yellow',
+
     };
     public totales:any={};
     public totalTamLg=[6,6,4,4,3,4,3];
+
+    public Total=[
+        {'name':'Total descargado ('+this.WEIGTH_METRIC_SHORT+')','icon':'fa fa-truck 0','quantity':0.0},
+        {'name':'Total facturado ('+this.MONEY_METRIC+')','icon':'fa fa-line-chart 1','quantity':0.0},
+        {'name':'Saldo de clientes ('+this.MONEY_METRIC+')','icon':'fa fa-money 2','quantity':0.0},
+        {'name':'Total de ingresos ('+this.MONEY_METRIC+')','icon':'fa fa-dollar 3','quantity':0.0},
+    ]
+
     loadTotales(data){
         let that=this;
         that.totales={'list':[],'count':0};
@@ -234,9 +251,18 @@ export class Dashboard extends RestController {
                 total+=Math.abs(val);
             })
             that.totales.list.push({'name':key.name,'icon':key.icon,'quantity':total});
+            if(key.name=='Uso - Vertedero')
+                this.Total[1].quantity=total;
+            else if(key.name=='Devolución')
+                this.Total[3].quantity-=total;
+            else
+                this.Total[3].quantity+=total;
+
         })
         that.totales.count=data.length;
+        that.Total[2].quantity=this.Total[3].quantity-this.Total[1].quantity;
     }
+
     getPlot2() {
         let that = this;
         let successCallback = response => {
@@ -244,10 +270,6 @@ export class Dashboard extends RestController {
 
                 that.chart['plot4'].series.forEach((data,i)=>{
                     let _data = response.json().series[i];
-                    if(_data.name=="Uso - Vertedero")
-                        _data.data.forEach((key,index)=>{
-                            _data.data[index]*=-1;
-                        })
                     data.setData(_data.data);
 
                 });
@@ -257,11 +279,6 @@ export class Dashboard extends RestController {
                 if (response.json().categories)
                     that.dataAreaPlot4.xAxis.categories = response.json().categories;
                 let _data = response.json().series;
-
-                _data.forEach((key,x)=>{
-                    if(key.name=="Uso - Vertedero")
-                        key.data.forEach((val,y)=>{_data[x].data[y]*=-1;})
-                })
                 that.dataAreaPlot4.series = _data;
             }
             this.loadTotales(response.json().series);
@@ -327,6 +344,7 @@ export class Dashboard extends RestController {
     }
 
     loadFacturas(event) {
+
         event.preventDefault();
         let final=this.dateEnd.value;
         if (!this.dateEnd.value) {
@@ -350,6 +368,12 @@ export class Dashboard extends RestController {
 
     loadFechaPlot(data) {
         this.plotDate = data.date;
+
+        this.Total[0].quantity=0.0;
+        this.Total[1].quantity=0.0;
+        this.Total[2].quantity=0.0;
+        this.Total[3].quantity=0.0;
+
         this.getPlots();
         this.getPlot2();
     }
