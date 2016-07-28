@@ -22,6 +22,7 @@ export class globalService extends RestController{
         }
 
         if(localStorage.getItem('bearer')){
+            this.loadParams();
             this.getUser();
         }
     }
@@ -39,7 +40,6 @@ export class globalService extends RestController{
             let successCallback2= response => {
                 Object.assign(that.user,that.user,response.json().list[0]);
                 that.myPermissions();
-                that.loadParams();
             };
             let where = encodeURI('[["op":"eq","field":"username","value":"'+this.user.username+'"]]');
             this.httputils.doGet('/users?where='+where, successCallback2,error);
