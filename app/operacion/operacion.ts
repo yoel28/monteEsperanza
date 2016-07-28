@@ -91,7 +91,7 @@ export class Operacion extends RestController{
         if(this.operacionPrint)
             this.operacionPrint.data=data
     }
-    onEditableWeight(field,data,value,endpoint){
+    onEditableWeight(field,data,value,endpoint):any{
         let cond = this.myglobal.getParams('PesoE>PesoS');
         let peso = parseFloat(value);
         if((field== 'weightOut' && cond=="true" && data.weightIn > peso) || (field== 'weightIn' && cond=="true" && peso > data.weightOut) || (cond!="true"))
@@ -104,6 +104,7 @@ export class Operacion extends RestController{
             };
             return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
         }
+        //return 'El peso de entrada debe ser mayor que el peso de salida';
     }
 
 
