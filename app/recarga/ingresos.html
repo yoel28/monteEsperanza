@@ -8,31 +8,46 @@
             </div>
             <div class="box-body">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">
-                            <div class="form-group input-icon right col-lg-6">
-                                    Inicio
-                                    <div class="input-icon right">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                        <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Ingresar un periodo inicial" type="text" class="form-control">
-                                    </div>
+                            <div class="form-group input-icon right col-lg-2">
+                                Lapso
+                                <div class="input-icon right">
+                                    <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                        <option data-hidden="true" value="-1"></option>
+                                        <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group input-icon right col-lg-6">
-                                    Fin
-                                    <div class="input-icon right">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                        <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="2" value="Ingresar un periodo final" type="text" class="form-control">
-                                    </div>
+                            <div class="form-group input-icon right col-lg-3">
+                                Inicio
+                                <div class="input-icon right">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Periodo inicial" type="text" class="form-control">
+                                </div>
                             </div>
-
-                            <div class="col-lg-12">
+                            <div class="form-group input-icon right col-lg-3">
+                                Fin
+                                <div class="input-icon right">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="2" value="Periodo final" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div *ngIf="rechargeTypes.list" class="form-group input-icon right col-lg-2">
+                                Tipo de recarga
+                                <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                    <option data-hidden="true" value="-1" >Todos</option>
+                                    <option *ngFor="let n of rechargeTypes.list"  [attr.value]="n.id" >{{n.title}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 center-margin padding-top">
                                 <button (click)="loadFacturas($event)" type="button" class="btn btn-success pull-right"
                                         id="cntrlsubmit" [disabled]="!form.valid">
                                     <i class="fa fa-bank"></i>
                                     Consultar
                                 </button>
                             </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>

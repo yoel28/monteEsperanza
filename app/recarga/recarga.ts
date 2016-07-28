@@ -99,7 +99,58 @@ export class RecargaIngresos extends RestController{
     }
     ngOnInit() {
         this.initForm();
+        this.getRechargeTypes();
     }
+
+    //lapso de fechas
+    public itemsFecha=[
+        {'id':'1','text':'Hoy'},
+        {'id':'2','text':'Semana actual'},
+        {'id':'3','text':'Mes actual'},
+        {'id':'4','text':'Mes anterior'},
+        {'id':'5','text':'Últimos 3 meses'},
+        {'id':'6','text':'Año actual'},
+    ]
+    setFecha(id){
+        //Thu Jul 09 2015 00:00:00 GMT-0400 (VET)
+        let day = moment().format('lll');
+        let val;
+        switch (id)
+        {
+            case "1" :
+                this.dateStart.updateValue(day);
+                break;
+            case "2" :
+                val=moment().format('e');
+                this.dateStart.updateValue(moment(day).subtract(val, 'days'));
+                this.dateEnd.updateValue(day);
+                break;
+            case "3" :
+                val=moment().format('D');
+                this.dateStart.updateValue((moment(day).subtract(val, 'days')).add(1,'days'));
+                this.dateEnd.updateValue(day);
+                break;
+            case "4" :
+                val=moment().format('D');
+                this.dateStart.updateValue(((moment(day).subtract(val, 'days')).subtract(1, 'month')).add(1,'days'));
+                this.dateEnd.updateValue(moment(day).subtract(val, 'days'));
+                break;
+            case "5" :
+                this.dateStart.updateValue((moment(day).subtract(3, 'month')).add(1,'days'));
+                this.dateEnd.updateValue(day);
+                break;
+            case "6" :
+                val=moment().format('MM');
+                this.dateStart.updateValue((moment(day).subtract(val, 'month')).add(1,'days'));
+                this.dateEnd.updateValue(day);
+                break;
+        }
+        if(id!='-1')
+            this.loadFacturas();
+
+
+    }
+
 
     public formatDateFact = {
         format: "dd/mm/yyyy",
@@ -137,8 +188,9 @@ export class RecargaIngresos extends RestController{
     recargaFactura:RecargaFactura;
     public paramsFactura:any={};
     public consultar=false;
-    loadFacturas(event){
-        event.preventDefault();
+    loadFacturas(event?){
+        if(event)
+            event.preventDefault();
         let final=this.dateEnd.value;
         if (!this.dateEnd.value) {
             final = (moment(this.dateStart.value).add(1, 'days'));
@@ -147,16 +199,43 @@ export class RecargaIngresos extends RestController{
             final = (moment(this.dateEnd.value).add(1, 'days'));
         }
 
+        let recharge=""
+        if(this.idRecharge && this.idRecharge!="-1")
+            recharge=",['op':'eq','field':'rechargeType.id','value':"+this.idRecharge+"]";
+
+
         this.paramsFactura = {
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
             'dateEnd': moment(final.toString()).format('DD-MM-YYYY'),
+            'where':"",
         };
+
+        let where ="[['op':'ge','field':'dateCreated','value':'"+this.paramsFactura.dateStart+"','type':'date']," +
+            "['op':'lt','field':'dateCreated','value':'"+this.paramsFactura.dateEnd+"','type':'date']"+recharge+"]&order=asc";
+
+        this.paramsFactura.where=where;
+
         if (this.recargaFactura) {
             this.recargaFactura.params = this.paramsFactura;
             if(this.myglobal.existsPermission('109'))
                 this.recargaFactura.cargar();
         }
         this.consultar = true;
+
+
+
+
+
+
+    }
+    public rechargeTotal:any={}
+    public idRecharge:string;
+    public rechargeTypes:any={};
+    getRechargeTypes(){
+        this.httputils.onLoadList("/type/recharges",this.rechargeTypes,this.error);
+    }
+    setType(data){
+        this.idRecharge=data;
     }
     
 }

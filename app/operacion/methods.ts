@@ -349,6 +349,9 @@ export class OperacionSave extends RestController{
             Object.assign(this.dataList,data);
             this.listOperations=true;
         }
+        else{
+            this.getOperacion(data.operations[0]);
+        }
     }
     resetForm(){
        /* (<Control>this.form.controls).forEach((name, control) => {

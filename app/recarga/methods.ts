@@ -195,13 +195,16 @@ export class RecargaFactura extends RestController{
     }
     public rechargeTotal:any={};
     public cargar(){
-        this.endpoint="/search/recharges/?where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
 
-        let where="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
+        if(this.params.where)
+            this.endpoint="/search/recharges/?where="+encodeURI(this.params.where);
+        else
+            this.endpoint="/search/recharges/?where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+                "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
 
-        this.endpoint = encodeURI(this.endpoint);
+        let where=encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]");
+
         this.loadData();
 
         this.httputils.onLoadList('/total/recharges?where='+encodeURI(where),this.rechargeTotal,this.max,this.error);
