@@ -78,7 +78,7 @@ export class Dashboard extends RestController {
     dataAreaPlot1 = {
         chart: {
             renderTo: 'chartcontainer1',
-            type: 'column',
+            type: 'area',
         },
         xAxis: {
             categories: [],
@@ -100,7 +100,7 @@ export class Dashboard extends RestController {
     dataAreaPlot2 = {
         chart: {
             renderTo: 'chartcontainer2',
-            type: 'area',
+            type: 'column',
         },
         xAxis: {
             categories: [],
@@ -207,7 +207,36 @@ export class Dashboard extends RestController {
         this.chart[index]=[];
         this.chart[index] = chartInstance;
     }
-
+    public color= {
+        'fa fa-cc-amex': 'bg-black',
+        'fa fa-cc-mastercard': 'bg-blue',
+        'fa fa-credit-card': 'bg-red',
+        'fa fa-cc-diners-club': 'bg-dark',
+        'fa fa-cc-paypal': 'bg-blue',
+        'fa fa-google-wallet': 'bg-red',
+        'fa fa-cc-discover': 'bg-orange',
+        'fa fa-cc-stripe': 'bg-green',
+        'fa fa-paypal': 'bg-yellow',
+        'fa fa-cc-jcb': 'bg-violet',
+        'fa fa-cc-visa': 'bg-pink',
+        'fa fa-money': 'bg-violet',
+        'fa fa-truck': 'bg-green',
+        'fa fa-refresh': 'bg-ivonne',
+    };
+    public totales:any={};
+    public totalTamLg=[6,6,4,4,3,4,3];
+    loadTotales(data){
+        let that=this;
+        that.totales={'list':[],'count':0};
+        data.forEach(key=>{
+            let total=0;
+            key.data.forEach(val=>{
+                total+=Math.abs(val);
+            })
+            that.totales.list.push({'name':key.name,'icon':key.icon,'quantity':total});
+        })
+        that.totales.count=data.length;
+    }
     getPlot2() {
         let that = this;
         let successCallback = response => {
@@ -235,6 +264,7 @@ export class Dashboard extends RestController {
                 })
                 that.dataAreaPlot4.series = _data;
             }
+            this.loadTotales(response.json().series);
 
         }
         this.httputils.doGet("/dashboards/plot/2/" + this.plotDate, successCallback, this.error)

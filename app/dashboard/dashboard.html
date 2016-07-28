@@ -59,6 +59,20 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
+                        <div class="row" *ngIf="totales && totales.count > 0">
+                            <div class="col-lg-{{totalTamLg[totales.count-1]}} col-xs-6" *ngFor="let total of totales.list">
+                                <div class="small-box {{color[total.icon]}}">
+                                    <div class="inner">
+                                        <h3>{{total.quantity}} {{MONEY_METRIC_SHORT}}</h3>
+                                        <p>{{total.name}}</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="{{total.icon}}"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-6">
                                 <chart [options]="dataAreaPlot1" (load)="saveInstance($event.context,'plot1')"></chart>

@@ -80,3 +80,9 @@
 .padding-top{
     padding-top: 15pt;
 }
+.bg-ivonne{
+    background-color: #c8f3d7 !important;
+}
+.bg-ivonne::after{
+    border-color: transparent #c8f3d7 transparent transparent !important;
+}
