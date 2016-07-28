@@ -131,7 +131,7 @@ export class RecargaTimeLine extends RestController{
         'fa fa-cc-mastercard': 'bg-blue',
         'fa fa-credit-card': 'bg-red',
         'fa fa-cc-diners-club': 'bg-dark',
-        'fa fa-cc-paypal': 'bg-lime',
+        'fa fa-cc-paypal': 'bg-blue',
         'fa fa-google-wallet': 'bg-red',
         'fa fa-cc-discover': 'bg-orange',
         'fa fa-cc-stripe': 'bg-green',
