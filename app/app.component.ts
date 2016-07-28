@@ -129,7 +129,7 @@ export class AppComponent extends RestController{
         },function(error){
           console.log("entro2");
         }
-    );this.onSocket();
+    );//this.onSocket();
   }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
