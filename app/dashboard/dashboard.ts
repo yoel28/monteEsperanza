@@ -236,10 +236,10 @@ export class Dashboard extends RestController {
     public totalTamLg=[6,6,4,4,3,4,3];
 
     public Total=[
-        {'name':'Total descargado ('+this.WEIGTH_METRIC_SHORT+')','icon':'fa fa-truck 0','quantity':0.0},
-        {'name':'Total facturado ('+this.MONEY_METRIC+')','icon':'fa fa-line-chart 1','quantity':0.0},
-        {'name':'Saldo de clientes ('+this.MONEY_METRIC+')','icon':'fa fa-money 2','quantity':0.0},
-        {'name':'Total de ingresos ('+this.MONEY_METRIC+')','icon':'fa fa-dollar 3','quantity':0.0},
+        {'name':'Total descargado ('+this.WEIGTH_METRIC_SHORT+')','icon':'fa fa-truck 0','quantity':0.0,'metric':this.WEIGTH_METRIC_SHORT},
+        {'name':'Total facturado ('+this.MONEY_METRIC+')','icon':'fa fa-line-chart 1','quantity':0.0,'metric':this.MONEY_METRIC_SHORT},
+        {'name':'Saldo de clientes ('+this.MONEY_METRIC+')','icon':'fa fa-money 2','quantity':0.0,'metric':this.MONEY_METRIC_SHORT},
+        {'name':'Total de ingresos ('+this.MONEY_METRIC+')','icon':'fa fa-dollar 3','quantity':0.0,'metric':this.MONEY_METRIC_SHORT},
     ]
 
     loadTotales(data){
@@ -250,7 +250,9 @@ export class Dashboard extends RestController {
             key.data.forEach(val=>{
                 total+=Math.abs(val);
             })
-            that.totales.list.push({'name':key.name,'icon':key.icon,'quantity':total});
+            if(key.name!='Uso - Vertedero')
+                that.totales.list.push({'name':key.name,'icon':key.icon,'quantity':total});
+
             if(key.name=='Uso - Vertedero')
                 this.Total[1].quantity=total;
             else if(key.name=='Devolución')
