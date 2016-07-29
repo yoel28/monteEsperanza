@@ -96,8 +96,8 @@
                                     <td>
                                         {{recharges.weight || "&nbsp;"}} {{recharges.metric}}
                                     </td>
-                                    <td>{{recharges.rechargeTypeId!=4?recharges.quantity:"&nbsp;"}}</td>
-                                    <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1):"&nbsp;"}}</td>
+                                    <td>{{recharges.rechargeTypeId!=4?recharges.quantity+" "+MONEY_METRIC_SHORT:"&nbsp;"}}</td>
+                                    <td>{{recharges.rechargeTypeId==4?(recharges.quantity*-1)+" "+MONEY_METRIC_SHORT:"&nbsp;"}}</td>
                                 </tr>
                                 </tbody>
                                 <tfoot *ngIf="dataList && dataList.page.length > 1">
