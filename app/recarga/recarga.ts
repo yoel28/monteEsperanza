@@ -246,6 +246,7 @@ export class RecargaLibro extends RestController{
         this.initForm();
         this.getRechargeTypes();
     }
+    public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
 
     //lapso de fechas
     public itemsFecha=[
