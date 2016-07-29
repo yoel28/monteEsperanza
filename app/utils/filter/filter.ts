@@ -112,12 +112,15 @@ export class Filter extends RestController{
                             if( !that.searchId[key]){
                                 that.loadData();
                             }
-                            else if(that.searchId[key].title != value){
+                            else if(that.searchId[key].detail != value){
                                 that.loadData();
+                                delete that.searchId[key];
                             }
                             else{
                                 that.search = [];
                             }
+                        }else{
+                            that.findControl="";
                         }
                     });
                 }
@@ -130,6 +133,7 @@ export class Filter extends RestController{
     //Al hacer click en la lupa guarda los valores del objecto
     getLoadSearch(event,data){
         event.preventDefault();
+        this.findControl="";
         this.search=data;
     }
     //accion al dar click en el boton de buscar del formulario en el search
@@ -146,8 +150,8 @@ export class Filter extends RestController{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title};
-        (<Control>this.form.controls[this.search.key]).updateValue(data.title);
+        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail};
+        (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
     
@@ -224,6 +228,15 @@ export class Filter extends RestController{
     //guardar condicion en el formulario
     setCondicion(cond,id){
         (<Control>this.form.controls[id+'Cond']).updateValue(cond);
+    }
+    searchLength()
+    {
+        if(this.searchId)
+            return Object.keys(this.searchId).length
+        return 0;
+    }
+    searchIdKeys(){
+        return Object.keys(this.searchId);
     }
 }
 
