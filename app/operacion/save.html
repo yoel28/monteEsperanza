@@ -34,7 +34,7 @@
                                                     <div class="col-lg-10">
                                                         <div class="input-group input-icon right form-group" [class.object-invalid]="
                                                             rules[key].object && data[key].value && data[key].value.length > 0 &&
-                                                            ((searchId[key] && searchId[key].title != data[key].value) || !searchId[key])
+                                                            ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
                                                             <i class="{{rules[key].icon || 'fa fa-list'}} z-index"></i>
                                                             <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
@@ -54,7 +54,8 @@
                                                                         ></textarea>
 
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
-                                                                {{rules[key].msg.error || 'El campo contiene errores'}}
+                                                                {{msgError!=""?msgError:(rules[key].msg.error || 'El campo contiene errores')}}
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -104,6 +105,10 @@
                                         <td>
                                             <strong>{{search.paramsSearch.label.title}} {{data.title}}</strong><br>
                                             {{search.paramsSearch.label.detail}} {{data.detail}}
+                                            <span *ngIf="data.balance || data.minBalance">
+                                                <br>Balance:{{data.balance || 0}}
+                                                <br>Balance minimo:{{data.minBalance || 0}}
+                                            </span>
                                         </td>
                                         <td style="vertical-align: middle;">
                                             <i class="btn btn-box-tool text-green fa fa-check"></i>
