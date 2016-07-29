@@ -26,7 +26,11 @@
                         <tr data-title="email">
                             <th>Cliente</th>
                             <th>Grupo</th>
-                            <th>Referencia</th>
+                            <th>Fecha de transacci&oacute;n</th>
+                            <th>#Ref o #Recibo</th>
+                            <th>Ruta</th>
+                            <th>Tipo de basura</th>
+                            <th>Operador</th>
                             <th>Monto</th>
                             <th>Veh&iacute;culo</th>
                             <th>Peso de entrada</th>
@@ -36,9 +40,26 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
-                            <td>{{data.companyName}}&nbsp;({{data.companyRUC}})</td>
+                            <td>
+                                <a class="btn btn-box-tool"
+                                   (click)="goTaquilla($event,data.companyId)">
+                                    {{data.companyName}}<br/>({{data.companyRUC}})
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
                             <td>{{data.companyTypeName}}</td>
+                            <td>
+                                {{data.rechargeReferenceDate| fecha | date:'dd'}}/
+                                {{data.rechargeReferenceDate| fecha | date:'MM'}}/
+                                {{data.rechargeReferenceDate| fecha | date:'yyyy'}},
+                                {{data.rechargeReferenceDate| fecha | date:'h:m'}}
+                            </td>
+
                             <td> {{data.rechargeReference || "-"}}</td>
+                            <td> {{data.routeTitle}}&nbsp;({{data.routeReference}})</td>
+                            <td> {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})</td>
+                            <td> {{data.usernameCreator}}</td>
+
                             <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "-"}}</td>
                             <td>{{data.vehiclePlate}}</td>
                             <td>
