@@ -26,6 +26,8 @@ export class OperacionSave extends RestController{
     data:any = [];
     keys:any = {};
 
+    msgError:string="";
+
     public rules={
         'vehicle':{
             'type':'text',
@@ -54,6 +56,8 @@ export class OperacionSave extends RestController{
             'required':true,
             'key':'company',
             'readOnly':false,
+            'checkBalance':true,
+            'checkBalancePermission':this.myglobal.existsPermission('160'),
             'paramsSearch': {
                 'label':{'title':"Nombre: ",'detail':"RUC: "},
                 'endpoint':"/search/companies/",
@@ -69,6 +73,7 @@ export class OperacionSave extends RestController{
             'msg':{
                 'error':'El cliente contiene errores',
                 'notAuthorized':'No tiene permisos de listar los clientes',
+                'errorCheckBalance':"El cliente no tiene saldo suficiente"
             },
         },
         'trashType':{
@@ -170,7 +175,26 @@ export class OperacionSave extends RestController{
                 {
                     that.data[key] = new Control("",Validators.compose([Validators.required,
                         (c:Control)=> {
-                            return (that.searchId[key] && that.searchId[key].title == c.value) ? null : {pattern: {valid: false}};
+                            if(that.searchId[key] && that.searchId[key].detail == c.value){
+                                if(that.rules[key].checkBalance){
+                                    if(!that.rules[key].checkBalancePermission){
+                                        let balance = parseFloat(that.searchId[key].balance || "0");
+                                        let minBalance = parseFloat(that.searchId[key].minBalance || "0");
+                                        if(balance > minBalance)
+                                            return null;
+                                        else{
+                                            that.msgError=that.rules[key].msg.errorCheckBalance;
+                                            return {pattern: {valid: false}};
+                                        }
+                                    }
+                                    else
+                                        return null;
+                                }
+                                else
+                                    return null;
+                            }
+                            that.msgError="";
+                            return {pattern: {valid: false}};
                         }
                     ]));
                 }
@@ -190,14 +214,19 @@ export class OperacionSave extends RestController{
                             if( !that.searchId[key]){
                                 that.loadData();
                             }
-                            else if(that.searchId[key].title != value){
-                                that.searchId[key]=[];
+                            else if(that.searchId[key].detail != value){
+                                delete that.searchId[key];
                                 that.loadData();
                             }
                             else{
                                 this.findControl="";
                                 that.search = [];
                             }
+                        }
+                        else{
+                            that.findControl="";
+                            if(that.searchId[key])
+                                delete that.searchId[key];
                         }
                     });
                 }
@@ -275,7 +304,7 @@ export class OperacionSave extends RestController{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.detail};
+        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
