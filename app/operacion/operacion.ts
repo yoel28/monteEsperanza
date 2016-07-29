@@ -31,8 +31,10 @@ export class Operacion extends RestController{
     }
 
     public rules={
-        'weightIn':{'type':'number','display':null,'title':'Peso de Entrada','mode':'inline','search': true,'placeholder': 'Peso de entrada','double':true},
-        'weightOut':{'type':'number','display':null,'title':'Peso de Salida','mode':'inline','search': true,'placeholder': 'Peso de salida','double':true},
+        'weightIn':{
+            'type':'number','display':null,'title':'Peso de Entrada','mode':'inline','search': true,'placeholder': 'Peso de entrada','double':true,'icon':'fa fa-balance-scale',},
+        'weightOut':{'type':'number','display':null,'title':'Peso de Salida','mode':'inline','search': true,'placeholder': 'Peso de salida','double':true,'icon':'fa fa-balance-scale',},
+
         'vehicle':{
             'type':'text',
             'key':'vehicle',
@@ -64,6 +66,52 @@ export class Operacion extends RestController{
             'title':'Buscar cliente',
             'placeholder':'Ingrese el RUC o nombre del cliente',
             'icon':'fa fa-building-o',
+        },
+        'trashType':{
+            'type':'text',
+            'required':true,
+            'key':'trashType',
+            'readOnly':false,
+            'permissions':'136',
+            'paramsSearch': {
+                'label':{'title':"Tipo: ",'detail':"Referencia: "},
+                'endpoint':"/search/type/trash/",
+                'where':'',
+                'imageGuest':'/assets/img/trash-guest.png',
+                'field':'trashType.id',
+            },
+            'icon':'fa fa-trash',
+            'search':true,
+            'object':true,
+            'title':'Basura',
+            'placeholder':'Referencia del tipo de basura',
+            'msg':{
+                'error':'El tipo de basura contiene errores',
+                'notAuthorized':'No tiene permisos de listar los tipos de basura',
+            },
+        },
+        'route':{
+            'type':'text',
+            'search':true,
+            'required':true,
+            'key':'route',
+            'readOnly':false,
+            'paramsSearch': {
+                'label':{'title':"Ruta: ",'detail':"Referencia: "},
+                'endpoint':"/search/routes/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png',
+                'field':'route.id',
+            },
+            'icon':'fa fa-random',
+            'object':true,
+            'title':'Ruta',
+            'placeholder':'Referencia de la ruta',
+            'permissions':'69',
+            'msg':{
+                'error':'La ruta contiene errores',
+                'notAuthorized':'No tiene permisos de listar las rutas',
+            },
         },
     };
 
@@ -112,6 +160,11 @@ export class Operacion extends RestController{
             return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
         }
         //return 'El peso de entrada debe ser mayor que el peso de salida';
+    }
+    goTaquilla(event,companyId:string) {
+        event.preventDefault();
+        let link = ['TaquillaSearh', {search: companyId}];
+        this.router.navigate(link);
     }
 
 
