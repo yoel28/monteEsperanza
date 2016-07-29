@@ -111,12 +111,12 @@
                         </a>
                         <ul class="treeview-menu">
                             <li *ngIf="myglobal.existsPermission('21')"><a href="#" [routerLink]="['Operacion']"><i class="fa fa-user"></i> <span>Operaci&oacute;n</span></a></li>
-                            <li *ngIf="myglobal.existsPermission('21')">
+                            <li *ngIf="myglobal.existsPermission('161')">
                                 <a (click)="inAnt($event)" data-toggle="modal" data-target="#operacionManual">
                                     <i class="fa fa-sign-in"></i> <span>Entrada</span>
                                 </a>
                             </li>
-                            <li *ngIf="myglobal.existsPermission('21')">
+                            <li *ngIf="myglobal.existsPermission('162')">
                                 <a (click)="outAnt($event)" data-toggle="modal" data-target="#operacionManual">
                                     <i class="fa fa-sign-out"></i> <span>Salida</span>
                                 </a>
