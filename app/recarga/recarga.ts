@@ -199,34 +199,17 @@ export class RecargaIngresos extends RestController{
             final = (moment(this.dateEnd.value).add(1, 'days'));
         }
 
-        let recharge=""
-        if(this.idRecharge && this.idRecharge!="-1")
-            recharge=",['op':'eq','field':'rechargeType.id','value':"+this.idRecharge+"]";
-
-
         this.paramsFactura = {
             'dateStart': moment(this.dateStart.value.toString()).format('DD-MM-YYYY'),
             'dateEnd': moment(final.toString()).format('DD-MM-YYYY'),
-            'where':"",
+            'recharge':this.idRecharge,
         };
-
-        let where ="[['op':'ge','field':'dateCreated','value':'"+this.paramsFactura.dateStart+"','type':'date']," +
-            "['op':'lt','field':'dateCreated','value':'"+this.paramsFactura.dateEnd+"','type':'date']"+recharge+"]&order=asc";
-
-        this.paramsFactura.where=where;
-
         if (this.recargaFactura) {
             this.recargaFactura.params = this.paramsFactura;
             if(this.myglobal.existsPermission('109'))
                 this.recargaFactura.cargar();
         }
         this.consultar = true;
-
-
-
-
-
-
     }
     public rechargeTotal:any={}
     public idRecharge:string;
