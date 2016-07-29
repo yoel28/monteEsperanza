@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Router,RouteParams }           from '@angular/router-deprecated';
 import  {FormBuilder} from '@angular/common';
 import { Http } from '@angular/http';
@@ -7,6 +7,7 @@ import {RestController} from "../common/restController";
 import {Fecha} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {OperacionPrint} from "../operacion/methods";
 
 
 @Component({
@@ -14,12 +15,15 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
     pipes: [Fecha],
     templateUrl: 'app/taquilla/index.html',
     styleUrls: ['app/taquilla/style.css'],
-    directives:[RecargaSave]
+    directives:[RecargaSave,OperacionPrint]
 })
 export class Taquilla extends RestController{
     dataCompany:any = {};
     dataCompanies:any = {};
     search;
+    public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
+    public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
+
 
     constructor(public params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
@@ -78,6 +82,15 @@ export class Taquilla extends RestController{
         event.preventDefault();
         this.max = this.dataList.count||1000;
         this.loadData();
+    }
+    @ViewChild(OperacionPrint)
+    operacionPrint:OperacionPrint;
+    onPrintOperation(data){
+        let successCallback= response => {
+            if(this.operacionPrint)
+                this.operacionPrint.data=response.json();
+        };
+        this.httputils.doGet('/operations/'+data.operationId,successCallback,this.error)
     }
 }
 
