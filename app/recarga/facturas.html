@@ -10,18 +10,25 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-
-                    <th>Registrado</th>
-                    <th>Recarga</th>
+                    <th>Cliente</th>
+                    <th>Fecha de transacci&oacute;n</th>
+                    <th>Tipo de recarga</th>
+                    <th>Detalle</th>
                     <th>Veh&iacute;culo</th>
                     <th>#Ref o #Recibo</th>
-                    <th>Fecha</th>
-                    <th>Monto</th>
+                    <th>Fecha de referencia</th>
+                    <th>Monto ({{MONEY_METRIC}})</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let data of dataList.list">
-
+                    <td>
+                        <a class="btn btn-box-tool"
+                           (click)="goTaquilla($event,data.companyId)">
+                            {{data.companyName}}&nbsp;({{data.companyRuc}})
+                            <i class="fa fa-external-link"></i>
+                        </a>
+                    </td>
                     <td>
                         {{data.dateCreated | fecha | date:'dd' }}/
                         {{data.dateCreated | fecha | date:'MM' }}/
@@ -31,6 +38,7 @@
                     <td>
                         <strong> <i class="{{data.rechargeTypeIcon}}"></i>&nbsp;{{data.rechargeTypeTitle}}</strong><br/>
                     </td>
+                    <td><span *ngIf="data.operationId"><strong>E/S: </strong>{{data.weightIn}}/{{data.weightOut}} {{data.metric}}</span></td>
                     <td>{{data.vehiclePlate}}</td>
                     <td>{{data.reference}}</td>
                     <td>
@@ -38,7 +46,7 @@
                         {{data.referenceDate | fecha | date:'MM' }}/
                         {{data.referenceDate | fecha | date:'yyyy' }}
                     </td>
-                    <td>{{data.quantity}} <span *ngIf="data.operationId"><strong>E/S: </strong>{{data.weightIn}}/{{data.weightOut}}</span></td>
+                    <td>{{data.quantity}}{{MONEY_METRIC_SHORT}}</td>
                 </tr>
                 </tbody>
             </table>
