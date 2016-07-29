@@ -84,7 +84,7 @@ export class Save extends RestController{
             {
                 that.data[key] = new Control("",Validators.compose([Validators.required,
                     (c:Control)=> {
-                        return (that.searchId[key] && that.searchId[key].title == c.value) ? null : {pattern: {valid: false}};
+                        return (that.searchId[key] && that.searchId[key].detail == c.value) ? null : {pattern: {valid: false}};
                     }
                 ]));
             }

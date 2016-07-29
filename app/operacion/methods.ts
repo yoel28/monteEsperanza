@@ -26,8 +26,6 @@ export class OperacionSave extends RestController{
     data:any = [];
     keys:any = {};
 
-    msgError:string="";
-
     public rules={
         'vehicle':{
             'type':'text',
@@ -173,35 +171,23 @@ export class OperacionSave extends RestController{
     
                 if(that.rules[key].required && that.rules[key].object)
                 {
-                    that.data[key] = new Control("",Validators.compose([Validators.required,
+                    that.data[key] = new Control(null,Validators.compose([Validators.required,
                         (c:Control)=> {
-                            if(that.searchId[key] && that.searchId[key].detail == c.value){
-                                if(that.rules[key].checkBalance){
-                                    if(!that.rules[key].checkBalancePermission){
-                                        let balance = parseFloat(that.searchId[key].balance || "0");
-                                        let minBalance = parseFloat(that.searchId[key].minBalance || "0");
-                                        if(balance > minBalance)
-                                            return null;
-                                        else{
-                                            that.msgError=that.rules[key].msg.errorCheckBalance;
-                                            return {pattern: {valid: false}};
-                                        }
-                                    }
-                                    else
+                            if(c.value && c.value.length > 0){
+                                if(that.searchId[key]){
+                                    if(that.searchId[key].detail == c.value)
                                         return null;
                                 }
-                                else
-                                    return null;
+                                return {myobject: {valid: false}};
                             }
-                            that.msgError="";
-                            return {pattern: {valid: false}};
+                            return null;
                         }
                     ]));
                 }
                 else if (that.rules[key].required)
-                    that.data[key] = new Control("",Validators.compose([Validators.required]));
+                    that.data[key] = new Control(null,Validators.compose([Validators.required]));
                 else
-                    that.data[key] = new Control("");
+                    that.data[key] = new Control(null);
 
                 if(that.rules[key].object)
                 {
@@ -223,11 +209,6 @@ export class OperacionSave extends RestController{
                                 that.search = [];
                             }
                         }
-                        else{
-                            that.findControl="";
-                            if(that.searchId[key])
-                                delete that.searchId[key];
-                        }
                     });
                 }
 
@@ -243,9 +224,9 @@ export class OperacionSave extends RestController{
         event.preventDefault();
         let that = this;
         let successCallback= response => {
-            Object.keys(that.form.controls).forEach((key) => {
-                (<Control>that.form.controls[key]).updateValue("");
-                (<Control>that.form.controls[key]).setErrors(null);
+            Object.keys(that.data).forEach((key) => {
+                that.data[key].updateValue(null);
+                that.data[key].setErrors(null);
                 this.searchId={};
                 if(that.rules[key].readOnly)
                     that.rules[key].readOnly=false;
@@ -255,6 +236,7 @@ export class OperacionSave extends RestController{
         };
         this.setEndpoint('/operations/');
         let body = this.form.value;
+
         Object.keys(body).forEach((key:string)=>{
             if(that.rules[key].object){
                 body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
@@ -279,7 +261,6 @@ export class OperacionSave extends RestController{
                 that.toastr.success('Actualizado con éxito','Notificación')
         }
         this.httputils.doPut('/operations/'+this.idOperacion,body,successCallback,this.error)
-
     }
     //objecto del search actual
     public search:any={};
@@ -305,57 +286,60 @@ export class OperacionSave extends RestController{
     //accion al seleccion un parametro del search
     getDataSearch(data){
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
-        (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
+        this.data[this.search.key].updateValue(data.detail);
         this.dataList=[];
     }
     public dataIn:any={};
     public antenaEnabled:boolean=false;
-
+    public idOperacion="-1";
     public listOperations=false;
+
     inAntena(data){
+
+        this.resetForm();
         this.readOnlyfalse();
+
         this.antenaEnabled=true;
         this.idOperacion="-1";
         let that = this;
 
-        that.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
-        (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
+        that.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
+        this.data['vehicle'].updateValue(data.vehiclePlate);
         that.rules['vehicle'].readOnly=true;
 
-        that.searchId['company']={'id':data.companyId,'title':data.companyRuc};
-        (<Control>this.form.controls['company']).updateValue(data.companyRuc);
+        that.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
+        this.data['company'].updateValue(data.companyRuc);
 
-        (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
+        this.data['weightIn'].updateValue(data.weightIn);
     }
-    public idOperacion="-1";
-    getOperacion(data){
-        this.readOnlyfalse();
 
+    getOperacion(data){
         this.idOperacion=data.id;
-        this.searchId['vehicle']={'id':data.vehicleId,'title':data.vehiclePlate};
-        (<Control>this.form.controls['vehicle']).updateValue(data.vehiclePlate);
+
+        this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
+        this.data['vehicle'].updateValue(data.vehiclePlate);
         this.rules['vehicle'].readOnly=true;
 
-        this.searchId['company']={'id':data.companyId,'title':data.companyRuc};
-        (<Control>this.form.controls['company']).updateValue(data.companyRuc);
+        this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
+        this.data['company'].updateValue(data.companyRuc);
         this.rules['company'].readOnly=true;
 
-        this.searchId['trashType']={'id':data.typeTrashId,'title':data.trashTypeReference};
-        (<Control>this.form.controls['trashType']).updateValue(data.trashTypeReference);
+        this.searchId['trashType']={'id':data.typeTrashId,'title':data.trashTypeName,'detail':data.trashTypeReference};
+        this.data['trashType'].updateValue(data.trashTypeReference);
         this.rules['trashType'].readOnly=true;
 
-        this.searchId['route']={'id':data.routeId,'title':data.routeReference};
-        (<Control>this.form.controls['route']).updateValue(data.routeReference);
+        this.searchId['route']={'id':data.routeId,'title':data.routeName,'detail':data.routeReference};
+        this.data['route'].updateValue(data.routeReference);
         this.rules['route'].readOnly=true;
 
-        (<Control>this.form.controls['weightIn']).updateValue(data.weightIn);
+        this.data['weightIn'].updateValue(data.weightIn);
         this.rules['weightIn'].readOnly=true;
 
-        (<Control>this.form.controls['weightOut']).updateValue(this.weightOut);
+        this.data['weightOut'].updateValue(this.weightOut);
         this.rules['weightOut'].readOnly=false;
         this.rules['weightOut'].hidden=false;
 
-        (<Control>this.form.controls['comment']).updateValue(data.comment);
+        this.data['comment'].updateValue(data.comment);
 
         this.listOperations=false;
     }
@@ -372,6 +356,7 @@ export class OperacionSave extends RestController{
     }
 
     outAntena(data){
+        this.resetForm();
         if(data.operations && data.operations.length>1)
         {
             this.weightOut=data.weightOut;
@@ -379,14 +364,21 @@ export class OperacionSave extends RestController{
             this.listOperations=true;
         }
         else{
-            this.getOperacion(data.operations[0]);
+            this.getOperacion(data.operations?data.operations[0]:null);
         }
     }
     resetForm(){
-       /* (<Control>this.form.controls).forEach((name, control) => {
-            control.updateValue('');
-            control.setErrors(null);
-        });*/
+        let that=this;
+        this.search={};
+        this.searchId={};
+        Object.keys(this.data).forEach(key=>{
+            (<Control>that.form.controls[key]).updateValue(null);
+            that.form.controls[key].setErrors(null);
+            //that.form.controls[key].updateValueAndValidity();
+        })
+        //this.form.setErrors([]);
+        //this.form.updateValueAndValidity(true);
+
     }
 }
 

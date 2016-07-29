@@ -53,9 +53,8 @@
                                                                         placeholder="{{rules[key].placeholder}}"
                                                                         ></textarea>
 
-                                                            <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
-                                                                {{msgError!=""?msgError:(rules[key].msg.error || 'El campo contiene errores')}}
-
+                                                            <div [hidden]="data[key].errors==null" class="alert alert-danger">
+                                                                {{rules[key].msg.error || 'El campo contiene errores'}}
                                                             </div>
                                                         </div>
                                                     </div>
