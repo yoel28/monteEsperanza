@@ -121,12 +121,14 @@
 
                             <thead>
                             <tr>
-                                <th>Fecha efectiva</th>
-                                <th>Referencia</th>
                                 <th>Fecha de transacci&oacute;n</th>
+                                <th>#Ref o #Recibo</th>
+                                <th>Fecha de referencia</th>
                                 <th>Tipo</th>
-                                <th>Peso</th>
-                                <th>Monto</th>
+                                <th>Descargado</th>
+                                <th>Veh&iacute;culo</th>
+                                <th>Monto ({{MONEY_METRIC}})</th>
+                                <th class="noprint"></th>
                             </tr>
                             </thead>
                             <tbody *ngFor="let recharges of dataList.list">
@@ -146,13 +148,20 @@
                                 <td>
                                     <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                                 </td>
-                                <td>{{recharges.weight}}</td>
-                                <td>{{recharges.quantity}}</td>
+                                <td>{{recharges.weight}} {{recharges.metric}}</td>
+                                <td>{{recharges.vehiclePlate}}</td>
+                                <td>{{recharges.quantity}} {{MONEY_METRIC_SHORT}}</td>
+                                <td class="noprint">
+                                    <a *ngIf="myglobal.existsPermission('157') && recharges.operationId"
+                                       (click)="onPrintOperation(recharges)">
+                                        <span class="fa fa-print fa-lg btn"></span>
+                                    </a>
+                                </td>
                             </tr>
                             </tbody>
-                            <tfoot>
+                            <tfoot class="noprint">
                             <tr>
-                                <td colspan="7">
+                                <td colspan="8">
                                     <div *ngIf="dataList.count==0" class="norecharges">
                                         No tiene recargas asociadas
                                     </div>
@@ -220,4 +229,7 @@
             </div>
         </div>
     </section>
+</div>
+<div  *ngIf="myglobal.existsPermission('157')">
+    <operacion-print [data]="operacionPrint"></operacion-print>
 </div>
