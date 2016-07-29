@@ -8,6 +8,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search";
 import {globalService} from "../common/globalService";
 import {Datepicker} from "../common/xeditable";
+import { Router }           from '@angular/router-deprecated';
 
 @Component({
     selector: 'recarga-save',
@@ -183,7 +184,7 @@ export class RecargaFactura extends RestController{
     // };
     public params:any={};
 
-    constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
+    constructor(public router: Router,public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/search/recharges/');
     }
@@ -194,23 +195,33 @@ export class RecargaFactura extends RestController{
         }
     }
     public rechargeTotal:any={};
+    public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
+    public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
     public cargar(){
 
-        if(this.params.where)
-            this.endpoint="/search/recharges/?where="+encodeURI(this.params.where);
-        else
-            this.endpoint="/search/recharges/?where=[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
-                "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]";
+        let recharge="";
+        if(this.params.recharge && this.params.recharge!="-1")
+            recharge=",['op':'eq','field':'rechargeType.id','value':"+this.params.recharge+"]";
 
-        let where=encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+        let whereList=encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
+                            "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+recharge+"]");
+
+        let whereTotal=encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
             "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]");
+
+        this.endpoint="/search/recharges/?where="+whereList;
 
         this.loadData();
 
-        this.httputils.onLoadList('/total/recharges?where='+encodeURI(where),this.rechargeTotal,this.max,this.error);
+        this.httputils.onLoadList('/total/recharges?where='+whereTotal,this.rechargeTotal,this.max,this.error);
     }
     loadData(offset=0){
         this.offset=offset;
         this.httputils.onLoadList(this.endpoint+`&max=${this.max}&offset=${this.offset}`,this.dataList,this.max,this.error);
+    }
+    goTaquilla(event,companyId:string) {
+        event.preventDefault();
+        let link = ['TaquillaSearh', {search: companyId}];
+        this.router.navigate(link);
     }
 }
