@@ -94,7 +94,14 @@ export class Operacion extends RestController{
     onEditableWeight(field,data,value,endpoint):any{
         let cond = this.myglobal.getParams('PesoE>PesoS');
         let peso = parseFloat(value);
-        if((field== 'weightOut' && cond=="true" && data.weightIn > peso) || (field== 'weightIn' && cond=="true" && peso > data.weightOut) || (cond!="true"))
+        if(
+            peso > 0.0 &&
+            (
+                (field== 'weightOut' && cond=="true" && data.weightIn > peso) ||
+                (field== 'weightIn'  && cond=="true" && peso > data.weightOut) ||
+                (cond!="true")
+            )
+        )
         {
             let json = {};
             json[field] = parseFloat(value);
