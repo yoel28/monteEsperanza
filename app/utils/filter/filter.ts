@@ -104,7 +104,7 @@ export class Filter extends RestController{
                 if(that.rules[key].object)
                 {
                     that.data[key].valueChanges.subscribe((value: string) => {
-                        if(value.length > 0){
+                        if(value && value.length > 0){
                             that.search=that.rules[key];
                             that.findControl = value;
                             that.dataList=[];
@@ -117,6 +117,7 @@ export class Filter extends RestController{
                                 delete that.searchId[key];
                             }
                             else{
+                                this.findControl="";
                                 that.search = [];
                             }
                         }else{
