@@ -30,7 +30,7 @@
                                 <th>Referencia</th>
                                 <th>Detalle</th>
                                 <th>Fecha de referencia</th>
-                                <th>Cantidad </th>
+                                <th>Monto ({{MONEY_METRIC}})</th>
                                 <th *ngIf="myglobal.existsPermission('114')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('113')">Acciones</th>
                             </tr>
@@ -67,7 +67,7 @@
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="quantity"
-                                       [disabled]="!myglobal.existsPermission('112')"></a>
+                                       [disabled]="!myglobal.existsPermission('112')"></a> {{MONEY_METRIC_SHORT}}
                                 </td>
                                 <td *ngIf="myglobal.existsPermission('114')">
                                     <button (click)="onLock('enabled',data)" class="btn btn-sm"
