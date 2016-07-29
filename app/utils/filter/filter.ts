@@ -121,6 +121,8 @@ export class Filter extends RestController{
                             }
                         }else{
                             that.findControl="";
+                            if(that.searchId[key])
+                                delete that.searchId[key];
                         }
                     });
                 }
