@@ -20,6 +20,9 @@ import {OperacionPrint} from "../operacion/methods";
     directives:[RecargaSave,Xeditable,Filter,OperacionPrint]
 })
 export class Recarga extends RestController{
+    public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
+    public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
+
     public rules={
         'quantity':{'type':'number','display':null,'title':'Key','mode':'inline','placeholder': 'Cantidad', 'search': true,'double':true},
         'reference':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Referencia', 'search': true},
@@ -65,7 +68,10 @@ export class Recarga extends RestController{
         endpointForm: "",
     };
     loadWhere(where) {
-        this.where = where;
+        if(where.length == 13)
+            this.where = where.slice(0,-3)+encodeURI("['op':'isNull','field':'o.id']]");
+        else
+            this.where = where.slice(0,-3)+encodeURI(",['op':'isNull','field':'o.id']]");
         this.loadData();
     }
     goTaquilla(event,companyId:string) {
