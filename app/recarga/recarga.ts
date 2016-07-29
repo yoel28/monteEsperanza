@@ -35,7 +35,7 @@ export class Recarga extends RestController{
             },
             'search':true,
             'object':true,
-            'title':'Buscar tipo de recarga',
+            'title':'Tipo de recarga',
             'placeholder':'Ingrese el tipo de recarga',
             'icon':'fa fa-money',
         },
