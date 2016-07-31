@@ -219,7 +219,7 @@ export class AppComponent extends RestController{
             that.dataOperation=response.json();
             if(that.operacionSave)
             {
-                that.operacionSave.outAntena(that.dataOperation['salida']);
+                that.operacionSave.outAntena(that.dataOperation['salida'] || {});
             }
         }
         this.httputils.doGet('/out/operations',successCallback,this.error);
