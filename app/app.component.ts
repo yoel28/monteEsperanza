@@ -35,6 +35,7 @@ import {Http} from "@angular/http";
 import {ReporteGrupos} from "./reportes/reportes";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {OperacionSave} from "./operacion/methods";
+import {ReporteDescargasGrupos} from "./reportes/reporteDG";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -71,6 +72,7 @@ declare var Stomp:any;
   { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
     
   { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
+  { path: '/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
