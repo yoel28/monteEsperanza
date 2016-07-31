@@ -26,9 +26,18 @@ export class Regla extends RestController{
         this.setEndpoint('/rules/');
     }
     ngOnInit(){
+
+    }
+    public modalIn:boolean=true;
+    loadPage(){
+        this.modalIn=false;
         if (this.myglobal.existsPermission('53')) {
             this.loadData();
         }
+    }
+    onDashboard(){
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
     }
     assignRule(data){
         this.dataList.list.unshift(data);

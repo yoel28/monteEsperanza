@@ -34,11 +34,20 @@ export class Parametro extends RestController{
             ]
         },
     };
-    ngOnInit(){
+    public modalIn:boolean=true;
+    loadPage(){
+        this.modalIn=false;
         if(this.myglobal.existsPermission('99')){
             this.max = 10;
             this.loadData();
         }
+    }
+    onDashboard(){
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
+    }
+    ngOnInit(){
+
 
     }
     assignParametro(data){
