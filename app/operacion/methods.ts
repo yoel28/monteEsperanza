@@ -216,21 +216,13 @@ export class OperacionSave extends RestController{
         this.form = this._formBuilder.group(this.data);
         this.keys = Object.keys(this.rules);
     }
-
-    public loadPage:boolean=false;
     public findControl:string="";
 
     submitForm(event){
         event.preventDefault();
         let that = this;
         let successCallback= response => {
-            Object.keys(that.data).forEach((key) => {
-                that.data[key].updateValue(null);
-                that.data[key].setErrors(null);
-                this.searchId={};
-                if(that.rules[key].readOnly)
-                    that.rules[key].readOnly=false;
-            });
+            that.resetForm();
             that.save.emit(response.json());
             that.toastr.success('Guardado con éxito','Notificación')
         };
@@ -241,22 +233,21 @@ export class OperacionSave extends RestController{
             if(that.rules[key].object){
                 body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
             }
-            if(that.rules[key].double && body[key]!=""){
+            if(that.rules[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
             }
-
         });
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
     patchForm(event){
         event.preventDefault();
         let that=this;
-        let json={}
+        let json={};
         json['comment'] = this.form.controls['comment'].value;
         json['weightOut'] = parseFloat(this.form.controls['weightOut'].value);
         let body = JSON.stringify(json);
-
         let successCallback= response => {
+            that.resetForm();
             if(that.toastr)
                 that.toastr.success('Actualizado con éxito','Notificación')
         }
@@ -290,24 +281,19 @@ export class OperacionSave extends RestController{
         this.dataList=[];
     }
     public dataIn:any={};
-    public antenaEnabled:boolean=false;
+
     public idOperacion="-1";
     public listOperations=false;
 
     inAntena(data){
-
         this.resetForm();
-        this.readOnlyfalse();
-
-        this.antenaEnabled=true;
         this.idOperacion="-1";
-        let that = this;
 
-        that.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
+        this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
         this.data['vehicle'].updateValue(data.vehiclePlate);
-        that.rules['vehicle'].readOnly=true;
+        this.rules['vehicle'].readOnly=true;
 
-        that.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
+        this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
         this.data['company'].updateValue(data.companyRuc);
 
         this.data['weightIn'].updateValue(data.weightIn);
@@ -345,26 +331,20 @@ export class OperacionSave extends RestController{
     }
     public weightOut:number;
 
-    readOnlyfalse(){
-        this.rules['vehicle'].readOnly=false;
-        this.rules['company'].readOnly=false;
-        this.rules['trashType'].readOnly=false;
-        this.rules['route'].readOnly=false;
-        this.rules['weightIn'].readOnly=false;
-        this.rules['weightOut'].hidden=true;
-        this.listOperations=false;
-    }
-
     outAntena(data){
         this.resetForm();
-        if(data.operations && data.operations.length>1)
+        if(data && data.operations && data.operations.length>1)
         {
+            this.listOperations=true;
             this.weightOut=data.weightOut;
             Object.assign(this.dataList,data);
-            this.listOperations=true;
         }
         else{
-            this.getOperacion(data.operations?data.operations[0]:null);
+            if(data.operations)
+                this.getOperacion(data.operations[0]);
+            else
+                this.listOperations=true;
+
         }
     }
     resetForm(){
@@ -372,13 +352,14 @@ export class OperacionSave extends RestController{
         this.search={};
         this.searchId={};
         Object.keys(this.data).forEach(key=>{
-            (<Control>that.form.controls[key]).updateValue(null);
-            that.form.controls[key].setErrors(null);
-            //that.form.controls[key].updateValueAndValidity();
+            (<Control>that.data[key]).updateValue(null);
+            (<Control>that.data[key]).setErrors(null);
+            that.data[key]._pristine=true;
+            if(that.rules[key].readOnly)
+                that.rules[key].readOnly=false;
         })
-        //this.form.setErrors([]);
-        //this.form.updateValueAndValidity(true);
-
+        this.rules['weightOut'].hidden=true;
+        this.listOperations=false;
     }
 }
 
