@@ -38,7 +38,7 @@ export class HttpUtils {
                     response => {
                         if (successCallback != null)
                             successCallback(response)
-                        resolve(response.json());
+                        resolve(response);
                     },
                     error => {
                         if (errorCallback != null)
