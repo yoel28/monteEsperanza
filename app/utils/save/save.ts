@@ -84,7 +84,14 @@ export class Save extends RestController{
             {
                 that.data[key] = new Control("",Validators.compose([Validators.required,
                     (c:Control)=> {
-                        return (that.searchId[key] && that.searchId[key].detail == c.value) ? null : {pattern: {valid: false}};
+                        if(c.value && c.value.length > 0){
+                            if(that.searchId[key]){
+                                if(that.searchId[key].detail == c.value)
+                                    return null;
+                            }
+                            return {myobject: {valid: false}};
+                        }
+                        return null;
                     }
                 ]));
             }
@@ -96,7 +103,7 @@ export class Save extends RestController{
             if(that.rules[key].object)
             {
                 that.data[key].valueChanges.subscribe((value: string) => {
-                    if(value.length > 0){
+                    if(value && value.length > 0){
                         that.search=that.rules[key];
                         that.findControl = value;
                         that.dataList=[];
@@ -104,8 +111,8 @@ export class Save extends RestController{
                         if( !that.searchId[key]){
                             that.loadData();
                         }
-                        else if(that.searchId[key].title != value){
-                            that.searchId[key]=[];
+                        else if(that.searchId[key].detail != value){
+                            delete that.searchId[key];
                             that.loadData();
                         }
                         else{
@@ -120,29 +127,26 @@ export class Save extends RestController{
         this.form = this._formBuilder.group(this.data);
     }
 
-    public loadPage:boolean=false;
     public findControl:string="";
 
-    submitForm(){
+    submitForm(event){
+        event.preventDefault();
         let that = this;
         let successCallback= response => {
-            Object.keys(that.form.controls).forEach((key) => {
-                (<Control>that.form.controls[key]).updateValue("");
-                (<Control>that.form.controls[key]).setErrors(null);
-                this.searchId={};
-                if(that.rules[key].readOnly)
-                    that.rules[key].readOnly=false;
-            });
+            that.resetForm();
             that.save.emit(response.json());
             that.toastr.success('Guardado con éxito','Notificación')
         };
         this.setEndpoint(this.params.endpoint);
         let body = this.form.value;
+
         Object.keys(body).forEach((key:string)=>{
             if(that.rules[key].object){
                 body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
             }
-
+            if(that.rules[key].type == 'number' && body[key]!=""){
+                body[key]=parseFloat(body[key]);
+            }
 
         });
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
@@ -170,13 +174,25 @@ export class Save extends RestController{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.detail};
+        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
     //accion seleccionar un item de un select
     setValueSelect(data,key){
         (<Control>this.form.controls[key]).updateValue(data);
+    }
+    resetForm(){
+        let that=this;
+        this.search={};
+        this.searchId={};
+        Object.keys(this.data).forEach(key=>{
+            (<Control>that.data[key]).updateValue(null);
+            (<Control>that.data[key]).setErrors(null);
+            that.data[key]._pristine=true;
+            if(that.rules[key].readOnly)
+                that.rules[key].readOnly=false;
+        })
     }
 }
 
