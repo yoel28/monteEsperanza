@@ -144,7 +144,7 @@
                         </ul>
                     </li>
                     <li class="treeview" [class.active]="activeMenuId=='report'"
-
+                        *ngIf="myglobal.existsPermission('163') || myglobal.existsPermission('164')"
                     >
                         <a (click)="activeMenu($event,'report')">
                             <i class="fa fa-list"></i>
@@ -152,10 +152,16 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li>
+                            <li *ngIf="myglobal.existsPermission('164')">
                                 <a href="#" [routerLink]="['ReporteGrupos']">
                                     <i class="fa fa-user"></i>
                                     <span>Grupos</span>
+                                </a>
+                            </li>
+                            <li *ngIf="myglobal.existsPermission('163')">
+                                <a href="#" [routerLink]="['ReporteDescargasGrupos']">
+                                    <i class="fa fa-user"></i>
+                                    <span>Descarga por grupos</span>
                                 </a>
                             </li>
                         </ul>
