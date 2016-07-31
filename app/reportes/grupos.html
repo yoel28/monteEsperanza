@@ -8,9 +8,26 @@
             </div>
             <div class="box-body">
                 <div class="row">
+                    <div class="form-group input-icon right col-lg-2">
+                        Lapso
+                        <div class="input-icon right">
+                            <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                <option data-hidden="true" value="-1"></option>
+                                <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="companyTypes.list" class="form-group input-icon right col-lg-2">
+                        Grupos
+                        <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                            <option data-hidden="true" value="-2" >Sin grupos</option>
+                            <option data-hidden="true" value="-1" >Todos los grupos</option>
+                            <option *ngFor="let n of companyTypes.list"  [attr.value]="n.id" >{{n.title}}</option>
+                        </select>
+                    </div>
                     <div class="col-lg-6">
                         <form role="form" [ngFormModel]="form" (submit)="loadReporte($event)" >
-
+                            Rango
                             <div datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" class="input-daterange input-group">
                                 <input type="text" class="input-sm form-control" name="start" accessKey="1" />
                                 <span class="input-group-addon">Hasta</span>
@@ -18,14 +35,7 @@
                             </div>
                         </form>
                     </div>
-                    <div *ngIf="companyTypes.list" class="form-group input-icon right col-lg-3">
-                        <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
-                            <option data-hidden="true" value="-2" >Sin grupos</option>
-                            <option data-hidden="true" value="-1" >Todos los grupos</option>
-                            <option *ngFor="let n of companyTypes.list"  [attr.value]="n.id" >{{n.title}}</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-2 margin-top-12">
                         <button (click)="loadReporte($event)" type="button" class="btn btn-success"
                                 id="cntrlsubmit" [disabled]="!form.valid">
                             <i class="fa fa-bank"></i>
