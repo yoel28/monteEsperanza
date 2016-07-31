@@ -8,19 +8,36 @@
             </div>
             <div class="modal-body">
                 <div *ngIf="listOperations">
-                    <h2>Seleccione un salida</h2>
                     <table class="table table-hover">
-                        <tbody>
+                        <thead>
+                            <tr>
+                                <th class="text-center" colspan="5"><h3>Seleccione una salida</h3></th>
+                            </tr>
+                            <tr>
+                                <th>Veh&iacute;culo</th>
+                                <th>Cliente</th>
+                                <th>Ruta</th>
+                                <th>Tipo de basura</th>
+                                <th>Peso de entrada({{op.metric}})</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="dataList && dataList.operations">
                         <tr *ngFor="let op of dataList.operations" (click)="getOperacion(op)">
-                            <td>
-                                <strong>Cliente RUC:&nbsp;</strong>{{op.companyRuc}}&nbsp;
-                                <strong>Placa:&nbsp;</strong>{{op.vehiclePlate}}&nbsp;
-                                <strong>Ruta:&nbsp;</strong>{{op.routeReference}}&nbsp;
-                                <strong>Tipo de basura:&nbsp;</strong>{{op.trashTypeReference}}&nbsp;
-                                <strong>Peso de entrada:&nbsp;</strong>{{op.weightIn}}&nbsp;
-                            </td>
+                            <td>{{op.vehiclePlate}}</td>
+                            <td>{{op.companyName}}({{op.companyRuc}})</td>
+                            <td>{{op.routeTitle}}({{op.routeReference}})</td>
+                            <td>{{op.trashTypeTitle}}({{op.trashTypeReference}})</td>
+                            <td>{{op.weightIn}}&nbsp;{{op.metric}}</td>
                         </tr>
                         </tbody>
+                        <tfoot *ngIf="!dataList || !dataList.operations">
+                            <tr>
+                                <td colspan="5">
+                                    No existe ninguna entrada pendiente
+                                </td>
+                            </tr>
+                        </tfoot>
+
                     </table>
                 </div>
                 <div class="row" *ngIf="!listOperations">
@@ -53,7 +70,7 @@
                                                                         placeholder="{{rules[key].placeholder}}"
                                                                         ></textarea>
 
-                                                            <div [hidden]="data[key].errors==null" class="alert alert-danger">
+                                                            <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
                                                                 {{rules[key].msg.error || 'El campo contiene errores'}}
                                                             </div>
                                                         </div>
@@ -133,12 +150,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button *ngIf="idOperacion<0" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                <button *ngIf="idOperacion<0 && !listOperations" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
                     Agregar entrada
                 </button>
-                <button *ngIf="idOperacion>=0" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                <button *ngIf="idOperacion>=0 && !listOperations" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
                     Agregar salida
