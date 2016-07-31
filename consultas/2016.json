@@ -1,0 +1,38 @@
+{
+    "list":[
+        {
+            "companyTypeTitle":"Grupo A",
+            "companyTypeReference":"0001",
+            "data":[1,2,3,4,5,6,7,8,9,10,11,12]
+        },
+        {
+            "companyTypeTitle":"Grupo B",
+            "companyTypeReference":"0002",
+            "data":[1,2,3,4,5,6,7,8,9,10,11,12]
+        },
+        {
+            "companyTypeTitle":"Grupo C",
+            "companyTypeReference":"0003",
+            "data":[1,2,3,4,5,6,7,8,9,10,11,12]
+        },
+        {
+            "companyTypeTitle":"Grupo D",
+            "companyTypeReference":"0004",
+            "data":[1,2,3,4,5,6,7,8,9,10,11,12]
+        },
+        {
+            "companyTypeTitle":"Grupo E",
+            "companyTypeReference":"0005",
+            "data":[1,2,3,4,5,6,7,8,9,10,11,12]
+        },
+        {
+            "companyTypeTitle":"Grupo F",
+            "companyTypeReference":"0006",
+            "data":[1,2,3,4,5,6,7,8,9,10,11,12]
+        }
+
+    ],
+    "categories":["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
+    "metric":"Ton",
+    "count":12
+}
