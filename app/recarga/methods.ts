@@ -70,14 +70,26 @@ export class RecargaSave extends RestController{
         this.httputils.onLoadList("/type/recharges?where="+where,this.rechargeTypes,this.error);
     }
     submitForm(){
+        let that=this;
         if(this.myglobal.existsPermission('111')) {
             let successCallback = response => {
-                this.save.emit(response.json());
-                this.toastr.success('Guardado con éxito','Notificación')
+                that.resetForm();
+                that.save.emit(response.json());
+                that.toastr.success('Guardado con éxito','Notificación')
             };
             let body = JSON.stringify(this.form.value);
             this.httputils.doPost(this.endpoint, body, successCallback, this.error);
         }
+    }
+    resetForm(){
+        let that=this;
+        Object.keys(this).forEach(key=>{
+            if(that[key] instanceof Control){
+                that[key].updateValue(null);
+                that[key].setErrors(null);
+                that[key]._pristine=true;
+            }
+        })
     }
     public formatDateFact = {
         format: "dd/mm/yyyy",

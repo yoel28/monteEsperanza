@@ -65,12 +65,24 @@ export class UserSave extends RestController{
         };
     }
     submitForm(){
+        let that = this;
         let successCallback= response => {
-            this.save.emit(response.json());
-            this.toastr.success('Guardado con éxito','Notificación')
+            that.resetForm();
+            that.save.emit(response.json());
+            that.toastr.success('Guardado con éxito','Notificación')
         };
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
+    }
+    resetForm(){
+        let that=this;
+        Object.keys(this).forEach(key=>{
+            if(that[key] instanceof Control){
+                that[key].updateValue(null);
+                that[key].setErrors(null);
+                that[key]._pristine=true;
+            }
+        })
     }
     //formulario de imagen
     changeImage(data){

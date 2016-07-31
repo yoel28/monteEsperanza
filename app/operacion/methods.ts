@@ -171,7 +171,7 @@ export class OperacionSave extends RestController{
     
                 if(that.rules[key].required && that.rules[key].object)
                 {
-                    that.data[key] = new Control(null,Validators.compose([Validators.required,
+                    that.data[key] = new Control("",Validators.compose([Validators.required,
                         (c:Control)=> {
                             if(c.value && c.value.length > 0){
                                 if(that.searchId[key]){
@@ -185,9 +185,9 @@ export class OperacionSave extends RestController{
                     ]));
                 }
                 else if (that.rules[key].required)
-                    that.data[key] = new Control(null,Validators.compose([Validators.required]));
+                    that.data[key] = new Control("",Validators.compose([Validators.required]));
                 else
-                    that.data[key] = new Control(null);
+                    that.data[key] = new Control("");
 
                 if(that.rules[key].object)
                 {

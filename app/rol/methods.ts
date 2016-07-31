@@ -35,12 +35,24 @@ export class RolSave extends RestController{
         });
     }
     submitForm(){
+        let that = this;
         let successCallback= response => {
-            this.save.emit(response.json());
+            that.resetForm();
+            that.save.emit(response.json());
         };
         this.authority.updateValue("ROLE_"+this.authority.value.toUpperCase())
         let body = JSON.stringify(this.form.value);
         this.httputils.doPost(this.endpoint,body,successCallback,this.error);
+    }
+    resetForm(){
+        let that=this;
+        Object.keys(this).forEach(key=>{
+            if(that[key] instanceof Control){
+                that[key].updateValue(null);
+                that[key].setErrors(null);
+                that[key]._pristine=true;
+            }
+        })
     }
 }
 
