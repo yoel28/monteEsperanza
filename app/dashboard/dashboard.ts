@@ -133,7 +133,7 @@ export class Dashboard extends RestController {
             },
         },
         tooltip: {
-            pointFormat: 'Cantidad de {series.name} <br/> que ingresaron <b>{point.y:,.0f}</b>'+this.VEHICLE_METRIC_SHORT
+            pointFormat: 'Cantidad de viajes<br/> que ingresaron <b>{point.y:,.0f}</b>'+this.VEHICLE_METRIC_SHORT
         },
         credits: {
             enabled: false
