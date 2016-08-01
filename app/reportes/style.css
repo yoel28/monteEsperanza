@@ -77,3 +77,11 @@
     background: inherit;
     left: 20px;
 }
+/*-------------------------------------------*/
+.text-title{
+    font-size: 11pt;
+    font-weight: 700;
+}
+.enableOverflow{
+    overflow: auto;
+}
