@@ -22,19 +22,20 @@ export class ReporteDescargasGrupos extends RestController{
 
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
-        this.setEndpoint('consultas/2016.json');
+        this.setEndpoint('/report/weight/groups');
     }
     ngOnInit(){
         this.getCompanyTypes();
     }
 
     public companyTypes:any={};
-    public idCompanyType:string="-1";
+    public companyType:string="all";
     getCompanyTypes(){
         this.httputils.onLoadList("/type/companies",this.companyTypes,this.error);
     }
     setType(data){
-        this.idCompanyType=data;
+        this.companyType=data;
+        this.loadMatriz();
     }
     public msgLabel:boolean=true;
     cambiar(){
@@ -64,20 +65,22 @@ export class ReporteDescargasGrupos extends RestController{
         todayHighlight: true,
         return: 'YYYY',
     }
+    public dataConsult:any={'date':'2016'};
 
-    loadMatriz(data) {
+    loadMatriz(data?) {
+        if(data){
+            this.dataConsult=data
+        }
+
         let that = this;
-
-        this.where="";
-        if(this.idCompanyType && this.idCompanyType!="-1")
-            this.where="&where="+encodeURI("[['op':'eq','field':'t.id','value':"+this.idCompanyType+"]]");
+        let type="";
+        if(this.companyType!="all")
+            type="?type="+this.companyType;
 
         let successCallback = response => {
             Object.assign(that.dataList,response.json())
         };
-        //this.httputils.doGet(this.endpoint+data.data,successCallback, this.error,true)
-        //this.loadData();
-        this.httputils.onLoadList(this.endpoint,this.dataList,this.max,this.error,true);
+        this.httputils.doGet('/reports/weight/groups/'+this.dataConsult.date+type,successCallback,this.error);
     }
 
 }
