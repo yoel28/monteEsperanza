@@ -19,4 +19,7 @@
     .noprint{
         display:none;
     }
+    .content-wrapper{
+        margin-left: 0 !important;
+    }
 }
