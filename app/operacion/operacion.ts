@@ -145,8 +145,8 @@ export class Operacion extends RestController{
         if(
             peso > 0.0 &&
             (
-                (field== 'weightOut' && cond=="true" && data.weightIn > peso) ||
-                (field== 'weightIn'  && cond=="true" && peso > data.weightOut) ||
+                (field== 'weightOut' && cond=="true" && data.weightIn >= peso) ||
+                (field== 'weightIn'  && cond=="true" && peso >= data.weightOut) ||
                 (cond!="true")
             )
         )
