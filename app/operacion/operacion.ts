@@ -135,13 +135,16 @@ export class Operacion extends RestController{
     }
     @ViewChild(OperacionPrint)
     operacionPrint:OperacionPrint;
-    onPrint(data){
+    public onPrint(data){
         if(this.operacionPrint)
             this.operacionPrint.data=data
     }
+    public PrintAutomatic:string="";
     onEditableWeight(field,data,value,endpoint):any{
         let cond = this.myglobal.getParams('PesoE>PesoS');
         let peso = parseFloat(value);
+        this.PrintAutomatic = this.myglobal.getParams('PrintAutomaticOperations')
+        let that = this;
         if(
             peso > 0.0 &&
             (
@@ -155,9 +158,17 @@ export class Operacion extends RestController{
             json[field] = parseFloat(value);
             let body = JSON.stringify(json);
             let error = err => {
-                this.toastr.error(err.json().message);
+                that.toastr.error(err.json().message);
             };
-            return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
+            let successCallback= response => {
+                Object.assign(data, response.json());
+                if(that.toastr)
+                    that.toastr.success('Actualizado con éxito','Notificación');
+                if(that.PrintAutomatic=="true")
+                    that.onPrint(data);
+
+            }
+            return this.httputils.doPut(endpoint + data.id,body,successCallback,error)
         }
         //return 'El peso de entrada debe ser mayor que el peso de salida';
     }
