@@ -13,7 +13,7 @@ import { TipoVehiculo }         from './tipoVehiculo/tipoVehiculo';
 import { Dashboard }         from './dashboard/dashboard';
 import { User }         from './user/user';
 import { Taquilla }         from './taquilla/taquilla';
-import { Operacion }         from './operacion/operacion';
+import {Operacion, OperacionMonitor}         from './operacion/operacion';
 import { Profile }         from './profile/profile';
 import { Rol }         from './rol/rol';
 import { Parametro }         from './parametro/parametro';
@@ -68,6 +68,7 @@ declare var Stomp:any;
   { path: '/cliente/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
+  { path: '/operacion/monitor',   name: 'OperacionMonitor', component: OperacionMonitor },
   { path: '/roles',   name: 'Rol', component: Rol },
   { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
     
@@ -97,11 +98,11 @@ export class AppComponent extends RestController{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
-    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-    localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
+    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
       
-    //localStorage.setItem('urlAPI','http://192.168.0.91:8080/api');
-    //localStorage.setItem('url','http://192.168.0.91:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.103:8080/api');
+    localStorage.setItem('url','http://192.168.0.103:8080');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
