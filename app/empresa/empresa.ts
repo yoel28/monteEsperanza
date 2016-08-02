@@ -37,7 +37,7 @@ export class Empresa extends RestController {
         'name': {
             'type': 'text',
             'display': null,
-            'title': 'Nombre de la empresa',
+            'title': 'Nombre del cliente',
             'placeholder': 'Nombre',
             'mode': 'inline',
             'search': true
@@ -45,7 +45,15 @@ export class Empresa extends RestController {
         'ruc': {
             'type': 'text',
             'display': null,
-            'title': 'Ruc de la empresa',
+            'title': 'Ruc del cliente',
+            'mode': 'inline',
+            'placeholder': 'RUC',
+            'search': true
+        },
+        'code': {
+            'type': 'text',
+            'display': null,
+            'title': 'Codigo del cliente',
             'mode': 'inline',
             'placeholder': 'RUC',
             'search': true
