@@ -17,6 +17,13 @@
                             <p *ngIf="title.errors.required">Titulo Requerido</p>
                         </div>
                     </div>
+                    <div class="form-group input-icon right">
+                        <i class="fa fa-list"></i>
+                        <input ngControl="code" class="form-control" [(ngModel)]="code.value"  #code="ngForm" placeholder="Códígo" type="text">
+                        <div [hidden]="code.valid || code.pristine" class="alert alert-danger">
+                            El c&oacute;digo es obligatorio
+                        </div>
+                    </div>
                     <div class="form-group">
                         <ng-select [allowClear]="true"
                                    [items]="items"
