@@ -107,6 +107,12 @@
                                                            [rules]="rules" field="ruc"></a>
                                                     </p>
                                                     <p>
+                                                        <strong>C&oacute;digo: </strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="code"></a>
+                                                    </p>
+                                                    <p>
                                                         <strong>Responsable:</strong>
                                                         <a x-editable [disabled]="!myglobal.existsPermission('83')"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
