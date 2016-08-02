@@ -169,3 +169,31 @@ export class Operacion extends RestController{
 
 
 }
+
+@Component({
+    selector: 'operacion-monitor',
+    templateUrl: 'app/operacion/monitor.html',
+    styleUrls: ['app/operacion/style.css'],
+    pipes:[Fecha]
+})
+export class OperacionMonitor extends RestController{
+
+    constructor(public router: Router,public http: Http,public toastr: ToastsManager, public myglobal:globalService) {
+        super(http,toastr);
+        this.setEndpoint('/operations/');
+    }
+    ngOnInit(){
+        this.where="&where=[['op':'isNull','field':'weightOut']]"
+        if (this.myglobal.existsPermission('165')) {
+            this.max = 15;
+            this.loadData();
+        }
+    }
+    goTaquilla(event,companyId:string) {
+        event.preventDefault();
+        let link = ['TaquillaSearh', {search: companyId}];
+        this.router.navigate(link);
+    }
+
+}
+
