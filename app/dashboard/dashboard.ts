@@ -95,7 +95,7 @@ export class Dashboard extends RestController {
             enabled: false
         },
         series: [],
-        title: {text: 'Descargas en el vertedero ('+this.WEIGTH_METRIC+')'},
+        title: {text: 'Disposición final ('+this.WEIGTH_METRIC+')'},
     };
     dataAreaPlot2 = {
         chart: {
