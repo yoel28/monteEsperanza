@@ -9,7 +9,7 @@
             <div *ngIf="companyTypes.list" class="form-group input-icon right col-lg-4">
                 <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
                     <option data-hidden="true" value="all" >Todos los grupos</option>
-                    <option *ngFor="let n of companyTypes.list"  [attr.value]="n.title" >{{n.title}}</option>
+                    <option *ngFor="let n of companyTypes.list"  [attr.value]="n" >{{n}}</option>
                 </select>
             </div>
             <div class="col-lg-4">
