@@ -25,6 +25,7 @@ export class EmpresaSave extends RestController{
     name:Control;
     ruc:Control;
     responsiblePerson:Control;
+    code:Control;
     phone:Control;
     address:Control;
     image:Control;
@@ -49,14 +50,15 @@ export class EmpresaSave extends RestController{
     
     initForm(){
 
-        this.name = new Control("", Validators.compose([Validators.required,Validators.maxLength(10)]));
+        this.name = new Control("", Validators.compose([Validators.required,Validators.maxLength(30)]));
         this.ruc = new Control("", Validators.compose([Validators.required]));
         this.responsiblePerson = new Control("", Validators.compose([Validators.required]));
         this.phone = new Control("", Validators.compose([Validators.required]));
         this.address = new Control("", Validators.compose([Validators.required]));
         this.image = new Control("");
         this.companyType = new Control("", Validators.compose([Validators.required]));
-        
+        this.code = new Control("", Validators.compose([Validators.required]));
+
         this.form = this._formBuilder.group({
             name: this.name,
             ruc: this.ruc,
@@ -65,6 +67,7 @@ export class EmpresaSave extends RestController{
             address: this.address,
             image: this.image,
             companyType: this.companyType,
+            code: this.code,
         });
     }
     submitForm(){
