@@ -133,13 +133,13 @@ export class Dashboard extends RestController {
             },
         },
         tooltip: {
-            pointFormat: 'Cantidad de viajes<br/> que ingresaron <b>{point.y:,.0f}</b>'+this.VEHICLE_METRIC_SHORT
+            pointFormat: 'Cantidad de {series.name}<br/> que ingresaron al vertedero <b>{point.y:,.0f}</b>'+this.VEHICLE_METRIC_SHORT
         },
         credits: {
             enabled: false
         },
         series: [],
-        title: {text: 'Uso de vertedero ('+this.VEHICLE_METRIC+')'},
+        title: {text: ' Viajes al vertedero'},
     };
     dataAreaPlot4 = {
         chart: {
