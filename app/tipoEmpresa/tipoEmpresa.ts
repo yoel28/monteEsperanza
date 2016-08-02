@@ -20,6 +20,7 @@ export class TipoEmpresa extends RestController{
 
     public rules={
         'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
+        'code':{'type':'text','display':null,'title':'Código','placeholder':'Código','search':true},
         'detail':{'type':'text','display':null,'title':'nombre','placeholder':'Detalle','search':true},
         'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
             'source': [
