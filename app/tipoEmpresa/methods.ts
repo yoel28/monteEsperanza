@@ -22,6 +22,7 @@ export class TipoEmpresaSave extends RestController{
     title: Control;
     icon: Control;
     detail: Control;
+    code: Control;
 
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
@@ -38,11 +39,13 @@ export class TipoEmpresaSave extends RestController{
         this.title = new Control("", Validators.compose([Validators.required]));
         this.icon = new Control("", Validators.compose([Validators.required]));
         this.detail = new Control("", Validators.compose([Validators.required]));
+        this.code = new Control("", Validators.compose([Validators.required]));
 
         this.form = this._formBuilder.group({
             title: this.title,
             icon: this.icon,
             detail: this.detail,
+            code: this.code,
         });
 
     }
