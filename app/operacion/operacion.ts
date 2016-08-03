@@ -19,6 +19,7 @@ import {Fecha} from "../utils/pipe";
 export class Operacion extends RestController{
 
     public dataSelect:any={};
+    public MONEY_METRIC_SHORT:string="";
     constructor(public router: Router,public http: Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.setEndpoint('/operations/');
@@ -27,6 +28,7 @@ export class Operacion extends RestController{
         if (this.myglobal.existsPermission('93')) {
             this.max = 15;
             this.loadData();
+            this.MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
         }
     }
 
@@ -143,7 +145,6 @@ export class Operacion extends RestController{
     onEditableWeight(field,data,value,endpoint):any{
         let cond = this.myglobal.getParams('PesoE>PesoS');
         let peso = parseFloat(value);
-        this.PrintAutomatic = this.myglobal.getParams('PrintAutomaticOperations')
         let that = this;
         if(
             peso > 0.0 &&
@@ -164,9 +165,6 @@ export class Operacion extends RestController{
                 Object.assign(data, response.json());
                 if(that.toastr)
                     that.toastr.success('Actualizado con éxito','Notificación');
-                if(that.PrintAutomatic=="true")
-                    that.onPrint(data);
-
             }
             return this.httputils.doPut(endpoint + data.id,body,successCallback,error)
         }
@@ -177,7 +175,14 @@ export class Operacion extends RestController{
         let link = ['TaquillaSearh', {search: companyId}];
         this.router.navigate(link);
     }
-
+    onRechargeAutomatic(event,data){
+        event.preventDefault();
+        let successCallback= response => {
+            Object.assign(data, response.json());
+        }
+        this.httputils.doGet('/pay/'+data.id,successCallback,this.error);
+        //this.httputils.onUpdate('/pay/'+data.id,{},data,this.error);
+    }
 
 }
 
