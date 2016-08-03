@@ -229,6 +229,9 @@ export class RecargaIngresos extends RestController{
     
 }
 
+declare var jsPDF:any;
+declare var jQuery:any;
+
 @Component({
     selector: 'libro',
     pipes: [Fecha],
@@ -371,6 +374,12 @@ export class RecargaLibro extends RestController{
     }
     setType(data){
         this.idRecharge=data;
+    }
+
+    exportPdf(){
+        let doc = new jsPDF();
+        doc.fromHTML(jQuery('#content').get(0), 15, 15,{'width': 500});
+        doc.save('libro-'+Date()+'.pdf');
     }
 
 }
