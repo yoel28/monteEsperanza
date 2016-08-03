@@ -30,7 +30,9 @@
                                 <th>T&iacute;tulo</th>
                                 <th>Detalle</th>
                                 <th>Referencia </th>
-                                <th>Precio </th>
+                                <th>Precio ({{MONEY_METRIC_SHORT}})</th>
+                                <th>Precio min&iacute;mo ({{MONEY_METRIC_SHORT}})</th>
+                                <th>Peso min&iacute;mo ({{WEIGTH_METRIC_SHORT}})</th>
                                 <th *ngIf="myglobal.existsPermission('140')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('137')" >Acciones</th>
                             </tr>
@@ -52,6 +54,14 @@
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="price"
+                                       [disabled]="!myglobal.existsPermission('138')"></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="minPrice"
+                                       [disabled]="!myglobal.existsPermission('138')"></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="min"
                                        [disabled]="!myglobal.existsPermission('138')"></a>
                                 </td>
                                 <td *ngIf="myglobal.existsPermission('140')">
