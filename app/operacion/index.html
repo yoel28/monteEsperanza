@@ -35,7 +35,7 @@
                             <th>Veh&iacute;culo</th>
                             <th>Peso de entrada</th>
                             <th>Peso de salida</th>
-                            <th *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157')">Acciones</th>
+                            <th *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157') || myglobal.existsPermission('166')">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,6 +79,11 @@
                                 <a *ngIf="myglobal.existsPermission('157') && data.rechargeId"
                                    (click)="onPrint(data)">
                                    <span class="fa fa-print fa-lg btn"></span>
+                                </a>
+                                <a *ngIf="myglobal.existsPermission('166') && data.rechargeId && data.enabled"
+                                   data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
+                                   (click)="dataSelect = data">
+                                    <span class="fa fa-money fa-lg btn"></span>
                                 </a>
                             </td>
                         </tr>
@@ -130,4 +135,31 @@
 </div>
 <div  *ngIf="myglobal.existsPermission('157')">
     <operacion-print [data]="operacionPrint"></operacion-print>
+</div>
+<div *ngIf="myglobal.existsPermission('166')">
+    <div class="modal fade" [attr.id]="'modalAutomatic'" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabe"><i
+                            class="fa fa-info"></i>&nbsp;<strong>CONFIRMACI&Oacute;N</strong></h4>
+                </div>
+                <div class="modal-body">
+                    ¿ Estás seguro que deseas realizar un pago automatica al cliente
+                    <strong>{{dataSelect.companyName}}<br/>({{dataSelect.companyRUC}})</strong> por
+                    {{(dataSelect.rechargeQuantity)*-1}} {{MONEY_METRIC_SHORT}}
+                    ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button (click)="onRechargeAutomatic($event,dataSelect)" data-dismiss="modal" type="button"
+                            class="btn btn-green fa fa-money">&nbsp;Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
