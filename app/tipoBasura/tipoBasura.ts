@@ -17,7 +17,12 @@ import {Save} from "../utils/save/save";
 export class TipoBasura extends RestController{
 
     public dataSelect:any={};
-    public title="Tipo de basura"
+    public title="Tipo de basura";
+
+    public WEIGTH_METRIC_SHORT:string="";
+    public WEIGTH_METRIC:string="";
+    public MONEY_METRIC_SHORT:string="";
+    public MONEY_METRIC:string="";
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
@@ -59,6 +64,36 @@ export class TipoBasura extends RestController{
                 'error':'El precio debe ser numerico',
             }
         },
+        'min':{
+            'type':'number',
+            'key':'min',
+            'icon':'fa fa-balance-scale',
+            'required':true,
+            'display':null,
+            'double':true,
+            'title':'Peso mínimo',
+            'mode':'inline',
+            'placeholder': 'Peso mínimo',
+            'search': true,
+            'msg':{
+                'error':'Este campo es obligatorio y numerico',
+            }
+        },
+        'minPrice':{
+            'type':'number',
+            'key':'minPrice',
+            'icon':'fa fa-money',
+            'required':true,
+            'display':null,
+            'double':true,
+            'title':'Precio mínimo',
+            'mode':'inline',
+            'placeholder': 'Precio mínimo',
+            'search': true,
+            'msg':{
+                'error':'Este campo es obligatorio y numerico',
+            }
+        },
         'reference':{
             'type':'text',
             'icon':'fa fa-list',
@@ -93,6 +128,11 @@ export class TipoBasura extends RestController{
         if(this.myglobal.existsPermission('136')){
             this.max = 10;
             this.loadData();
+
+            this.WEIGTH_METRIC_SHORT=this.myglobal.getParams('WEIGTH_METRIC_SHORT');
+            this.WEIGTH_METRIC=this.myglobal.getParams('WEIGTH_METRIC');
+            this.MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
+            this.MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
         }
 
     }
