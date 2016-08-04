@@ -65,6 +65,9 @@ export class ReporteGrupos extends RestController implements OnInit{
     loadReporte(event?){
         if(event)
             event.preventDefault();
+        if(!this.dateStart.value)
+            this.dateStart.updateValue(moment().format('lll'))
+
         let final=this.dateEnd.value;
         if (!this.dateEnd.value) {
             final = (moment(this.dateStart.value).add(1, 'days'));
@@ -78,10 +81,10 @@ export class ReporteGrupos extends RestController implements OnInit{
             'dateEnd': moment(final.toString()).format('DD-MM-YYYY'),
         };
         let type=""
-        if(this.idCompanyType && this.idCompanyType!="-1")
+        if(this.idCompanyType && this.idCompanyType!="-1" && this.idCompanyType!="-2")
             type=",['op':'eq','field':'t.id','value':"+this.idCompanyType+"]"
         let noGroup=""
-        if(this.idCompanyType && this.idCompanyType!="-2")
+        if(this.idCompanyType && this.idCompanyType=="-2")
             noGroup="&noGroup=true";
 
         
@@ -122,6 +125,7 @@ export class ReporteGrupos extends RestController implements OnInit{
     }
     setType(data){
         this.idCompanyType=data;
+        this.loadReporte();
     }
 
     //lapso de fechas
