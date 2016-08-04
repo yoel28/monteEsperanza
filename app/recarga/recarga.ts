@@ -229,7 +229,6 @@ export class RecargaIngresos extends RestController implements OnInit{
     
 }
 
-declare var jsPDF:any;
 declare var jQuery:any;
 
 @Component({
@@ -376,11 +375,16 @@ export class RecargaLibro extends RestController implements OnInit{
         this.idRecharge=data;
     }
 
-    exportPdf(){
-        /*
-        let doc = new jsPDF();
-        doc.fromHTML(jQuery('#content').get(0), 15, 15,{'width': 500});
-        doc.save('libro-'+Date()+'.pdf');*/
+    exportCSV(){
+        jQuery("#content").tableToCSV();
+    }
+    formatDate(date,format){
+        return moment(date).format(format);
+    }
+    loadAll(event){
+        event.preventDefault();
+        this.max = this.dataList.count;
+        this.loadData();
     }
 
 }
