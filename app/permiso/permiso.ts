@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef } from '@angular/core';
+import {Component, Directive, ElementRef, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -17,7 +17,7 @@ import {Filter} from "../utils/filter/filter";
     styleUrls: ['app/permiso/style.css'],
     directives:[PermisoSave,Xeditable,Filter]
 })
-export class Permiso extends RestController{
+export class Permiso extends RestController implements OnInit{
 
     public dataSelect:any={};
 
@@ -70,7 +70,7 @@ export class Permiso extends RestController{
     styleUrls: ['app/permiso/style.css'],
     directives: [SELECT_DIRECTIVES,RolSave,SMDropdown]
 })
-export class PermisosRol extends RestController {
+export class PermisosRol extends RestController implements OnInit{
 
     public dataSelect:any={};
 

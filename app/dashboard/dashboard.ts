@@ -1,4 +1,4 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ViewChild, OnInit} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
 import {Http} from "@angular/http";
 import {HttpUtils} from "../common/http-utils";
@@ -17,7 +17,7 @@ import {CHART_DIRECTIVES} from "angular2-highcharts";
     styleUrls: ['app/dashboard/dashboard.css'],
     directives: [RecargaTimeLine, RecargaFactura, Datepicker, CHART_DIRECTIVES],
 })
-export class Dashboard extends RestController {
+export class Dashboard extends RestController implements OnInit {
     
     dataCamion:any = [];
     httputils:HttpUtils;

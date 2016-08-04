@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {Router, RouteParams}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
@@ -14,7 +14,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
     templateUrl: 'app/account/login/index.html',
     styleUrls: ['app/account/style.css']
 })
-export class AccountLogin extends RestController {
+export class AccountLogin extends RestController implements OnInit{
 
     public submitForm:boolean = false;
     form:ControlGroup;

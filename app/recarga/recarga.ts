@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -19,7 +19,7 @@ import {OperacionPrint} from "../operacion/methods";
     styleUrls: ['app/recarga/style.css'],
     directives:[RecargaSave,Xeditable,Filter,OperacionPrint]
 })
-export class Recarga extends RestController{
+export class Recarga extends RestController implements OnInit{
     public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
 
@@ -98,7 +98,7 @@ export class Recarga extends RestController{
     templateUrl: 'app/recarga/ingresos.html',
     styleUrls: ['app/recarga/style.css'],
 })
-export class RecargaIngresos extends RestController{
+export class RecargaIngresos extends RestController implements OnInit{
 
     constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
@@ -239,7 +239,7 @@ declare var jQuery:any;
     templateUrl: 'app/recarga/libro.html',
     styleUrls: ['app/recarga/style.css'],
 })
-export class RecargaLibro extends RestController{
+export class RecargaLibro extends RestController implements OnInit{
 
     constructor(public router: Router,http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);

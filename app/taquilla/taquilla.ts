@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import { Router,RouteParams }           from '@angular/router-deprecated';
 import  {FormBuilder} from '@angular/common';
 import { Http } from '@angular/http';
@@ -17,7 +17,7 @@ import {OperacionPrint} from "../operacion/methods";
     styleUrls: ['app/taquilla/style.css'],
     directives:[RecargaSave,OperacionPrint]
 })
-export class Taquilla extends RestController{
+export class Taquilla extends RestController implements OnInit{
     dataCompany:any = {};
     dataCompanies:any = {};
     search;

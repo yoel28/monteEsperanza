@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -18,7 +18,7 @@ import {Fecha} from "../utils/pipe";
     styleUrls: ['app/reportes/style.css'],
     directives : [Filter,Datepicker]
 })
-export class ReporteDescargasGrupos extends RestController{
+export class ReporteDescargasGrupos extends RestController implements OnInit{
 
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);

@@ -1,4 +1,4 @@
-import {ElementRef, Directive, EventEmitter, Component} from "@angular/core";
+import {ElementRef, Directive, EventEmitter, Component, OnInit} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {HttpUtils} from "../common/http-utils";
@@ -12,7 +12,7 @@ declare var jQuery:any;
     inputs: ['data', 'rules', 'field', 'function', 'endpoint','disabled'],
     outputs: ['success']
 })
-export class Xeditable {
+export class Xeditable implements OnInit {
     public success:any;
     public data:any = {};
     public rules:any = {};
@@ -61,7 +61,7 @@ export class Xeditable {
 @Directive({
     selector: "[x-file]"
 })
-export class Xfile {
+export class Xfile implements OnInit{
     constructor(public el:ElementRef) {
     }
     ngOnInit() {
@@ -83,7 +83,7 @@ export class Xfile {
     inputs: ['imageSrc'],
     outputs:   ['saveImagen'],
 })
-export class Xcropit {
+export class Xcropit implements OnInit{
     public saveImagen:any;
     public imageSrc:string;
     constructor(public el:ElementRef) {
@@ -150,7 +150,7 @@ export class SMDropdown {
     inputs:['format'],
     outputs:['fecha']
 })
-export class Datepicker {
+export class Datepicker implements OnInit {
     // public format={
     //     format: "mm/yyyy",
     //     startView: 2,

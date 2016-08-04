@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {Save} from "../utils/save/save";
     styleUrls: ['app/antena/style.css'],
     directives:[Xeditable,Filter,Save]
 })
-export class Antenna extends RestController{
+export class Antenna extends RestController implements OnInit{
 
     public dataSelect:any={};
     public title="Antenas"

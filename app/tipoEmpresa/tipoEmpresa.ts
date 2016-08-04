@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {Filter} from "../utils/filter/filter";
     styleUrls: ['app/tipoEmpresa/style.css'],
     directives: [TipoEmpresaSave,Xeditable,Filter],
 })
-export class TipoEmpresa extends RestController{
+export class TipoEmpresa extends RestController implements OnInit{
 
     public dataSelect:any={};
 

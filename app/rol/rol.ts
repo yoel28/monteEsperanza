@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {Filter} from "../utils/filter/filter";
     styleUrls: ['app/rol/style.css'],
     directives:[RolSave,Xeditable,Filter]
 })
-export class Rol extends RestController{
+export class Rol extends RestController implements OnInit{
 
     public rules={
         'authority':{'type':'text','display':null,'title':'Titulo','placeholder':'Nombre del perfil','search':true},

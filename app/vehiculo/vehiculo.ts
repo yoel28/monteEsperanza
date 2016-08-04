@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router, RouteParams}           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
@@ -23,7 +23,7 @@ declare var jQuery:any;
     styleUrls: ['app/vehiculo/styleVehiculo.css'],
     directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter],
 })
-export class Vehiculo extends RestController{
+export class Vehiculo extends RestController implements OnInit{
 
     @ViewChild(Search)
     modal:Search;

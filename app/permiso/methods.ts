@@ -1,4 +1,4 @@
-import { Component,EventEmitter } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
     directives:[SELECT_DIRECTIVES],
     outputs:['save'],
 })
-export class PermisoSave extends RestController{
+export class PermisoSave extends RestController implements OnInit{
 
     public idModal:string;
     public save:any;

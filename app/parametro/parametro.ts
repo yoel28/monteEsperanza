@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {globalService} from "../common/globalService";
     styleUrls: ['app/parametro/style.css'],
     directives:[ParametroSave,Xeditable,Filter]
 })
-export class Parametro extends RestController{
+export class Parametro extends RestController implements OnInit{
 
     public dataSelect:any={};
 

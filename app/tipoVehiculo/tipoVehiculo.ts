@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {Filter} from "../utils/filter/filter";
     styleUrls: ['app/tipoVehiculo/style.css'],
     directives: [TipoVehiculoSave,Xeditable,Filter],
 })
-export class TipoVehiculo extends RestController{
+export class TipoVehiculo extends RestController implements OnInit{
 
     public rules={
         'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},

@@ -1,4 +1,4 @@
-import { Component,EventEmitter } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -14,7 +14,7 @@ import {globalService} from "../common/globalService";
     outputs:['save'],
     directives:[Xfile,Xcropit]
 })
-export class UserSave extends RestController{
+export class UserSave extends RestController implements OnInit{
 
     public idModal:string;
     public save:any;

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Router, RouteParams} from "@angular/router-deprecated";
 import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
@@ -19,7 +19,7 @@ import {Filter} from "../utils/filter/filter";
     styleUrls: ['app/empresa/style.css'],
     directives: [EmpresaSave, TipoEmpresaSave, Search, Xeditable, Xfile, Xcropit,Filter]
 })
-export class Empresa extends RestController {
+export class Empresa extends RestController implements OnInit {
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);

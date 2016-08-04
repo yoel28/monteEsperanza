@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Pipe} from '@angular/core';
+import {Component, EventEmitter, Input, Pipe, OnInit} from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
@@ -17,7 +17,7 @@ import { Router }           from '@angular/router-deprecated';
     directives: [SELECT_DIRECTIVES,Search,Datepicker],
     outputs:['save'],
 })
-export class RecargaSave extends RestController{
+export class RecargaSave extends RestController implements OnInit{
 
     @Input() idModal:string;
     @Input() idCompany:string;
@@ -128,7 +128,7 @@ export class RecargaSave extends RestController{
     inputs:['params'],
     pipes: [Fecha],
 })
-export class RecargaTimeLine extends RestController{
+export class RecargaTimeLine extends RestController implements OnInit{
 
     // Formato de entrada
     // params={
@@ -189,7 +189,7 @@ export class RecargaTimeLine extends RestController{
     inputs:['params'],
     pipes: [Fecha],
 })
-export class RecargaFactura extends RestController{
+export class RecargaFactura extends RestController implements OnInit{
     // public params={
     //     'dateStart':'27-06-2016',
     //     'dateEnd':'27-06-2016',

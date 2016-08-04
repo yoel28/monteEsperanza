@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -16,7 +16,7 @@ import {Xeditable} from "../common/xeditable";
     styleUrls: ['app/tagRfid/style.css'],
     directives:[TagSave,Search,Filter,Xeditable],
 })
-export class TagRfid extends RestController{
+export class TagRfid extends RestController implements OnInit{
     @ViewChild(Search)
     modal:Search;
     public dataSelect:any={};

@@ -1,4 +1,4 @@
-import { Component,EventEmitter } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -11,7 +11,7 @@ import {Http} from "@angular/http";
     inputs:['idModal'],
     outputs:['save'],
 })
-export class ReglaSave extends RestController{
+export class ReglaSave extends RestController implements OnInit{
 
     public idModal:string;
     public save:any;

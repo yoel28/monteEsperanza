@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
 import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
@@ -18,7 +18,7 @@ import {Divide} from "../utils/pipe";
     styleUrls: ['app/user/style.css'],
     directives: [UserSave, Search, EmpresaSave, Xeditable, Filter, Xcropit, Xfile],
 })
-export class User extends RestController {
+export class User extends RestController implements OnInit{
 
     public dataSelect:any={};
 

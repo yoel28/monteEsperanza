@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import forEach = require("core-js/fn/array/for-each");
 import {SMDropdown} from "../../common/xeditable";
@@ -15,7 +15,7 @@ import {globalService} from "../../common/globalService";
     inputs: ['rules', 'params'],
     outputs: ['whereFilter'],
 })
-export class Filter extends RestController{
+export class Filter extends RestController implements OnInit{
 
     //objeto con las reglas de modelo
     public rules:any = {};

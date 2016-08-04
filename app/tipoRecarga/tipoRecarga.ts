@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -15,7 +15,7 @@ import {Xeditable} from "../common/xeditable";
     directives: [TipoRecargaSave,Xeditable,Filter],
 
 })
-export class TipoRecarga extends RestController{
+export class TipoRecarga extends RestController implements OnInit{
     
     constructor(public router: Router,public http: Http, public toastr:ToastsManager, public myglobal:globalService) {
         super(http);

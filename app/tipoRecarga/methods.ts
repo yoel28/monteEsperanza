@@ -1,4 +1,4 @@
-import { Component,EventEmitter } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
@@ -14,7 +14,7 @@ import {globalService} from "../common/globalService";
     inputs:['idModal'],
     outputs:['save'],
 })
-export class TipoRecargaSave extends RestController{
+export class TipoRecargaSave extends RestController implements OnInit{
 
     public idModal:string;
     public save:any;

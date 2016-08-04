@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -16,7 +16,7 @@ import {Fecha} from "../utils/pipe";
     directives:[OperacionSave,Xeditable,Filter,OperacionPrint],
     pipes:[Fecha]
 })
-export class Operacion extends RestController{
+export class Operacion extends RestController implements OnInit{
 
     public dataSelect:any={};
     public MONEY_METRIC_SHORT:string="";
@@ -192,7 +192,7 @@ export class Operacion extends RestController{
     styleUrls: ['app/operacion/style.css'],
     pipes:[Fecha]
 })
-export class OperacionMonitor extends RestController{
+export class OperacionMonitor extends RestController implements OnInit{
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);

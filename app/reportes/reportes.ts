@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -18,7 +18,7 @@ import {Fecha} from "../utils/pipe";
     styleUrls: ['app/reportes/style.css'],
     directives : [Filter,Datepicker]
 })
-export class ReporteGrupos extends RestController{
+export class ReporteGrupos extends RestController implements OnInit{
 
     form: ControlGroup;
     dateStart:Control;

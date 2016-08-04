@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
 import {RestController} from "../common/restController";
@@ -14,7 +14,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
     styleUrls: ['app/profile/style.css'],
     directives: [Xeditable,Xcropit,Search,EmpresaSave,Xfile],
 })
-export class Profile extends RestController{
+export class Profile extends RestController implements OnInit{
     public userSelect:string;
     constructor(public router: Router,public http: Http,public myglobal:globalService,public toastr: ToastsManager) {
         super(http,toastr);
