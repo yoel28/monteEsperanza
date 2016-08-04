@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
@@ -14,7 +14,7 @@ import {Fecha} from "../utils/pipe";
     styleUrls: ['app/operacion/style.css'],
     inputs:['idModal','inAnt'],
     outputs:['save'],
-    directives:[Search],
+    directives:[Search,OperacionPrint],
 })
 export class OperacionSave extends RestController implements OnInit{
 
@@ -250,9 +250,26 @@ export class OperacionSave extends RestController implements OnInit{
             that.resetForm();
             if(that.toastr)
                 that.toastr.success('Actualizado con éxito','Notificación')
+            that.onPrint(response.json());
         }
         this.httputils.doPut('/operations/'+this.idOperacion,body,successCallback,this.error)
     }
+    //print automatic
+    @ViewChild(OperacionPrint)
+    operacionPrint:OperacionPrint;
+    dataPrint:any={};
+    printAuto:boolean=false;
+    public onPrint(data){
+        let value = this.myglobal.getParams('PRINT_AUTOMATIC_OPERATIONS');
+        this.printAuto=false;
+        if(value=="true"){
+            this.dataPrint=data;
+            this.printAuto=true;
+            if(this.operacionPrint)
+                this.operacionPrint.data=data
+        }
+    }
+
     //objecto del search actual
     public search:any={};
     //Lista de id search
@@ -388,6 +405,7 @@ export class OperacionPrint implements OnInit {
         popupWin.document.head.innerHTML = (document.head.innerHTML);
         popupWin.document.close();
         this.data={};
+
     }
 }
 
