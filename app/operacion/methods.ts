@@ -14,7 +14,7 @@ import {Fecha} from "../utils/pipe";
     styleUrls: ['app/operacion/style.css'],
     inputs:['idModal','inAnt'],
     outputs:['save'],
-    directives:[Search,OperacionPrint],
+    directives:[Search],
 })
 export class OperacionSave extends RestController implements OnInit{
 
