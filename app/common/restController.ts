@@ -2,9 +2,10 @@ import { Http} from '@angular/http';
 import  {ControlGroup,} from '@angular/common';
 import {HttpUtils} from "./http-utils";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {OnInit} from "@angular/core";
 
 
-export class RestController{
+export class RestController implements OnInit {
 
     dataList:any = [];
     httputils:HttpUtils;
@@ -16,6 +17,9 @@ export class RestController{
 
     constructor(public http: Http,public toastr?: ToastsManager) {
         this.httputils = new HttpUtils(http,toastr || null);
+    }
+    ngOnInit(){
+
     }
     setEndpoint(endpoint:string){
         this.endpoint=endpoint;
