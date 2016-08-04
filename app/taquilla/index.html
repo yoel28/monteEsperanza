@@ -117,7 +117,7 @@
                         </div>
                     </div><!--Fin de Datos de  camion-->
                     <div *ngIf="myglobal.existsPermission('109')">
-                        <table class="table table-hover table-bordered">
+                        <table id="content" class="table table-hover table-bordered">
 
                             <thead>
                             <tr>
@@ -134,16 +134,11 @@
                             <tbody *ngFor="let recharges of dataList.list">
                             <tr>
                                 <td>
-                                    {{recharges.dateCreated | fecha | date:'dd'}}/
-                                    {{recharges.dateCreated | fecha | date:'MM'}}/
-                                    {{recharges.dateCreated | fecha | date:'yyyy'}},
-                                    {{recharges.dateCreated | fecha | date:'h:mma'}}
+                                    {{formatDate(recharges.dateCreated,'DD/MM/YYYY, LT')}}
                                 </td>
                                 <td>{{recharges.reference}}</td>
                                 <td>
-                                    {{recharges.referenceDate | fecha | date:'dd'}}/
-                                    {{recharges.referenceDate | fecha | date:'MM'}}/
-                                    {{recharges.referenceDate | fecha | date:'yyyy'}}
+                                    {{formatDate(recharges.referenceDate,'DD/MM/YYYY')}}
                                 </td>
                                 <td>
                                     <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
@@ -165,8 +160,7 @@
                                     <div *ngIf="dataList.count==0" class="norecharges">
                                         No tiene recargas asociadas
                                     </div>
-                                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
-                                        class="btn-group pull-right">
+                                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
                                         <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                                             {{val}}
                                         </button>
@@ -214,6 +208,9 @@
                             <div class="row pull-right noprint">
                                 <button (click)="onPrint($event)" type="button" class="btn  btn-blue">
                                     <i class="fa  fa-print fa-lg"></i> Imprimir
+                                </button>
+                                <button (click)="exportCSV()" type="button" class="btn btn-default">
+                                    <i class="fa fa-download"></i>&nbsp;Exportar a CSV
                                 </button>
                                 <button type="button" class="btn  btn-success" data-toggle="modal" data-target="#saveRecarga"
                                         *ngIf="myglobal.existsPermission('111')">

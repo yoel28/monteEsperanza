@@ -8,7 +8,9 @@ import {Fecha} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {OperacionPrint} from "../operacion/methods";
+import moment from "moment/moment";
 
+declare var jQuery:any;
 
 @Component({
     selector: 'taquilla',
@@ -78,11 +80,19 @@ export class Taquilla extends RestController implements OnInit{
         popupWin.document.close();
 
     }
+
+    exportCSV(){
+        jQuery("#content").tableToCSV();
+    }
+    formatDate(date,format){
+        return moment(date).format(format);
+    }
     loadAll(event){
         event.preventDefault();
-        this.max = this.dataList.count||1000;
+        this.max = this.dataList.count;
         this.loadData();
     }
+
     @ViewChild(OperacionPrint)
     operacionPrint:OperacionPrint;
     onPrintOperation(data){
