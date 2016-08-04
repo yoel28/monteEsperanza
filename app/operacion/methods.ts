@@ -304,16 +304,22 @@ export class OperacionSave extends RestController implements OnInit{
 
     inAntena(data){
         this.resetForm();
-        this.idOperacion="-1";
+        if(data && data.vehicleId){
+            this.listOperations=false;
+            this.idOperacion="-1";
 
-        this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
-        this.data['vehicle'].updateValue(data.vehiclePlate);
-        this.rules['vehicle'].readOnly=true;
+            this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
+            this.data['vehicle'].updateValue(data.vehiclePlate);
+            this.rules['vehicle'].readOnly=true;
 
-        this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
-        this.data['company'].updateValue(data.companyRuc);
+            this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
+            this.data['company'].updateValue(data.companyRuc);
 
-        this.data['weightIn'].updateValue(data.weightIn);
+            this.data['weightIn'].updateValue(data.weightIn);
+        }
+        else{
+            this.listOperations=true;
+        }
     }
 
     getOperacion(data){
