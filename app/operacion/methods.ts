@@ -371,10 +371,13 @@ export class OperacionSave extends RestController implements OnInit{
     inputs:['data'],
     pipes:[Fecha],
 })
-export class OperacionPrint{
+export class OperacionPrint implements OnInit {
     public data:any={};
 
     constructor() {
+    }
+    ngOnInit(){
+
     }
 
     onPrint(){
