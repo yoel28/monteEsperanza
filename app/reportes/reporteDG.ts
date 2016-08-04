@@ -35,7 +35,8 @@ export class ReporteDescargasGrupos extends RestController implements OnInit{
     }
     setType(data){
         this.companyType=data;
-        this.loadMatriz();
+        if(this.companyType!="-1")
+            this.loadMatriz();
     }
     public msgLabel:boolean=true;
     cambiar(){
