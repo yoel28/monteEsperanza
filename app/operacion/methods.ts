@@ -277,6 +277,7 @@ export class OperacionSave extends RestController implements OnInit{
     //Al hacer click en la lupa guarda los valores del objecto
     getLoadSearch(event,data){
         event.preventDefault();
+        this.findControl="";
         this.search=data;
     }
     //accion al dar click en el boton de buscar del formulario en el search
@@ -295,6 +296,18 @@ export class OperacionSave extends RestController implements OnInit{
     getDataSearch(data){
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         this.data[this.search.key].updateValue(data.detail);
+        let balance=parseFloat(this.searchId[this.search.key].balance || '0');
+        let minBalance=parseFloat(this.searchId[this.search.key].minBalance || '0');
+
+        if(balance < minBalance && !this.myglobal.existsPermission('160'))
+        {
+            delete this.searchId[this.search.key];
+            this.data[this.search.key].updateValue('');
+            this.findControl="";
+            this.toastr.info('El cliente no tiene saldo suficiente')
+        }
+
+
         this.dataList=[];
     }
     public dataIn:any={};
