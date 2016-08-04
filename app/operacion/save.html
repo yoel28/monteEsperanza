@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div *ngIf="listOperations">
-                    <table class="table table-hover">
+                    <table *ngIf="dataList && dataList.operations" class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="text-center texto-head" colspan="5"><strong>Seleccione una salida</strong></th>
@@ -18,10 +18,10 @@
                                 <th>Cliente</th>
                                 <th>Ruta</th>
                                 <th>Tipo de basura</th>
-                                <th>Peso de entrada({{op.metric}})</th>
+                                <th>Peso de entrada</th>
                             </tr>
                         </thead>
-                        <tbody *ngIf="dataList && dataList.operations">
+                        <tbody>
                         <tr *ngFor="let op of dataList.operations" (click)="getOperacion(op)">
                             <td>{{op.vehiclePlate}}</td>
                             <td>{{op.companyName}}({{op.companyRuc}})</td>
@@ -30,15 +30,12 @@
                             <td>{{op.weightIn}}&nbsp;{{op.metric}}</td>
                         </tr>
                         </tbody>
-                        <tfoot *ngIf="!dataList || !dataList.operations">
-                            <tr>
-                                <td colspan="5" class="text-foot">
-                                    No existe ninguna entrada pendiente
-                                </td>
-                            </tr>
-                        </tfoot>
-
                     </table>
+                </div>
+                <div *ngIf="(!dataList || !dataList.operations) && listOperations">
+                    <div class="col-lg-12 text-foot">
+                        No existe ninguna registro pendiente
+                    </div>
                 </div>
                 <div class="row" *ngIf="!listOperations">
                     <div class="col-lg-12">
