@@ -181,6 +181,10 @@ export class RecargaTimeLine extends RestController implements OnInit{
         if(this.params.offset < this.dataList.count)
             this.httputils.doGet(this.endpoint+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,successCallback,this.error)
     }
+    formatDate(date,format){
+        return moment(date).format(format);
+    }
+    
 
 }
 
