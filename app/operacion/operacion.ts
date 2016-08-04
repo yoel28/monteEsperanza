@@ -176,12 +176,15 @@ export class Operacion extends RestController implements OnInit{
         this.router.navigate(link);
     }
     onRechargeAutomatic(event,data){
+        let that=this;
         event.preventDefault();
         let successCallback= response => {
             Object.assign(data, response.json());
+            if(that.toastr)
+                that.toastr.success('Pago cargado con éxito','Notificación');
+
         }
         this.httputils.doGet('/pay/'+data.id,successCallback,this.error);
-        //this.httputils.onUpdate('/pay/'+data.id,{},data,this.error);
     }
 
 }
