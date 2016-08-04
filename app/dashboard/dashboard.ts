@@ -75,6 +75,9 @@ export class Dashboard extends RestController implements OnInit {
     public VEHICLE_METRIC_SHORT=this.myglobal.getParams('VEHICLE_METRIC_SHORT');
     public VEHICLE_METRIC=this.myglobal.getParams('VEHICLE_METRIC');
 
+    public PLOT_ID_NEGATIVES=this.myglobal.getParams('PLOT_ID_NEGATIVES');
+    public RECHARGE_DEVOLUCION_ID=this.myglobal.getParams('RECHARGE_DEVOLUCION_ID');
+
     dataAreaPlot1 = {
         chart: {
             renderTo: 'chartcontainer1',
@@ -163,6 +166,83 @@ export class Dashboard extends RestController implements OnInit {
         series: [],
         title: {text: 'Flujo de caja ('+this.MONEY_METRIC+')'},
     };
+
+    dataAreaPlot5={
+        chart: {
+            zoomType: 'xy',
+            renderTo: 'chartcontainer5',
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: 'Ingresos vs Consumos'
+        },
+        subtitle: {
+            text: 'Balance general'
+        },
+        xAxis: [{
+            categories: [],
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value} '+this.MONEY_METRIC_SHORT,
+                style: {
+                    color: '#FFF'
+                }
+            },
+            title: {
+                text: 'Temperature',
+                style: {
+                    color: '#FFF'
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Rainfall',
+                style: {
+                    color: '#FFF'
+                }
+            },
+            labels: {
+                format: '{value} '+this.MONEY_METRIC_SHORT,
+                style: {
+                    color: '#FFF'
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: '#FFFFFF'
+        },
+        series: [{
+            name: 'Ingreso Neto',
+            type: 'column',
+            yAxis: 1,
+            data: [],
+            tooltip: {
+                valueSuffix: this.MONEY_METRIC_SHORT,
+            }
+
+        }, {
+            name: 'Consumo en vertedero',
+            type: 'spline',
+            data: [],
+            tooltip: {
+                valueSuffix: this.MONEY_METRIC_SHORT,
+            }
+        }]
+    }
 
     getPlots() {
         let that = this;
@@ -283,6 +363,39 @@ export class Dashboard extends RestController implements OnInit {
                 let _data = response.json().series;
                 that.dataAreaPlot4.series = _data;
             }
+            let ingresos=[];
+            let consumo=[];
+            let cat=response.json().categories;
+
+            response.json().series.forEach((obj,x)=>{
+                obj.data.forEach((data,y)=>{
+                    if(!consumo[y])
+                        consumo[y]=0.0;
+                    if(!ingresos[y])
+                        ingresos[y]=0.0;
+
+                    if(obj.id == 4){
+                        consumo[y]+=data;
+                    }
+                    else if(obj.id == 7){
+                        ingresos[y]-=data;
+                    }
+                    else{
+                        ingresos[y]+=data;
+                    }
+
+                })
+            });
+            Object.assign(that.dataAreaPlot5.xAxis[0]['categories'],cat);
+            Object.assign(that.dataAreaPlot5.series[0]['data'],ingresos);
+            Object.assign(that.dataAreaPlot5.series[1]['data'],consumo);
+            if(that.chart['plot5']) {
+
+                that.chart['plot5'].series[0].setData(ingresos);
+                that.chart['plot5'].series[1].setData(consumo);
+                that.chart['plot5'].xAxis[0].setCategories(cat)
+            }
+
             this.loadTotales(response.json().series);
 
         }

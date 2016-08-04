@@ -104,6 +104,11 @@
                                 <chart [options]="dataAreaPlot4" (load)="saveInstance($event.context,'plot4')"></chart>
                             </div>
                         </div>
+                        <div class="row">
+                            <div *ngIf="dataAreaPlot5.series.length>0" id="chartcontainer5" width='100%' class="padding-bottom col-lg-12">
+                                <chart [options]="dataAreaPlot5" (load)="saveInstance($event.context,'plot5')"></chart>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-12 border">
                         <div class="col-lg-3">
