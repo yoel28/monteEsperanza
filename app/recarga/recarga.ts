@@ -377,9 +377,10 @@ export class RecargaLibro extends RestController implements OnInit{
     }
 
     exportPdf(){
+        /*
         let doc = new jsPDF();
         doc.fromHTML(jQuery('#content').get(0), 15, 15,{'width': 500});
-        doc.save('libro-'+Date()+'.pdf');
+        doc.save('libro-'+Date()+'.pdf');*/
     }
 
 }
