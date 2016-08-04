@@ -296,19 +296,20 @@ export class OperacionSave extends RestController implements OnInit{
     getDataSearch(data){
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         this.data[this.search.key].updateValue(data.detail);
-        let balance=parseFloat(this.searchId[this.search.key].balance || '0');
-        let minBalance=parseFloat(this.searchId[this.search.key].minBalance || '0');
+        this.checkBalance()
+        this.dataList=[];
+    }
+    checkBalance(){
 
+        let balance=parseFloat(this.searchId['company'].balance || '0');
+        let minBalance=parseFloat(this.searchId['company'].minBalance || '0');
         if(balance < minBalance && !this.myglobal.existsPermission('160'))
         {
-            delete this.searchId[this.search.key];
-            this.data[this.search.key].updateValue('');
+            delete this.searchId['company'];
+            this.data['company'].updateValue('');
             this.findControl="";
             this.toastr.info('El cliente no tiene saldo suficiente')
         }
-
-
-        this.dataList=[];
     }
     public dataIn:any={};
 
@@ -330,6 +331,8 @@ export class OperacionSave extends RestController implements OnInit{
             this.data['company'].updateValue(data.companyRuc);
 
             this.data['weightIn'].updateValue(data.weightIn);
+
+            this.checkBalance();
         }
         else{
             this.listOperations=true;
