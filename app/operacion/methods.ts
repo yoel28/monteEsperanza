@@ -306,6 +306,7 @@ export class OperacionSave extends RestController implements OnInit{
         this.resetForm();
         if(data && data.vehicleId){
             this.listOperations=false;
+            this.dataList={};
             this.idOperacion="-1";
 
             this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
