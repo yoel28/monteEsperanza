@@ -10,6 +10,7 @@ import moment from 'moment/moment';
 import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
 
+declare var jQuery:any;
 
 @Component({
     selector: 'reporte-dg',
@@ -82,6 +83,9 @@ export class ReporteDescargasGrupos extends RestController implements OnInit{
             Object.assign(that.dataList,response.json())
         };
         this.httputils.doGet('/reports/weight/groups/'+this.dataConsult.date+type,successCallback,this.error);
+    }
+    exportCSV(){
+        jQuery("#content").tableToCSV();
     }
 
 }
