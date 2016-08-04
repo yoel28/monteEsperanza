@@ -9,6 +9,8 @@ import {Search} from "../utils/search/search";
 import {globalService} from "../common/globalService";
 import {Datepicker} from "../common/xeditable";
 import { Router }           from '@angular/router-deprecated';
+import moment from "moment/moment";
+
 
 @Component({
     selector: 'recarga-save',
@@ -182,6 +184,8 @@ export class RecargaTimeLine extends RestController implements OnInit{
 
 }
 
+declare var jQuery:any;
+
 @Component({
     selector: 'recarga-factura',
     templateUrl: 'app/recarga/facturas.html',
@@ -235,5 +239,17 @@ export class RecargaFactura extends RestController implements OnInit{
         event.preventDefault();
         let link = ['TaquillaSearh', {search: companyId}];
         this.router.navigate(link);
+    }
+
+    exportCSV(){
+        jQuery("#content").tableToCSV();
+    }
+    formatDate(date,format){
+        return moment(date).format(format);
+    }
+    loadAll(event){
+        event.preventDefault();
+        this.max = this.dataList.count;
+        this.loadData();
     }
 }
