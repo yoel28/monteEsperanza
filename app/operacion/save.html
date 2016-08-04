@@ -164,3 +164,6 @@
         </div>
     </div>
 </div>
+<div  *ngIf="myglobal.existsPermission('157') && printAuto">
+    <operacion-print [data]="dataPrint"></operacion-print>
+</div>
