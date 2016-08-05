@@ -71,6 +71,11 @@
                                 </li>
                             </ul>
                         </li>
+                        <li *ngIf="myglobal.existsPermission('165')">
+                            <a (click)="activeMenu($event,'monitor')" href="#" data-toggle="control-sidebar">
+                                <i class="fa fa-video-camera"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -204,7 +209,6 @@
 
                         </ul>
                     </li>
-                    <li *ngIf="myglobal.existsPermission('165')"><a href="#" [routerLink]="['OperacionMonitor']"><i class="fa fa-video-camera"></i> <span>Monitor</span></a></li>
 
                 </ul>
                 <!-- /.sidebar-menu -->
@@ -224,4 +228,27 @@
         <strong>Copyright &copy; 2015 <a href="#">AGUASEO</a>.</strong> Todos los derechos reservados.
     </footer>
 </div>
+
+
+<aside *ngIf="myglobal.existsPermission('165')" class="control-sidebar control-sidebar-dark" [class.control-sidebar-open]="activeMenuId=='monitor'">
+    {{loadMonitor()}}
+    <div class="tab-content">
+        <div class="tab-pane active" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Camiones en el vertedero</h3>
+            <ul class="control-sidebar-menu">
+                <li *ngFor="let data of monitor.list">
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon fa fa-truck bg-red"></i>
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">{{data.vehiclePlate}}</h4>
+                            <p>{{data.companyName}}<br/>RUC:({{data.companyRUC}})</p>
+                            <p>{{formatDate(data.createDate,'DD/MM/YYYY, LT')}}</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
 <!-- ./wrapper -->
