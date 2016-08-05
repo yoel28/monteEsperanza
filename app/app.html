@@ -246,6 +246,11 @@
                         </div>
                     </a>
                 </li>
+                <li *ngIf="!monitor.list || (monitor && monitor.count==0)">
+                    <div class="menu-info">
+                        <h4 class="control-sidebar-subheading">No hay camiones</h4>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
