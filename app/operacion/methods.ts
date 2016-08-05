@@ -296,7 +296,7 @@ export class OperacionSave extends RestController implements OnInit{
     getDataSearch(data){
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         this.data[this.search.key].updateValue(data.detail);
-        this.checkBalance()
+        this.checkBalance();
         this.dataList=[];
     }
     checkBalance(){
@@ -304,11 +304,13 @@ export class OperacionSave extends RestController implements OnInit{
         if(this.searchId['company']){
             let balance=parseFloat(this.searchId['company'].balance || '0');
             let minBalance=parseFloat(this.searchId['company'].minBalance || '0');
-            if(balance < minBalance && !this.myglobal.existsPermission('160'))
+            if(balance < minBalance )
             {
-                delete this.searchId['company'];
-                this.data['company'].updateValue('');
-                this.findControl="";
+                if(!this.myglobal.existsPermission('160')){
+                    delete this.searchId['company'];
+                    this.data['company'].updateValue('');
+                    this.findControl="";
+                }
                 this.toastr.info('El cliente no tiene saldo suficiente')
             }
         }
@@ -352,11 +354,11 @@ export class OperacionSave extends RestController implements OnInit{
         this.data['company'].updateValue(data.companyRuc);
         this.rules['company'].readOnly=true;
 
-        this.searchId['trashType']={'id':data.typeTrashId,'title':data.trashTypeName,'detail':data.trashTypeReference};
+        this.searchId['trashType']={'id':data.typeTrashId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
         this.data['trashType'].updateValue(data.trashTypeReference);
         this.rules['trashType'].readOnly=true;
 
-        this.searchId['route']={'id':data.routeId,'title':data.routeName,'detail':data.routeReference};
+        this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
         this.data['route'].updateValue(data.routeReference);
         this.rules['route'].readOnly=true;
 
