@@ -17,14 +17,6 @@
                                     El campo contiene errores
                                 </div>
                             </div>
-                            <div *ngIf="companyTypes.count" class="form-group">
-                                <ng-select [allowClear]="true"
-                                           [items]="items"
-                                           (data)="refreshValue($event)"
-                                           placeholder="Seleccione un Grupo de empresa">
-
-                                </ng-select>
-                            </div>
                             <div *ngIf="!myglobal.existsPermission('36')">
                                 <div class="btn-red form-group padding-error">
                                     <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
@@ -90,7 +82,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                            <div  *ngIf="companyTypes.count" class="form-group">
+                                <ng-select [allowClear]="true"
+                                           [items]="items"
+                                           (data)="refreshValue($event)"
+                                           placeholder="Seleccione un Grupo de empresa">
+
+                                </ng-select>
+                            </div>
+                        </div>
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
