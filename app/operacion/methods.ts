@@ -301,14 +301,16 @@ export class OperacionSave extends RestController implements OnInit{
     }
     checkBalance(){
 
-        let balance=parseFloat(this.searchId['company'].balance || '0');
-        let minBalance=parseFloat(this.searchId['company'].minBalance || '0');
-        if(balance < minBalance && !this.myglobal.existsPermission('160'))
-        {
-            delete this.searchId['company'];
-            this.data['company'].updateValue('');
-            this.findControl="";
-            this.toastr.info('El cliente no tiene saldo suficiente')
+        if(this.searchId['company']){
+            let balance=parseFloat(this.searchId['company'].balance || '0');
+            let minBalance=parseFloat(this.searchId['company'].minBalance || '0');
+            if(balance < minBalance && !this.myglobal.existsPermission('160'))
+            {
+                delete this.searchId['company'];
+                this.data['company'].updateValue('');
+                this.findControl="";
+                this.toastr.info('El cliente no tiene saldo suficiente')
+            }
         }
     }
     public dataIn:any={};
