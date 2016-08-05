@@ -45,8 +45,9 @@
                                         <div class="row" *ngIf="!rules[key].hidden">
                                             <div class="col-lg-12">
                                                 <div class="row">
-                                                    <div class="col-lg-10">
-                                                        <div class="input-group input-icon right form-group" [class.object-invalid]="
+                                                    <div class="col-lg-10 form-group">
+
+                                                        <div class="input-group input-icon right" [class.object-invalid]="
                                                             rules[key].object && data[key].value && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
@@ -70,9 +71,9 @@
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
                                                                 {{rules[key].msg.error || 'El campo contiene errores'}}
                                                             </div>
-                                                            <div *ngIf="searchId[key] && searchId[key].title" >
-                                                                {{searchId[key].title}}
-                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="searchId[key] && searchId[key].title" class="text-search">
+                                                            {{searchId[key].title}}
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 padding-top-4">
