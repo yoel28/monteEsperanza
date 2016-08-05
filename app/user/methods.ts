@@ -39,7 +39,7 @@ export class UserSave extends RestController implements OnInit{
     }
     initForm(){
 
-        this.username = new Control("", Validators.compose([Validators.required,Validators.maxLength(10)]));
+        this.username = new Control("", Validators.compose([Validators.required,Validators.maxLength(35)]));
         this.name = new Control("", Validators.compose([Validators.required]));
         this.email = new Control("", Validators.compose([Validators.required,this.validateEmail]));
         this.password = new Control("", Validators.compose([Validators.required]));

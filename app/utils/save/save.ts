@@ -95,7 +95,9 @@ export class Save extends RestController implements OnInit{
                     }
                 ]));
             }
-            else if (that.rules[key].required)
+            else if (that.rules[key].required && that.rules[key].maxLength)
+                that.data[key] = new Control("",Validators.compose([Validators.required,Validators.maxLength(that.rules[key].maxLength)]));
+            else if (that.rules[key].required )
                 that.data[key] = new Control("",Validators.compose([Validators.required]));
             else
                 that.data[key] = new Control("");

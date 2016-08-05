@@ -36,6 +36,7 @@ export class Ruta extends RestController implements OnInit{
             'key':'title',
             'required':true,
             'display':null,
+            'maxLength':'35',
             'title':'Título',
             'mode':'inline',
             'placeholder': 'Título',

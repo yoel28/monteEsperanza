@@ -41,6 +41,7 @@ export class TipoBasura extends RestController implements OnInit{
             'icon':'fa fa-font',
             'required':true,
             'display':null,
+            'maxLength':'35',
             'title':'Título',
             'mode':'inline',
             'placeholder': 'Titulo',

@@ -50,7 +50,7 @@ export class EmpresaSave extends RestController implements OnInit{
     
     initForm(){
 
-        this.name = new Control("", Validators.compose([Validators.required]));
+        this.name = new Control("", Validators.compose([Validators.required,Validators.maxLength(35)]));
         this.ruc = new Control("", Validators.compose([Validators.required]));
         this.responsiblePerson = new Control("", Validators.compose([Validators.required]));
         this.phone = new Control("", Validators.compose([Validators.required]));

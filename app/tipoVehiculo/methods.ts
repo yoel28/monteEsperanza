@@ -49,7 +49,7 @@ export class TipoVehiculoSave extends RestController implements OnInit{
 
     initForm(){
 
-        this.title = new Control("", Validators.compose([Validators.required]));
+        this.title = new Control("", Validators.compose([Validators.required,Validators.maxLength(35)]));
         this.detail = new Control("", Validators.compose([Validators.required]));
         this.icon = new Control("", Validators.compose([Validators.required]));
 
