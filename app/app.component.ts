@@ -132,6 +132,12 @@ export class AppComponent extends RestController{
 
           }
 
+           if(that.myglobal.getParams('VERSION_CACHE')!=localStorage.getItem('VERSION_CACHE') && that.myglobal.getParams('VERSION_CACHE')!="")
+           {
+               localStorage.setItem('VERSION_CACHE',that.myglobal.getParams('VERSION_CACHE'))
+               location.reload(true);
+           }
+
         },function(error){
           console.log("entro2");
         }
