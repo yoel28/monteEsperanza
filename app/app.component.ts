@@ -1,4 +1,4 @@
-import {Component, provide, ViewChild} from '@angular/core';
+import {Component, provide, ViewChild, OnInit} from '@angular/core';
 import { Router,RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { contentHeaders } from './common/headers';
 import { AccountLogin }         from './account/account';
@@ -36,6 +36,8 @@ import {ReporteGrupos} from "./reportes/reportes";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {OperacionSave} from "./operacion/methods";
 import {ReporteDescargasGrupos} from "./reportes/reporteDG";
+import moment from "moment/moment";
+
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -91,7 +93,7 @@ declare var Stomp:any;
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
-export class AppComponent extends RestController{
+export class AppComponent extends RestController implements OnInit{
 
   public saveUrl:string;
 
@@ -143,6 +145,9 @@ export class AppComponent extends RestController{
         }
     );//this.onSocket();
   }
+    ngOnInit(){
+
+    }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
   public isPublic(){
@@ -236,7 +241,28 @@ export class AppComponent extends RestController{
         }
         this.httputils.doGet('/out/operations',successCallback,this.error);
     }
-   
+
+    public monitor:any={};
+    public enableMonitor:boolean=false;
+    loadMonitor(){
+        let that= this;
+        if(!that.enableMonitor)
+        {
+            setInterval(()=>{
+                let where="?where=[['op':'isNull','field':'weightOut']]";
+                let successCallback= response => {
+                    Object.assign(that.monitor,response.json());
+                }
+                that.httputils.doGet('/operations/'+where,successCallback,this.error);
+            }, 10000)
+        }
+        that.enableMonitor=true;
+    }
+    formatDate(date,format){
+        if(!date)
+            date=Date();
+        return moment(date).format(format);
+    }
 
 
 }
