@@ -15,11 +15,11 @@ jQuery.fn.tableToCSV = function() {
             var data = [];
             $(this).find('th').each(function(){
                 var text = clean_text($(this).text());
-                title.push(text);
+                title.push(text.trim());
             });
             $(this).find('td').each(function(){
                 var text = clean_text($(this).text());
-                data.push(text);
+                data.push(text.trim());
             });
             data = data.join(",");
             rows.push(data);
