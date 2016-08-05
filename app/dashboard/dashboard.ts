@@ -176,7 +176,7 @@ export class Dashboard extends RestController implements OnInit {
             enabled: false
         },
         title: {
-            text: 'Ingresos vs Consumos'
+            text: ' Total Ingresos x Total consumo de vertedero'
         },
         subtitle: {
             text: 'Balance general'
