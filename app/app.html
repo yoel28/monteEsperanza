@@ -169,6 +169,12 @@
                                     <span>Descarga por grupos</span>
                                 </a>
                             </li>
+                            <li *ngIf="myglobal.existsPermission('167')">
+                                <a href="#" [routerLink]="['ReporteGruposVehiculos']">
+                                    <i class="fa fa-truck"></i>
+                                    <span>Descarga por veh&iacute;culos</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="treeview" [class.active]="activeMenuId=='access'"
