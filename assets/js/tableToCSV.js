@@ -14,17 +14,19 @@ jQuery.fn.tableToCSV = function() {
         $(this).find('tr').each(function(){
             var data = [];
             $(this).find('th').each(function(){
-                var text = clean_text($(this).text());
+                //var text = clean_text($(this).text());
+                var text = $(this)[0].innerText;
                 title.push(text.trim());
             });
             $(this).find('td').each(function(){
-                var text = clean_text($(this).text());
+                //var text = clean_text($(this).text());
+                var text = $(this)[0].innerText;
                 data.push(text.trim());
             });
-            data = data.join(",");
+            data = data.join(";");
             rows.push(data);
         });
-        title = title.join(",");
+        title = title.join(";");
         rows = rows.join("\n");
 
         var csv = title + rows;
