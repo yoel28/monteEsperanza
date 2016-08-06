@@ -37,6 +37,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {OperacionSave} from "./operacion/methods";
 import {ReporteDescargasGrupos} from "./reportes/reporteDG";
 import moment from "moment/moment";
+import {ReporteGruposVehiculos} from "./reportes/reporteGV";
 
 
 declare var SockJS:any;
@@ -76,6 +77,7 @@ declare var Stomp:any;
     
   { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
   { path: '/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
+  { path: '/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
