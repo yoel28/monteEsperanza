@@ -106,7 +106,7 @@ export class AppComponent extends RestController implements OnInit{
     //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
       
     localStorage.setItem('urlAPI','http://54.234.235.119:8080/api');
-    localStorage.setItem('url','http://54.234.235.119s:8080');
+    localStorage.setItem('url','http://54.234.235.119:8080');
 
     //  localStorage.setItem('urlAPI','http://192.168.0.104:8080/api');
     //  localStorage.setItem('url','http://192.168.0.104:8080');
