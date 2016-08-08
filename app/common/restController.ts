@@ -67,6 +67,8 @@ export class RestController implements OnInit {
     }
     onEditable(field,data,value,endpoint){
         let json = {};
+        if( typeof data[field] === "number" )
+            value=parseFloat(value);
         json[field] = value;
         let body = JSON.stringify(json);
         let error = err => {
