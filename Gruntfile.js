@@ -35,7 +35,7 @@ module.exports = function(grunt) {
         dist: {
             options: {
                 removeComments: true,
-                collapseWhitespace: false
+                collapseWhitespace: true
             },
             files: [{
                 expand: true,
