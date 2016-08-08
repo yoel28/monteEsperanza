@@ -81,6 +81,11 @@
                                                                 class="btn btn-box-tool fa fa-search text-blue"
                                                                 (click)="getLoadSearch($event,rules[key])">
                                                         </button>
+                                                        <button *ngIf="rules[key].object && key=='company' && searchId[key]"
+                                                                data-toggle="modal" data-target="#saveRecarga"
+                                                                class="btn btn-box-tool fa fa-money text-green"
+                                                                (click)="getLoadRecharge($event,searchId[key])">
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,4 +172,7 @@
 </div>
 <div  *ngIf="myglobal.existsPermission('157') && printAuto">
     <operacion-print [data]="dataPrint"></operacion-print>
+</div>
+<div *ngIf="myglobal.existsPermission('111')">
+    <recarga-save  idModal="saveRecarga" > </recarga-save>
 </div>
