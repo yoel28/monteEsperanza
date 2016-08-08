@@ -6,6 +6,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search";
 import {globalService} from "../common/globalService";
 import {Fecha} from "../utils/pipe";
+import {RecargaSave} from "../recarga/methods";
 
 
 @Component({
@@ -14,7 +15,7 @@ import {Fecha} from "../utils/pipe";
     styleUrls: ['app/operacion/style.css'],
     inputs:['idModal','inAnt'],
     outputs:['save'],
-    directives:[Search],
+    directives:[Search,RecargaSave],
 })
 export class OperacionSave extends RestController implements OnInit{
 
@@ -404,6 +405,16 @@ export class OperacionSave extends RestController implements OnInit{
         })
         this.rules['weightOut'].hidden=true;
         this.listOperations=false;
+    }
+    @ViewChild(RecargaSave)
+    recargaSave:RecargaSave;
+    getLoadRecharge(event,data){
+        event.preventDefault();
+        if(this.recargaSave){
+            this.recargaSave.idCompany=data.id;
+            this.recargaSave.company.updateValue(data.id);
+        }
+
     }
 }
 
