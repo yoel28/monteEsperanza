@@ -40,7 +40,7 @@ export class Xeditable implements OnInit {
             showbuttons: that.rules[that.field].showbuttons || false,
             mode: that.rules[that.field].mode || 'inline',
             source:that.rules[that.field].source || null,
-            step:that.rules[that.field].step||"any",
+            step:that.rules[that.field].step||"0.001",
             validate: function (newValue) {
                 if(that.function)
                 {
@@ -181,11 +181,8 @@ export class Datepicker implements OnInit {
             forceParse: that.format.forceParse,
             autoclose: that.format.autoclose,
             todayHighlight: that.format.todayHighlight,
-            beforeShowYear: function (date){
-                if (date.getFullYear() < 2016) {
-                    return false;
-                }
-            }
+            startDate:'01-01-2016',
+            endDate:new Date(),
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
             if(that.format.return)
