@@ -243,7 +243,7 @@
             <h3 class="control-sidebar-heading">Camiones en el vertedero</h3>
             <ul class="control-sidebar-menu">
                 <li *ngFor="let data of monitor.list">
-                    <a href="javascript:void(0)">
+                    <a (click)="outAnt($event,data)" data-toggle="modal" data-target="#operacionManual">
                         <i class="menu-icon fa fa-truck bg-red"></i>
                         <div class="menu-info">
                             <h4 class="control-sidebar-subheading">{{data.vehiclePlate}}</h4>
