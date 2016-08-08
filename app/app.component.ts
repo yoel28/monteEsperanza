@@ -231,31 +231,49 @@ export class AppComponent extends RestController implements OnInit{
         }
         this.httputils.doGet('/in/operations',successCallback,this.error);
     }
-    outAnt(event){
+    outAnt(event,data?){
         event.preventDefault();
         let that= this;
-        let successCallback= response => {
-            that.dataOperation=response.json();
+        if(!data){
+            let successCallback= response => {
+                that.dataOperation=response.json();
+                if(that.operacionSave)
+                {
+                    that.operacionSave.outAntena(that.dataOperation['salida'] || {});
+                }
+            }
+            this.httputils.doGet('/out/operations',successCallback,this.error);
+        }
+        else{
+            that.dataOperation.operations=[];
+            that.dataOperation.operations.push(data);
             if(that.operacionSave)
             {
-                that.operacionSave.outAntena(that.dataOperation['salida'] || {});
+                that.operacionSave.outAntena(that.dataOperation || {});
             }
         }
-        this.httputils.doGet('/out/operations',successCallback,this.error);
+
     }
 
     public monitor:any={};
+    public monitorInterval:any;
     public enableMonitor:boolean=false;
     loadMonitor(){
         let that= this;
-        if(!that.enableMonitor)
+        if(!that.enableMonitor && localStorage.getItem('bearer'))
         {
-            setInterval(()=>{
-                let where="?where=[['op':'isNull','field':'weightOut']]";
-                let successCallback= response => {
-                    Object.assign(that.monitor,response.json());
+            that.monitorInterval=setInterval(()=>{
+                if(localStorage.getItem('bearer'))
+                {
+                    let where="?where=[['op':'isNull','field':'weightOut']]";
+                    let successCallback= response => {
+                        Object.assign(that.monitor,response.json());
+                    }
+                    that.httputils.doGet('/operations/'+where,successCallback,this.error);
                 }
-                that.httputils.doGet('/operations/'+where,successCallback,this.error);
+                else{
+                    clearInterval(that.monitorInterval);
+                }
             }, 10000)
         }
         that.enableMonitor=true;
