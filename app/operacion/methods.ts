@@ -331,8 +331,8 @@ export class OperacionSave extends RestController implements OnInit{
             this.data['vehicle'].updateValue(data.vehiclePlate);
             this.rules['vehicle'].readOnly=true;
 
-            this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
-            this.data['company'].updateValue(data.companyRuc);
+            this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
+            this.data['company'].updateValue(data.companyRUC);
 
             this.data['weightIn'].updateValue(data.weightIn);
 
@@ -350,11 +350,11 @@ export class OperacionSave extends RestController implements OnInit{
         this.data['vehicle'].updateValue(data.vehiclePlate);
         this.rules['vehicle'].readOnly=true;
 
-        this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
-        this.data['company'].updateValue(data.companyRuc);
+        this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
+        this.data['company'].updateValue(data.companyRUC);
         this.rules['company'].readOnly=true;
 
-        this.searchId['trashType']={'id':data.typeTrashId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
+        this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
         this.data['trashType'].updateValue(data.trashTypeReference);
         this.rules['trashType'].readOnly=true;
 
