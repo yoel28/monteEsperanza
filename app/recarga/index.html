@@ -46,9 +46,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{data.dateCreated | fecha | date:'dd' }}/
-                                    {{data.dateCreated | fecha | date:'MM' }}/
-                                    {{data.dateCreated | fecha | date:'yyyy' }}
+                                    {{formatDate(data.dateCreated,'DD/MM/YYYY')}}
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="reference"
@@ -61,9 +59,7 @@
                                     </label>
                                 </td>
                                 <td>
-                                    {{data.referenceDate | fecha | date:'dd' }}/
-                                    {{data.referenceDate | fecha | date:'MM' }}/
-                                    {{data.referenceDate | fecha | date:'yyyy' }}
+                                    {{formatDate(data.referenceDate,'DD/MM/YYYY')}}
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="quantity"
