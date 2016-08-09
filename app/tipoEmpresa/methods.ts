@@ -23,6 +23,7 @@ export class TipoEmpresaSave extends RestController implements OnInit{
     icon: Control;
     detail: Control;
     code: Control;
+    free: Control;
 
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
@@ -32,6 +33,7 @@ export class TipoEmpresaSave extends RestController implements OnInit{
     }
     ngOnInit(){
         this.initTipos();
+        this.initAccess();
         this.initForm();
     }
     initForm(){
@@ -40,15 +42,28 @@ export class TipoEmpresaSave extends RestController implements OnInit{
         this.icon = new Control("", Validators.compose([Validators.required]));
         this.detail = new Control("", Validators.compose([Validators.required]));
         this.code = new Control("", Validators.compose([Validators.required]));
+        this.free = new Control("", Validators.compose([Validators.required]));
 
         this.form = this._formBuilder.group({
             title: this.title,
             icon: this.icon,
             detail: this.detail,
             code: this.code,
+            free: this.free,
         });
 
     }
+    public itemsAccess:any = [];
+    initAccess(){
+        this.itemsAccess=[
+            {'id': true, 'text':'Libre'},
+            {'id': false, 'text': 'Pago'},
+        ]
+    }
+    public refreshValueAccess(value:any):void {
+        this.free.updateValue(value.id);
+    }
+
     submitForm(){
         let that = this;
         let successCallback= response => {
