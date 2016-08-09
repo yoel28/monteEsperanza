@@ -19,6 +19,21 @@ export class Regla extends RestController implements OnInit{
     public rules={
         'rule':{'type':'text','display':null,'title':'Regla','placeholder':'Regla','search':true},
         'name':{'type':'text','display':null,'title':'Nombre','placeholder':'Nombre','search':true},
+        'detail':{
+            'type':'textarea',
+            'key':'detail',
+            'icon':'fa fa-list',
+            'required':true,
+            'display':null,
+            'title':'Detalle',
+            'mode':'inline',
+            'placeholder': 'Detalle',
+            'showbuttons':true,
+            'search': true,
+            'msg':{
+                'error':'El detalle contiene errores',
+            }
+        },
     };
 
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {

@@ -25,6 +25,21 @@ export class Parametro extends RestController implements OnInit{
     public rules={
         'key':{'type':'text','display':null,'title':'Key','mode':'inline','placeholder': 'Clave', 'search': true},
         'value':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Valor', 'search': true},
+        'detail':{
+            'type':'textarea',
+            'key':'detail',
+            'icon':'fa fa-list',
+            'required':true,
+            'display':null,
+            'title':'Detalle',
+            'mode':'inline',
+            'placeholder': 'Detalle',
+            'showbuttons':true,
+            'search': true,
+            'msg':{
+                'error':'El detalle contiene errores',
+            }
+        },
         'type':{'type':'select','display':null,'title':'Tipo','mode':'inline','placeholder': 'Tipo', 'search': true,
             'source': [
                 {'value': 'String', 'text': 'String'},
