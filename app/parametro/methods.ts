@@ -22,6 +22,7 @@ export class ParametroSave extends RestController{
     form: ControlGroup;
     key: Control;
     value: Control;
+    detail: Control;
     type: Control;
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
@@ -34,11 +35,13 @@ export class ParametroSave extends RestController{
         this.key = new Control("", Validators.compose([Validators.required]));
         this.value = new Control("", Validators.compose([Validators.required]));
         this.type = new Control("", Validators.compose([Validators.required]));
+        this.detail = new Control("");
 
         this.form = this._formBuilder.group({
             key: this.key,
             value: this.value,
             type: this.type,
+            detail: this.detail,
         });
     }
     public items:any=['String','Long','Double','Date'];

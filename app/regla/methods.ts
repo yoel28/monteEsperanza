@@ -19,6 +19,7 @@ export class ReglaSave extends RestController implements OnInit{
     form: ControlGroup;
     rule: Control;
     name: Control;
+    detail: Control;
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager) {
@@ -32,10 +33,12 @@ export class ReglaSave extends RestController implements OnInit{
     initForm(){
         this.rule = new Control("", Validators.compose([Validators.required]));
         this.name = new Control("", Validators.compose([Validators.required]));
+        this.detail = new Control("");
 
         this.form = this._formBuilder.group({
             rule: this.rule,
             name: this.name,
+            detail: this.detail,
         });
     }
     submitForm(){
