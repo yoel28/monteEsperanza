@@ -22,6 +22,12 @@ export class TipoEmpresa extends RestController implements OnInit{
         'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
         'code':{'type':'text','display':null,'title':'Código','placeholder':'Código','search':true},
         'detail':{'type':'text','display':null,'title':'nombre','placeholder':'Detalle','search':true},
+        'free':{'type':'select','display':null,'title':'Libre','mode':'inline',
+            'source': [
+                {'value': true, 'text':'Libre'},
+                {'value': false, 'text': 'Pago'},
+            ]
+        },
         'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
             'source': [
                 {'value': 'fa fa-building', 'text':'building'},
