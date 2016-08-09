@@ -49,10 +49,7 @@
                             </td>
                             <td>{{data.companyTypeName}}</td>
                             <td>
-                                {{data.rechargeReferenceDate| fecha | date:'dd'}}/
-                                {{data.rechargeReferenceDate| fecha | date:'MM'}}/
-                                {{data.rechargeReferenceDate| fecha | date:'yyyy'}},
-                                {{data.rechargeReferenceDate| fecha | date:'h:m'}}
+                                {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
                             </td>
 
                             <td> {{data.rechargeReference || "-"}}</td>

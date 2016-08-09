@@ -8,6 +8,8 @@ import {Xeditable} from "../common/xeditable";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
+import moment from "moment/moment";
+
 
 @Component({
     selector: 'operacion',
@@ -185,6 +187,11 @@ export class Operacion extends RestController implements OnInit{
 
         }
         this.httputils.doGet('/pay/'+data.id,successCallback,this.error);
+    }
+    formatDate(date,format){
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
 
 }
