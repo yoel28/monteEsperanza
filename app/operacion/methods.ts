@@ -280,6 +280,7 @@ export class OperacionSave extends RestController implements OnInit{
         event.preventDefault();
         this.findControl="";
         this.search=data;
+        this.getSearch(event,"");
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){

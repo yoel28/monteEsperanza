@@ -161,6 +161,7 @@ export class Save extends RestController implements OnInit{
     getLoadSearch(event,data){
         event.preventDefault();
         this.search=data;
+        this.getSearch(event,"");
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
