@@ -45,7 +45,10 @@
                                         <a x-editable [disabled]="!myglobal.existsPermission('39')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="code" ></a>
                                     </td>
                                     <td>
-                                        <a x-editable [disabled]="!myglobal.existsPermission('39')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="free" ></a>
+                                        <button (click)="onPatch('free',data)" class="btn btn-sm"
+                                                [class.btn-green]="data.free" [class.btn-orange]="!data.free">
+                                            {{data.free?"Libre":"Pago"}}
+                                        </button>
                                     </td>
                                     <td *ngIf="myglobal.existsPermission('127')">
                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
