@@ -24,6 +24,7 @@
 
                                 <th>Regla</th>
                                 <th>Nombre</th>
+                                <th>Detalle</th>
                                 <th *ngIf="myglobal.existsPermission('118')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('55')">Acciones</th>
                             </tr>
@@ -36,6 +37,9 @@
                                 </td>
                                 <td>
                                     <a x-editable [disabled]="!myglobal.existsPermission('56')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="name" ></a>
+                                </td>
+                                <td>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('56')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="detail" ></a>
                                 </td>
                                 <td *ngIf="myglobal.existsPermission('118')">
                                     <button (click)="onLock('enabled',data)" class="btn btn-sm"

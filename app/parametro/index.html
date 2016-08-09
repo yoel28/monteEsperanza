@@ -30,6 +30,7 @@
                                 <th>Clave</th>
                                 <th>Valor</th>
                                 <th>Tipo </th>
+                                <th>Detalle</th>
                                 <th *ngIf="myglobal.existsPermission('102')">Bloqueado</th>
                                 <th *ngIf="myglobal.existsPermission('101')" >Acciones</th>
                             </tr>
@@ -47,6 +48,10 @@
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="type"
+                                       [disabled]="!myglobal.existsPermission('104')"></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="detail"
                                        [disabled]="!myglobal.existsPermission('104')"></a>
                                 </td>
                                 <td *ngIf="myglobal.existsPermission('102')">
