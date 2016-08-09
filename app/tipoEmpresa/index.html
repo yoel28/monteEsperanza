@@ -26,6 +26,7 @@
                                     <th>T&iacute;tulo</th>
                                     <th>Detalle</th>
                                     <th>C&oacute;digo</th>
+                                    <th>Acceso</th>
                                     <th *ngIf="myglobal.existsPermission('127')">Habilitado</th>
                                     <th>Icono </th>
                                     <th *ngIf="myglobal.existsPermission('38')">Acciones</th>
@@ -42,6 +43,9 @@
                                     </td>
                                     <td>
                                         <a x-editable [disabled]="!myglobal.existsPermission('39')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="code" ></a>
+                                    </td>
+                                    <td>
+                                        <a x-editable [disabled]="!myglobal.existsPermission('39')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="free" ></a>
                                     </td>
                                     <td *ngIf="myglobal.existsPermission('127')">
                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
