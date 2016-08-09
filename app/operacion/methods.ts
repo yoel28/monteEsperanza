@@ -7,6 +7,7 @@ import {Search} from "../utils/search/search";
 import {globalService} from "../common/globalService";
 import {Fecha} from "../utils/pipe";
 import {RecargaSave} from "../recarga/methods";
+import moment from "moment/moment";
 
 
 @Component({
@@ -445,6 +446,11 @@ export class OperacionPrint implements OnInit {
         popupWin.document.close();
         this.data={};
 
+    }
+    formatDate(date,format){
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
 }
 

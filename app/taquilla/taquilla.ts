@@ -85,7 +85,9 @@ export class Taquilla extends RestController implements OnInit{
         jQuery("#content").tableToCSV();
     }
     formatDate(date,format){
-        return moment(date).format(format);
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
     loadAll(event){
         event.preventDefault();

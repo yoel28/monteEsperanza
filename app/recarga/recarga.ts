@@ -89,6 +89,11 @@ export class Recarga extends RestController implements OnInit{
         };
         this.httputils.doGet('/operations/'+data.operationId,successCallback,this.error)
     }
+    formatDate(date,format){
+        if(date)
+            return moment(date).format(format);
+        return "";
+    }
 }
 
 
@@ -379,7 +384,9 @@ export class RecargaLibro extends RestController implements OnInit{
         jQuery("#content").tableToCSV();
     }
     formatDate(date,format){
-        return moment(date).format(format);
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
     loadAll(event){
         event.preventDefault();

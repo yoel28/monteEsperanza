@@ -182,7 +182,9 @@ export class RecargaTimeLine extends RestController implements OnInit{
             this.httputils.doGet(this.endpoint+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,successCallback,this.error)
     }
     formatDate(date,format){
-        return moment(date).format(format);
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
     
 
@@ -249,7 +251,9 @@ export class RecargaFactura extends RestController implements OnInit{
         jQuery("#content").tableToCSV();
     }
     formatDate(date,format){
-        return moment(date).format(format);
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
     loadAll(event){
         event.preventDefault();

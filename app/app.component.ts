@@ -279,9 +279,9 @@ export class AppComponent extends RestController implements OnInit{
         that.enableMonitor=true;
     }
     formatDate(date,format){
-        if(!date)
-            date=Date();
-        return moment(date).format(format);
+        if(date)
+            return moment(date).format(format);
+        return "";
     }
 
 

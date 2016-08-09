@@ -176,4 +176,9 @@ export class ReporteGrupos extends RestController implements OnInit{
 
 
     }
+    formatDate(date,format){
+        if(date)
+            return moment(date).format(format);
+        return "";
+    }
 }
