@@ -171,6 +171,22 @@ export class ReporteGruposVehiculos extends RestController implements OnInit{
         this.loadReporte();
     }
 
+    minMaxAvgSum(data){
+        let min=9999999999999999999;
+        let max=-999999999999999999;
+        let total=0.0;
+        let avg=0.0;
+        data.forEach(val=>{
+            if(val<min)
+                min=val;
+            if(val>max)
+                max=val;
+            total+=val;
+        })
+        avg=total/data.length;
+        return [min,max,avg.toFixed(3),total];
+    }
+
 
 
 
