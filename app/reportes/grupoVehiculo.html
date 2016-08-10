@@ -60,6 +60,10 @@
                             <tr>
                                 <th class="text-blue text-title">Veh&iacute;culos/Grupo</th>
                                 <th *ngFor="let cat of dataList.categories">{{cat}}</th>
+                                <th>Minimo</th>
+                                <th>Maximo</th>
+                                <th>Promedio</th>
+                                <th>Total</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -69,6 +73,9 @@
                                 </td>
                                 <td *ngFor="let ton of data.data">
                                     {{ton}}
+                                </td>
+                                <td *ngFor="let val of minMaxAvgSum(data.data)">
+                                    {{val}}
                                 </td>
                             </tr>
                             </tbody>
