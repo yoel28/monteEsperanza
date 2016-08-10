@@ -95,10 +95,10 @@ export class Empresa extends RestController implements OnInit {
     public dataSelect:any={};
 
     public searchTipoEmpresa = {
-        title: "Tipo de empresa",
+        title: "Grupo",
         idModal: "searchTipoEmpresa",
         endpointForm: "/search/type/companies/",
-        placeholderForm: "Ingrese el tipo de empresa",
+        placeholderForm: "Ingrese el grupo",
         labelForm: {name: "Nombre: ", detail: "Detalle: "},
     }
 
