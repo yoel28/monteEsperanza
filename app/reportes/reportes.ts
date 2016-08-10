@@ -9,6 +9,7 @@ import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import moment from 'moment/moment';
 import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
+import {Search} from "../utils/search/search";
 
 
 @Component({
@@ -16,7 +17,7 @@ import {Fecha} from "../utils/pipe";
     templateUrl: 'app/reportes/grupos.html',
     pipes: [Fecha],
     styleUrls: ['app/reportes/style.css'],
-    directives : [Filter,Datepicker]
+    directives : [Filter,Datepicker,Search]
 })
 export class ReporteGrupos extends RestController implements OnInit{
 
@@ -42,6 +43,14 @@ export class ReporteGrupos extends RestController implements OnInit{
             dateEnd: this.dateEnd,
         });
     }
+    public searchTipoEmpresa = {
+        title: "Grupo",
+        idModal: "searchTipoEmpresa",
+        endpointForm: "/search/type/companies/",
+        placeholderForm: "Ingrese el grupo",
+        labelForm: {name: "Nombre: ", detail: "Detalle: "},
+    }
+
     public formatDateFact = {
         format: "dd/mm/yyyy",
         startView: 2,
@@ -120,12 +129,17 @@ export class ReporteGrupos extends RestController implements OnInit{
     }
     public companyTypes:any={};
     public idCompanyType:string="-1";
+    public companyTypeName:string="-1";
     getCompanyTypes(){
         this.httputils.onLoadList("/type/companies",this.companyTypes,this.error);
     }
     setType(data){
         this.idCompanyType=data;
         this.loadReporte();
+    }
+    assignTipoEmpresa(data){
+        this.setType(data.id);
+        this.companyTypeName=data.title;
     }
 
     //lapso de fechas
@@ -180,5 +194,16 @@ export class ReporteGrupos extends RestController implements OnInit{
         if(date)
             return moment(date).format(format);
         return "";
+    }
+    public msgLabelAll:boolean=true;
+    cambiarAll(){
+        if(this.msgLabelAll){
+            this.setType('-2');
+        }
+        else
+            this.setType('-1');
+        
+        this.companyTypeName="-1";
+        this.msgLabelAll=!this.msgLabelAll;
     }
 }

@@ -9,6 +9,7 @@ import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import moment from 'moment/moment';
 import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
+import {Search} from "../utils/search/search";
 
 declare var jQuery:any;
 
@@ -16,7 +17,7 @@ declare var jQuery:any;
     selector: 'reporte-gv',
     templateUrl: 'app/reportes/grupoVehiculo.html',
     styleUrls: ['app/reportes/style.css'],
-    directives : [Datepicker]
+    directives : [Datepicker,Search]
 })
 export class ReporteGruposVehiculos extends RestController implements OnInit{
     form: ControlGroup;
@@ -186,7 +187,24 @@ export class ReporteGruposVehiculos extends RestController implements OnInit{
         avg=total/data.length;
         return [min,max,avg.toFixed(3),total];
     }
-
+    public searchTipoEmpresa = {
+        title: "Grupo",
+        idModal: "searchTipoEmpresa",
+        endpointForm: "/search/type/companies/",
+        placeholderForm: "Ingrese el grupo",
+        labelForm: {name: "Nombre: ", detail: "Detalle: "},
+    }
+    assignTipoEmpresa(data){
+        this.msgLabelAll=false;
+        this.setType(data.title);
+    }
+    public msgLabelAll:boolean=true;
+    cambiarAll(){
+        if(!this.msgLabelAll){
+            this.setType('-1');
+        }
+        this.msgLabelAll=true;
+    }
 
 
 
