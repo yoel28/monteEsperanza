@@ -7,16 +7,7 @@
             <div *ngIf="myglobal.existsPermission('93')"  class="box-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="form-group input-icon right col-lg-6">
-                            Lapso
-                            <div class="input-icon right">
-                                <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
-                                    <option data-hidden="true" value="-1"></option>
-                                    <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="form-group input-icon right">
                                 Grupo:&nbsp;{{idCompanyType!="-1"?idCompanyType:"Buscar un grupo especifico"}} <button  *ngIf="myglobal.existsPermission('36')"
                                                 type="button" class="btn btn-box-tool fa fa-search text-blue"
@@ -29,6 +20,15 @@
                                         <span>&nbsp;{{msgLabelAll?"TODOS":"BUSCAR TODOS"}}</span>
                                     </div>
                                 </label>
+                            </div>
+                        </div>
+                        <div class="form-group input-icon right col-lg-5">
+                            Lapso
+                            <div class="input-icon right">
+                                <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                    <option data-hidden="true" value="-1"></option>
+                                    <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
+                                </select>
                             </div>
                         </div>
                     </div>

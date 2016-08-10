@@ -8,6 +8,19 @@
             </div>
             <div class="box-body">
                 <div class="row">
+                    <div class="form-group input-icon right col-lg-3">
+                        Grupo:&nbsp;{{companyTypeName!="-1"?companyTypeName:"Buscar un grupo"}} <button  *ngIf="myglobal.existsPermission('36')"
+                                                                                                         type="button" class="btn btn-box-tool fa fa-search text-blue"
+                                                                                                         data-toggle="modal" data-target="#searchTipoEmpresa">
+                    </button><br/>
+                        <label>
+                            <div class="material-switch ">
+                                <input (click)="cambiarAll()" id="todos" [attr.accesskey]="msgLabelAll" type="checkbox" [checked]="msgLabelAll"/>
+                                <label for="todos" class="label-success"></label>
+                                <span>&nbsp;{{msgLabelAll?"Todos los grupos":"Sin grupos"}}</span>
+                            </div>
+                        </label>
+                    </div>
                     <div class="form-group input-icon right col-lg-2">
                         Lapso
                         <div class="input-icon right">
@@ -16,19 +29,6 @@
                                 <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
                             </select>
                         </div>
-                    </div>
-                    <div *ngIf="companyTypes.list" class="form-group input-icon right col-lg-3">
-                            Grupo:&nbsp;{{companyTypeName!="-1"?companyTypeName:"Buscar un grupo"}} <button  *ngIf="myglobal.existsPermission('36')"
-                                            type="button" class="btn btn-box-tool fa fa-search text-blue"
-                                            data-toggle="modal" data-target="#searchTipoEmpresa">
-                                    </button><br/>
-                        <label>
-                            <div class="material-switch ">
-                                <input (click)="cambiarAll()" id="todos" [attr.accesskey]="msgLabelAll" type="checkbox" [checked]="msgLabelAll"/>
-                                <label for="todos" class="label-success"></label>
-                                <span>&nbsp;{{msgLabelAll?"Todos los grupos":"Sin grupos"}}</span>
-                            </div>
-                        </label>
                     </div>
                     <div class="col-lg-5">
                         <form role="form" [ngFormModel]="form" (submit)="loadReporte($event)" >
