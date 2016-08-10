@@ -17,12 +17,18 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div *ngIf="companyTypes.list" class="form-group input-icon right">
-                                Grupos
-                                <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
-                                    <option data-hidden="true" value="-1" >TODOS LOS GRUPOS</option>
-                                    <option *ngFor="let n of companyTypes.list"  [attr.value]="n.title" >{{n.title | uppercase}}</option>
-                                </select>
+                            <div class="form-group input-icon right">
+                                Grupo:&nbsp;{{idCompanyType!="-1"?idCompanyType:"Buscar un grupo especifico"}} <button  *ngIf="myglobal.existsPermission('36')"
+                                                type="button" class="btn btn-box-tool fa fa-search text-blue"
+                                                data-toggle="modal" data-target="#searchTipoEmpresa">
+                                        </button><br/>
+                                <label>
+                                    <div class="material-switch ">
+                                        <input (click)="cambiarAll()" id="todos" [attr.accesskey]="msgLabelAll" type="checkbox" [checked]="msgLabelAll" [disabled]="msgLabelAll"/>
+                                        <label for="todos" class="label-success"></label>
+                                        <span>&nbsp;{{msgLabelAll?"TODOS":"BUSCAR TODOS"}}</span>
+                                    </div>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -105,4 +111,7 @@
 
         </div>
     </section>
+</div>
+<div *ngIf="myglobal.existsPermission('36')">
+    <search [params]="searchTipoEmpresa" (result)="assignTipoEmpresa($event)"></search>
 </div>

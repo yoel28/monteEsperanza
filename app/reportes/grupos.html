@@ -17,15 +17,20 @@
                             </select>
                         </div>
                     </div>
-                    <div *ngIf="companyTypes.list" class="form-group input-icon right col-lg-2">
-                        Grupos
-                        <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
-                            <option data-hidden="true" value="-2" >Sin grupos</option>
-                            <option data-hidden="true" value="-1" >Todos los grupos</option>
-                            <option *ngFor="let n of companyTypes.list"  [attr.value]="n.id" >{{n.title}}</option>
-                        </select>
+                    <div *ngIf="companyTypes.list" class="form-group input-icon right col-lg-3">
+                            Grupo:&nbsp;{{companyTypeName!="-1"?companyTypeName:"Buscar un grupo"}} <button  *ngIf="myglobal.existsPermission('36')"
+                                            type="button" class="btn btn-box-tool fa fa-search text-blue"
+                                            data-toggle="modal" data-target="#searchTipoEmpresa">
+                                    </button><br/>
+                        <label>
+                            <div class="material-switch ">
+                                <input (click)="cambiarAll()" id="todos" [attr.accesskey]="msgLabelAll" type="checkbox" [checked]="msgLabelAll"/>
+                                <label for="todos" class="label-success"></label>
+                                <span>&nbsp;{{msgLabelAll?"Todos los grupos":"Sin grupos"}}</span>
+                            </div>
+                        </label>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <form role="form" [ngFormModel]="form" (submit)="loadReporte($event)" >
                             Rango
                             <div datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" class="input-daterange input-group">
@@ -103,4 +108,8 @@
             </div>
         </div>
     </section>
+</div>
+
+<div *ngIf="myglobal.existsPermission('36')">
+    <search [params]="searchTipoEmpresa" (result)="assignTipoEmpresa($event)"></search>
 </div>
