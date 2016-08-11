@@ -38,6 +38,8 @@ import {OperacionSave} from "./operacion/methods";
 import {ReporteDescargasGrupos} from "./reportes/reporteDG";
 import moment from "moment/moment";
 import {ReporteGruposVehiculos} from "./reportes/reporteGV";
+import {ReporteDescargasRutas} from "./reportes/reporteDR";
+import {ReporteDescargasBasura} from "./reportes/reporteDB";
 
 
 declare var SockJS:any;
@@ -78,6 +80,8 @@ declare var Stomp:any;
   { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
   { path: '/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
   { path: '/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
+  { path: '/reporte/rutas',   name: 'ReporteDescargasRutas', component: ReporteDescargasRutas },
+  { path: '/reporte/basura',   name: 'ReporteDescargasBasura', component: ReporteDescargasBasura },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
