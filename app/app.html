@@ -149,7 +149,9 @@
                         </ul>
                     </li>
                     <li class="treeview" [class.active]="activeMenuId=='report'"
-                        *ngIf="myglobal.existsPermission('163') || myglobal.existsPermission('164')"
+                        *ngIf="myglobal.existsPermission('163') || myglobal.existsPermission('164')
+                        || myglobal.existsPermission('167') || myglobal.existsPermission('201') || myglobal.existsPermission('202')
+                        "
                     >
                         <a (click)="activeMenu($event,'report')">
                             <i class="fa fa-list"></i>
@@ -173,6 +175,18 @@
                                 <a href="#" [routerLink]="['ReporteGruposVehiculos']">
                                     <i class="fa fa-truck"></i>
                                     <span>Descarga por veh&iacute;culos</span>
+                                </a>
+                            </li>
+                            <li *ngIf="myglobal.existsPermission('201')">
+                                <a href="#" [routerLink]="['ReporteDescargasRutas']">
+                                    <i class="fa fa-truck"></i>
+                                    <span>Descarga por rutas</span>
+                                </a>
+                            </li>
+                            <li *ngIf="myglobal.existsPermission('202')">
+                                <a href="#" [routerLink]="['ReporteDescargasBasura']">
+                                    <i class="fa fa-trash"></i>
+                                    <span>Descarga por tipo de basura</span>
                                 </a>
                             </li>
                         </ul>
