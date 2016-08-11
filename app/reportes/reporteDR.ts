@@ -95,6 +95,7 @@ export class ReporteDescargasRutas extends RestController implements OnInit{
             total+=val;
         })
         avg=total/data.length;
+        this.minMaxAvgSumGlobal([min,max,total]);
         return [min,max,avg.toFixed(3),total];
     }
 
@@ -116,6 +117,30 @@ export class ReporteDescargasRutas extends RestController implements OnInit{
         }
         this.msgLabelAll=true;
     }
+    public minG=9999999999999999999;
+    public maxG=-999999999999999999;
+    public totalG=0;
+    public count=0;
+    public avgG="0";
+    minMaxAvgSumGlobal(data?){
+        if(data){
+            if(data[0]<this.minG)
+                this.minG=data[0];
+            if(data[1]>this.maxG)
+                this.maxG=data[1]
+            this.totalG+=data[2];
+            this.count++;
+            this.avgG=(this.totalG/this.count).toFixed(3);
+        }
+        else{
+            this.minG=9999999999999999999;
+            this.maxG=-999999999999999999;
+            this.totalG=0.0;
+            this.avgG="0";
+            this.count=0;
+        }
+    }
+
 
 }
 
