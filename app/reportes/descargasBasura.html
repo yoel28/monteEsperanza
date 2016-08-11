@@ -42,6 +42,27 @@
                         <div class="col-lg-12 text-center">
                             <strong>REPORTE POR CONSUMO DE TIPO DE BASURA DEL {{dataConsult.date}}</strong>
                         </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" colspan="4">Balance del periodo ({{dataList.metric}})</th>
+                            </tr>
+                            <tr>
+                                <th>Minimo</th>
+                                <th>Maximo</th>
+                                <th>Promedio</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>{{minG}}</th>
+                                <th>{{maxG}}</th>
+                                <th>{{avgG}}</th>
+                                <th>{{totalG}}</th>
+                            </tr>
+                            </tbody>
+                        </table>
                         <table id="content" class="table table-striped table-hover">
                             <thead>
                             <tr>
@@ -54,6 +75,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {{minMaxAvgSumGlobal()}}
                             <tr *ngFor="let data of dataList.list">
                                 <td>
                                     {{data.title}}
