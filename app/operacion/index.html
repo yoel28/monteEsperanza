@@ -23,47 +23,76 @@
                 <div>
                     <table class="table table-striped table-hover tarjeta">
                         <thead>
-                        <tr data-title="email">
-                            <th>Cliente</th>
-                            <th>Grupo</th>
-                            <th>Fecha de transacci&oacute;n</th>
-                            <th>#Recibo</th>
-                            <th>Ruta</th>
-                            <th>Tipo de basura</th>
-                            <th>Operador</th>
-                            <th>Monto</th>
-                            <th>Veh&iacute;culo</th>
-                            <th>Peso de entrada</th>
-                            <th>Peso de salida</th>
-                            <th *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157') || myglobal.existsPermission('166')">&nbsp;</th>
+                        <tr>
+                            <th [hidden]="!view['Cliente']">Cliente</th>
+                            <th [hidden]="!view['Grupos']">Grupo</th>
+                            <th [hidden]="!view['Fecha de transaccion']">Fecha de transacci&oacute;n</th>
+                            <th [hidden]="!view['Recibo']">#Recibo</th>
+                            <th [hidden]="!view['Rutas']">Ruta</th>
+                            <th [hidden]="!view['Tipo de basura']">Tipo de basura</th>
+                            <th [hidden]="!view['Operador']">Operador</th>
+                            <th [hidden]="!view['Monto']">Monto</th>
+                            <th [hidden]="!view['Vehiculo']">Veh&iacute;culo</th>
+                            <th [hidden]="!view['Peso de entrada']">Peso de entrada</th>
+                            <th [hidden]="!view['Peso de salida']">Peso de salida</th>
+                            <th>
+
+                                <div class="btn-group dropdown pull-right">
+                                    <button type="button" data-toggle="dropdown"
+                                            class="btn btn-box-tool dropdown-toggle"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-filter fa-lg"></i>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                        <li *ngFor="let key of getKeys(view)" >
+                                            <a (click)="view[key]= !view[key]" class="{{view[key]?'text-green':'text-red'}}">
+                                                <span class="fa {{view[key]?'fa-eye':'fa-eye-slash'}}"></span>&nbsp;{{key}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
-                            <td>
+                            <td [hidden]="!view['Cliente']">
                                 <a class="btn btn-box-tool"
                                    (click)="goTaquilla($event,data.companyId)">
                                     {{data.companyName}}<br/>({{data.companyRUC}})
                                     <i class="fa fa-external-link"></i>
                                 </a>
                             </td>
-                            <td>{{data.companyTypeName}}</td>
-                            <td>
+                            <td [hidden]="!view['Grupos']">
+                                {{data.companyTypeName}}
+                            </td>
+                            <td [hidden]="!view['Fecha de transaccion']">
                                 {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
                             </td>
-
-                            <td> {{data.rechargeReference || "-"}}</td>
-                            <td> {{data.routeTitle}}&nbsp;({{data.routeReference}})</td>
-                            <td> {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})</td>
-                            <td> {{data.usernameCreator}}</td>
-
-                            <td [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0"> {{data.rechargeQuantity || "-"}}</td>
-                            <td>{{data.vehiclePlate}}</td>
-                            <td>
+                            <td [hidden]="!view['Recibo']">
+                                {{data.rechargeReference || "-"}}
+                            </td>
+                            <td [hidden]="!view['Rutas']">
+                                {{data.routeTitle}}&nbsp;({{data.routeReference}})
+                            </td>
+                            <td [hidden]="!view['Tipo de basura']">
+                                {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
+                            </td>
+                            <td [hidden]="!view['Operador']">
+                                {{data.usernameCreator}}
+                            </td>
+                            <td [hidden]="!view['Monto']" [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
+                                {{data.rechargeQuantity || "-"}}
+                            </td>
+                            <td [hidden]="!view['Vehiculo']">
+                                {{data.vehiclePlate}}
+                            </td>
+                            <td [hidden]="!view['Peso de entrada']">
                                 <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
                                    [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightIn"></a>
                             </td>
-                            <td>
+                            <td [hidden]="!view['Peso de salida']">
                                 <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
                                    [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightOut"></a>
                             </td>

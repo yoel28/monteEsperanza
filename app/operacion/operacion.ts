@@ -193,7 +193,22 @@ export class Operacion extends RestController implements OnInit{
             return moment(date).format(format);
         return "";
     }
-
+    public view={
+        'Cliente':true,
+        'Grupos':true,
+        'Fecha de transaccion':true,
+        'Recibo':true,
+        'Rutas':false,
+        'Tipo de basura':false,
+        'Operador':true,
+        'Monto':true,
+        'Vehiculo':true,
+        'Peso de entrada':true,
+        'Peso de salida':true,
+    };
+    getKeys(data){
+        return Object.keys(data);
+    }
 }
 
 @Component({
