@@ -105,31 +105,24 @@
 
                             <td *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157') || myglobal.existsPermission('166')" style="vertical-align: middle">
 
-                                <div class="btn-group dropdown pull-right">
-                                    <button type="button" data-toggle="dropdown"
-                                            class="btn btn-box-tool dropdown-toggle"
-                                            aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-gears fa-lg"></i>
-                                    </button>
-                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                        <li *ngIf="myglobal.existsPermission('94')">
-                                            <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                                               (click)="dataSelect = data" href="#">
-                                                <span class="fa fa-trash fa-lg btn"></span>&nbsp;Eliminar
-                                            </a>
-                                        </li>
-                                        <li *ngIf="myglobal.existsPermission('157') && data.rechargeId">
-                                            <a (click)="onPrint(data)">
-                                                <span class="fa fa-print fa-lg btn"></span>&nbsp;Imprimir
-                                            </a>
-                                        </li>
-                                        <li *ngIf="myglobal.existsPermission('166') && data.rechargeId && data.enabled">
-                                            <a data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
-                                               (click)="dataSelect = data">
-                                                <span class="fa fa-money fa-lg btn"></span>&nbsp;Pagar
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div class="btn-group">
+                                    <label *ngIf="myglobal.existsPermission('94')">
+                                        <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                           (click)="dataSelect = data" href="#">
+                                            <span class="fa fa-trash fa-lg btn"></span>
+                                        </a>
+                                    </label>
+                                    <label *ngIf="myglobal.existsPermission('157') && data.rechargeId">
+                                        <a (click)="onPrint(data)">
+                                            <span class="fa fa-print fa-lg btn"></span>
+                                        </a>
+                                    </label>
+                                    <label *ngIf="myglobal.existsPermission('166') && data.rechargeId && data.enabled">
+                                        <a data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
+                                           (click)="dataSelect = data">
+                                            <span class="fa fa-money fa-lg btn"></span>
+                                        </a>
+                                    </label>
                                 </div>
                             </td>
                         </tr>
