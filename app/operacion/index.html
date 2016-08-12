@@ -2,7 +2,22 @@
     <section class="content">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Operaciones</h3>
+                <h3 class="box-title">Operaciones
+                    <div class="btn-group dropdown">
+                        <button type="button" data-toggle="dropdown"
+                                class="btn btn-box-tool dropdown-toggle"
+                                aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-filter fa-lg"></i>
+                        </button>
+                        <ul role="menu" class="dropdown-menu text-left submenu-config">
+                            <li *ngFor="let view of orderViewData" >
+                                <span (click)="view.visible= !view.visible"
+                                      class="fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}">
+                                </span>&nbsp;{{view.title}}
+                            </li>
+                        </ul>
+                    </div>
+                </h3>
 
                 <div class="pull-right">
                     <button *ngIf="myglobal.existsPermission('98')"
@@ -24,78 +39,70 @@
                     <table class="table table-striped table-hover tarjeta">
                         <thead>
                         <tr>
-                            <th [hidden]="!view['Cliente']">Cliente</th>
-                            <th [hidden]="!view['Grupos']">Grupo</th>
-                            <th [hidden]="!view['Fecha de transaccion']">Fecha de transacci&oacute;n</th>
-                            <th [hidden]="!view['Recibo']">#Recibo</th>
-                            <th [hidden]="!view['Rutas']">Ruta</th>
-                            <th [hidden]="!view['Tipo de basura']">Tipo de basura</th>
-                            <th [hidden]="!view['Operador']">Operador</th>
-                            <th [hidden]="!view['Monto']">Monto</th>
-                            <th [hidden]="!view['Vehiculo']">Veh&iacute;culo</th>
-                            <th [hidden]="!view['Peso de entrada']">Peso de entrada</th>
-                            <th [hidden]="!view['Peso de salida']">Peso de salida</th>
-                            <th>
+                            <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
+                                {{view.title}}
+                                <br/>
+                                <div class="btn-group btn-box-tool row">
+                                    <span (click)="setOrden(view,'asc')" class="fa fa-caret-left btn"></span>
 
-                                <div class="btn-group dropdown pull-right">
-                                    <button type="button" data-toggle="dropdown"
-                                            class="btn btn-box-tool dropdown-toggle"
-                                            aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-filter fa-lg"></i>
-                                    </button>
-                                    <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                        <li *ngFor="let key of getKeys(view)" >
-                                            <a (click)="view[key]= !view[key]" class="{{view[key]?'text-green':'text-red'}}">
-                                                <span class="fa {{view[key]?'fa-eye':'fa-eye-slash'}}"></span>&nbsp;{{key}}
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <span (click)="view.visible= !view.visible" class="fa fa-eye text-green btn"></span>
+
+                                    <span (click)="setOrden(view,'desc')" class="fa fa-caret-right btn"></span>
                                 </div>
-
+                            </td>
+                            <th>
+                                &nbsp;
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
-                            <td [hidden]="!view['Cliente']">
-                                <a class="btn btn-box-tool"
-                                   (click)="goTaquilla($event,data.companyId)">
-                                    {{data.companyName}}<br/>({{data.companyRUC}})
-                                    <i class="fa fa-external-link"></i>
-                                </a>
+                            <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
+                                <span [ngSwitch]="view.key">
+                                    <span  *ngSwitchWhen="'company'">
+                                        <a class="btn btn-box-tool"
+                                           (click)="goTaquilla($event,data.companyId)">
+                                        {{data.companyName}}<br/>({{data.companyRUC}})
+                                        <i class="fa fa-external-link"></i>
+                                        </a>
+                                    </span>
+                                    <span   *ngSwitchWhen="'companyTypeName'">
+                                        {{data.companyTypeName}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'rechargeReferenceDate'">
+                                        {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'rechargeReference'">
+                                        {{data.rechargeReference || "-"}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'route'">
+                                        {{data.routeTitle}}&nbsp;({{data.routeReference}})
+                                    </span>
+                                    <span   *ngSwitchWhen="'trash'">
+                                        {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
+                                    </span>
+                                    <span   *ngSwitchWhen="'usernameCreator'">
+                                        {{data.usernameCreator}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'rechargeQuantity'">
+                                        <span [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
+                                            {{data.rechargeQuantity || "-"}}
+                                        </span>
+                                    </span>
+                                    <span   *ngSwitchWhen="'vehicle'">
+                                        {{data.vehiclePlate}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'weightIn'">
+                                        <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
+                                           [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightIn"></a>
+                                    </span>
+                                    <span   *ngSwitchWhen="'weightOut'">
+                                        <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
+                                           [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightOut"></a>
+                                    </span>
+                                </span>
                             </td>
-                            <td [hidden]="!view['Grupos']">
-                                {{data.companyTypeName}}
-                            </td>
-                            <td [hidden]="!view['Fecha de transaccion']">
-                                {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
-                            </td>
-                            <td [hidden]="!view['Recibo']">
-                                {{data.rechargeReference || "-"}}
-                            </td>
-                            <td [hidden]="!view['Rutas']">
-                                {{data.routeTitle}}&nbsp;({{data.routeReference}})
-                            </td>
-                            <td [hidden]="!view['Tipo de basura']">
-                                {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
-                            </td>
-                            <td [hidden]="!view['Operador']">
-                                {{data.usernameCreator}}
-                            </td>
-                            <td [hidden]="!view['Monto']" [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
-                                {{data.rechargeQuantity || "-"}}
-                            </td>
-                            <td [hidden]="!view['Vehiculo']">
-                                {{data.vehiclePlate}}
-                            </td>
-                            <td [hidden]="!view['Peso de entrada']">
-                                <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
-                                   [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightIn"></a>
-                            </td>
-                            <td [hidden]="!view['Peso de salida']">
-                                <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
-                                   [disabled]="!myglobal.existsPermission('95')" [rules]="rules" field="weightOut"></a>
-                            </td>
+
                             <td *ngIf="myglobal.existsPermission('94') || myglobal.existsPermission('157') || myglobal.existsPermission('166')" style="vertical-align: middle">
 
                                 <div class="btn-group dropdown pull-right">
