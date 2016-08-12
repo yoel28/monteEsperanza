@@ -9,13 +9,14 @@ import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
 import moment from "moment/moment";
+import {NgSwitch, NgSwitchWhen} from "@angular/common";
 
 
 @Component({
     selector: 'operacion',
     templateUrl: 'app/operacion/index.html',
     styleUrls: ['app/operacion/style.css'],
-    directives:[OperacionSave,Xeditable,Filter,OperacionPrint],
+    directives:[OperacionSave,Xeditable,Filter,OperacionPrint,NgSwitch,NgSwitchWhen],
     pipes:[Fecha]
 })
 export class Operacion extends RestController implements OnInit{
@@ -29,6 +30,15 @@ export class Operacion extends RestController implements OnInit{
     ngOnInit(){
         if (this.myglobal.existsPermission('93')) {
             this.max = 15;
+
+            if(localStorage.getItem('orderViewData'))
+                this.orderViewData = JSON.parse(localStorage.getItem('orderViewData'));
+
+            if(localStorage.getItem('view'))
+                this.view = JSON.parse(localStorage.getItem('view'));
+
+
+            this.ordenView();
             this.loadData();
             this.MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
         }
@@ -191,23 +201,71 @@ export class Operacion extends RestController implements OnInit{
     formatDate(date,format){
         if(date)
             return moment(date).format(format);
-        return "";
+        return "-";
     }
-    public view={
-        'Cliente':true,
-        'Grupos':false,
-        'Fecha de transaccion':true,
-        'Recibo':true,
-        'Rutas':true,
-        'Tipo de basura':false,
-        'Operador':true,
-        'Monto':true,
-        'Vehiculo':true,
-        'Peso de entrada':true,
-        'Peso de salida':true,
-    };
+
+    public view = [
+        {'visible': true, 'position': 1, 'title': 'Fecha de transaccion', 'key': 'rechargeReferenceDate'},
+        {'visible': true, 'position': 2, 'title': 'Recibo', 'key': 'rechargeReference'},
+        {'visible': true, 'position': 3, 'title': 'Monto', 'key': 'rechargeQuantity'},
+        {'visible': true, 'position': 4, 'title': 'Vehiculo', 'key': 'vehicle'},
+        {'visible': true, 'position': 5, 'title': 'Peso de entrada', 'key': 'weightIn'},
+        {'visible': true, 'position': 6, 'title': 'Peso de salida', 'key': 'weightOut'},
+
+
+        {'visible': false, 'position': 7, 'title': 'Cliente', 'key': 'company'},
+        {'visible': false, 'position': 8, 'title': 'Grupos', 'key': 'companyTypeName'},
+        {'visible': false, 'position': 9, 'title': 'Rutas', 'key': 'route'},
+        {'visible': false, 'position': 10, 'title': 'Tipo de basura', 'key': 'trash'},
+        {'visible': false, 'position': 11, 'title': 'Operador', 'key': 'usernameCreator'},
+
+    ];
     getKeys(data){
         return Object.keys(data);
+    }
+    setOrden(data,dir){
+        if(dir=="asc"){
+            let pos=data.position-1;
+            this.view.forEach(key=>{
+                if(data.position-1>0){
+                    if(key.position == pos){
+                        key.position=data.position+1;
+                    }
+                    if(key.key == (data.key)){
+                        key.position--;
+                    }
+                }
+            })
+        }
+        else{
+            let pos=data.position+1;
+            this.view.forEach(key=>{
+                if(data.position+1<12){
+                    if(key.position == pos){
+                        key.position=data.position-1;
+                    }
+                    if(key.key == (data.key)){
+                        key.position++;
+                    }
+                }
+            })
+        }
+        this.ordenView();
+    }
+    public orderViewData=[];
+    ordenView(){
+        let that=this;
+        that.orderViewData=[];
+        for(let i=1;i<=this.view.length;i++){
+            this.view.forEach(key=>{
+                if(key['position'] == i){
+                    that.orderViewData.push(key);
+                    return;
+                }
+            })
+        }
+        localStorage.setItem('orderViewData',JSON.stringify(this.orderViewData))
+        localStorage.setItem('view',JSON.stringify(this.view))
     }
 }
 
