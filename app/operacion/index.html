@@ -12,8 +12,8 @@
                         <ul role="menu" class="dropdown-menu text-left submenu-config">
                             <li *ngFor="let view of orderViewData" >
                                 <span (click)="view.visible= !view.visible"
-                                      class="fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}">
-                                </span>&nbsp;{{view.title}}
+                                      class="btn fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}">
+                                &nbsp;{{view.title}}</span>
                             </li>
                         </ul>
                     </div>
