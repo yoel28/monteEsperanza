@@ -91,16 +91,16 @@
                                     {{formatDate(recharge.referenceDate,'LT')}}
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                    {{recharge.weightIn-recharge.weightOut}}
+                                    {{recharge.weightIn-recharge.weightOut | number:'.0-3'}}
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                    {{recharge.quantity}}
+                                    {{recharge.quantity | number:'.0-2'}}
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-weight: 900;">
                                 <div class="col-lg-offset-8 col-md-offset-8 col-sm-offset-8 col-xs-offset-8 col-lg-2 col-md-2 col-sm-2 col-xs-2">Viajes - {{type.recharges.length}}</div>
-                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{sumTotalPeso(i)}}</div>
-                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{sumTotalFact(i)}}</div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{sumTotalPeso(i) | number:'.0-3'}}</div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{sumTotalFact(i) | number:'.0-2'}}</div>
                             </div>
                         </div>
                     </div>
