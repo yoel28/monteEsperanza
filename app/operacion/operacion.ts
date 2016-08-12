@@ -195,10 +195,10 @@ export class Operacion extends RestController implements OnInit{
     }
     public view={
         'Cliente':true,
-        'Grupos':true,
+        'Grupos':false,
         'Fecha de transaccion':true,
         'Recibo':true,
-        'Rutas':false,
+        'Rutas':true,
         'Tipo de basura':false,
         'Operador':true,
         'Monto':true,
