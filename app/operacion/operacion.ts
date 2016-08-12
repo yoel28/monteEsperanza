@@ -31,9 +31,6 @@ export class Operacion extends RestController implements OnInit{
         if (this.myglobal.existsPermission('93')) {
             this.max = 15;
 
-            if(localStorage.getItem('orderViewData'))
-                this.orderViewData = JSON.parse(localStorage.getItem('orderViewData'));
-
             if(localStorage.getItem('view'))
                 this.view = JSON.parse(localStorage.getItem('view'));
 
@@ -227,12 +224,12 @@ export class Operacion extends RestController implements OnInit{
         if(dir=="asc"){
             let pos=data.position-1;
             this.view.forEach(key=>{
-                if(data.position-1>0){
+                if(pos>0){
                     if(key.position == pos){
-                        key.position=data.position+1;
+                        key.position=pos+1;
                     }
                     if(key.key == (data.key)){
-                        key.position--;
+                        key.position=pos;
                     }
                 }
             })
@@ -240,12 +237,12 @@ export class Operacion extends RestController implements OnInit{
         else{
             let pos=data.position+1;
             this.view.forEach(key=>{
-                if(data.position+1<12){
+                if(pos<12){
                     if(key.position == pos){
-                        key.position=data.position-1;
+                        key.position=pos-1;
                     }
                     if(key.key == (data.key)){
-                        key.position++;
+                        key.position=pos;
                     }
                 }
             })
@@ -264,7 +261,16 @@ export class Operacion extends RestController implements OnInit{
                 }
             })
         }
-        localStorage.setItem('orderViewData',JSON.stringify(this.orderViewData))
+        localStorage.setItem('view',JSON.stringify(this.view))
+    }
+    setVisibleView(data){
+        this.view.forEach(key=>{
+            if(key.key == data.key)
+            {
+                key.visible= !key.visible;
+                return;
+            }
+        })
         localStorage.setItem('view',JSON.stringify(this.view))
     }
 }
