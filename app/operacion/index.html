@@ -11,7 +11,7 @@
                         </button>
                         <ul role="menu" class="dropdown-menu text-left submenu-config">
                             <li *ngFor="let view of orderViewData" >
-                                <span (click)="view.visible= !view.visible"
+                                <span (click)="setVisibleView(view)"
                                       class="btn fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}">
                                 &nbsp;{{view.title}}</span>
                             </li>
@@ -45,7 +45,7 @@
                                 <div class="btn-group btn-box-tool row">
                                     <span (click)="setOrden(view,'asc')" class="fa fa-caret-left btn"></span>
 
-                                    <span (click)="view.visible= !view.visible" class="fa fa-eye text-green btn"></span>
+                                    <span (click)="setVisibleView(view)" class="fa fa-eye text-green btn"></span>
 
                                     <span (click)="setOrden(view,'desc')" class="fa fa-caret-right btn"></span>
                                 </div>
