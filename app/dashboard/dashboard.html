@@ -43,7 +43,7 @@
                                     </span>
                         <div class="info-box-content">
                             <span class="info-box-text">{{total.name}}</span>
-                            <span class="info-box-number">{{total.quantity}}&nbsp;<small>{{total.metric}}</small></span>
+                            <span class="info-box-number">{{total.quantity | number:total.decimal}}&nbsp;<small>{{total.metric}}</small></span>
                         </div>
                     </div>
                 </div>
