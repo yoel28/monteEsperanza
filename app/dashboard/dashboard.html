@@ -78,7 +78,7 @@
                             <div class="col-lg-{{totalTamLg[totales.count-1]}} col-xs-12" *ngFor="let total of totales.list">
                                 <div class="small-box {{color[total.icon]}}">
                                     <div class="inner">
-                                        <h3>{{total.quantity}} {{MONEY_METRIC_SHORT}}</h3>
+                                        <h3>{{total.quantity | number:'.0-2'}} {{MONEY_METRIC_SHORT}}</h3>
                                         <p>{{total.name}}</p>
                                     </div>
                                     <div class="icon">

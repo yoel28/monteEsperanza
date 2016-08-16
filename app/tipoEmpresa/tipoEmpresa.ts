@@ -42,6 +42,7 @@ export class TipoEmpresa extends RestController implements OnInit{
     }
     ngOnInit(){
         if (this.myglobal.existsPermission('36')) {
+            this.max=20;
             this.loadData();
         }
     }

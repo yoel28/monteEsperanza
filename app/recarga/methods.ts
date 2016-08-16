@@ -212,7 +212,7 @@ export class RecargaFactura extends RestController implements OnInit{
     }
     ngOnInit() {
         if(this.myglobal.existsPermission('109')){
-            this.max = 10;
+            this.max = 50;
             this.cargar()
         }
     }

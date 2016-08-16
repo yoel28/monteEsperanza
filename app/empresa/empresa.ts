@@ -28,7 +28,7 @@ export class Empresa extends RestController implements OnInit {
 
     ngOnInit() {
         if (this.myglobal.existsPermission('80')) {
-            this.max = 6;
+            this.max = 12;
             this.loadData();
         }
     }

@@ -59,7 +59,7 @@ export class Taquilla extends RestController implements OnInit{
     getCompanies(companies:string,offset=0){
         if(this.myglobal.existsPermission('80')) {
             this.offset = offset;
-            this.max=5;
+            this.max=20;
             this.dataCompanies = {};
             this.dataCompany={};
             this.httputils.onLoadList("/search/companies/" + companies + "?max=" + this.max + "&offset=" + this.offset, this.dataCompanies, this.max, this.error);

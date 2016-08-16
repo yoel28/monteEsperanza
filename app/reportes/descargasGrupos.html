@@ -56,10 +56,10 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <th>{{minG}}</th>
-                        <th>{{maxG}}</th>
-                        <th>{{avgG}}</th>
-                        <th>{{totalG}}</th>
+                        <th>{{minG | number:'.0-3'}}</th>
+                        <th>{{maxG | number:'.0-3'}}</th>
+                        <th>{{avgG }}</th>
+                        <th>{{totalG | number:'.0-3'}}</th>
                     </tr>
                     </tbody>
                 </table>
@@ -81,7 +81,7 @@
                             {{data.companyTypeTitle}}
                         </td>
                         <td *ngFor="let ton of data.data">
-                            {{ton}}
+                            {{ton | number:'.0-3'}}
                         </td>
                         <td *ngFor="let val of minMaxAvgSum(data.data)">
                             {{val}}

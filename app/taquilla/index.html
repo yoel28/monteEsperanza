@@ -143,9 +143,9 @@
                                 <td>
                                     <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
                                 </td>
-                                <td>{{recharges.weight}} {{recharges.metric}}</td>
+                                <td>{{recharges.weight | number:'.0-3'}} {{recharges.metric}}</td>
                                 <td>{{recharges.vehiclePlate}}</td>
-                                <td>{{recharges.quantity}} {{MONEY_METRIC_SHORT}}</td>
+                                <td>{{recharges.quantity | number:'.0-2'}} {{MONEY_METRIC_SHORT}}</td>
                                 <td class="noprint">
                                     <a *ngIf="myglobal.existsPermission('157') && recharges.operationId"
                                        (click)="onPrintOperation(recharges)">

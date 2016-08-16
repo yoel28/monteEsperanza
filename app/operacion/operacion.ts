@@ -29,7 +29,7 @@ export class Operacion extends RestController implements OnInit{
     }
     ngOnInit(){
         if (this.myglobal.existsPermission('93')) {
-            this.max = 15;
+            this.max = 40;
 
             if(localStorage.getItem('view'))
                 this.view = JSON.parse(localStorage.getItem('view'));

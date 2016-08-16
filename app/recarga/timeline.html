@@ -17,7 +17,7 @@
                     </div>
                     <div class="timeline-label {{color[data.rechargeTypeIcon]}}">
                         <h4 class="timeline-title">
-                            {{data.rechargeTypeTitle}}: {{data.quantity}}$
+                            {{data.rechargeTypeTitle}}: {{data.quantity | number:'.0-2'}}$
                             Ref: {{data.reference}}
                         </h4>
                         <p>
@@ -28,8 +28,8 @@
                             <span *ngIf="data.operationId">
 
                                 <strong>Placa del veh&iacute;culo: </strong>{{data.vehiclePlate}}<br/>
-                                <strong>Peso de entrada: </strong>{{data.weightIn}}<br/>
-                                <strong>Peso de salida: </strong>{{data.weightOut}}<br/>
+                                <strong>Peso de entrada: </strong>{{data.weightIn | number:'.0-3'}}<br/>
+                                <strong>Peso de salida: </strong>{{data.weightOut | number:'.0-3'}}<br/>
                             </span>
                         </p>
                     </div>
