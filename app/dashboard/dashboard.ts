@@ -316,10 +316,10 @@ export class Dashboard extends RestController implements OnInit {
     public totalTamLg=[6,6,4,4,3,4,3];
 
     public Total=[
-        {'name':'Total descargado ('+this.WEIGTH_METRIC_SHORT+')','icon':'fa fa-truck 0','quantity':0.0,'metric':this.WEIGTH_METRIC_SHORT},
-        {'name':'Total facturado ('+this.MONEY_METRIC+')','icon':'fa fa-line-chart 1','quantity':0.0,'metric':this.MONEY_METRIC_SHORT},
-        {'name':'Saldo de clientes ('+this.MONEY_METRIC+')','icon':'fa fa-money 2','quantity':0.0,'metric':this.MONEY_METRIC_SHORT},
-        {'name':'Total de ingresos ('+this.MONEY_METRIC+')','icon':'fa fa-dollar 3','quantity':0.0,'metric':this.MONEY_METRIC_SHORT},
+        {'name':'Total descargado ('+this.WEIGTH_METRIC_SHORT+')','icon':'fa fa-truck 0','quantity':0.0,'metric':this.WEIGTH_METRIC_SHORT,'decimal':'.0-3'},
+        {'name':'Total facturado ('+this.MONEY_METRIC+')','icon':'fa fa-line-chart 1','quantity':0.0,'metric':this.MONEY_METRIC_SHORT,'decimal':'.0-2'},
+        {'name':'Saldo de clientes ('+this.MONEY_METRIC+')','icon':'fa fa-money 2','quantity':0.0,'metric':this.MONEY_METRIC_SHORT,'decimal':'.0-2'},
+        {'name':'Total de ingresos ('+this.MONEY_METRIC+')','icon':'fa fa-dollar 3','quantity':0.0,'metric':this.MONEY_METRIC_SHORT,'decimal':'.0-2'},
     ]
 
     loadTotales(data){
