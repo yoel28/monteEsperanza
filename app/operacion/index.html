@@ -89,7 +89,7 @@
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeQuantity'">
                                         <span [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
-                                            {{data.rechargeQuantity || "-"}}
+                                            {{data.rechargeQuantity | number:'.0-2' || "-"}}
                                         </span>
                                     </span>
                                     <span   *ngSwitchWhen="'vehicle'">
