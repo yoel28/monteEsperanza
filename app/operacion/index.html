@@ -69,6 +69,9 @@
                                     <span   *ngSwitchWhen="'companyTypeName'">
                                         {{data.companyTypeName}}
                                     </span>
+                                    <span   *ngSwitchWhen="'neto'">
+                                        {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
+                                    </span>
                                     <span   *ngSwitchWhen="'rechargeReferenceDate'">
                                         {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
                                     </span>
