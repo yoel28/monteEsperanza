@@ -31,8 +31,8 @@ export class Operacion extends RestController implements OnInit{
         if (this.myglobal.existsPermission('93')) {
             this.max = 40;
 
-            if(localStorage.getItem('view3'))
-                this.view = JSON.parse(localStorage.getItem('view3'));
+            if(localStorage.getItem('view4'))
+                this.view = JSON.parse(localStorage.getItem('view4'));
 
 
             this.ordenView();
@@ -208,7 +208,7 @@ export class Operacion extends RestController implements OnInit{
         {'visible': true, 'position': 4, 'title': 'Vehiculo', 'key': 'vehicle'},
         {'visible': true, 'position': 5, 'title': 'Peso de entrada', 'key': 'weightIn'},
         {'visible': true, 'position': 6, 'title': 'Peso de salida', 'key': 'weightOut'},
-        {'visible': true, 'position': 7, 'title': 'Descargado', 'key': 'neto'},
+        {'visible': true, 'position': 7, 'title': 'Peso neto', 'key': 'neto'},
 
 
         {'visible': false, 'position': 8, 'title': 'Cliente', 'key': 'company'},
@@ -262,7 +262,7 @@ export class Operacion extends RestController implements OnInit{
                 }
             })
         }
-        localStorage.setItem('view3',JSON.stringify(this.view))
+        localStorage.setItem('view4',JSON.stringify(this.view))
     }
     setVisibleView(data){
         this.view.forEach(key=>{
@@ -272,7 +272,7 @@ export class Operacion extends RestController implements OnInit{
                 return;
             }
         })
-        localStorage.setItem('view3',JSON.stringify(this.view))
+        localStorage.setItem('view4',JSON.stringify(this.view))
     }
 }
 
