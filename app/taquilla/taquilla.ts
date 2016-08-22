@@ -47,6 +47,15 @@ export class Taquilla extends RestController implements OnInit{
             this.dataCompanies = {};
         }
     }
+
+    @ViewChild(RecargaSave)
+    recargaSave:RecargaSave;
+    RecargarSaldo(data){
+        if(this.recargaSave){
+            this.recargaSave.setdata(data.id,data.balance)
+        }
+
+    }
     loadData(offset=0){
         if(this.myglobal.existsPermission('109')) {
             this.offset = offset;

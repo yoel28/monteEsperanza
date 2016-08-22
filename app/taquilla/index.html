@@ -9,7 +9,7 @@
         <div  class="row col-lg-6 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12 padding-bottom noprint">
             <form role="form" (submit)="getCompanies(findCompany.value)">
                 <div class="input-group input-group-sm">
-                    <input  #findCompany type="text" class="form-control" placeholder="Ingrese el RUC del cliente" value="{{search}}">
+                    <input  #findCompany type="text" class="form-control" placeholder="Ingrese el RUC/Codigo del cliente" value="{{search}}">
                     <span class="input-group-btn">
                         <button (click)="getCompanies(findCompany.value)" type="button" class="btn btn-info btn-flat">
                             <i class="fa fa-search"></i>
@@ -33,7 +33,7 @@
                             <img src="{{company.image?company.image:'/assets/img/company-guest.png'}}"
                                  style="display: inline-block" class="img-responsive img-find pull-left">
                             <strong>&nbsp;Nombre:</strong>&nbsp;{{company.title}}
-                            <strong>&nbsp;RUC:</strong>&nbsp;{{company.detail}}
+                            <strong>&nbsp;Codigo:</strong>&nbsp;{{company.detail}}
                     </td>
                 </tr>
                 </tbody>
@@ -80,7 +80,7 @@
                                     <td><strong>RUC: </strong>{{dataCompany.ruc}}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>DIRECCI&Oacute;N:</strong> {{dataCompany.address}}</td>
+                                    <td><strong>CODIGO:</strong> {{dataCompany.code}}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>TEL&Eacute;FONO:</strong>{{dataCompany.phone}}</td>
@@ -111,6 +111,9 @@
                                         <td><strong>VEH&Iacute;CULOS REGISTRADOS: </strong>
                                             {{dataCompany.vehiclesCount}}
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>DIRECCI&Oacute;N:</strong> {{dataCompany.address}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -197,11 +200,18 @@
                                 <tbody>
                                 <tr>
                                     <td><strong>Saldo m&iacute;nimo: </strong></td>
-                                    <td>{{dataCompany.minBalance}}</td>
+                                    <td>{{dataCompany.minBalance | number:'.0-2'}}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Saldo actual: </strong></td>
-                                    <td>{{dataCompany.balance}}</td>
+                                    <td>{{dataCompany.balance | number:'.0-2'}}
+                                    <span class="btn" *ngIf="dataCompany.balance<0" (click)="RecargarSaldo(dataCompany)"
+                                          data-toggle="modal" data-target="#saveRecarga"
+                                        >
+                                        &nbsp;<i class="fa fa-money text-green fa-lg"></i>
+                                        Pagar deuda
+                                    </span>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
