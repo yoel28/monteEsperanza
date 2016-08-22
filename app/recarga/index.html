@@ -55,7 +55,7 @@
                                 <td>
                                     <i class="{{data.rechargeTypeIcon}}"></i>&nbsp;{{data.rechargeTypeTitle}}
                                     <label *ngIf="data.weight">
-                                       ( {{data.weight}} {{data.metric}})
+                                       ( {{data.weight | number:'.0-3'}} {{data.metric}})
                                     </label>
                                 </td>
                                 <td>
