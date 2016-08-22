@@ -80,7 +80,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let type of dataList.list; let i = index">
                             <div class="row text-center title-companygroup"><h3>{{type.routeTitle}}</h3></div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let recharge of type.recharges">
-                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{recharge.companyRuc}}</div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{recharge.companyCode}}</div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{recharge.companyName}}</div>
                                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{recharge.vehiclePlate}}</div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{recharge.reference}}</div>
