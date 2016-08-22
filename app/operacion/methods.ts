@@ -59,7 +59,7 @@ export class OperacionSave extends RestController implements OnInit{
             'checkBalance':true,
             'checkBalancePermission':this.myglobal.existsPermission('160'),
             'paramsSearch': {
-                'label':{'title':"Nombre: ",'detail':"RUC: "},
+                'label':{'title':"Nombre: ",'detail':"Codigo: "},
                 'endpoint':"/search/companies/",
                 'where':'',
                 'imageGuest':'/assets/img/company-guest.png',
@@ -68,7 +68,7 @@ export class OperacionSave extends RestController implements OnInit{
             'icon':'fa fa-building',
             'object':true,
             'title':'Cliente',
-            'placeholder':'Ingrese el RUC o nombre del cliente',
+            'placeholder':'Ingrese el Codigo/RUC del cliente',
             'permissions':'80',
             'msg':{
                 'error':'El cliente contiene errores',
