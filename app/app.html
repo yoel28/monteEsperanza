@@ -160,6 +160,12 @@
                         </a>
                         <ul class="treeview-menu">
                             <li *ngIf="myglobal.existsPermission('164')">
+                                <a href="#" [routerLink]="['GruposRutas']">
+                                    <i class="fa fa-list"></i>
+                                    <span>Rutas</span>
+                                </a>
+                            </li>
+                            <li *ngIf="myglobal.existsPermission('203')">
                                 <a href="#" [routerLink]="['ReporteGrupos']">
                                     <i class="fa fa-user"></i>
                                     <span>Grupos</span>
