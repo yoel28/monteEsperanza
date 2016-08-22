@@ -73,10 +73,8 @@ export class Tables extends RestController implements OnInit {
 
         if(this.search)
         {
-            this.search.setNewModal();
             this.search.params=this.searchTable;
         }
-
 
         this.searchTableData=data;
 
