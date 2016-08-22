@@ -128,8 +128,8 @@
                                             <strong>{{search.paramsSearch.label.title}} {{data.title}}</strong><br>
                                             {{search.paramsSearch.label.detail}} {{data.detail}}
                                             <span *ngIf="data.balance || data.minBalance">
-                                                <br>Balance:{{data.balance || 0}}
-                                                <br>Balance minimo:{{data.minBalance || 0}}
+                                                <br>Balance:{{(data.balance | number:'.0-2')  || 0}}
+                                                <br>Balance minimo:{{(data.minBalance | number:'.0-2') || 0}}
                                             </span>
                                         </td>
                                         <td style="vertical-align: middle;">
