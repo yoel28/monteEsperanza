@@ -157,31 +157,27 @@ export class ReporteGrupos extends RestController implements OnInit{
         let val;
         switch (id)
         {
-            case "1" :
+            case "1" : //hoy
                 this.dateStart.updateValue(day);
                 break;
-            case "2" :
-                val=moment().format('e');
-                this.dateStart.updateValue(moment(day).subtract(val, 'days'));
+            case "2" ://Semana Actual
+                this.dateStart.updateValue(moment(day).startOf('week'));
                 this.dateEnd.updateValue(day);
                 break;
-            case "3" :
-                val=moment().format('D');
-                this.dateStart.updateValue((moment(day).subtract(val, 'days')).add(1,'days'));
+            case "3" ://mes actual
+                this.dateStart.updateValue(moment().startOf('month'));
                 this.dateEnd.updateValue(day);
                 break;
-            case "4" :
-                val=moment().format('D');
-                this.dateStart.updateValue(((moment(day).subtract(val, 'days')).subtract(1, 'month')).add(1,'days'));
-                this.dateEnd.updateValue(moment(day).subtract(val, 'days'));
+            case "4" ://mes anterior
+                this.dateStart.updateValue(moment().subtract(1, 'month').startOf('month'));
+                this.dateEnd.updateValue(moment().subtract(1, 'month').endOf('month'));
                 break;
-            case "5" :
-                this.dateStart.updateValue((moment(day).subtract(3, 'month')).add(1,'days'));
+            case "5" ://ultimos 3 meses
+                this.dateStart.updateValue(moment().subtract(3, 'month').startOf('month'));
                 this.dateEnd.updateValue(day);
                 break;
-            case "6" :
-                val=moment().format('MM');
-                this.dateStart.updateValue((moment(day).subtract(val, 'month')).add(1,'days'));
+            case "6" ://ano actual
+                this.dateStart.updateValue(moment().startOf('year'));
                 this.dateEnd.updateValue(day);
                 break;
         }
