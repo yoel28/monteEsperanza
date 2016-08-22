@@ -40,6 +40,7 @@ import moment from "moment/moment";
 import {ReporteGruposVehiculos} from "./reportes/reporteGV";
 import {ReporteDescargasRutas} from "./reportes/reporteDR";
 import {ReporteDescargasBasura} from "./reportes/reporteDB";
+import {GruposRutas} from "./reportes/gruposRutas";
 
 
 declare var SockJS:any;
@@ -78,6 +79,7 @@ declare var Stomp:any;
   { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
     
   { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
+  { path: '/reporte/grupos/rutas',   name: 'GruposRutas', component: GruposRutas },
   { path: '/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
   { path: '/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
   { path: '/reporte/rutas',   name: 'ReporteDescargasRutas', component: ReporteDescargasRutas },
