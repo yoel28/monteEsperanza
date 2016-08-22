@@ -59,3 +59,6 @@ main{
 @media print{
 
 }
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #e8e7e7 !important;
+}
