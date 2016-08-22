@@ -58,6 +58,7 @@ export class Taquilla extends RestController implements OnInit{
     }
     loadData(offset=0){
         if(this.myglobal.existsPermission('109')) {
+            this.max=5;
             this.offset = offset;
             this.endpoint = "/search/recharges";
             let where = encodeURI("[['op':'eq','field':'company.id','value':" + this.dataCompany.id + "l]]")
