@@ -23,6 +23,7 @@ export class RecargaSave extends RestController implements OnInit{
 
     @Input() idModal:string;
     @Input() idCompany:string;
+    @Input() money:string;
 
     public save:any;
 
@@ -44,6 +45,8 @@ export class RecargaSave extends RestController implements OnInit{
         this.initForm();
         if(this.idCompany)
             this.company.updateValue(this.idCompany);
+        if(this.money)
+            this.quantity.updateValue(this.money);
         if(this.myglobal.existsPermission('116'))
             this.getRechargeTypes();
     }
@@ -66,6 +69,10 @@ export class RecargaSave extends RestController implements OnInit{
     }
     setRechargeType(id){
         this.rechargeType.updateValue(id);
+    }
+    setdata(company,money){
+        this.company.updateValue(company);
+        this.quantity.updateValue(money.toFixed(2)*-1);
     }
     getRechargeTypes(){
         let where = encodeURI("[['op':'ne','field':'enabled','value':false]]")
