@@ -24,7 +24,7 @@ export class Recarga extends RestController implements OnInit{
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
 
     public rules={
-        'quantity':{'type':'number','display':null,'title':'Key','mode':'inline','placeholder': 'Cantidad', 'search': true,'double':true},
+        'quantity':{'type':'number','display':null,'title':'Key','mode':'inline','placeholder': 'Cantidad', 'search': true,'double':true,'step':'0.01'},
         'reference':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Referencia', 'search': true},
         'typeRecharges':{
             'type':'text',
@@ -70,6 +70,8 @@ export class Recarga extends RestController implements OnInit{
     loadWhere(where) {
         if(where.length == 13)
             this.where = where.slice(0,-3)+encodeURI("['op':'isNull','field':'o.id']]");
+        else if(where.length==0)
+            this.where = "&where="+encodeURI("[['op':'isNull','field':'o.id']]");
         else
             this.where = where.slice(0,-3)+encodeURI(",['op':'isNull','field':'o.id']]");
         this.loadData();
