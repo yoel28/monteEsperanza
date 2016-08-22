@@ -47,7 +47,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   line-height: 1.42857143;
-  color: #777777;
+  color: #000;
   background-color: #f0f2f5;
   height: 100%;
 }
@@ -60,7 +60,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #777777;
+  color: #000;
   text-decoration: none;
 }
 a:hover,
@@ -6253,7 +6253,7 @@ fieldset[disabled] .btn-white.active {
   border-top-left-radius: 0 !important;
 }
 .input-group .input-group-addon {
-  color: #777777;
+  color: #343434;
   border-color: #e5e5e5;
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;

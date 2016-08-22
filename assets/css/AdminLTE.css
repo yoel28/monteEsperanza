@@ -1707,7 +1707,7 @@ a:focus {
   clear: both;
 }
 .box-header {
-  color: #444;
+  color: #000;
   display: block;
   padding: 10px;
   position: relative;
@@ -1748,7 +1748,7 @@ a:focus {
   padding: 5px;
   font-size: 12px;
   background: transparent;
-  color: #97a0b3;
+  color: #484858;
 }
 .open .btn-box-tool,
 .btn-box-tool:hover {
@@ -1987,7 +1987,7 @@ a:focus {
   max-width: 200px;
 }
 .modal .panel-body {
-  color: #444;
+  color: #131313;
 }
 /*
  * Component: Info Box
@@ -2100,21 +2100,21 @@ a:focus {
   border-radius: 3px;
   margin-top: 0;
   background: #fff;
-  color: #444;
+  color: #232323;
   margin-left: 60px;
   margin-right: 15px;
   padding: 0;
   position: relative;
 }
 .timeline > li > .timeline-item > .time {
-  color: #999;
+  color: #5d5d5d;
   float: right;
   padding: 10px;
   font-size: 12px;
 }
 .timeline > li > .timeline-item > .timeline-header {
   margin: 0;
-  color: #555;
+  color: #1d1d1d;
   border-bottom: 1px solid #f4f4f4;
   padding: 10px;
   font-size: 16px;
@@ -2135,7 +2135,7 @@ a:focus {
   font-size: 15px;
   line-height: 30px;
   position: absolute;
-  color: #666;
+  color: #2f2f2f;
   background: #d2d6de;
   border-radius: 50%;
   text-align: center;
@@ -2156,7 +2156,7 @@ a:focus {
   box-shadow: none;
 }
 .timeline-inverse > li > .timeline-item > .timeline-header {
-  border-bottom-color: #ddd;
+  border-bottom-color: #a5a5a5;
 }
 /*
  * Component: Button
