@@ -82,6 +82,15 @@ export class Empresa extends RestController implements OnInit {
             'mode': 'inline',
             'search': true
         },
+        'balance': {
+            'type': 'number',
+            'display': null,
+            'title': 'Balance',
+            'placeholder': 'Balance',
+            'double':true,
+            'mode': 'inline',
+            'search': true
+        },
         'address': {
             'type': 'text',
             'display': null,
