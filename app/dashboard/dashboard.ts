@@ -32,6 +32,7 @@ export class Dashboard extends RestController implements OnInit {
 
     constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);
+        this.plotDate = moment().format('YYYY/MM')
     }
 
     ngOnInit() {
