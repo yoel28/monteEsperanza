@@ -167,7 +167,7 @@
                                             <div *ngIf="myglobal.existsPermission('87')"
                                                  class="row text-center divider">
                                                 <div class="col-xs-12 col-sm-4 emphasis">
-                                                    <h4><strong>{{data.weightCount?data.weightCount:"N/A"}}</strong>
+                                                    <h4><strong>{{data.weightCount? (data.weightCount | number:'.0-3'):"N/A"}}</strong>
                                                     </h4>
                                                     <p>
                                                         <small>Descargas</small>
@@ -186,7 +186,7 @@
 
                                                 </div>
                                                 <div class="col-xs-12 col-sm-4 emphasis">
-                                                    <h4><strong>{{data.balance?data.balance:"0"}}$</strong></h4>
+                                                    <h4><strong>{{data.balance?(data.balance | number:'.0-3'):"0"}}$</strong></h4>
                                                     <p>
                                                         <small>Saldo</small>
                                                     </p>
