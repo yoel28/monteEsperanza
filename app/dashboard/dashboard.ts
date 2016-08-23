@@ -50,10 +50,25 @@ export class Dashboard extends RestController implements OnInit {
                     +'<br/>Viajes: '+scope.dataAreaPlot3.series[0].data[this.point.index]
                 ;
         }
+        let formatter2 = function (hc,scope=that) {
+            let data;
+            if(scope.plotDate.length==4){
+                data=moment(scope.plotDate+"/"+(this.point.index+1),"YYYY/MM")
+                data=data.format('MMMM,  YYYY');
+            }
+            else{
+                data=moment(scope.plotDate+"/"+(this.point.index+1),"YYYY/MM/DD")
+                data=data.format('dddd D, MMMM  YYYY');
+            }
+            return '<strong>'+data+'</strong><br/>'
+                    +this.y+scope.MONEY_METRIC_SHORT+" en "+this.series.name
+                ;
+        }
 
         this.dataAreaPlot1.tooltip.formatter = formatter;
         this.dataAreaPlot2.tooltip.formatter = formatter;
         this.dataAreaPlot3.tooltip.formatter = formatter;
+        this.dataAreaPlot4.tooltip.formatter = formatter2;
 
     }
     initMoment(){
@@ -188,7 +203,7 @@ export class Dashboard extends RestController implements OnInit {
             },
         },
         tooltip: {
-            pointFormat: 'Ingreso {point.y:,.0f}'+this.MONEY_METRIC_SHORT+' en {series.name}'
+            formatter:{}
         },
         credits: {
             enabled: false
