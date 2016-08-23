@@ -42,6 +42,7 @@ import {ReporteDescargasRutas} from "./reportes/reporteDR";
 import {ReporteDescargasBasura} from "./reportes/reporteDB";
 import {GruposRutas} from "./reportes/gruposRutas";
 import {EmpresaMorosos} from "./empresa/companyMorosos";
+import {Caja} from "./recarga/caja";
 
 
 declare var SockJS:any;
@@ -79,7 +80,8 @@ declare var Stomp:any;
   { path: '/operacion/monitor',   name: 'OperacionMonitor', component: OperacionMonitor },
   { path: '/roles',   name: 'Rol', component: Rol },
   { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
-    
+  { path: '/caja',   name: 'Caja', component: Caja },
+
   { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
   { path: '/reporte/grupos/rutas',   name: 'GruposRutas', component: GruposRutas },
   { path: '/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
