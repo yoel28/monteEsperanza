@@ -11,6 +11,10 @@
                             data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                         <i class="fa fa-filter"></i>&nbsp;Filtrar
                     </button>
+                    <button *ngIf="myglobal.existsPermission('204')" type="button"
+                            class="btn btn-primary btn-red" (click)="goMorosos($event)">
+                        <i class="fa fa-archive"></i>&nbsp;Morosos
+                    </button>
 
                     <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
