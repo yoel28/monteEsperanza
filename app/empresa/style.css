@@ -27,3 +27,6 @@
 .padding-error{
     padding: 5pt;
 }
+.btn-cursor{
+    cursor: pointer;
+}

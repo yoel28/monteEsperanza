@@ -137,6 +137,11 @@ export class Empresa extends RestController implements OnInit {
         let link = ['EmpresaTimeLine', {ruc: companyRuc}];
         this.router.navigate(link);
     }
+    goMorosos(event){
+        event.preventDefault();
+        let link = ['EmpresaMorosos'];
+        this.router.navigate(link);
+    }
 
     //cambiar imagen de una empresa
     public image:any = [];
