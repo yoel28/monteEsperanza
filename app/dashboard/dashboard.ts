@@ -22,7 +22,7 @@ export class Dashboard extends RestController implements OnInit {
     dataCamion:any = [];
     httputils:HttpUtils;
     endpoint:string;
-    plotDate = "2016";
+    plotDate = "";
 
     public paramsTimeLine = {
         'offset': 0,
@@ -32,10 +32,39 @@ export class Dashboard extends RestController implements OnInit {
 
     constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);
-        this.plotDate = moment().format('YYYY/MM')
+        this.plotDate = moment().format('YYYY/MM');
+        let that=this;
+        let formatter = function (hc,scope=that) {
+            let data;
+            if(scope.plotDate.length==4){
+                data=moment(scope.plotDate+"/"+(this.point.index+1),"YYYY/MM")
+                data=data.format('MMMM,  YYYY');
+            }
+            else{
+                data=moment(scope.plotDate+"/"+(this.point.index+1),"YYYY/MM/DD")
+                data=data.format('dddd D, MMMM  YYYY');
+            }
+            return '<strong>'+data+'</strong><br/>'
+                    + scope.WEIGTH_METRIC+' descargadas: ' + scope.dataAreaPlot1.series[0].data[this.point.index].toFixed(3)+" "+(scope.WEIGTH_METRIC_SHORT||'')+'<br/>'
+                    +'Ingreso total: '+scope.dataAreaPlot2.series[0].data[this.point.index].toFixed(2)+(scope.MONEY_METRIC_SHORT||'')
+                    +'<br/>Viajes: '+scope.dataAreaPlot3.series[0].data[this.point.index]
+                ;
+        }
+
+        this.dataAreaPlot1.tooltip.formatter = formatter;
+        this.dataAreaPlot2.tooltip.formatter = formatter;
+        this.dataAreaPlot3.tooltip.formatter = formatter;
+
+    }
+    initMoment(){
+        moment.updateLocale('en', {
+            months : ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            weekdays:["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"]
+        });
     }
 
     ngOnInit() {
+        this.initMoment();
         if (this.myglobal.existsPermission('27')) {
             this.initForm();
             this.getPlots();
@@ -93,7 +122,7 @@ export class Dashboard extends RestController implements OnInit {
             },
         },
         tooltip: {
-            pointFormat: '{series.name} descargadas <b>{point.y:,.0f}</b>'+this.WEIGTH_METRIC_SHORT
+            formatter:{}
         },
         credits: {
             enabled: false
@@ -115,7 +144,7 @@ export class Dashboard extends RestController implements OnInit {
             },
         },
         tooltip: {
-            pointFormat: '{series.name} <br/>Ingresaron <b>{point.y:,.0f}</b>'+this.MONEY_METRIC_SHORT
+            formatter:{}
         },
         credits: {
             enabled: false
@@ -137,7 +166,7 @@ export class Dashboard extends RestController implements OnInit {
             },
         },
         tooltip: {
-            pointFormat: 'Cantidad de {series.name}<br/> que ingresaron al vertedero <b>{point.y:,.0f}</b>'+this.VEHICLE_METRIC_SHORT
+            formatter:{}
         },
         credits: {
             enabled: false
