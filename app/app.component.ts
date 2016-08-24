@@ -43,6 +43,7 @@ import {ReporteDescargasBasura} from "./reportes/reporteDB";
 import {GruposRutas} from "./reportes/gruposRutas";
 import {EmpresaMorosos} from "./empresa/companyMorosos";
 import {Caja} from "./recarga/caja";
+import {TipoServicio} from "./tipoServicio/tipoServicio";
 
 
 declare var SockJS:any;
@@ -97,6 +98,7 @@ declare var Stomp:any;
   { path: '/libro',   name: 'RecargaLibro', component: RecargaLibro },
   { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
   { path: '/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
+  { path: '/tipo/servicio',   name: 'TipoServicio', component: TipoServicio },
   { path: '/grupo',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
