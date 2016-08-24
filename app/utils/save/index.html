@@ -16,10 +16,7 @@
                                         <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-lg-10">
-                                                    <div class="input-group input-icon right form-group" [class.object-invalid]="
-                                                            rules[key].object && data[key].value.length > 0 &&
-                                                            ((searchId[key] && searchId[key].title != data[key].value) || !searchId[key])
-                                                        ">
+                                                    <div class="input-group input-icon right form-group" >
                                                         <i class="{{rules[key].icon}} z-index"></i>
                                                         <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
                                                         <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
