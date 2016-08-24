@@ -28,6 +28,7 @@
                             <tr>
 
                                 <th>T&iacute;tulo</th>
+                                <th>C&oacute;digo</th>
                                 <th>Detalle</th>
                                 <th>Precio ({{MONEY_METRIC_SHORT}})</th>
                                 <th *ngIf="permissions['lock']">Bloqueado</th>
@@ -39,6 +40,10 @@
 
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="title"
+                                       [disabled]="!permissions['update']"></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="code"
                                        [disabled]="!permissions['update']"></a>
                                 </td>
                                 <td>
