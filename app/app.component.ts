@@ -44,6 +44,7 @@ import {GruposRutas} from "./reportes/gruposRutas";
 import {EmpresaMorosos} from "./empresa/companyMorosos";
 import {Caja} from "./recarga/caja";
 import {TipoServicio} from "./tipoServicio/tipoServicio";
+import {Servicio} from "./servicio/servicio";
 
 
 declare var SockJS:any;
@@ -99,6 +100,7 @@ declare var Stomp:any;
   { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
   { path: '/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
   { path: '/tipo/servicio',   name: 'TipoServicio', component: TipoServicio },
+  { path: '/servicio',   name: 'Servicio', component: Servicio },
   { path: '/grupo',   name: 'TipoEmpresa', component: TipoEmpresa },
   { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
@@ -120,8 +122,8 @@ export class AppComponent extends RestController implements OnInit{
     //localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
     //localStorage.setItem('url','http://dev.aguaseo.com:8080');
 
-    //localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
-      // localStorage.setItem('url','http://192.168.0.95:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.112:8080/api');
+      localStorage.setItem('url','http://192.168.0.112:8080');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
