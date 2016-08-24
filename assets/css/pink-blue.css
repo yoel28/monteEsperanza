@@ -47,7 +47,9 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   line-height: 1.42857143;
-  color: #000;
+  color: #000 !important;
+  font-stretch: condensed !important;
+  font-weight: bold !important;
   background-color: #f0f2f5;
   height: 100%;
 }
