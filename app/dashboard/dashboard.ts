@@ -65,15 +65,32 @@ export class Dashboard extends RestController implements OnInit {
                 vert= '<br/>'+scope.WEIGTH_METRIC+' descargadas: ' + scope.dataAreaPlot1.series[0].data[this.point.index].toFixed(3)+" "+(scope.WEIGTH_METRIC_SHORT||'')
             }
             return '<strong>'+data+'</strong><br/>'
-                    +this.y+scope.MONEY_METRIC_SHORT+" en "+this.series.name+vert
+                    +(this.y).toFixed(2)+scope.MONEY_METRIC_SHORT+" en "+this.series.name+vert
 
                 ;
         }
+        let formatter3 = function (hc,scope=that) {
+            let data;
+            if(scope.plotDate.length==4){
+                data=moment(scope.plotDate+"/"+(this.points[0].point.index+1),"YYYY/MM")
+                data=data.format('MMMM,  YYYY');
+            }
+            else{
+                data=moment(scope.plotDate+"/"+(this.points[0].point.index+1),"YYYY/MM/DD")
+                data=data.format('dddd D, MMMM  YYYY');
+            }
+            return '<strong>'+data+'</strong><br/>'
+                    +this.points[0].series.name+' '+(this.points[0].y).toFixed(2)+(scope.MONEY_METRIC_SHORT||'')+'<br/>'
+                    +this.points[1].series.name+' '+(this.points[1].y).toFixed(2)+(scope.MONEY_METRIC_SHORT||'')
+                ;
+        }
+
 
         this.dataAreaPlot1.tooltip.formatter = formatter;
         this.dataAreaPlot2.tooltip.formatter = formatter;
         this.dataAreaPlot3.tooltip.formatter = formatter;
         this.dataAreaPlot4.tooltip.formatter = formatter2;
+        this.dataAreaPlot5.tooltip.formatter = formatter3;
 
     }
     initMoment(){
@@ -226,7 +243,7 @@ export class Dashboard extends RestController implements OnInit {
             enabled: false
         },
         title: {
-            text: ' Total Ingresos x Total facturado en vertedero'
+            text: ' Ingreso neto x Facturado en vertedero'
         },
         subtitle: {
             text: 'Balance general'
@@ -264,7 +281,8 @@ export class Dashboard extends RestController implements OnInit {
             opposite: true
         }],
         tooltip: {
-            shared: true
+            shared: true,
+            formatter:{}
         },
         legend: {
             layout: 'vertical',
@@ -285,7 +303,7 @@ export class Dashboard extends RestController implements OnInit {
             }
 
         }, {
-            name: 'Consumo en vertedero',
+            name: 'Facturado en vertedero',
             type: 'spline',
             data: [],
             tooltip: {
