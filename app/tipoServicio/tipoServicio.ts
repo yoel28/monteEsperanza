@@ -53,7 +53,7 @@ export class TipoServicio extends RestController implements OnInit{
     public params = {
         title: "Tipo de servicio",
         idModal: "saveTypeServices",
-        endpoint: "/type/service/",
+        endpoint: "/type/services/",
     }
 
     public rules={
@@ -141,16 +141,16 @@ export class TipoServicio extends RestController implements OnInit{
         this.ruleObject={
             'icon':'fa fa-list',
             "type": "text",
-            "key": "typeService",
+            "key": "serviceType",
             "title": "Tipo de servicio",
             'object':true,
-            "placeholder": "Ingrese el codigo del tipo de servicio",
+            "placeholder": "Codigo del tipo de servicio",
             'paramsSearch': {
                 'label':{'title':"tipo: ",'detail':"Detalle: "},
                 'endpoint':"/search/type/services/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
-                'field':'typeService.id',
+                'field':'serviceType',
             },
             'search':true,
             'msg':{
