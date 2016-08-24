@@ -38,12 +38,12 @@ export class TipoServicio extends RestController implements OnInit{
 
     }
     initPermissions(){
-        this.permissions['list']=this.myglobal.existsPermission('1');
-        this.permissions['add']=this.myglobal.existsPermission('1');
-        this.permissions['filter']=this.myglobal.existsPermission('1');
-        this.permissions['lock']=this.myglobal.existsPermission('1');
-        this.permissions['delete']=this.myglobal.existsPermission('1');
-        this.permissions['update']=this.myglobal.existsPermission('1');
+        this.permissions['list']=this.myglobal.existsPermission('208');
+        this.permissions['add']=this.myglobal.existsPermission('207');
+        this.permissions['filter']=this.myglobal.existsPermission('213');
+        this.permissions['lock']=this.myglobal.existsPermission('211');
+        this.permissions['delete']=this.myglobal.existsPermission('209');
+        this.permissions['update']=this.myglobal.existsPermission('210');
 
         this.permissions['actions']=this.permissions['delete'];
 
