@@ -107,7 +107,7 @@
 
                     <li class="treeview" [class.active]="activeMenuId=='trans'"
                         *ngIf="myglobal.existsPermission('21') || myglobal.existsPermission('14')
-                        || myglobal.existsPermission('158') || myglobal.existsPermission('159')"
+                        || myglobal.existsPermission('158') || myglobal.existsPermission('159') || myglobal.existsPermission('214')"
                     >
                         <a (click)="activeMenu($event,'trans')">
                             <i class="fa fa-gears"></i>
@@ -116,6 +116,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li *ngIf="myglobal.existsPermission('21')"><a href="#" [routerLink]="['Operacion']"><i class="fa fa-user"></i> <span>Operaci&oacute;n</span></a></li>
+                            <li *ngIf="myglobal.existsPermission('214')"><a href="#" [routerLink]="['Servicio']"><i class="fa fa-list"></i> <span>Servicios</span></a></li>
                             <li *ngIf="myglobal.existsPermission('161')">
                                 <a (click)="inAnt($event)" data-toggle="modal" data-target="#operacionManual">
                                     <i class="fa fa-sign-in"></i> <span>Entrada</span>
