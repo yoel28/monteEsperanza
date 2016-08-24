@@ -60,8 +60,13 @@ export class Dashboard extends RestController implements OnInit {
                 data=moment(scope.plotDate+"/"+(this.point.index+1),"YYYY/MM/DD")
                 data=data.format('dddd D, MMMM  YYYY');
             }
+            let vert="";
+            if(this.series.name == "Uso - Vertedero"){
+                vert= '<br/>'+scope.WEIGTH_METRIC+' descargadas: ' + scope.dataAreaPlot1.series[0].data[this.point.index].toFixed(3)+" "+(scope.WEIGTH_METRIC_SHORT||'')
+            }
             return '<strong>'+data+'</strong><br/>'
-                    +this.y+scope.MONEY_METRIC_SHORT+" en "+this.series.name
+                    +this.y+scope.MONEY_METRIC_SHORT+" en "+this.series.name+vert
+
                 ;
         }
 
@@ -221,7 +226,7 @@ export class Dashboard extends RestController implements OnInit {
             enabled: false
         },
         title: {
-            text: ' Total Ingresos x Total consumo de vertedero'
+            text: ' Total Ingresos x Total facturado en vertedero'
         },
         subtitle: {
             text: 'Balance general'
