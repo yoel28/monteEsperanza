@@ -146,7 +146,7 @@ export class TipoServicio extends RestController implements OnInit{
             'object':true,
             "placeholder": "Codigo del tipo de servicio",
             'paramsSearch': {
-                'label':{'title':"tipo: ",'detail':"Detalle: "},
+                'label':{'title':"tipo: ",'detail':"Codigo: "},
                 'endpoint':"/search/type/services/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
