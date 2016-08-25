@@ -1,13 +1,15 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {RestController} from "../common/restController";
 import {Router, RouteParams} from "@angular/router-deprecated";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
+import {RecargaSave} from "../recarga/methods";
 @Component({
     selector: 'empresa-moroso',
     templateUrl: 'app/empresa/morosos.html',
     styleUrls: ['app/empresa/style.css'],
+    directives:[RecargaSave]
 })
 export class EmpresaMorosos extends RestController implements OnInit {
     public viewOptions:any={};
@@ -44,5 +46,21 @@ export class EmpresaMorosos extends RestController implements OnInit {
     goTaquilla(companyId:string) {
         let link = ['TaquillaSearh', {search: companyId}];
         this.router.navigate(link);
+    }
+    
+    public dataCompany:any={};
+    @ViewChild(RecargaSave)
+    recargaSave:RecargaSave;
+    
+    RecargarSaldo(data){
+        this.dataCompany = data;
+        if(this.recargaSave){
+            this.recargaSave.idCompany=data.id;
+            this.recargaSave.setdata(data.id,data.balance)
+        }
+
+    }
+    assignRecarga(data){
+        this.dataCompany.balance+=data.quantity;
     }
 }
