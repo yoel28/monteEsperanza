@@ -62,3 +62,6 @@ main{
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #e8e7e7 !important;
 }
+tbody{
+  font-weight: 100 !important;
+}
