@@ -75,7 +75,7 @@ export class RecargaSave extends RestController implements OnInit{
         this.quantity.updateValue(money.toFixed(2)*-1);
     }
     getRechargeTypes(){
-        let where = encodeURI("[['op':'ne','field':'enabled','value':false]]")
+        let where = encodeURI("[['op':'ne','field':'id','value':4]]")
         this.httputils.onLoadList("/type/recharges?where="+where,this.rechargeTypes,this.error);
     }
     submitForm(){
