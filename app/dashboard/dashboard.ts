@@ -61,7 +61,7 @@ export class Dashboard extends RestController implements OnInit {
                 data=data.format('dddd D, MMMM  YYYY');
             }
             let vert="";
-            if(this.series.name == "Uso - Vertedero"){
+            if(this.series.name == scope.TITLE_USO_VERTEDERO){
                 vert= '<br/>'+scope.WEIGTH_METRIC+' descargadas: ' + scope.dataAreaPlot1.series[0].data[this.point.index].toFixed(3)+" "+(scope.WEIGTH_METRIC_SHORT||'')
             }
             return '<strong>'+data+'</strong><br/>'
@@ -141,6 +141,7 @@ export class Dashboard extends RestController implements OnInit {
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
     public VEHICLE_METRIC_SHORT=this.myglobal.getParams('VEHICLE_METRIC_SHORT');
     public VEHICLE_METRIC=this.myglobal.getParams('VEHICLE_METRIC');
+    public TITLE_USO_VERTEDERO=this.myglobal.getParams('TITLE_USO_VERTEDERO');
 
     public PLOT_ID_NEGATIVES=this.myglobal.getParams('PLOT_ID_NEGATIVES');
     public RECHARGE_DEVOLUCION_ID=this.myglobal.getParams('RECHARGE_DEVOLUCION_ID');
