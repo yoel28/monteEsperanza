@@ -30,7 +30,8 @@ export class Servicio extends RestController implements OnInit{
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService,public tipoServicio:TipoServicio) {
         super(http,toastr);
-        this.setEndpoint("/services/")
+        this.setEndpoint("/services/");
+        this.tipoServicio.initPermissions();
     }
     initViewOptions(){
         this.viewOptions.title="Servicios";
@@ -40,12 +41,12 @@ export class Servicio extends RestController implements OnInit{
 
     }
     initPermissions(){
-        this.permissions['list']=this.myglobal.existsPermission('');
-        this.permissions['add']=this.myglobal.existsPermission('');
-        this.permissions['filter']=this.myglobal.existsPermission('');
-        this.permissions['lock']=this.myglobal.existsPermission('');
-        this.permissions['delete']=this.myglobal.existsPermission('');
-        this.permissions['update']=this.myglobal.existsPermission('');
+        this.permissions['list']=this.myglobal.existsPermission('216');
+        this.permissions['add']=this.myglobal.existsPermission('215');
+        this.permissions['filter']=this.myglobal.existsPermission('221');
+        this.permissions['lock']=this.myglobal.existsPermission('219');
+        this.permissions['delete']=this.myglobal.existsPermission('217');
+        this.permissions['update']=this.myglobal.existsPermission('218');
 
         this.permissions['actions']=this.permissions['delete'];
 
