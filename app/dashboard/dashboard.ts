@@ -8,9 +8,9 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {ControlGroup, Control, Validators, FormBuilder} from "@angular/common";
 import {Datepicker} from "../common/xeditable";
-import moment from "moment/moment";
 import {CHART_DIRECTIVES} from "angular2-highcharts";
 
+declare var moment:any;
 @Component({
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
