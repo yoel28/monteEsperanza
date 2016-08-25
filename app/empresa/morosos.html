@@ -14,13 +14,20 @@
                                     <th>Código</th>
                                     <th>Nombre</th>
                                     <th>Saldo</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of dataList.list" class="btn-cursor"  (click)="goTaquilla(data.id)">
-                                    <td>{{data.code}}</td>
-                                    <td>{{data.name}}</td>
-                                    <td>{{data.balance}}</td>
+                                <tr *ngFor="let data of dataList.list" class="btn-cursor" >
+                                    <td (click)="goTaquilla(data.id)">{{data.code}}</td>
+                                    <td (click)="goTaquilla(data.id)">{{data.name}}</td>
+                                    <td (click)="goTaquilla(data.id)">{{data.balance}}</td>
+                                    <td><span class="btn" (click)="RecargarSaldo(data)"
+                                              data-toggle="modal" data-target="#saveRecarga"
+                                    >
+                                        &nbsp;<i class="fa fa-money text-green fa-lg"></i>
+                                        Pagar deuda
+                                    </span></td>
                                 </tr>
                             </tbody>
                             <tfoot *ngIf="dataList.count == 0">
@@ -50,4 +57,7 @@
             </div>
         </div>
     </section>
+</div>
+<div *ngIf="myglobal.existsPermission('111')">
+    <recarga-save  idModal="saveRecarga" [idCompany]="dataCompany.id" (save)="assignRecarga($event)"> </recarga-save>
 </div>
