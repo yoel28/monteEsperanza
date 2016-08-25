@@ -111,6 +111,7 @@ export class Servicio extends RestController implements OnInit{
                 },
                 'search': true
             },
+            'serviceType':this.tipoServicio.ruleObject,
             'amount':{
                 'type':'number',
                 'key':'amount',
@@ -127,6 +128,21 @@ export class Servicio extends RestController implements OnInit{
                     'error':'El precio debe ser numerico',
                 }
             },
+            'weight':{
+                'type':'number',
+                'key':'weight',
+                'step':'0.001',
+                'icon':'fa fa-balance-scale',
+                'display':null,
+                'double':true,
+                'title':'Peso',
+                'mode':'inline',
+                'placeholder': 'Peso',
+                'search': true,
+                'msg':{
+                    'error':'El peso debe ser numerico',
+                }
+            },
             'detail':{
                 'type':'textarea',
                 'key':'detail',
@@ -141,7 +157,6 @@ export class Servicio extends RestController implements OnInit{
                     'error':'El detalle contiene errores',
                 }
             },
-            'serviceType':this.tipoServicio.ruleObject
         };
         this.rules['serviceType'].required=true;
     }

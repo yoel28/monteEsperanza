@@ -30,6 +30,7 @@
                                 <th>Tipo</th>
                                 <th>Precio ({{MONEY_METRIC_SHORT}})</th>
                                 <th>Placa</th>
+                                <th>Peso</th>
                                 <th>RUC</th>
                                 <th>Detalle</th>
                                 <th *ngIf="permissions['lock']">Bloqueado</th>
@@ -49,6 +50,10 @@
                                 </td>
                                 <td>
                                     <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="plate"
+                                       [disabled]="!permissions['update']"></a>
+                                </td>
+                                <td>
+                                    <a x-editable [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="weight"
                                        [disabled]="!permissions['update']"></a>
                                 </td>
                                 <td>
