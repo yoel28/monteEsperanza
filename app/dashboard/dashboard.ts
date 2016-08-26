@@ -142,6 +142,7 @@ export class Dashboard extends RestController implements OnInit {
     public VEHICLE_METRIC_SHORT=this.myglobal.getParams('VEHICLE_METRIC_SHORT');
     public VEHICLE_METRIC=this.myglobal.getParams('VEHICLE_METRIC');
     public TITLE_USO_VERTEDERO=this.myglobal.getParams('TITLE_USO_VERTEDERO');
+    public TITLE_DEVOLUCION=this.myglobal.getParams('TITLE_DEVOLUCION');
 
     public PLOT_ID_NEGATIVES=this.myglobal.getParams('PLOT_ID_NEGATIVES');
     public RECHARGE_DEVOLUCION_ID=this.myglobal.getParams('RECHARGE_DEVOLUCION_ID');
@@ -399,12 +400,12 @@ export class Dashboard extends RestController implements OnInit {
             key.data.forEach(val=>{
                 total+=Math.abs(val);
             })
-            if(key.name!='Uso - Vertedero')
+            if(key.name!=this.TITLE_USO_VERTEDERO)
                 that.totales.list.push({'name':key.name,'icon':key.icon,'quantity':total});
 
-            if(key.name=='Uso - Vertedero')
+            if(key.name==this.TITLE_USO_VERTEDERO)
                 this.Total[1].quantity=total;
-            else if(key.name=='Devolución')
+            else if(key.name==this.TITLE_DEVOLUCION)
                 this.Total[3].quantity-=total;
             else
                 this.Total[3].quantity+=total;
