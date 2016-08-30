@@ -14,7 +14,7 @@ import moment from "moment/moment";
     selector: 'operacion-save',
     templateUrl: 'app/operacion/save.html',
     styleUrls: ['app/operacion/style.css'],
-    inputs:['idModal','inAnt'],
+    inputs:['idModal','inAnt','rules'],
     outputs:['save'],
     directives:[Search,RecargaSave],
 })
@@ -23,140 +23,13 @@ export class OperacionSave extends RestController implements OnInit{
     public idModal:string;
     public save:any;
     public inAnt:any={};
-
+    public rules:any={};
+    
     form:ControlGroup;
     data:any = [];
     keys:any = {};
 
-    public rules={
-        'vehicle':{
-            'type':'text',
-            'required':true,
-            'readOnly':false,
-            'key':'vehicle',
-            'paramsSearch': {
-                'label':{'title':"Empresa: ",'detail':"Placa: "},
-                'endpoint':"/search/vehicles/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png',
-                'field':'vehicle.id',
-            },
-            'icon':'fa fa-truck',
-            'object':true,
-            'title':'Vehículo',
-            'placeholder':'Ingrese la placa del vehículo',
-            'permissions':'69',
-            'msg':{
-                'error':'El vehículo contiene errores',
-                'notAuthorized':'No tiene permisos de listar los vehículos',
-            },
-        },
-        'company':{
-            'type':'text',
-            'required':true,
-            'key':'company',
-            'readOnly':false,
-            'checkBalance':true,
-            'checkBalancePermission':this.myglobal.existsPermission('160'),
-            'paramsSearch': {
-                'label':{'title':"Nombre: ",'detail':"Codigo: "},
-                'endpoint':"/search/companies/",
-                'where':'',
-                'imageGuest':'/assets/img/company-guest.png',
-                'field':'company.id',
-            },
-            'icon':'fa fa-building',
-            'object':true,
-            'title':'Cliente',
-            'placeholder':'Ingrese el Codigo/RUC del cliente',
-            'permissions':'80',
-            'msg':{
-                'error':'El cliente contiene errores',
-                'notAuthorized':'No tiene permisos de listar los clientes',
-                'errorCheckBalance':"El cliente no tiene saldo suficiente"
-            },
-        },
-        'trashType':{
-            'type':'text',
-            'required':true,
-            'key':'trashType',
-            'readOnly':false,
-            'permissions':'136',
-            'paramsSearch': {
-                'label':{'title':"Tipo: ",'detail':"Referencia: "},
-                'endpoint':"/search/type/trash/",
-                'where':'',
-                'imageGuest':'/assets/img/trash-guest.png',
-                'field':'trashType',
-            },
-            'icon':'fa fa-trash',
-            'object':true,
-            'title':'Basura',
-            'placeholder':'Referencia del tipo de basura',
-            'msg':{
-                'error':'El tipo de basura contiene errores',
-                'notAuthorized':'No tiene permisos de listar los tipos de basura',
-            },
-        },
-        'route':{
-            'type':'text',
-            'required':true,
-            'key':'route',
-            'readOnly':false,
-            'paramsSearch': {
-                'label':{'title':"Ruta: ",'detail':"Referencia: "},
-                'endpoint':"/search/routes/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png',
-                'field':'route.id',
-            },
-            'icon':'fa fa-random',
-            'object':true,
-            'title':'Ruta',
-            'placeholder':'Referencia de la ruta',
-            'permissions':'69',
-            'msg':{
-                'error':'La ruta contiene errores',
-                'notAuthorized':'No tiene permisos de listar las rutas',
-            },
-        },
-        'weightIn':{
-            'type':'number',
-            'required':true,
-            'double':true,
-            'key':'weightIn',
-            'readOnly':false,
-            'icon':'fa fa-balance-scale',
-            'title':'Peso E.',
-            'placeholder':'Ingrese el peso de entrada',
-            'msg':{
-                'error':'El peso debe ser numerico',
-            },
-        },
-        'weightOut':{
-            'type':'number',
-            'key':'weightOut',
-            'readOnly':false,
-            'hidden':true,
-            'double':true,
-            'icon':'fa fa-balance-scale',
-            'title':'Peso S.',
-            'placeholder':'Peso de salida',
-            'msg':{
-                'error':'El peso debe ser numerico',
-            },
-        },
-        'comment':{
-            'type':'textarea',
-            'key':'description',
-            'icon':'fa fa-font',
-            'title':'Comentarios',
-            'placeholder':'Ingrese un comentario',
-            'msg':{
-                'error':'El comentario contiene errores',
-            },
-        },
-    };
+    
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
