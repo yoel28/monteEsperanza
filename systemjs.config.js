@@ -24,7 +24,9 @@
     //'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js',
     'semantic' :                  'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js',
     'angular2-websocket' :       'node_modules/angular2-websocket',
-    'sockjs-client':              'assets/js'
+    'sockjs-client':              'assets/js',
+    'ng2-translate':              'node_modules/ng2-translate',
+
 
   };
   // packages tells the System loader how to load when no filename and/or no extension
@@ -46,8 +48,7 @@
     'angular2-highcharts' :       { main: 'index',format: 'cjs', defaultExtension: 'js' },
     'angular2-websocket' :        { main: 'angular2-websocket.js', defaultExtension: 'js' },
     'sockjs-client' :             { main: 'websocket.js', defaultExtension: 'js' },
-
-
+    'ng2-translate' :             { main: 'ng2-translate', defaultExtension: 'js' },
 
   };
   var ngPackageNames = [
