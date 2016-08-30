@@ -24,6 +24,8 @@ export class OperacionSave extends RestController implements OnInit{
     public save:any;
     public inAnt:any={};
     public rules:any={};
+
+    public pendients=false;
     
     form:ControlGroup;
     data:any = [];
@@ -102,6 +104,9 @@ export class OperacionSave extends RestController implements OnInit{
             that.toastr.success('Guardado con éxito','Notificación')
         };
         this.setEndpoint('/operations/');
+        if(this.pendients)
+            this.setEndpoint('/operations/save/auto/');
+        
         let body = this.form.value;
 
         Object.keys(body).forEach((key:string)=>{
@@ -211,6 +216,15 @@ export class OperacionSave extends RestController implements OnInit{
             this.data['company'].updateValue(data.companyRUC);
 
             this.data['weightIn'].updateValue(data.weightIn);
+
+            if(data.weightOut){
+                this.data['weightOut'].updateValue(data.weightOut);
+
+                this.rules['weightOut'].readOnly=true;
+                this.rules['weightIn'].readOnly=true;
+                
+                this.rules['weightOut'].hidden=false;
+            }
 
             this.checkBalance();
         }
