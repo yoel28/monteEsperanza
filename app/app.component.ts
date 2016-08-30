@@ -45,6 +45,7 @@ import {EmpresaMorosos} from "./empresa/companyMorosos";
 import {Caja} from "./recarga/caja";
 import {TipoServicio} from "./tipoServicio/tipoServicio";
 import {Servicio} from "./servicio/servicio";
+import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 
 
 declare var SockJS:any;
@@ -79,6 +80,7 @@ declare var Stomp:any;
   { path: '/cliente/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
   { path: '/operacion',   name: 'Operacion', component: Operacion },
+  { path: '/operacion/pendiente',   name: 'OperacionPendiente', component: OperacionPendiente },
   { path: '/operacion/monitor',   name: 'OperacionMonitor', component: OperacionMonitor },
   { path: '/roles',   name: 'Rol', component: Rol },
   { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
@@ -119,11 +121,11 @@ export class AppComponent extends RestController implements OnInit{
     //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
     //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
       
-    localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
-    localStorage.setItem('url','http://dev.aguaseo.com:8080');
+    //localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
+    //localStorage.setItem('url','http://dev.aguaseo.com:8080');
 
-    //localStorage.setItem('urlAPI','http://192.168.0.112:8080/api');
-      // localStorage.setItem('url','http://192.168.0.112:8080');
+    localStorage.setItem('urlAPI','http://192.168.0.114:8080/api');
+    localStorage.setItem('url','http://192.168.0.114:8080');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
