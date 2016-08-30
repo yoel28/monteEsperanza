@@ -43,14 +43,6 @@ export class Operacion extends ModelBase implements OnInit {
         }
     }
 
-    initModel() {
-        this.initPermissions();
-        this.initOptions();
-        this.initRules();
-        this.initFilter();
-
-    }
-
     initOptions() {
         this.viewOptions["title"] = 'Operaciones';
         this.viewOptions["buttons"].push({
