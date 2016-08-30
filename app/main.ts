@@ -7,6 +7,10 @@ import { globalService }   from './common/globalService';
 import { AppComponent }   from './app.component';
 import { ToastsManager,ToastOptions } from 'ng2-toastr/ng2-toastr';
 import 'semantic';
+import {
+    TranslateLoader, TranslateStaticLoader,
+    TranslateService
+} from 'ng2-translate/ng2-translate';
 
 let options = {
     toastLife: 4000,
@@ -16,8 +20,14 @@ enableProdMode();
 bootstrap(AppComponent, [
     globalService,
     ToastsManager,
-    provide(ToastOptions, { useValue: new ToastOptions(options)}),
     HTTP_PROVIDERS,
+    provide(ToastOptions, { useValue: new ToastOptions(options)}),
+    {
+        provide: TranslateLoader,
+        useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
+        deps: [Http]
+    },
+    TranslateService,
     provide(LocationStrategy, { useClass: HashLocationStrategy }),
     provide(APP_BASE_HREF, { useValue: '/' }),
     provide(AuthHttp, {
