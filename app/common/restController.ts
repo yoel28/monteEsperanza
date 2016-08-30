@@ -89,4 +89,9 @@ export class RestController implements OnInit {
         }
         return (this.httputils.doPost(endpoint, body,successCallback, error));
     }
+    assignData(data){
+        this.dataList.list.unshift(data);
+        if(this.dataList.page.length > 1)
+            this.dataList.list.pop();
+    }
 }
