@@ -50,7 +50,7 @@ export class globalService extends RestController{
         let index = this.permissions.findIndex(obj => obj.id == id);
         if(index > -1)
             return true;
-        return false;
+        return true;
     }
     myPermissions(){
         let that = this;
