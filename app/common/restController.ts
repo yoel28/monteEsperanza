@@ -45,8 +45,9 @@ export class RestController implements OnInit {
             this.httputils.onUpdate(this.endpoint+data.id,body,data,this.error);
         }
     }
-    onDelete(event,id){
-        event.preventDefault();
+    onDelete(event=null,id){
+        if(event)
+            event.preventDefault();
         this.httputils.onDelete(this.endpoint+id, id, this.dataList.list, this.error);
     }
     onSave(data:ControlGroup){
