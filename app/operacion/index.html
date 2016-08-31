@@ -138,6 +138,13 @@
                     </button>
                 </div>
             </div>
+            <div *ngIf="!permissions.list" class="box-body">
+                <div class="btn-red padding-error">
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{viewOptions.errors.title}}</strong></h5>
+                    {{viewOptions.errors.list}}
+                </div>
+            </div>
+
         </div>
     </section>
 </div>

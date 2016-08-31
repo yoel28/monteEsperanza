@@ -285,6 +285,7 @@ export class OperacionSave extends RestController implements OnInit{
         let that=this;
         this.search={};
         this.searchId={};
+        this.dataList={};
         Object.keys(this.data).forEach(key=>{
             (<Control>that.data[key]).updateValue(null);
             (<Control>that.data[key]).setErrors(null);
