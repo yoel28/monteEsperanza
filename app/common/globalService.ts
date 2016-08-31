@@ -14,7 +14,7 @@ export class globalService extends RestController{
     init=false;
 
     status={
-        'token':{'status':false,'title':'Validando token de usuario'},
+        'token':{'status':false,'title':'Validando usuario'},
         'user':{'status':false,'title':'Consultando datos del usuario'},
         'permissions':{'status':false,'title':'Consultando  permisos'},
         'params':{'status':false,'title':'Consultando  parametros'},
