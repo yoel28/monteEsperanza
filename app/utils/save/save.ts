@@ -197,5 +197,13 @@ export class Save extends RestController implements OnInit{
                 that.rules[key].readOnly=false;
         })
     }
+    refreshField(event,data){
+        event.preventDefault();
+        let that = this;
+        let successCallback= response => {
+            that.data[data.key].updateValue(response.json()[data.refreshField.field]);
+        }
+        this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
+    }
 }
 

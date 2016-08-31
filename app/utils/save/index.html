@@ -47,6 +47,10 @@
                                                             class="btn btn-box-tool fa fa-search text-blue"
                                                             (click)="getLoadSearch($event,rules[key])">
                                                     </button>
+                                                    <button *ngIf="rules[key].refreshField"
+                                                            class="btn btn-box-tool fa {{rules[key].refreshField.icon}} text-blue"
+                                                            (click)="refreshField($event,rules[key])">
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
