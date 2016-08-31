@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,ViewChild} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
@@ -142,6 +142,11 @@ export class Servicio extends RestController implements OnInit{
                 'search': true,
                 'msg':{
                     'error':'El peso debe ser numerico',
+                },
+                'refreshField':{
+                    'icon':'fa fa-refresh',
+                    'endpoint':'/weight/',
+                    'field':'weight',
                 }
             },
             'detail':{
@@ -200,4 +205,13 @@ export class Servicio extends RestController implements OnInit{
         this.loadData();
     }
 
+    @ViewChild(Save)
+    save:Save;
+    loadWeight(){
+        let that = this;
+        let successCallback= response => {
+            that.save.data['weight'].updateValue(response.json().weight);
+        }
+        this.httputils.doGet('/weight/',successCallback,this.error);
+    }
 }

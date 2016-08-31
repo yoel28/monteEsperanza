@@ -9,6 +9,7 @@
                         <div class="pull-right">
                             <button *ngIf="permissions['add']"
                                     type="button" class="btn btn-primary" data-toggle="modal"
+                                    (click)="loadWeight()"
                                     [attr.data-target]="'#'+params.idModal">
                                 <i class="fa fa-plus"></i>&nbsp;Agregar
                             </button>
