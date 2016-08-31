@@ -54,8 +54,7 @@ export class AccountLogin extends RestController implements OnInit{
             that.myglobal.init=false;
             localStorage.setItem('bearer', response.json().access_token);
             contentHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('bearer'));
-            that.myglobal.user = response.json();
-            that.myglobal.getUser();
+            that.myglobal.initSession();
             let link = ['Dashboard', {}];
             that.router.navigate(link);
         };
