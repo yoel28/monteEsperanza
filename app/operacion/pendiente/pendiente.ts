@@ -28,9 +28,9 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.operacion.initModel();
         
         this.initModel();
-        this.setEndpoint('/pendings');
+        this.setEndpoint('/pendings/');
         this.loadData();
-        this.setEndpoint('/operations');
+        this.setEndpoint('/operations/');
     }
 
     initOptions() {
@@ -75,5 +75,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             return moment(date).format(format);
         return "-";
     }
-
+    liberar(data) {
+        this.httputils.onDelete('/pendings/' + this.dataOperation.id, this.dataOperation.id, this.dataList.list, this.error);
+    }
 }
