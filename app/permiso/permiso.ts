@@ -31,6 +31,7 @@ export class Permiso extends RestController implements OnInit{
         'module':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Modulo', 'search': true},
         'controlador':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Controlador', 'search': true},
         'accion':{'type':'text','display':null,'title':'Modulo','mode':'inline','placeholder': 'Accion', 'search': true},
+        'code':{'type':'text','display':null,'title':'Codigo','mode':'inline','placeholder': 'Codigo', 'search': true},
     };
     public modalIn:boolean=true;
     ngOnInit(){
@@ -186,7 +187,7 @@ export class PermisosRol extends RestController implements OnInit{
     }
     //Cargar mis permisos
     loadMyPermissions(){
-        this.myglobal.myPermissions();
+        this.myglobal.loadMyPermissions();
     }
 
 }

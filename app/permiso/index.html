@@ -23,6 +23,7 @@
                             <thead>
                             <tr data-title="email">
 
+                                <th>Codigo</th>
                                 <th>M&oacute;dulo</th>
                                 <th>T&iacute;tulo</th>
                                 <th>Detalle</th>
@@ -34,6 +35,9 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let data of dataList.list" >
+                                <td>
+                                    <a x-editable [disabled]="!myglobal.existsPermission('44')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="code" ></a>
+                                </td>
 
                                 <td>
                                     <a x-editable [disabled]="!myglobal.existsPermission('44')" [endpoint]="endpoint" [function]="onEditable" [data]="data" [rules]="rules" field="module" ></a>
