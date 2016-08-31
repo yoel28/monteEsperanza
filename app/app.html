@@ -293,7 +293,7 @@
         </div>
         <strong>Copyright &copy; 2016 <a href="#">AGUASEO</a>.</strong> Todos los derechos reservados.
         <br/>En caso de error comunicarse al
-        <strong>+507 60456510</strong> / <strong>oscarenriquex@gmail.com</strong> / <strong>castanedao@zippyttech.com</strong>
+        {{myglobal.getParams('PHONE_SUPPORT')}} / {{myglobal.getParams('EMAIL_SUPPORT')}}
     </footer>
 </div>
 <div *ngIf="validToken() && !myglobal.init" class="col-lg-12 cargar">
