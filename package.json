@@ -33,6 +33,7 @@
     "font-awesome": "4.4.0",
     "highcharts": "^4.2.5",
     "jquery": "2.1.4",
+    "jquery-knob": "^1.2.11",
     "jspdf": "^1.2.61",
     "modernizr": "^3.3.1",
     "moment": "^2.13.0",
