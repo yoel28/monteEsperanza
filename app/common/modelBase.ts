@@ -144,6 +144,7 @@ export abstract class ModelBase extends RestController {
         this.viewOptions["buttons"] = [];
         this.viewOptions["actions"] = {};
         this.viewOptions["errors"] = {};
+        this.viewOptions["errors"].title = "ADVERTENCIA";
         this.viewOptions["errors"].notFound = "no se encontraron resultados";
         this.viewOptions["errors"].list = "no tiene permisos para ver esta pagina";
     }
