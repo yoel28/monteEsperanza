@@ -57,7 +57,7 @@ declare var Stomp:any;
   styleUrls:['app/app.css'],
   directives: [ROUTER_DIRECTIVES,OperacionSave],
   providers: [
-    ROUTER_PROVIDERS,
+    ROUTER_PROVIDERS,Operacion,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
   ]
 })
@@ -114,18 +114,19 @@ declare var Stomp:any;
 export class AppComponent extends RestController implements OnInit{
 
   public saveUrl:string;
+    public rulesOperacion={};
 
-  constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
+  constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
     //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
     //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
       
-    //localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
-    //localStorage.setItem('url','http://dev.aguaseo.com:8080');
+    localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
+    localStorage.setItem('url','http://dev.aguaseo.com:8080');
 
-    localStorage.setItem('urlAPI','http://192.168.0.114:8080/api');
-    localStorage.setItem('url','http://192.168.0.114:8080');
+    //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
+    //localStorage.setItem('url','http://192.168.0.114:9090');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
@@ -164,7 +165,8 @@ export class AppComponent extends RestController implements OnInit{
     );//this.onSocket();
   }
     ngOnInit(){
-
+        this.operacion.initModel();
+        this.rulesOperacion = this.operacion.rulesSave;
     }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -203,7 +205,7 @@ export class AppComponent extends RestController implements OnInit{
   }
     loadPermisos(event){
         event.preventDefault();
-        this.myglobal.myPermissions();
+        this.myglobal.loadMyPermissions();
     }
     activeMenuId:string;
     activeMenu(event,id){
