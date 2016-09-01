@@ -120,6 +120,13 @@ export class ReporteGrupos extends RestController implements OnInit{
         })
         return total;
     }
+    sumTotalVeh(id){
+        let total={};
+        this.dataList.list[id].recharges.forEach(val=>{
+            total[val.vehiclePlate]='';
+        })
+        return Object.keys(total).length;
+    }
     onPrint(){
         var printContents = document.getElementById("reporte").innerHTML;
         var popupWin = window.open('', '_blank');

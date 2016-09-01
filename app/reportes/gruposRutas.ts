@@ -44,7 +44,7 @@ export class GruposRutas extends RestController implements OnInit{
         });
     }
     public searchRutas = {
-        title: "Grupo",
+        title: "Rutas",
         idModal: "searchRoutes",
         endpointForm: "/search/routes/",
         placeholderForm: "Ingrese la ruta",
@@ -53,6 +53,7 @@ export class GruposRutas extends RestController implements OnInit{
 
     public formatDateFact = {
         format: "dd/mm/yyyy",
+        startDate:'01/01/2016',
         startView: 2,
         minViewMode: 0,
         maxViewMode: 2,
@@ -118,6 +119,13 @@ export class GruposRutas extends RestController implements OnInit{
             total+=(val.quantity);
         })
         return total;
+    }
+    sumTotalVeh(id){
+        let total={};
+        this.dataList.list[id].recharges.forEach(val=>{
+            total[val.vehiclePlate]='';
+        })
+        return Object.keys(total).length;
     }
     onPrint(){
         var printContents = document.getElementById("reporte").innerHTML;
