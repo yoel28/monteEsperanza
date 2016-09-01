@@ -8,6 +8,7 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Operacion} from "../operacion";
 import {OperacionSave} from "../methods";
 import moment from "moment/moment";
+import {Filter} from "../../utils/filter/filter";
 
 
 @Component({
@@ -15,32 +16,64 @@ import moment from "moment/moment";
     templateUrl: 'app/operacion/pendiente/index.html',
     styleUrls: ['app/operacion/pendiente/style.css'],
     providers: [TranslateService,Operacion],
-    directives: [OperacionSave],
+    directives: [OperacionSave,Filter],
     pipes: [TranslatePipe]
 })
 export class OperacionPendiente extends ModelBase implements OnInit {
 
     public dataSelect:any = {};
     public typeView=2;
-    
+
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public operacion:Operacion) {
-        super('OP', '/operations/', http, toastr, myglobal, translate);
+        super('PEND', '/pendings/', http, toastr, myglobal, translate);
     }
     ngOnInit(){
         this.operacion.initModel();
         
         this.initModel();
-        this.setEndpoint('/pendings/');
         this.loadData();
-        this.setEndpoint('/operations/');
     }
 
     initOptions() {
+        this.max=20;
         this.viewOptions["title"] = 'Operaciones pendientes';
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions['filter'],
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.paramsFilter.idModal
+        });
+
     }
 
     initRules() {
-        this.rulesSave = this.operacion.rulesSave;
+        this.rules['tagRFID']={
+            'type': 'text',
+            'search': true,
+            'key': 'tagRFID',
+            'icon': 'fa fa-balance-scale',
+            'title': 'TagRFID',
+            'placeholder': 'Ingrese tag RFID',
+        }
+        this.rules['weightIn']={
+            'type': 'number',
+            'step':'0.001',
+            'search': true,
+            'key': 'weightIn',
+            'icon': 'fa fa-balance-scale',
+            'title': 'Peso E.',
+            'placeholder': 'Ingrese el peso de entrada',
+        }
+        this.rules['weightOut']={
+            'type': 'number',
+            'step':'0.001',
+            'search': true,
+            'key': 'weightOut',
+            'icon': 'fa fa-balance-scale',
+            'title': 'Peso S.',
+            'placeholder': 'Ingrese el peso de salida',
+        }
     }
 
     initSearch() {
@@ -50,6 +83,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
 
     initFilter() {
+        this.paramsFilter.title="Filtrar operaciones pendientes"
     }
 
     initPermissions() {
@@ -78,6 +112,6 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         return "-";
     }
     liberar(data) {
-        this.httputils.onDelete('/pendings/' + this.dataOperation.id, this.dataOperation.id, this.dataList.list, this.error);
+        this.onDelete(null,this.dataOperation.id);
     }
 }
