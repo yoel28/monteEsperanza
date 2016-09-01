@@ -181,7 +181,7 @@ export class Datepicker implements OnInit {
             forceParse: that.format.forceParse,
             autoclose: that.format.autoclose,
             todayHighlight: that.format.todayHighlight,
-            startDate:'01-01-2016',
+            startDate:that.format.startDate,
             endDate:new Date(),
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {

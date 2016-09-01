@@ -39,6 +39,7 @@ export class ReporteDescargasBasura extends RestController implements OnInit{
     }
     public formatDate1 = {
         format: "mm/yyyy",
+        startDate:'01/2016',
         startView: 2,
         minViewMode: 1,
         maxViewMode: 2,
@@ -51,6 +52,7 @@ export class ReporteDescargasBasura extends RestController implements OnInit{
     }
     public formatDate2 = {
         format: "yyyy",
+        startDate:'2016',
         startView: 2,
         minViewMode: 2,
         maxViewMode: 2,

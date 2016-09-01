@@ -494,6 +494,7 @@ export class Dashboard extends RestController implements OnInit {
     public consultar = false;
     public formatDate1 = {
         format: "mm/yyyy",
+        startDate:'01/2016',
         startView: 2,
         minViewMode: 1,
         maxViewMode: 2,
@@ -506,6 +507,7 @@ export class Dashboard extends RestController implements OnInit {
     }
     public formatDate2 = {
         format: "yyyy",
+        startDate:'2016',
         startView: 2,
         minViewMode: 2,
         maxViewMode: 2,
@@ -518,6 +520,7 @@ export class Dashboard extends RestController implements OnInit {
     }
     public formatDateFact = {
         format: "dd/mm/yyyy",
+        startDate:'01/01/2016',
         startView: 2,
         minViewMode: 0,
         maxViewMode: 2,

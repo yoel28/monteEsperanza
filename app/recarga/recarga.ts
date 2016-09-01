@@ -163,6 +163,7 @@ export class RecargaIngresos extends RestController implements OnInit{
 
     public formatDateFact = {
         format: "dd/mm/yyyy",
+        startDate:'01/01/2016',
         startView: 2,
         minViewMode: 0,
         maxViewMode: 2,
@@ -300,6 +301,7 @@ export class RecargaLibro extends RestController implements OnInit{
 
     public formatDateFact = {
         format: "dd/mm/yyyy",
+        startDate:'01/01/2016',
         startView: 2,
         minViewMode: 0,
         maxViewMode: 2,
