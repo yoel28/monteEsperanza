@@ -114,7 +114,7 @@ export class globalService extends RestController{
         let index = this.permissions.findIndex(obj => (obj.id == val || obj.code == val));
         if(index > -1)
             return true;
-        return true;
+        return false;
     }
 
 
