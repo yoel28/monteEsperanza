@@ -84,7 +84,7 @@
                                     {{ton | number:'.0-3'}}
                                 </td>
                                 <td *ngFor="let val of minMaxAvgSum(data.data)">
-                                    {{val}}
+                                    {{val| number:'.0-3'}}
                                 </td>
                             </tr>
                             </tbody>

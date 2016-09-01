@@ -105,7 +105,7 @@ export class ReporteDescargasGrupos extends RestController implements OnInit{
         })
         avg=total/data.length;
         this.minMaxAvgSumGlobal([min,max,total])
-        return [min,max,avg.toFixed(3),total];
+        return [min,max,avg,total];
     }
 
     public searchTipoEmpresa = {
