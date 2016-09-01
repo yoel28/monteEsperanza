@@ -226,6 +226,11 @@ export class OperacionSave extends RestController implements OnInit{
                 this.rules['weightOut'].hidden=false;
             }
 
+            if(this.myglobal.existsPermission('OP_EDIT_WEIGHT')){
+                this.rules['weightIn'].readOnly=false;
+                this.rules['weightOut'].readOnly=false;
+            }
+
             this.checkBalance();
         }
         else{
