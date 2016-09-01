@@ -25,6 +25,7 @@ export class PermisoSave extends RestController implements OnInit{
     module: Control;
     controlador: Control;
     accion: Control;
+    code: Control;
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager) {
         super(http,toastr);
@@ -38,10 +39,12 @@ export class PermisoSave extends RestController implements OnInit{
         this.title = new Control("", Validators.compose([Validators.required]));
         this.detail = new Control("", Validators.compose([Validators.required]));
         this.module = new Control("", Validators.compose([Validators.required]));
+        this.code = new Control("", Validators.compose([Validators.required]));
         this.controlador = new Control("");
         this.accion = new Control("");
 
         this.form = this._formBuilder.group({
+            code: this.code,
             title: this.title,
             detail: this.detail,
             module: this.module,
