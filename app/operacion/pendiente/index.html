@@ -49,7 +49,7 @@
                             <td>{{data.weightOut | number:'.0-3'}}</td>
                             <td>{{(data.weightIn - data.weightOut) | number:'.0-3'}}</td>
                             <td>
-                                <a *ngIf="data.weightOut" (click)="cargarData($event,data)" data-toggle="modal" data-target="#operacionManual2" >
+                                <a (click)="cargarData($event,data)" data-toggle="modal" data-target="#operacionManual2" >
                                     <i class="fa fa-sign-in fa-lg"></i>&nbsp;Cargar
                                 </a>
                             </td>
