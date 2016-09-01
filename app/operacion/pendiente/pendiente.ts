@@ -21,6 +21,8 @@ import moment from "moment/moment";
 export class OperacionPendiente extends ModelBase implements OnInit {
 
     public dataSelect:any = {};
+    public typeView=2;
+    
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public operacion:Operacion) {
         super('OP', '/operations/', http, toastr, myglobal, translate);
     }
