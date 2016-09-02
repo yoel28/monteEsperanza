@@ -77,7 +77,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 padding-top-4">
-                                                        <button *ngIf="rules[key].refreshField"
+                                                        <button *ngIf="rules[key].refreshField && !rules[key].readOnly"
                                                                 class="btn btn-box-tool fa {{rules[key].refreshField.icon}} text-blue"
                                                                 (click)="refreshField($event,rules[key])">
                                                         </button>
