@@ -55,7 +55,7 @@ export class Empresa extends RestController implements OnInit {
             'display': null,
             'title': 'Codigo del cliente',
             'mode': 'inline',
-            'placeholder': 'RUC',
+            'placeholder': 'Código',
             'search': true
         },
         'responsiblePerson': {
