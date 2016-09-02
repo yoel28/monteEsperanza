@@ -64,6 +64,7 @@ export class Save extends RestController implements OnInit{
     form:ControlGroup;
     data:any = [];
     keys:any = {};
+    public baseWeight=1;
 
 
 
@@ -72,6 +73,8 @@ export class Save extends RestController implements OnInit{
         this.save = new EventEmitter();
     }
     ngOnInit(){
+        this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
+        this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         this.initForm();
     }
 
@@ -201,6 +204,10 @@ export class Save extends RestController implements OnInit{
         event.preventDefault();
         let that = this;
         let successCallback= response => {
+            let val = response.json()[data.refreshField.field]
+            if(data.refreshField.field=='weight')
+                val = val / this.baseWeight
+            that.data[data.key].updateValue(val);
             that.data[data.key].updateValue(response.json()[data.refreshField.field]);
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
