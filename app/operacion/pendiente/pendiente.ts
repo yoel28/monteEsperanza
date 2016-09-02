@@ -23,12 +23,16 @@ export class OperacionPendiente extends ModelBase implements OnInit {
 
     public dataSelect:any = {};
     public typeView=2;
+    public baseWeight=1;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public operacion:Operacion) {
         super('PEND', '/pendings/', http, toastr, myglobal, translate);
     }
     ngOnInit(){
         this.operacion.initModel();
+
+        this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
+        this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         
         this.initModel();
         this.loadData();
@@ -45,6 +49,18 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'modal': this.paramsFilter.idModal
         });
 
+        this.viewOptions.actions.delete = {
+            'title': 'Eliminar',
+            'visible': this.permissions.delete,
+            'message': 'Estás seguro que deseas eliminar la operación pendiente del ',
+            'keyAction': 'id'
+        };
+        this.viewOptions.actions.load = {
+            'visible': this.permissions.add,
+            'modalId':'cargaPendiente'
+        };
+
+
     }
 
     initRules() {
@@ -60,6 +76,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'type': 'number',
             'step':'0.001',
             'search': true,
+            'double':true,
             'key': 'weightIn',
             'icon': 'fa fa-balance-scale',
             'title': 'Peso E.',
@@ -69,6 +86,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'type': 'number',
             'step':'0.001',
             'search': true,
+            'double':true,
             'key': 'weightOut',
             'icon': 'fa fa-balance-scale',
             'title': 'Peso S.',
@@ -113,5 +131,9 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
     liberar(data) {
         this.onDelete(null,this.dataOperation.id);
+    }
+    getBaseWeight(weight){
+        if(typeof weight === "number")
+            return weight/this.baseWeight;
     }
 }
