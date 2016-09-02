@@ -26,6 +26,7 @@ export class OperacionSave extends RestController implements OnInit{
     public rules:any={};
 
     public pendients=false;
+    public baseWeight=1;
     
     form:ControlGroup;
     data:any = [];
@@ -38,6 +39,8 @@ export class OperacionSave extends RestController implements OnInit{
         this.save = new EventEmitter();
     }
     ngOnInit(){
+        this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
+        this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         this.initForm();
     }
 
@@ -215,10 +218,10 @@ export class OperacionSave extends RestController implements OnInit{
             this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
             this.data['company'].updateValue(data.companyRUC);
 
-            this.data['weightIn'].updateValue(data.weightIn);
+            this.data['weightIn'].updateValue(data.weightIn/this.baseWeight);
 
             if(data.weightOut){
-                this.data['weightOut'].updateValue(data.weightOut);
+                this.data['weightOut'].updateValue(data.weightOut/this.baseWeight);
 
                 this.rules['weightOut'].readOnly=true;
                 this.rules['weightIn'].readOnly=true;
@@ -260,7 +263,7 @@ export class OperacionSave extends RestController implements OnInit{
         this.data['weightIn'].updateValue(data.weightIn);
         this.rules['weightIn'].readOnly=true;
 
-        this.data['weightOut'].updateValue(this.weightOut);
+        this.data['weightOut'].updateValue(this.weightOut/this.baseWeight);
         this.rules['weightOut'].readOnly=false;
         this.rules['weightOut'].hidden=false;
 
@@ -310,6 +313,17 @@ export class OperacionSave extends RestController implements OnInit{
             this.recargaSave.company.updateValue(data.id);
         }
 
+    }
+    refreshField(event,data){
+        event.preventDefault();
+        let that = this;
+        let successCallback= response => {
+            let val = response.json()[data.refreshField.field]
+            if(data.refreshField.field=='weight')
+                val = val / this.baseWeight
+            that.data[data.key].updateValue(val);
+        }
+        this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
     }
 }
 
