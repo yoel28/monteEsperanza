@@ -187,6 +187,11 @@ export class Operacion extends ModelBase implements OnInit {
                 'msg': {
                     'error': 'El peso debe ser numerico',
                 },
+                'refreshField':{
+                    'icon':'fa fa-refresh',
+                    'endpoint':'/weight/',
+                    'field':'weight',
+                }
             },
             'weightOut': {
                 'type': 'number',
@@ -203,6 +208,11 @@ export class Operacion extends ModelBase implements OnInit {
                 'msg': {
                     'error': 'El peso debe ser numerico',
                 },
+                'refreshField':{
+                    'icon':'fa fa-refresh',
+                    'endpoint':'/weight/',
+                    'field':'weight',
+                }
             },
             'comment': {
                 'type': 'textarea',
