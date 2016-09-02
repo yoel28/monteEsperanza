@@ -34,6 +34,7 @@ export class Filter extends RestController implements OnInit{
     public  cond = {
         'text': [
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'%like%','text': 'Contiene'},
             {'id':'like%','text': 'Comienza con'},
@@ -41,9 +42,11 @@ export class Filter extends RestController implements OnInit{
             {'id':'%ilike%','text': 'Contiene(i)'},
             {'id':'ilike%','text': 'Comienza con(i)'},
             {'id':'%ilike','text': 'Termina en(i)'}
+
         ],
         'number':[
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'ge','text':'Mayor Igual'},
             {'id':'gt','text':'Mayor que'},
@@ -52,10 +55,12 @@ export class Filter extends RestController implements OnInit{
         ],
         'object':[
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
         ],
         'date':[
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'ge','text':'Mayor Igual'},
             {'id':'gt','text':'Mayor que'},
@@ -64,6 +69,7 @@ export class Filter extends RestController implements OnInit{
         ],
         'email': [
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'%like%','text': 'Contiene'},
             {'id':'like%','text': 'Comienza con'},
@@ -75,9 +81,11 @@ export class Filter extends RestController implements OnInit{
         'select': [//TODO: hacer un select para este parametro
             {'id':'eq','text':'Igual que'},
             {'id':'ne','text':'Diferente que'},
+            {'id':'isNull','text':'Nulo'},
         ],
         'textarea': [
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'%like%','text': 'Contiene'},
             {'id':'like%','text': 'Comienza con'},
@@ -185,7 +193,7 @@ export class Filter extends RestController implements OnInit{
         let dataWhere="";
         let that=this
         Object.keys(this.rules).forEach( key=>{
-            if(this.form.value[key] && this.form.value[key]!="")
+            if( (this.form.value[key] && this.form.value[key]!="") || that.form.value[key+'Cond']=='isNull')
             {
                 let value="";
                 let op="";
@@ -216,7 +224,12 @@ export class Filter extends RestController implements OnInit{
                     key = that.rules[key].paramsSearch.field;
                 }
 
-                dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
+                if(op=='isNull')
+                    dataWhere+="['op':'"+op+"','field':'"+key+"'],";
+                else
+                    dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
+
+
             }
 
         });
