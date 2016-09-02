@@ -12,6 +12,8 @@ export class RestController implements OnInit {
     endpoint:string;
     offset=0;
     max=5;
+    sort="";//name field.
+    order="";//asc o desc
     page:any=[];
     where:string="";
 
@@ -33,7 +35,7 @@ export class RestController implements OnInit {
 
     loadData(offset=0){
         this.offset=offset;
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error);
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error);
     };
     onUpdate(event,data){
         event.preventDefault();
