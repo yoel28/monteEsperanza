@@ -218,10 +218,10 @@ export class OperacionSave extends RestController implements OnInit{
             this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
             this.data['company'].updateValue(data.companyRUC);
 
-            this.data['weightIn'].updateValue(data.weightIn/this.baseWeight);
+            this.data['weightIn'].updateValue(data.weightIn);
 
             if(data.weightOut){
-                this.data['weightOut'].updateValue(data.weightOut/this.baseWeight);
+                this.data['weightOut'].updateValue(data.weightOut);
 
                 this.rules['weightOut'].readOnly=true;
                 this.rules['weightIn'].readOnly=true;
@@ -263,7 +263,7 @@ export class OperacionSave extends RestController implements OnInit{
         this.data['weightIn'].updateValue(data.weightIn);
         this.rules['weightIn'].readOnly=true;
 
-        this.data['weightOut'].updateValue(this.weightOut/this.baseWeight);
+        this.data['weightOut'].updateValue(this.weightOut);
         this.rules['weightOut'].readOnly=false;
         this.rules['weightOut'].hidden=false;
 
