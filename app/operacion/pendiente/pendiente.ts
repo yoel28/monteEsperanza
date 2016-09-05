@@ -25,7 +25,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     public typeView=2;
     public baseWeight=1;
 
-    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public operacion:Operacion) {
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public operacion:Operacion,public tagRfid:TagRfid) {
         super('PEND', '/pendings/', http, toastr, myglobal, translate);
     }
     ngOnInit(){
@@ -35,6 +35,18 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         
         this.initModel();
+
+        this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
+        this.loadData();
+    }
+
+    public pendings=true;
+    loadDataPendings(event){
+        event.preventDefault();
+        this.pendings=!this.pendings;
+        this.where="";
+        if(this.pendings)
+            this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
         this.loadData();
     }
 
@@ -42,7 +54,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.max=20;
         this.viewOptions["title"] = 'Operaciones pendientes';
         this.viewOptions["buttons"].push({
-            'visible': this.permissions['filter'],
+            'visible': this.permissions.filter,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
@@ -59,7 +71,9 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'visible': this.permissions.add,
             'modalId':'cargaPendiente'
         };
-
+        this.viewOptions.actions.verificar = {
+            'visible': this.permissions.update,
+        };
 
     }
 
@@ -92,6 +106,17 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'title': 'Peso S.',
             'placeholder': 'Ingrese el peso de salida',
         }
+        this.rules['dateIn']={
+            'type': 'date',
+            'search': true,
+            'title': 'Fecha de entrada.',
+        }
+        this.rules['dateOut']={
+            'type': 'date',
+            'search': true,
+            'title': 'Fecha de salida',
+        }
+
     }
 
     initSearch() {
@@ -130,6 +155,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         return "-";
     }
     liberar(data) {
-        this.onDelete(null,this.dataOperation.id);
+        this.onPatch('enabled',this.dataOperation);
+
     }
 }
