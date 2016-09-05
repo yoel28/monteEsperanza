@@ -300,7 +300,7 @@ export class Operacion extends ModelBase implements OnInit {
         let that = this;
         event.preventDefault();
         let json={};
-        json['rechargeReference']=this.codeReference.length>0? this.codeReference: (this.AUTOMATIC_RECHARGE_PREF+data.rechargeReference);
+        json['reference']=this.codeReference.length>0? this.codeReference: (this.AUTOMATIC_RECHARGE_PREF+data.rechargeReference);
         let successCallback = response => {
             Object.assign(data, response.json());
             if (that.toastr)
