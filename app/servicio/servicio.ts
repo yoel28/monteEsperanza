@@ -204,14 +204,4 @@ export class Servicio extends RestController implements OnInit{
         this.where = where;
         this.loadData();
     }
-
-    @ViewChild(Save)
-    save:Save;
-    loadWeight(){
-        let that = this;
-        let successCallback= response => {
-            that.save.data['weight'].updateValue(response.json().weight);
-        }
-        this.httputils.doGet('/weight/',successCallback,this.error);
-    }
 }
