@@ -208,7 +208,6 @@ export class Save extends RestController implements OnInit{
             if(data.refreshField.field=='weight')
                 val = val / this.baseWeight
             that.data[data.key].updateValue(val);
-            that.data[data.key].updateValue(response.json()[data.refreshField.field]);
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
     }
