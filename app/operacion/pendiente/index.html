@@ -21,6 +21,12 @@
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
                     </button>
+                    <button class="btn btn-blue" type="button"
+                        (click)="loadDataPendings($event)">
+                        <i class="fa fa-truck"></i>
+                        &nbsp;{{pendings?'Ver todos':'Solo pendientes'}}
+                    </button>
+
                 </div>
 
             </div>
@@ -84,7 +90,7 @@
                                 <h4 class="panel-title row">
 
                                     <div class="col-lg-10">
-                                        <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
+                                        <a [class.text-white]="!data.vehicleId" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
                                             <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
                                             <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT')}}&nbsp;&nbsp;
                                             <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT')}}&nbsp;&nbsp;
@@ -95,7 +101,7 @@
 
 
                                     <div *ngIf="getViewOptionsActions().length > 0" class="col-lg-2">
-                                        <div class="btn-group">
+                                        <div class="btn-group" *ngIf="data.enabled">
                                             <label *ngFor="let action of getViewOptionsActions()" >
                                                 <a *ngIf="action == 'delete'" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                                    (click)="dataSelect = data" href="#">
@@ -105,12 +111,13 @@
                                                    [attr.data-target]="'#'+ viewOptions.actions.load.modalId" >
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
+                                                <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
+                                                    &nbsp;<span class="fa fa-check fa-lg"></span>
+                                                </a>
+
                                             </label>
                                         </div>
                                     </div>
-
-
-
                                 </h4>
                             </div>
                             <div [attr.id]="'collapse'+data.id" class="panel-collapse collapse">
@@ -166,7 +173,7 @@
                     </button>
                 </div>
             </div>
-            <div *ngIf="permissions.list && permissions.count==0" class="box-footer with-border">
+            <div *ngIf="permissions.list && dataList.count==0" class="box-footer with-border">
                 <div class="alert alert-warning alert-dismissable">
                     <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
                     <strong><i class="fa fa-warning"></i></strong>&nbsp;{{viewOptions.errors.notFound | translate }}
