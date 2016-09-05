@@ -17,7 +17,7 @@
                                             <div class="col-lg-8">
                                                 <div class="row">
                                                     <div class="col-lg-10">
-                                                        <div class="row" [class.object-invalid]="
+                                                        <div *ngIf="rules[key].type!='date'" class="row" [class.object-invalid]="
                                                             rules[key].object && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
@@ -26,12 +26,22 @@
                                                                    [(ngModel)]="data[key].value"
                                                                    placeholder="{{rules[key].placeholder}}"
                                                                    type="{{rules[key].type}}">
+
                                                             <div [hidden]="data[key].valid ||data[key].pristine"
                                                                  class="alert alert-danger">
                                                                 El campo contiene errores
                                                             </div>
                                                         </div>
+                                                        <div *ngIf="rules[key].type=='date'" class="row">
+                                                            <div daterangepicker [params]="paramsDate" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event,key)">
+                                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                                                <span *ngIf="date[key]">{{(date[key].start || 'Inicio') +' - '+ (date[key].end || 'Fin') }}</span>
+                                                                <span *ngIf="!date[key]">{{rules[key].title}}</span> <b class="caret"></b>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
+
                                                     <div class="col-lg-2 padding-top-4">
                                                         <button *ngIf="rules[key].object"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
