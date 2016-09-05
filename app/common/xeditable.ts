@@ -212,4 +212,30 @@ export class Knob {
         this.elem.emit({data});
     }
 }
+@Directive({
+    selector: "[daterangepicker]",
+    inputs:['params'],
+    outputs:['fecha']
+})
+export class DateRangepPicker implements OnInit {
+    /*
+     format={
+     }
+     */
 
+    public params:any={};
+    public fecha:any;
+    public element:any;
+    constructor(public el: ElementRef) {
+        this.fecha = new EventEmitter();
+    }
+    ngOnInit(){
+        let that = this;
+        that.element = jQuery(this.el.nativeElement).daterangepicker({
+                showDropdowns: true
+            },
+            function(start, end) {
+                that.fecha.emit({'start':start.format(that.params.format),'end':end.format(that.params.format)})
+            });
+    }
+}
