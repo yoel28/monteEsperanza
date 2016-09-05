@@ -200,7 +200,9 @@
                     ¿ Estás seguro que deseas realizar un pago automatico al cliente
                     <strong>{{dataSelect.companyName}}&nbsp;({{dataSelect.companyRUC}})</strong> por
                     {{(dataSelect.rechargeQuantity)*-1}} {{MONEY_METRIC_SHORT}}
-                    ?
+                    ?<br/>
+                    <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Recibo {{AUTOMATIC_RECHARGE_PREF}} {{dataSelect.rechargeReference}}" >
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
