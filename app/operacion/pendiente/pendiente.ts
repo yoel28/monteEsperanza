@@ -132,8 +132,4 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     liberar(data) {
         this.onDelete(null,this.dataOperation.id);
     }
-    getBaseWeight(weight){
-        if(typeof weight === "number")
-            return weight/this.baseWeight;
-    }
 }
