@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import forEach = require("core-js/fn/array/for-each");
-import {SMDropdown} from "../../common/xeditable";
+import {SMDropdown, DateRangepPicker} from "../../common/xeditable";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -11,7 +11,7 @@ import {globalService} from "../../common/globalService";
     selector: 'filter',
     templateUrl: 'app/utils/filter/index.html',
     styleUrls: ['app/utils/filter/style.css'],
-    directives:[SMDropdown],
+    directives:[SMDropdown,DateRangepPicker],
     inputs: ['rules', 'params'],
     outputs: ['whereFilter'],
 })
@@ -59,13 +59,9 @@ export class Filter extends RestController implements OnInit{
             {'id':'ne','text':'Diferente que'},
         ],
         'date':[
-            {'id':'eq','text':'Igual que'},
+            {'id':'eq','text':'En rango'},
+            {'id':'ne','text':'Fuera de rango'},
             {'id':'isNull','text':'Nulo'},
-            {'id':'ne','text':'Diferente que'},
-            {'id':'ge','text':'Mayor Igual'},
-            {'id':'gt','text':'Mayor que'},
-            {'id':'le','text':'Menor Igual'},
-            {'id':'lt','text':'Menor que'},
         ],
         'email': [
             {'id':'eq','text':'Igual que'},
@@ -95,6 +91,9 @@ export class Filter extends RestController implements OnInit{
             {'id':'%ilike','text': 'Termina en(i)'}
         ],
     }
+    //foormato de fecha
+    public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"}
+    public date={};
     //Lista de id search
     public searchId:any={};
     public findControl:string="";//variable en el value del search
@@ -175,6 +174,16 @@ export class Filter extends RestController implements OnInit{
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
+    //Cargar data
+    assignDate(data,key){
+        let val="";
+        this.date[key]={};
+        if(data.start){
+            val="['op':'ge','field':'"+key+"','value':'"+data.start+"','type':'date'],['op':'le','field':'"+key+"','value':'"+data.end+"','type':'date']";
+        }
+        this.data[key].updateValue(val);
+        this.date[key]=data;
+    }
     
     // public search=
     //
@@ -212,7 +221,7 @@ export class Filter extends RestController implements OnInit{
                     value = value+"%";
                 }
                 
-                if(that.rules[key].type !='number')
+                if(that.rules[key].type !='number' && that.rules[key].type !='date')
                     value = "'"+value+"'";
                 
                 if(that.rules[key].double)
@@ -226,6 +235,13 @@ export class Filter extends RestController implements OnInit{
 
                 if(op=='isNull')
                     dataWhere+="['op':'"+op+"','field':'"+key+"'],";
+                else if(that.rules[key].type=='date'){
+                    if(that.data[key+'Cond'].value=='eq')
+                        value=value+","
+                    else if(this.data[key+'Cond'].value=='ne')
+                        value="[or:["+value+"]],"
+                    dataWhere+=value;
+                }
                 else
                     dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
 
@@ -241,12 +257,12 @@ export class Filter extends RestController implements OnInit{
     //reset
     onReset(event) {
         event.preventDefault();
+        this.date={};
+        this.searchId={};
         this.keys.forEach(key=>{
             if(this.form.controls[key]){
                 (<Control>this.form.controls[key]).updateValue("");
                 (<Control>this.form.controls[key]).setErrors(null);
-
-                (<Control>this.form.controls[key+'Cond']).updateValue("eq");
             }
         })
         this.whereFilter.emit("");
