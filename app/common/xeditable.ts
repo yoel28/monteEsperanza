@@ -232,10 +232,15 @@ export class DateRangepPicker implements OnInit {
     ngOnInit(){
         let that = this;
         that.element = jQuery(this.el.nativeElement).daterangepicker({
-                showDropdowns: true
+                showDropdowns: true,
+                minDate:that.params.minDate
             },
             function(start, end) {
                 that.fecha.emit({'start':start.format(that.params.format),'end':end.format(that.params.format)})
             });
+        jQuery(that.element).on('cancel.daterangepicker', function(ev, picker) {
+            //do something, like clearing an input
+            that.fecha.emit({});
+        });
     }
 }
