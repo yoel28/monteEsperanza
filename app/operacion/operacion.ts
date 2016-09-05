@@ -12,6 +12,7 @@ import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen} from "@angular/common";
 import {ModelBase} from "../common/modelBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {stringify} from "querystring";
 
 
 @Component({
@@ -25,6 +26,7 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 export class Operacion extends ModelBase implements OnInit {
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
+    public AUTOMATIC_RECHARGE_PREF="";
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/', http, toastr, myglobal, translate);
@@ -33,6 +35,7 @@ export class Operacion extends ModelBase implements OnInit {
     ngOnInit() {
         this.initModel();
         this.MONEY_METRIC_SHORT = this.myglobal.getParams('MONEY_METRIC_SHORT');
+        this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF')
 
         if (this.permissions['list']) {
             this.max = 40;
@@ -292,16 +295,22 @@ export class Operacion extends ModelBase implements OnInit {
         this.router.navigate(link);
     }
 
+    public codeReference="";
     onRechargeAutomatic(event, data) {
         let that = this;
         event.preventDefault();
+        let json={};
+        json['rechargeReference']=this.codeReference.length>0? this.codeReference: (this.AUTOMATIC_RECHARGE_PREF+data.rechargeReference);
         let successCallback = response => {
             Object.assign(data, response.json());
             if (that.toastr)
                 that.toastr.success('Pago cargado con éxito', 'Notificación');
 
         }
-        this.httputils.doGet('/pay/' + data.id, successCallback, this.error);
+        this.httputils.doPost('/pay/' + data.id,JSON.stringify(json),successCallback, this.error);
+    }
+    onKey(event:any) {
+        this.codeReference = event.target.value;
     }
 
     formatDate(date, format) {
