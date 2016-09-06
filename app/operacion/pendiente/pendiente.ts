@@ -51,7 +51,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
 
     initOptions() {
-        this.max=20;
+        this.max=10;
         this.viewOptions["title"] = 'Operaciones pendientes';
         this.viewOptions["buttons"].push({
             'visible': this.permissions.filter,
