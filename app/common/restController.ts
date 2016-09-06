@@ -33,9 +33,43 @@ export class RestController implements OnInit {
         console.log(err);
     }
 
-    loadData(offset=0){
-        this.offset=offset;
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error);
+    loadData(offset?){
+        let that=this;
+        if(typeof offset ==='number')
+            that.offset=that.max*(offset-1);
+        else{
+            if(offset=='<')
+                this.offset=this.offset-this.max;
+            else if (offset=='<<')
+                this.offset=0;
+            else if(offset=='>')
+                this.offset=this.offset+this.max;
+            else if (offset=='>>')
+                this.offset=(Math.ceil(that.dataList.count/that.max)-1)*that.max;
+
+        }
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error).then(
+            response=>{
+                if(that.dataList.count && that.dataList.count > 0)
+                {
+                    that.dataList['page']=[];
+                    let initPage=Math.trunc((that.offset+that.max)/(that.max*5))*5;
+                    let count=0;
+                    let maxPage = Math.ceil(that.dataList.count/that.max);
+                    if(initPage > 1)
+                        that.dataList.page.push('<<','<',initPage);
+                    while(count < 5 && maxPage > (initPage+count) ){
+                        count++;
+                        that.dataList.page.push(initPage+count)
+                    }
+                    if(maxPage > (initPage+count))
+                        that.dataList.page.push('>','>>');
+
+                }
+            },error=>{
+                console.log("error");
+            }
+        );
     };
     onUpdate(event,data){
         event.preventDefault();
