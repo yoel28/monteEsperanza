@@ -31,15 +31,9 @@ export class Search extends RestController{
     }
     getSearch(search){
         this.endpoint=this.params.endpointForm+search;
+        this.where = this.params.where || "";
         this.loadData();
     }
-    loadData(offset=0){
-        this.offset=offset;
-        if(this.params.where)
-            this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.params.where,this.dataList,this.max,this.error);
-        else
-            this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset,this.dataList,this.max,this.error);
-    };
     getData(data){
         this.result.emit(data);
     }
