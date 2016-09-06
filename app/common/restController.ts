@@ -32,11 +32,9 @@ export class RestController implements OnInit {
             this.toastr.error(err.json().message);
         console.log(err);
     }
-
-    loadData(offset?){
-        let that=this;
+    getOffset(offset?){
         if(typeof offset ==='number')
-            that.offset=that.max*(offset-1);
+            this.offset=this.max*(offset-1);
         else{
             if(offset=='<')
                 this.offset=this.offset-this.max;
@@ -45,27 +43,46 @@ export class RestController implements OnInit {
             else if(offset=='>')
                 this.offset=this.offset+this.max;
             else if (offset=='>>')
-                this.offset=(Math.ceil(that.dataList.count/that.max)-1)*that.max;
-
+                this.offset=(Math.ceil(this.dataList.count/this.max)-1)*this.max;
+            else
+                this.offset=0;
         }
+    }
+    loadPage(list){
+        list['page']=[];
+        if(list.count && list.count > 0)
+        {
+            let initPage=Math.trunc((this.offset+this.max)/(this.max*5))*5;
+            let count=0;
+            let maxPage = Math.ceil(list.count/this.max);
+            if(initPage > 1)
+                list.page.push('<<','<',initPage);
+            while(count < 5 && maxPage > (initPage+count) ){
+                count++;
+                list.page.push(initPage+count)
+            }
+            if(maxPage > (initPage+count))
+                list.page.push('>','>>');
+        }
+    }
+
+    loadData(offset?){
+        let that = this;
+        this.getOffset(offset);
         this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error).then(
             response=>{
-                that.dataList['page']=[];
-                if(that.dataList.count && that.dataList.count > 0)
-                {
-                    let initPage=Math.trunc((that.offset+that.max)/(that.max*5))*5;
-                    let count=0;
-                    let maxPage = Math.ceil(that.dataList.count/that.max);
-                    if(initPage > 1)
-                        that.dataList.page.push('<<','<',initPage);
-                    while(count < 5 && maxPage > (initPage+count) ){
-                        count++;
-                        that.dataList.page.push(initPage+count)
-                    }
-                    if(maxPage > (initPage+count))
-                        that.dataList.page.push('>','>>');
-
-                }
+                that.loadPage(that.dataList);
+            },error=>{
+                console.log("error");
+            }
+        );
+    };
+    onloadData(endpoint?,list?,offset?){
+        let that = this;
+        this.getOffset(offset);
+        this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
+            response=>{
+                that.loadPage(list || that.dataList);
             },error=>{
                 console.log("error");
             }
