@@ -239,15 +239,11 @@ export class RecargaFactura extends RestController implements OnInit{
         let whereTotal=encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
             "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']]");
 
-        this.endpoint="/search/recharges/?where="+whereList;
-
+        this.where="&where="+whereList
+        this.endpoint="/search/recharges/";
         this.loadData();
 
         this.httputils.onLoadList('/total/recharges?where='+whereTotal,this.rechargeTotal,this.max,this.error);
-    }
-    loadData(offset=0){
-        this.offset=offset;
-        this.httputils.onLoadList(this.endpoint+`&max=${this.max}&offset=${this.offset}`,this.dataList,this.max,this.error);
     }
     goTaquilla(event,companyId:string) {
         event.preventDefault();
@@ -262,10 +258,5 @@ export class RecargaFactura extends RestController implements OnInit{
         if(date)
             return moment(date).format(format);
         return "";
-    }
-    loadAll(event){
-        event.preventDefault();
-        this.max = this.dataList.count;
-        this.loadData();
     }
 }

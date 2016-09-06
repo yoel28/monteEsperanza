@@ -91,9 +91,6 @@
             <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                 {{val}}
             </button>
-            <button (click)="loadAll($event)" type="button" class="btn btn-default">
-                <i class="fa fa-list"></i>
-            </button>
         </div>
     </div>
     <div *ngIf="!myglobal.existsPermission('109')">
