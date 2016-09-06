@@ -25,13 +25,15 @@ export class Rol extends RestController implements OnInit{
     }
     //advertencia
     public modalIn:boolean=true;
-    loadPage(){
+    loadPage(event){
+        event.preventDefault();
         this.modalIn=false;
         if (this.myglobal.existsPermission('48')) {
             this.loadData();
         }
     }
-    onDashboard(){
+    onDashboard(event){
+        event.preventDefault();
         let link = ['Dashboard', {}];
         this.router.navigate(link);
     }

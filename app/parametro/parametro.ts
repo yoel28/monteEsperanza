@@ -50,14 +50,16 @@ export class Parametro extends RestController implements OnInit{
         },
     };
     public modalIn:boolean=true;
-    loadPage(){
+    loadPage(event){
+        event.preventDefault();
         this.modalIn=false;
         if(this.myglobal.existsPermission('99')){
             this.max = 10;
             this.loadData();
         }
     }
-    onDashboard(){
+    onDashboard(event){
+        event.preventDefault();
         let link = ['Dashboard', {}];
         this.router.navigate(link);
     }

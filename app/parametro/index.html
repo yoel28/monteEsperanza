@@ -131,11 +131,11 @@
                 El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que hace.
             </div>
             <div class="modal-footer">
-                <button (click)="onDashboard()" type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
+                <button (click)="onDashboard($event)" type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
                     &nbsp;Salir
                 </button>
 
-                <button (click)="loadPage()"  data-dismiss="modal" type="button" class="btn btn-red fa fa-check">
+                <button (click)="loadPage($event)"  data-dismiss="modal" type="button" class="btn btn-red fa fa-check">
                     &nbsp;S&iacute;, estoy seguro
                 </button>
             </div>

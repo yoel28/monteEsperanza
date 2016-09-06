@@ -83,13 +83,15 @@ export class PermisosRol extends RestController implements OnInit{
     }
     //advertencia
     public modalIn:boolean=true;
-    loadPage(){
+    loadPage(event){
+        event.preventDefault();
         this.modalIn=false;
         this.loadPermissions();
         if(this.myglobal.existsPermission('48'))
             this.loadRoles();
     }
-    onDashboard(){
+    onDashboard(event){
+        event.preventDefault();
         let link = ['Dashboard', {}];
         this.router.navigate(link);
     }
