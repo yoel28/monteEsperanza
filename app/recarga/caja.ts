@@ -35,9 +35,10 @@ export class Caja extends RestController implements OnInit{
         }
     }
     loadCaja(){
+        this.max=20;
         this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.dia.format('DD-MM-YYYY')+"','type':'date'],['op':'lt','field':'dateCreated','value':'"+this.dia.add(1, 'days').format('DD-MM-YYYY')+"','type':'date']]");
         this.loadData();
-        this.httputils.onLoadList('/total/recharges?max=1000'+this.where,this.rechargeTotal,this.max,this.error);
+        this.onloadData('/total/recharges/',this.rechargeTotal)
         this.httputils.onLoadList('/type/recharges?max=1000',this.typeRecharge,this.max,this.error);
     }
     formatDate(date,format){
