@@ -48,7 +48,7 @@ export class RestController implements OnInit {
                 this.offset=0;
         }
     }
-    loadPage(list){
+    loadPager(list){
         list['page']=[];
         if(list.count && list.count > 0)
         {
@@ -71,7 +71,7 @@ export class RestController implements OnInit {
         this.getOffset(offset);
         this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error).then(
             response=>{
-                that.loadPage(that.dataList);
+                that.loadPager(that.dataList);
             },error=>{
                 console.log("error");
             }
@@ -82,7 +82,7 @@ export class RestController implements OnInit {
         this.getOffset(offset);
         this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
             response=>{
-                that.loadPage(list || that.dataList);
+                that.loadPager(list || that.dataList);
             },error=>{
                 console.log("error");
             }
