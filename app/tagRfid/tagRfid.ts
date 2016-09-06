@@ -66,7 +66,7 @@ export class TagRfid extends RestController implements OnInit{
         idModal:"searchVehicle",
         endpointForm:"/search/vehicles/",
         placeholderForm:"Ingrese la placa del vehiculo",
-        labelForm:{'name':"Placa: ",'detail':"Empresa: "},
+        labelForm:{'name':"Empresa: ",'detail':"Placa: "},
         where:"&where="+encodeURI("[['op':'isNull','field':'tag.id']]")
     }
     //asignar tag a vehiculo
