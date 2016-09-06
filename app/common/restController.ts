@@ -50,9 +50,9 @@ export class RestController implements OnInit {
         }
         this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error).then(
             response=>{
+                that.dataList['page']=[];
                 if(that.dataList.count && that.dataList.count > 0)
                 {
-                    that.dataList['page']=[];
                     let initPage=Math.trunc((that.offset+that.max)/(that.max*5))*5;
                     let count=0;
                     let maxPage = Math.ceil(that.dataList.count/that.max);
