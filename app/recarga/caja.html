@@ -105,13 +105,10 @@
                                 </tbody>
                                 <tfoot *ngIf="dataList && dataList.page.length > 1">
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="8">
                                         <div class="btn-group pull-right">
                                             <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                                                 {{val}}
-                                            </button>
-                                            <button (click)="loadAll($event)" type="button" class="btn btn-default">
-                                                <i class="fa fa-list"></i>
                                             </button>
                                         </div>
                                     </td>
