@@ -360,7 +360,7 @@ export class RecargaLibro extends RestController implements OnInit{
         let where ="[['op':'ge','field':'dateCreated','value':'"+this.params.dateStart+"','type':'date']," +
                     "['op':'lt','field':'dateCreated','value':'"+this.params.dateEnd+"','type':'date']"+recharge+"]&order=asc";
         this.where = "&where="+encodeURI(where);
-        this.max=100;
+        this.max=50;
         if(this.myglobal.existsPermission('109')){
             this.loadData();
             this.httputils.onLoadList('/total/recharges?where='+encodeURI(where),this.rechargeTotal,this.max,this.error);
