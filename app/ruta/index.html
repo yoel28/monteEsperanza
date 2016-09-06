@@ -77,7 +77,7 @@
                 <!-- ./box-body -->
                 <div *ngIf="myglobal.existsPermission('151')" class="box-footer with-border">
                     <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
-                        <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                        <button (click)="loadData(val)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                             {{val}}
                         </button>
                     </div>
