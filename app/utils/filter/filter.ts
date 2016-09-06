@@ -229,13 +229,13 @@ export class Filter extends RestController implements OnInit{
                 
                 if(that.rules[key].object)
                 {
-                    value = this.searchId[key].id || null;
+                    value = that.searchId[key].id || null;
                     key = that.rules[key].paramsSearch.field;
                 }
 
                 if(op=='isNull')
                     dataWhere+="['op':'"+op+"','field':'"+key+"'],";
-                else if(that.rules[key].type=='date'){
+                else if(that.rules[key] && that.rules[key].type=='date'){
                     if(that.data[key+'Cond'].value=='eq')
                         value=value+","
                     else if(this.data[key+'Cond'].value=='ne')
