@@ -15,7 +15,7 @@
                     <div *ngIf="myglobal.existsPermission('69')" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
                              class="btn-group pull-right">
-                            <button (click)="loadData(val)" *ngFor="let val of dataList.page" type="button"
+                            <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button"
                                     class="btn btn-default">
                                 {{val}}
                             </button>
