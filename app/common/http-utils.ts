@@ -101,16 +101,8 @@ export class HttpUtils {
         let that = this;
         let successCallback= response => {
             Object.assign(list, response.json());
-            if(list.count)
-            {
-                list['page']=[];
-                for (var i=1;i<=Math.ceil(list.count/max);i++)
-                {
-                    list['page'].push(i);
-                }
-            }
         }
-        this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
+        return this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
 
     onDelete(endpoint:string,id, list ,errorCallback = null,isEndpointAbsolute = false) {
