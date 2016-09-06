@@ -38,10 +38,11 @@ export class Taquilla extends RestController implements OnInit{
         }
     }
     getCompany(companyId:string){
+        let that=this;
         if(this.myglobal.existsPermission('80')){
             let successCallback= response => {
                 Object.assign(this.dataCompany, response.json());
-                this.loadData();
+                that.loadDataRecargas();
             }
             this.httputils.doGet("/companies/"+companyId,successCallback,this.error)
             this.dataCompanies = {};
@@ -56,23 +57,23 @@ export class Taquilla extends RestController implements OnInit{
         }
 
     }
-    loadData(offset=0){
+    loadDataRecargas(){
         if(this.myglobal.existsPermission('109')) {
             this.max=5;
-            this.offset = offset;
+            this.offset = 1;
             this.endpoint = "/search/recharges";
-            let where = encodeURI("[['op':'eq','field':'company.id','value':" + this.dataCompany.id + "l]]")
-            this.httputils.onLoadList(this.endpoint + "?where=" + where + "&max=" + this.max + "&offset=" + this.offset, this.dataList, this.max, this.error);
+            this.where ="&where="+encodeURI("[['op':'eq','field':'company.id','value':" + this.dataCompany.id + "l]]");
+            this.loadData();
         }
     };
 
-    getCompanies(companies:string,offset=0){
+    getCompanies(companies:string,offset=1){
         if(this.myglobal.existsPermission('80')) {
-            this.offset = offset;
-            this.max=20;
-            this.dataCompanies = {};
+            this.max=10;
             this.dataCompany={};
-            this.httputils.onLoadList("/search/companies/" + companies + "?max=" + this.max + "&offset=" + this.offset, this.dataCompanies, this.max, this.error);
+            this.where="";
+            this.onloadData("/search/companies/"+ companies,this.dataCompanies,offset)
+            //this.httputils.onLoadList("/search/companies/"  + "?max=" + this.max + "&offset=" + this.offset, , this.max, this.error);
         }
     }
     assignRecarga(data){
@@ -97,12 +98,7 @@ export class Taquilla extends RestController implements OnInit{
     formatDate(date,format){
         if(date)
             return moment(date).format(format);
-        return "";
-    }
-    loadAll(event){
-        event.preventDefault();
-        this.max = this.dataList.count;
-        this.loadData();
+        return "-";
     }
 
     @ViewChild(OperacionPrint)

@@ -41,7 +41,7 @@
                     <tr>
                         <td>
                             <div *ngIf="dataCompanies.page && dataCompanies.page.length > 1 && dataCompanies.count > 0" class="btn-group pull-right">
-                                <button (click)="getCompanies(findCompany.value,max*(val-1))" *ngFor="let val of dataCompanies.page" type="button" class="btn btn-default">
+                                <button (click)="getCompanies(findCompany.value,val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataCompanies.page" type="button" class="btn btn-default">
                                     {{val}}
                                 </button>
                             </div>
@@ -166,9 +166,6 @@
                                     <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
                                         <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                                             {{val}}
-                                        </button>
-                                        <button (click)="loadAll($event)" type="button" class="btn btn-default">
-                                            <i class="fa fa-list"></i>
                                         </button>
                                     </div>
                                 </td>
