@@ -280,14 +280,12 @@ export class AppComponent extends RestController implements OnInit{
         let that= this;
         if(!that.enableMonitor && localStorage.getItem('bearer'))
         {
+            that.where="&where="+encodeURI("[['op':'isNull','field':'weightOut']]");
+            that.max=10;
             that.monitorInterval=setInterval(()=>{
                 if(localStorage.getItem('bearer'))
                 {
-                    let where="?where=[['op':'isNull','field':'weightOut']]";
-                    let successCallback= response => {
-                        Object.assign(that.monitor,response.json());
-                    }
-                    that.httputils.doGet('/operations/'+where,successCallback,this.error);
+                    that.onloadData('/operations/',that.monitor)
                 }
                 else{
                     clearInterval(that.monitorInterval);
