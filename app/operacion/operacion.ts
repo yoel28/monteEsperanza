@@ -408,7 +408,7 @@ export class OperacionMonitor extends RestController implements OnInit {
     }
 
     ngOnInit() {
-        this.where = "&where=[['op':'isNull','field':'weightOut']]"
+        this.where = "&where="+encodeURI("[['op':'isNull','field':'weightOut']]")
         if (this.myglobal.existsPermission('165')) {
             this.max = 15;
             this.loadData();
