@@ -25,7 +25,7 @@ export class OperacionSave extends RestController implements OnInit{
     public inAnt:any={};
     public rules:any={};
 
-    public pendients=false;
+    public pending=0;
     public baseWeight=1;
     
     form:ControlGroup;
@@ -107,7 +107,7 @@ export class OperacionSave extends RestController implements OnInit{
             that.toastr.success('Guardado con éxito','Notificación')
         };
         this.setEndpoint('/operations/');
-        if(this.pendients)
+        if(this.pending>0)
             this.setEndpoint('/operations/save/auto/');
         
         let body = this.form.value;
@@ -120,6 +120,9 @@ export class OperacionSave extends RestController implements OnInit{
                 body[key]=parseFloat(body[key]);
             }
         });
+        if(this.pending>0)
+            body['pendingId']=this.pending;
+
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
     patchForm(event){
