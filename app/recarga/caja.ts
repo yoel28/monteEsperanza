@@ -49,6 +49,11 @@ export class Caja extends RestController implements OnInit{
     exportCSV(){
         jQuery("#content").tableToCSV();
     }
+    goTaquilla(event, companyId:string) {
+        event.preventDefault();
+        let link = ['TaquillaSearh', {search: companyId}];
+        this.router.navigate(link);
+    }
     public typeRechargeIndex:any={};
     calcRecharges(){
         let that = this;
