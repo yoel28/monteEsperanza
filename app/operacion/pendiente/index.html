@@ -21,10 +21,18 @@
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
                     </button>
-                    <button class="btn btn-blue" type="button"
-                        (click)="loadDataPendings($event)">
-                        <i class="fa fa-truck"></i>
-                        &nbsp;{{pendings?'Ver todos':'Solo pendientes'}}
+
+                    <button class="btn {{list=='pendings'?'btn-green':'btn-red'}}" type="button"
+                        (click)="loadDataPendings($event,'pendings')">
+                        &nbsp;Pendientes
+                    </button>
+                    <button class="btn {{list=='asign'?'btn-green':'btn-red'}}" type="button"
+                            (click)="loadDataPendings($event,'asign')">
+                            &nbsp;Procesados
+                    </button>
+                    <button class="btn {{list=='all'?'btn-green':'btn-red'}}" type="button"
+                            (click)="loadDataPendings($event,'all')">
+                        &nbsp;Ver todos
                     </button>
 
                 </div>
@@ -113,6 +121,13 @@
                                                 </a>
                                                 <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
                                                     &nbsp;<span class="fa fa-check fa-lg"></span>
+                                                </a>
+                                            </label>
+                                        </div>
+                                        <div class="btn-group" *ngIf="!data.enabled">
+                                            <label *ngFor="let action of getViewOptionsActions()" >
+                                                <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data)">
+                                                    &nbsp;<span class="fa fa-refresh fa-lg"></span>
                                                 </a>
 
                                             </label>
