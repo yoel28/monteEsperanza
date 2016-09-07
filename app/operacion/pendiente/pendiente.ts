@@ -40,13 +40,17 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.loadData();
     }
 
-    public pendings=true;
-    loadDataPendings(event){
+    public list='pendings';
+    loadDataPendings(event,data){
         event.preventDefault();
-        this.pendings=!this.pendings;
-        this.where="";
-        if(this.pendings)
+        this.list=data;
+        if(this.list=='pendings')
             this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
+        else if(this.list=='asign')
+            this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':false]]");
+        else if(this.list=='all')
+            this.where="";
+
         this.loadData();
     }
 
@@ -74,10 +78,21 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.viewOptions.actions.verificar = {
             'visible': this.permissions.update,
         };
+        this.viewOptions.actions.devolver = {
+            'visible': this.permissions.lock,
+        };
 
     }
 
     initRules() {
+        this.rules['veh.plate']={
+            'type': 'text',
+            'search': true,
+            'key': 'veh.plate',
+            'icon': 'fa fa-truck',
+            'title': 'Placa',
+            'placeholder': 'Ingrese la placa del vehículo',
+        }
         this.rules['tagRFID']={
             'type': 'text',
             'search': true,
@@ -145,7 +160,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         event.preventDefault();
         this.dataOperation=data;
         if(this.operacionSave) {
-            this.operacionSave.pendients=true;
+            this.operacionSave.pending=data.id;
             this.operacionSave.inAntena(data);
         }
     }
