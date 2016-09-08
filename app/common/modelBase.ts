@@ -50,7 +50,6 @@ export abstract class ModelBase extends RestController {
             "update": this.permissions['update'],
             "visible": true,
             'icon': 'fa fa-list',
-            "search": true,
             "type": "textarea",
             "key": "detail",
             "title": "detalle",
