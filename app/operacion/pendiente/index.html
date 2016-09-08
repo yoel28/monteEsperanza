@@ -52,11 +52,12 @@
                             <th>Peso E.</th>
                             <th>Peso S.</th>
                             <th>Neto</th>
+                            <th>Procesado</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let data of dataList.list">
+                        <tr *ngFor="let data of dataList.list" [class.error-vehicle]="!data.companyId">
                             <td>{{data.id}}</td>
                             <td>
                                 <a *ngIf="data.companyId" class="btn btn-box-tool"
@@ -72,17 +73,35 @@
                             <td>{{ data.weightIn | number:'.0-3'}}</td>
                             <td>{{ data.weightOut | number:'.0-3'}}</td>
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
+                            <td>
+                                <span *ngIf="data.enabled">Pendiente</span>
+                                <span *ngIf="!data.enabled">{{ formatDate(data.dateUpdated,'DD/MM/YYYY, LT') }} por {{data.usernameUpdater}}</span>
+                            </td>
                             <td *ngIf="getViewOptionsActions().length > 0">
-                                <div class="btn-group">
+                                <div class="btn-group" *ngIf="data.enabled">
                                     <label *ngFor="let action of getViewOptionsActions()" >
                                         <a *ngIf="action == 'delete'" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                            (click)="dataSelect = data" href="#">
                                             <span class="fa fa-trash fa-lg btn"></span>
                                         </a>
-                                        <a *ngIf="action == 'load'"  (click)="cargarData($event,data)" data-toggle="modal"
+                                        <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
                                            [attr.data-target]="'#'+ viewOptions.actions.load.modalId" >
                                             <i class="fa fa-sign-in fa-lg"></i>
                                         </a>
+                                        <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
+                                            &nbsp;<span class="fa fa-check fa-lg"></span>
+                                        </a>
+                                    </label>
+                                </div>
+                                <div class="btn-group" *ngIf="!data.enabled">
+                                    <label *ngFor="let action of getViewOptionsActions()" >
+                                        <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data)">
+                                            &nbsp;<span class="fa fa-undo fa-lg"></span>
+                                        </a>
+                                        <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation(data)">
+                                            &nbsp;<span class="fa fa-print fa-lg"></span>
+                                        </a>
+
                                     </label>
                                 </div>
                             </td>
@@ -115,7 +134,7 @@
                                                    (click)="dataSelect = data" href="#">
                                                     <span class="fa fa-trash fa-lg btn"></span>
                                                 </a>
-                                                <a *ngIf="action == 'load'"  (click)="cargarData($event,data)" data-toggle="modal"
+                                                <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
                                                    [attr.data-target]="'#'+ viewOptions.actions.load.modalId" >
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
@@ -127,16 +146,28 @@
                                         <div class="btn-group" *ngIf="!data.enabled">
                                             <label *ngFor="let action of getViewOptionsActions()" >
                                                 <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data)">
-                                                    &nbsp;<span class="fa fa-refresh fa-lg"></span>
+                                                    &nbsp;<span class="fa fa-undo fa-lg"></span>
                                                 </a>
-
+                                                <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation(data)">
+                                                    &nbsp;<span class="fa fa-print fa-lg"></span>
+                                                </a>
                                             </label>
                                         </div>
                                     </div>
                                 </h4>
                             </div>
                             <div [attr.id]="'collapse'+data.id" class="panel-collapse collapse">
-                                <div class="panel-body" [class.red]="data.vehicleId">
+                                <div class="panel-body" [class.red]="!data.vehicleId">
+                                    <div *ngIf="!data.enabled">
+                                        <div class="col-lg-12">
+                                            <p style="font-size: large">
+                                                <i class="fa fa-user-secret" aria-hidden="true"></i>
+                                                Procesado el <strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY')}}</strong>,&nbsp;
+                                                a las <strong>{{formatDate(data.dateUpdated,'LT')}}</strong> por&nbsp;
+                                                <strong>{{data.usernameUpdater}}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
                                     <div>
                                         <div class="col-lg-6">
                                             <strong>Tag RFID:&nbsp;</strong>
@@ -229,10 +260,12 @@
     </div>
 </div>
 
-
+<div *ngIf="permissions.print">
+    <operacion-print ></operacion-print>
+</div>
 <div *ngIf="permissions.add">
     <operacion-save [(idModal)]="viewOptions.actions.load.modalId" [rules]="operacion.rulesSave" [inAnt]="dataOperation" (save)="liberar($event)"> </operacion-save>
 </div>
 <div *ngIf="permissions.filter">
-    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere2($event)"></filter>
 </div>

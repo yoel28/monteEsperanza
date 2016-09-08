@@ -6,7 +6,7 @@ import {globalService} from "../../common/globalService";
 import {ModelBase} from "../../common/modelBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Operacion} from "../operacion";
-import {OperacionSave} from "../methods";
+import {OperacionSave, OperacionPrint} from "../methods";
 import moment from "moment/moment";
 import {Filter} from "../../utils/filter/filter";
 
@@ -16,7 +16,7 @@ import {Filter} from "../../utils/filter/filter";
     templateUrl: 'app/operacion/pendiente/index.html',
     styleUrls: ['app/operacion/pendiente/style.css'],
     providers: [TranslateService,Operacion],
-    directives: [OperacionSave,Filter],
+    directives: [OperacionSave,Filter,OperacionPrint],
     pipes: [TranslatePipe]
 })
 export class OperacionPendiente extends ModelBase implements OnInit {
@@ -80,6 +80,9 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         };
         this.viewOptions.actions.devolver = {
             'visible': this.permissions.lock,
+        };
+        this.viewOptions.actions.print = {
+            'visible': this.permissions.print,
         };
 
     }
@@ -145,6 +148,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
 
     initPermissions() {
+        this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
     }
 
     goTaquilla(event, companyId:string) {
@@ -170,7 +174,22 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         return "-";
     }
     liberar(data) {
-        this.onPatch('enabled',this.dataOperation);
-
+        this.dataOperation.operationId=data.id
+        this.dataOperation.enabled=false;
+        
+        
+    }
+    loadWhere2(data){
+        this.list='';
+        this.loadWhere(data);
+    }
+    @ViewChild(OperacionPrint)
+    operacionPrint:OperacionPrint;
+    onPrintOperation(data){
+        let successCallback= response => {
+            if(this.operacionPrint)
+                this.operacionPrint.data=response.json();
+        };
+        this.httputils.doGet('/operations/'+data.operationId,successCallback,this.error)
     }
 }
