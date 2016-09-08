@@ -39,7 +39,7 @@ export class EmpresaMorosos extends RestController implements OnInit {
 
     }
     initPermisssions(){
-        this.permissions['list']=this.myglobal.existsPermission('');
+        this.permissions['list']=this.myglobal.existsPermission('80');
     }
 
 
