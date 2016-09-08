@@ -12,7 +12,6 @@ import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen} from "@angular/common";
 import {ModelBase} from "../common/modelBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
-import {stringify} from "querystring";
 
 
 @Component({
