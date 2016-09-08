@@ -88,14 +88,27 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
 
     initRules() {
-        this.rules['veh.plate']={
+        this.rules['vehicle']= {
             'type': 'text',
+                'key': 'vehicle',
+                'paramsSearch': {
+                'label': {'title': "Empresa: ", 'detail': "Placa: "},
+                'endpoint': "/search/vehicles/",
+                    'where': '',
+                    'imageGuest': '/assets/img/truck-guest.png',
+                    'field': 'vehicle.id',
+            },
             'search': true,
-            'key': 'veh.plate',
             'icon': 'fa fa-truck',
-            'title': 'Placa',
-            'placeholder': 'Ingrese la placa del vehículo',
-        }
+                'object': true,
+                'title': 'Vehículo',
+                'placeholder': 'Ingrese la placa del vehículo',
+                'permissions': '69',
+                'msg': {
+                'error': 'El vehículo contiene errores',
+                    'notAuthorized': 'No tiene permisos de listar los vehículos',
+            },
+        },
         this.rules['tagRFID']={
             'type': 'text',
             'search': true,
