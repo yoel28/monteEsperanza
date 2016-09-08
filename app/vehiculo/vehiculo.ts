@@ -27,6 +27,8 @@ export class Vehiculo extends RestController implements OnInit{
 
     @ViewChild(Search)
     modal:Search;
+    public typeView=1;
+
 
     public rules={
         'plate':{'type':'text','display':null,'title':'Placa del vehiculo','search': true,'placeholder': 'Placa'},
