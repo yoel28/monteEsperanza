@@ -21,6 +21,8 @@ import {Filter} from "../utils/filter/filter";
 })
 export class Empresa extends RestController implements OnInit {
 
+    public typeView=1;
+
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);
         this.setEndpoint('/companies/');

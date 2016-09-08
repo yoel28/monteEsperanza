@@ -15,6 +15,16 @@
                             class="btn btn-primary btn-red" (click)="goMorosos($event)">
                         <i class="fa fa-archive"></i>&nbsp;Morosos
                     </button>
+                    <button (click)="typeView = 1"
+                            type="button" class="btn btn-box-tool">
+                        <i class="fa fa-list fa-lg text-blue"></i>
+                    </button>
+
+                    <button (click)="typeView = 2"
+                            type="button" class="btn btn-box-tool">
+                        <i class="fa fa-list-alt fa-lg text-blue"></i>
+                    </button>
+
 
                     <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
@@ -27,7 +37,188 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="box-body">
+                <div *ngIf="typeView==1"  class="box-body">
+                    <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="panel-group" id="accordion">
+                        <div *ngFor="let data of dataList.list " class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title row">
+                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                        <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
+                                            <label class="title">C&oacute;digo:&nbsp;</label>{{data.code}}&nbsp;
+                                            <label class="title">RUC:&nbsp;</label>{{data.ruc}}&nbsp;
+                                            <label class="title">Nombre:&nbsp;</label>{{data.name}}&nbsp;
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                        <div class="btn-group">
+                                            <label *ngIf="myglobal.existsPermission('84')">
+                                                <a (click)="onLock('enabled',data)">
+                                                    <span class="fa {{data.enabled?'fa-lock':'fa-unlock'}}"></span>
+                                                </a>
+                                            </label>
+                                            <label *ngIf="myglobal.existsPermission('82')">
+                                                <a data-toggle="modal"
+                                                   (click)="dataSelect = data"
+                                                   [attr.data-target]="'#modalDelete'">
+                                                    <span class="fa fa-trash"></span>
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </h4>
+                            </div>
+                            <div [attr.id]="'collapse'+data.id" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-lg-12">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center separacion">
+                                            <figure>
+                                                <div [imageSrc]="data.image || '/assets/img/company-guest.png'"
+                                                     x-cropit
+                                                     (saveImagen)="changeImage($event,data.id)">
+                                                    <div class="cropit-preview center-block"></div>
+                                                    <div class="col-lg-12 margenes"
+                                                         [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                        <div class="col-lg-6">
+                                                            <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
+                                                            <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <input type="range"
+                                                                   class="cropit-image-zoom-input"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12"
+                                                         [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                        <div class="col-lg-6">
+                                                            <input x-file type="file"
+                                                                   class="cropit-image-input"/>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <button (click)="loadImage($event,data)"
+                                                                    class="btn btn-success pull-right fa fa-save upload boton-guardar">
+                                                                &nbsp;Guardar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </figure>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                            <div class="row separacion">
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                    <p>
+                                                        <strong>
+                                                            <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                               [endpoint]="endpoint" [function]="onEditable"
+                                                               [data]="data" [rules]="rules" field="name"></a>
+                                                        </strong>
+                                                    </p>
+                                                    <p>
+                                                        <strong>RUC: </strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="ruc"></a>
+                                                    </p>
+                                                    <p>
+                                                        <strong>C&oacute;digo: </strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="code"></a>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Responsable:</strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="responsiblePerson"></a>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Tel&eacute;fonos:</strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="phone"></a>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                    <p>
+                                                        <strong>Balance M&iacute;nimo:</strong>
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('83')"
+                                                           [data]="data" [rules]="rules" field="minBalance"></a>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Direcci&oacute;n:</strong>
+                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                           [endpoint]="endpoint" [function]="onEditable" [data]="data"
+                                                           [rules]="rules" field="address"></a>
+                                                    </p>
+                                                    <p><strong>Grupo:</strong>
+                                                        {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
+                                                        <label>
+                                                            <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
+                                                                    (click)="dataSelect = data.id"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    data-toggle="modal" data-target="#searchTipoEmpresa">
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
+
+                                                            <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')"
+                                                                    (click)="dataSelect = data.id"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    data-toggle="modal" data-target="#saveTipoEmpresa">
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <button (click)="onLock('enabled',data)" class="btn btn-sm"
+                                                                [class.btn-green]="data.enabled"
+                                                                [class.btn-red]="!data.enabled"
+                                                                [disabled]="!(myglobal.existsPermission('84'))">
+                                                            {{data.enabled?"Habilitado":"Bloqueado"}}
+                                                        </button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row text-center divider" *ngIf="myglobal.existsPermission('87')">
+                                                <div class="col-xs-12 col-sm-4 emphasis">
+                                                    <h4><strong>{{data.weightCount? (data.weightCount | number:'.0-3'):"N/A"}}</strong>
+                                                    </h4>
+                                                    <p>
+                                                        <small>Descargas</small>
+                                                    </p>
+                                                    <button (click)="goTimeLine(data.ruc)"
+                                                            class="btn btn-yellow btn-block">Registro
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 emphasis">
+                                                    <h4><strong>{{data.vehiclesCount?data.vehiclesCount:"N/A"}}</strong>
+                                                    </h4>
+                                                    <p>
+                                                        <small>Camiones</small>
+                                                    </p>
+                                                    <button (click)="goVehiculo($event,data.id)" class="btn btn-yellow btn-block">Cami&oacute;n</button>
+
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 emphasis">
+                                                    <h4><strong>{{data.balance?(data.balance | number:'.0-2'):"0"}}$</strong></h4>
+                                                    <p>
+                                                        <small>Saldo</small>
+                                                    </p>
+                                                    <button (click)="goTaquilla(data.id)"
+                                                            class="btn btn-yellow btn-block">Taquilla
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="typeView==2">
+                    <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="box-body">
                     <div *ngFor="let i of [0,3,6,9]" class="row">
                         <div *ngFor="let data of dataList.list | slice:i:i+3">
                             <div class="col-lg-4">
@@ -206,6 +397,9 @@
                         </div>
                     </div>
                 </div>
+                </div>
+
+
             </div>
             <!-- /.box -->
         </div>
