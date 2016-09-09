@@ -106,9 +106,16 @@ export class Dashboard extends RestController implements OnInit {
             this.initForm();
             this.getPlots();
             this.getPlot2();
+            this.getDataDebts();
         }
     }
+    public debts:any={};
+    public noDebts:any={};
 
+    getDataDebts(){
+        this.onloadData('/reports/debts/',this.debts)
+        this.onloadData('/reports/noDebts/',this.noDebts)
+    }
     goTaquilla(event) {
         event.preventDefault();
         let link = ['Taquilla', {}];

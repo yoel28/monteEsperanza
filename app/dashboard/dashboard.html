@@ -87,7 +87,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div *ngIf="dataAreaPlot5.series.length>0" id="chartcontainer5" width='100%' class="padding-bottom col-lg-8">
+                                <chart [options]="dataAreaPlot5" (load)="saveInstance($event.context,'plot5')"></chart>
+                            </div>
+                            <div class="padding-bottom col-lg-4">
+                                <div class="info-box bg-green">
+                                    <span class="info-box-icon">
+                                        <i class="fa fa-money btn-outline"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Saldo posito de los cliente</span>
+                                        <span class="info-box-number">92,050</span>
+                                    </div>
+                                </div>
 
+                                <div class="info-box bg-red">
+                                    <span class="info-box-icon">
+                                        <i class="fa fa-money btn-outline"></i>
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Deuda de los clientes</span>
+                                        <span class="info-box-number">92,050</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-6">
                                 <chart [options]="dataAreaPlot1" (load)="saveInstance($event.context,'plot1')"></chart>
@@ -102,11 +129,6 @@
                             </div>
                             <div *ngIf="dataAreaPlot4.series.length>0" id="chartcontainer4" width='100%' class="padding-bottom col-lg-6">
                                 <chart [options]="dataAreaPlot4" (load)="saveInstance($event.context,'plot4')"></chart>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div *ngIf="dataAreaPlot5.series.length>0" id="chartcontainer5" width='100%' class="padding-bottom col-lg-12">
-                                <chart [options]="dataAreaPlot5" (load)="saveInstance($event.context,'plot5')"></chart>
                             </div>
                         </div>
                     </div>
