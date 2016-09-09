@@ -24,6 +24,7 @@ export class TipoEmpresaSave extends RestController implements OnInit{
     detail: Control;
     code: Control;
     free: Control;
+    credit: Control;
 
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr?: ToastsManager) {
@@ -34,6 +35,7 @@ export class TipoEmpresaSave extends RestController implements OnInit{
     ngOnInit(){
         this.initTipos();
         this.initAccess();
+        this.initCredit();
         this.initForm();
     }
     initForm(){
@@ -43,6 +45,7 @@ export class TipoEmpresaSave extends RestController implements OnInit{
         this.detail = new Control("", Validators.compose([Validators.required]));
         this.code = new Control("", Validators.compose([Validators.required]));
         this.free = new Control("", Validators.compose([Validators.required]));
+        this.credit = new Control("",Validators.compose([Validators.required]));
 
         this.form = this._formBuilder.group({
             title: this.title,
@@ -50,19 +53,32 @@ export class TipoEmpresaSave extends RestController implements OnInit{
             detail: this.detail,
             code: this.code,
             free: this.free,
+            credit: this.credit,
         });
 
     }
+    public itemsCredit:any = [];
+    initCredit(){
+        this.itemsCredit=[
+            {'id': 1, 'text':'Grupo a credito'},
+            {'id': 2, 'text': 'Grupo a contado'},
+        ]
+    }
+    public refreshValueCredit(value:any):void {
+        this.credit.updateValue(value.id==1?true:false);
+    }
+
     public itemsAccess:any = [];
     initAccess(){
         this.itemsAccess=[
-            {'id': true, 'text':'Libre'},
-            {'id': false, 'text': 'Pago'},
+            {'id': 1, 'text':'Libre'},
+            {'id': 2, 'text': 'Pago'},
         ]
     }
     public refreshValueAccess(value:any):void {
-        this.free.updateValue(value.id);
+        this.free.updateValue(value.id==1?true:false);
     }
+
 
     submitForm(){
         let that = this;

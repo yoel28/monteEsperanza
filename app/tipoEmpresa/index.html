@@ -27,6 +27,7 @@
                                     <th>Detalle</th>
                                     <th>C&oacute;digo</th>
                                     <th>Acceso</th>
+                                    <th>Tipo</th>
                                     <th *ngIf="myglobal.existsPermission('127')">Habilitado</th>
                                     <th>Icono </th>
                                     <th *ngIf="myglobal.existsPermission('38')">Acciones</th>
@@ -48,6 +49,12 @@
                                         <button (click)="onPatch('free',data)" class="btn btn-sm"
                                                 [class.btn-green]="data.free" [class.btn-blue]="!data.free">
                                             {{data.free?"Libre":"Pago"}}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button (click)="onPatch('credit',data)" class="btn btn-sm"
+                                                [class.btn-green]="data.credit" [class.btn-blue]="!data.credit">
+                                            {{data.credit?"Credito":"Contado"}}
                                         </button>
                                     </td>
                                     <td *ngIf="myglobal.existsPermission('127')">

@@ -48,6 +48,14 @@
 
                         </ng-select>
                     </div>
+                    <div class="form-group">
+                        <ng-select [allowClear]="true"
+                                   [items]="itemsCredit"
+                                   (data)="refreshValueCredit($event)"
+                                   placeholder="Seleccione un tipo de grupo">
+
+                        </ng-select>
+                    </div>
                 </form>
 
             </div>
