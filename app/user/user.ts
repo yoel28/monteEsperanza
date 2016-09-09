@@ -21,6 +21,8 @@ import {Divide} from "../utils/pipe";
 export class User extends RestController implements OnInit{
 
     public dataSelect:any={};
+    public typeView=1;
+
 
     constructor(public router:Router, public http:Http, public myglobal:globalService, public toastr:ToastsManager) {
         super(http, toastr);
