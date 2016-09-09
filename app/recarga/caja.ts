@@ -20,6 +20,7 @@ export class Caja extends RestController implements OnInit{
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
     public WEIGTH_METRIC_SHORT=this.myglobal.getParams('WEIGTH_METRIC_SHORT');
     public rechargeTotal={};
+    public rechargeSum:any=[];
     public typeRecharge:any={};
     public dia:any;
 
@@ -34,12 +35,21 @@ export class Caja extends RestController implements OnInit{
             this.loadCaja();
         }
     }
+
     loadCaja(){
         this.max=20;
         this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.dia.format('DD-MM-YYYY')+"','type':'date'],['op':'lt','field':'dateCreated','value':'"+this.dia.add(1, 'days').format('DD-MM-YYYY')+"','type':'date']]");
         this.loadData();
         this.onloadData('/total/recharges/',this.rechargeTotal)
         this.httputils.onLoadList('/type/recharges?max=1000',this.typeRecharge,this.max,this.error);
+        this.onloadData('/operations/sum',this.rechargeSum)
+    }
+    getRechargeSum(val){
+        let index = this.rechargeSum.findIndex(obj => (obj.companyTypeCredit == val ));
+        if(index > -1)
+           return this.rechargeSum[index].quantity
+        return 0;
+
     }
     formatDate(date,format){
         if(date)

@@ -60,6 +60,25 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Clientes al contado&nbsp;({{MONEY_METRIC_SHORT}})</th>
+                                        <th>Clientes a credito&nbsp;({{MONEY_METRIC_SHORT}})</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>TOTAL</td>
+                                    <td>{{getRechargeSum(false)*-1 | number:'.0-2'}}</td>
+                                    <td>{{getRechargeSum(true) | number:'.0-2'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
 
                         <div *ngIf=" dataList && dataList.count > 0 ">
                             {{calcRecharges()}}
