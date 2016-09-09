@@ -98,7 +98,7 @@
                                     </span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Saldo posito de los cliente</span>
-                                        <span class="info-box-number">92,050</span>
+                                        <span class="info-box-number">{{noDebts.total|number:'.0-2' || '0' }}</span>
                                     </div>
                                 </div>
 
@@ -108,7 +108,7 @@
                                     </span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Deuda de los clientes</span>
-                                        <span class="info-box-number">92,050</span>
+                                        <span class="info-box-number">{{debts.total |number:'.0-2' || '0'}}</span>
                                     </div>
                                 </div>
 
