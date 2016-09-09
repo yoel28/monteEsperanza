@@ -28,9 +28,29 @@ export class RestController implements OnInit {
     }
 
     error= err => {
+        //this.sound(err.status);
         if(this.toastr)
             this.toastr.error(err.json().message);
         console.log(err);
+
+    }
+    sound(id) {
+        var audio = {};
+        audio['500']= new Audio();
+        audio['404']= new Audio();
+        audio['422']= new Audio();
+        audio['default']= new Audio();
+
+        audio['500'].src = "assets/audio/500.mp3";
+        audio['404'].src = "assets/audio/404.mp3";
+        audio['422'].src = "assets/audio/422.mp3";
+        audio['default'].src = "assets/audio/default.mp3";
+
+        if(audio[id])
+            audio[id].play();
+        else
+            audio['default'].play();
+
     }
     getOffset(offset?){
         if(typeof offset ==='number')
