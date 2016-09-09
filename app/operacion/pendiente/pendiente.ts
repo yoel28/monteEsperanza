@@ -183,7 +183,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
     formatDate(date, format) {
         if (date)
-            return moment(date).format(format);
+            return moment.utc(date).format(format);
         return "-";
     }
     liberar(data) {
