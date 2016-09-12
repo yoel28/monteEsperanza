@@ -1,42 +1,52 @@
 before_script:
   - pwd
-  - whoami
+  - npm version
 
 after_script:
     - sh /home/ubuntu/Vertedero/conn.sh
 stages:
+    - update_version
+    - pre_install
     - build
-    - run
     - deploy
     - clean
 
     
-build_job:
-  stage: build
+update_version_job:
+  stage: update_version
   script:
     - echo 'Job Build'   
   tags:
     - vertederodev
 
 
-run_job:
-  stage: run
+pre_install_job:
+  stage: pre_install
   script:
-    - echo ' RUN'
-  only:
-    - tags
+    - npm install 
+    - typings install
+    - npm run tsc -w
   when: on_success
+  
+build_job:
+  stage: build
+  script:
+    - npm run build
+  when: on_success 
+  
+deploy_job:
+  stage: deploy
+  script:
+    - npm run build
+    - cp -rf build/* ./
+    - find ./ -type f -name '*.ts' -delete
+    - rm -rf /var/www/html/*
+    - mv ./ /var/www/html/
+  when: on_success 
+  
   
 clean_job:
   stage: clean
   script:
     - echo 'en fallo, borrar todo aqui'
   when: on_failure
-
-deploy_job:
-  stage: deploy 
-  script:
-    - echo 'Si todo salio bien, copiar aqui los archivos a su ubicacion final'
-  only:
-    - tags
-  when: on_success
