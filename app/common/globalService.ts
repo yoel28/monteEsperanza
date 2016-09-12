@@ -9,6 +9,7 @@ export class globalService extends RestController{
     version:string = "1.0.0";
     user:any=[];
     params:any={};
+    help:any={};
     permissions:any=[];
     allPermissions:any={};
     init=false;
@@ -18,6 +19,7 @@ export class globalService extends RestController{
         'user':{'status':false,'title':'Consultando datos del usuario'},
         'permissions':{'status':false,'title':'Consultando  permisos'},
         'params':{'status':false,'title':'Consultando  parametros'},
+        'help':{'status':false,'title':'Consultando  ayudas'},
     };
 
     
@@ -39,6 +41,7 @@ export class globalService extends RestController{
         this.loadValidToken();
         this.loadMyPermissions();
         this.loadParams();
+        this.loadTooltips();
     }
     initFinish(reverse=false){
         if(reverse)
@@ -47,8 +50,9 @@ export class globalService extends RestController{
             this.status.user.status=false;
             this.status.permissions.status=false;
             this.status.params.status=false;
+            this.status.help.status=false;
         }
-        if(this.status.token.status && this.status.user.status  && this.status.permissions.status && this.status.params.status )
+        if(this.status.token.status && this.status.user.status  && this.status.permissions.status && this.status.params.status && this.status.help.status)
             this.init=true;
     }
     countInitSession(){
@@ -109,7 +113,15 @@ export class globalService extends RestController{
         };
         this.httputils.doGet('/params?max=1000',successCallback,this.error);
     }
-
+    loadTooltips(){
+        let that = this;
+        let successCallback= response => {
+            Object.assign(that.help,response.json().list);
+            that.status.help.status=true;
+            that.initFinish();
+        };
+        this.httputils.doGet('/infos?max=1000',successCallback,this.error);
+    }
     existsPermission(val){
         let index = this.permissions.findIndex(obj => (obj.id == val || obj.code == val));
         if(index > -1)
