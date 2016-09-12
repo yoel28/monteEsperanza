@@ -47,9 +47,9 @@ import {TipoServicio} from "./tipoServicio/tipoServicio";
 import {Servicio} from "./servicio/servicio";
 import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 
-
 declare var SockJS:any;
 declare var Stomp:any;
+let  version='/ME01';
 
 @Component({
   selector: 'my-app',
@@ -62,57 +62,56 @@ declare var Stomp:any;
   ]
 })
 @RouteConfig([
-  { path: '/account/login',  name: 'AccountLogin',  component: AccountLogin, useAsDefault: true },
-  { path: '/account/active/:id/:token',  name: 'AccountActivate',  component: AccountActivate },
-  { path: '/account/recover',  name: 'AccountRecover',  component: AccountRecover },
-  { path: '/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
+  { path: version+'/account/login',  name: 'AccountLogin',  component: AccountLogin, useAsDefault: true },
+  { path: version+'/account/active/:id/:token',  name: 'AccountActivate',  component: AccountActivate },
+  { path: version+'/account/recover',  name: 'AccountRecover',  component: AccountRecover },
+  { path: version+'/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
 
-  { path: '/users',   name: 'User', component: User },
-  { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
-  { path: '/taquilla',   name: 'Taquilla', component: Taquilla },
-  { path: '/vehiculos',   name: 'Vehiculo', component: Vehiculo },
-  { path: '/vehiculos/:companyId',   name: 'VehiculoCompany', component: Vehiculo },
-  { path: '/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
+  { path: version+'/users',   name: 'User', component: User },
+  { path: version+'/dashboard',   name: 'Dashboard', component: Dashboard },
+  { path: version+'/taquilla',   name: 'Taquilla', component: Taquilla },
+  { path: version+'/vehiculos',   name: 'Vehiculo', component: Vehiculo },
+  { path: version+'/vehiculos/:companyId',   name: 'VehiculoCompany', component: Vehiculo },
+  { path: version+'/taquilla/:search',   name: 'TaquillaSearh', component: Taquilla },
 
-  { path: '/cliente',   name: 'Empresa', component: Empresa },
-  { path: '/cliente/morosos',   name: 'EmpresaMorosos', component: EmpresaMorosos },
-  { path: '/perfil',   name: 'Profile', component: Profile },
-  { path: '/cliente/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
+  { path: version+'/cliente',   name: 'Empresa', component: Empresa },
+  { path: version+'/cliente/morosos',   name: 'EmpresaMorosos', component: EmpresaMorosos },
+  { path: version+'/perfil',   name: 'Profile', component: Profile },
+  { path: version+'/cliente/:ruc',   name: 'EmpresaTimeLine', component: EmpresaTimeLine },
 
-  { path: '/operacion',   name: 'Operacion', component: Operacion },
-  { path: '/operacion/pendiente',   name: 'OperacionPendiente', component: OperacionPendiente },
-  { path: '/operacion/monitor',   name: 'OperacionMonitor', component: OperacionMonitor },
-  { path: '/roles',   name: 'Rol', component: Rol },
-  { path: '/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
-  { path: '/caja',   name: 'Caja', component: Caja },
+  { path: version+'/operacion',   name: 'Operacion', component: Operacion },
+  { path: version+'/operacion/pendiente',   name: 'OperacionPendiente', component: OperacionPendiente },
+  { path: version+'/operacion/monitor',   name: 'OperacionMonitor', component: OperacionMonitor },
+  { path: version+'/roles',   name: 'Rol', component: Rol },
+  { path: version+'/factura',   name: 'RecargaIngresos', component: RecargaIngresos },
+  { path: version+'/caja',   name: 'Caja', component: Caja },
 
-  { path: '/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
-  { path: '/reporte/grupos/rutas',   name: 'GruposRutas', component: GruposRutas },
-  { path: '/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
-  { path: '/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
-  { path: '/reporte/rutas',   name: 'ReporteDescargasRutas', component: ReporteDescargasRutas },
-  { path: '/reporte/basura',   name: 'ReporteDescargasBasura', component: ReporteDescargasBasura },
+  { path: version+'/reporte/grupos',   name: 'ReporteGrupos', component: ReporteGrupos },
+  { path: version+'/reporte/grupos/rutas',   name: 'GruposRutas', component: GruposRutas },
+  { path: version+'/reporte/toneladas',   name: 'ReporteDescargasGrupos', component: ReporteDescargasGrupos },
+  { path: version+'/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
+  { path: version+'/reporte/rutas',   name: 'ReporteDescargasRutas', component: ReporteDescargasRutas },
+  { path: version+'/reporte/basura',   name: 'ReporteDescargasBasura', component: ReporteDescargasBasura },
 
-  { path: '/permisos',   name: 'Permiso', component: Permiso },
-  { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
-  { path: '/parametro',   name: 'Parametro', component: Parametro },
-  { path: '/regla',   name: 'Regla', component: Regla },
-  { path: '/recargas',   name: 'Recarga', component: Recarga },
-  { path: '/libro',   name: 'RecargaLibro', component: RecargaLibro },
-  { path: '/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
-  { path: '/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
-  { path: '/tipo/servicio',   name: 'TipoServicio', component: TipoServicio },
-  { path: '/servicio',   name: 'Servicio', component: Servicio },
-  { path: '/grupo',   name: 'TipoEmpresa', component: TipoEmpresa },
-  { path: '/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
-  { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
-  { path: '/antenas',   name: 'Antenna', component: Antenna },
-  { path: '/rutas',   name: 'Ruta', component: Ruta },
+  { path: version+'/permisos',   name: 'Permiso', component: Permiso },
+  { path: version+'/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
+  { path: version+'/parametro',   name: 'Parametro', component: Parametro },
+  { path: version+'/regla',   name: 'Regla', component: Regla },
+  { path: version+'/recargas',   name: 'Recarga', component: Recarga },
+  { path: version+'/libro',   name: 'RecargaLibro', component: RecargaLibro },
+  { path: version+'/tipoRecarga',   name: 'TipoRecarga', component: TipoRecarga },
+  { path: version+'/tipoBasura',   name: 'TipoBasura', component: TipoBasura },
+  { path: version+'/tipo/servicio',   name: 'TipoServicio', component: TipoServicio },
+  { path: version+'/servicio',   name: 'Servicio', component: Servicio },
+  { path: version+'/grupo',   name: 'TipoEmpresa', component: TipoEmpresa },
+  { path: version+'/tipoVehiculo',   name: 'TipoVehiculo', component: TipoVehiculo },
+  { path: version+'/tagRfid',   name: 'TagRfid', component: TagRfid },
+  { path: version+'/antenas',   name: 'Antenna', component: Antenna },
+  { path: version+'/rutas',   name: 'Ruta', component: Ruta },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
-
   public saveUrl:string;
     public rulesOperacion={};
 
@@ -153,7 +152,7 @@ export class AppComponent extends RestController implements OnInit{
 
           }
 
-           if(that.myglobal.getParams('VERSION_CACHE')!=localStorage.getItem('VERSION_CACHE') && that.myglobal.getParams('VERSION_CACHE')!="")
+           if(that.myglobal.getParams('VERSION_CACHE')!=localStorage.getItem('VERSION_CACHE') && (that.myglobal.init && localStorage.getItem('bearer')))
            {
                localStorage.setItem('VERSION_CACHE',that.myglobal.getParams('VERSION_CACHE'))
                location.reload(true);
