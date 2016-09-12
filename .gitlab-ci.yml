@@ -22,7 +22,7 @@ build_job:
 run_job:
   stage: run
   script:
-    - echo 'En un tag si se da'
+    - bash /home/ubuntu/Vertedero/conn.sh
   only:
     - tags
   when: on_success
