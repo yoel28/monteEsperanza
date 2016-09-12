@@ -90,3 +90,13 @@
     white-space: normal !important;
     font-size: 12px !important;
 }
+.border-bottom{
+    border-bottom: 1px solid #000000;
+    padding-bottom: 15pt;
+}
+.saldo-positivo{
+    background: rgb(28, 113, 22);
+}
+.saldo-negativo{
+    background: rgb(173, 0, 0);
+}
