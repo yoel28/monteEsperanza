@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
-import forEach = require("core-js/fn/array/for-each");
 import {SMDropdown, DateRangepPicker} from "../../common/xeditable";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
