@@ -3,7 +3,7 @@ before_script:
   - whoami
 
 after_script:
-   - echo 'Hola Mundo' 
+    - sh /home/ubuntu/Vertedero/conn.sh
 stages:
     - build
     - run
@@ -22,7 +22,7 @@ build_job:
 run_job:
   stage: run
   script:
-    - sh /home/ubuntu/Vertedero/conn.sh
+    - echo ' RUN'
   only:
     - tags
   when: on_success
