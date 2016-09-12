@@ -22,7 +22,7 @@ build_job:
 run_job:
   stage: run
   script:
-    - bash /home/ubuntu/Vertedero/conn.sh
+    - sh /home/ubuntu/Vertedero/conn.sh
   only:
     - tags
   when: on_success
