@@ -1,0 +1,42 @@
+before_script:
+  - pwd
+  - whoami
+
+after_script:
+   - echo 'Hola Mundo' 
+stages:
+    - build
+    - run
+    - deploy
+    - clean
+
+    
+build_job:
+  stage: build
+  script:
+    - echo 'Job Build'   
+  tags:
+    - vertederodev
+
+
+run_job:
+  stage: run
+  script:
+    - echo 'En un tag si se da'
+  only:
+    - tags
+  when: on_success
+  
+clean_job:
+  stage: clean
+  script:
+    - echo 'en fallo, borrar todo aqui'
+  when: on_failure
+
+deploy_job:
+  stage: deploy 
+  script:
+    - echo 'Si todo salio bien, copiar aqui los archivos a su ubicacion final'
+  only:
+    - tags
+  when: on_success
