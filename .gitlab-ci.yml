@@ -1,5 +1,6 @@
 before_script:
   - pwd
+  - echo $CI_BUILD_REF_NAME
 after_script:
     - echo 'after'
 stages:
@@ -87,7 +88,6 @@ clean_job_:
     - sudo rm -rf /tmp/build
     - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
     - sudo tar -xf /var/www/html/$CI_BUILD_REF_NAME.tar -C /var/www/html/
-    - sh /home/ubuntu/Vertedero/failed.sh $CI_PROJECT_NAMESPACE $CI_PROJECT_NAME $CI_BUILD_NAME $CI_BUILD_REF_NAME
   when: on_failure
   tags:
     - vertederodev
