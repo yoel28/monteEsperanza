@@ -39,9 +39,10 @@ deploy_job_3:
     - cd /tmp/build
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
-    - sudo tar -cvf /var/www/html.tar /var/www/html    
+    - cd /var/www/
+    - sudo tar -cvf html.tar html/
     - sudo rm -rf /var/www/html/*
-    - sudo cp -rf ./ /var/www/html/
+    - sudo cp -rf /tmp/build /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   tags:
