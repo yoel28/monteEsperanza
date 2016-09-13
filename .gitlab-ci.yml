@@ -1,9 +1,3 @@
-before_script:
-  - pwd
-  - npm version
-
-after_script:
-    - echo 'after'
 stages:
     - pre_install
     - build
@@ -16,7 +10,7 @@ pre_install_job:
     - npm install 
     - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
-    - typings install
+    - sudo typings install
     - mkdir /tmp/build
     - sudo cp -rf ./* /tmp/build
   when: on_success
