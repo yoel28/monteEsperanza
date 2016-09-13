@@ -5,11 +5,11 @@ before_script:
 after_script:
     - sh /home/ubuntu/Vertedero/conn.sh
 stages:
-    - update_version
     - pre_install
     - build
     - deploy
     - clean
+    - update_version
 
     
 update_version_job:
@@ -23,6 +23,7 @@ update_version_job:
 pre_install_job:
   stage: pre_install
   script:
+    - pwd 
     - npm install 
     - typings install
     - npm run tsc -w
