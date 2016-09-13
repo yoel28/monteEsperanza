@@ -16,7 +16,6 @@ pre_install_job:
     - npm run prestart
     - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
-    - sudo typings install
     - mkdir /tmp/build
     - sudo cp -rf ./* /tmp/build
   when: on_success
