@@ -57,4 +57,4 @@ clean_job:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
-  when: on_failure
+  when: always
