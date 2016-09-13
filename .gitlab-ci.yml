@@ -1,5 +1,6 @@
 before_script:
   - pwd
+  - npm version
 
 after_script:
     - echo 'after'
@@ -8,6 +9,16 @@ stages:
     - build
     - deploy
     - clean
+    - update_version
+
+    
+update_version_job:
+  stage: update_version
+  script:
+    - echo 'Job Build'   
+  tags:
+    - vertederodev
+
 
 pre_install_job:
   stage: pre_install
@@ -15,7 +26,7 @@ pre_install_job:
     - npm install 
     - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
-    - sudo typings install
+    - typings install
     - mkdir /tmp/build
     - sudo cp -rf ./* /tmp/build
   when: on_success
@@ -27,31 +38,23 @@ build_job:
     - sudo npm run tsc -w
     - npm run build
   when: on_success 
-
+  
+  
+  
 deploy_job:
   stage: deploy
   script:
     - cd /tmp/build
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
-    - sudo tar -cvf /var/www/html.tar /var/www/html
     - sudo rm -rf /var/www/html/*
     - sudo cp -rf ./ /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
-
+  
+  
 clean_job:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
-    - sudo rm -rf /var/www/html/build
-    - sudo rm -rf /var/www/html/typings
-    - sudo rm -rf /var/www/html/consultas
-    - sudo rm /var/www/html/.gitignore
-    - sudo rm /var/www/html/.gitlab-ci.yml
-    - sudo rm /var/www/html/bs-config.json
-    - sudo rm /var/www/html/Gruntfile.js
-    - sudo rm /var/www/html/package.json
-    - sudo rm /var/www/html/tsconfig.json
-    - sudo rm /var/www/html/typings.json
-  when: always
+  when: on_failure
