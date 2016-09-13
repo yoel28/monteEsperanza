@@ -48,7 +48,7 @@ deploy_job:
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
     - sudo rm -rf /var/www/html/*
-    - sudo mv ./ /var/www/html/
+    - sudo cp -rf ./ /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   
