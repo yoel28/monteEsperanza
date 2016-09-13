@@ -40,9 +40,9 @@ deploy_job_3:
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
     - cd /var/www/
-    - sudo tar -cvf html.tar html/
+    - sudo tar -cf html.tar html/
     - sudo rm -rf /var/www/html/*
-    - sudo cp -rf /tmp/build /var/www/html/
+    - sudo cp -rf /tmp/build/* /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   tags:
@@ -73,7 +73,7 @@ clean_job_:
   script:
     - sudo rm -rf /tmp/build
     - sudo rm -rf /var/www/html/*
-    - sudo tar -xvf /var/www/html.tar -C /var/www/
+    - sudo tar -xf /var/www/html.tar -C /var/www/
   when: on_failure
   tags:
     - vertederodev
