@@ -5,4 +5,5 @@ typings/
 .directory
 build/
 vendors/
-.gitignore
+app/*.js
+app/*.js.map
