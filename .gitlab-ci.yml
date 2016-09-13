@@ -27,11 +27,14 @@ pre_install_job:
     - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
     - typings install
+    - mkdir /tmp/build
+    - sudo cp ./* /tmp/build
   when: on_success
   
 build_job:
   stage: build
   script:
+    - cd /tmp/build
     - sudo npm run tsc -w
     - npm run build
   when: on_success 
@@ -41,6 +44,7 @@ build_job:
 deploy_job:
   stage: deploy
   script:
+    - cd /tmp/build
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
     - sudo rm -rf /var/www/html/*
@@ -52,5 +56,5 @@ deploy_job:
 clean_job:
   stage: clean
   script:
-    - sudo rm -rf build/*
+    - sudo rm -rf /tmp/build
   when: on_failure
