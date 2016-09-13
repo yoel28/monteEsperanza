@@ -1,52 +1,79 @@
 before_script:
   - pwd
-  - npm version
-
 after_script:
-    - sh /home/ubuntu/Vertedero/conn.sh
+    - echo 'after'
 stages:
-    - update_version
     - pre_install
     - build
     - deploy
+    - reset
     - clean
 
-    
-update_version_job:
-  stage: update_version
+pre_install_job_1:
+  stage: pre_install
   script:
-    - echo 'Job Build'   
+    - mkdir /tmp/build
+    - sudo cp -rf ./* /tmp/build
+    - cd /tmp/build
+    - sudo npm run prestart
+    - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
+    - sudo npm install -g typings tsc concurrently  lite-server typescript
+    - sudo typings install
+  when: on_success
   tags:
     - vertederodev
 
-
-pre_install_job:
-  stage: pre_install
-  script:
-    - npm install 
-    - typings install
-    - npm run tsc -w
-  when: on_success
-  
-build_job:
+build_job_2:
   stage: build
   script:
-    - npm run build
-  when: on_success 
-  
-deploy_job:
+    - cd /tmp/build
+    - sudo npm run tsc -w
+    - sudo npm run build
+  when: on_success
+  tags:
+    - vertederodev
+
+deploy_job_3:
   stage: deploy
   script:
-    - npm run build
-    - cp -rf build/* ./
-    - find ./ -type f -name '*.ts' -delete
-    - rm -rf /var/www/html/*
-    - mv ./ /var/www/html/
+    - cd /tmp/build
+    - sudo cp -rf build/* ./
+    - sudo find ./ -type f -name '*.ts' -delete
+    - cd /var/www/
+    - sudo tar -cf html.tar html/
+    - sudo rm -rf /var/www/html/*
+    - sudo cp -rf /tmp/build/* /var/www/html/
+    - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
-  
-  
-clean_job:
+  tags:
+    - vertederodev  
+
+reset_job_4:
+  stage: reset
+  script:
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/build
+    - sudo rm -rf /var/www/html/typings
+    - sudo rm -rf /var/www/html/consultas
+    - sudo rm -rf /var/www/html/.git
+    - sudo rm -f /var/www/html/.gitignore
+    - sudo rm -f /var/www/html/.gitlab-ci.yml
+    - sudo rm -f /var/www/html/bs-config.json
+    - sudo rm -f /var/www/html/Gruntfile.js
+    - sudo rm -f /var/www/html/package.json
+    - sudo rm -f /var/www/html/tsconfig.json
+    - sudo rm -f /var/www/html/typings.json
+    - sudo chown ubuntu.ubuntu -R /var/www/html
+  when: always
+  tags:
+    - vertederodev
+    
+clean_job_:
   stage: clean
   script:
-    - echo 'en fallo, borrar todo aqui'
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/*
+    - sudo tar -xf /var/www/html.tar -C /var/www/
   when: on_failure
+  tags:
+    - vertederodev
