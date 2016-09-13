@@ -49,7 +49,7 @@ import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 
 declare var SockJS:any;
 declare var Stomp:any;
-let  version='/V01';
+let  version='/V02';
 
 @Component({
   selector: 'my-app',
