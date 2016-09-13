@@ -23,8 +23,9 @@ update_version_job:
 pre_install_job:
   stage: pre_install
   script:
-    - pwd 
+    - pwd
     - npm install 
+    - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - typings install
     - npm run tsc -w
   when: on_success
