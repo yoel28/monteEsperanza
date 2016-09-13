@@ -3,7 +3,7 @@ before_script:
   - npm version
 
 after_script:
-    - sh /home/ubuntu/Vertedero/conn.sh
+    - echo 'after'
 stages:
     - pre_install
     - build
@@ -23,32 +23,33 @@ update_version_job:
 pre_install_job:
   stage: pre_install
   script:
-    - pwd
     - npm install 
     - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - typings install
-    - npm run tsc -w
   when: on_success
   
 build_job:
   stage: build
   script:
+    - npm run tsc -w
     - npm run build
   when: on_success 
+  
+  
   
 deploy_job:
   stage: deploy
   script:
-    - npm run build
     - cp -rf build/* ./
     - find ./ -type f -name '*.ts' -delete
     - rm -rf /var/www/html/*
     - mv ./ /var/www/html/
+    - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   
   
 clean_job:
   stage: clean
   script:
-    - echo 'en fallo, borrar todo aqui'
+    - rm -rf build/*
   when: on_failure
