@@ -32,7 +32,7 @@ pre_install_job:
 build_job:
   stage: build
   script:
-    - npm run tsc -w
+    - sudo npm run tsc -w
     - npm run build
   when: on_success 
   
@@ -41,10 +41,10 @@ build_job:
 deploy_job:
   stage: deploy
   script:
-    - cp -rf build/* ./
-    - find ./ -type f -name '*.ts' -delete
-    - rm -rf /var/www/html/*
-    - mv ./ /var/www/html/
+    - sudo cp -rf build/* ./
+    - sudo find ./ -type f -name '*.ts' -delete
+    - sudo rm -rf /var/www/html/*
+    - sudo mv ./ /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   
@@ -52,5 +52,5 @@ deploy_job:
 clean_job:
   stage: clean
   script:
-    - rm -rf build/*
+    - sudo rm -rf build/*
   when: on_failure
