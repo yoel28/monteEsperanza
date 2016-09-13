@@ -1,6 +1,5 @@
 before_script:
   - pwd
-  - whoami
 after_script:
     - echo 'after'
 stages:
