@@ -63,6 +63,7 @@ reset_job_4:
     - sudo rm -f /var/www/html/package.json
     - sudo rm -f /var/www/html/tsconfig.json
     - sudo rm -f /var/www/html/typings.json
+    - sudo chown ubuntu.ubuntu -R /var/www/html
   when: always
   tags:
     - vertederodev
