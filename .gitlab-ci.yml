@@ -1,6 +1,5 @@
 before_script:
   - pwd
-  - echo $CI_BUILD_REF_NAME
 after_script:
     - echo 'after'
 stages:
