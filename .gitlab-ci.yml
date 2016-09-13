@@ -9,21 +9,11 @@ stages:
     - build
     - deploy
     - clean
-    - update_version
-
-    
-update_version_job:
-  stage: update_version
-  script:
-    - echo 'Job Build'   
-  tags:
-    - vertederodev
-
 
 pre_install_job:
   stage: pre_install
   script:
-    - npm install 
+    - npm prestart
     - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
     - typings install
@@ -37,9 +27,7 @@ build_job:
     - cd /tmp/build
     - sudo npm run tsc -w
     - npm run build
-  when: on_success 
-  
-  
+  when: on_success
   
 deploy_job:
   stage: deploy
