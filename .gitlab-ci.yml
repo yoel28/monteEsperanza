@@ -3,6 +3,7 @@ stages:
     - build
     - deploy
     - clean
+    - reset
 
 pre_install_job:
   stage: pre_install
@@ -51,7 +52,7 @@ clean_job:
     - sudo rm /var/www/html/typings.json
   when: always
 
-clean_job:
+reset_job:
   stage: clean
   script:
     - sudo rm -rf /var/www/html/*
