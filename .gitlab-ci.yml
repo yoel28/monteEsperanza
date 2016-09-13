@@ -13,22 +13,26 @@ stages:
 pre_install_job:
   stage: pre_install
   script:
-    - npm run prestart
-    - npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
+    - sudo npm run prestart
+    - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
-    - typings install
-    - mkdir /tmp/build
+    - sudo typings install
+    - sudo mkdir /tmp/build
     - sudo cp -rf ./* /tmp/build
   when: on_success
-  
+  tags:
+    - vertederodev
+
 build_job:
   stage: build
   script:
     - cd /tmp/build
     - sudo npm run tsc -w
-    - npm run build
+    - sudo npm run build
   when: on_success
-  
+  tags:
+    - vertederodev
+
 deploy_job:
   stage: deploy
   script:
@@ -39,10 +43,13 @@ deploy_job:
     - sudo cp -rf ./ /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
-  
+  tags:
+    - vertederodev  
   
 clean_job:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
   when: on_failure
+  tags:
+    - vertederodev
