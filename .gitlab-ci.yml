@@ -1,3 +1,8 @@
+before_script:
+  - pwd
+
+after_script:
+    - echo 'after'
 stages:
     - pre_install
     - build
@@ -53,7 +58,7 @@ clean_job:
   when: always
 
 reset_job:
-  stage: clean
+  stage: reset
   script:
     - sudo rm -rf /var/www/html/*
     - sudo tar -xvf /var/www/html.tar -C /var/www/html/
