@@ -15,7 +15,7 @@ pre_install_job_1:
     - mkdir /tmp/build
     - sudo cp -rf ./* /tmp/build
     - cd /tmp/build
-    - sudo npmd run prestart
+    - sudo npm run prestart
     - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
     - sudo typings install
@@ -87,6 +87,7 @@ clean_job_:
     - sudo rm -rf /tmp/build
     - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
     - sudo tar -xf /var/www/html/$CI_BUILD_REF_NAME.tar -C /var/www/html/
+    - sh /home/ubuntu/Vertedero/failed.sh $CI_PROJECT_NAMESPACE $CI_PROJECT_NAME $CI_BUILD_NAME $CI_BUILD_REF_NAME
   when: on_failure
   tags:
     - vertederodev
