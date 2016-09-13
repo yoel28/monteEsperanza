@@ -8,7 +8,6 @@ stages:
     - build
     - deploy
     - clean
-    - reset
 
 pre_install_job:
   stage: pre_install
@@ -56,10 +55,3 @@ clean_job:
     - sudo rm /var/www/html/tsconfig.json
     - sudo rm /var/www/html/typings.json
   when: always
-
-reset_job:
-  stage: reset
-  script:
-    - sudo rm -rf /var/www/html/*
-    - sudo tar -xvf /var/www/html.tar -C /var/www/html/
-  when: on_failure
