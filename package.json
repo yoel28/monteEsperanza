@@ -31,7 +31,7 @@
     "bootstrap-fileinput": "^4.2.8",
     "cropit": "^0.5.1",
     "font-awesome": "4.4.0",
-    "highcharts": "^4.2.5",
+    "highcharts": "4.2.5",
     "jquery": "2.1.4",
     "jquery-knob": "^1.2.11",
     "jspdf": "^1.2.61",
