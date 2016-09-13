@@ -1,6 +1,5 @@
 before_script:
   - pwd
-  - echo 'hola'
 after_script:
     - echo 'after'
 stages:
