@@ -7,6 +7,7 @@ stages:
     - pre_install
     - build
     - deploy
+    - reset
     - clean
 
 pre_install_job:
@@ -39,17 +40,38 @@ deploy_job:
     - cd /tmp/build
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
+    - sudo tar -cvf /var/www/html.tar /var/www/html    
     - sudo rm -rf /var/www/html/*
     - sudo cp -rf ./ /var/www/html/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   tags:
     - vertederodev  
-  
+
+reset_job:
+  stage: reset
+  script:
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/build
+    - sudo rm -rf /var/www/html/typings
+    - sudo rm -rf /var/www/html/consultas
+    - sudo rm /var/www/html/.gitignore
+    - sudo rm /var/www/html/.gitlab-ci.yml
+    - sudo rm /var/www/html/bs-config.json
+    - sudo rm /var/www/html/Gruntfile.js
+    - sudo rm /var/www/html/package.json
+    - sudo rm /var/www/html/tsconfig.json
+    - sudo rm /var/www/html/typings.json
+  when: always
+  tags:
+    - vertederodev
+    
 clean_job:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/*
+    - sudo tar -xvf /var/www/html.tar -C /var/www/
   when: on_failure
   tags:
     - vertederodev
