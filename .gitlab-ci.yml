@@ -9,7 +9,7 @@ stages:
     - reset
     - clean
 
-pre_install_job:
+pre_install_job_1:
   stage: pre_install
   script:
     - mkdir /tmp/build
@@ -23,7 +23,7 @@ pre_install_job:
   tags:
     - vertederodev
 
-build_job:
+build_job_2:
   stage: build
   script:
     - cd /tmp/build
@@ -33,7 +33,7 @@ build_job:
   tags:
     - vertederodev
 
-deploy_job:
+deploy_job_3:
   stage: deploy
   script:
     - cd /tmp/build
@@ -47,25 +47,26 @@ deploy_job:
   tags:
     - vertederodev  
 
-reset_job:
+reset_job_4:
   stage: reset
   script:
     - sudo rm -rf /tmp/build
     - sudo rm -rf /var/www/html/build
     - sudo rm -rf /var/www/html/typings
     - sudo rm -rf /var/www/html/consultas
-    - sudo rm /var/www/html/.gitignore
-    - sudo rm /var/www/html/.gitlab-ci.yml
-    - sudo rm /var/www/html/bs-config.json
-    - sudo rm /var/www/html/Gruntfile.js
-    - sudo rm /var/www/html/package.json
-    - sudo rm /var/www/html/tsconfig.json
-    - sudo rm /var/www/html/typings.json
+    - sudo rm -rf /var/www/html/.git
+    - sudo rm -f /var/www/html/.gitignore
+    - sudo rm -f /var/www/html/.gitlab-ci.yml
+    - sudo rm -f /var/www/html/bs-config.json
+    - sudo rm -f /var/www/html/Gruntfile.js
+    - sudo rm -f /var/www/html/package.json
+    - sudo rm -f /var/www/html/tsconfig.json
+    - sudo rm -f /var/www/html/typings.json
   when: always
   tags:
     - vertederodev
     
-clean_job:
+clean_job_:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
