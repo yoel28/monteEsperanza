@@ -115,11 +115,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div *ngIf="dataAreaPlot5.series.length>0" id="chartcontainer5" width='100%' class="padding-bottom col-lg-12">
-                                <chart [options]="dataAreaPlot5" (load)="saveInstance($event.context,'plot5')"></chart>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-6">
                                 <chart [options]="dataAreaPlot1" (load)="saveInstance($event.context,'plot1')"></chart>
                             </div>
@@ -133,6 +128,11 @@
                             </div>
                             <div *ngIf="dataAreaPlot4.series.length>0" id="chartcontainer4" width='100%' class="padding-bottom col-lg-6">
                                 <chart [options]="dataAreaPlot4" (load)="saveInstance($event.context,'plot4')"></chart>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="dataAreaPlot5.series.length>0" id="chartcontainer5" width='100%' class="padding-bottom col-lg-12">
+                                <chart [options]="dataAreaPlot5" (load)="saveInstance($event.context,'plot5')"></chart>
                             </div>
                         </div>
                     </div>
