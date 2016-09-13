@@ -1,5 +1,6 @@
 before_script:
   - pwd
+  - echo $CI_BUILD_REF_NAME
 after_script:
     - echo 'after'
 stages:
@@ -22,7 +23,10 @@ pre_install_job_1:
   when: on_success
   tags:
     - vertederodev
-
+  only :
+    - dev
+    - alpha
+    
 build_job_2:
   stage: build
   script:
@@ -32,48 +36,61 @@ build_job_2:
   when: on_success
   tags:
     - vertederodev
-
+  only :
+    - dev
+    - alpha
+    
 deploy_job_3:
   stage: deploy
   script:
     - cd /tmp/build
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
-    - cd /var/www/
-    - sudo tar -cf html.tar html/
-    - sudo rm -rf /var/www/html/*
-    - sudo cp -rf /tmp/build/* /var/www/html/
+    - cd /var/www/html/
+    - sudo tar -cf $CI_BUILD_REF_NAME.tar $CI_BUILD_REF_NAME/
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
+    - sudo cp -rf /tmp/build/* /var/www/html/$CI_BUILD_REF_NAME/
     - sh /home/ubuntu/Vertedero/conn.sh
   when: on_success 
   tags:
-    - vertederodev  
+    - vertederodev
+  only :
+    - dev
+    - alpha
 
 reset_job_4:
   stage: reset
   script:
     - sudo rm -rf /tmp/build
-    - sudo rm -rf /var/www/html/build
-    - sudo rm -rf /var/www/html/typings
-    - sudo rm -rf /var/www/html/consultas
-    - sudo rm -rf /var/www/html/.git
-    - sudo rm -f /var/www/html/.gitignore
-    - sudo rm -f /var/www/html/.gitlab-ci.yml
-    - sudo rm -f /var/www/html/bs-config.json
-    - sudo rm -f /var/www/html/Gruntfile.js
-    - sudo rm -f /var/www/html/package.json
-    - sudo rm -f /var/www/html/tsconfig.json
-    - sudo rm -f /var/www/html/typings.json
-    - sudo chown ubuntu.ubuntu -R /var/www/html
-  when: always
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/build
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/typings
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/consultas
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/.git
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/.gitignore
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/.gitlab-ci.yml
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/bs-config.json
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/Gruntfile.js
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/package.json
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/tsconfig.json
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/typings.json
+    - sudo chown ubuntu.ubuntu -R /var/www/html/$CI_BUILD_REF_NAME/
+  when: on_success
   tags:
     - vertederodev
+  only :
+    - dev
+    - alpha
+
     
 clean_job_:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
-    - sudo rm -rf /var/www/html/*
-    - sudo tar -xf /var/www/html.tar -C /var/www/
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
+    - sudo tar -xf /var/www/html/$CI_BUILD_REF_NAME.tar -C /var/www/html/
   when: on_failure
   tags:
     - vertederodev
+  only :
+    - dev
+    - alpha
