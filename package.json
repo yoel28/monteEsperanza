@@ -32,6 +32,7 @@
     "cropit": "^0.5.1",
     "font-awesome": "4.4.0",
     "highcharts": "4.2.5",
+    "humanize-duration": "^3.9.1",
     "jquery": "2.1.4",
     "jquery-knob": "^1.2.11",
     "jspdf": "^1.2.61",
