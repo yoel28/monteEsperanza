@@ -13,9 +13,9 @@ stages:
 update_job:
   stage: update
   script:
-    - sh /home/ubuntu/script/updatedb.sh
+    - echo 'hola'
   tags:
-    - vertederodev
+    - local
   only :
     - dev
     - alpha
