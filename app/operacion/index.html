@@ -69,7 +69,8 @@
                                         {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReferenceDate'">
-                                        {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
+                                        {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT',false,data.id)}}
+                                        <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReference'">
                                         {{data.rechargeReference || "-"}}
