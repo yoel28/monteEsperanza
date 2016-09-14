@@ -3,9 +3,11 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {RestController} from "./restController";
-
+declare var humanizeDuration:any;
+declare var moment:any;
 export abstract class ModelBase extends RestController {
 
+    public formatDateId:any={}
     public permissions:any = {};
     public prefix = "";
 
@@ -17,6 +19,23 @@ export abstract class ModelBase extends RestController {
     public rulesSave:any = {};
     public ruleObject:any = {};
     public rulesAudict:any = {};
+
+    public dateHmanizer = humanizeDuration.humanizer({
+        language: 'shortEs',
+        round:true,
+        languages: {
+            shortEs: {
+                y: function() { return 'y' },
+                mo: function() { return 'm' },
+                w: function() { return 'Sem' },
+                d: function() { return 'd' },
+                h: function() { return 'hr' },
+                m: function() { return 'min' },
+                s: function() { return 'seg' },
+                ms: function() { return 'ms' },
+            }
+        }
+    })
 
 
     constructor(prefix, endpoint, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
@@ -215,14 +234,14 @@ export abstract class ModelBase extends RestController {
     }
 
 
-    initLang() {
+    public initLang() {
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
         userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
         this.translate.setDefaultLang('en');
         this.translate.use(userLang);
     }
 
-    getViewOptionsButtons(){
+    public getViewOptionsButtons(){
         let visible=[];
         this.viewOptions['buttons'].forEach(obj=>{
             if(obj.visible)
@@ -231,7 +250,7 @@ export abstract class ModelBase extends RestController {
         return visible;
     }
 
-    getViewOptionsActions(){
+    public getViewOptionsActions(){
         let visible=[];
         Object.keys(this.viewOptions.actions).forEach(obj=>{
             if(this.viewOptions.actions[obj].visible)
@@ -240,14 +259,14 @@ export abstract class ModelBase extends RestController {
         return visible;
     }
 
-    loadWhere(where) {
+    public loadWhere(where) {
         this.where = where;
         if (this.permissions.list && this.permissions.filter) {
             this.loadData();
         }
     }
 
-    getObjectKeys(data){
+    public getObjectKeys(data){
         return Object.keys(data);
     }
 
@@ -260,5 +279,37 @@ export abstract class ModelBase extends RestController {
         this.initRuleObject();
     };
 
+    public formatDate(date, format,force=false,id=null) {
+        if (date)
+        {
+            if(id && this.formatDateId[id])
+                force = this.formatDateId[id].value;
+
+            if(this.myglobal.getParams(this.prefix+'_DATE_FORMAT_HUMAN') == 'true' && !force){
+                var diff =  moment().valueOf() - moment(date).valueOf();
+                if(diff < parseFloat(this.myglobal.getParams('DATE_MAX_HUMAN'))){
+                    if(diff < 1800000)//menor a 30min
+                        return 'Hace '+this.dateHmanizer(diff,{ units: ['m', 's'] })
+                    if(diff < 3600000) //menor a 1hora
+                        return 'Hace '+this.dateHmanizer(diff,{ units: ['m'] })
+
+                    return 'Hace '+this.dateHmanizer(diff,{ units: ['h','m'] })
+                }
+            }
+            return moment(date).format(format);
+        }
+        return "-";
+    }
+    public changeFormatDate(id) {
+        if (!this.formatDateId[id])
+            this.formatDateId[id]={'value':false};
+        this.formatDateId[id].value = !this.formatDateId[id].value;
+    }
+    public viewChangeDate(date){
+        //<i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+        var diff =  moment().valueOf() - moment(date).valueOf();
+        return ((diff < parseFloat(this.myglobal.getParams('DATE_MAX_HUMAN'))) && this.myglobal.getParams(this.prefix+'_DATE_FORMAT_HUMAN') == 'true')
+        
+    }
 
 }
