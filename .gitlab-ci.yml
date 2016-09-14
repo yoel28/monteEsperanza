@@ -21,15 +21,6 @@ update_job:
     - dev
     - alpha
 
-restore_backup_job:
-  stage: restore_backup
-  script:
-  tags:
-    - vertederodev
-  only :
-    - dev
-    - alpha
-
 pre_install_job_1:
   stage: pre_install
   script:
