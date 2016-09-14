@@ -4,11 +4,31 @@ before_script:
 after_script:
     - echo 'after'
 stages:
+    - update
     - pre_install
     - build
     - deploy
     - reset
     - clean
+
+update_job:
+  stage: update
+  script:
+    - sh /home/ubuntu/script/updatedb.sh
+  tags:
+    - vertederodev
+  only :
+    - dev
+    - alpha
+
+restore_backup_job:
+  stage: restore_backup
+  script:
+  tags:
+    - vertederodev
+  only :
+    - dev
+    - alpha
 
 pre_install_job_1:
   stage: pre_install
@@ -50,7 +70,7 @@ deploy_job_3:
     - sudo tar -cf $CI_BUILD_REF_NAME.tar $CI_BUILD_REF_NAME/
     - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
     - sudo cp -rf /tmp/build/* /var/www/html/$CI_BUILD_REF_NAME/
-    - sh /home/ubuntu/Vertedero/conn.sh
+    - sh /home/ubuntu/script/conn.sh
   when: on_success 
   tags:
     - vertederodev
