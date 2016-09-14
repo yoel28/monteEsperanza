@@ -47,10 +47,15 @@
                             <th>Cliente</th>
                             <th>Placa</th>
                             <th>TAG RFID</th>
-                            <th>Fecha de entrada</th>
-                            <th>Fecha de salida</th>
-                            <th>Peso E.</th>
-                            <th>Peso S.</th>
+
+                            <th>Fecha&nbsp;E.</th>
+                            <th>Peso&nbsp;E.</th>
+                            <th>Tiempo&nbsp;E.</th>
+
+                            <th>Fecha&nbsp;S.</th>
+                            <th>Peso&nbsp;S.</th>
+                            <th>Tiempo&nbsp;S.</th>
+
                             <th>Neto</th>
                             <th>Procesado</th>
                             <th></th>
@@ -68,14 +73,28 @@
                             </td>
                             <td>{{data.vehiclePlate || '-'}}</td>
                             <td>{{data.tagRFID || '-'}}</td>
-                            <td>{{formatDate(data.dateIn,'DD/MM/YYYY, LT')}}</td>
-                            <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT')}}</td>
+                            <td>
+                                {{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}
+                                <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                            </td>
                             <td>{{ data.weightIn | number:'.0-3'}}</td>
+                            <td>{{ data.timeBalIn || '-'}}</td>
+
+                            <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}
+                                <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                            </td>
                             <td>{{ data.weightOut | number:'.0-3'}}</td>
+                            <td>{{ data.timeBalOut || '-'}} </td>
+
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
                             <td>
-                                <span *ngIf="data.enabled">Pendiente</span>
-                                <span *ngIf="!data.enabled">{{ formatDate(data.dateUpdated,'DD/MM/YYYY, LT') }} por {{data.usernameUpdater}}</span>
+                                <span *ngIf="data.enabled && !data.dateUpdated">Pendiente&nbsp;</span>
+                                <span *ngIf="data.enabled && data.dateUpdated">Devuelto&nbsp;</span>
+                                <span *ngIf="!data.enabled">Procesado&nbsp;</span>
+                                <span *ngIf="data.dateUpdated">
+                                    {{ formatDate(data.dateUpdated,'DD/MM/YYYY, LT',false,data.id) }} por {{data.usernameUpdater}}
+                                </span>
+                                <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
                             </td>
                             <td *ngIf="getViewOptionsActions().length > 0">
                                 <div class="btn-group" *ngIf="data.enabled">
@@ -89,7 +108,7 @@
                                             <i class="fa fa-sign-in fa-lg"></i>
                                         </a>
                                         <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
-                                            &nbsp;<span class="fa fa-check fa-lg"></span>
+                                            &nbsp;<span class="fa fa-ban fa-lg"></span>
                                         </a>
                                     </label>
                                 </div>
@@ -118,11 +137,13 @@
 
                                     <div class="col-lg-10">
                                         <a [class.text-white]="!data.vehicleId" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
+                                            <i *ngIf="!data.vehicleId" class="fa fa-exclamation-triangle">&nbsp;</i>
                                             <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
-                                            <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT')}}&nbsp;&nbsp;
-                                            <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT')}}&nbsp;&nbsp;
+                                            <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
+                                            <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Tag:&nbsp;</label>{{data.tagRFID || '-'}}&nbsp;&nbsp;
-                                            <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}
+                                            <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
+                                            <i *ngIf="data.dateUpdated && data.enabled" class="fa fa-comment">&nbsp;Devuelto</i>
                                         </a>
                                     </div>
 
@@ -139,7 +160,7 @@
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
                                                 <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
-                                                    &nbsp;<span class="fa fa-check fa-lg"></span>
+                                                    &nbsp;<span class="fa fa-ban fa-lg"></span>
                                                 </a>
                                             </label>
                                         </div>
@@ -161,9 +182,10 @@
                                     <div *ngIf="data.dateUpdated">
                                         <div class="col-lg-12">
                                             <p style="font-size: large">
-                                                <i class="fa fa-user-secret" aria-hidden="true"></i>
-                                                {{data.enabled?'Devuelto':'Procesado'}} el <strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY')}}</strong>,&nbsp;
-                                                a las <strong>{{formatDate(data.dateUpdated,'LT')}}</strong> por&nbsp;
+                                                <i *ngIf="!data.enabled" class="fa fa-user-secret" aria-hidden="true"></i>
+                                                <i *ngIf="data.enabled" class="fa fa-comment" aria-hidden="true"></i>
+                                                {{data.enabled?'Devuelto':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
+                                                a las <strong>{{formatDate(data.dateUpdated,'LT',true)}}</strong> por&nbsp;
                                                 <strong>{{data.usernameUpdater}}</strong>
                                             </p>
                                         </div>
@@ -183,21 +205,33 @@
                                     </div>
                                     <div>
                                         <div class="col-lg-6">
-                                            <strong>Entrada:&nbsp;</strong>
-                                            {{formatDate(data.dateIn,'DD/MM/YYYY, LT')}}
+                                            <strong>Fecha E:&nbsp;</strong>
+                                            {{formatDate(data.dateIn,'DD/MM/YYYY, LT',true,data.id)}}
+                                            <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
                                         </div>
                                         <div class="col-lg-6">
-                                            <strong>Salida:&nbsp;</strong>
-                                            {{formatDate(data.dateOut,'DD/MM/YYYY, LT')}}
+                                            <strong>Fecha S.:&nbsp;</strong>
+                                            {{formatDate(data.dateOut,'DD/MM/YYYY, LT',true,data.id)}}
+                                            <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-lg-6">
+                                            <strong>Tiempo E:&nbsp;</strong>
+                                            {{data.timeBalIn || '-'}}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <strong>Tiempo S.:&nbsp;</strong>
+                                            {{data.timeBalOut || '-'}}
                                         </div>
                                     </div>
                                     <div>
                                         <div class="col-lg-3">
-                                            <strong>Peso de entrada:&nbsp;</strong>
+                                            <strong>Peso E:&nbsp;</strong>
                                             {{ (data.weightIn) | number:'.0-3'}}
                                         </div>
                                         <div class="col-lg-3">
-                                            <strong>Peso de salida:&nbsp;</strong>
+                                            <strong>Peso S:&nbsp;</strong>
                                             {{ (data.weightOut) | number:'.0-3'}}
                                         </div>
                                         <div class="col-lg-6">
