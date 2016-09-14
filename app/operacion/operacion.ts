@@ -311,12 +311,7 @@ export class Operacion extends ModelBase implements OnInit {
     onKey(event:any) {
         this.codeReference = event.target.value;
     }
-
-    formatDate(date, format) {
-        if (date)
-            return moment(date).format(format);
-        return "-";
-    }
+    
 
     public view = [
         {'visible': true, 'position': 1, 'title': 'Fecha de transaccion', 'key': 'rechargeReferenceDate'},

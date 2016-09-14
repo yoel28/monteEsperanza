@@ -181,11 +181,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             this.operacionSave.inAntena(data);
         }
     }
-    formatDate(date, format) {
-        if (date)
-            return moment(date).format(format);
-        return "-";
-    }
+    
     liberar(data) {
         this.dataOperation.operationId=data.id
         this.dataOperation.enabled=false;
