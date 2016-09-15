@@ -27,7 +27,7 @@ update_job:
   script:
     - wget http://server.zippyttech.com:9580/dumptablas.sql
     - pwd
-    - 'sh /home/ubuntu/script/updatedb.sh ($pwd)'
+    - sh /home/ubuntu/script/updatedb.sh $(pwd)
     - rm -f dumptablas.sql
   tags:
     - vertederodev
