@@ -53,7 +53,7 @@ export class Taquilla extends RestController implements OnInit{
     recargaSave:RecargaSave;
     RecargarSaldo(data){
         if(this.recargaSave){
-            this.recargaSave.setdata(data.id,data.balance)
+            this.recargaSave.setdata(data.id,data.debt+data.balance)
         }
 
     }
@@ -72,12 +72,17 @@ export class Taquilla extends RestController implements OnInit{
             this.max=10;
             this.dataCompany={};
             this.where="";
-            this.onloadData("/search/companies/"+ companies,this.dataCompanies,offset)
-            //this.httputils.onLoadList("/search/companies/"  + "?max=" + this.max + "&offset=" + this.offset, , this.max, this.error);
+            this.onloadData("/search/companies/"+ companies,this.dataCompanies,offset);
         }
     }
     assignRecarga(data){
-        this.dataCompany.balance+=data.quantity;
+        let saldo=data.quantity+this.dataCompany.balance;
+        if( (this.dataCompany.debt*-1) <= saldo)
+        {
+            saldo= saldo + this.dataCompany.debt;
+            this.dataCompany.debt=0;
+        }
+        this.dataCompany.balance=saldo;
         this.dataList.count+=1;
         this.dataList.list.unshift(data);
     }
