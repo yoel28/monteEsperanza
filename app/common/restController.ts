@@ -30,7 +30,12 @@ export class RestController implements OnInit {
     error= err => {
         //this.sound(err.status);
         if(this.toastr)
-            this.toastr.error(err.json().message);
+        {
+            if(err.json().message.error)
+                this.toastr.error(err.json().message.error);
+            else
+                this.toastr.error(err.json().message);
+        }
         console.log(err);
 
     }
