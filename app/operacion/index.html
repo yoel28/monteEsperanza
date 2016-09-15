@@ -70,10 +70,14 @@
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReferenceDate'">
                                         {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT',false,data.id)}}
-                                        <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                        <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReference'">
                                         {{data.rechargeReference || "-"}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'dateCreated'">
+                                        {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',false,data.id)}}
+                                        <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'route'">
                                         {{data.routeTitle}}&nbsp;({{data.routeReference}})

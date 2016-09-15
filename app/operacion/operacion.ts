@@ -38,8 +38,8 @@ export class Operacion extends ModelBase implements OnInit {
 
         if (this.permissions['list']) {
             this.max = 40;
-            if (localStorage.getItem('view4'))
-                this.view = JSON.parse(localStorage.getItem('view4'));
+            if (localStorage.getItem('view6'))
+                this.view = JSON.parse(localStorage.getItem('view6'));
             this.ordenView();
             this.loadData();
         }
@@ -85,6 +85,7 @@ export class Operacion extends ModelBase implements OnInit {
             'vehicle': {
                 'type': 'text',
                 'required': true,
+                'search':true,
                 'readOnly': false,
                 'key': 'vehicle',
                 'paramsSearch': {
@@ -107,6 +108,7 @@ export class Operacion extends ModelBase implements OnInit {
             'company': {
                 'type': 'text',
                 'required': true,
+                'search':true,
                 'key': 'company',
                 'readOnly': false,
                 'checkBalance': true,
@@ -132,6 +134,7 @@ export class Operacion extends ModelBase implements OnInit {
             'trashType': {
                 'type': 'text',
                 'required': true,
+                'search':true,
                 'key': 'trashType',
                 'readOnly': false,
                 'permissions': '136',
@@ -140,7 +143,7 @@ export class Operacion extends ModelBase implements OnInit {
                     'endpoint': "/search/type/trash/",
                     'where': '',
                     'imageGuest': '/assets/img/trash-guest.png',
-                    'field': 'trashType',
+                    'field': 'trashType.id',
                 },
                 'icon': 'fa fa-trash',
                 'object': true,
@@ -154,6 +157,7 @@ export class Operacion extends ModelBase implements OnInit {
             'route': {
                 'type': 'text',
                 'required': true,
+                'search':true,
                 'key': 'route',
                 'readOnly': false,
                 'paramsSearch': {
@@ -185,7 +189,7 @@ export class Operacion extends ModelBase implements OnInit {
                 'readOnly': false,
                 'icon': 'fa fa-balance-scale',
                 'title': 'Peso E.',
-                'placeholder': 'Ingrese el peso de entrada',
+                'placeholder': 'Peso de entrada',
                 'msg': {
                     'error': 'El peso debe ser numerico',
                 },
@@ -216,6 +220,12 @@ export class Operacion extends ModelBase implements OnInit {
                     'field':'weight',
                 }
             },
+            'dateCreated':{
+                'type': 'date',
+                'display': null,
+                'search': true,
+                'title': 'Fecha de entrada',
+            },
             'comment': {
                 'type': 'textarea',
                 'key': 'description',
@@ -229,6 +239,7 @@ export class Operacion extends ModelBase implements OnInit {
         }
         Object.assign(this.rulesSave, modelRules);
         Object.assign(this.rules, modelRules, this.rules);
+        delete this.rulesSave.dateCreated
     }
 
     initPermissions() {
@@ -328,6 +339,7 @@ export class Operacion extends ModelBase implements OnInit {
         {'visible': false, 'position': 10, 'title': 'Rutas', 'key': 'route'},
         {'visible': false, 'position': 11, 'title': 'Tipo de basura', 'key': 'trash'},
         {'visible': false, 'position': 12, 'title': 'Operador', 'key': 'usernameCreator'},
+        {'visible': false, 'position': 13, 'title': 'Fecha de Entrada.', 'key': 'dateCreated'},
 
     ];
 
@@ -374,7 +386,7 @@ export class Operacion extends ModelBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view4', JSON.stringify(this.view))
+        localStorage.setItem('view6', JSON.stringify(this.view))
     }
 
     setVisibleView(data) {
@@ -384,7 +396,7 @@ export class Operacion extends ModelBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view4', JSON.stringify(this.view))
+        localStorage.setItem('view6', JSON.stringify(this.view))
     }
 }
 
