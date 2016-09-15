@@ -75,7 +75,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'visible': this.permissions.add,
             'modalId':'cargaPendiente'
         };
-        this.viewOptions.actions.verificar = {
+        this.viewOptions.actions.rechazar = {
             'visible': this.permissions.update,
         };
         this.viewOptions.actions.devolver = {
@@ -116,6 +116,24 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'icon': 'fa fa-balance-scale',
             'title': 'TagRFID',
             'placeholder': 'Ingrese tag RFID',
+        }
+        this.rules['timeBalIn']={
+            'type': 'number',
+            'step':'0',
+            'search': true,
+            'key': 'timeBalIn',
+            'icon': 'fa fa-clock-o',
+            'title': 'Tiempo E.',
+            'placeholder': 'Tiempo en la balanza de entrada',
+        }
+        this.rules['timeBalOut']={
+            'type': 'number',
+            'step':'0',
+            'search': true,
+            'key': 'timeBalOut',
+            'icon': 'fa fa-clock-o',
+            'title': 'Tiempo S.',
+            'placeholder': 'Tiempo en la balanza de salida',
         }
         this.rules['weightIn']={
             'type': 'number',
@@ -194,7 +212,9 @@ export class OperacionPendiente extends ModelBase implements OnInit {
     }
     @ViewChild(OperacionPrint)
     operacionPrint:OperacionPrint;
-    onPrintOperation(data){
+    onPrintOperation(event,data){
+        if(event)
+            event.preventDefault();
         let successCallback= response => {
             if(this.operacionPrint)
                 this.operacionPrint.data=response.json();
