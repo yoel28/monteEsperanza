@@ -7,53 +7,24 @@
             <div class="col-lg-8">
                 <h1 class="title">BIENVENIDOS A MONTE ESPERANZA</h1><br/>
                 <h3 class="subtitle">¿QU&Eacute; DESEA REALIZAR?</h3>
-                <div class="row border-bottom">
+                <div class="row">
                     <div class="text-center title padding-top">
-                    <!--<div *ngIf="myglobal.existsPermission('12')" class="col-lg-3 btn" (click)="goVehiculos($event)">-->
-                        <!--<img src="/assets/img/dashboard/vehiculo.png" class="actions-dashboard">-->
-                        <!--<h6>VEH&Iacute;CULO</h6>-->
-                    <!--</div>-->
-                    <div *ngIf="myglobal.existsPermission('21')" class="col-xs-6 col-lg-3 btn" (click)="goOperaciones($event)">
-                        <img src="/assets/img/dashboard/operacion.png" class="actions-dashboard">
-                        <h6>OPERACI&Oacute;N</h6>
-                    </div>
-                    <div *ngIf="myglobal.existsPermission('13')" class="col-xs-6 col-lg-3 btn" (click)="goFactura($event)">
-                        <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
-                        <h6>INGRESOS</h6>
-                    </div>
-                    <div *ngIf="myglobal.existsPermission('11')" class="col-xs-6 col-lg-3 btn" (click)="goLibro($event)">
-                        <img src="/assets/img/dashboard/libro.png" class="actions-dashboard">
-                        <h6>LIBRO</h6>
-                    </div>
-                    <div *ngIf="myglobal.existsPermission('10')" class="col-xs-6 col-lg-3 btn" (click)="goTaquilla($event)">
-                        <img src="/assets/img/dashboard/taquilla.png" class="actions-dashboard">
-                        <h6>TAQUILLA</h6>
-                    </div>
-                </div>
-                </div>
-                <div class="row ">
-                    <div class="text-center title">
-
-                        <div class="col-lg-6 text-white">
-                            <div class="col-xs-6 col-lg-6 col-lg-offset-3 saldo-positivo">
-                                <i class="fa fa-money fa-3x"></i>
-                                <div class="row">
-                                    <h6>Saldo de los clientes</h6>
-                                    <h6>{{noDebts.total|number:'.0-2' || '0' }}&nbsp;{{MONEY_METRIC_SHORT}}</h6>
-                                </div>
-                            </div>
+                        <div *ngIf="myglobal.existsPermission('21')" class="col-xs-6 col-lg-3 btn" (click)="goOperaciones($event)">
+                            <img src="/assets/img/dashboard/operacion.png" class="actions-dashboard">
+                            <h6>OPERACI&Oacute;N</h6>
                         </div>
-
-                        <div class="col-lg-6 text-white">
-                            <div class="col-xs-6 col-lg-6 col-lg-offset-3 saldo-negativo">
-                                <i class="fa fa-money fa-3x"></i>
-                                <div class="row">
-                                    <h6>Deuda de los clientes</h6>
-                                    <h6>{{debts.total |number:'.0-2' || '0'}}&nbsp;{{MONEY_METRIC_SHORT}}</h6>
-                                </div>
-                            </div>
+                        <div *ngIf="myglobal.existsPermission('13')" class="col-xs-6 col-lg-3 btn" (click)="goFactura($event)">
+                            <img src="/assets/img/dashboard/ingresos.png" class="actions-dashboard">
+                            <h6>INGRESOS</h6>
                         </div>
-
+                        <div *ngIf="myglobal.existsPermission('11')" class="col-xs-6 col-lg-3 btn" (click)="goLibro($event)">
+                            <img src="/assets/img/dashboard/libro.png" class="actions-dashboard">
+                            <h6>LIBRO</h6>
+                        </div>
+                        <div *ngIf="myglobal.existsPermission('10')" class="col-xs-6 col-lg-3 btn" (click)="goTaquilla($event)">
+                            <img src="/assets/img/dashboard/taquilla.png" class="actions-dashboard">
+                            <h6>TAQUILLA</h6>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,6 +33,31 @@
     <section class="content">
         <div *ngIf="myglobal.existsPermission('27')" >
 
+
+            <div class="row ">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                    <div class="info-box">
+                                    <span class="info-box-icon bg-green">
+                                        <i class="fa fa-money"></i>
+                                    </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Saldo de los clientes</span>
+                            <span class="info-box-number">{{noDebts.total|number:'.0-2' || '0' }}&nbsp;{{MONEY_METRIC_SHORT}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                    <div class="info-box">
+                                    <span class="info-box-icon bg-red">
+                                        <i class="fa fa-money"></i>
+                                    </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Deuda de los clientes</span>
+                            <span class="info-box-number">{{debts.total |number:'.0-2' || '0'}}&nbsp;{{MONEY_METRIC_SHORT}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row" *ngIf="Total">
                 <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let total of Total">
                     <div class="info-box">
