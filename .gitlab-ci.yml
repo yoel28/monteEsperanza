@@ -7,7 +7,6 @@ stages:
     - dump
     - update
     - pre_install
-    - pre_install2
     - build
     - deploy
     - reset
