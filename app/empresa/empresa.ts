@@ -101,6 +101,14 @@ export class Empresa extends RestController implements OnInit {
             'placeholder': 'Dirección',
             'search': true
         },
+        'debt': {
+            'type': 'number',
+            'step':'0.001',
+            'title': 'Deuda',
+            'placeholder': 'Deuda (Valores negativos)',
+            'double':true,
+            'search': true
+        },
     };
 
     public dataSelect:any={};
