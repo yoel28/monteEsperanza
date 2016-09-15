@@ -33,6 +33,7 @@ export class RecargaSave extends RestController implements OnInit{
     reference: Control;
     referenceDate: Control;
     rechargeType: Control;
+    RECHARGE_DEVOLUCION_ID:number;
 
     rechargeTypes:any = []; //Arreglo con todos los tipos de regarga
 
@@ -43,6 +44,7 @@ export class RecargaSave extends RestController implements OnInit{
     }
     ngOnInit() {
         this.initForm();
+        this.RECHARGE_DEVOLUCION_ID=parseFloat(this.myglobal.getParams('RECHARGE_DEVOLUCION_ID'));
         if(this.idCompany)
             this.company.updateValue(this.idCompany);
         if(this.money)
@@ -86,6 +88,10 @@ export class RecargaSave extends RestController implements OnInit{
                 that.save.emit(response.json());
                 that.toastr.success('Guardado con éxito','Notificación')
             };
+            if(this.rechargeType.value == this.RECHARGE_DEVOLUCION_ID)
+                if(this.quantity.value > 0)
+                    this.quantity.updateValue(this.quantity.value*-1);
+
             let body = JSON.stringify(this.form.value);
             this.httputils.doPost(this.endpoint, body, successCallback, this.error);
         }
