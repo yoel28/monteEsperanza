@@ -57,12 +57,12 @@
                             <th>Tiempo&nbsp;S.</th>
 
                             <th>Neto</th>
-                            <th>Procesado</th>
-                            <th></th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let data of dataList.list" [class.error-vehicle]="!data.companyId">
+                        <tr *ngFor="let data of dataList.list">
                             <td>{{data.id}}</td>
                             <td>
                                 <a *ngIf="data.companyId" class="btn btn-box-tool"
@@ -75,49 +75,48 @@
                             <td>{{data.tagRFID || '-'}}</td>
                             <td>
                                 {{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}
-                                <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                             </td>
                             <td>{{ data.weightIn | number:'.0-3'}}</td>
                             <td>{{ data.timeBalIn || '-'}}</td>
 
                             <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}
-                                <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange  btn" (click)="changeFormatDate(data.id)"></i>
                             </td>
                             <td>{{ data.weightOut | number:'.0-3'}}</td>
                             <td>{{ data.timeBalOut || '-'}} </td>
 
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
                             <td>
-                                <span *ngIf="data.enabled && !data.dateUpdated">Pendiente&nbsp;</span>
-                                <span *ngIf="data.enabled && data.dateUpdated">Devuelto&nbsp;</span>
-                                <span *ngIf="!data.enabled">Procesado&nbsp;</span>
-                                <span *ngIf="data.dateUpdated">
-                                    {{ formatDate(data.dateUpdated,'DD/MM/YYYY, LT',false,data.id) }} por {{data.usernameUpdater}}
-                                </span>
-                                <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                <span *ngIf="!data.vehicleId" class="label label-red font-12pt">&nbsp;Error&nbsp;</span>
+                                <span *ngIf="data.dateUpdated && data.enabled" class="label label-yellow font-12pt">&nbsp;Devuelto&nbsp;</span>
+                                <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
+                                <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Pendiente&nbsp;</span>
+                                <span *ngIf="data.operationId" class="label label-green font-12pt">&nbsp;Validado&nbsp;</span>
+
                             </td>
                             <td *ngIf="getViewOptionsActions().length > 0">
                                 <div class="btn-group" *ngIf="data.enabled">
                                     <label *ngFor="let action of getViewOptionsActions()" >
                                         <a *ngIf="action == 'delete'" data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                                           (click)="dataSelect = data" href="#">
+                                           (click)="dataSelect = data" href="#" title="Eliminar">
                                             <span class="fa fa-trash fa-lg btn"></span>
                                         </a>
                                         <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
-                                           [attr.data-target]="'#'+ viewOptions.actions.load.modalId" >
+                                           [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Procesar">
                                             <i class="fa fa-sign-in fa-lg"></i>
                                         </a>
-                                        <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
+                                        <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" href="#" title="Rechazar">
                                             &nbsp;<span class="fa fa-ban fa-lg"></span>
                                         </a>
                                     </label>
                                 </div>
                                 <div class="btn-group" *ngIf="!data.enabled">
                                     <label *ngFor="let action of getViewOptionsActions()" >
-                                        <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data)">
+                                        <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data,$event)" href="#" title="Devolver">
                                             &nbsp;<span class="fa fa-undo fa-lg"></span>
                                         </a>
-                                        <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation(data)">
+                                        <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation($event,data)" href="#" title="Imprimir operaci&oacute;n">
                                             &nbsp;<span class="fa fa-print fa-lg"></span>
                                         </a>
 
@@ -131,19 +130,24 @@
 
                 <div *ngIf="typeView==2">
                     <div class="panel-group" id="accordion">
-                        <div *ngFor="let data of dataList.list" class="panel" [class.btn-red]="!data.vehicleId" [class.panel-default]="data.vehicleId">
+                        <div *ngFor="let data of dataList.list" class="panel panel-default" >
                             <div class="panel-heading">
                                 <h4 class="panel-title row">
 
                                     <div class="col-lg-10">
-                                        <a [class.text-white]="!data.vehicleId" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
-                                            <i *ngIf="!data.vehicleId" class="fa fa-exclamation-triangle">&nbsp;</i>
+                                        <a  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
                                             <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
                                             <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Tag:&nbsp;</label>{{data.tagRFID || '-'}}&nbsp;&nbsp;
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
-                                            <i *ngIf="data.dateUpdated && data.enabled" class="fa fa-comment">&nbsp;Devuelto</i>
+
+                                            <span *ngIf="!data.vehicleId" class="label label-red font-12pt">&nbsp;Error&nbsp;</span>
+                                            <span *ngIf="data.dateUpdated && data.enabled" class="label label-yellow font-12pt">&nbsp;Devuelto&nbsp;</span>
+                                            <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
+                                            <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Pendiente&nbsp;</span>
+                                            <span *ngIf="data.operationId" class="label label-green font-12pt">&nbsp;Validado&nbsp;</span>
+
                                         </a>
                                     </div>
 
@@ -152,24 +156,24 @@
                                         <div class="btn-group" *ngIf="data.enabled">
                                             <label *ngFor="let action of getViewOptionsActions()" >
                                                 <a *ngIf="action == 'delete'" data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                                                   (click)="dataSelect = data" href="#">
+                                                   (click)="dataSelect = data" href="#" title="Eliminar">
                                                     <span class="fa fa-trash fa-lg btn"></span>
                                                 </a>
                                                 <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
-                                                   [attr.data-target]="'#'+ viewOptions.actions.load.modalId" >
+                                                   [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Procesar">
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
-                                                <a *ngIf="action == 'verificar'"  (click)="onLock('enabled',data)">
+                                                <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" title="Rechazar" href="#">
                                                     &nbsp;<span class="fa fa-ban fa-lg"></span>
                                                 </a>
                                             </label>
                                         </div>
                                         <div class="btn-group" *ngIf="!data.enabled">
                                             <label *ngFor="let action of getViewOptionsActions()" >
-                                                <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data)">
-                                                    &nbsp;<span class="fa fa-undo fa-lg"></span>
+                                                <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data,$event)" href="#">
+                                                    &nbsp;<span class="fa fa-undo fa-lg" title="Devolver"></span>
                                                 </a>
-                                                <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation(data)">
+                                                <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation($event,data)" title="Imprimir operaci&oacute;n" href="#">
                                                     &nbsp;<span class="fa fa-print fa-lg"></span>
                                                 </a>
                                             </label>
@@ -183,7 +187,6 @@
                                         <div class="col-lg-12">
                                             <p style="font-size: large">
                                                 <i *ngIf="!data.enabled" class="fa fa-user-secret" aria-hidden="true"></i>
-                                                <i *ngIf="data.enabled" class="fa fa-comment" aria-hidden="true"></i>
                                                 {{data.enabled?'Devuelto':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
                                                 a las <strong>{{formatDate(data.dateUpdated,'LT',true)}}</strong> por&nbsp;
                                                 <strong>{{data.usernameUpdater}}</strong>
@@ -207,12 +210,12 @@
                                         <div class="col-lg-6">
                                             <strong>Fecha E:&nbsp;</strong>
                                             {{formatDate(data.dateIn,'DD/MM/YYYY, LT',true,data.id)}}
-                                            <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                            <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                         </div>
                                         <div class="col-lg-6">
                                             <strong>Fecha S.:&nbsp;</strong>
                                             {{formatDate(data.dateOut,'DD/MM/YYYY, LT',true,data.id)}}
-                                            <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
+                                            <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                         </div>
                                     </div>
                                     <div>
