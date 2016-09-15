@@ -1,5 +1,6 @@
 before_script:
   - pwd
+  - echo $CI_BUILD_REF_NAME
 after_script:
     - echo 'after'
 stages:
@@ -20,16 +21,17 @@ dump_job:
   only :
     - dev
     - alpha
-
+    
 update_job:
   stage: update
   script:
-    - wget http://server.zippyttech.com:9580/dumptablas.sql 
+    - wget http://server.zippyttech.com:9580/dumptablas.sql
+    - sh /home/ubuntu/script/updatedb.sh
   tags:
     - vertederodev
   only :
     - dev
-    - alpha
+    - alpha    
 
 pre_install_job_1:
   stage: pre_install
