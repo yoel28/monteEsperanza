@@ -21,7 +21,7 @@ export class EmpresaMorosos extends RestController implements OnInit {
 
     }
     ngOnInit(){
-        this.where="&where="+encodeURI("[['op':'lt','field':'balance','value':0d]]");
+        this.where="&where="+encodeURI("[['op':'lt','field':'debt','value':0d]]");
         this.max=15;
 
         this.initViewOptions();
@@ -56,7 +56,7 @@ export class EmpresaMorosos extends RestController implements OnInit {
         this.dataCompany = data;
         if(this.recargaSave){
             this.recargaSave.idCompany=data.id;
-            this.recargaSave.setdata(data.id,data.balance)
+            this.recargaSave.setdata(data.id,data.debt+data.balance)
         }
 
     }
