@@ -114,8 +114,10 @@
                             class="fa fa-dollar"></i> <span>Taquilla</span></a></li>
 
                     <li class="treeview" [class.active]="activeMenuId=='trans'"
-                        *ngIf="myglobal.existsPermission('21') || myglobal.existsPermission('14')
-                        || myglobal.existsPermission('158') || myglobal.existsPermission('159') || myglobal.existsPermission('214')"
+                        *ngIf="myglobal.existsPermission('21') || myglobal.existsPermission('222')
+                        || myglobal.existsPermission('214') || myglobal.existsPermission('161') || myglobal.existsPermission('162')
+                        || myglobal.existsPermission('14') || myglobal.existsPermission('158') || myglobal.existsPermission('159')
+                        "
                     >
                         <a (click)="activeMenu($event,'trans')">
                             <i class="fa fa-gears"></i>
