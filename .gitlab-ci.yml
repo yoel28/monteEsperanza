@@ -4,11 +4,36 @@ before_script:
 after_script:
     - echo 'after'
 stages:
+    - dump
+    - update
     - pre_install
     - build
     - deploy
     - reset
     - clean
+
+dump_job:
+  stage: dump
+  script:
+    - sh /home/zippyttech/Documentos/Vertedero/dump.sh
+  tags:
+    - local
+  only :
+    - dev
+    - alpha
+    
+update_job:
+  stage: update
+  script:
+    - wget http://server.zippyttech.com:9580/dumptablas.sql
+    - pwd
+    - sh /home/ubuntu/script/updatedb.sh $(pwd)
+    - rm -f dumptablas.sql
+  tags:
+    - vertederodev
+  only :
+    - dev
+    - alpha    
 
 pre_install_job_1:
   stage: pre_install
@@ -19,14 +44,14 @@ pre_install_job_1:
     - sudo npm run prestart
     - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
-    - sudo typings install
+    - sudo typings install    
   when: on_success
   tags:
     - vertederodev
   only :
     - dev
     - alpha
-    
+
 build_job_2:
   stage: build
   script:
@@ -50,7 +75,7 @@ deploy_job_3:
     - sudo tar -cf $CI_BUILD_REF_NAME.tar $CI_BUILD_REF_NAME/
     - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
     - sudo cp -rf /tmp/build/* /var/www/html/$CI_BUILD_REF_NAME/
-    - sh /home/ubuntu/Vertedero/conn.sh
+    - sh /home/ubuntu/script/conn.sh
   when: on_success 
   tags:
     - vertederodev
