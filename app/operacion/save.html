@@ -163,6 +163,17 @@
                 </div>
             </div>
             <div class="modal-footer">
+
+                <button *ngIf="idOperacion==-1 && listOperations" (click)="loadInAnt($event)" type="button" class="btn btn-blue">
+                    <i class="fa fa-refresh"></i>
+                    Buscar entradas
+                </button>
+                <button *ngIf="idOperacion==-2 && listOperations" (click)="loadOutAnt($event)" type="button" class="btn btn-blue">
+                    <i class="fa fa-refresh"></i>
+                    Buscar salidas
+                </button>
+
+
                 <button *ngIf="idOperacion<0 && !listOperations" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
