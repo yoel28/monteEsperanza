@@ -212,7 +212,6 @@ export class OperacionSave extends RestController implements OnInit{
         if(data && data.vehicleId){
             this.listOperations=false;
             this.dataList={};
-            this.idOperacion="-1";
 
             this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
             this.data['vehicle'].updateValue(data.vehiclePlate);
@@ -328,6 +327,41 @@ export class OperacionSave extends RestController implements OnInit{
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
     }
+
+    //cargar entradas desde la antena
+    loadInAnt(event?){
+        if(event)
+            event.preventDefault();
+        this.idOperacion="-1";
+        let that= this;
+        let successCallback= response => {
+            let dataOperation=response.json();
+            that.inAntena(dataOperation['entrada']);
+        }
+        this.httputils.doGet('/in/operations',successCallback,this.error);
+    }
+    //cargar salidas desde la antena
+    loadOutAnt(event?,data?){
+        if(event)
+            event.preventDefault();
+        this.idOperacion="-2";
+        let that= this;
+        if(!data){
+            let successCallback= response => {
+                let dataOperation=response.json();
+                that.outAntena(dataOperation['salida'] || {});
+            }
+            this.httputils.doGet('/out/operations',successCallback,this.error);
+        }
+        else{
+            let dataOperation={'operations':[]};
+            dataOperation.operations.push(data);
+            that.outAntena(dataOperation || {});
+        }
+
+    }
+
+
 }
 
 
