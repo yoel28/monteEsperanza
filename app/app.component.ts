@@ -237,39 +237,17 @@ export class AppComponent extends RestController implements OnInit{
     dataOperation:any={};
     inAnt(event){
         event.preventDefault();
-        let that= this;
-        let successCallback= response => {
-            that.dataOperation=response.json();
-            if(that.operacionSave)
-            {
-                that.operacionSave.inAntena(that.dataOperation['entrada']);
-            }
-
+        if(this.operacionSave)
+        {
+            this.operacionSave.loadInAnt();
         }
-        this.httputils.doGet('/in/operations',successCallback,this.error);
     }
     outAnt(event,data?){
         event.preventDefault();
-        let that= this;
-        if(!data){
-            let successCallback= response => {
-                that.dataOperation=response.json();
-                if(that.operacionSave)
-                {
-                    that.operacionSave.outAntena(that.dataOperation['salida'] || {});
-                }
-            }
-            this.httputils.doGet('/out/operations',successCallback,this.error);
+        if(this.operacionSave)
+        {
+            this.operacionSave.loadOutAnt(null,data);
         }
-        else{
-            that.dataOperation.operations=[];
-            that.dataOperation.operations.push(data);
-            if(that.operacionSave)
-            {
-                that.operacionSave.outAntena(that.dataOperation || {});
-            }
-        }
-
     }
 
     public monitor:any={};
