@@ -42,7 +42,8 @@ export class Caja extends RestController implements OnInit{
         this.loadData();
         this.onloadData('/total/recharges/',this.rechargeTotal)
         this.httputils.onLoadList('/type/recharges?max=1000',this.typeRecharge,this.max,this.error);
-        this.onloadData('/operations/sum',this.rechargeSum)
+        let where="&where="+encodeURI("[['op':'ge','field':'re.dateCreated','value':'"+this.dia.format('DD-MM-YYYY')+"','type':'date'],['op':'lt','field':'re.dateCreated','value':'"+this.dia.add(1, 'days').format('DD-MM-YYYY')+"','type':'date']]");
+        this.onloadData('/operations/sum',this.rechargeSum,null,null,where)
     }
     getRechargeSum(val){
         let index = this.rechargeSum.findIndex(obj => (obj.companyTypeCredit == val ));
