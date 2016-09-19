@@ -102,10 +102,10 @@ export class RestController implements OnInit {
             }
         );
     };
-    onloadData(endpoint?,list?,offset?){
+    onloadData(endpoint?,list?,offset?,max?,where?){
         let that = this;
         this.getOffset(offset);
-        this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
+        this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+(max || this.max)+"&offset="+(offset || this.offset)+(where || this.where)+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
             response=>{
                 that.loadPager(list || that.dataList);
             },error=>{
