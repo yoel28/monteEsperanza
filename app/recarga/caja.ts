@@ -38,11 +38,14 @@ export class Caja extends RestController implements OnInit{
 
     loadCaja(){
         this.max=20;
-        this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.dia.format('DD-MM-YYYY')+"','type':'date'],['op':'lt','field':'dateCreated','value':'"+this.dia.add(1, 'days').format('DD-MM-YYYY')+"','type':'date']]");
+        let hoy= this.dia.format('DD-MM-YYYY');
+        let manana= this.dia.add(1, 'days').format('DD-MM-YYYY')
+
+        this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+hoy+"','type':'date'],['op':'lt','field':'dateCreated','value':'"+manana+"','type':'date']]");
         this.loadData();
         this.onloadData('/total/recharges/',this.rechargeTotal)
         this.httputils.onLoadList('/type/recharges?max=1000',this.typeRecharge,this.max,this.error);
-        let where="&where="+encodeURI("[['op':'ge','field':'re.dateCreated','value':'"+this.dia.format('DD-MM-YYYY')+"','type':'date'],['op':'lt','field':'re.dateCreated','value':'"+this.dia.add(1, 'days').format('DD-MM-YYYY')+"','type':'date']]");
+        let where="&where="+encodeURI("[['op':'ge','field':'re.dateCreated','value':'"+hoy+"','type':'date'],['op':'lt','field':'re.dateCreated','value':'"+manana+"','type':'date']]");
         this.onloadData('/operations/sum',this.rechargeSum,null,null,where)
     }
     getRechargeSum(val){
