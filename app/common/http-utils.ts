@@ -12,11 +12,14 @@ export class HttpUtils {
     }
 
     doGet(endpoint:string, successCallback, errorCallback ,isEndpointAbsolute = false) {
+        let that = this;
         endpoint=this.createEndpoint(endpoint,isEndpointAbsolute);
         return new Promise<any>((resolve, reject) => {
             this.http.get(endpoint, {headers: contentHeaders})
                 .subscribe(
                     response => {
+                        localStorage.setItem('VERSION_CACHE_HEADER',response.headers.get('Cookie'));
+                        that.valideVersion();
                         if (successCallback != null)
                             successCallback(response)
                         resolve(response.json());
@@ -31,11 +34,14 @@ export class HttpUtils {
     }
 
     doDelete(endpoint:string, successCallback, errorCallback,isEndpointAbsolute = false) {
+        let that = this;
         endpoint=this.createEndpoint(endpoint,isEndpointAbsolute);
         return new Promise<any>((resolve, reject) => {
             this.http.delete(endpoint, {headers: contentHeaders})
                 .subscribe(
                     response => {
+                        localStorage.setItem('VERSION_CACHE_HEADER',response.headers.get('Cookie'));
+                        that.valideVersion();
                         if (successCallback != null)
                             successCallback(response)
                         resolve(response);
@@ -50,11 +56,14 @@ export class HttpUtils {
     }
 
     doPost(endpoint:string,body, successCallback, errorCallback,isEndpointAbsolute = false) {
+        let that = this;
         endpoint=this.createEndpoint(endpoint,isEndpointAbsolute);
         return new Promise<any>((resolve, reject) => {
             this.http.post(endpoint,body, {headers: contentHeaders})
                 .subscribe(
                     response => {
+                        localStorage.setItem('VERSION_CACHE_HEADER',response.headers.get('Cookie'));
+                        that.valideVersion();
                         if (successCallback != null)
                             successCallback(response)
                         resolve(response.json());
@@ -68,11 +77,14 @@ export class HttpUtils {
         });
     }
     doPut(endpoint:string,body, successCallback, errorCallback,isEndpointAbsolute = false) {
+        let that = this;
         endpoint=this.createEndpoint(endpoint,isEndpointAbsolute);
         return new Promise<any>((resolve, reject) => {
             this.http.put(endpoint,body, {headers: contentHeaders})
                 .subscribe(
                     response => {
+                        localStorage.setItem('VERSION_CACHE_HEADER',response.headers.get('Cookie'));
+                        that.valideVersion();
                         if (successCallback != null)
                             successCallback(response)
                         resolve(response.json());
@@ -126,5 +138,14 @@ export class HttpUtils {
                 that.toastr.success('Actualizado con éxito','Notificación')
         }
        return this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
+    }
+    
+    valideVersion(){
+        if(localStorage.getItem('VERSION_CACHE') && localStorage.getItem('VERSION_CACHE_HEADER'))
+            if(localStorage.getItem('bearer') && (localStorage.getItem('VERSION_CACHE') != localStorage.getItem('VERSION_CACHE_HEADER')))
+            {
+                localStorage.setItem('VERSION_CACHE',localStorage.getItem('VERSION_CACHE_HEADER'))
+                location.reload(true);
+            }
     }
 }
