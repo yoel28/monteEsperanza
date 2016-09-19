@@ -52,10 +52,11 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <button (click)="onPatch('credit',data)" class="btn btn-sm"
+                                        <button *ngIf="!data.free" (click)="onPatch('credit',data)" class="btn btn-sm"
                                                 [class.btn-green]="data.credit" [class.btn-blue]="!data.credit">
                                             {{data.credit?"Credito":"Contado"}}
                                         </button>
+                                        <span *ngIf="data.free" class="label label-orange">&nbsp;N/A&nbsp;</span>
                                     </td>
                                     <td *ngIf="myglobal.existsPermission('127')">
                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
