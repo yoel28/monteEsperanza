@@ -139,7 +139,6 @@
                                             <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
                                             <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
-                                            <label class="title">Tag:&nbsp;</label>{{data.tagRFID || '-'}}&nbsp;&nbsp;
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
 
                                             <span *ngIf="!data.vehicleId" class="label label-red font-12pt">&nbsp;Error&nbsp;</span>
