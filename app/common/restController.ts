@@ -29,12 +29,28 @@ export class RestController implements OnInit {
 
     error= err => {
         //this.sound(err.status);
-        if(this.toastr)
-        {
-            if(err.json().message.error)
-                this.toastr.error(err.json().message.error);
-            else
-                this.toastr.error(err.json().message);
+        let that = this;
+        if (that.toastr) {
+            if (err.json()) {
+                if (err.json().message && err.json().message.error)
+                    that.toastr.error(err.json().message.error);
+                else if (err.json()._embedded && err.json()._embedded.errors) {
+                    let msg="";
+                    err.json()._embedded.errors.forEach(obj=> {
+                        msg=msg+" "+obj.message;
+                    })
+                    that.toastr.error(msg);
+                }
+                else if (err.json().message) {
+                    that.toastr.error(err.json().message);
+                }
+                else {
+                    that.toastr.error(err.json());
+                }
+            }
+            else {
+                that.toastr.error(err);
+            }
         }
         console.log(err);
 
@@ -105,7 +121,7 @@ export class RestController implements OnInit {
     onloadData(endpoint?,list?,offset?,max?,where?){
         let that = this;
         this.getOffset(offset);
-        this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+(max || this.max)+"&offset="+(offset || this.offset)+(where || this.where)+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
+        this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+(max || this.max)+"&offset="+(this.offset)+(where || this.where)+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
             response=>{
                 that.loadPager(list || that.dataList);
             },error=>{
