@@ -118,14 +118,14 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
     //TODO:Cambiar URL a PRODUCCION
-    //localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
-    //localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
+    localStorage.setItem('urlAPI','http://vertedero.aguaseo.com:8080/api');
+    localStorage.setItem('url','http://vertedero.aguaseo.com:8080');
       
-    localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
-    localStorage.setItem('url','http://dev.aguaseo.com:8080');
+    //localStorage.setItem('urlAPI','http://dev.aguaseo.com:8080/api');
+    //localStorage.setItem('url','http://dev.aguaseo.com:8080');
 
-    //localStorage.setItem('urlAPI','http://192.168.0.114:8080/api');
-    //localStorage.setItem('url','http://192.168.0.114:8080');
+    //localStorage.setItem('urlAPI','http://pescadorj:9090/api');
+    //localStorage.setItem('url','http://pescadorj:9090');
     //localStorage.setItem('ws','ws//192.168.0.91:8080');
     let that=this;
     router.subscribe(
