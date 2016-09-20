@@ -110,3 +110,9 @@
         width: 1170px;
     }
 }
+.version{
+    background-color: rgb(165, 165, 165);
+    font-weight: 100;
+    font-size: smaller;
+    color: white;
+}
