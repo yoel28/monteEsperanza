@@ -76,6 +76,14 @@
 </script>
 <script>
   $.fn.editable.defaults.mode = 'popup';
+  (function() {
+    var original = $.fn.editableutils.setCursorPosition;
+    $.fn.editableutils.setCursorPosition = function() {
+      try {
+        original.apply(this, Array.prototype.slice.call(arguments));
+      } catch (e) { /* noop */ }
+    };
+  })();
 </script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <script type="text/javascript" src="node_modules/humanize-duration/humanize-duration.js"></script>
