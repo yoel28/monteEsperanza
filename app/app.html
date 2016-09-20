@@ -54,13 +54,7 @@
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="{{myglobal.user.image?myglobal.user.image:'assets/img/user-guest.png'}}"
-                                         class="img-circle" alt="User Image">
-
-                                    <p>
-                                        {{pageTitle}}
-                                        <small *ngIf="pageSubtitle">{{pageSubtitle}}</small>
-                                    </p>
+                                    <img src="{{myglobal.user.image?myglobal.user.image:'assets/img/user-guest.png'}}" class="img-circle" alt="User Image">
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
@@ -72,6 +66,9 @@
                                         <a href="#" (click)='logout($event)' class="btn btn-default btn-flat">Salir</a>
                                     </div>
                                 </li>
+                                <p class="version">
+                                    &nbsp;&nbsp;<i class="fa fa-gears"></i>&nbsp;<strong>N. de compilaci&oacute;n:&nbsp;</strong>{{myglobal.getParams('VERSION_CACHE')}}
+                                </p>
                             </ul>
                         </li>
                         <li *ngIf="myglobal.existsPermission('165')">
