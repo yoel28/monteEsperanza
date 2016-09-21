@@ -44,6 +44,7 @@
                         <thead>
                         <tr>
                             <th>C&oacute;digo</th>
+
                             <th>Cliente</th>
                             <th>Placa</th>
                             <th>TAG RFID</th>
@@ -51,10 +52,12 @@
                             <th>Fecha&nbsp;E.</th>
                             <th>Peso&nbsp;E.</th>
                             <th>Tiempo&nbsp;E.</th>
+                            <th>Lote&nbsp;E.</th>
 
                             <th>Fecha&nbsp;S.</th>
                             <th>Peso&nbsp;S.</th>
                             <th>Tiempo&nbsp;S.</th>
+                            <th>Lote&nbsp;S.</th>
 
                             <th>Neto</th>
                             <th>Estatus</th>
@@ -79,15 +82,20 @@
                             </td>
                             <td>{{ data.weightIn | number:'.0-3'}}</td>
                             <td>{{ data.timeBalIn || '-'}}</td>
+                            <td>{{ data.lotValIn || '-'}}</td>
+
 
                             <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}
                                 <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange  btn" (click)="changeFormatDate(data.id)"></i>
                             </td>
                             <td>{{ data.weightOut | number:'.0-3'}}</td>
                             <td>{{ data.timeBalOut || '-'}} </td>
+                            <td>{{ data.lotValOut || '-'}}</td>
+
 
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
                             <td>
+                                <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
                                 <span *ngIf="!data.vehicleId" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
                                 <span *ngIf="data.dateUpdated && data.enabled" class="label label-yellow font-12pt" >&nbsp;Devuelto&nbsp;</span>
                                 <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
@@ -141,6 +149,7 @@
                                             <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
 
+                                            <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
                                             <span *ngIf="!data.vehicleId" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
                                             <span *ngIf="data.dateUpdated && data.enabled" class="label label-yellow font-12pt">&nbsp;Devuelto&nbsp;</span>
                                             <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
@@ -192,7 +201,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="col-lg-12">
                                         <div class="col-lg-6">
                                             <strong>Tag RFID:&nbsp;</strong>
                                             {{data.tagRFID || '-'}}
@@ -205,9 +214,9 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="col-lg-12">
                                         <div class="col-lg-6">
-                                            <strong>Fecha E:&nbsp;</strong>
+                                            <strong>Fecha E.:&nbsp;</strong>
                                             {{formatDate(data.dateIn,'DD/MM/YYYY, LT',true,data.id)}}
                                             <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                         </div>
@@ -217,9 +226,19 @@
                                             <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="col-lg-12">
                                         <div class="col-lg-6">
-                                            <strong>Tiempo E:&nbsp;</strong>
+                                            <strong>Lote E.:&nbsp;</strong>
+                                            {{data.lotValIn || '-'}}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <strong>Lote S.:&nbsp;</strong>
+                                            {{data.lotValOut || '-'}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <strong>Tiempo E.:&nbsp;</strong>
                                             {{data.timeBalIn || '-'}}
                                         </div>
                                         <div class="col-lg-6">
@@ -227,17 +246,17 @@
                                             {{data.timeBalOut || '-'}}
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="col-lg-12">
                                         <div class="col-lg-3">
-                                            <strong>Peso E:&nbsp;</strong>
+                                            <strong>Peso E.:&nbsp;</strong>
                                             {{ (data.weightIn) | number:'.0-3'}}
                                         </div>
                                         <div class="col-lg-3">
-                                            <strong>Peso S:&nbsp;</strong>
+                                            <strong>Peso S.:&nbsp;</strong>
                                             {{ (data.weightOut) | number:'.0-3'}}
                                         </div>
                                         <div class="col-lg-6">
-                                            <strong>Neto:&nbsp;</strong>
+                                            <strong>Neto.:&nbsp;</strong>
                                             {{ (data.weightIn - data.weightOut) | number:'.0-3'}}
                                         </div>
                                     </div>
