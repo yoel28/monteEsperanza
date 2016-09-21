@@ -21,30 +21,30 @@
     text-decoration: underline;
 }
 .head-fact{
-    font-weight: 800;
-    margin-bottom: 5px;
-    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    font-size: 12px;
 }
 .body-print{
-    font-size: 11px;
+    font-size: 10px;
 }
 .detalle-title{
     border-bottom: 1px solid #949494;
     border-top: 1px solid #949494;
-    font-size: 13px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    font-size: 12px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 .body-fact{
     border-bottom: 1px solid #949494;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
+    margin-bottom: 3px;
+    padding-bottom: 3px;
 }
 .borde-margin{
     border-top: 1px solid black;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 .texto-head{
     color: black;
