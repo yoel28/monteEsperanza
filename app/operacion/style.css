@@ -22,26 +22,29 @@
 }
 .head-fact{
     font-weight: 800;
-    margin-bottom: 10pt;
-    font-size: 12pt;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+.body-print{
+    font-size: 11px;
 }
 .detalle-title{
     border-bottom: 1px solid #949494;
     border-top: 1px solid #949494;
-    font-size: 12pt;
-    margin-top: 5pt;
-    margin-bottom: 5pt;
-    padding-top: 3pt;
-    padding-bottom: 3pt;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .body-fact{
     border-bottom: 1px solid #949494;
-    margin-bottom: 5pt;
-    padding-bottom: 5pt;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 .borde-margin{
     border-top: 1px solid black;
-    margin-top: 40pt;
+    margin-top: 40px;
 }
 .texto-head{
     color: black;

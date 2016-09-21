@@ -1,86 +1,88 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="data && data.id" style="display: none">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="operacion">
-        <div class="text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 head-fact">
-            AGUASEO, S.A.<br/>
-            RELLENO SANITARIO MONTE ESPERANZA<br/>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <span class="subrayar">FECHA:</span>&nbsp;
-                {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
+        <div class="body-print">
+            <div class="text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 head-fact">
+                AGUASEO, S.A.<br/>
+                RELLENO SANITARIO MONTE ESPERANZA<br/>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <span class="subrayar">CLIENTE:</span>&nbsp;
-                {{data.companyCode}}<br/>RUC:{{data.companyRUC}}
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <span class="subrayar">COMPROBANTE:</span>&nbsp;
-                {{data.rechargeReference}}
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <span class="subrayar">OPERADOR:</span>&nbsp;
-                {{data.usernameCreator}}
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                {{data.companyName}}
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <span class="subrayar">VEHÍCULO:</span>&nbsp;
-            {{data.vehiclePlate}}
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <span class="subrayar">RUTA:</span>&nbsp;
-            {{data.routeReference}}&nbsp;{{data.routeDetail}}
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <span class="subrayar">DESECHO:</span>&nbsp;
-            {{data.trashTypeReference}}&nbsp;{{data.trashTypeTitle}}
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <span class="subrayar">OBSERVACI&Oacute;N:</span>&nbsp;
-            {{data.comment}}
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center detalle-title">
-            DETALLE DEL PESAJE
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 body-fact">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <span class="subrayar">PESO DE ENTRADA:</span>&nbsp;
-                    {{data.weightIn | number:'.0-3'}}
+                <div class="row col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <span class="subrayar">FECHA:</span>&nbsp;
+                    {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT')}}
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <span class="subrayar">PESO NETO:</span>&nbsp;
-                    {{ (data.weightIn - data.weightOut) | number:'.0-3'}}
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <span class="subrayar">CLIENTE:</span>&nbsp;
+                    {{data.companyCode}}<br/>RUC:{{data.companyRUC}}
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <span class="subrayar">COMPROBANTE:</span>&nbsp;
+                    {{data.rechargeReference}}
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <span class="subrayar">PESO DE SALIDA:</span>&nbsp;
-                    {{data.weightOut | number:'.0-3'}}
+                <div class="row col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <span class="subrayar">OPERADOR:</span>&nbsp;
+                    {{data.usernameCreator}}
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <span class="subrayar">VALOR FACTURADO:</span>&nbsp;
-                    {{ (data.rechargeQuantity*-1) | number:'.0-2'}}
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    {{data.companyName}}
                 </div>
             </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center borde-margin">
-                FIRMA DEL CONDUCTOR
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span class="subrayar">VEHÍCULO:</span>&nbsp;
+                {{data.vehiclePlate}}
             </div>
-            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center borde-margin col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-                <span>FIRMA DEL OPERADOR DE LA BASCULA</span>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span class="subrayar">RUTA:</span>&nbsp;
+                {{data.routeReference}}&nbsp;{{data.routeDetail}}
             </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 text-center borde-margin">
-                <span>FIRMA DEL INSPECTOR</span>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span class="subrayar">DESECHO:</span>&nbsp;
+                {{data.trashTypeReference}}&nbsp;{{data.trashTypeTitle}}
             </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span class="subrayar">OBSERVACI&Oacute;N:</span>&nbsp;
+                {{data.comment}}
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center detalle-title">
+                DETALLE DEL PESAJE
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 body-fact">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="subrayar">PESO DE ENTRADA:</span>&nbsp;
+                        {{data.weightIn | number:'.0-3'}}
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="subrayar">PESO NETO:</span>&nbsp;
+                        {{ (data.weightIn - data.weightOut) | number:'.0-3'}}
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="subrayar">PESO DE SALIDA:</span>&nbsp;
+                        {{data.weightOut | number:'.0-3'}}
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="subrayar">VALOR FACTURADO:</span>&nbsp;
+                        {{ (data.rechargeQuantity*-1) | number:'.0-2'}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center borde-margin">
+                    FIRMA DEL CONDUCTOR
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center borde-margin col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+                    <span>FIRMA DEL OPERADOR DE LA BASCULA</span>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 text-center borde-margin">
+                    <span>FIRMA DEL INSPECTOR</span>
+                </div>
+            </div>
+            {{onPrint()}}
         </div>
-        {{onPrint()}}
     </div>
 </div>
