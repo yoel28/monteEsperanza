@@ -154,6 +154,15 @@
                                        (click)="onPrintOperation(recharges)">
                                         <span class="fa fa-print fa-lg btn"></span>
                                     </a>
+                                    <a *ngIf="  permissions.automatic &&
+                                                recharges.operationId &&
+                                                recharges.operationEnable &&
+                                                recharges.quantity < 0"
+                                       data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
+                                       (click)="dataSelect = recharges">
+                                        <span class="fa fa-money fa-lg btn"></span>
+                                    </a>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -241,4 +250,34 @@
 </div>
 <div  *ngIf="myglobal.existsPermission('157')">
     <operacion-print [data]="operacionPrint"></operacion-print>
+</div>
+
+<div *ngIf="permissions.automatic">
+    <div class="modal fade" [attr.id]="'modalAutomatic'" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabe">
+                        <strong>CONFIRMAR PAGO</strong></h4>
+                </div>
+                <div class="modal-body">
+                    ¿ Estás seguro que deseas realizar un pago automatico al cliente
+                    <strong>{{dataCompany.name}}&nbsp;({{dataCompany.ruc}})</strong> por
+                    {{(dataSelect.quantity)*-1}} {{MONEY_METRIC_SHORT}}
+                    ?<br/>
+                    <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Recibo {{AUTOMATIC_RECHARGE_PREF}} {{dataSelect.reference}}" >
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button (click)="onRechargeAutomatic($event,dataSelect)" data-dismiss="modal" type="button"
+                            class="btn btn-green fa fa-money">&nbsp;Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

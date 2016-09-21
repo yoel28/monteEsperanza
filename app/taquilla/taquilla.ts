@@ -20,17 +20,21 @@ declare var jQuery:any;
     directives:[RecargaSave,OperacionPrint]
 })
 export class Taquilla extends RestController implements OnInit{
-    dataCompany:any = {};
-    dataCompanies:any = {};
-    search;
+    public dataCompany:any = {};
+    public dataSelect:any = {};
+    public dataCompanies:any = {};
+    public permissions={};
+    public search;
     public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
+    public AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF')
 
 
     constructor(public params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
     }
     ngOnInit(){
+        this.permissions['automatic'] = this.myglobal.existsPermission('OP_AUTOMATIC');
         if(this.params.get('search'))
         {
             if(this.myglobal.existsPermission('80'))
@@ -114,6 +118,24 @@ export class Taquilla extends RestController implements OnInit{
                 this.operacionPrint.data=response.json();
         };
         this.httputils.doGet('/operations/'+data.operationId,successCallback,this.error)
+    }
+    //recarga automatica
+    public codeReference="";
+    onRechargeAutomatic(event, data) {
+        let that = this;
+        event.preventDefault();
+        let json={};
+        json['reference']=this.codeReference.length>0? this.codeReference: (this.AUTOMATIC_RECHARGE_PREF+data.reference);
+        let successCallback = response => {
+            Object.assign(data, response.json());
+            if (that.toastr)
+                that.toastr.success('Pago cargado con éxito', 'Notificación');
+
+        }
+        this.httputils.doPost('/pay/' + data.operationId,JSON.stringify(json),successCallback, this.error);
+    }
+    onKey(event:any) {
+        this.codeReference = event.target.value;
     }
 }
 
