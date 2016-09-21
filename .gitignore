@@ -7,3 +7,4 @@ build/
 vendors/
 app/*.js
 app/*.js.map
+.gitlab-ci.yml
