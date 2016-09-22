@@ -41,7 +41,7 @@
     "ng2-bootstrap": "^1.0.17",
     "ng2-file-upload": "^1.0.3",
     "ng2-imageupload": "^1.1.1",
-    "ng2-select": "^1.0.3",
+    "ng2-select": "1.0.3",
     "ng2-toastr": "^0.2.0",
     "ng2-toasty": "^1.8.0",
     "ng2-translate": "2.2.2",
