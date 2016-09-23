@@ -9,12 +9,12 @@ import {Operacion} from "../operacion";
 import {OperacionSave, OperacionPrint} from "../methods";
 import moment from "moment/moment";
 import {Filter} from "../../utils/filter/filter";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'operacion-pendiente',
-    templateUrl: 'app/operacion/pendiente/index.html',
-    styleUrls: ['app/operacion/pendiente/style.css'],
+    templateUrl: SystemJS.map.app+'/operacion/pendiente/index.html',
+    styleUrls: [SystemJS.map.app+'/operacion/pendiente/style.css'],
     providers: [TranslateService,Operacion],
     directives: [OperacionSave,Filter,OperacionPrint],
     pipes: [TranslatePipe]

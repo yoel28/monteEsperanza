@@ -9,14 +9,14 @@ import {globalService} from "../common/globalService";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {OperacionPrint} from "../operacion/methods";
 import moment from "moment/moment";
-
 declare var jQuery:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'taquilla',
     pipes: [Fecha],
-    templateUrl: 'app/taquilla/index.html',
-    styleUrls: ['app/taquilla/style.css'],
+    templateUrl: SystemJS.map.app+'/taquilla/index.html',
+    styleUrls: [SystemJS.map.app+'/taquilla/style.css'],
     directives:[RecargaSave,OperacionPrint]
 })
 export class Taquilla extends RestController implements OnInit{

@@ -8,11 +8,11 @@ import {Xfile,Xcropit} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 
-
+declare var SystemJS:any;
 @Component({
     selector: 'vehiculo-save',
-    templateUrl: 'app/vehiculo/save.html',
-    styleUrls: ['app/vehiculo/styleVehiculo.css'],
+    templateUrl: SystemJS.map.app+'/vehiculo/save.html',
+    styleUrls: [SystemJS.map.app+'/vehiculo/styleVehiculo.css'],
     inputs:['idModal'],
     outputs:['save'],
     directives:[SELECT_DIRECTIVES,Search,Xfile,Xcropit]

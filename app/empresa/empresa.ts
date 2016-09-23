@@ -11,12 +11,13 @@ import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
+declare var SystemJS:any;
 
 @Component({
     selector: 'empresa',
     pipes: [Divide],
-    templateUrl: 'app/empresa/index.html',
-    styleUrls: ['app/empresa/style.css'],
+    templateUrl: SystemJS.map.app+'/empresa/index.html',
+    styleUrls: [SystemJS.map.app+'/empresa/style.css'],
     directives: [EmpresaSave, TipoEmpresaSave, Search, Xeditable, Xfile, Xcropit,Filter]
 })
 export class Empresa extends RestController implements OnInit {
@@ -183,8 +184,8 @@ export class Empresa extends RestController implements OnInit {
 
 @Component({
     selector: 'empresa-timeline',
-    templateUrl: 'app/empresa/timeLine.html',
-    styleUrls: ['app/empresa/style.css'],
+    templateUrl: SystemJS.map.app+'/empresa/timeLine.html',
+    styleUrls: [SystemJS.map.app+'/empresa/style.css'],
     directives: [RecargaTimeLine]
 })
 export class EmpresaTimeLine extends RestController {

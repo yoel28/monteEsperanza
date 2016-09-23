@@ -7,11 +7,12 @@ import {Search} from "../utils/search/search";
 import {EmpresaSave} from "../empresa/methods";
 import {Xeditable, Xcropit, Xfile} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+declare var SystemJS:any;
 
 @Component({
     selector: 'profile',
-    templateUrl: 'app/profile/index.html',
-    styleUrls: ['app/profile/style.css'],
+    templateUrl: SystemJS.map.app+'/profile/index.html',
+    styleUrls: [SystemJS.map.app+'/profile/style.css'],
     directives: [Xeditable,Xcropit,Search,EmpresaSave,Xfile],
 })
 export class Profile extends RestController implements OnInit{

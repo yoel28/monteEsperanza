@@ -7,11 +7,11 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
-
+declare var SystemJS:any;
 @Component({
     selector: 'tipoVehiculo',
-    templateUrl: 'app/tipoVehiculo/index.html',
-    styleUrls: ['app/tipoVehiculo/style.css'],
+    templateUrl: SystemJS.map.app+'/tipoVehiculo/index.html',
+    styleUrls: [SystemJS.map.app+'/tipoVehiculo/style.css'],
     directives: [TipoVehiculoSave,Xeditable,Filter],
 })
 export class TipoVehiculo extends RestController implements OnInit{

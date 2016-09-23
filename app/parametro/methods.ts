@@ -5,11 +5,12 @@ import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
+declare var SystemJS:any;
 
 @Component({
     selector: 'parametro-save',
-    templateUrl: 'app/parametro/save.html',
-    styleUrls: ['app/parametro/style.css'],
+    templateUrl: SystemJS.map.app+'/parametro/save.html',
+    styleUrls: [SystemJS.map.app+'/parametro/style.css'],
     inputs:['idModal'],
     directives:[SELECT_DIRECTIVES],
     outputs:['save'],

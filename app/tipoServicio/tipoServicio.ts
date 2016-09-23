@@ -7,11 +7,12 @@ import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
 import {Save} from "../utils/save/save";
+declare var SystemJS:any;
 
 @Component({
     selector: 'tipo-servicio',
-    templateUrl: 'app/tipoServicio/index.html',
-    styleUrls: ['app/tipoServicio/style.css'],
+    templateUrl: SystemJS.map.app+'/tipoServicio/index.html',
+    styleUrls: [SystemJS.map.app+'/tipoServicio/style.css'],
     directives:[Xeditable,Filter,Save]
 })
 export class TipoServicio extends RestController implements OnInit{

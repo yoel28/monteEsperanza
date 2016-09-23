@@ -10,12 +10,12 @@ import {EmpresaSave} from "../empresa/methods";
 import {Xeditable, Xcropit, Xfile} from "../common/xeditable";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Divide} from "../utils/pipe";
-
+declare var SystemJS:any;
 @Component({
     selector: 'user',
     pipes: [Divide],
-    templateUrl: 'app/user/index.html',
-    styleUrls: ['app/user/style.css'],
+    templateUrl: SystemJS.map.app+'/user/index.html',
+    styleUrls: [SystemJS.map.app+'/user/style.css'],
     directives: [UserSave, Search, EmpresaSave, Xeditable, Filter, Xcropit, Xfile],
 })
 export class User extends RestController implements OnInit{

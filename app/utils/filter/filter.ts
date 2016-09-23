@@ -5,11 +5,11 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-
+declare var SystemJS:any;
 @Component({
     selector: 'filter',
-    templateUrl: 'app/utils/filter/index.html',
-    styleUrls: ['app/utils/filter/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/filter/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/filter/style.css'],
     directives:[SMDropdown,DateRangepPicker],
     inputs: ['rules', 'params'],
     outputs: ['whereFilter'],

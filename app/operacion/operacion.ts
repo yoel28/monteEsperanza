@@ -12,12 +12,12 @@ import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen} from "@angular/common";
 import {ModelBase} from "../common/modelBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'operacion',
-    templateUrl: 'app/operacion/index.html',
-    styleUrls: ['app/operacion/style.css'],
+    templateUrl: SystemJS.map.app+'/operacion/index.html',
+    styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     providers: [TranslateService],
     directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen],
     pipes: [TranslatePipe]
@@ -406,8 +406,8 @@ export class Operacion extends ModelBase implements OnInit {
 
 @Component({
     selector: 'operacion-monitor',
-    templateUrl: 'app/operacion/monitor.html',
-    styleUrls: ['app/operacion/style.css'],
+    templateUrl: SystemJS.map.app+'/operacion/monitor.html',
+    styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     pipes: [Fecha]
 })
 export class OperacionMonitor extends RestController implements OnInit {

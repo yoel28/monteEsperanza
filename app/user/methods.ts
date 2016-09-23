@@ -5,11 +5,11 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
 import {Xfile, Xcropit} from "../common/xeditable";
 import {globalService} from "../common/globalService";
-
+declare var SystemJS:any;
 @Component({
     selector: 'user-save',
-    templateUrl: 'app/user/save.html',
-    styleUrls: ['app/user/style.css'],
+    templateUrl: SystemJS.map.app+'/user/save.html',
+    styleUrls: [SystemJS.map.app+'/user/style.css'],
     inputs:['idModal'],
     outputs:['save'],
     directives:[Xfile,Xcropit]

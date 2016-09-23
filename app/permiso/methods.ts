@@ -4,12 +4,12 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'permiso-save',
-    templateUrl: 'app/permiso/save.html',
-    styleUrls: ['app/permiso/style.css'],
+    templateUrl: SystemJS.map.app+'/permiso/save.html',
+    styleUrls: [SystemJS.map.app+'/permiso/style.css'],
     inputs:['idModal'],
     directives:[SELECT_DIRECTIVES],
     outputs:['save'],

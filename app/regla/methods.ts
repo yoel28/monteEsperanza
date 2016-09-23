@@ -3,11 +3,12 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Http} from "@angular/http";
+declare var SystemJS:any;
 
 @Component({
     selector: 'regla-save',
-    templateUrl: 'app/regla/save.html',
-    styleUrls: ['app/regla/style.css'],
+    templateUrl: SystemJS.map.app+'/regla/save.html',
+    styleUrls: [SystemJS.map.app+'/regla/style.css'],
     inputs:['idModal'],
     outputs:['save'],
 })

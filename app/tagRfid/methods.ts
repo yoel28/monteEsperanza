@@ -3,11 +3,12 @@ import  {FormBuilder, Validators, Control, ControlGroup} from '@angular/common';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+declare var SystemJS:any;
 
 @Component({
     selector: 'tag-save',
-    templateUrl: 'app/tagRfid/save.html',
-    styleUrls: ['app/tagRfid/style.css'],
+    templateUrl: SystemJS.map.app+'/tagRfid/save.html',
+    styleUrls: [SystemJS.map.app+'/tagRfid/style.css'],
     inputs:['idModal'],
     outputs:['save'],
 })

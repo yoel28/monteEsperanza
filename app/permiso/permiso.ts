@@ -9,12 +9,12 @@ import {SELECT_DIRECTIVES} from "ng2-select/ng2-select";
 import {globalService} from "../common/globalService";
 import {Xeditable, SMDropdown} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'permission',
-    templateUrl: 'app/permiso/index.html',
-    styleUrls: ['app/permiso/style.css'],
+    templateUrl: SystemJS.map.app+'/permiso/index.html',
+    styleUrls: [SystemJS.map.app+'/permiso/style.css'],
     directives:[PermisoSave,Xeditable,Filter]
 })
 export class Permiso extends RestController implements OnInit{
@@ -67,8 +67,8 @@ export class Permiso extends RestController implements OnInit{
 }
 @Component({
     selector: 'permission-role',
-    templateUrl: 'app/permiso/permisosRol.html',
-    styleUrls: ['app/permiso/style.css'],
+    templateUrl: SystemJS.map.app+'/permiso/permisosRol.html',
+    styleUrls: [SystemJS.map.app+'/permiso/style.css'],
     directives: [SELECT_DIRECTIVES,RolSave,SMDropdown]
 })
 export class PermisosRol extends RestController implements OnInit{

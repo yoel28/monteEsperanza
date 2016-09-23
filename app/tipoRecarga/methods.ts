@@ -5,11 +5,12 @@ import {Http} from "@angular/http";
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
+declare var SystemJS:any;
 
 @Component({
     selector: 'tipoRecarga-save',
-    templateUrl: 'app/tipoRecarga/save.html',
-    styleUrls: ['app/tipoRecarga/style.css'],
+    templateUrl: SystemJS.map.app+'/tipoRecarga/save.html',
+    styleUrls: [SystemJS.map.app+'/tipoRecarga/style.css'],
     directives:[SELECT_DIRECTIVES],
     inputs:['idModal'],
     outputs:['save'],

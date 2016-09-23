@@ -6,12 +6,12 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Xfile, Xcropit} from "../common/xeditable";
 import {globalService} from "../common/globalService";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'empresa-save',
-    templateUrl: 'app/empresa/save.html',
-    styleUrls: ['app/empresa/style.css'],
+    templateUrl: SystemJS.map.app+'/empresa/save.html',
+    styleUrls: [SystemJS.map.app+'/empresa/style.css'],
     directives: [SELECT_DIRECTIVES,Xfile,Xcropit],
     inputs:['idModal'],
     outputs:['save'],

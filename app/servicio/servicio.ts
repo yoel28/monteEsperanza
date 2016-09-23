@@ -8,11 +8,12 @@ import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
 import {Save} from "../utils/save/save";
 import {TipoServicio} from "../tipoServicio/tipoServicio";
+declare var SystemJS:any;
 
 @Component({
     selector: 'servicio',
-    templateUrl: 'app/servicio/index.html',
-    styleUrls: ['app/servicio/style.css'],
+    templateUrl: SystemJS.map.app+'/servicio/index.html',
+    styleUrls: [SystemJS.map.app+'/servicio/style.css'],
     directives:[Xeditable,Filter,Save],
     providers:[TipoServicio]
 })

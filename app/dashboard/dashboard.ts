@@ -11,10 +11,12 @@ import {Datepicker} from "../common/xeditable";
 import {CHART_DIRECTIVES} from "angular2-highcharts";
 
 declare var moment:any;
+declare var SystemJS:any;
+
 @Component({
     selector: 'home',
-    templateUrl: 'app/dashboard/dashboard.html',
-    styleUrls: ['app/dashboard/dashboard.css'],
+    templateUrl: SystemJS.map.app+'/dashboard/dashboard.html',
+    styleUrls: [SystemJS.map.app+'/dashboard/dashboard.css'],
     directives: [RecargaTimeLine, RecargaFactura, Datepicker, CHART_DIRECTIVES],
 })
 export class Dashboard extends RestController implements OnInit {

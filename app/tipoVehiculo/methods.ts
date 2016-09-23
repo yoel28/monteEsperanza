@@ -4,11 +4,12 @@ import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {SELECT_DIRECTIVES} from "ng2-select/ng2-select";
+declare var SystemJS:any;
 
 @Component({
     selector: 'tipoVehiculo-save',
-    templateUrl: 'app/tipoVehiculo/save.html',
-    styleUrls: ['app/tipoVehiculo/style.css'],
+    templateUrl: SystemJS.map.app+'/tipoVehiculo/save.html',
+    styleUrls: [SystemJS.map.app+'/tipoVehiculo/style.css'],
     directives: [SELECT_DIRECTIVES],
     inputs:['idModal'],
     outputs:['save'],

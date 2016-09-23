@@ -10,13 +10,13 @@ import moment from 'moment/moment';
 import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
 import {Search} from "../utils/search/search";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'reporte-gruposRutas',
-    templateUrl: 'app/reportes/gruposRutas.html',
+    templateUrl: SystemJS.map.app+'/reportes/gruposRutas.html',
     pipes: [Fecha],
-    styleUrls: ['app/reportes/style.css'],
+    styleUrls: [SystemJS.map.app+'/reportes/style.css'],
     directives : [Filter,Datepicker,Search]
 })
 export class GruposRutas extends RestController implements OnInit{

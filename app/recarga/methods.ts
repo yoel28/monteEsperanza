@@ -10,12 +10,12 @@ import {globalService} from "../common/globalService";
 import {Datepicker} from "../common/xeditable";
 import { Router }           from '@angular/router-deprecated';
 import moment from "moment/moment";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'recarga-save',
-    templateUrl: 'app/recarga/save.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/save.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
     directives: [SELECT_DIRECTIVES,Search,Datepicker],
     outputs:['save'],
 })
@@ -139,8 +139,8 @@ export class RecargaSave extends RestController implements OnInit{
 }
 @Component({
     selector: 'recarga-timeline',
-    templateUrl: 'app/recarga/timeline.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/timeline.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
     inputs:['params'],
     pipes: [Fecha],
 })
@@ -208,8 +208,8 @@ declare var jQuery:any;
 
 @Component({
     selector: 'recarga-factura',
-    templateUrl: 'app/recarga/facturas.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/facturas.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
     inputs:['params'],
     pipes: [Fecha],
 })

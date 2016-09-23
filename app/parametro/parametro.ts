@@ -7,11 +7,12 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
+declare var SystemJS:any;
 
 @Component({
     selector: 'parametro',
-    templateUrl: 'app/parametro/index.html',
-    styleUrls: ['app/parametro/style.css'],
+    templateUrl: SystemJS.map.app+'/parametro/index.html',
+    styleUrls: [SystemJS.map.app+'/parametro/style.css'],
     directives:[ParametroSave,Xeditable,Filter]
 })
 export class Parametro extends RestController implements OnInit{

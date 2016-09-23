@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {globalService} from "../../common/globalService";
-
+declare var SystemJS:any;
 @Component({
     selector: 'tooltip',
-    templateUrl: 'app/utils/tooltips/index.html',
-    styleUrls: ['app/utils/tooltips/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/tooltips/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/tooltips/style.css'],
     inputs: ['code', 'params'],
 })
 export class Tooltips implements OnInit {

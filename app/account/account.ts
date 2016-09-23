@@ -7,12 +7,12 @@ import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
-
+declare var SystemJS:any;
 //--------------------------LOGIN-------------------------------
 @Component({
     selector: 'login',
-    templateUrl: 'app/account/login/index.html',
-    styleUrls: ['app/account/style.css']
+    templateUrl: SystemJS.map.app+'/account/login/index.html',
+    styleUrls: [SystemJS.map.app+'/account/style.css']
 })
 export class AccountLogin extends RestController implements OnInit{
 
@@ -70,8 +70,8 @@ export class AccountLogin extends RestController implements OnInit{
 //-----------------------ACTIVAR------------------------------
 @Component({
     selector: 'activate',
-    templateUrl: 'app/account/activate/index.html',
-    styleUrls: ['app/account/style.css']
+    templateUrl: SystemJS.map.app+'/account/activate/index.html',
+    styleUrls: [SystemJS.map.app+'/account/style.css']
 })
 export class AccountActivate extends RestController {
     mensaje:string;
@@ -99,8 +99,8 @@ export class AccountActivate extends RestController {
 //-------------------------Recover-------------------------
 @Component({
     selector: 'recover',
-    templateUrl: 'app/account/recover/index.html',
-    styleUrls: ['app/account/style.css']
+    templateUrl: SystemJS.map.app+'/account/recover/index.html',
+    styleUrls: [SystemJS.map.app+'/account/style.css']
 })
 export class AccountRecover extends RestController {
 
@@ -136,8 +136,8 @@ export class AccountRecover extends RestController {
 //-------------------------Recover Password-------------------------
 @Component({
     selector: 'recoverPassword',
-    templateUrl: 'app/account/recoverPassword/index.html',
-    styleUrls: ['app/account/style.css']
+    templateUrl: SystemJS.map.app+'/account/recoverPassword/index.html',
+    styleUrls: [SystemJS.map.app+'/account/style.css']
 })
 export class AccountRecoverPassword extends RestController {
 

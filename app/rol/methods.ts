@@ -4,12 +4,12 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {RestController} from "../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'rol-save',
-    templateUrl: 'app/rol/save.html',
-    styleUrls: ['app/rol/style.css'],
+    templateUrl: SystemJS.map.app+'/rol/save.html',
+    styleUrls: [SystemJS.map.app+'/rol/style.css'],
     inputs:['idModal'],
     directives:[SELECT_DIRECTIVES],
     outputs:['save'],

@@ -7,11 +7,12 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
+declare var SystemJS:any;
 
 @Component({
     selector: 'rol',
-    templateUrl: 'app/rol/index.html',
-    styleUrls: ['app/rol/style.css'],
+    templateUrl: SystemJS.map.app+'/rol/index.html',
+    styleUrls: [SystemJS.map.app+'/rol/style.css'],
     directives:[RolSave,Xeditable,Filter]
 })
 export class Rol extends RestController implements OnInit{

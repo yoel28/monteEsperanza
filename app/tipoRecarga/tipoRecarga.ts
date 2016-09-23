@@ -7,11 +7,12 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Xeditable} from "../common/xeditable";
+declare var SystemJS:any;
 
 @Component({
     selector: 'tipoRecarga',
-    templateUrl: 'app/tipoRecarga/index.html',
-    styleUrls: ['app/tipoRecarga/style.css'],
+    templateUrl: SystemJS.map.app+'/tipoRecarga/index.html',
+    styleUrls: [SystemJS.map.app+'/tipoRecarga/style.css'],
     directives: [TipoRecargaSave,Xeditable,Filter],
 
 })

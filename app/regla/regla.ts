@@ -7,11 +7,12 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
+declare var SystemJS:any;
 
 @Component({
     selector: 'regla',
-    templateUrl: 'app/regla/index.html',
-    styleUrls: ['app/regla/style.css'],
+    templateUrl: SystemJS.map.app+'/regla/index.html',
+    styleUrls: [SystemJS.map.app+'/regla/style.css'],
     directives : [ReglaSave,Xeditable,Filter]
 })
 export class Regla extends RestController implements OnInit{

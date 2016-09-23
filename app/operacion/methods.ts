@@ -8,12 +8,12 @@ import {globalService} from "../common/globalService";
 import {Fecha} from "../utils/pipe";
 import {RecargaSave} from "../recarga/methods";
 import moment from "moment/moment";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'operacion-save',
-    templateUrl: 'app/operacion/save.html',
-    styleUrls: ['app/operacion/style.css'],
+    templateUrl: SystemJS.map.app+'/operacion/save.html',
+    styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     inputs:['idModal','inAnt','rules'],
     outputs:['save'],
     directives:[Search,RecargaSave],
@@ -367,8 +367,8 @@ export class OperacionSave extends RestController implements OnInit{
 
 @Component({
     selector: 'operacion-print',
-    templateUrl: 'app/operacion/print.html',
-    styleUrls: ['app/operacion/style.css'],
+    templateUrl: SystemJS.map.app+'/operacion/print.html',
+    styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     inputs:['data'],
     pipes:[Fecha],
 })

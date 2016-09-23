@@ -4,11 +4,11 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-
+declare var SystemJS:any;
 @Component({
     selector: 'save',
-    templateUrl: 'app/utils/save/index.html',
-    styleUrls: ['app/utils/save/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/save/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
     inputs:['params','rules'],
     outputs:['save'],
 })

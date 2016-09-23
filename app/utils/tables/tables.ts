@@ -9,11 +9,11 @@ import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
 
-
+declare var SystemJS:any;
 @Component({
     selector: 'tables',
-    templateUrl: 'app/utils/tables/index.html',
-    styleUrls: ['app/utils/tables/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/tables/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','rulesSearch','dataList','externalSave'],
     directives:[Xeditable,Search,Filter,Save]
 })

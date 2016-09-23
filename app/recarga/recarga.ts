@@ -11,12 +11,13 @@ import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Xeditable, Datepicker} from "../common/xeditable";
 import {OperacionPrint} from "../operacion/methods";
+declare var SystemJS:any;
 
 @Component({
     selector: 'recarga',
     pipes: [Fecha],
-    templateUrl: 'app/recarga/index.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/index.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
     directives:[RecargaSave,Xeditable,Filter,OperacionPrint]
 })
 export class Recarga extends RestController implements OnInit{
@@ -102,8 +103,8 @@ export class Recarga extends RestController implements OnInit{
 @Component({
     selector: 'ingresos',
     directives:[RecargaFactura,Datepicker],
-    templateUrl: 'app/recarga/ingresos.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/ingresos.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
 })
 export class RecargaIngresos extends RestController implements OnInit{
 
@@ -239,8 +240,8 @@ declare var jQuery:any;
     selector: 'libro',
     pipes: [Fecha],
     directives:[Datepicker],
-    templateUrl: 'app/recarga/libro.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/libro.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
 })
 export class RecargaLibro extends RestController implements OnInit{
 

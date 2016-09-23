@@ -5,10 +5,12 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {RecargaSave} from "../recarga/methods";
+declare var SystemJS:any;
+
 @Component({
     selector: 'empresa-moroso',
-    templateUrl: 'app/empresa/morosos.html',
-    styleUrls: ['app/empresa/style.css'],
+    templateUrl: SystemJS.map.app+'/empresa/morosos.html',
+    styleUrls: [SystemJS.map.app+'/empresa/style.css'],
     directives:[RecargaSave]
 })
 export class EmpresaMorosos extends RestController implements OnInit {

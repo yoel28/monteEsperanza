@@ -16,11 +16,12 @@ import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 
 declare var jQuery:any;
+declare var SystemJS:any;
 @Component({
     selector: 'vehiculo',
     pipes:[Divide],
-    templateUrl: 'app/vehiculo/index.html',
-    styleUrls: ['app/vehiculo/styleVehiculo.css'],
+    templateUrl: SystemJS.map.app+'/vehiculo/index.html',
+    styleUrls: [SystemJS.map.app+'/vehiculo/styleVehiculo.css'],
     directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter],
 })
 export class Vehiculo extends RestController implements OnInit{

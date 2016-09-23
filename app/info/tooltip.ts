@@ -7,12 +7,12 @@ import {ModelBase} from "../common/modelBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import moment from "moment/moment";
 import {Filter} from "../utils/filter/filter";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'info',
-    templateUrl: 'app/tooltip/index.html',
-    styleUrls: ['app/tooltip/style.css'],
+    templateUrl: SystemJS.map.app+'/tooltip/index.html',
+    styleUrls: [SystemJS.map.app+'/tooltip/style.css'],
     providers: [TranslateService],
     directives: [Filter],
     pipes: [TranslatePipe]

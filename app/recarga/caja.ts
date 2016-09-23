@@ -7,11 +7,12 @@ import moment from 'moment/moment';
 import {globalService} from "../common/globalService";
 import {Datepicker} from "../common/xeditable";
 declare var jQuery:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'caja',
-    templateUrl: 'app/recarga/caja.html',
-    styleUrls: ['app/recarga/style.css'],
+    templateUrl: SystemJS.map.app+'/recarga/caja.html',
+    styleUrls: [SystemJS.map.app+'/recarga/style.css'],
     directives:[Datepicker]
 })
 export class Caja extends RestController implements OnInit{
