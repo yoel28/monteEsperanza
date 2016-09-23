@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outFile": "appRoot/all.js",
+    "outFile": "myapp.js",
     "allowSyntheticDefaultImports": true,
     "target": "es5",
     "module": "system",
