@@ -96,7 +96,7 @@
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
                             <td>
                                 <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
-                                <span *ngIf="!data.vehicleId" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
+                                <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
                                 <span *ngIf="data.dateUpdated && data.enabled" class="label label-yellow font-12pt" >&nbsp;Devuelto&nbsp;</span>
                                 <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
                                 <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Pendiente&nbsp;</span>
@@ -150,7 +150,7 @@
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
 
                                             <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
-                                            <span *ngIf="!data.vehicleId" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
+                                            <span *ngIf="!data.vehicleId ||  !data.dateIn" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
                                             <span *ngIf="data.dateUpdated && data.enabled" class="label label-yellow font-12pt">&nbsp;Devuelto&nbsp;</span>
                                             <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
                                             <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Pendiente&nbsp;</span>
