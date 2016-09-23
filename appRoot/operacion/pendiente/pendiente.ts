@@ -135,6 +135,24 @@ export class OperacionPendiente extends ModelBase implements OnInit {
             'title': 'Tiempo S.',
             'placeholder': 'Tiempo en la balanza de salida',
         }
+        this.rules['lotValIn']={
+            'type': 'number',
+            'step':'0',
+            'search': true,
+            'key': 'lotValIn',
+            'icon': 'fa fa-clock-o',
+            'title': 'Tiempo E.',
+            'placeholder': 'Lote de entrada',
+        }
+        this.rules['lotValOut']={
+            'type': 'number',
+            'step':'0',
+            'search': true,
+            'key': 'lotValOut',
+            'icon': 'fa fa-clock-o',
+            'title': 'Tiempo E.',
+            'placeholder': 'Lote de salida',
+        }
         this.rules['weightIn']={
             'type': 'number',
             'step':'0.001',
