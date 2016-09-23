@@ -5,6 +5,7 @@ typings/
 .directory
 build/
 vendors/
-app/*.js
+appRoot/*.js
+appRoot/*.js.map
 app/*.js.map
 .gitlab-ci.yml
