@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    //"outDir": "build/",
+    "outFile": "bundle.js",
     "allowSyntheticDefaultImports": true,
     "target": "es5",
     "module": "system",
