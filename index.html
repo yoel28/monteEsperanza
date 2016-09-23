@@ -13,8 +13,6 @@
   <script src="node_modules/zone.js/dist/zone.js"></script>
   <script src="node_modules/reflect-metadata/Reflect.js"></script>
 
-  <script src="node_modules/webshim/js-webshim/minified/polyfiller.js"></script>
-
   <link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css">
   <script src="https://afarkas.github.io/webshim/js-webshim/minified/polyfiller.js"></script>
   <link rel="stylesheet" href="assets/css/semantic.min.css" />
@@ -62,9 +60,6 @@
 <main>
     <my-app>Loading...</my-app>
 </main>
-<script>
-  webshims.polyfill();
-</script>
 <script>
   $(document).ajaxStart(function () {
     Pace.restart();
