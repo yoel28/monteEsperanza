@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outFile": "bundle.js",
+    "outFile": "appRoot/all.js",
     "allowSyntheticDefaultImports": true,
     "target": "es5",
     "module": "system",
