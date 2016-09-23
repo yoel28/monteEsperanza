@@ -144,7 +144,6 @@ reset_job_4:
     - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/package.json
     - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/tsconfig.json
     - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/typings.json
-    - sudo sed -i -e 's/$URL_REGEX/$URL_DEV/g' /var/www/html/$CI_BUILD_REF_NAME/app/app.component.js
     - sudo chown ubuntu.ubuntu -R /var/www/html/$CI_BUILD_REF_NAME/
   when: on_success
   tags:
