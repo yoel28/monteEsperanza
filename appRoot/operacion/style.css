@@ -21,12 +21,14 @@
     text-decoration: underline;
 }
 .head-fact{
+    margin-top:0.4cm !important;
     font-weight: 600;
     margin-bottom: 3px;
     font-size: 12px;
 }
 .body-print{
     font-size: 10px;
+    font-family: times, arial !important;
 }
 .detalle-title{
     border-bottom: 1px solid #949494;
