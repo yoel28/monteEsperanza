@@ -36,7 +36,9 @@ update_job:
 pre_install_job_1:
   stage: pre_install
   script:
-    - mkdir /tmp/build
+    - mkdir -p /tmp/build
+    - sudo mkdir -p /home/ubuntu/node_modules/
+    - sudo cp -rf /home/ubuntu/node_modules /tmp/build/
     - sudo cp -rf ./* /tmp/build
     - cd /tmp/build
     - sudo npm run prestart
@@ -95,6 +97,7 @@ deploy_job_3:
   script:
     - cd /tmp/build
     - sudo cp -rf build/* ./
+    - sudo cp -rf ./node_modules /home/ubuntu/
     - sudo find ./ -type f -name '*.ts' -delete
     - cd /var/www/html/
     - sudo tar -cf $CI_BUILD_REF_NAME.tar $CI_BUILD_REF_NAME/
