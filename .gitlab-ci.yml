@@ -20,8 +20,7 @@ dump_job:
     - local
   only :
     - dev
-    - alpha
-    
+
 update_job:
   stage: update
   script:
@@ -33,7 +32,6 @@ update_job:
     - vertederodev
   only :
     - dev
-    - alpha    
 
 pre_install_job_1:
   stage: pre_install
@@ -50,12 +48,11 @@ pre_install_job_1:
     - vertederodev
   only :
     - dev
-    - alpha
     
 pre_install_prod_job_1:
   stage: pre_install
   script:
-    - mkdir /tmp/build
+    - mkdir -p /tmp/build
     - sudo cp -rf ./* /tmp/build
     - cd /tmp/build
     - sudo npm run prestart
@@ -80,7 +77,6 @@ build_job_2:
     - vertederodev
   only :
     - dev
-    - alpha
     
 build_prod_job_2:
   stage: build
@@ -110,7 +106,6 @@ deploy_job_3:
     - vertederodev
   only :
     - dev
-    - alpha
 
 deploy_prod_job_3:
   stage: deploy
@@ -150,7 +145,6 @@ reset_job_4:
     - vertederodev
   only :
     - dev
-    - alpha
 
 reset_prod_job_4:
   stage: reset
@@ -167,7 +161,6 @@ reset_prod_job_4:
     - sudo rm -f /var/www/html/package.json
     - sudo rm -f /var/www/html/tsconfig.json
     - sudo rm -f /var/www/html/typings.json
-    - sudo sed -i -e 's/$URL_REGEX/$URL_DEV/g' /var/www/html/$CI_BUILD_REF_NAME/app/app.component.js
     - sudo chown ubuntu.ubuntu -R /var/www/html/
   when: on_success
   tags:
@@ -187,8 +180,7 @@ clean_job_:
     - vertederodev
   only :
     - dev
-    - alpha
-    
+
 clean_prod_job_:
   stage: clean
   script:
