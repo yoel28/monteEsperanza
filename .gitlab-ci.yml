@@ -55,6 +55,8 @@ pre_install_prod_job_1:
   stage: pre_install
   script:
     - mkdir -p /tmp/build
+    - sudo mkdir -p /home/ubuntu/node_modules/
+    - sudo cp -rf /home/ubuntu/node_modules /tmp/build/
     - sudo cp -rf ./* /tmp/build
     - cd /tmp/build
     - sudo npm run prestart
@@ -88,6 +90,10 @@ build_prod_job_2:
   stage: build
   script:
     - cd /tmp/build
+    - export epoch=$(date +%s)
+    - sudo sed -i -e 's;\=\"\(http\)s\?://[a-zA-Z0-9.]\+\([:][0-9]\+\)\?\"\;;\=\"http://dev.aguaseo.com:8080\"\;;g' appRoot/app.component.ts
+    - sudo sed -i -e "s;appRoot;${epoch};g" ./systemjs.config.js
+    - sudo mv appRoot ${epoch}
     - sudo npm run tsc -w
     - sudo npm run build
   when: on_success
@@ -119,6 +125,7 @@ deploy_prod_job_3:
   script:
     - cd /tmp/build
     - sudo cp -rf build/* ./
+    - sudo cp -rf ./node_modules /home/ubuntu/
     - sudo find ./ -type f -name '*.ts' -delete
     - cd /var/www/
     - sudo tar -cf html.tar html/
