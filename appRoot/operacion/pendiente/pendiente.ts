@@ -45,6 +45,8 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         event.preventDefault();
         this.list=data;
         if(this.list=='pendings')
+            this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
+        else if(this.list=='pendingsAll')
             this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
         else if(this.list=='asign')
             this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':false]]");
