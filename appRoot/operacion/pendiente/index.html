@@ -12,9 +12,42 @@
                         type="button" class="btn btn-box-tool">
                     <i class="fa fa-list-alt fa-lg text-blue"></i>
                 </button>
-
-
                 <div class="pull-right" *ngIf="viewOptions['buttons'].length > 0">
+
+                    <div class="btn-group dropdown">
+                        <button type="button " data-toggle="dropdown"
+                                class="btn btn-blue dropdown-toggle"
+                                aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-gears fa-lg"></i>&nbsp;Filtros rapidos
+                        </button>
+                        <ul role="menu" class="dropdown-menu text-left submenu-config">
+                            <li>
+                                <a href="#" (click)="loadDataPendings($event,'pendings')">
+                                    <i class="fa fa-list"></i>
+                                    &nbsp;Pendientes sin errores
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" (click)="loadDataPendings($event,'pendingsAll')">
+                                    <i class="fa fa-list"></i>
+                                    &nbsp;Todos los pendientes
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" (click)="loadDataPendings($event,'asign')">
+                                    <i class="fa fa-list"></i>
+                                    &nbsp;Procesados
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" (click)="loadDataPendings($event,'all')">
+                                    <i class="fa fa-list"></i>
+                                    &nbsp;Ver todos
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
                             [attr.data-target]="'#'+buttom.modal">
@@ -22,20 +55,8 @@
                         {{buttom.title | translate}}
                     </button>
 
-                    <button class="btn {{list=='pendings'?'btn-green':'btn-red'}}" type="button"
-                        (click)="loadDataPendings($event,'pendings')">
-                        &nbsp;Pendientes
-                    </button>
-                    <button class="btn {{list=='asign'?'btn-green':'btn-red'}}" type="button"
-                            (click)="loadDataPendings($event,'asign')">
-                            &nbsp;Procesados
-                    </button>
-                    <button class="btn {{list=='all'?'btn-green':'btn-red'}}" type="button"
-                            (click)="loadDataPendings($event,'all')">
-                        &nbsp;Ver todos
-                    </button>
-
                 </div>
+
 
             </div>
             <div *ngIf="permissions.list" class="box-body">
