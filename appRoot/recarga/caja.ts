@@ -61,8 +61,13 @@ export class Caja extends RestController implements OnInit{
             return moment(date).format(format);
         return "";
     }
-    exportCSV(){
-        jQuery("#content").tableToCSV();
+    exportCSV(id,event?){
+        if(event)
+            event.preventDefault();
+        this.getLoadDataAll([],null,null,0,1000,null,()=>{
+                setTimeout(function(_id=id,_jQuery=jQuery){ _jQuery("#"+_id).tableToCSV();}, 3000)
+            }
+        )
     }
     goTaquilla(event, companyId:string) {
         event.preventDefault();
