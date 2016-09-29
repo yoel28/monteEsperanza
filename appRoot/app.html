@@ -14,6 +14,9 @@
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
+                <!-- Button trigger menu modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myMenu">
+                </button>
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
@@ -332,3 +335,236 @@
 </aside>
 
 <!-- ./wrapper -->
+
+<!-- Modal menu-->
+<div class="modal fade" id="myMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body"><!--Dashboard-->
+                <h1 style="color:#ffffff">Dashboard</h1>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('26')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Dashboard']">
+                            <i class="fa fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </div>
+                </div><!--Fin de dashboard-->
+                <h1 style="color:#ffffff">Taquilla</h1>
+                <div class="row"><!--Taquilla-->
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('3')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Taquilla']">
+                            <i class="fa fa-dollar"></i>
+                            <span>Taquilla</span>
+                        </a>
+                    </div>
+                </div><!--Fin de taquilla-->
+                    <h1 style="color:#ffffff">Transacciones</h1>
+                <div class="row"><!--Transacciones-->
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('21')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Operacion']">
+                            <i class="fa fa-user"></i>
+                            <span>Operaci&oacute;n</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('222')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['OperacionPendiente']">
+                            <i class="fa fa-user"></i>
+                            <span>Operaci&oacute;n pendiente</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('214')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Servicio']">
+                            <i class="fa fa-list"></i>
+                            <span>Servicios</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('161')">
+                        <a class="a-menu-modal" (click)="inAnt($event)" data-toggle="modal" data-target="#operacionManual">
+                            <i class="fa fa-sign-in"></i>
+                            <span>Entrada</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('162')">
+                        <a class="a-menu-modal" (click)="outAnt($event)" data-toggle="modal" data-target="#operacionManual">
+                            <i class="fa fa-sign-out"></i>
+                            <span>Salida</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('14')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Recarga']">
+                            <i class="fa fa-money"></i>
+                            <span>Recargas</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('158')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['RecargaIngresos']">
+                            <i class="fa fa-money"></i>
+                            <span>Ingresos</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('159')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['RecargaLibro']">
+                            <i class="fa fa-book"></i>
+                            <span>Libro</span>
+                        </a>
+                    </div>
+                </div><!--Fin de transacionnes-->
+                <h1 style="color:#ffffff">Administraci&oacute;n</h1>
+                <div class="row"><!--Administracion-->
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('2')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['User']">
+                            <i class="fa fa-user"></i>
+                            <span>Usuarios</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('1')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Empresa']">
+                            <i class="fa fa-building-o"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('15')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Vehiculo']">
+                            <i class="fa fa-truck"></i>
+                            <span>Veh&iacute;culos</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('25')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['TagRfid']">
+                            <i class="fa fa-user"></i>
+                            <span>Tag RFID</span>
+                        </a>
+                    </div>
+                </div><!--Fin de administracion-->
+                <h1 style="color:#ffffff">Reportes</h1>
+                <div class="row"><!--Reportes-->
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('205')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Caja']">
+                            <i class="fa fa-list"></i>
+                            <span>Caja</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('164')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['GruposRutas']">
+                            <i class="fa fa-list"></i>
+                            <span>Rutas</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3"  *ngIf="myglobal.existsPermission('203')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['ReporteGrupos']">
+                            <i class="fa fa-user"></i>
+                            <span>Grupos</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('163')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['ReporteDescargasGrupos']">
+                            <i class="fa fa-user"></i>
+                            <span>Descarga por grupos</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('167')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['ReporteGruposVehiculos']">
+                            <i class="fa fa-truck"></i>
+                            <span>Descarga por veh&iacute;culos</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('201')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['ReporteDescargasRutas']">
+                            <i class="fa fa-truck"></i>
+                            <span>Descarga por rutas</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('202')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['ReporteDescargasBasura']">
+                            <i class="fa fa-trash"></i>
+                            <span>Descarga por tipo de basura</span>
+                        </a>
+                    </div>
+                </div><!--Fin de reportes-->
+                <h1 style="color:#ffffff">Acceso</h1>
+                <div class="row"><!--Acceso-->
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('16')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Rol']">
+                            <i class="fa fa-key"></i>
+                            <span>Roles</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('17')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Permiso']">
+                            <i class="fa fa-key"></i>
+                            <span>Permisos</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('18')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['PermisoRol']">
+                            <i class="fa fa-key"></i>
+                            <span>ACL</span>
+                        </a>
+                    </div>
+                </div><!--Fin de acceso-->
+                <h1 style="color: #ffffff;">Configuraci&oacute;n</h1>
+                <div class="row"><!--Configuracion-->
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('147')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Antenna']">
+                            <i class="fa fa-crosshairs"></i>
+                            <span>Antenas</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('22')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Parametro']">
+                            <i class="fa fa-user"></i>
+                            <span>Par&aacute;metro</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('23')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Regla']">
+                            <i class="fa fa-user"></i>
+                            <span>Regla</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('19')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['TipoEmpresa']">
+                            <i class="fa fa-user"></i>
+                            <span>Grupos de clientes</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('149')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['Ruta']">
+                            <i class="fa fa-crosshairs"></i>
+                            <span>Rutas</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('20')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['TipoVehiculo']">
+                            <i class="fa fa-user"></i>
+                            <span>Tipo de veh&iacute;culo</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('24')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['TipoRecarga']">
+                            <i class="fa fa-user"></i>
+                            <span>Tipo de recarga</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('141')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['TipoBasura']">
+                            <i class="fa fa-trash"></i>
+                            <span>Tipo de basura</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="myglobal.existsPermission('206')">
+                        <a class="a-menu-modal" href="#" [routerLink]="['TipoServicio']">
+                            <i class="fa fa-archive"></i>
+                            <span>Tipo de servicio</span>
+                        </a>
+                    </div>
+                </div><!--Fin de configuracion-->
+            </div>
+        </div>
+    </div>
+</div>
