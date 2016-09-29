@@ -13,7 +13,6 @@
                     <i class="fa fa-list-alt fa-lg text-blue"></i>
                 </button>
                 <div class="pull-right" *ngIf="viewOptions['buttons'].length > 0">
-
                     <div class="btn-group dropdown">
                         <button type="button " data-toggle="dropdown"
                                 class="btn btn-blue dropdown-toggle"
@@ -21,10 +20,10 @@
                             <i class="fa fa-gears fa-lg"></i>&nbsp;Filtros rapidos
                         </button>
                         <ul role="menu" class="dropdown-menu text-left submenu-config">
-                            <li>
+                            <li [class.btn-blue]="list=='pendings'">
                                 <a href="#" (click)="loadDataPendings($event,'pendings')">
                                     <i class="fa fa-list"></i>
-                                    &nbsp;Pendientes sin errores
+                                    &nbsp;Pendientes
                                 </a>
                             </li>
                             <li>
@@ -47,7 +46,7 @@
                             </li>
                         </ul>
                     </div>
-
+                    &nbsp;
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
                             [attr.data-target]="'#'+buttom.modal">
