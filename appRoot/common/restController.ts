@@ -73,18 +73,21 @@ export class RestController implements OnInit {
             audio['default'].play();
 
     }
-    getOffset(offset?){
+    getOffset(offset?,list?,max?){
+        var _count= ( list? list.count:this.dataList.count);
+        var _max = (max | this.max);
+
         if(typeof offset ==='number')
-            this.offset=this.max*(offset-1);
+            this.offset=_max*(offset-1);
         else{
             if(offset=='<')
-                this.offset=this.offset-this.max;
+                this.offset=this.offset-_max;
             else if (offset=='<<')
                 this.offset=0;
             else if(offset=='>')
-                this.offset=this.offset+this.max;
+                this.offset=this.offset+_max;
             else if (offset=='>>')
-                this.offset=(Math.ceil(this.dataList.count/this.max)-1)*this.max;
+                this.offset=(Math.ceil(_count/_max)-1)*_max;
             else
                 this.offset=0;
         }
@@ -104,31 +107,73 @@ export class RestController implements OnInit {
             }
             if(maxPage > (initPage+count))
                 list.page.push('>','>>');
+            if(maxPage>1)
+                list.page.push('#');
         }
     }
 
     loadData(offset?){
         let that = this;
-        this.getOffset(offset);
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error).then(
-            response=>{
-                that.loadPager(that.dataList);
-            },error=>{
-                console.log("error");
-            }
-        );
+        if(offset && offset=='#')
+            that.getLoadDataAll([],null,null,0,1000,null);
+        else{
+            this.getOffset(offset);
+            this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),this.dataList,this.max,this.error).then(
+                response=>{
+                    that.loadPager(that.dataList);
+                },error=>{
+                    console.log("error");
+                }
+            );
+        }
     };
     onloadData(endpoint?,list?,offset?,max?,where?){
         let that = this;
-        this.getOffset(offset);
-        this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+(max || this.max)+"&offset="+(this.offset)+(where || this.where)+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
+
+        if(offset && offset=='#')
+            that.getLoadDataAll([],endpoint,list,0,1000,where);
+        else{
+            this.getOffset(offset,list,max);
+            this.httputils.onLoadList((endpoint || this.endpoint)+"?max="+(max || this.max)+"&offset="+(this.offset)+(where || this.where)+(this.sort.length>0?'&sort='+this.sort:'')+(this.order.length>0?'&order='+this.order:''),(list || this.dataList),this.max,this.error).then(
+                response=>{
+                    that.loadPager(list || that.dataList);
+                },error=>{
+                    console.log("error");
+                }
+            );
+        }
+    };
+    getLoadDataAll(data,endpoint?,list?,offset?,max?,where?,successCallback?){
+        let that = this;
+
+        endpoint = ( endpoint?endpoint:that.endpoint);
+        list = (list?list:that.dataList);
+        max = (max?max:that.max);
+        where = (where?where:that.where);
+        list.page=[];
+        this.httputils.onLoadList(endpoint+"?max="+max+"&offset="+offset+where,list,max,this.error).then(
             response=>{
-                that.loadPager(list || that.dataList);
+                if(list.count > 0){
+                    data=data.concat(list.list);
+                    if(list.count == list.list.length || list.count == data.length ){
+                        Object.assign(list.list,data);
+                        if(successCallback)
+                            successCallback();
+                    }
+                    else if(max > list.list.length){
+                        max=list.list.length;
+                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where);
+                    }
+                    else {
+                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where);
+                    }
+                }
+
             },error=>{
                 console.log("error");
             }
         );
-    };
+    }
     onUpdate(event,data){
         event.preventDefault();
         if(data[event.target.accessKey]!=event.target.innerHTML){
