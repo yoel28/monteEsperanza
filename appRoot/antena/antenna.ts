@@ -3,7 +3,7 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {Xeditable} from "../common/xeditable";
+import {Xeditable, DrapResize} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
 import {Save} from "../utils/save/save";
@@ -13,7 +13,7 @@ declare var SystemJS:any;
     selector: 'antenna',
     templateUrl: SystemJS.map.app+'/antena/index.html',
     styleUrls: [SystemJS.map.app+'/antena/style.css'],
-    directives:[Xeditable,Filter,Save]
+    directives:[Xeditable,Filter,Save,DrapResize]
 })
 export class Antenna extends RestController implements OnInit{
 
