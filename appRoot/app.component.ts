@@ -46,6 +46,7 @@ import {Caja} from "./recarga/caja";
 import {TipoServicio} from "./tipoServicio/tipoServicio";
 import {Servicio} from "./servicio/servicio";
 import {OperacionPendiente} from "./operacion/pendiente/pendiente";
+import {CustomRouterOutlet} from "./common/CustomRouterOutlet";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -55,7 +56,7 @@ declare var SystemJS:any;
   selector: 'my-app',
   templateUrl: SystemJS.map.app+'/app.html',
   styleUrls:[SystemJS.map.app+'/app.css'],
-  directives: [ROUTER_DIRECTIVES,OperacionSave],
+  directives: [ROUTER_DIRECTIVES,OperacionSave,CustomRouterOutlet],
   providers: [
     ROUTER_PROVIDERS,Operacion,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
@@ -117,7 +118,7 @@ export class AppComponent extends RestController implements OnInit{
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
-      let url="http://vertedero.aguaseo.com:8080";
+      let url="http://dev.aguaseo.com:8080";
 
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
