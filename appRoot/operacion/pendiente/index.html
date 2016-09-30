@@ -79,6 +79,7 @@
                             <th>Tiempo&nbsp;S.</th>
                             <th>Lote&nbsp;S.</th>
 
+                            <th>Descargado</th>
                             <th>Neto</th>
                             <th>Estatus</th>
                             <th>Acciones</th>
@@ -114,12 +115,13 @@
 
 
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
+                            <td>{{ (data.vehicleWeight || 0) | number:'.0-3'}}</td>
                             <td>
                                 <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
-                                <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
+                                <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt" title="La operación esta incompleta">&nbsp;Error&nbsp;</span>
                                 <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt" >&nbsp;Devuelto&nbsp;</span>
-                                <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
-                                <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Pendiente&nbsp;</span>
+                                <span *ngIf="!data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
+                                <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Sin procesar&nbsp;</span>
                                 <span *ngIf="data.operationId" class="label label-green font-12pt">&nbsp;Validado&nbsp;</span>
 
                             </td>
@@ -170,10 +172,10 @@
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
 
                                             <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
-                                            <span *ngIf="!data.vehicleId ||  !data.dateIn" class="label label-red font-12pt" title="La operación no contiene un vehículo registrado">&nbsp;Error&nbsp;</span>
-                                            <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt">&nbsp;Devuelto&nbsp;</span>
-                                            <span *ngIf="data.dateUpdated && !data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
-                                            <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Pendiente&nbsp;</span>
+                                            <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt" title="La operación esta incompleta">&nbsp;Error&nbsp;</span>
+                                            <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt" >&nbsp;Devuelto&nbsp;</span>
+                                            <span *ngIf="!data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
+                                            <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Sin procesar&nbsp;</span>
                                             <span *ngIf="data.operationId" class="label label-green font-12pt">&nbsp;Validado&nbsp;</span>
 
                                         </a>
@@ -210,8 +212,8 @@
                                 </h4>
                             </div>
                             <div [attr.id]="'collapse'+data.id" class="panel-collapse collapse">
-                                <div class="panel-body" [class.red]="!data.vehicleId">
-                                    <div *ngIf="data.dateUpdated">
+                                <div class="panel-body">
+                                    <div *ngIf="data.touched">
                                         <div class="col-lg-12">
                                             <p style="font-size: large">
                                                 <i *ngIf="!data.enabled" class="fa fa-user-secret" aria-hidden="true"></i>
@@ -275,9 +277,13 @@
                                             <strong>Peso S.:&nbsp;</strong>
                                             {{ (data.weightOut) | number:'.0-3'}}
                                         </div>
-                                        <div class="col-lg-6">
-                                            <strong>Neto.:&nbsp;</strong>
+                                        <div class="col-lg-3">
+                                            <strong>Descargado.:&nbsp;</strong>
                                             {{ (data.weightIn - data.weightOut) | number:'.0-3'}}
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <strong>Peso Neto.:&nbsp;</strong>
+                                            {{ (data.vehicleWeight || 0) | number:'.0-3'}}
                                         </div>
                                     </div>
                                 </div>
