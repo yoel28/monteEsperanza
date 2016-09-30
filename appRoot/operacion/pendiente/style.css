@@ -8,3 +8,9 @@
 .font-12pt{
     font-size: 12pt;
 }
+.btn-blue a{
+    color: white !important;
+}
+.btn-blue a:hover{
+    color: black !important;
+}

@@ -39,7 +39,7 @@ export class Operacion extends ModelBase implements OnInit {
         if (this.permissions['list']) {
             this.max = 10;
             let start = moment().startOf('month').format('DD-MM-YYYY');
-            let end = moment().endOf('month').format('DD-MM-YYYY');
+            let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
             if (localStorage.getItem('view6'))
