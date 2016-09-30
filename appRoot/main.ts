@@ -33,7 +33,7 @@ bootstrap(AppComponent, [
     provide(AuthHttp, {
         useFactory: (http) => {
             return new AuthHttp(new AuthConfig({
-                tokenName: 'bearer'
+                tokenName: 'Bearer'
             }), http);
         },
         deps: [Http]
