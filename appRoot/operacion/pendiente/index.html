@@ -26,19 +26,19 @@
                                     &nbsp;Pendientes
                                 </a>
                             </li>
-                            <li>
+                            <li [class.btn-blue]="list=='pendingsAll'">
                                 <a href="#" (click)="loadDataPendings($event,'pendingsAll')">
                                     <i class="fa fa-list"></i>
                                     &nbsp;Todos los pendientes
                                 </a>
                             </li>
-                            <li>
+                            <li [class.btn-blue]="list=='asign'">
                                 <a href="#" (click)="loadDataPendings($event,'asign')">
                                     <i class="fa fa-list"></i>
                                     &nbsp;Procesados
                                 </a>
                             </li>
-                            <li>
+                            <li [class.btn-blue]="list=='all'">
                                 <a href="#" (click)="loadDataPendings($event,'all')">
                                     <i class="fa fa-list"></i>
                                     &nbsp;Ver todos
