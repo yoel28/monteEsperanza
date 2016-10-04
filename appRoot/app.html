@@ -11,11 +11,11 @@
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <a *ngIf="menu_list=='1'" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
                 <!-- Button trigger menu modal -->
-                <button type="button" class="btn btn-blue glyphicon glyphicon-th"  style="font-size: x-large" data-toggle="modal" data-target="#myMenu">
+                <button *ngIf="menu_modal=='1'" type="button" class="btn btn-blue glyphicon glyphicon-th"  style="font-size: x-large" data-toggle="modal" data-target="#myMenu">
                 </button>
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
@@ -83,7 +83,7 @@
                 </div>
             </nav>
         </header>
-        <aside class="main-sidebar">
+        <aside *ngIf="menu_list=='1'" class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel (optional) -->
@@ -103,10 +103,10 @@
                 </div>
                 <ul class="sidebar-menu" >
                     <li class="header" ><i class="fa fa-circle text-success"></i> {{myglobal.user.email}}</li>
-                    {{loadMenu()}}
                     <li  *ngFor="let item of menuItemsVisible(menuItems)"
                          [class.treeview]="item.treeview"
-                         [class.active]="item.key && activeMenuId==item.key">
+                         [class.active]="item.key && activeMenuId==item.key"
+                    >
                         <a *ngIf="item.routerLink" href="#" [routerLink]="[item.routerLink]">
                             <i class="{{item.icon}}"></i>
                             <span>{{item.title}}</span>
@@ -135,6 +135,7 @@
         </aside>
     </div>
     <router-outlet></router-outlet>
+    {{loadMenuMain()}}
     <operacion-save idModal="operacionManual" [rules]="rulesOperacion" [inAnt]="dataOperation"></operacion-save>
 
 </div>
@@ -187,7 +188,7 @@
 <!-- ./wrapper -->
 
 <!-- Modal menu -->
-<div class="modal fade" id="myMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div *ngIf="menu_modal=='1'" class="modal fade" id="myMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -198,7 +199,8 @@
                 <div *ngFor="let item of menuItemsTreeview(menuItems)"
                      [class.treeview]="item.treeview">
                         <a *ngIf="item.routerLink" data-dismiss="modal" class="a-menu-modal" href="#" [routerLink]="[item.routerLink]">
-                            <i class="{{item.icon}}"></i>
+                            <i *ngIf="!item.image" class="{{item.icon}}"></i>
+                            <img *ngIf="item.image" src="{{item.image}}"/>
                             <p>{{item.title}}</p>
                         </a>
                     <div class="row" *ngIf="item.treeview">

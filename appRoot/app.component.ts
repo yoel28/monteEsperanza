@@ -50,6 +50,7 @@ import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 declare var SockJS:any;
 declare var Stomp:any;
 declare var SystemJS:any;
+declare var jQuery:any;
 
 @Component({
   selector: 'my-app',
@@ -114,6 +115,8 @@ declare var SystemJS:any;
 export class AppComponent extends RestController implements OnInit{
   public saveUrl:string;
     public rulesOperacion={};
+    public menu_modal:string="";
+    public menu_list:string="";
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
@@ -271,7 +274,14 @@ export class AppComponent extends RestController implements OnInit{
             return moment(date).format(format);
         return "";
     }
-
+    loadMenuMain(){
+        this.loadMenu();
+        this.menu_modal=this.myglobal.getParams('MENU_MODAL');
+        this.menu_list=this.myglobal.getParams('MENU_LIST');
+        if(this.menu_list!='' && this.menu_list!='1'){
+            jQuery('body').addClass('no-menu');
+        }
+    }
     public menuItems=[];
     loadMenu() {
         if(this.menuItems.length == 0) {
