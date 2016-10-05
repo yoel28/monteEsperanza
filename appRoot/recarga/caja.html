@@ -82,6 +82,9 @@
 
                         <div *ngIf=" dataList && dataList.count > 0 ">
                             {{calcRecharges()}}
+                            <button class="btn-green btn pull-right" (click)="exportCSV('content',$event)">
+                                <i class="fa fa-print"></i>&nbsp;Exportar CSV
+                            </button>
                             <table id="content"  class="table table-hover table-bordered">
 
                                 <thead>

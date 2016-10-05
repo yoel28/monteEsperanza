@@ -16,12 +16,12 @@ jQuery.fn.tableToCSV = function() {
             $(this).find('th').each(function(){
                 //var text = clean_text($(this).text());
                 var text = $(this)[0].innerText;
-                title.push(text.trim());
+                title.push(text.trim().replace(',','-'));
             });
             $(this).find('td').each(function(){
                 //var text = clean_text($(this).text());
                 var text = $(this)[0].innerText;
-                data.push(text.trim());
+                data.push(text.trim().replace(',','-'));
             });
             data = data.join(";");
             rows.push(data);

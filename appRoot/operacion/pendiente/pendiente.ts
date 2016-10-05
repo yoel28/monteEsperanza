@@ -36,21 +36,35 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         
         this.initModel();
 
-        this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
+        this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
         this.loadData();
     }
 
     public list='pendings';
     loadDataPendings(event,data){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         this.list=data;
-        if(this.list=='pendings')
-            this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
-        else if(this.list=='asign')
-            this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':false]]");
-        else if(this.list=='all')
-            this.where="";
-
+        switch (this.list)
+        {
+            case 'pendings' :
+                this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
+                break;
+            case 'pendingsAll' :
+                this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
+                break;
+            case 'asign' :
+                this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':false]]");
+                break;
+            case 'all' :
+                this.where="";
+                break;
+            case 'expired' :
+                this.where="&where="+encodeURI("[['op':'eq','field':'expired','value':true]]");
+                break;
+            default :
+                this.where="";
+        }
         this.loadData();
     }
 
