@@ -58,7 +58,7 @@ main{
 
 @media print{
   body{
-    letter-spacing: 2px !important;
+    letter-spacing: 1pt !important;
   }
 }
 .table-striped > tbody > tr:nth-of-type(odd) {
