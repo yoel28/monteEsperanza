@@ -10,6 +10,7 @@ import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
 
 declare var SystemJS:any;
+declare var moment:any;
 @Component({
     selector: 'tables',
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
@@ -36,6 +37,7 @@ export class Tables extends RestController implements OnInit {
     public dataSave :any={};
 
     public keyActions =[];
+    public configId=moment().valueOf();
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
