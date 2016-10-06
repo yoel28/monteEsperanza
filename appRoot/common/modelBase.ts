@@ -9,7 +9,8 @@ export abstract class ModelBase extends RestController {
 
     public formatDateId:any={}
     public permissions:any = {};
-    public prefix = "";
+    public prefix = "DEFAULT";
+    public configId=moment().valueOf();
 
     public viewOptions:any = {};
     public paramsFilter:any = {};
@@ -64,7 +65,6 @@ export abstract class ModelBase extends RestController {
 
 
     private initConfigurationRules() {
-
         this.rules["detail"] = {
             "update": this.permissions['update'],
             "visible": true,
@@ -93,7 +93,6 @@ export abstract class ModelBase extends RestController {
                 },
             }
         };
-
     }
 
     private initConfigurationAudit(){
@@ -183,7 +182,7 @@ export abstract class ModelBase extends RestController {
         this.paramsSearch = {
 
             'title': this.viewOptions["title"],
-            'idModal': "searchDefault",
+            'idModal': this.prefix+'_'+this.configId+'_search',
             'endpoint': "/search" + this.endpoint,
             'placeholder': "Placeholder default",
             'label': {'title': "titulo: ", 'detail': "detalle: "},
@@ -201,7 +200,7 @@ export abstract class ModelBase extends RestController {
 
         this.paramsSave = {
             title: "Agregar Default",
-            idModal: "saveDefault",
+            idModal: this.prefix+'_'+this.configId+'_add',
             endpoint: this.endpoint,
         }
 
@@ -210,7 +209,7 @@ export abstract class ModelBase extends RestController {
     private initConfigurationFilter(){
         this.paramsFilter = {
             title: "Filter default",
-            idModal: "modalFilter",
+            idModal: this.prefix+'_'+this.configId+'_filter',
             endpointForm: "",
         };
     }
@@ -309,7 +308,11 @@ export abstract class ModelBase extends RestController {
         //<i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
         var diff =  moment().valueOf() - moment(date).valueOf();
         return ((diff < parseFloat(this.myglobal.getParams('DATE_MAX_HUMAN'))) && this.myglobal.getParams(this.prefix+'_DATE_FORMAT_HUMAN') == 'true')
-        
+    }
+    public setLoadData(data){
+        this.dataList.list.unshift(data);
+        if(this.dataList.count >= this.max)
+            this.dataList.list.pop();
     }
 
 }
