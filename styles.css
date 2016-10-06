@@ -65,3 +65,11 @@ main{
 tbody{
   font-weight: 100 !important;
 }
+.padding-error{
+  padding: 5px;
+}
+.cargar{
+  color: white;
+  font-size: 16pt;
+  margin: 10pt;
+}
