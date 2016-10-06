@@ -65,3 +65,6 @@ main{
 tbody{
   font-weight: 100 !important;
 }
+body.no-menu .content-wrapper, body.no-menu .main-footer {
+  margin-left: 0px !important;
+}

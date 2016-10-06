@@ -50,6 +50,7 @@ import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 declare var SockJS:any;
 declare var Stomp:any;
 declare var SystemJS:any;
+declare var jQuery:any;
 
 @Component({
   selector: 'my-app',
@@ -114,6 +115,8 @@ declare var SystemJS:any;
 export class AppComponent extends RestController implements OnInit{
   public saveUrl:string;
     public rulesOperacion={};
+    public menu_modal:string="";
+    public menu_list:string="";
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
@@ -271,6 +274,296 @@ export class AppComponent extends RestController implements OnInit{
             return moment(date).format(format);
         return "";
     }
+    loadMenuMain(){
+        this.loadMenu();
+        this.menu_modal=this.myglobal.getParams('MENU_MODAL');
+        this.menu_list=this.myglobal.getParams('MENU_LIST');
+        if(this.menu_list!='' && this.menu_list!='1'){
+            jQuery('body').addClass('no-menu');
+        }
+    }
+    public menuItems=[];
+    loadMenu() {
+        if(this.menuItems.length == 0) {
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_DASHBOARD"),
+                'icon':'fa fa-home',
+                'title':'Dashboard',
+                'routerLink':'Dashboard'
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_TAQ"),
+                'icon':'fa fa-dollar',
+                'title':'Taquilla',
+                'routerLink':'Taquilla'
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_OP")  || this.myglobal.existsPermission("MEN_OP_PEN")   || this.myglobal.existsPermission("MEN_SERV")
+                 || this.myglobal.existsPermission("MEN_RECARGAS")  || this.myglobal.existsPermission("MEN_INGRESOS") || this.myglobal.existsPermission("MEN_LIBRO")
+                 || this.myglobal.existsPermission("MEN_SEMI_ES")   || this.myglobal.existsPermission("MEN_SEMI_SA"),
+                'icon':'fa fa-gears',
+                'title':'Transacciones',
+                'key':'Transacciones',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_OP"),
+                        'icon':'fa fa-user',
+                        'title':'Operación',
+                        'routerLink':'Operacion'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_OP_PEN"),
+                        'icon':'fa fa-user',
+                        'title':'Operación Pendiente',
+                        'routerLink':'OperacionPendiente'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_SERV"),
+                        'icon':'fa fa-list',
+                        'title':'Servicios',
+                        'routerLink':'Servicio'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_SEMI_ES"),
+                        'icon':'fa fa-sign-in',
+                        'title':'Entrada',
+                        'modal' : true,
+                        'modalId' : '#operacionManual',
+                        'function' : this.inAnt
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_SEMI_SA"),
+                        'icon':'fa fa-sign-out',
+                        'title':'Salida',
+                        'modal' : true,
+                        'modalId' : '#operacionManual',
+                        'function' : this.outAnt
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_RECARGAS"),
+                        'icon':'fa fa-money',
+                        'title':'Recarga',
+                        'routerLink':'Recarga'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_INGRESOS"),
+                        'icon':'fa fa-money',
+                        'title':'Ingresos',
+                        'routerLink':'RecargaIngresos'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_LIBRO"),
+                        'icon':'fa fa-book',
+                        'title':'Libro',
+                        'routerLink':'RecargaLibro'
+                    },
 
+                ]
 
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_USERS") || this.myglobal.existsPermission("MEN_CLIENTES")
+                    || this.myglobal.existsPermission("MEN_VEH")      || this.myglobal.existsPermission("MEN_TAG"),
+                'icon':'fa fa-gears',
+                'title':'Administración',
+                'key':'Administración',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_USERS"),
+                        'icon':'fa fa-user',
+                        'title':'Usuarios',
+                        'routerLink':'User'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CLIENTES"),
+                        'icon':'fa fa-building-o',
+                        'title':'Clientes',
+                        'routerLink':'Empresa'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_VEH"),
+                        'icon':'fa fa-truck',
+                        'title':'Vehículos',
+                        'routerLink':'Vehiculo'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TAG"),
+                        'icon':'fa fa-user',
+                        'title':'Tag RFID',
+                        'routerLink':'TagRfid'
+                    },
+                ]
+
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_CAJA")   || this.myglobal.existsPermission("MEN_REP_RU") || this.myglobal.existsPermission("MEN_REP_GROUPS")
+                 || this.myglobal.existsPermission("MEN_DESC_GROUPS")  || this.myglobal.existsPermission("MEN_VEH")    || this.myglobal.existsPermission("MEN_REP_CONSU_RUT")
+                 || this.myglobal.existsPermission("MEN_REP_CONSU_BAS") ,
+                'icon':'fa fa-list',
+                'title':'Reportes',
+                'key':'Reportes',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CAJA"),
+                        'icon':'fa fa-list',
+                        'title':'Caja',
+                        'routerLink':'Caja'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_REP_RU"),
+                        'icon':'fa fa-list',
+                        'title':'Rutas',
+                        'routerLink':'GruposRutas'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_REP_GROUPS"),
+                        'icon':'fa fa-truck',
+                        'title':'Grupos',
+                        'routerLink':'ReporteGrupos'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_DESC_GROUPS"),
+                        'icon':'fa fa-user',
+                        'title':'Descarga por grupos',
+                        'routerLink':'ReporteDescargasGrupos'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_VEH"),
+                        'icon':'fa fa-truck',
+                        'title':'Descarga por vehículos',
+                        'routerLink':'ReporteGruposVehiculos'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_REP_CONSU_RUT"),
+                        'icon':'fa fa-truck',
+                        'title':'Descarga por rutas',
+                        'routerLink':'ReporteDescargasRutas'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_REP_CONSU_BAS"),
+                        'icon':'fa fa-trash',
+                        'title':'Descarga por tipo basura',
+                        'routerLink':'ReporteDescargasBasura'
+                    },
+                ]
+
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_ROLES") || this.myglobal.existsPermission("MEN_PERMISOS") || this.myglobal.existsPermission("MEN_ACL"),
+                'icon':'fa fa-gears',
+                'title':'Acceso',
+                'key':'Acceso',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_ROLES"),
+                        'icon':'fa fa-key',
+                        'title':'Roles',
+                        'routerLink':'Rol'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PERMISOS"),
+                        'icon':'fa fa-key',
+                        'title':'Permisos',
+                        'routerLink':'Permiso'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_ACL"),
+                        'icon':'fa fa-key',
+                        'title':'ACL',
+                        'routerLink':'PermisoRol'
+                    },
+                ]
+
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_ANTENAS") || this.myglobal.existsPermission("MEN_PARAM")
+                    || this.myglobal.existsPermission("MEN_RULE")  || this.myglobal.existsPermission("MEN_GROUPS")
+                    || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
+                    || this.myglobal.existsPermission("MEN_TIP_RECARGA")  || this.myglobal.existsPermission("MEN_TIP_BAS")
+                    || this.myglobal.existsPermission("MEN_TIP_SERV") ,
+                'icon':'fa fa-gears',
+                'title':'Configuración',
+                'key':'Configuración',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_ANTENAS"),
+                        'icon':'fa fa-crosshairs',
+                        'title':'Antenas',
+                        'routerLink':'Antenna'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PARAM"),
+                        'icon':'fa fa-user',
+                        'title':'Parámetro',
+                        'routerLink':'Parametro'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_RULE"),
+                        'icon':'fa fa-user',
+                        'title':'Regla',
+                        'routerLink':'Regla'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_GROUPS"),
+                        'icon':'fa fa-users',
+                        'title':'Grupo de clientes',
+                        'routerLink':'TipoEmpresa'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_RUTAS"),
+                        'icon':'fa fa-crosshairs',
+                        'title':'Rutas',
+                        'routerLink':'Ruta'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TIP_VEH"),
+                        'icon':'fa fa-user',
+                        'title':'Tipo de vehículo',
+                        'routerLink':'TipoVehiculo'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TIP_RECARGA"),
+                        'icon':'fa fa-user',
+                        'title':'Tipo de recarga',
+                        'routerLink':'TipoRecarga'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TIP_BAS"),
+                        'icon':'fa fa-trash',
+                        'title':'Tipo de basura',
+                        'routerLink':'TipoBasura'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TIP_SERV"),
+                        'icon':'fa fa-archive',
+                        'title':'Tipo de servicio',
+                        'routerLink':'TipoServicio'
+                    },
+                ]
+
+            });
+        }
+    }
+    menuItemsVisible(menu){
+        let data=[];
+        menu.forEach(obj=>{
+            if(obj.visible)
+                data.push(obj)
+        })
+        return data;
+    }
+    menuItemsTreeview(menu){
+        let data=[];
+        let datatemp=[];
+        menu.forEach(obj=>{
+            if(obj.treeview)
+                data.push(obj)
+            else
+                datatemp.push(obj)
+        })
+        data.unshift({'icon':'fa fa-gears', 'title':'General',
+            'key':'General',
+            'treeview':datatemp})
+        return data;
+    }
 }
