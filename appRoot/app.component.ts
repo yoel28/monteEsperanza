@@ -47,7 +47,8 @@ import {TipoServicio} from "./tipoServicio/tipoServicio";
 import {Servicio} from "./servicio/servicio";
 import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 import {CustomRouterOutlet} from "./common/CustomRouterOutlet";
-import {Tooltip} from "./tooltip/tooltip";
+import {Help} from "./help/help";
+
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -110,7 +111,7 @@ declare var SystemJS:any;
   { path: '/tagRfid',   name: 'TagRfid', component: TagRfid },
   { path: '/antenas',   name: 'Antenna', component: Antenna },
   { path: '/rutas',   name: 'Ruta', component: Ruta },
-  { path: '/info',   name: 'Ruta', component: Tooltip },
+  { path: '/ayuda',   name: 'Help', component: Help },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
