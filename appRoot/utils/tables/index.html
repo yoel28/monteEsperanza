@@ -1,15 +1,17 @@
 <table class="table table-striped table-hover" >
     <thead>
         <tr>
-            <th *ngFor="let key of keyVisible()" >{{rules[key].title}}</th>
-            <th *ngIf="params.actions"></th>
+            <th *ngFor="let key of keyVisible()" >
+                {{rules[key].title}}
+            </th>
+            <th *ngIf="params.actions">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let data of dataList.list">
             <td *ngFor="let key of keyVisible()">
 
-             <a *ngIf="!rules[key].object &&  rules[key].type !='boolean'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+             <a *ngIf="!rules[key].object &&  rules[key].type !='boolean'" x-editable  [disabled]="!rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
              <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
                  {{data[key]}}
                  <label>
@@ -41,7 +43,7 @@
                     <ul role="menu" class="dropdown-menu text-left submenu-config">
                         <li *ngFor="let key of actionPermissionKey()">
                             <a *ngIf="key == 'delete'"
-                               data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                               data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                                (click)="dataSelect = data" href="#">
                                 <i class="{{params.actions[key].icon}}"></i>
                                 &nbsp;{{params.actions[key].title}}
@@ -70,7 +72,7 @@
 
                    <div *ngFor="let key of actionPermissionKey()">
                        <a *ngIf="key == 'delete'"
-                          data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                          data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                           (click)="dataSelect = data" href="#">
                            <i class="{{params.actions[key].icon}}"></i>
                            &nbsp;{{params.actions[key].title}}
@@ -101,22 +103,15 @@
             <td [attr.colspan]="keyVisible().length + 1">
                 <div class="btn-group pull-right">
 
-                    <button *ngFor="let val of pagesPager" (click)="pagerFunction(val)" type="button" class="btn btn-default">
-                        {{val}}
-                    </button>
-
-
-                    <button (click)="loadAll($event)" type="button" class="btn btn-default">
-                        <i class="fa fa-list"></i>
-                    </button>
                 </div>
             </td>
         </tr>
     </tfoot>
 </table>
 
-<div *ngIf="params && params.actions && params.actions.delete && myglobal.existsPermission(params.actions.delete.permission)">
-    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
+
+<div *ngIf="params && params.actions && params.actions.delete && params.actions.delete.permission">
+    <div class="modal fade" [attr.id]="params.actions.delete.idModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -140,6 +135,7 @@
     </div>
 </div>
 
+<!--
 <div *ngIf="dataSave && dataSave.params && dataSave.params.idModal">
     <save [rules]="dataSave.rules" [params]="dataSave.params" (save)="asignData($event)"> </save>
 </div>
@@ -150,6 +146,7 @@
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
 
-<!--div>
+<div>
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
-</div-->
+</div>
+-->
