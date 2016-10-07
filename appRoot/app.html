@@ -271,6 +271,8 @@
                                     class="fa fa-trash"></i> <span>Tipo de basura</span></a></li>
                             <li *ngIf="myglobal.existsPermission('206')"><a href="#" [routerLink]="['TipoServicio']"><i
                                     class="fa fa-archive"></i> <span>Tipo de servicio</span></a></li>
+                            <li *ngIf="myglobal.existsPermission('MEN_INFO')"><a href="#" [routerLink]="['Help']"><i
+                                    class="fa fa-archive"></i> <span>Informacion</span></a></li>
 
                         </ul>
                     </li>
