@@ -141,6 +141,17 @@ export class globalService extends RestController{
         })
         return valor;
     }
+    getTooltip(code){
+        let that = this;
+        let valor={};
+        Object.keys(this.help).forEach(index=>{
+            if(that.help[index].code==code){
+                valor=that.help[index];
+                return;
+            }
+        })
+        return valor;
+    }
     getKeys(data){
         return Object.keys(data);
     }
