@@ -1,8 +1,9 @@
-<a href="#" (click)="f($event)" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
+<span [attr.id]="configId" data-html="true"  class="btn btn-box-tool {{data.color}}" data-toggle="popover" [attr.title]="data.title" [attr.data-content]="data.detail">
+    <i class="{{data.icon}}"></i>&nbsp;
 
-<div class="tooltip tooltip-top" role="tooltip">
-    <div class="tooltip-arrow"></div>
-    <div class="tooltip-inner">
-        Some tooltip text!
-    </div>
-</div>
+</span>
+<!--
+<i class="fa fa-pencil" data-toggle="modal" [attr.data-target]="'#'+help.paramsSave.idModal"></i>
+<div *ngIf="help.permissions.add">
+    <save [params]="help.paramsSave" [rules]="help.rulesSave" > </save>
+</div>-->
