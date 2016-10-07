@@ -33,8 +33,8 @@
                                                         </textarea>
 
                                                         <select *ngIf="rules[key].type == 'select'" [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown">
-                                                            <option data-hidden="true"></option>
-                                                            <option *ngFor="let n of rules[key].source"  [attr.value]="n.id" >{{n.text}}</option>
+                                                            <option data-hidden="true">Seleccione una opcion</option>
+                                                            <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" >{{n.text}}</option>
                                                         </select>
 
                                                         <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
