@@ -3,7 +3,7 @@ import {Router}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {ModelBase} from "../../common/modelBase";
+import {ControllerBase} from "../../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Operacion} from "../operacion";
 import {OperacionSave, OperacionPrint} from "../methods";
@@ -19,7 +19,7 @@ declare var SystemJS:any;
     directives: [OperacionSave,Filter,OperacionPrint],
     pipes: [TranslatePipe]
 })
-export class OperacionPendiente extends ModelBase implements OnInit {
+export class OperacionPendiente extends ControllerBase implements OnInit {
 
     public dataSelect:any = {};
     public typeView=2;
@@ -68,7 +68,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.loadData();
     }
 
-    initOptions() {
+    initViewOptions() {
         this.max=10;
         this.viewOptions["title"] = 'Operaciones pendientes';
         this.viewOptions["buttons"].push({
@@ -112,7 +112,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
                     'imageGuest': '/assets/img/truck-guest.png',
                     'field': 'vehicle.id',
             },
-            'search': true,
+            'search': this.permissions.filter,
             'icon': 'fa fa-truck',
                 'object': true,
                 'title': 'Vehículo',
@@ -125,7 +125,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         },
         this.rules['tagRFID']={
             'type': 'text',
-            'search': true,
+            'search': this.permissions.filter,
             'key': 'tagRFID',
             'icon': 'fa fa-balance-scale',
             'title': 'TagRFID',
@@ -134,7 +134,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.rules['timeBalIn']={
             'type': 'number',
             'step':'0',
-            'search': true,
+            'search': this.permissions.filter,
             'key': 'timeBalIn',
             'icon': 'fa fa-clock-o',
             'title': 'Tiempo E.',
@@ -143,7 +143,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.rules['timeBalOut']={
             'type': 'number',
             'step':'0',
-            'search': true,
+            'search': this.permissions.filter,
             'key': 'timeBalOut',
             'icon': 'fa fa-clock-o',
             'title': 'Tiempo S.',
@@ -152,7 +152,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.rules['lotValIn']={
             'type': 'number',
             'step':'0',
-            'search': true,
+            'search': this.permissions.filter,
             'key': 'lotValIn',
             'icon': 'fa fa-clock-o',
             'title': 'Tiempo E.',
@@ -161,7 +161,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.rules['lotValOut']={
             'type': 'number',
             'step':'0',
-            'search': true,
+            'search': this.permissions.filter,
             'key': 'lotValOut',
             'icon': 'fa fa-clock-o',
             'title': 'Tiempo E.',
@@ -170,7 +170,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.rules['weightIn']={
             'type': 'number',
             'step':'0.001',
-            'search': true,
+            'search': this.permissions.filter,
             'double':true,
             'key': 'weightIn',
             'icon': 'fa fa-balance-scale',
@@ -180,7 +180,7 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         this.rules['weightOut']={
             'type': 'number',
             'step':'0.001',
-            'search': true,
+            'search': this.permissions.filter,
             'double':true,
             'key': 'weightOut',
             'icon': 'fa fa-balance-scale',
@@ -189,30 +189,27 @@ export class OperacionPendiente extends ModelBase implements OnInit {
         }
         this.rules['dateIn']={
             'type': 'date',
-            'search': true,
+            'search': this.permissions.filter,
             'title': 'Fecha de entrada.',
         }
         this.rules['dateOut']={
             'type': 'date',
-            'search': true,
+            'search': this.permissions.filter,
             'title': 'Fecha de salida',
         }
 
     }
-
-    initSearch() {
-    }
-
-    initRuleObject() {
-    }
-
-    initFilter() {
+    initRulesSave() {}
+    initParamsSearch() {}
+    initRuleObject() {}
+    initParamsFilter() {
         this.paramsFilter.title="Filtrar operaciones pendientes"
     }
-
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
     }
+    initRulesAudit() {}
+    initParamsSave() {}
 
     goTaquilla(event, companyId:string) {
         event.preventDefault();

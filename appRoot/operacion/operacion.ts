@@ -10,7 +10,7 @@ import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
 import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen} from "@angular/common";
-import {ModelBase} from "../common/modelBase";
+import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 declare var SystemJS:any;
 
@@ -22,7 +22,7 @@ declare var SystemJS:any;
     directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen],
     pipes: [TranslatePipe]
 })
-export class Operacion extends ModelBase implements OnInit {
+export class Operacion extends ControllerBase implements OnInit {
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
@@ -49,7 +49,7 @@ export class Operacion extends ModelBase implements OnInit {
         }
     }
 
-    initOptions() {
+    initViewOptions() {
         this.viewOptions["title"] = 'Operaciones';
         this.viewOptions["buttons"].push({
             'visible': this.permissions['add'],
@@ -83,7 +83,6 @@ export class Operacion extends ModelBase implements OnInit {
 
 
     }
-
     initRules() {
         let modelRules = {
             'vehicle': {
@@ -241,27 +240,26 @@ export class Operacion extends ModelBase implements OnInit {
                 },
             },
         }
-        Object.assign(this.rulesSave, modelRules);
         Object.assign(this.rules, modelRules, this.rules);
-        delete this.rulesSave.dateCreated
     }
-
+    initRulesSave() {
+        this.rulesSave=Object.assign({},this.rules);
+        delete this.rulesSave.dateCreated;
+        delete this.rulesSave.enabled;
+    }
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
         this.permissions['automatic'] = this.myglobal.existsPermission(this.prefix + '_AUTOMATIC');
     }
-
-    initSearch() {
-    }
-
+    initParamsSearch() {}
+    initRulesAudit() {}
+    initParamsSave() {}
     initRuleObject() {
         this.ruleObject.key = "operation";
         this.ruleObject.title = "Operaciones";
         this.ruleObject.placeholder = "Ingrese el codigo de la operacion";
-
     }
-
-    initFilter() {
+    initParamsFilter() {
         this.paramsFilter.title = "Filtrar operaciones";
     }
 
