@@ -20,7 +20,6 @@ declare var SystemJS:any;
     directives: [Filter,Tables,Save],
     pipes: [TranslatePipe]
 })
-@Injectable()
 export class Help extends ControllerBase implements OnInit {
 
     public dataSelect:any = {};
