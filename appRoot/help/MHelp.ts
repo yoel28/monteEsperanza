@@ -11,6 +11,9 @@ export class MHelp extends ModelBase{
         this.rules['code']={
             'type': 'text',
             'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
             'key': 'code',
             'icon': 'fa fa-key',
             'title': 'Codigo',
@@ -22,6 +25,9 @@ export class MHelp extends ModelBase{
         this.rules['title']={
             'type': 'text',
             'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
             'key': 'title',
             'icon': 'fa fa-key',
             'title': 'Título',
@@ -33,6 +39,9 @@ export class MHelp extends ModelBase{
         this.rules['color']={
             'type': 'select',
             'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
             'source': [
                 {'value': 'bg-transparent', 'text':'Transparente'},
                 {'value': 'bg-red', 'text':'Rojo'},
@@ -61,6 +70,9 @@ export class MHelp extends ModelBase{
         this.rules['icon']={
             'type': 'select',
             'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
             'source': [
                 {'value': 'fa fa-question', 'text': 'question'},
                 {'value': 'fa fa-truck', 'text':'truck'},
