@@ -50,6 +50,7 @@ pre_install_job_1:
     - vertederodev
   only :
     - dev
+    - beta
     
 pre_install_prod_job_1:
   stage: pre_install
@@ -85,6 +86,7 @@ build_job_2:
     - vertederodev
   only :
     - dev
+    - beta
     
 build_prod_job_2:
   stage: build
@@ -119,6 +121,7 @@ deploy_job_3:
     - vertederodev
   only :
     - dev
+    - beta
 
 deploy_prod_job_3:
   stage: deploy
@@ -159,6 +162,7 @@ reset_job_4:
     - vertederodev
   only :
     - dev
+    - beta
 
 reset_prod_job_4:
   stage: reset
@@ -194,6 +198,7 @@ clean_job_:
     - vertederodev
   only :
     - dev
+    - beta
 
 clean_prod_job_:
   stage: clean
