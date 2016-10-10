@@ -20,11 +20,13 @@ export class CustomRouterOutlet extends RouterOutlet {
 
     deactivate(instruction: ComponentInstruction) {
         console.log('deactivate');
-        return super.deactivate(instruction);
+        //return super.deactivate(instruction);
+        return null;
     }
 
     reuse(instruction: ComponentInstruction) {
         console.log('reuse');
-        return null;
+        //return null;
+        return super.activate(instruction);
     }
 }
