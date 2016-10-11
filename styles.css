@@ -75,3 +75,9 @@ tbody{
   font-size: 16pt;
   margin: 10pt;
 }
+
+div, table, section , div.modal-content{
+  -webkit-border-radius: 5px !important;
+  -moz-border-radius: 5px !important;
+  border-radius: 5px !important;
+}
