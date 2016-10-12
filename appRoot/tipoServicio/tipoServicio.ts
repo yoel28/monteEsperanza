@@ -146,7 +146,7 @@ export class TipoServicio extends RestController implements OnInit{
             "title": "Tipo de servicio",
             'object':true,
             "placeholder": "Codigo del tipo de servicio",
-            'permissions':this.permissions['list'],
+            'permissions':this.permissions,
             'paramsSearch': {
                 'label':{'title':"tipo: ",'detail':"Codigo: "},
                 'endpoint':"/search/type/services/",
