@@ -1,75 +1,98 @@
 import {Component, OnInit} from '@angular/core';
 import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {ReglaSave} from "./methods";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
-import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
+import {ControllerBase} from "../common/ControllerBase";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {MRegla} from "./MRegla";
+import {Save} from "../utils/save/save";
+import {Tables} from "../utils/tables/tables";
 declare var SystemJS:any;
 
 @Component({
     selector: 'regla',
     templateUrl: SystemJS.map.app+'/regla/index.html',
     styleUrls: [SystemJS.map.app+'/regla/style.css'],
-    directives : [ReglaSave,Xeditable,Filter]
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save],
+    pipes: [TranslatePipe]
 })
-export class Regla extends RestController implements OnInit{
+export class Regla extends ControllerBase implements OnInit{
     public dataSelect:any={};
-    public rules={
-        'rule':{'type':'text','display':null,'title':'Regla','placeholder':'Regla','search':true},
-        'name':{'type':'text','display':null,'title':'Nombre','placeholder':'Nombre','search':true},
-        'detail':{
-            'type':'textarea',
-            'key':'detail',
-            'icon':'fa fa-list',
-            'required':true,
-            'display':null,
-            'title':'Detalle',
-            'mode':'inline',
-            'placeholder': 'Detalle',
-            'showbuttons':true,
-            'search': true,
-            'msg':{
-                'error':'El detalle contiene errores',
-            }
-        },
-    };
+    public paramsTable:any={};
+    public model:any;
 
-    constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/rules/');
+    constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public translate:TranslateService) {
+        super('RULE','/rules/',router,http,toastr,myglobal,translate);
+        this.model= new MRegla(myglobal);
     }
     ngOnInit(){
+        this.initModel();
+        this.loadParamsTable();
+        this.loadPage();
+    }
+    initPermissions() {}
+    initRules() {
+        this.rules = this.model.rules;
+    }
+    initRulesAudit() {}
+    initViewOptions() {
+        this.max=10;
 
-    }
-    public modalIn:boolean=true;
-    loadPage(){
-        this.modalIn=false;
-        if (this.myglobal.existsPermission('53')) {
-            this.loadData();
-        }
-    }
-    onDashboard(){
-        let link = ['Dashboard', {}];
-        this.router.navigate(link);
-    }
-    assignRule(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
-    }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar Reglas",
-        idModal: "modalFilter",
-        endpointForm: "",
-    };
+        this.viewOptions["title"] = 'Reglas';
 
-    loadWhere(where) {
-        this.where = where;
-        this.loadData();
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.paramsSave.idModal
+        });
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.paramsFilter.idModal
+        });
+
+        this.viewOptions.actions.delete = {
+            'title': 'Eliminar',
+            'visible': this.permissions.delete,
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'message': 'Estás seguro que deseas eliminar la regla ',
+            'keyAction': 'code'
+        };
     }
+    initRulesSave() {
+        this.rulesSave=Object.assign({},this.rules);
+        delete this.rulesSave.enabled;
+    }
+    initParamsSave() {
+        this.paramsSave.title="Agregar regla"
+    }
+    initParamsSearch() {}
+    initParamsFilter() {
+        this.paramsFilter.title="Filtrar reglas";
+    }
+    initRuleObject() {}
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.permissions.delete,
+            'message': '¿ Esta seguro de eliminar la regla: ',
+            'keyAction':'name'
+        };
+    }
+
+    
 
 }
