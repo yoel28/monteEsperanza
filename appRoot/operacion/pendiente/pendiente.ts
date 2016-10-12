@@ -26,7 +26,7 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
     public baseWeight=1;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public operacion:Operacion) {
-        super('PEND', '/pendings/', http, toastr, myglobal, translate);
+        super('PEND', '/pendings/',router, http, toastr, myglobal, translate);
     }
     ngOnInit(){
         this.operacion.initModel();
