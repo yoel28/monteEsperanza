@@ -11,8 +11,12 @@
         <tr *ngFor="let data of dataList.list">
             <td *ngFor="let key of keyVisible()">
 
-             <a *ngIf="!rules[key].object &&  rules[key].type !='boolean'" x-editable  [disabled]="!rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
-             <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
+                <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' && rules[key].type !='color'" x-editable  [disabled]="!rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+
+                <input *ngIf="rules[key].type == 'color' && rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
+                <label *ngIf="rules[key].type == 'color' && !rules[key].update" class="form-control">{{data[key]}}</label>
+
+                <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
                  {{data[key]}}
                  <label>
                      <button *ngIf="rulesSearch[key]" type="button" class="btn btn-box-tool"
