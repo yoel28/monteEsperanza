@@ -4,7 +4,7 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {Xeditable} from "../../common/xeditable";
+import {Xeditable, ColorPicker} from "../../common/xeditable";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -13,7 +13,7 @@ declare var moment:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','rulesSearch','dataList','externalSave'],
-    directives:[Xeditable]
+    directives:[Xeditable,ColorPicker]
 })
 
 
