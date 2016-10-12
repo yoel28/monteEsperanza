@@ -48,6 +48,7 @@ import {Servicio} from "./servicio/servicio";
 import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 import {CustomRouterOutlet} from "./common/CustomRouterOutlet";
 import {Help} from "./help/help";
+import {Events} from "./event/event";
 
 
 declare var SockJS:any;
@@ -112,6 +113,7 @@ declare var SystemJS:any;
   { path: '/antenas',   name: 'Antenna', component: Antenna },
   { path: '/rutas',   name: 'Ruta', component: Ruta },
   { path: '/ayuda',   name: 'Help', component: Help },
+  { path: '/eventos',   name: 'Event', component: Events },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -121,7 +123,7 @@ export class AppComponent extends RestController implements OnInit{
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
-      let url="http://dev.aguaseo.com:8080";
+      let url="https://dev.aguaseo.com:8080";
 
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);

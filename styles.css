@@ -81,3 +81,6 @@ div ,table ,section ,div.modal-dialog > div.modal-content{
   -moz-border-radius: 5px !important;
   border-radius: 5px !important;
 }
+.colorpicker, .colorpicker * {
+  z-index: 9999;
+}
