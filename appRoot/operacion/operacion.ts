@@ -28,7 +28,7 @@ export class Operacion extends ControllerBase implements OnInit {
     public AUTOMATIC_RECHARGE_PREF="";
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super('OP', '/operations/', http, toastr, myglobal, translate);
+        super('OP', '/operations/',router, http, toastr, myglobal, translate);
     }
 
     ngOnInit() {
@@ -240,7 +240,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 },
             },
         }
-        Object.assign(this.rules, modelRules, this.rules);
+        this.rules=Object.assign({}, modelRules, this.rules);
     }
     initRulesSave() {
         this.rulesSave=Object.assign({},this.rules);
