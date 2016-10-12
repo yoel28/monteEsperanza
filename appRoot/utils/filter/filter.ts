@@ -205,10 +205,12 @@ export class Filter extends RestController implements OnInit{
             {
                 let value="";
                 let op="";
+                let field="";
 
                 value= that.form.value[key];
-                op=that.form.value[key+'Cond']
-                
+                op=that.form.value[key+'Cond'];
+                field=that.rules[key].subType || key;
+
                 if(op.substr(0,1)=="%")
                 {
                     op=op.substr(1);
@@ -229,7 +231,7 @@ export class Filter extends RestController implements OnInit{
                 if(that.rules[key].object)
                 {
                     value = that.searchId[key].id || null;
-                    key = that.rules[key].paramsSearch.field;
+                    field = that.rules[key].paramsSearch.field;
                 }
 
                 if(op=='isNull')
@@ -242,7 +244,7 @@ export class Filter extends RestController implements OnInit{
                     dataWhere+=value;
                 }
                 else
-                    dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
+                    dataWhere+="['op':'"+op+"','field':'"+field+"','value':"+value+"],";
 
 
             }
