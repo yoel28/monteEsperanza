@@ -27,13 +27,13 @@ export class Help extends ControllerBase implements OnInit {
     public model;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super('INFO', '/infos/', http, toastr, myglobal, translate);
+        super('INFO', '/infos/',router, http, toastr, myglobal, translate);
         this.model= new MHelp(myglobal);
     }
     ngOnInit(){
         this.initModel();
         this.loadParamsTable();
-        this.loadData();
+        this.loadPage();
     }
     initViewOptions() {
         this.max=10;
@@ -75,7 +75,9 @@ export class Help extends ControllerBase implements OnInit {
     initRuleObject() {}
     initPermissions() {}
     initRulesAudit() {}
-    initParamsSave() {}
+    initParamsSave() {
+        this.paramsSave.title="Agregar información";
+    }
     initParamsFilter() {
         this.paramsFilter.title="Filtrar ayudas";
     }
