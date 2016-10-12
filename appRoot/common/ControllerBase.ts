@@ -1,8 +1,10 @@
 import {Http} from "@angular/http";
+import { Router }           from '@angular/router-deprecated';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {RestController} from "./restController";
+
 declare var humanizeDuration:any;
 declare var moment:any;
 export abstract class ControllerBase extends RestController {
@@ -50,7 +52,7 @@ export abstract class ControllerBase extends RestController {
             }
         }
     })
-    constructor(prefix, endpoint, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+    constructor(prefix, endpoint,public router: Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super(http, toastr);
         this.setEndpoint(endpoint);
         //Carga Configuracion por defecto
@@ -91,6 +93,9 @@ export abstract class ControllerBase extends RestController {
         this.permissions['delete'] = this.myglobal.existsPermission(this.prefix + '_DELETE');
         this.permissions['filter'] = this.myglobal.existsPermission(this.prefix + '_FILTER');
         this.permissions['lock'] = this.myglobal.existsPermission(this.prefix + '_LOCK');
+        this.permissions['warning'] = this.myglobal.existsPermission(this.prefix + '_WARNING');
+        this.permissions['search'] = this.myglobal.existsPermission(this.prefix + '_SEARCH');
+
         this.permissions['visible'] = true;//this.myglobal.existsPermission(this.prefix + '_VISIBLE');
         this.permissions['audit'] = this.myglobal.existsPermission(this.prefix + '_AUDICT');
     }
@@ -310,5 +315,17 @@ export abstract class ControllerBase extends RestController {
         if (this.permissions.list && this.permissions.filter) {
             this.loadData();
         }
+    }
+
+    public modalIn:boolean=true;
+    public loadPage(accept=false){
+        if (!this.permissions.warning || accept) {
+            this.modalIn=false;
+            this.loadData();
+        }
+    }
+    public onDashboard(){
+        let link = ['Dashboard', {}];
+        this.router.navigate(link);
     }
 }
