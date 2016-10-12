@@ -245,7 +245,7 @@
                     <li class="treeview" [class.active]="activeMenuId=='config'"
                         *ngIf="myglobal.existsPermission('147') || myglobal.existsPermission('22') || myglobal.existsPermission('23') || myglobal.existsPermission('19') ||
                         myglobal.existsPermission('149') || myglobal.existsPermission('20') || myglobal.existsPermission('24') || myglobal.existsPermission('141') || myglobal.existsPermission('206')
-                        "
+                        || myglobal.existsPermission('MENU_INFO') || myglobal.existsPermission('MENU_EVENT')"
                     >
                         <a (click)="activeMenu($event,'config')">
                             <i class="fa fa-gears"></i>
@@ -273,6 +273,8 @@
                                     class="fa fa-archive"></i> <span>Tipo de servicio</span></a></li>
                             <li *ngIf="myglobal.existsPermission('MEN_INFO')"><a href="#" [routerLink]="['Help']"><i
                                     class="fa fa-archive"></i> <span>Informacion</span></a></li>
+                            <li *ngIf="myglobal.existsPermission('MEN_EVENT')"><a href="#" [routerLink]="['Event']"><i
+                                    class="fa fa-archive"></i> <span>Eventos</span></a></li>
 
                         </ul>
                     </li>
