@@ -253,3 +253,38 @@ export class DrapResize {
         //jQuery(el.nativeElement).draggable().resizable();
     }
 }
+
+@Directive({
+    selector: "[color-picker]",
+    outputs:['color']
+
+})
+export class ColorPicker {
+    public color:any;
+    public hide:any;
+    public hex="0000ff";
+
+    constructor(el:ElementRef) {
+        let that = this;
+        this.color = new EventEmitter();
+        this.hide = new EventEmitter();
+
+        jQuery(el.nativeElement).ColorPicker({
+            color: that.hex,
+            onShow: function (colpkr) {
+                jQuery(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                that.color.emit(that.hex);
+                jQuery(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                that.hex = hex;
+                jQuery(el.nativeElement).css('backgroundColor', '#' + that.hex);
+                jQuery(el.nativeElement).val('#'+that.hex);
+            }
+        })
+    }
+}
