@@ -4,11 +4,13 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
+import {ColorPicker} from "../../common/xeditable";
 declare var SystemJS:any;
 @Component({
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
+    directives:[ColorPicker],
     inputs:['params','rules'],
     outputs:['save'],
 })
@@ -210,6 +212,9 @@ export class Save extends RestController implements OnInit{
             that.data[data.key].updateValue(val);
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
+    }
+    setColor(data,key){
+        this.data[key].updateValue(data);
     }
 }
 
