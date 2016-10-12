@@ -73,7 +73,7 @@ export class Filter extends RestController implements OnInit{
             {'id':'ilike%','text': 'Comienza con(i)'},
             {'id':'%ilike','text': 'Termina en(i)'}
         ],
-        'select': [//TODO: hacer un select para este parametro
+        'select': [
             {'id':'eq','text':'Igual que'},
             {'id':'ne','text':'Diferente que'},
             {'id':'isNull','text':'Nulo'},
@@ -270,14 +270,16 @@ export class Filter extends RestController implements OnInit{
     setCondicion(cond,id){
         (<Control>this.form.controls[id+'Cond']).updateValue(cond);
     }
-    searchLength()
-    {
+    searchLength() {
         if(this.searchId)
             return Object.keys(this.searchId).length
         return 0;
     }
     searchIdKeys(){
         return Object.keys(this.searchId);
+    }
+    setValueSelect(data,key){
+        this.data[key].updateValue(data);
     }
 }
 

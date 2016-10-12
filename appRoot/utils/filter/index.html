@@ -17,7 +17,8 @@
                                             <div class="col-lg-8">
                                                 <div class="row">
                                                     <div class="col-lg-10">
-                                                        <div *ngIf="rules[key].type!='date'" class="row" [class.object-invalid]="
+
+                                                        <div *ngIf="rules[key].type!='date' && rules[key].type!='select'" class="row" [class.object-invalid]="
                                                             rules[key].object && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
@@ -32,12 +33,20 @@
                                                                 El campo contiene errores
                                                             </div>
                                                         </div>
+
                                                         <div *ngIf="rules[key].type=='date'" class="row">
                                                             <div daterangepicker [params]="paramsDate" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event,key)">
                                                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
                                                                 <span *ngIf="date[key]">{{(date[key].start || 'Inicio') +' - '+ (date[key].end || 'Fin') }}</span>
                                                                 <span *ngIf="!date[key]">{{rules[key].title}}</span> <b class="caret"></b>
                                                             </div>
+                                                        </div>
+
+                                                        <div *ngIf="rules[key].type=='select'" class="row">
+                                                            <select [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown" title="Choose one of the following...">
+                                                                <option></option>
+                                                                <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" >{{n.text}}</option>
+                                                            </select>
                                                         </div>
 
                                                     </div>
