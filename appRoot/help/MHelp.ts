@@ -62,6 +62,7 @@ export class MHelp extends ModelBase{
                 {'value': 'RIGHT', 'text': 'Derecha'},
             ],
             'key': 'position',
+            'subKey':'name',
             'title': 'Posición',
             'placeholder': 'Selecccione una posición',
             'msg':{
