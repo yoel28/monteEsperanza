@@ -126,7 +126,7 @@ export class AppComponent extends RestController implements OnInit{
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
-      let url="http://vertedero.aguaseo.com:8080";
+      let url="https://dev.aguaseo.com:8080";
 
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
@@ -486,7 +486,7 @@ export class AppComponent extends RestController implements OnInit{
                     || this.myglobal.existsPermission("MEN_RULE")  || this.myglobal.existsPermission("MEN_GROUPS")
                     || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                     || this.myglobal.existsPermission("MEN_TIP_RECARGA")  || this.myglobal.existsPermission("MEN_TIP_BAS")
-                    || this.myglobal.existsPermission("MEN_TIP_SERV") ,
+                    || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT") ,
                 'icon':'fa fa-gears',
                 'title':'Configuración',
                 'key':'Configuración',
@@ -550,6 +550,12 @@ export class AppComponent extends RestController implements OnInit{
                         'icon':'fa fa-archive',
                         'title':'Informacion',
                         'routerLink':'Help'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_EVENT"),
+                        'icon':'fa fa-archive',
+                        'title':'Eventos',
+                        'routerLink':'Event'
                     },
                 ]
 
