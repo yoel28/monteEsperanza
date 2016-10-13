@@ -3,35 +3,14 @@ before_script:
   - echo $CI_BUILD_REF_NAME
 after_script:
     - echo 'after'
+
 stages:
-    - dump
-    - update
     - pre_install
     - build
     - deploy
     - reset
     - clean
 
-dump_job:
-  stage: dump
-  script:
-    - sh /home/zippyttech/Documentos/Vertedero/dump.sh
-  tags:
-    - local
-  only :
-    - dev
-
-update_job:
-  stage: update
-  script:
-    - wget http://server.zippyttech.com:9580/dumptablas.sql
-    - pwd
-    - sh /home/ubuntu/script/updatedb.sh $(pwd)
-    - rm -f dumptablas.sql
-  tags:
-    - vertederodev
-  only :
-    - dev
 
 pre_install_job_1:
   stage: pre_install

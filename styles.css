@@ -84,3 +84,6 @@ div ,table ,section ,div.modal-dialog > div.modal-content{
 .colorpicker, .colorpicker * {
   z-index: 9999;
 }
+body.no-menu .content-wrapper, body.no-menu .main-footer {
+  margin-left: 0px !important;
+}
