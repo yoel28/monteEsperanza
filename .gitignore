@@ -8,5 +8,4 @@ vendors/
 appRoot/*.js
 appRoot/*.js.map
 app/*.js.map
-.gitlab-ci.yml
 .com.google.Chrome.*
