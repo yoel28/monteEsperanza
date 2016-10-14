@@ -55,7 +55,7 @@ build_job_2:
   script:
     - cd /tmp/build
     - export epoch=$(date +%s)
-    - sudo sed -i -e 's;\=\"\(http\)s\?://[a-zA-Z0-9.]\+\([:][0-9]\+\)\?\"\;;\=\"http://dev.aguaseo.com:8080\"\;;g' appRoot/app.component.ts
+    - sudo sed -i -e 's;\=\"\(http\)s\?://[a-zA-Z0-9.]\+\([:][0-9]\+\)\?\"\;;\=\"https://dev.aguaseo.com:8080\"\;;g' appRoot/app.component.ts
     - sudo sed -i -e "s;appRoot;${epoch};g" ./systemjs.config.js
     - sudo mv appRoot ${epoch}
     - sudo npm run tsc -w
