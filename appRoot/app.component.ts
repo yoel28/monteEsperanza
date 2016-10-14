@@ -188,6 +188,8 @@ export class AppComponent extends RestController implements OnInit{
           this.myglobal.init=false;
           localStorage.removeItem('bearer');
           contentHeaders.delete('Authorization');
+          this.menuItems=[];
+          this.activeMenuId="";
 
           let link = ['AccountLogin', {}];
           this.router.navigate(link);
