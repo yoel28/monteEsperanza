@@ -36,14 +36,12 @@ export class MEvent extends ModelBase{
         }
         this.rules['actionType']={
             'type': 'select',
-            'subType':'com.zippyttech.business.Event.ActionType',
             'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'source': [],
             'key': 'actionType',
-            'subKey':'name',
             'title': 'Tipo de acción',
             'placeholder': 'Selecccione una opcion',
             'msg':{
@@ -58,7 +56,6 @@ export class MEvent extends ModelBase{
                 'visible':this.permissions.visible,
                 'source': [],
                 'key': 'way',
-                'subKey':'name',
                 'title': 'Canal',
                 'placeholder': 'Selecccione una opcion',
                 'msg':{
@@ -83,6 +80,7 @@ export class MEvent extends ModelBase{
         this.rules['message']={
             'type': 'textarea',
             'required':true,
+            'showbuttons':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
