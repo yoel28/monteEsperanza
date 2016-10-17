@@ -5,6 +5,8 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
+import {isNumeric} from "rxjs/util/isNumeric";
+
 declare var SystemJS:any;
 @Component({
     selector: 'filter',
@@ -175,13 +177,7 @@ export class Filter extends RestController implements OnInit{
     }
     //Cargar data
     assignDate(data,key){
-        let val="";
-        this.date[key]={};
-        if(data.start){
-            val="['op':'ge','field':'"+key+"','value':'"+data.start+"','type':'date'],['op':'le','field':'"+key+"','value':'"+data.end+"','type':'date']";
-        }
-        this.data[key].updateValue(val);
-        this.date[key]=data;
+        this.data[key].updateValue(data);
     }
     
     // public search=
@@ -198,62 +194,103 @@ export class Filter extends RestController implements OnInit{
     
     submitForm(event) {
         event.preventDefault();
-        let dataWhere="";
-        let that=this
+        let dataWhere=[];
+        let that=this;
         Object.keys(this.rules).forEach( key=>{
-            if( (this.form.value[key] && this.form.value[key]!="") || that.form.value[key+'Cond']=='isNull')
+            if ((this.form.value[key] && this.form.value[key] != "") || that.form.value[key + 'Cond'] == 'isNull')
             {
-                let value="";
-                let op="";
-                let field="";
+                let whereTemp:any = {};//Fila de where para un solo elemento
+                let whereTemp2:any;//Fila para codificiones multiples
 
-                value= that.form.value[key];
-                op=that.form.value[key+'Cond'];
-                field=that.rules[key].subType || key;
+                whereTemp.op = that.form.value[key + 'Cond'];//condicion
+                whereTemp.field = that.rules[key].key || key;//columna
 
-                if(op.substr(0,1)=="%")
+                if (that.rules[key].subType)//si existe un subtype lo agregamos
                 {
-                    op=op.substr(1);
-                    value = "%"+value;
+                    whereTemp.type = that.rules[key].subType;
                 }
-                if(op.substr(-1)=="%")
+
+                if (whereTemp.op != 'isNull')// si es diferente de nulo, carge el value
                 {
-                    op=op.slice(0,-1);
-                    value = value+"%";
+                    whereTemp.value = that.form.value[key];//valor
+
+                    if (whereTemp.op.substr(0, 1) == "%")//inicia con
+                    {
+                        whereTemp.op = whereTemp.op.substr(1);
+                        whereTemp.value = "%" + whereTemp.value;
+                    }
+
+                    if (whereTemp.op.substr(-1) == "%")//termina en
+                    {
+                        whereTemp.op = whereTemp.op.slice(0, -1);
+                        whereTemp.value = whereTemp.value + "%";
+                    }
+
+                    if (that.rules[key].type == 'number' && isNumeric(whereTemp.value))// tipo numerico...
+                    {
+                        whereTemp.value = parseFloat(whereTemp.value);
+                        if (that.rules[key].double)
+                        {
+                            whereTemp.type = 'double';
+                        }
+                    }
+
+                    if (that.rules[key].type == 'date')//si es tipo date..
+                    {
+                        whereTemp.type='date';
+
+                        whereTemp2={};
+                        if (this.data[key + 'Cond'].value == 'eq') // Si esta en rango..
+                        {
+                            whereTemp.value = that.form.value[key].start;
+                            whereTemp.op = 'ge';
+
+                            whereTemp2.value = that.form.value[key].end;
+                            whereTemp2.op='le';
+
+                            whereTemp2.field = whereTemp.field;
+                            whereTemp2.type = whereTemp.type;
+                        }
+                        if (this.data[key + 'Cond'].value == 'ne')// para fechas fuera del rango
+                        {
+                            whereTemp2.or=[];
+
+                            whereTemp.value = that.form.value[key].start;
+                            whereTemp.op    =  'le';
+
+                            whereTemp2.or.push(Object.assign({},whereTemp));
+
+                            whereTemp.value = that.form.value[key].end;
+                            whereTemp.op    =  'ge';
+
+                            whereTemp2.or.push(Object.assign({},whereTemp));
+
+                            whereTemp = Object.assign({},whereTemp2);
+
+                            whereTemp2=null;
+                        }
+                    }
+
+                    if (that.rules[key].object && that.searchId[key] && that.searchId[key].id) // si es un objecto y existe el id
+                    {
+                        whereTemp.value = that.searchId[key].id;
+                    }
                 }
-                
-                if(that.rules[key].type !='number' && that.rules[key].type !='date')
-                    value = "'"+value+"'";
-                
-                if(that.rules[key].double)
-                    value=value+"d";
-                
-                if(that.rules[key].object)
+
+                if (that.rules[key].object) // si es un objecto y existe el id
                 {
-                    value = that.searchId[key].id || null;
-                    field = that.rules[key].paramsSearch.field;
+                    whereTemp.field = that.rules[key].paramsSearch.field;
                 }
 
-                if(op=='isNull')
-                    dataWhere+="['op':'"+op+"','field':'"+key+"'],";
-                else if(that.rules[key] && that.rules[key].type=='date'){
-                    if(that.data[key+'Cond'].value=='eq')
-                        value=value+","
-                    else if(this.data[key+'Cond'].value=='ne')
-                        value="[or:["+value+"]],"
-                    dataWhere+=value;
+                dataWhere.push(whereTemp);
+                if(whereTemp2)
+                {
+                    dataWhere.push(whereTemp2);
                 }
-                else
-                    dataWhere+="['op':'"+op+"','field':'"+field+"','value':"+value+"],";
-
-
             }
-
         });
-        let where = encodeURI("["+dataWhere.slice(0,-1)+"]");
-        dataWhere="&where="+where;
-
-        this.whereFilter.emit(dataWhere);
+        let where = "&where="+encodeURI(JSON.stringify(dataWhere).split('{').join('[').split('}').join(']'));
+        this.whereFilter.emit(where);
     }
     //reset
     onReset(event) {
