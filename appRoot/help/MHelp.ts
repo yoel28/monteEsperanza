@@ -69,12 +69,33 @@ export class MHelp extends ModelBase{
                 'error':'Este campo es obligatorio',
             }
         }
+        this.rules['icon']={
+            'type': 'select',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'source': [
+                {'value': 'fa fa-question-circle', 'text': 'Interrogante 1'},
+                {'value': 'fa fa-question', 'text': 'Interrogante 2'},
+            ],
+            'key': 'icon',
+            'title': 'Icono',
+            'placeholder': 'Selecccione un icono',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
+        }
+        
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
     initPermissions() {}
     initParamsSearch() {
         this.paramsSearch.title="Buscar ayuda";
         this.paramsSearch.placeholder="Ingrese codigo de la ayuda";
+    }
+    initParamsSave() {
+        this.paramsSave.title="Agregar ayuda"
     }
     initRuleObject() {
         this.ruleObject.title="Ayuda";
@@ -83,8 +104,7 @@ export class MHelp extends ModelBase{
     }
     initRulesSave() {
         let _rules = Object.assign({},this.rules);
-        delete _rules.detail;
-        delete _rules.enable;
+        delete _rules.enabled;
         this.ruleSave = Object.assign({},_rules);
     }
 
