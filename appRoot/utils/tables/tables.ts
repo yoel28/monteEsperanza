@@ -5,6 +5,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xeditable, ColorPicker} from "../../common/xeditable";
+import {Search} from "../search/search";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -13,7 +14,7 @@ declare var moment:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','rulesSearch','dataList','externalSave'],
-    directives:[Xeditable,ColorPicker]
+    directives:[Xeditable,ColorPicker,Search]
 })
 
 
@@ -47,7 +48,8 @@ export class Tables extends RestController implements OnInit {
         this.setEndpoint(this.params.endpoint);
     }
     
-    keyVisible(){
+    keyVisible()
+    {
         let data=[];
         let that=this;
         Object.keys(this.rules).forEach((key)=>{
@@ -58,19 +60,23 @@ export class Tables extends RestController implements OnInit {
     }
 
 
-    public searchTable:any = {}
-    public searchTableData:any = {}
-    
+    public searchTable:any = {};
+    public searchTableData:any;
 
-    asignData(data){
-        this.onPatch(this.dataSave.column,this.dataSave.data,data.id);
+    loadSearchTable(event,key,data)
+    {
+        event.preventDefault();
+        this.searchTable =  Object.assign({},this.rules[key].paramsSearch);
+        this.searchTable.field =  key;
+        this.searchTableData=data;
     }
     
     getDataSearch(data){
         this.onPatch(this.searchTable.field,this.searchTableData,data.id);
     }
 
-    actionPermissionKey() {
+    actionPermissionKey() 
+    {
         let data=[];
         let that=this;
 
@@ -84,7 +90,8 @@ export class Tables extends RestController implements OnInit {
 
     }
 
-    getKeys(data){
+    getKeys(data)
+    {
         return Object.keys(data);
     }
     
