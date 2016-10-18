@@ -13,7 +13,7 @@ declare var moment:any;
     selector: 'tables',
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
-    inputs:['params','rules','rulesSearch','dataList','externalSave'],
+    inputs:['params','rules','rulesSearch','dataList'],
     directives:[Xeditable,ColorPicker,Search]
 })
 
@@ -30,7 +30,6 @@ export class Tables extends RestController implements OnInit {
     form:ControlGroup;
     public dataDelete:any={};
     public dataSelect:any={};
-    public  externalSave:any={};
 
     public dataSave :any={};
 
