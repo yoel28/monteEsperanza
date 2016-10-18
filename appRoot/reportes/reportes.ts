@@ -46,9 +46,9 @@ export class ReporteGrupos extends RestController implements OnInit{
     public searchTipoEmpresa = {
         title: "Grupo",
         idModal: "searchTipoEmpresa",
-        endpointForm: "/search/type/companies/",
-        placeholderForm: "Ingrese el grupo",
-        labelForm: {name: "Nombre: ", detail: "Detalle: "},
+        endpoint: "/search/type/companies/",
+        placeholder: "Ingrese el grupo",
+        label: {name: "Nombre: ", detail: "Detalle: "},
     }
 
     public formatDateFact = {

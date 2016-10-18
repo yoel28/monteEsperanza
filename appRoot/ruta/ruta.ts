@@ -93,7 +93,7 @@ export class Ruta extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar rutas",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         this.where = where;

@@ -15,9 +15,9 @@ export class Search extends RestController{
     // public searchVehiculo={
     //     title:"Vehiculo",
     //     idModal:"searchVehiculo",
-    //     endpointForm:"/search/vehicles/",
-    //     placeholderForm:"Ingrese la placa",
-    //     labelForm:{name:"Nombre: ",detail:": "},
+    //     endpoint:"/search/vehicles/",
+    //     placeholder:"Ingrese la placa",
+    //     label:{name:"Nombre: ",detail:": "},
     //     where:&where[['op':'eq','field':'vehicle','value':'IsNull']]
     // }
 
@@ -26,11 +26,14 @@ export class Search extends RestController{
 
     constructor(public http:Http) {
         super(http);
-        this.setEndpoint(this.params.endpointForm);
         this.result = new EventEmitter();
     }
+    ngOnInit(){
+        this.setEndpoint(this.params.endpoint);
+        this.loadData();
+    }
     getSearch(search){
-        this.endpoint=this.params.endpointForm+search;
+        this.endpoint=this.params.endpoint+search;
         this.where = this.params.where || "";
         this.loadData();
     }

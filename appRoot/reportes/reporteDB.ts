@@ -104,9 +104,9 @@ export class ReporteDescargasBasura extends RestController implements OnInit{
     public searchBasura = {
         title: "Tipo de basura",
         idModal: "searchModalBasura",
-        endpointForm: "/search/type/trash/",
-        placeholderForm: "Ingrese el tipo de basura",
-        labelForm: {name: "Tipo: ", detail: "Referencia: "},
+        endpoint: "/search/type/trash/",
+        placeholder: "Ingrese el tipo de basura",
+        label: {name: "Tipo: ", detail: "Referencia: "},
     }
     assignBasura(data){
         this.msgLabelAll=false;

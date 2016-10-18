@@ -46,9 +46,9 @@ export class GruposRutas extends RestController implements OnInit{
     public searchRutas = {
         title: "Rutas",
         idModal: "searchRoutes",
-        endpointForm: "/search/routes/",
-        placeholderForm: "Ingrese la ruta",
-        labelForm: {name: "Nombre: ", detail: "Detalle: "},
+        endpoint: "/search/routes/",
+        placeholder: "Ingrese la ruta",
+        label: {name: "Nombre: ", detail: "Detalle: "},
     }
 
     public formatDateFact = {

@@ -54,7 +54,7 @@ export class Vehiculo extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar vehiculos",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
 
     loadWhere(where) {
@@ -76,9 +76,9 @@ export class Vehiculo extends RestController implements OnInit{
     public searchTag={
         title:"Tag",
         idModal:"searchTag",
-        endpointForm:"/search/rfids/",
-        placeholderForm:"Seleccione un Tag",
-        labelForm:{name:"Numero: ",detail:"Detalle: "},
+        endpoint:"/search/rfids/",
+        placeholder:"Seleccione un Tag",
+        label:{name:"Numero: ",detail:"Detalle: "},
         where:"&where="+encodeURI("[['op':'isNull','field':'vehicle.id']]")
     }
     //asignar tag a vehiculo
@@ -122,9 +122,9 @@ export class Vehiculo extends RestController implements OnInit{
     public searchTipoVehiculo={
         title:"Tipo Vehiculo",
         idModal:"searchTipoVehiculo",
-        endpointForm:"/search/type/vehicles",
-        placeholderForm:"Seleccione un Tipo de vehiculo",
-        labelForm:{name:"Numero: ",detail:"Detalle: "}
+        endpoint:"/search/type/vehicles",
+        placeholder:"Seleccione un Tipo de vehiculo",
+        label:{name:"Numero: ",detail:"Detalle: "}
     }
     //asignar tag a vehiculo
     assignTipoVehiculo(data){
@@ -141,9 +141,9 @@ export class Vehiculo extends RestController implements OnInit{
     public searchEmpresa={
         title:"Empresa nueva",
         idModal:"searchEmpresaNueva",
-        endpointForm:"/search/companies/",
-        placeholderForm:"Ingrese el RUC de la empresa",
-        labelForm:{name:"Nombre: ",detail:"RUC: "},
+        endpoint:"/search/companies/",
+        placeholder:"Ingrese el RUC de la empresa",
+        label:{name:"Nombre: ",detail:"RUC: "},
     }
     //asignar empresa
     assignEmpresa(data){

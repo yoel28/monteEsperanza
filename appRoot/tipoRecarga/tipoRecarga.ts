@@ -75,7 +75,7 @@ export class TipoRecarga extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar tipos de recargas",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
 
     loadWhere(where) {

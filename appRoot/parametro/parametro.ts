@@ -77,7 +77,7 @@ export class Parametro extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar parámetros",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         this.where = where;

@@ -66,7 +66,7 @@ export class Recarga extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar recargas",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         if(where.length == 13)

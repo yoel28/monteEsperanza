@@ -117,9 +117,9 @@ export class Empresa extends RestController implements OnInit {
     public searchTipoEmpresa = {
         title: "Grupo",
         idModal: "searchTipoEmpresa",
-        endpointForm: "/search/type/companies/",
-        placeholderForm: "Ingrese el grupo",
-        labelForm: {name: "Nombre: ", detail: "Detalle: "},
+        endpoint: "/search/type/companies/",
+        placeholder: "Ingrese el grupo",
+        label: {name: "Nombre: ", detail: "Detalle: "},
     }
 
     assignTipoEmpresa(data) {
@@ -172,7 +172,7 @@ export class Empresa extends RestController implements OnInit {
     public paramsFilter:any = {
         title: "Filtrar empresas",
         idModal: "modalFilterCompanies",
-        endpointForm: "",
+        endpoint: "",
     };
 
     loadWhere(where) {

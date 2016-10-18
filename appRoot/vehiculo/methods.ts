@@ -106,9 +106,9 @@ export class VehiculoSave extends RestController implements OnInit{
     public searchEmpresa={
         title:"Empresa",
         idModal:"searchEmpresa",
-        endpointForm:"/search/companies/",
-        placeholderForm:"Ingrese el RUC de la empresa",
-        labelForm:{name:"Nombre: ",detail:"RUC: "},
+        endpoint:"/search/companies/",
+        placeholder:"Ingrese el RUC de la empresa",
+        label:{name:"Nombre: ",detail:"RUC: "},
     }
     assignCompany(data){
         this.company.updateValue(data.id);

@@ -26,8 +26,8 @@ export class Filter extends RestController implements OnInit{
     public params:any = {
         title: "sin titulo",
         idModal: "nomodal",
-        endpointForm: "sin endpoint",
-        placeholderForm: "sin placeholder"
+        endpoint: "sin endpoint",
+        placeholder: "sin placeholder"
     };
     //objecto del search actual
     public search:any={};
@@ -185,9 +185,9 @@ export class Filter extends RestController implements OnInit{
     //     {
     //         title:"Vehiculo",
     //         idModal:"searchVehicle",
-    //         endpointForm:"/search/vehicles/",
-    //         placeholderForm:"Ingrese la placa del vehiculo",
-    //         labelForm:{'name':"Placa: ",'detail':"Empresa: "},
+    //         endpoint:"/search/vehicles/",
+    //         placeholder:"Ingrese la placa del vehiculo",
+    //         label:{'name':"Placa: ",'detail':"Empresa: "},
     //         where:"&where="+encodeURI("[['op':'isNull','field':'tag.id']]")
     //     }
     

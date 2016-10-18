@@ -52,7 +52,7 @@ export class TagRfid extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar Tag",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         this.where = where;
@@ -64,9 +64,9 @@ export class TagRfid extends RestController implements OnInit{
     public searchVehicle={
         title:"Vehiculo",
         idModal:"searchVehicle",
-        endpointForm:"/search/vehicles/",
-        placeholderForm:"Ingrese la placa del vehiculo",
-        labelForm:{'name':"Empresa: ",'detail':"Placa: "},
+        endpoint:"/search/vehicles/",
+        placeholder:"Ingrese la placa del vehiculo",
+        label:{'name':"Empresa: ",'detail':"Placa: "},
         where:"&where="+encodeURI("[['op':'isNull','field':'tag.id']]")
     }
     //asignar tag a vehiculo

@@ -46,7 +46,7 @@ export class TipoVehiculo extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar tipos de vehiculos",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
 
     loadWhere(where) {

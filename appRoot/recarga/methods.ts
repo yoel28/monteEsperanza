@@ -127,9 +127,9 @@ export class RecargaSave extends RestController implements OnInit{
     public searchCompany={
         title:"Compañia",
         idModal:"searchCompany",
-        endpointForm:"/search/companies/",
-        placeholderForm:"Ingrese el RUC",
-        labelForm:{title:"Nombre: ",detail:"RUC: "},
+        endpoint:"/search/companies/",
+        placeholder:"Ingrese el RUC",
+        label:{title:"Nombre: ",detail:"RUC: "},
     }
     public dataCompany:string;
     assignCompany(data){

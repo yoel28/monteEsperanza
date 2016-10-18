@@ -104,9 +104,9 @@ export class ReporteDescargasRutas extends RestController implements OnInit{
     public searchRuta = {
         title: "Ruta",
         idModal: "searchModal",
-        endpointForm: "/search/routes/",
-        placeholderForm: "Ingrese la ruta",
-        labelForm: {name: "Nombre: ", detail: "Detalle: "},
+        endpoint: "/search/routes/",
+        placeholder: "Ingrese la ruta",
+        label: {name: "Nombre: ", detail: "Detalle: "},
     }
     assignRuta(data){
         this.msgLabelAll=false;

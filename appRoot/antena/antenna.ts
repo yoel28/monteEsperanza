@@ -79,7 +79,7 @@ export class Antenna extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar Antenas",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         this.where = where;

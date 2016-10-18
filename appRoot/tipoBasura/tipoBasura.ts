@@ -147,7 +147,7 @@ export class TipoBasura extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar tipos de basura",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         this.where = where;

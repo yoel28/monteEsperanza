@@ -51,7 +51,7 @@ export class Rol extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar roles",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
 
     loadWhere(where) {

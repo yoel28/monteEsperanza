@@ -56,7 +56,7 @@ export class Permiso extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar permisos",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
     loadWhere(where) {
         this.where = where;

@@ -56,7 +56,7 @@ export class TipoEmpresa extends RestController implements OnInit{
     public paramsFilter:any = {
         title: "Filtrar tipos de empresas",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
 
     loadWhere(where) {
