@@ -43,6 +43,7 @@ export class MHelp extends ModelBase{
             'search':false,
             'visible':this.permissions.visible,
             'key': 'color',
+            'value':'00ff00',
             'title': 'Color',
             'placeholder': '#000',
             'msg':{
