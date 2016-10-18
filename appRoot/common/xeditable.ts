@@ -4,7 +4,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {HttpUtils} from "../common/http-utils";
 import moment from 'moment/moment';
 import {globalService} from "./globalService";
-
+import {Control} from "@angular/common";
 
 declare var jQuery:any;
 @Directive({
@@ -257,37 +257,31 @@ export class DrapResize {
 @Directive({
     selector: "[color-picker]",
     inputs:['hex'],
-    outputs:['color']
-
 })
 export class ColorPicker {
-    public color:any;
     public hide:any;
-    public hex="0000ff";
+    public hex:Control =  new Control('');
 
     constructor(el:ElementRef) {
         let that = this;
-        this.color = new EventEmitter();
-        this.hide = new EventEmitter();
-
+        
         jQuery(el.nativeElement).ColorPicker({
-            color: that.hex,
+            color: that.hex.value,
             onShow: function (colpkr) {
                 jQuery(colpkr).fadeIn(500);
                 return false;
             },
             onHide: function (colpkr) {
-                that.color.emit(that.hex);
                 jQuery(colpkr).fadeOut(500);
                 return false;
             },
             onChange: function (hsb, hex, rgb) {
-                that.hex = hex;
-                jQuery(el.nativeElement).css('backgroundColor', '#' + that.hex);
-                jQuery(el.nativeElement).val('#'+that.hex);
+                that.hex.updateValue(hex);
+                jQuery(el.nativeElement).css('backgroundColor', '#' + that.hex.value);
+                jQuery(el.nativeElement).val('#'+that.hex.value);
             }
         })
-        jQuery(el.nativeElement).css('backgroundColor', '#' + that.hex);
-        jQuery(el.nativeElement).val('#'+that.hex);
+        jQuery(el.nativeElement).css('backgroundColor', '#' + that.hex.value);
+        jQuery(el.nativeElement).val('#'+that.hex.value);
     }
 }
