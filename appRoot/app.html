@@ -122,7 +122,7 @@
                                     <i class="{{subItem.icon}}"></i>
                                     <span>{{subItem.title}}</span>
                                 </a>
-                                <a *ngIf="subItem.modal" (click)="subItem.function($event)" data-toggle="modal" [attr.data-target]="subItem.modalId">
+                                <a *ngIf="subItem.modal" (click)="subItem.function($event,myglobal)" data-toggle="modal" [attr.data-target]="subItem.modalId">
                                     <i class="{{subItem.icon}}"></i> <span>{{subItem.title}}</span>
                                 </a>
                             </li>
@@ -136,7 +136,7 @@
     </div>
     <router-outlet></router-outlet>
     {{loadMenuMain()}}
-    <operacion-save idModal="operacionManual" [rules]="rulesOperacion" [inAnt]="dataOperation"></operacion-save>
+    <operacion-save idModal="operacionManual" [rules]="rulesOperacion" (getInstance)="setInstance($event,'OP')" ></operacion-save>
     <save [rules]="mhelp.ruleSave" [params]="mhelp.paramsSave" (getInstance)="setInstance($event,mhelp.prefix)" ></save>
 </div>
 <div class="main-footer-container" *ngIf="validToken() && myglobal.init">
@@ -166,7 +166,7 @@
             <h3 class="control-sidebar-heading">Camiones en el vertedero</h3>
             <ul class="control-sidebar-menu">
                 <li *ngFor="let data of monitor.list">
-                    <a (click)="outAnt($event,data)" data-toggle="modal" data-target="#operacionManual">
+                    <a (click)="outAnt($event,myglobal,data)" data-toggle="modal" data-target="#operacionManual">
                         <i class="menu-icon fa fa-truck bg-red"></i>
                         <div class="menu-info">
                             <h4 class="control-sidebar-subheading">{{data.vehiclePlate}}</h4>
