@@ -1,10 +1,10 @@
-<span *ngIf="data.id" data-html="true"  class="btn btn-box-tool {{data.color}}"
+<span *ngIf="data.id" data-html="true"  class="btn btn-box-tool"
       [attr.id]="configId"
       [attr.data-placement]="data.position"
       [attr.title]="data.title"
       [attr.data-content]="data.detail"
 
 >
-    <i *ngIf="permissions.update" class="fa fa-lg {{data.icon}}" (click)="edit($event,data)" data-toggle="modal" [attr.data-target]="'#'+ myglobal.objectInstance['INFO'].params.idModal"></i>&nbsp;
-    <i *ngIf="!permissions.update" class="fa fa-lg {{data.icon}}" ></i>&nbsp;
+    <i *ngIf="permissions.update"  class="{{data.size}} {{data.icon}}" [style.color]="'#'+data.color" (click)="edit($event,data)" data-toggle="modal" [attr.data-target]="'#'+ myglobal.objectInstance['INFO'].params.idModal"></i>&nbsp;
+    <i *ngIf="!permissions.update" class="{{data.size}} {{data.icon}}" [style.color]="'#'+data.color"></i>&nbsp;
 </span>
