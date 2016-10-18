@@ -180,8 +180,9 @@ export class AppComponent extends RestController implements OnInit{
 
     }
     setInstance(instance,prefix){
-        this.myglobal.objectInstance[prefix]={}
-        Object.assign(this.myglobal.objectInstance[prefix],instance);
+        if(!this.myglobal.objectInstance[prefix])
+            this.myglobal.objectInstance[prefix]={}
+        this.myglobal.objectInstance[prefix]=instance;
     }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -249,22 +250,18 @@ export class AppComponent extends RestController implements OnInit{
 
 
     }
-    @ViewChild(OperacionSave)
-    operacionSave:OperacionSave;
-
-    dataOperation:any={};
-    inAnt(event){
+    inAnt(event,myglobal){
         event.preventDefault();
-        if(this.operacionSave)
+        if(myglobal.objectInstance['OP'])
         {
-            this.operacionSave.loadInAnt();
+            myglobal.objectInstance['OP'].loadInAnt();
         }
     }
-    outAnt(event,data?){
+    outAnt(event,myglobal,data?){
         event.preventDefault();
-        if(this.operacionSave)
+        if(myglobal.objectInstance['OP'])
         {
-            this.operacionSave.loadOutAnt(null,data);
+            myglobal.objectInstance['OP'].loadOutAnt(null,data);
         }
     }
 
