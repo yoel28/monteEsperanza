@@ -15,13 +15,14 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/operacion/save.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     inputs:['idModal','inAnt','rules'],
-    outputs:['save'],
+    outputs:['save','getInstance'],
     directives:[Search,RecargaSave],
 })
 export class OperacionSave extends RestController implements OnInit{
 
     public idModal:string;
     public save:any;
+    public getInstance:any;
     public inAnt:any={};
     public rules:any={};
 
@@ -37,11 +38,15 @@ export class OperacionSave extends RestController implements OnInit{
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.save = new EventEmitter();
+        this.getInstance = new EventEmitter();
     }
     ngOnInit(){
         this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         this.initForm();
+    }
+    ngAfterViewInit(){
+        this.getInstance.emit(this);
     }
 
     initForm() {
