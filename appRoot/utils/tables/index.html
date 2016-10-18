@@ -17,20 +17,20 @@
                 <label *ngIf="rules[key].type == 'color' && !rules[key].update" class="form-control">{{data[key]}}</label>
 
                 <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
-                 {{data[key]}}
+                 {{data[rules[key].keyDisplay]}}
                  <label>
-                     <button *ngIf="rulesSearch[key]" type="button" class="btn btn-box-tool"
-                             (click)="loadSearchTable(key,data)"
-                             data-toggle="modal" [attr.data-target]="'#'+rulesSearch[key].idModal">
+                     <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
+                             (click)="loadSearchTable($event,key,data)"
+                             data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
                          <i class="fa fa-search text-blue"></i>
                      </button>
 
-                     <button *ngIf="externalSave[rules[key].key]" type="button" class="btn btn-box-tool"
-                             (click)="loadSaveTable(rules[key].key,data)" type="button" class="btn btn-box-tool"
-
-                             data-toggle="modal" [attr.data-target]="'#'+externalSave[rules[key].key].paramsSave.idModal">
-                         <i class="fa fa-plus text-green"></i>
+                     <button *ngIf="rules[key].paramsSearch" type="button" class="btn btn-box-tool"
+                             (click)="loadSearchTable($event,key,data)"
+                             data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
+                         <i class="fa fa-search text-blue"></i>
                      </button>
+
                  </label>
              </a>
              <button  *ngIf="!rules[key].object &&  rules[key].type =='boolean'" class="btn" [class.btn-green]="data[key]" [class.btn-red]="!data[key]" (click)="onPatch(key,data)">{{data[key]?rules[key].states[0]:rules[key].states[1]}}</button>
@@ -138,16 +138,13 @@
         </div>
     </div>
 </div>
+<div *ngIf="searchTable.idModal">
+    <search [params]="searchTable" (result)="getDataSearch($event)"></search>
+</div>
 
 <!--
 <div *ngIf="dataSave && dataSave.params && dataSave.params.idModal">
     <save [rules]="dataSave.rules" [params]="dataSave.params" (save)="asignData($event)"> </save>
-</div>
-
-
-
-<div *ngIf="searchTable.idModal">
-    <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
 
 <div>
