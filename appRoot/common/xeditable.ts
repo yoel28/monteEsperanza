@@ -256,6 +256,7 @@ export class DrapResize {
 
 @Directive({
     selector: "[color-picker]",
+    inputs:['hex'],
     outputs:['color']
 
 })
@@ -286,5 +287,7 @@ export class ColorPicker {
                 jQuery(el.nativeElement).val('#'+that.hex);
             }
         })
+        jQuery(el.nativeElement).css('backgroundColor', '#' + that.hex);
+        jQuery(el.nativeElement).val('#'+that.hex);
     }
 }
