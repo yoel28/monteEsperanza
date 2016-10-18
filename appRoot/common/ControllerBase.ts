@@ -235,7 +235,7 @@ export abstract class ControllerBase extends RestController {
         this.paramsFilter = {
             title: "Filter default",
             idModal: this.prefix + '_' + this.configId + '_filter',
-            endpointForm: "",
+            endpoint: "",
         };
     }
     abstract initRuleObject();
