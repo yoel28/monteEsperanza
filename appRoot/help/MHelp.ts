@@ -56,15 +56,36 @@ export class MHelp extends ModelBase{
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'source': [
-                {'value': 'TOP', 'text': 'Arriba'},
-                {'value': 'BOTTOM', 'text':'Abajo'},
-                {'value': 'LEFT', 'text': 'Izquierda'},
-                {'value': 'RIGHT', 'text': 'Derecha'},
+                {'value': 'top', 'text': 'Arriba'},
+                {'value': 'bottom', 'text':'Abajo'},
+                {'value': 'left', 'text': 'Izquierda'},
+                {'value': 'right', 'text': 'Derecha'},
             ],
             'key': 'position',
-            'subKey':'name',
             'title': 'Posición',
             'placeholder': 'Selecccione una posición',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
+        }
+        this.rules['size']={
+            'type': 'select',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'source': [
+                {'value': 'fa', 'text': 'Normal'},
+                {'value': 'fa-lg', 'text':'Lg'},
+                {'value': 'fa-2x', 'text':'2x'},
+                {'value': 'fa-3x', 'text':'3x'},
+                {'value': 'fa-4x', 'text':'4x'},
+                {'value': 'fa-5x', 'text':'5x'},
+
+            ],
+            'key': 'size',
+            'title': 'Tamaño',
+            'placeholder': 'Selecccione un tamaño',
             'msg':{
                 'error':'Este campo es obligatorio',
             }
