@@ -122,8 +122,9 @@ export class Save extends RestController implements OnInit{
                         return EMAIL_REGEXP.test(c.value) ? null : {email: {valid: false}};
                     });
             }
-            let value = that.rules[key].value || '';
-            that.data[key] = new Control(value,Validators.compose(validators));
+            that.data[key] = new Control('',Validators.compose(validators));
+            if(that.rules[key].value)
+                that.data[key].updateValue(that.rules[key].value);
 
 
             if(that.rules[key].object)
