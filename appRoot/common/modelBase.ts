@@ -8,6 +8,7 @@ export abstract class ModelBase{
     public endpoint = "DEFAULT_ENDPOINT";
     public permissions:any = {};
     public paramsSearch:any = {};
+    public paramsSave:any = {};
     public ruleObject:any={};
     public ruleSave:any={};
 
@@ -25,6 +26,7 @@ export abstract class ModelBase{
         this._initPermissions();
         this._initRules();
         this._initParamsSearch();
+        this._initParamsSave();
         this._initRuleObject();
     }
     public initModel(){
@@ -32,6 +34,7 @@ export abstract class ModelBase{
         this.initRules();
         this.initRulesSave();
         this.initParamsSearch();
+        this.initParamsSave();
         this.initRuleObject();
     }
     
@@ -102,6 +105,17 @@ export abstract class ModelBase{
             },
             'where': '',
             'imageGuest': '/assets/img/truck-guest.png'
+        };
+    }
+
+    abstract initParamsSave();
+    private _initParamsSave() {
+        this.paramsSave = {
+            'title': 'Title Default',
+            'updateField':false,
+            'permission': this.permissions.add,
+            'idModal': this.prefix + '_' + this.configId + '_add',
+            'endpoint': this.endpoint,
         };
     }
 
