@@ -49,6 +49,8 @@ import {OperacionPendiente} from "./operacion/pendiente/pendiente";
 import {CustomRouterOutlet} from "./common/CustomRouterOutlet";
 import {Help} from "./help/help";
 import {Events} from "./event/event";
+import {MHelp} from "./help/MHelp";
+import {Save} from "./utils/save/save";
 
 
 declare var SockJS:any;
@@ -60,7 +62,7 @@ declare var jQuery:any;
   selector: 'my-app',
   templateUrl: SystemJS.map.app+'/app.html',
   styleUrls:[SystemJS.map.app+'/app.css'],
-  directives: [ROUTER_DIRECTIVES,OperacionSave,CustomRouterOutlet],
+  directives: [ROUTER_DIRECTIVES,OperacionSave,CustomRouterOutlet,Save],
   providers: [
     ROUTER_PROVIDERS,Operacion,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
@@ -123,6 +125,7 @@ export class AppComponent extends RestController implements OnInit{
     public rulesOperacion={};
     public menu_modal:string="";
     public menu_list:string="";
+    public mhelp:MHelp;
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http)
@@ -169,7 +172,16 @@ export class AppComponent extends RestController implements OnInit{
   }
     ngOnInit(){
         this.operacion.initModel();
+        this.mhelp =  new MHelp(this.myglobal);
+
         this.rulesOperacion = this.operacion.rulesSave;
+    }
+    ngAfterViewInit(){
+
+    }
+    setInstance(instance,prefix){
+        this.myglobal.objectInstance[prefix]={}
+        Object.assign(this.myglobal.objectInstance[prefix],instance);
     }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];

@@ -137,7 +137,7 @@
     <router-outlet></router-outlet>
     {{loadMenuMain()}}
     <operacion-save idModal="operacionManual" [rules]="rulesOperacion" [inAnt]="dataOperation"></operacion-save>
-
+    <save [rules]="mhelp.ruleSave" [params]="mhelp.paramsSave" (getInstance)="setInstance($event,mhelp.prefix)" ></save>
 </div>
 <div class="main-footer-container" *ngIf="validToken() && myglobal.init">
     <footer class="main-footer">
