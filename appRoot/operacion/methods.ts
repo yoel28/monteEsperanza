@@ -51,55 +51,68 @@ export class OperacionSave extends RestController implements OnInit{
 
     initForm() {
         let that = this;
+        this.keys = Object.keys(this.rules);
         Object.keys(this.rules).forEach((key)=> {
-                that.data[key] = [];
-    
-                if(that.rules[key].required && that.rules[key].object)
-                {
-                    that.data[key] = new Control("",Validators.compose([Validators.required,
-                        (c:Control)=> {
-                            if(c.value && c.value.length > 0){
-                                if(that.searchId[key]){
-                                    if(that.searchId[key].detail == c.value)
-                                        return null;
-                                }
-                                return {myobject: {valid: false}};
-                            }
-                            return null;
-                        }
-                    ]));
-                }
-                else if (that.rules[key].required)
-                    that.data[key] = new Control("",Validators.compose([Validators.required]));
-                else
-                    that.data[key] = new Control("");
 
-                if(that.rules[key].object)
-                {
-                    that.data[key].valueChanges.subscribe((value: string) => {
-                        if(value && value.length > 0){
-                            that.search=that.rules[key];
-                            that.findControl = value;
-                            that.dataList=[];
-                            that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
-                            if( !that.searchId[key]){
-                                that.loadData();
+            that.data[key] = [];
+            let validators=[];
+            if(that.rules[key].required)
+                validators.push(Validators.required);
+            if(that.rules[key].maxLength)
+                validators.push(Validators.maxLength(that.rules[key].maxLength));
+            if(that.rules[key].minLength)
+                validators.push(Validators.minLength(that.rules[key].minLength));
+            if(that.rules[key].object)
+            {
+                validators.push(
+                    (c:Control)=> {
+                        if(c.value && c.value.length > 0){
+                            if(that.searchId[key]){
+                                if(that.searchId[key].detail == c.value)
+                                    return null;
                             }
-                            else if(that.searchId[key].detail != value){
-                                delete that.searchId[key];
-                                that.loadData();
-                            }
-                            else{
-                                this.findControl="";
-                                that.search = [];
-                            }
+                            return {object: {valid: false}};
                         }
+                        return null;
                     });
-                }
+            }
+            if(that.rules[key].type=='email')
+            {
+                validators.push(
+                    (c:Control)=> {
+                        let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                        return EMAIL_REGEXP.test(c.value) ? null : {email: {valid: false}};
+                    });
+            }
+            let value = that.rules[key].value || '';
+            that.data[key] = new Control(value,Validators.compose(validators));
+
+
+            if(that.rules[key].object)
+            {
+                that.data[key].valueChanges.subscribe((value: string) => {
+                    if(value && value.length > 0){
+                        that.search=that.rules[key];
+                        that.findControl = value;
+                        that.dataList=[];
+                        that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
+                        if( !that.searchId[key]){
+                            that.loadData();
+                        }
+                        else if(that.searchId[key].detail != value){
+                            delete that.searchId[key];
+                            that.loadData();
+                        }
+                        else{
+                            this.findControl="";
+                            that.search = [];
+                        }
+                    }
+                });
+            }
 
         });
         this.form = this._formBuilder.group(this.data);
-        this.keys = Object.keys(this.rules);
     }
     public findControl:string="";
 

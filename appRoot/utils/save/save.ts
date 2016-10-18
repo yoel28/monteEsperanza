@@ -91,28 +91,40 @@ export class Save extends RestController implements OnInit{
         let that = this;
         this.keys = Object.keys(this.rules);
         Object.keys(this.rules).forEach((key)=> {
+
             that.data[key] = [];
-            if(that.rules[key].required && that.rules[key].object)
+            let validators=[];
+            if(that.rules[key].required)
+                validators.push(Validators.required);
+            if(that.rules[key].maxLength)
+                validators.push(Validators.maxLength(that.rules[key].maxLength));
+            if(that.rules[key].minLength)
+                validators.push(Validators.minLength(that.rules[key].minLength));
+            if(that.rules[key].object)
             {
-                that.data[key] = new Control("",Validators.compose([Validators.required,
+                validators.push(
                     (c:Control)=> {
                         if(c.value && c.value.length > 0){
                             if(that.searchId[key]){
                                 if(that.searchId[key].detail == c.value)
                                     return null;
                             }
-                            return {myobject: {valid: false}};
+                            return {object: {valid: false}};
                         }
                         return null;
-                    }
-                ]));
+                    });
             }
-            else if (that.rules[key].required && that.rules[key].maxLength)
-                that.data[key] = new Control("",Validators.compose([Validators.required,Validators.maxLength(that.rules[key].maxLength)]));
-            else if (that.rules[key].required )
-                that.data[key] = new Control("",Validators.compose([Validators.required]));
-            else
-                that.data[key] = new Control("");
+            if(that.rules[key].type=='email')
+            {
+                validators.push(
+                    (c:Control)=> {
+                        let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                        return EMAIL_REGEXP.test(c.value) ? null : {email: {valid: false}};
+                    });
+            }
+            let value = that.rules[key].value || '';
+            that.data[key] = new Control(value,Validators.compose(validators));
+
 
             if(that.rules[key].object)
             {
