@@ -144,6 +144,9 @@ export class MEvent extends ModelBase{
         this.paramsSearch.title="Buscar eventos";
         this.paramsSearch.placeholder="Ingrese codigo del evento";
     }
+    initParamsSave() {
+        this.paramsSave.title="Agregar evento"
+    }
     initRuleObject() {
         this.ruleObject.title="Eventos";
         this.ruleObject.placeholder="Ingrese codigo del evento";

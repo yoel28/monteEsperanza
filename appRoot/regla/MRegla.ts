@@ -43,6 +43,9 @@ export class MRegla extends ModelBase{
         this.paramsSearch.title="Buscar regla";
         this.paramsSearch.placeholder="Ingrese codigo de la regla";
     }
+    initParamsSave() {
+        this.paramsSave.title="Agregar regla"
+    }
     initRuleObject() {
         this.ruleObject.title="Regla";
         this.ruleObject.placeholder="Ingrese codigo de la regla";
