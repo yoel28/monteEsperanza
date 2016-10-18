@@ -27,7 +27,7 @@
                                                                placeholder="{{rules[key].placeholder}}"
                                                                type="{{rules[key].type}}" [attr.aria-describedby]="key">
 
-                                                        <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" (color)="setColor($event,key)" readonly>
+                                                        <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" (color)="setColor($event,key)" (hex)="data[key].value" readonly>
 
                                                         <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                   [(ngModel)]="data[key].value"
@@ -123,7 +123,7 @@
                 <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         id="cntrlsubmit" [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
-                    Registrar
+                    {{params.updateField?'Actualizar':'Registrar'}}
                 </button>
             </div>
         </div>
