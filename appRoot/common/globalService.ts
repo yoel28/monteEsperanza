@@ -22,6 +22,7 @@ export class globalService extends RestController{
         'help':{'status':false,'title':'Consultando  ayudas'},
     };
 
+    objectInstance:any={};//lista de instancias creadas
     
     constructor(public http:Http,public toastr: ToastsManager) {
         super(http,toastr);
