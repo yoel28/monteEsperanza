@@ -46,8 +46,8 @@ export abstract class ModelBase{
         this.permissions['update'] = this.myglobal.existsPermission(this.prefix + '_UPDATE');
         this.permissions['delete'] = this.myglobal.existsPermission(this.prefix + '_DELETE');
         this.permissions['filter'] = this.myglobal.existsPermission(this.prefix + '_FILTER');
-        this.permissions['lock'] = this.myglobal.existsPermission(this.prefix + '_SEARCH');
-        this.permissions['search'] = this.myglobal.existsPermission(this.prefix + '_LOCK');
+        this.permissions['search'] = (this.myglobal.existsPermission(this.prefix + '_SEARCH') && this.myglobal.existsPermission(this.prefix + '_LIST'));
+        this.permissions['lock'] = this.myglobal.existsPermission(this.prefix + '_LOCK');
         this.permissions['warning'] = this.myglobal.existsPermission(this.prefix + '_WARNING');
         this.permissions['visible'] = true;//this.myglobal.existsPermission(this.prefix + '_VISIBLE');
         this.permissions['audit'] = this.myglobal.existsPermission(this.prefix + '_AUDICT');
