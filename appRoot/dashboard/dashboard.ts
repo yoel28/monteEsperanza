@@ -9,6 +9,7 @@ import {globalService} from "../common/globalService";
 import {ControlGroup, Control, Validators, FormBuilder} from "@angular/common";
 import {Datepicker} from "../common/xeditable";
 import {CHART_DIRECTIVES} from "angular2-highcharts";
+import {Tooltip} from "../utils/tooltips/tooltips";
 
 declare var moment:any;
 declare var SystemJS:any;
@@ -17,7 +18,7 @@ declare var SystemJS:any;
     selector: 'home',
     templateUrl: SystemJS.map.app+'/dashboard/dashboard.html',
     styleUrls: [SystemJS.map.app+'/dashboard/dashboard.css'],
-    directives: [RecargaTimeLine, RecargaFactura, Datepicker, CHART_DIRECTIVES],
+    directives: [RecargaTimeLine, RecargaFactura, Datepicker, CHART_DIRECTIVES,Tooltip],
 })
 export class Dashboard extends RestController implements OnInit {
     
