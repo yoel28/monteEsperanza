@@ -27,7 +27,7 @@
                                                                placeholder="{{rules[key].placeholder}}"
                                                                type="{{rules[key].type}}" [attr.aria-describedby]="key">
 
-                                                        <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" (color)="setColor($event,key)" (hex)="data[key].value" readonly>
+                                                        <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" [hex]="data[key]" readonly>
 
                                                         <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                   [(ngModel)]="data[key].value"
