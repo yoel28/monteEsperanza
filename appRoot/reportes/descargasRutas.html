@@ -3,9 +3,10 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Reporte por consumo de rutas</h3>
+                <tooltip code="INFO_80"></tooltip>
             </div>
             <div *ngIf="myglobal.existsPermission('93')"  class="box-body">
-                <div class="row padding-bottom">
+                <tooltip code="INFO_86"></tooltip> <div class="row padding-bottom">
                     <div class="form-group input-icon right col-lg-4">
                         Ruta:&nbsp;{{routeName!="all"?routeName:"Buscar una ruta especifica"}} <button  *ngIf="myglobal.existsPermission('151')"
                                                                                                              type="button" class="btn btn-box-tool fa fa-search text-blue"

@@ -6,6 +6,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import moment from 'moment/moment';
 import {globalService} from "../common/globalService";
 import {Datepicker} from "../common/xeditable";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var jQuery:any;
 declare var SystemJS:any;
 
@@ -13,7 +14,7 @@ declare var SystemJS:any;
     selector: 'caja',
     templateUrl: SystemJS.map.app+'/recarga/caja.html',
     styleUrls: [SystemJS.map.app+'/recarga/style.css'],
-    directives:[Datepicker]
+    directives:[Datepicker,Tooltip]
 })
 export class Caja extends RestController implements OnInit{
 
