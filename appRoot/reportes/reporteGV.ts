@@ -10,6 +10,7 @@ import moment from 'moment/moment';
 import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
 import {Search} from "../utils/search/search";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var jQuery:any;
 declare var SystemJS:any;
 
@@ -17,7 +18,7 @@ declare var SystemJS:any;
     selector: 'reporte-gv',
     templateUrl: SystemJS.map.app+'/reportes/grupoVehiculo.html',
     styleUrls: [SystemJS.map.app+'/reportes/style.css'],
-    directives : [Datepicker,Search]
+    directives : [Datepicker,Search,Tooltip]
 })
 export class ReporteGruposVehiculos extends RestController implements OnInit{
     form: ControlGroup;
