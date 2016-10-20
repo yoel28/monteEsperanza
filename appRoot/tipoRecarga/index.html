@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tipo Recarga</h3>
+                    <h3 class="box-title">Tipo Recarga</h3><tooltip code="INFO_105"></tooltip>
                     <div class="pull-right">
                         <button *ngIf="myglobal.existsPermission('125')"
                                 type="button" class="btn btn-primary" data-toggle="modal"
@@ -14,7 +14,7 @@
                                 type="button" class="btn btn-blue "
                                 data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                             <i class="fa fa-filter"></i>&nbsp;Filtrar
-                        </button>
+                        </button><tooltip code="INFO_106"></tooltip>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -76,7 +76,7 @@
                         <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button"
                                 class="btn btn-default">
                             {{val}}
-                        </button>
+                        </button><tooltip code="INFO_107"></tooltip>
                     </div>
                 </div>
                 <!-- ./box-body -->
