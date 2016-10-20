@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tag RFID</h3>
+                    <h3 class="box-title">Tag RFID</h3><tooltip code="INFO_97"></tooltip>
 
                     <div class="pull-right">
                         <button *ngIf="myglobal.existsPermission('79')" type="button" class="btn btn-primary btn-green"
@@ -13,7 +13,7 @@
                         <button *ngIf="myglobal.existsPermission('121')" type="button" class="btn btn-primary btn-blue"
                                 data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                             <i class="fa fa-filter"></i>&nbsp;Filtrar
-                        </button>
+                        </button><tooltip code="INFO_98"></tooltip>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -44,7 +44,7 @@
                                                 (click)="dataSelect = data" class="btn btn-box-tool text-blue"
                                                 *ngIf="myglobal.existsPermission('123') && myglobal.existsPermission('69')"
                                                 data-toggle="modal" data-target="#searchVehicle">
-                                            <i class="fa fa-search"></i>
+                                            <i class="fa fa-search"></i><tooltip code="INFO_99"></tooltip>
                                         </button>
                                     </div>
                                     <button *ngIf="data.vehiclePlate && myglobal.existsPermission('123')"
