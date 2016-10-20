@@ -225,7 +225,7 @@
                                                                     class="btn btn-box-tool dropdown-toggle"
                                                                     aria-haspopup="true" aria-expanded="false">
                                                                 <i class="fa fa-gears fa-lg"></i>
-                                                            </button>
+                                                            </button><tooltip code="INFO_147"></tooltip>
                                                             <ul role="menu" class="dropdown-menu text-left submenu-config">
                                                                 <li *ngIf="myglobal.existsPermission('62')">
                                                                     <a (click)="onPatch('accountLocked',user)">
@@ -264,6 +264,7 @@
                                                                     <div class="col-lg-6">
                                                                         <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                         <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                                        <tooltip code="INFO_148"></tooltip>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <input type="range"
@@ -284,6 +285,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <tooltip code="INFO_149"></tooltip>
                                                         </figure>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-8">
@@ -322,10 +324,12 @@
                                                                    (click)="dataSelect = user"
                                                                    class="btn btn-box-tools text-blue fa fa-search"
                                                                    data-toggle="modal" data-target="#searchEmpresa"></a>
+                                                                <tooltip code="INFO_150"></tooltip>
                                                                 <a *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63') "
                                                                    (click)="dataSelect = user"
                                                                    class="btn btn-box-tools text-green fa fa-plus"
                                                                    data-toggle="modal" data-target="#newEmpresa"></a>
+                                                                <tooltip code="INFO_73"></tooltip>
                                                                 <a *ngIf="user.companyId && myglobal.existsPermission('65') && myglobal.existsPermission('60')"
                                                                    (click)="releaseCompany(user)"
                                                                    class="btn btn-box-tools text-red fa fa-minus"></a>
@@ -346,6 +350,7 @@
                                                                     [class.btn-red]="!user.enabled">
                                                                 {{user.enabled?"Habilitado":"Bloqueado"}}
                                                             </button>
+                                                            <tooltip code="INFO_74"></tooltip>
                                                         </p>
                                                         <p *ngIf="dataRoles && dataRoles.count>0">
                                                             <strong class="col-lg-2">Rol:</strong>
