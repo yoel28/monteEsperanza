@@ -14,6 +14,7 @@ import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
+import {Tooltip} from "../utils/tooltips/tooltips";
 
 declare var jQuery:any;
 declare var SystemJS:any;
@@ -22,7 +23,7 @@ declare var SystemJS:any;
     pipes:[Divide],
     templateUrl: SystemJS.map.app+'/vehiculo/index.html',
     styleUrls: [SystemJS.map.app+'/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter,Tooltip],
 })
 export class Vehiculo extends RestController implements OnInit{
 
