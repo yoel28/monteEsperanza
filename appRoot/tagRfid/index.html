@@ -44,8 +44,8 @@
                                                 (click)="dataSelect = data" class="btn btn-box-tool text-blue"
                                                 *ngIf="myglobal.existsPermission('123') && myglobal.existsPermission('69')"
                                                 data-toggle="modal" data-target="#searchVehicle">
-                                            <i class="fa fa-search"></i><tooltip code="INFO_99"></tooltip>
-                                        </button>
+                                            <i class="fa fa-search"></i>
+                                        </button><tooltip code="INFO_99"></tooltip>
                                     </div>
                                     <button *ngIf="data.vehiclePlate && myglobal.existsPermission('123')"
                                             (click)="releaseTag(data)" class="btn btn-box-tool text-red">
