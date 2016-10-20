@@ -246,6 +246,8 @@ export class Operacion extends ControllerBase implements OnInit {
         this.rulesSave=Object.assign({},this.rules);
         delete this.rulesSave.dateCreated;
         delete this.rulesSave.enabled;
+        delete this.rulesSave.detail;
+        delete this.rulesSave.id;
     }
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
