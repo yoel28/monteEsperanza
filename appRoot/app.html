@@ -149,7 +149,7 @@
         {{myglobal.getParams('PHONE_SUPPORT')}} / {{ replace(myglobal.getParams('EMAIL_SUPPORT')) }}
     </footer>
 </div>
-<div *ngIf="validToken() && !myglobal.init" class="col-lg-12 cargar">
+<div *ngIf="validToken() && !myglobal.init" class="col-lg-12 cargar noprint">
     <h1 *ngFor="let status of myglobal.getKeys(myglobal.status)">
         <i class="fa fa-lg fa-check" *ngIf="myglobal.status[status].status"></i>
         <i class="fa fa-spinner fa-spin" *ngIf="!myglobal.status[status].status"></i>
