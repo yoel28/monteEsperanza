@@ -40,9 +40,9 @@
         <div *ngIf="dataList && dataList.list">
             <div class="col-lg-12 enableOverflow">
                 <div class="col-lg-12 text-center">
-                    <strong>REPORTE POR CONSUMO DE GRUPOS DEL {{dataConsult.date}}</strong>
+                    <strong>{{title}} {{dataConsult.date}}</strong>
                 </div>
-                <table class="table table-striped table-hover">
+                <table class="export table table-striped table-hover">
                     <thead>
                         <tr>
                             <th class="text-center" colspan="4">Balance del periodo ({{dataList.metric}})</th>
@@ -63,7 +63,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <table id="content" class="table table-striped table-hover">
+                <table class="export table table-striped table-hover">
                     <thead>
                     <tr>
                         <th class="text-blue text-title">Grupo/{{dataList.metric}}</th>
@@ -92,7 +92,7 @@
             </div>
             <div class="col-lg-12">
                 <button (click)="exportCSV()" type="button" class="btn btn-default pull-right">
-                    <i class="fa fa-download"></i>&nbsp;Exportar a CSV
+                    <i class="fa fa-download"></i>&nbsp;Exportar a Excel
                 </button>
             </div>
 

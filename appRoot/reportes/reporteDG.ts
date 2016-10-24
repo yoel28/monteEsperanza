@@ -12,6 +12,7 @@ import {Fecha} from "../utils/pipe";
 import {Search} from "../utils/search/search";
 declare var jQuery:any;
 declare var SystemJS:any;
+declare var Table2Excel:any;
 
 @Component({
     selector: 'reporte-dg',
@@ -21,12 +22,14 @@ declare var SystemJS:any;
     directives : [Filter,Datepicker,Search]
 })
 export class ReporteDescargasGrupos extends RestController implements OnInit{
-
+    
+    public title:string;
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
         this.setEndpoint('/report/weight/groups');
     }
     ngOnInit(){
+        this.title="REPORTE POR CONSUMO DE GRUPOS DEL";
         this.getCompanyTypes();
     }
 
@@ -88,7 +91,17 @@ export class ReporteDescargasGrupos extends RestController implements OnInit{
         this.httputils.doGet('/reports/weight/groups/'+this.dataConsult.date+type,successCallback,this.error);
     }
     exportCSV(){
-        jQuery("#content").tableToCSV();
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title+this.dataConsult.date,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
     }
     
     minMaxAvgSum(data){
