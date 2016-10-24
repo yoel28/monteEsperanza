@@ -42,29 +42,12 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
 
     public list='pendings';
     loadDataPendings(event,data){
-        if(event)
+        if(event){
             event.preventDefault();
-        this.list=data;
-        switch (this.list)
-        {
-            case 'pendings' :
-                this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
-                break;
-            case 'pendingsAll' :
-                this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
-                break;
-            case 'asign' :
-                this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':false]]");
-                break;
-            case 'all' :
-                this.where="";
-                break;
-            case 'expired' :
-                this.where="&where="+encodeURI("[['op':'eq','field':'expired','value':true]]");
-                break;
-            default :
-                this.where="";
+            event.stopPropagation()
         }
+        this.list = data.id;
+        this.where="&where="+encodeURI(data.where);
         this.loadData();
     }
 
@@ -76,7 +59,71 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
-            'modal': this.paramsFilter.idModal
+            'modal': this.paramsFilter.idModal,
+            'quickFilters': [
+                {
+                    'id': '1',
+                    'title': 'Sin registrar',
+                    'where': "[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]"
+                },
+                {
+                    'id': '2',
+                    'title': 'Sin registrar (Vencidas)',
+                    'where': "[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':true],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]"
+                },
+
+
+                {
+                    'id': '3',
+                    'title': 'Errores sin procesar ',
+                    'where': "[['op':'eq','field':'enabled','value':true],['or':[['op':'isNull','field':'vehicle'],['op':'isNull','field':'dateIn']]]]"
+                },
+                {
+                    'id': '4',
+                    'title': 'Errores procesados',
+                    'where': "[['op':'eq','field':'enabled','value':false],['or':[['op':'isNull','field':'vehicle'],['op':'isNull','field':'dateIn']]]]"
+                },
+
+
+                {
+                    'id': '5',
+                    'title': 'Vencidos con placa',
+                    'where': "[['op':'eq','field':'expired','value':true],['op':'isNotNull','field':'vehicle']]"
+                },
+                {
+                    'id': '6',
+                    'title': 'Vencidos sin placa',
+                    'where': "[['op':'eq','field':'expired','value':true],['op':'isNull','field':'vehicle']]"
+                },
+
+
+                {
+                    'id': '7',
+                    'title': 'Registrados manual',
+                    'where': "[['op':'isNotNull','field':'operation.id'],['op':'isNull','field':'operationRegistro.id']]"
+                },
+
+                {
+                    'id': '8',
+                    'title': 'Registrados automatico',
+                    'where': "[['op':'isNotNull','field':'operationRegistro.id']]"
+                },
+                {
+                    'id': '9',
+                    'title': 'Registros automaticos  validados',
+                    'where': "[['op':'isNotNull','field':'operation.id'],['op':'isNotNull','field':'operationRegistro.id']]"
+                },
+                {
+                    'id': '10',
+                    'title': 'Registros automaticos sin validar',
+                    'where': "[['op':'isNull','field':'operation.id'],['op':'isNotNull','field':'operationRegistro.id']]"
+                },
+                {
+                    'id': 'all',
+                    'title': 'Ver todos',
+                    'where': ""
+                },
+            ]
         });
 
         this.viewOptions.actions.delete = {
