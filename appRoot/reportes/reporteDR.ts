@@ -97,6 +97,14 @@ export class ReporteDescargasRutas extends RestController implements OnInit{
         });
         table2excel.export(document.querySelectorAll("table.export"));
     }
+    onPrint(){
+        var printContents = document.getElementById("reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+    }
 
     minMaxAvgSum(data){
         let min=9999999999999999999;
