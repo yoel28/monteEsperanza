@@ -11,6 +11,7 @@ import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
 import {Search} from "../utils/search/search";
 declare var SystemJS:any;
+declare var Table2Excel:any;
 
 @Component({
     selector: 'reporte-gruposRutas',
@@ -26,11 +27,14 @@ export class GruposRutas extends RestController implements OnInit{
     dateEnd:Control;
     fechaRegistro:any;
 
+    public title:string;
+
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
         this.setEndpoint('/reports/routes');
     }
     ngOnInit(){
+        this.title="REPORTE POR RUTAS";
         this.initForm();
         this.getRoutes();
     }
@@ -135,6 +139,20 @@ export class GruposRutas extends RestController implements OnInit{
         popupWin.document.head.innerHTML = (document.head.innerHTML);
         popupWin.document.close();
     }
+    exportCSV(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
+    }
+    
     public routes:any={};
     public idRoute:string="-1";
     public routeName:string="-1";
