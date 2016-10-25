@@ -33,7 +33,7 @@ export class ReporteGrupos extends RestController implements OnInit{
         this.setEndpoint('/reports/groups');
     }
     ngOnInit(){
-        this.title="REPORTE POR GRUPO DE CLIENTES";
+        this.title="REPORTE DE DESCARGA POR GRUPOS";
         this.initForm();
         this.getCompanyTypes();
     }
