@@ -51,7 +51,7 @@ import {Help} from "./help/help";
 import {Events} from "./event/event";
 import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
-
+import {OperationsAudit} from "./reportes/operationsAudit"
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -99,6 +99,7 @@ declare var jQuery:any;
   { path: '/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
   { path: '/reporte/rutas',   name: 'ReporteDescargasRutas', component: ReporteDescargasRutas },
   { path: '/reporte/basura',   name: 'ReporteDescargasBasura', component: ReporteDescargasBasura },
+  { path: '/reporte/operacion/auditoria',   name: 'OperationAudit', component: OperationsAudit },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
@@ -420,6 +421,12 @@ export class AppComponent extends RestController implements OnInit{
                 'title':'Reportes',
                 'key':'Reportes',
                 'treeview':[
+                    {
+                        'visible':true,
+                        'icon':'fa fa-list',
+                        'title':'Operacion auditoria',
+                        'routerLink':'OperationAudit'
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_CAJA"),
                         'icon':'fa fa-list',
