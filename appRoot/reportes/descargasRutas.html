@@ -5,7 +5,7 @@
                 <h3 class="box-title">{{title}}</h3>
             </div>
             <div *ngIf="myglobal.existsPermission('93')"  class="box-body">
-                <div class="row padding-bottom">
+                <div class="row padding-bottom noprint">
                     <div class="form-group input-icon right col-lg-4">
                         Ruta:&nbsp;{{routeName!="all"?routeName:"Buscar una ruta especifica"}} <button  *ngIf="myglobal.existsPermission('151')"
                                                                                                              type="button" class="btn btn-box-tool fa fa-search text-blue"
