@@ -139,7 +139,7 @@
     <operacion-save idModal="operacionManual" [rules]="rulesOperacion" (getInstance)="setInstance($event,'OP')" ></operacion-save>
     <save [rules]="mhelp.ruleSave" [params]="mhelp.paramsSave" (getInstance)="setInstance($event,mhelp.prefix)" ></save>
 </div>
-<div class="main-footer-container" *ngIf="validToken() && myglobal.init">
+<div class="main-footer-container noprint" *ngIf="validToken() && myglobal.init">
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             Aguaseo, C.A
@@ -158,7 +158,7 @@
 </div>
 
 
-<aside *ngIf="myglobal.existsPermission('165')" class="control-sidebar control-sidebar-dark"
+<aside *ngIf="myglobal.existsPermission('165')" class="control-sidebar control-sidebar-dark noprint"
        [class.control-sidebar-open]="activeMenuId=='monitor'" [hidden]="activeMenuId!='monitor'">
     {{loadMonitor()}}
     <div class="tab-content">
