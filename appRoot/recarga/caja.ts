@@ -154,6 +154,14 @@ export class Caja extends RestController implements OnInit{
             return moment(date).format(format);
         return "";
     }
+    onPrint(){
+        var printContents = document.getElementById("reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+    }
 
 
 }
