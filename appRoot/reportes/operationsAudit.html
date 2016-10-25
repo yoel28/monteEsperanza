@@ -1,0 +1,68 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">
+                    <strong>{{title}} </strong>
+                </h4>
+            </div>
+            <div class="box-body">
+                <div class="col-lg-12">
+                    <form role="form" [ngFormModel]="form" (submit)="loadAudit($event)">
+                        <div class="form-group input-icon right col-lg-2">
+                            Lapso
+                            <div class="input-icon right">
+                                <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                    <option data-hidden="true" value="-1"></option>
+                                    <option *ngFor="let n of itemsDate"  [attr.value]="n.id" >{{n.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            Rango
+                            <div daterangepicker [params]="paramsDate" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event)">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                    <span *ngIf="dateStart.value && dateEnd.value">
+                                        {{(dateStart.value || 'Inicio') +' - '+ (dateEnd.value || 'Fin') }}
+                                    </span>
+                                    <span *ngIf="!dateStart.value">
+                                        Seleccione un periodo
+                                    </span><b class="caret"></b>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 center-margin padding-top">
+                            <button (click)="loadAudit($event)" type="button" class="btn btn-success pull-right"
+                                    id="cntrlsubmit" [disabled]="!form.valid">
+                                <i class="fa fa-bank"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div  class="col-lg-12" style="margin-top: 10pt">
+                    <div>
+                        <div *ngIf="dataList && dataList.count > 0 ">
+                            <button class="btn-green btn pull-right" (click)="export($event)">
+                                <i class="fa fa-print"></i>&nbsp;Exportar Excel
+                            </button>
+                        </div>
+
+                        <div *ngIf="dataList && dataList.count == 0">
+                            <div class="alert alert-warning alert-dismissable">
+                                <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                <strong><i class="fa fa-warning"></i></strong> No se encontraron registros.
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="btn-red padding-error">
+                            <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                            No tiene permisos para ver esta pagina
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
