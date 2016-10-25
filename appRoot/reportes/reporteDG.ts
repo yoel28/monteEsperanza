@@ -29,7 +29,7 @@ export class ReporteDescargasGrupos extends RestController implements OnInit{
         this.setEndpoint('/report/weight/groups');
     }
     ngOnInit(){
-        this.title="REPORTE POR CONSUMO DE GRUPOS DEL";
+        this.title="REPORTE POR CONSUMO DE GRUPOS";
         this.getCompanyTypes();
     }
 
