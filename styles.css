@@ -56,17 +56,6 @@ main{
   background-color: #e1e7da !important;
 }
 
-@media print{
-  body{
-    letter-spacing: 1pt !important;
-  }
-  .noprint{
-    display:none;
-  }
-  .content-wrapper{
-    margin: 0pt !important;
-  }
-}
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #e8e7e7 ;
 }

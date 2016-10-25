@@ -88,11 +88,3 @@
 .enableOverflow{
     overflow: auto;
 }
-@media print {
-    .noprint{
-        display:none;
-    }
-    .content-wrapper{
-        margin: 0pt !important;
-    }
-}
