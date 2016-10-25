@@ -442,13 +442,13 @@ export class AppComponent extends RestController implements OnInit{
                     {
                         'visible':this.myglobal.existsPermission("MEN_REP_GROUPS"),
                         'icon':'fa fa-truck',
-                        'title':'Grupos',
+                        'title':'Descarga por grupos',
                         'routerLink':'ReporteGrupos'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_DESC_GROUPS"),
                         'icon':'fa fa-user',
-                        'title':'Descarga por grupos',
+                        'title':'Grupos por peso',
                         'routerLink':'ReporteDescargasGrupos'
                     },
                     {
