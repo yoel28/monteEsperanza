@@ -108,7 +108,7 @@ export class Caja extends RestController implements OnInit{
         this.loadData();
         this.onloadData('/total/recharges/',this.rechargeTotal)
         let where="&where="+encodeURI("[['op':'ge','field':'re.dateCreated','value':'"+this.dateStart.value+"','type':'date'],['op':'lt','field':'re.dateCreated','value':'"+this.dateEnd.value+"','type':'date']]");
-        this.onloadData('/operations/sum',this.rechargeSum,null,null,where)
+        this.onloadData('/operations/sum',this.rechargeSum,null,null,where);
     }
     
     
@@ -119,18 +119,19 @@ export class Caja extends RestController implements OnInit{
         return 0;
 
     }
-    export(event?){
+    export(type){
         let that=this;
-        if(event)
-            event.preventDefault();
         this.getLoadDataAll([],null,null,0,1000,null,()=>{
                 setTimeout(function(_jQuery=jQuery){
-                    that.exportCSV();
+                    if(type=='xls')
+                        that.exportXls();
+                    else if (type == 'print')
+                        that.onPrint();
                 }, 3000)
             }
         )
     }
-    exportCSV(){
+    exportXls(){
         let table2excel = new Table2Excel({
             'defaultFileName': 'Caja',
         });
