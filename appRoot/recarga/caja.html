@@ -43,7 +43,7 @@
                 <div id="reporte" class="col-lg-12" style="margin-top: 10pt">
                     <div *ngIf="myglobal.existsPermission('109')">
                         <div *ngIf="dataList.list">
-                            <h1><strong>Cierre de caja desde</strong> {{dateStart.value +' Hasta '+ dateEnd.value }}</h1>
+                            <h1><strong>Cierre de caja desde&nbsp;</strong> {{dateStart.value +' hasta '+ dateEnd.value }}</h1>
                         </div>
 
                         <div *ngIf="rechargeTotal.debe">
@@ -93,28 +93,29 @@
                         </div>
                         <div *ngIf=" dataList && dataList.count > 0 ">
                             <div class="pull-right noprint">
-                                <i (click)="onPrint()" class="btn fa fa-print fa-lg" title="Imprimir"></i>
-                                <i (click)="exportCSV()" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
+                                <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
+                                <i (click)="export('xls')" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
                             </div>
                             <table  class="export table table-hover table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Cliente</th>
-                                    <th>Veh. Placa</th>
-                                    <th>Fecha de transacci&oacute;n</th>
                                     <th>#Ref o #Recibo</th>
-                                    <th>Fecha de referencia</th>
-                                    <th>Descargado</th>
                                     <th>Entrada</th>
                                     <th>Salida</th>
+                                    <th>Cliente</th>
+                                    <th>Veh. Placa</th>
                                     <th>Ruta</th>
+                                    <th>Comentario</th>
                                     <th>Debe</th>
                                     <th>Haber</th>
-                                    <th>Comentario</th>
+                                    <th>Descargado</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngFor="let recharges of dataList.list">
                                 <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
+                                    <td>{{recharges.reference}}</td>
+                                    <td>{{recharges.operationId?formatDate(recharges.operationDateCreated,'DD/MM/YYYY, LT'):''}}</td>
+                                    <td>{{recharges.operationId?formatDate(recharges.dateCreated,'DD/MM/YYYY, LT'):''}}</td>
                                     <td>
                                         <a class="btn btn-box-tool"
                                            (click)="goTaquilla($event,recharges.companyId)">
@@ -123,28 +124,11 @@
                                         </a>
                                     </td>
                                     <td>{{recharges.vehiclePlate}}</td>
-                                    <td>
-                                        {{formatDate(recharges.dateCreated,'DD/MM/YYYY, LT')}}
-                                    </td>
-                                    <td>{{recharges.reference}}</td>
-                                    <td>
-                                        {{formatDate(recharges.referenceDate,'DD/MM/YYYY')}}
-                                    </td>
-                                    <td>
-                                        {{ (recharges.weight | number:'.0-3') || "&nbsp;"}} {{recharges.metric}}
-                                    </td>
-                                    <td>
-                                        {{recharges.operationId?formatDate(recharges.operationDateCreated,'DD/MM/YYYY, LT'):''}}
-                                    </td>
-                                    <td>
-                                        {{recharges.operationId?formatDate(recharges.dateCreated,'DD/MM/YYYY, LT'):''}}
-                                    </td>
-                                    <td>
-                                        {{recharges.routeReference}}
-                                    </td>
+                                    <td>{{recharges.routeReference}}</td>
+                                    <td>{{recharges.operationComment}}</td>
                                     <td>{{recharges.rechargeTypeId!=4?(recharges.quantity | number:'.0-2')+" "+MONEY_METRIC_SHORT:"&nbsp;"}}</td>
                                     <td>{{recharges.rechargeTypeId==4?((recharges.quantity*-1) | number:'.0-2')+" "+MONEY_METRIC_SHORT:"&nbsp;"}}</td>
-                                    <td>{{recharges.operationComment}}</td>
+                                    <td>{{ (recharges.weight | number:'.0-3') || "&nbsp;"}} {{recharges.metric}}</td>
                                 </tr>
                                 </tbody>
                                 <tfoot *ngIf="dataList && dataList.page.length > 1">
