@@ -78,11 +78,12 @@
                                 <th>HORA</th>
                                 <th>PESO NETO</th>
                                 <th>VALOR</th>
+                                <th class="hidden">COMENTARIO</th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let type of dataList.list; let i = index">
                             <tr>
-                                <td colspan="8" class="text-center title-companygroup"><h3>{{type.routeTitle}}</h3></td>
+                                <td colspan="9" class="text-center title-companygroup"><h3>{{type.routeTitle}}</h3></td>
                             </tr>
                             <tr *ngFor="let recharge of type.recharges">
                                 <td>{{recharge.companyCode}}</td>
@@ -93,6 +94,7 @@
                                 <td>{{formatDate(recharge.referenceDate,'LT')}}</td>
                                 <td>{{recharge.weightIn-recharge.weightOut | number:'.0-3'}}</td>
                                 <td>{{recharge.quantity*-1 | number:'.0-2'}}</td>
+                                <td class="hidden">{{recharge.comment}}</td>
                             </tr>
                             <tr style="font-weight: 900;">
                                 <td colspan="4">&nbsp;</td>
@@ -100,11 +102,12 @@
                                 <td>Viajes - {{type.recharges.length}}</td>
                                 <td>{{sumTotalPeso(i) | number:'.0-3'}}</td>
                                 <td>{{sumTotalFact(i)*-1 | number:'.0-2'}}</td>
+                                <td class="hidden">&nbsp;</td>
                             </tr>
                         </tbody>
                         <tfoot *ngIf="dataList.count == 0">
                             <tr class="alert alert-warning alert-dismissable">
-                                <td colspan="8">
+                                <td colspan="9">
                                     <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
                                     <strong>
                                         <i class="fa fa-warning"></i>
