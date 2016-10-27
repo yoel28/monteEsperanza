@@ -282,6 +282,12 @@ export class Filter extends RestController implements OnInit{
                     whereTemp.field = that.rules[key].paramsSearch.field;
                 }
 
+                if(that.rules[key].join){
+                    whereTemp=Object.assign({},{'join':that.rules[key].join,'where':[whereTemp]});
+                    if(whereTemp2)
+                        whereTemp2=Object.assign({},{'join':that.rules[key].join,'where':[whereTemp2]});
+                }
+
                 dataWhere.push(whereTemp);
                 if(whereTemp2)
                 {
