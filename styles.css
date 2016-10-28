@@ -82,3 +82,6 @@ div ,table ,section ,div.modal-dialog > div.modal-content{
 body.no-menu .content-wrapper, body.no-menu .main-footer {
   margin-left: 0px !important;
 }
+.margin-right-2{
+  margin-right: 2px !important;
+}
