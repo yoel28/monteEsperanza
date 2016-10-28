@@ -67,5 +67,9 @@ export class CatalogApp {
         table2excel.export(document.querySelectorAll("table."+ ( idClass || 'export')));
     }
 
+    public static get formatDateDDMMYYYY():any
+    {
+        return {'format':"DD-MM-YYYY","minDate":"01-01-2016"};
+    }
 
 }
