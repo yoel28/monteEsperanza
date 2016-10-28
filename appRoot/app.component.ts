@@ -52,6 +52,7 @@ import {Events} from "./event/event";
 import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
 import {OperationsAudit} from "./reportes/operationsAudit"
+import {Chofer} from "./chofer/chofer";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -118,6 +119,7 @@ declare var jQuery:any;
   { path: '/rutas',   name: 'Ruta', component: Ruta },
   { path: '/ayuda',   name: 'Help', component: Help },
   { path: '/eventos',   name: 'Event', component: Events },
+  { path: '/chofer',   name: 'Chofer', component: Chofer },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -422,7 +424,7 @@ export class AppComponent extends RestController implements OnInit{
                 'key':'Reportes',
                 'treeview':[
                     {
-                        'visible':true,
+                        'visible':this.myglobal.existsPermission("MEN_OP_AUD"),
                         'icon':'fa fa-list',
                         'title':'Operacion auditoria',
                         'routerLink':'OperationAudit'
@@ -504,11 +506,18 @@ export class AppComponent extends RestController implements OnInit{
                     || this.myglobal.existsPermission("MEN_RULE")  || this.myglobal.existsPermission("MEN_GROUPS")
                     || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                     || this.myglobal.existsPermission("MEN_TIP_RECARGA")  || this.myglobal.existsPermission("MEN_TIP_BAS")
-                    || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT") ,
+                    || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT")
+                    || this.myglobal.existsPermission("MEN_CHOFER"),
                 'icon':'fa fa-gears',
                 'title':'Configuración',
                 'key':'Configuración',
                 'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CHOFER"),
+                        'icon':'fa fa-car',
+                        'title':'Chofer',
+                        'routerLink':'Chofer'
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_ANTENAS"),
                         'icon':'fa fa-crosshairs',
