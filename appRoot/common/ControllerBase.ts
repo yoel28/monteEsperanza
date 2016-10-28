@@ -274,7 +274,7 @@ export abstract class ControllerBase extends RestController {
         return visible;
     }
     public getObjectKeys(data) {
-        return Object.keys(data);
+        return Object.keys(data || {});
     }
     public formatDate(date, format, force = false, id = null) {
         if (date) {
