@@ -38,7 +38,7 @@ export class Drivers extends ControllerBase implements OnInit {
     initViewOptions() {
         this.max=10;
 
-        this.viewOptions["title"] = 'Conductores';
+        this.viewOptions["title"] = 'Choferes';
 
         this.viewOptions["buttons"].push({
             'visible': this.permissions.add,
@@ -60,7 +60,7 @@ export class Drivers extends ControllerBase implements OnInit {
             'title': 'Eliminar',
             'visible': this.permissions.delete,
             'idModal': this.prefix+'_'+this.configId+'_del',
-            'message': 'Estás seguro que deseas eliminar conductor ',
+            'message': 'Estás seguro que deseas eliminar chofer ',
             'keyAction': 'code'
         };
     }
@@ -79,7 +79,7 @@ export class Drivers extends ControllerBase implements OnInit {
         this.paramsSave.title="Agregar información";
     }
     initParamsFilter() {
-        this.paramsFilter.title="Filtrar conductores";
+        this.paramsFilter.title="Filtrar choferes";
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
