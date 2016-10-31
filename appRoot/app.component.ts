@@ -51,6 +51,7 @@ import {Help} from "./help/help";
 import {Events} from "./event/event";
 import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
+import {Drivers} from "./drivers/drivers";
 
 
 declare var SockJS:any;
@@ -117,7 +118,9 @@ declare var jQuery:any;
   { path: '/rutas',   name: 'Ruta', component: Ruta },
   { path: '/ayuda',   name: 'Help', component: Help },
   { path: '/eventos',   name: 'Event', component: Events },
-  { path: '/**', redirectTo: ['Dashboard'] }
+    { path: '/chofer',   name: 'Drivers', component: Drivers },
+
+    { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
@@ -380,7 +383,8 @@ export class AppComponent extends RestController implements OnInit{
             });
             this.menuItems.push({
                 'visible':this.myglobal.existsPermission("MEN_USERS") || this.myglobal.existsPermission("MEN_CLIENTES")
-                    || this.myglobal.existsPermission("MEN_VEH")      || this.myglobal.existsPermission("MEN_TAG"),
+                    || this.myglobal.existsPermission("MEN_VEH")      || this.myglobal.existsPermission("MEN_TAG")
+                || this.myglobal.existsPermission("MEN_CHOFER"),
                 'icon':'fa fa-gears',
                 'title':'Administración',
                 'key':'Administración',
@@ -408,6 +412,12 @@ export class AppComponent extends RestController implements OnInit{
                         'icon':'fa fa-user',
                         'title':'Tag RFID',
                         'routerLink':'TagRfid'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CHOFER"),
+                        'icon':'fa fa-user',
+                        'title':'Conductores',
+                        'routerLink':'Drivers'
                     },
                 ]
 
