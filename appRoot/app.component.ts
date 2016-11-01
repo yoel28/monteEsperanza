@@ -53,8 +53,7 @@ import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
 import {Drivers} from "./drivers/drivers";
 
-import {OperationsAudit} from "./reportes/operationsAudit"
-import {Chofer} from "./chofer/chofer";
+import {OperationsAudit} from "./reportes/operationsAudit";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -121,10 +120,7 @@ declare var jQuery:any;
   { path: '/rutas',   name: 'Ruta', component: Ruta },
   { path: '/ayuda',   name: 'Help', component: Help },
   { path: '/eventos',   name: 'Event', component: Events },
-    { path: '/chofer',   name: 'Drivers', component: Drivers },
-
-    { path: '/**', redirectTo: ['Dashboard'] },
-//  { path: '/chofer',   name: 'Chofer', component: Chofer },
+  { path: '/chofer',   name: 'Drivers', component: Drivers },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -466,7 +462,7 @@ export class AppComponent extends RestController implements OnInit{
                         'routerLink':'ReporteDescargasGrupos'
                     },
                     {
-                        'visible':this.myglobal.existsPermission("MEN_VEH"),
+                        'visible':this.myglobal.existsPermission("MEN_REP_VEH"),
                         'icon':'fa fa-truck',
                         'title':'Descarga por vehículos',
                         'routerLink':'ReporteGruposVehiculos'
@@ -524,12 +520,6 @@ export class AppComponent extends RestController implements OnInit{
                 'title':'Configuración',
                 'key':'Configuración',
                 'treeview':[
-                    {
-                        'visible':this.myglobal.existsPermission("MEN_CHOFER"),
-                        'icon':'fa fa-car',
-                        'title':'Chofer',
-                        'routerLink':'Chofer'
-                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_ANTENAS"),
                         'icon':'fa fa-crosshairs',
