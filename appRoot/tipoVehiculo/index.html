@@ -4,7 +4,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Tipo de veh&iacute;culo</h3>
-
+                    <tooltip code="INFO_110"></tooltip>
                     <div class="pull-right">
                         <button *ngIf="myglobal.existsPermission('30')"
                                 type="button" class="btn btn-primary" data-toggle="modal"
@@ -15,7 +15,8 @@
                                 type="button" class="btn btn-blue "
                                 data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                             <i class="fa fa-filter"></i>&nbsp;Filtrar
-                        </button>
+                        </button><tooltip code="INFO_111"></tooltip>
+
                     </div>
 
                 </div>

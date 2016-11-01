@@ -7,13 +7,14 @@ import {Xeditable} from "../common/xeditable";
 import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
 import {Save} from "../utils/save/save";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
 
 @Component({
     selector: 'tipo-basura',
     templateUrl: SystemJS.map.app+'/tipoBasura/index.html',
     styleUrls: [SystemJS.map.app+'/tipoBasura/style.css'],
-    directives:[Xeditable,Filter,Save]
+    directives:[Xeditable,Filter,Save,Tooltip]
 })
 export class TipoBasura extends RestController implements OnInit{
 

@@ -4,8 +4,9 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Roles</h3>
-
+                    <tooltip code="INFO_89"></tooltip>
                     <div class="box-tools pull-right">
+                        <tooltip code="INFO_90"></tooltip>
                         <button *ngIf="myglobal.existsPermission('49')" type="button"
                                 class="btn btn-primary" data-toggle="modal" data-target="#saveRol">
                             <i class="fa fa-plus"></i>&nbsp;Agregar
@@ -54,6 +55,7 @@
                 <!-- ./box-body -->
                 <div *ngIf="myglobal.existsPermission('48')" class="box-footer with-border">
                     <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
+                        <tooltip code="INFO_94"></tooltip>
                         <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                             {{val}}
                         </button>

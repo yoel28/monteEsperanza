@@ -21,7 +21,7 @@
                     <button (click)="typeView = 2"
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list-alt fa-lg text-blue"></i>
-                    </button>
+                    </button><tooltip code="INFO_113"></tooltip>
 
                     <div *ngIf="myglobal.existsPermission('57')" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
@@ -29,7 +29,7 @@
                             <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button"
                                     class="btn btn-default">
                                 {{val}}
-                            </button>
+                            </button><tooltip code="INFO_114"></tooltip>
                         </div>
                     </div>
                 </div>
@@ -37,6 +37,7 @@
 
                 <div *ngIf="typeView==1"  class="box-body">
                     <div *ngIf="dataList.list && myglobal.existsPermission('57')" class="panel-group" id="accordion">
+                        <tooltip code="INFO_112"></tooltip>
                         <div *ngFor="let user of dataList.list " class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title row">
@@ -78,6 +79,7 @@
                                                         <div class="col-lg-6">
                                                             <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                             <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                            <tooltip code="INFO_115"></tooltip>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="range"
@@ -96,7 +98,7 @@
                                                                 &nbsp;Guardar
                                                             </button>
                                                         </div>
-                                                    </div>
+                                                    </div><tooltip code="INFO_116"></tooltip>
                                                 </div>
                                             </figure>
                                         </div>
@@ -134,11 +136,11 @@
                                                             <a *ngIf="myglobal.existsPermission('63') && myglobal.existsPermission('60') && myglobal.existsPermission('80')"
                                                                (click)="dataSelect = user"
                                                                class="btn btn-box-tools text-blue fa fa-search"
-                                                               data-toggle="modal" data-target="#searchEmpresa"></a>
+                                                               data-toggle="modal" data-target="#searchEmpresa"></a><tooltip code="INFO_117"></tooltip>
                                                             <a *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63') "
                                                                (click)="dataSelect = user"
                                                                class="btn btn-box-tools text-green fa fa-plus"
-                                                               data-toggle="modal" data-target="#newEmpresa"></a>
+                                                               data-toggle="modal" data-target="#newEmpresa"></a><tooltip code="INFO_118"></tooltip>
                                                             <a *ngIf="user.companyId && myglobal.existsPermission('65') && myglobal.existsPermission('60')"
                                                                (click)="releaseCompany(user)"
                                                                class="btn btn-box-tools text-red fa fa-minus"></a>
@@ -223,7 +225,7 @@
                                                                     class="btn btn-box-tool dropdown-toggle"
                                                                     aria-haspopup="true" aria-expanded="false">
                                                                 <i class="fa fa-gears fa-lg"></i>
-                                                            </button>
+                                                            </button><tooltip code="INFO_147"></tooltip>
                                                             <ul role="menu" class="dropdown-menu text-left submenu-config">
                                                                 <li *ngIf="myglobal.existsPermission('62')">
                                                                     <a (click)="onPatch('accountLocked',user)">
@@ -262,6 +264,7 @@
                                                                     <div class="col-lg-6">
                                                                         <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                         <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                                        <tooltip code="INFO_148"></tooltip>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <input type="range"
@@ -282,6 +285,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <tooltip code="INFO_149"></tooltip>
                                                         </figure>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-8">
@@ -320,10 +324,12 @@
                                                                    (click)="dataSelect = user"
                                                                    class="btn btn-box-tools text-blue fa fa-search"
                                                                    data-toggle="modal" data-target="#searchEmpresa"></a>
+                                                                <tooltip code="INFO_150"></tooltip>
                                                                 <a *ngIf="myglobal.existsPermission('68') && myglobal.existsPermission('60') && myglobal.existsPermission('63') "
                                                                    (click)="dataSelect = user"
                                                                    class="btn btn-box-tools text-green fa fa-plus"
                                                                    data-toggle="modal" data-target="#newEmpresa"></a>
+                                                                <tooltip code="INFO_73"></tooltip>
                                                                 <a *ngIf="user.companyId && myglobal.existsPermission('65') && myglobal.existsPermission('60')"
                                                                    (click)="releaseCompany(user)"
                                                                    class="btn btn-box-tools text-red fa fa-minus"></a>
@@ -344,6 +350,7 @@
                                                                     [class.btn-red]="!user.enabled">
                                                                 {{user.enabled?"Habilitado":"Bloqueado"}}
                                                             </button>
+                                                            <tooltip code="INFO_74"></tooltip>
                                                         </p>
                                                         <p *ngIf="dataRoles && dataRoles.count>0">
                                                             <strong class="col-lg-2">Rol:</strong>

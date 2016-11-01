@@ -14,6 +14,8 @@ import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
+import {Tooltip} from "../utils/tooltips/tooltips";
+import {DriversSave} from "../drivers/methods";
 
 declare var jQuery:any;
 declare var SystemJS:any;
@@ -22,7 +24,7 @@ declare var SystemJS:any;
     pipes:[Divide],
     templateUrl: SystemJS.map.app+'/vehiculo/index.html',
     styleUrls: [SystemJS.map.app+'/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter,Tooltip,DriversSave],
 })
 export class Vehiculo extends RestController implements OnInit{
 
@@ -36,6 +38,7 @@ export class Vehiculo extends RestController implements OnInit{
         'weight':{'type':'number','display':null,'title':'Peso del vehiculo','search': true,'placeholder': 'Peso'},
         'minBalance':{'type':'number','display':null,'title':'Balance minimo','search': true,'placeholder': 'Balance minimo'},
         'balance':{'type':'number','display':null,'title':'Balance','search': true,'placeholder': 'Balance'},
+        
     }
 
     constructor(public params:RouteParams,public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder,public myglobal:globalService) {
@@ -168,4 +171,21 @@ export class Vehiculo extends RestController implements OnInit{
         this.onPatch('image',data,this.image[data.id]);
     }
 
+    //Buscar Chofer ------------------------------------------
+    public searchDrivers={
+        title:"Chofer",
+        idModal:"searchDrivers",
+        endpoint:"/search/drivers/",
+        placeholder:"Ingrese Chofer",
+        label:{name:"Nombre: ",},
+    }
+    assignDriver(data){
+        let successCallBack = response=>{
+            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
+            this.dataList.list[index] = response.json();
+            this.modal.dataList=[];
+        }
+        let body=Json.stringify({'chofer':data.id})
+        this.httputils.doPut('/vehicles/'+this.dataSelect.id,body,successCallBack,this.error)
+    }
 }

@@ -3,9 +3,10 @@
         <div class="box">
     <div class="box-header">
         <h3 class="box-title">{{title}}</h3>
+        <tooltip code="INFO_78"></tooltip>
     </div>
     <div *ngIf="myglobal.existsPermission('93')"  class="box-body">
-        <div class="row padding-bottom noprint">
+        <tooltip code="INFO_87"></tooltip><div class="row padding-bottom noprint">
             <div class="form-group input-icon right col-lg-4">
                 Grupo:&nbsp;{{companyType!="all"?companyType:"Buscar un grupo especifico"}} <button  *ngIf="myglobal.existsPermission('36')"
                                 type="button" class="btn btn-box-tool fa fa-search text-blue"

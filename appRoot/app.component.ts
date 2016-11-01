@@ -51,8 +51,9 @@ import {Help} from "./help/help";
 import {Events} from "./event/event";
 import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
-import {OperationsAudit} from "./reportes/operationsAudit"
-import {Chofer} from "./chofer/chofer";
+import {Drivers} from "./drivers/drivers";
+
+import {OperationsAudit} from "./reportes/operationsAudit";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -119,7 +120,7 @@ declare var jQuery:any;
   { path: '/rutas',   name: 'Ruta', component: Ruta },
   { path: '/ayuda',   name: 'Help', component: Help },
   { path: '/eventos',   name: 'Event', component: Events },
-  { path: '/chofer',   name: 'Chofer', component: Chofer },
+  { path: '/chofer',   name: 'Drivers', component: Drivers },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -383,7 +384,8 @@ export class AppComponent extends RestController implements OnInit{
             });
             this.menuItems.push({
                 'visible':this.myglobal.existsPermission("MEN_USERS") || this.myglobal.existsPermission("MEN_CLIENTES")
-                    || this.myglobal.existsPermission("MEN_VEH")      || this.myglobal.existsPermission("MEN_TAG"),
+                    || this.myglobal.existsPermission("MEN_VEH")      || this.myglobal.existsPermission("MEN_TAG")
+                || this.myglobal.existsPermission("MEN_CHOFER"),
                 'icon':'fa fa-gears',
                 'title':'Administración',
                 'key':'Administración',
@@ -411,6 +413,12 @@ export class AppComponent extends RestController implements OnInit{
                         'icon':'fa fa-user',
                         'title':'Tag RFID',
                         'routerLink':'TagRfid'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CHOFER"),
+                        'icon':'fa fa-user',
+                        'title':'Choferes',
+                        'routerLink':'Drivers'
                     },
                 ]
 
@@ -454,7 +462,7 @@ export class AppComponent extends RestController implements OnInit{
                         'routerLink':'ReporteDescargasGrupos'
                     },
                     {
-                        'visible':this.myglobal.existsPermission("MEN_VEH"),
+                        'visible':this.myglobal.existsPermission("MEN_REP_VEH"),
                         'icon':'fa fa-truck',
                         'title':'Descarga por vehículos',
                         'routerLink':'ReporteGruposVehiculos'
@@ -512,12 +520,6 @@ export class AppComponent extends RestController implements OnInit{
                 'title':'Configuración',
                 'key':'Configuración',
                 'treeview':[
-                    {
-                        'visible':this.myglobal.existsPermission("MEN_CHOFER"),
-                        'icon':'fa fa-car',
-                        'title':'Chofer',
-                        'routerLink':'Chofer'
-                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_ANTENAS"),
                         'icon':'fa fa-crosshairs',

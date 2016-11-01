@@ -8,32 +8,31 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Filter} from "../utils/filter/filter";
 import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
-import {MChofer} from "./MChofer";
+import {Tooltip} from "../utils/tooltips/tooltips";
+import {MDrivers} from "./MDrivers";
 declare var SystemJS:any;
 
 @Component({
-    selector: 'chofer',
-    templateUrl: SystemJS.map.app+'/chofer/index.html',
-    styleUrls: [SystemJS.map.app+'/chofer/style.css'],
+    selector: 'drivers',
+    templateUrl: SystemJS.map.app+'/drivers/index.html',
+    styleUrls: [SystemJS.map.app+'/drivers/style.css'],
     providers: [TranslateService],
     directives: [Filter,Tables,Save],
     pipes: [TranslatePipe]
 })
-export class Chofer extends ControllerBase implements OnInit {
+export class Drivers extends ControllerBase implements OnInit {
 
     public dataSelect:any = {};
     public paramsTable:any={};
-    public dataPublic:any={};
-    public model:any;
+    public model;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super('CHOFER', '/chofer/',router, http, toastr, myglobal, translate);
-        this.model= new MChofer(myglobal);
+        super('CHOFER', '/drivers/',router, http, toastr, myglobal, translate);
+        this.model= new MDrivers(myglobal);
     }
     ngOnInit(){
         this.initModel();
         this.loadParamsTable();
-        this.loadPublicData();
         this.loadPage();
     }
     initViewOptions() {
@@ -61,7 +60,7 @@ export class Chofer extends ControllerBase implements OnInit {
             'title': 'Eliminar',
             'visible': this.permissions.delete,
             'idModal': this.prefix+'_'+this.configId+'_del',
-            'message': 'Estás seguro que deseas eliminar el chofer ',
+            'message': 'Estás seguro que deseas eliminar chofer ',
             'keyAction': 'code'
         };
     }
@@ -77,10 +76,10 @@ export class Chofer extends ControllerBase implements OnInit {
     initPermissions() {}
     initRulesAudit() {}
     initParamsSave() {
-        this.paramsSave.title="Agregar chofer"
+        this.paramsSave.title="Agregar información";
     }
     initParamsFilter() {
-        this.paramsFilter.title="Filtrar chofer";
+        this.paramsFilter.title="Filtrar choferes";
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -91,13 +90,11 @@ export class Chofer extends ControllerBase implements OnInit {
             'title': 'Eliminar',
             'idModal': this.prefix+'_'+this.configId+'_del',
             'permission': this.permissions.delete,
-            'message': '¿ Esta seguro de eliminar el chofer : ',
+            'message': '¿ Esta seguro de eliminar la accion : ',
             'keyAction':'code'
         };
     }
-    loadPublicData(){
-        this.onloadData('',this.dataPublic);
-    }
+
 
 }
 

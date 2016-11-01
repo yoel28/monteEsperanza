@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{viewOptions.title}}</h3>
+                    <h3 class="box-title">{{viewOptions.title}}</h3><tooltip code="INFO_108"></tooltip>
 
                     <div class="box-tools pull-right" *ngIf="permissions['actions']">
                         <div class="pull-right">
@@ -16,7 +16,7 @@
                                     type="button" class="btn btn-blue "
                                     data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                                 <i class="fa fa-filter"></i>&nbsp;Filtrar
-                            </button>
+                            </button><tooltip code="INFO_109"></tooltip>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,8 @@ import {RestController} from "../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import moment from 'moment/moment';
 import {globalService} from "../common/globalService";
+//import {Datepicker} from "../common/xeditable";
+import {Tooltip} from "../utils/tooltips/tooltips";
 import {SMDropdown, DateRangepPicker} from "../common/xeditable";
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 
@@ -16,7 +18,7 @@ declare var Table2Excel:any;
     selector: 'caja',
     templateUrl: SystemJS.map.app+'/recarga/caja.html',
     styleUrls: [SystemJS.map.app+'/recarga/style.css'],
-    directives:[DateRangepPicker,SMDropdown]
+    directives:[DateRangepPicker,SMDropdown,Tooltip]
 })
 export class Caja extends RestController implements OnInit{
 

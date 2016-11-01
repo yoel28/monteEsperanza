@@ -17,15 +17,15 @@
                     </span>
                 </div>
             </form>
-        </div>
+        </div><tooltip code="INFO_100"></tooltip>
         <div *ngIf="!myglobal.existsPermission('80')" class="col-lg-12">
             <div class="btn-red padding-error">
                 <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
                 No tiene permisos para listar los clientes
             </div>
         </div>
-
         <div *ngIf="dataCompanies.count && myglobal.existsPermission('80')" class="row col-lg-10 col-lg-offset-1">
+            <tooltip code="INFO_143"></tooltip>
             <table class="table table-hover">
                 <tbody>
                 <tr *ngFor="let company of dataCompanies.list" (click)="getCompany(company.id)">
@@ -198,7 +198,7 @@
                                 <img src="assets/img/credit/maestro.png" class="img-responsive btn" alt="">
                                 <img src="assets/img/credit/visa.png" class="img-responsive btn" alt="">
                             </div>
-
+                            <tooltip code="INFO_144"></tooltip>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <h3>Estado de cuenta</h3>
@@ -220,7 +220,7 @@
                                           data-toggle="modal" data-target="#saveRecarga">
                                         &nbsp;<i class="fa fa-money text-green fa-lg"></i>
                                         Pagar deuda
-                                    </span>
+                                    </span><tooltip code="INFO_145"></tooltip>
                                     </td>
                                 </tr>
 
@@ -237,6 +237,7 @@
                                         *ngIf="myglobal.existsPermission('111')">
                                     <i class="fa  fa-money fa-lg"></i> Recargar Saldo
                                 </button>
+                                <tooltip code="INFO_146"></tooltip>
                             </div>
                         </div>
                     </div>

@@ -46,6 +46,13 @@
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
+                            <div *ngIf="myglobal.existsPermission('80')" class="form-group">
+                                <strong>Chofer: </strong>{{dataChofer || ""}}
+                                <button  type="button" class="btn btn-box-tool text-blue" data-toggle="modal"
+                                         data-target="#searchDrivers">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                             <div *ngIf="!myglobal.existsPermission('80')" class="form-group">
                                 <div *ngIf="!myglobal.existsPermission('109')">
                                     <div class="btn-red padding-error">
@@ -92,3 +99,4 @@
     </div>
 </div>
 <search [params]="searchEmpresa" (result)="assignCompany($event)"></search>
+<search [params]="searchDrivers" (result)="assignChofer($event)"></search>

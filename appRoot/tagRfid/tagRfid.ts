@@ -8,13 +8,14 @@ import {globalService} from "../common/globalService";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Filter} from "../utils/filter/filter";
 import {Xeditable} from "../common/xeditable";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
 
 @Component({
     selector: 'tagRfid',
     templateUrl: SystemJS.map.app+'/tagRfid/index.html',
     styleUrls: [SystemJS.map.app+'/tagRfid/style.css'],
-    directives:[TagSave,Search,Filter,Xeditable],
+    directives:[TagSave,Search,Filter,Xeditable,Tooltip],
 })
 export class TagRfid extends RestController implements OnInit{
     @ViewChild(Search)

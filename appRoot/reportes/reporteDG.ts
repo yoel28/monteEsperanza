@@ -10,6 +10,7 @@ import moment from 'moment/moment';
 import {Datepicker} from "../common/xeditable";
 import {Fecha} from "../utils/pipe";
 import {Search} from "../utils/search/search";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var jQuery:any;
 declare var SystemJS:any;
 declare var Table2Excel:any;
@@ -19,7 +20,7 @@ declare var Table2Excel:any;
     templateUrl: SystemJS.map.app+'/reportes/descargasGrupos.html',
     pipes: [Fecha],
     styleUrls: [SystemJS.map.app+'/reportes/style.css'],
-    directives : [Filter,Datepicker,Search]
+    directives : [Filter,Datepicker,Search, Tooltip]
 })
 export class ReporteDescargasGrupos extends RestController implements OnInit{
     

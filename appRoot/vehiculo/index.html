@@ -20,7 +20,7 @@
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list-alt fa-lg text-blue"></i>
                     </button>
-
+                    <tooltip code="INFO_119"></tooltip>
                     <div *ngIf="myglobal.existsPermission('69')" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
                              class="btn-group pull-right">
@@ -28,10 +28,12 @@
                                     class="btn btn-default">
                                 {{val}}
                             </button>
+                            <tooltip code="INFO_120"></tooltip>
                         </div>
                     </div>
                 </div>
                 <div *ngIf="typeView==1"  class="box-body">
+                    <tooltip code="INFO_121"></tooltip>
                     <div *ngIf="dataList.list && myglobal.existsPermission('69')" class="panel-group" id="accordion">
                         <div *ngFor="let data of dataList.list " class="panel panel-default">
                             <div class="panel-heading">
@@ -71,6 +73,7 @@
                                                         <div class="col-lg-6">
                                                             <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                             <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                            <tooltip code="INFO_122"></tooltip>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="range" class="cropit-image-zoom-input"/>
@@ -87,7 +90,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div><tooltip code="INFO_123"></tooltip>
                                             </figure>
                                         </div>
                                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -112,20 +115,20 @@
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-minus text-red"></i>
                                                             </button>
-
                                                             <button (click)="dataSelect = data"
                                                                     *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('72')"
                                                                     data-toggle="modal" data-target="#saveTagVehiculo"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
-
+                                                            <tooltip code="INFO_124"></tooltip>
                                                             <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')"
                                                                     (click)="dataSelect = data"
                                                                     data-toggle="modal" data-target="#searchTag"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-search text-blue"></i>
                                                             </button>
+                                                            <tooltip code="INFO_125"></tooltip>
                                                         </label>
                                                     </p>
                                                     <p>
@@ -141,13 +144,14 @@
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
-
+                                                            <tooltip code="INFO_126"></tooltip>
                                                             <button (click)="dataSelect = data"
                                                                     *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')"
                                                                     data-toggle="modal" data-target="#searchTipoVehiculo"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-search text-blue"></i>
                                                             </button>
+                                                            <tooltip code="INFO_127"></tooltip>
                                                         </label>
                                                     </p>
                                                     <p *ngIf="myglobal.existsPermission('73')">
@@ -156,6 +160,7 @@
                                                                 [class.btn-red]="!data.enabled">
                                                             {{data.enabled?"Habilitado":"Bloqueado"}}
                                                         </button>
+                                                        <tooltip code="INFO_131"></tooltip>
                                                     </p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -176,13 +181,14 @@
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
-
+                                                                <tooltip code="INFO_128"></tooltip>
                                                                 <button (click)="dataSelect = data"
                                                                         *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
                                                                         data-toggle="modal" data-target="#searchEmpresaNueva"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
                                                                 </button>
+                                                                <tooltip code="INFO_130"></tooltip>
                                                             </div>
 
                                                         </div>
@@ -193,7 +199,33 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="pull-left">
+                                                            <figure>
+                                                                <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.png'}}"
+                                                                     class="img-responsive img-circle img-list">
+                                                            </figure>
+                                                            <div class="box-tools">
+                                                                <button (click)="dataSelect = data"
+                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
+                                                                        data-toggle="modal" data-target="#saveDriversAdd"
+                                                                        type="button" class="btn btn-box-tool">
+                                                                    <i class="fa fa-plus text-green"></i>
+                                                                </button>
+                                                                <button (click)="dataSelect = data"
+                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
+                                                                        data-toggle="modal" data-target="#searchDrivers"
+                                                                        type="button" class="btn btn-box-tool">
+                                                                    <i class="fa fa-search text-blue"></i>
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+                                                        <div>
+                                                            <strong>{{data.choferNombre}}</strong><br/>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         </div>
 
                                     </div>
@@ -214,7 +246,7 @@
                                                 <div style="margin-bottom: 15px" class="row">
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <div *ngIf="myglobal.existsPermission('73') || myglobal.existsPermission('71')"
-                                                             class="btn-group dropdown pull-right">
+                                                             class="btn-group dropdown pull-right"><tooltip code="INFO_132"></tooltip>
                                                             <button type="button" data-toggle="dropdown"
                                                                     class="btn btn-box-tool dropdown-toggle" aria-haspopup="true"
                                                                     aria-expanded="false">
@@ -247,6 +279,7 @@
                                                                     <div class="col-lg-6">
                                                                         <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                         <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
+                                                                        <tooltip code="INFO_133"></tooltip>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <input type="range" class="cropit-image-zoom-input"/>
@@ -263,7 +296,7 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div><tooltip code="INFO_134"></tooltip>
                                                         </figure>
                                                     </div>
 
@@ -286,6 +319,7 @@
                                                                         (click)="releaseTag(data)"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-minus text-red"></i>
+                                                                    <tooltip code="INFO_135"></tooltip>
                                                                 </button>
 
                                                                 <button (click)="dataSelect = data"
@@ -293,13 +327,14 @@
                                                                         data-toggle="modal" data-target="#saveTagVehiculo"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
+                                                                    <tooltip code="INFO_136"></tooltip>
                                                                 </button>
-
                                                                 <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')"
                                                                         (click)="dataSelect = data"
                                                                         data-toggle="modal" data-target="#searchTag"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
+                                                                    <tooltip code="INFO_137"></tooltip>
                                                                 </button>
                                                             </label>
                                                         </p>
@@ -315,13 +350,14 @@
                                                                         data-toggle="modal" data-target="#saveTipoVehiculoAdd"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
+                                                                    <tooltip code="INFO_138"></tooltip>
                                                                 </button>
-
                                                                 <button (click)="dataSelect = data"
                                                                         *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')"
                                                                         data-toggle="modal" data-target="#searchTipoVehiculo"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
+                                                                    <tooltip code="INFO_139"></tooltip>
                                                                 </button>
                                                             </label>
                                                         </p>
@@ -331,6 +367,7 @@
                                                                     [class.btn-red]="!data.enabled">
                                                                 {{data.enabled?"Habilitado":"Bloqueado"}}
                                                             </button>
+                                                            <tooltip code="INFO_140"></tooltip>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -351,6 +388,7 @@
                                                                         data-toggle="modal" data-target="#saveEmpresaAdd"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
+                                                                    <tooltip code="INFO_141"></tooltip>
                                                                 </button>
 
                                                                 <button (click)="dataSelect = data"
@@ -358,6 +396,7 @@
                                                                         data-toggle="modal" data-target="#searchEmpresaNueva"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
+                                                                    <tooltip code="INFO_142"></tooltip>
                                                                 </button>
                                                             </div>
 
@@ -436,4 +475,9 @@
 <div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
     <search [params]="searchTipoVehiculo" (result)="assignTipoVehiculo($event)"></search>
 </div>
-
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
+    <drivers-save idModal="saveDriversAdd" (save)="assignDriver($event)"></drivers-save>
+</div>
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
+    <search [params]="searchDrivers" (result)="assignDriver($event)"></search>
+</div>
