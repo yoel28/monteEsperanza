@@ -199,7 +199,33 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                        <div class="pull-left">
+                                                            <figure>
+                                                                <img src="{{data.companyImage?data.companyImage:'/assets/img/company-guest.png'}}"
+                                                                     class="img-responsive img-circle img-list">
+                                                            </figure>
+                                                            <div class="box-tools">
+                                                                <button (click)="dataSelect = data"
+                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
+                                                                        data-toggle="modal" data-target="#saveDriversAdd"
+                                                                        type="button" class="btn btn-box-tool">
+                                                                    <i class="fa fa-plus text-green"></i>
+                                                                </button>
+                                                                <button (click)="dataSelect = data"
+                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
+                                                                        data-toggle="modal" data-target="#searchDrivers"
+                                                                        type="button" class="btn btn-box-tool">
+                                                                    <i class="fa fa-search text-blue"></i>
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+                                                        <div>
+                                                            <strong>{{data.choferNombre}}</strong><br/>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         </div>
 
                                     </div>
@@ -449,4 +475,9 @@
 <div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
     <search [params]="searchTipoVehiculo" (result)="assignTipoVehiculo($event)"></search>
 </div>
-
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
+    <drivers-save idModal="saveDriversAdd" (save)="assignDriver($event)"></drivers-save>
+</div>
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
+    <search [params]="searchDrivers" (result)="assignDriver($event)"></search>
+</div>
