@@ -62,46 +62,19 @@ export class MDrivers extends ModelBase{
                 'error':'Este campo es obligatorio',
             }
         }
-
-        /*this.rules['vehicles']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'vehicles',
-            'title': 'Vehículos',
-            'placeholder': 'Ingrese el vehiculos',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
-        }
-        /*this.rules['userAgent']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'userAgent',
-            'title': 'User agente',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
-        }*/
-
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
     initPermissions() {}
     initParamsSearch() {
-        this.paramsSearch.title="Buscar Conductores";
-        this.paramsSearch.placeholder="Ingrese conductor";
+        this.paramsSearch.title="Buscar Choferes";
+        this.paramsSearch.placeholder="Ingrese chofer";
     }
     initParamsSave() {
-        this.paramsSave.title="Agregar conductor"
+        this.paramsSave.title="Agregar chofer"
     }
     initRuleObject() {
-        this.ruleObject.title="Conductor";
-        this.ruleObject.placeholder="Ingrese conductor";
+        this.ruleObject.title="Chofer";
+        this.ruleObject.placeholder="Ingrese chofer";
         this.ruleObject.key="drivers";
     }
     initRulesSave() {
