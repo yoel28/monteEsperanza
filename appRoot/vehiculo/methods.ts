@@ -29,11 +29,12 @@ export class VehiculoSave extends RestController implements OnInit{
     weight: Control;
     vehicleType: Control;
     company: Control;
+    chofer: Control;
     image: Control;
 
 
     dataCompany:string;
-
+    dataChofer:string;
 
     constructor(public http:Http,public _formBuilder: FormBuilder,public toastr: ToastsManager, public myglobal:globalService) {
         super(http);
@@ -51,6 +52,7 @@ export class VehiculoSave extends RestController implements OnInit{
         this.weight = new Control("", Validators.compose([Validators.required]));
         this.vehicleType = new Control("", Validators.compose([Validators.required]));
         this.company = new Control("", Validators.compose([Validators.required]));
+        this.chofer = new Control("", Validators.compose([Validators.required]));
         this.image = new Control("");
 
         this.form = this._formBuilder.group({
@@ -58,6 +60,7 @@ export class VehiculoSave extends RestController implements OnInit{
             weight: this.weight,
             vehicleType: this.vehicleType,
             company: this.company,
+            chofer:this.chofer,
             image: this.image,
         });
 
@@ -119,7 +122,19 @@ export class VehiculoSave extends RestController implements OnInit{
         this.image.updateValue(data);
     }
 
-    
+
+    //carga data de Chofer disponible ------------------------------------------
+    public searchDrivers={
+        title:"Chofer",
+        idModal:"searchDrivers",
+        endpoint:"/search/drivers/",
+        placeholder:"Ingrese Chofer",
+        label:{nombre:"Nombre: "},
+    }
+    assignChofer(data){
+        this.chofer.updateValue(data.id)
+        this.dataChofer=data.title + ", Teléfono: " + data.detail;
+    }
     
 }
 
