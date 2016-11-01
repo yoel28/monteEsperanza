@@ -12,46 +12,24 @@
                         type="button" class="btn btn-box-tool">
                     <i class="fa fa-list-alt fa-lg text-blue"></i>
                 </button>
+
                 <div class="pull-right" *ngIf="viewOptions['buttons'].length > 0">
-                    <div class="btn-group dropdown">
-                        <button type="button " data-toggle="dropdown"
-                                class="btn btn-blue dropdown-toggle"
-                                aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-gears fa-lg"></i>&nbsp;Filtros rapidos
-                        </button>
-                        <ul role="menu" class="dropdown-menu text-left submenu-config">
-                            <li [class.btn-blue]="list=='pendings'">
-                                <a href="#" (click)="loadDataPendings($event,'pendings')">
-                                    <i class="fa fa-list"></i>
-                                    &nbsp;Pendientes
-                                </a>
-                            </li>
-                            <li [class.btn-blue]="list=='pendingsAll'">
-                                <a href="#" (click)="loadDataPendings($event,'pendingsAll')">
-                                    <i class="fa fa-list"></i>
-                                    &nbsp;Todos los pendientes
-                                </a>
-                            </li>
-                            <li [class.btn-blue]="list=='asign'">
-                                <a href="#" (click)="loadDataPendings($event,'asign')">
-                                    <i class="fa fa-list"></i>
-                                    &nbsp;Procesados
-                                </a>
-                            </li>
-                            <li [class.btn-blue]="list=='all'">
-                                <a href="#" (click)="loadDataPendings($event,'all')">
-                                    <i class="fa fa-list"></i>
-                                    &nbsp;Ver todos
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    &nbsp;
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
                             [attr.data-target]="'#'+buttom.modal">
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
+                        <div *ngIf="buttom.quickFilters" class="btn-group dropdown">
+                            &nbsp;<span data-toggle="dropdown" class="fa fa-angle-down"></span>
+                            <ul role="menu" class="dropdown-menu pull-right submenu-config" >
+                                <li *ngFor="let quickFilter of buttom.quickFilters" [class.btn-blue]="list==quickFilter.id" >
+                                    <a  (click)="loadDataPendings($event,quickFilter)">
+                                        <i class="fa fa-list"></i>
+                                        &nbsp;{{quickFilter.title}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </button>
 
                 </div>
@@ -117,12 +95,20 @@
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
                             <td>{{ (data.vehicleWeight || 0) | number:'.0-3'}}</td>
                             <td>
-                                <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
-                                <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt" title="La operación esta incompleta">&nbsp;Error&nbsp;</span>
-                                <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt" >&nbsp;Devuelto&nbsp;</span>
-                                <span *ngIf="!data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
-                                <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Sin procesar&nbsp;</span>
-                                <span *ngIf="data.operationId" class="label label-green font-12pt">&nbsp;Validado&nbsp;</span>
+                                <span *ngIf="data.expired" class="label label-red font-12pt margin-right-2" title="La operación a expirado">Vencido</span>
+                                <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt margin-right-2" title="La operación esta incompleta">Error</span>
+                                <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Devuelto</span>
+
+                                <span *ngIf="!data.enabled && data.operationId && !data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registrado Manual</span>
+                                <span *ngIf="!data.enabled && !data.operationId && data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registro automatico</span>
+
+                                <span *ngIf="(data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Validado</span>
+                                <span *ngIf="(!data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Sin validar</span>
+
+                                <span *ngIf="data.enabled && data.vehicleId && data.dateIn" class="label bg-purple font-12pt margin-right-2">Sin registrar</span>
+
+                                <span *ngIf="!data.enabled && !data.operationId" class="label bg-red font-12pt margin-right-2">Rechazado</span>
+
 
                             </td>
                             <td *ngIf="getViewOptionsActions().length > 0">
@@ -171,12 +157,19 @@
                                             <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
 
-                                            <span *ngIf="data.expired" class="label label-red font-12pt" title="La operación a expirado">&nbsp;Vencido&nbsp;</span>
-                                            <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt" title="La operación esta incompleta">&nbsp;Error&nbsp;</span>
-                                            <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt" >&nbsp;Devuelto&nbsp;</span>
-                                            <span *ngIf="!data.enabled" class="label label-blue font-12pt">&nbsp;Procesado&nbsp;</span>
-                                            <span *ngIf="data.enabled" class="label bg-purple font-12pt">&nbsp;Sin procesar&nbsp;</span>
-                                            <span *ngIf="data.operationId" class="label label-green font-12pt">&nbsp;Validado&nbsp;</span>
+                                            <span *ngIf="data.expired" class="label label-red font-12pt margin-right-2" title="La operación a expirado">Vencido</span>
+                                            <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt margin-right-2" title="La operación esta incompleta">Error</span>
+                                            <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Devuelto</span>
+
+                                            <span *ngIf="!data.enabled && data.operationId && !data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registrado Manual</span>
+                                            <span *ngIf="!data.enabled && !data.operationId && data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registro automatico</span>
+
+                                            <span *ngIf="(data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Validado</span>
+                                            <span *ngIf="(!data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Sin validar</span>
+
+                                            <span *ngIf="data.enabled && data.vehicleId && data.dateIn" class="label bg-purple font-12pt margin-right-2">Sin registrar</span>
+
+                                            <span *ngIf="!data.enabled && !data.operationId" class="label bg-red font-12pt margin-right-2">Rechazado</span>
 
                                         </a>
                                     </div>
@@ -190,7 +183,7 @@
                                                     <span class="fa fa-trash fa-lg btn"></span>
                                                 </a>
                                                 <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
-                                                   [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Procesar">
+                                                   [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Registrar">
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
                                                 <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" title="Rechazar" href="#">

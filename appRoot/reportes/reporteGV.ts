@@ -13,6 +13,7 @@ import {Search} from "../utils/search/search";
 import {Tooltip} from "../utils/tooltips/tooltips";
 declare var jQuery:any;
 declare var SystemJS:any;
+declare var Table2Excel:any;
 
 @Component({
     selector: 'reporte-gv',
@@ -25,12 +26,14 @@ export class ReporteGruposVehiculos extends RestController implements OnInit{
     dateStart:Control;
     dateEnd:Control;
     plate:Control;
+    public title:string;
 
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
         this.setEndpoint('/reports/vehicle/groups');
     }
     ngOnInit(){
+        this.title="Reporte por vehículos y grupos";
         this.initForm();
         this.getCompanyTypes();
     }
@@ -157,7 +160,17 @@ export class ReporteGruposVehiculos extends RestController implements OnInit{
     }
 
     exportCSV(){
-        jQuery("#content").tableToCSV();
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
     }
 
     public companyTypes:any={};

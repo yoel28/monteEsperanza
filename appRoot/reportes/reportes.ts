@@ -12,6 +12,7 @@ import {Fecha} from "../utils/pipe";
 import {Search} from "../utils/search/search";
 import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
+declare var Table2Excel:any;
 
 @Component({
     selector: 'reporte-grupos',
@@ -26,12 +27,14 @@ export class ReporteGrupos extends RestController implements OnInit{
     dateStart:Control;
     dateEnd:Control;
     fechaRegistro:any;
+    public title:string;
 
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
         this.setEndpoint('/reports/groups');
     }
     ngOnInit(){
+        this.title="REPORTE DE DESCARGA POR GRUPOS";
         this.initForm();
         this.getCompanyTypes();
     }
@@ -43,6 +46,19 @@ export class ReporteGrupos extends RestController implements OnInit{
             dateStart: this.dateStart,
             dateEnd: this.dateEnd,
         });
+    }
+    exportCSV(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
     }
     public searchTipoEmpresa = {
         title: "Grupo",

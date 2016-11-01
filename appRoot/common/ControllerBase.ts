@@ -118,7 +118,7 @@ export abstract class ControllerBase extends RestController {
         this.rules["enabled"] = {
             "update": (this.permissions.update && this.permissions.lock),
             "visible": this.permissions.lock && this.permissions.visible,
-            "search": this.permissions.filter,
+            "search": false,
             'required': true,
             'icon': 'fa fa-list',
             "type": "boolean",
@@ -274,7 +274,7 @@ export abstract class ControllerBase extends RestController {
         return visible;
     }
     public getObjectKeys(data) {
-        return Object.keys(data);
+        return Object.keys(data || {});
     }
     public formatDate(date, format, force = false, id = null) {
         if (date) {

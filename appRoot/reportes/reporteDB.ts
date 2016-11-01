@@ -13,6 +13,7 @@ import {Tooltip} from "../utils/tooltips/tooltips";
 
 declare var jQuery:any;
 declare var SystemJS:any;
+declare var Table2Excel:any;
 
 @Component({
     selector: 'reporte-db',
@@ -23,11 +24,13 @@ declare var SystemJS:any;
 })
 export class ReporteDescargasBasura extends RestController implements OnInit{
 
+    public title:string;
     constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService,public _formBuilder: FormBuilder) {
         super(http,toastr);
         this.setEndpoint('/report/weight/trash');
     }
     ngOnInit(){
+        this.title="Reporte por consumo de tipo de basura";
     }
     public trashName:string="all";
     setType(data){
@@ -83,7 +86,25 @@ export class ReporteDescargasBasura extends RestController implements OnInit{
         this.httputils.doGet('/reports/weight/trash/'+this.dataConsult.date+type,successCallback,this.error);
     }
     exportCSV(){
-        jQuery("#content").tableToCSV();
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
+    }
+    onPrint(){
+        var printContents = document.getElementById("reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
     }
 
     minMaxAvgSum(data){

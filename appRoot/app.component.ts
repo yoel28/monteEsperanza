@@ -53,6 +53,8 @@ import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
 import {Drivers} from "./drivers/drivers";
 
+import {OperationsAudit} from "./reportes/operationsAudit"
+import {Chofer} from "./chofer/chofer";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -100,6 +102,7 @@ declare var jQuery:any;
   { path: '/reporte/vehiculos',   name: 'ReporteGruposVehiculos', component: ReporteGruposVehiculos },
   { path: '/reporte/rutas',   name: 'ReporteDescargasRutas', component: ReporteDescargasRutas },
   { path: '/reporte/basura',   name: 'ReporteDescargasBasura', component: ReporteDescargasBasura },
+  { path: '/reporte/operacion/auditoria',   name: 'OperationAudit', component: OperationsAudit },
 
   { path: '/permisos',   name: 'Permiso', component: Permiso },
   { path: '/permisos/rol',   name: 'PermisoRol', component: PermisosRol },
@@ -120,7 +123,9 @@ declare var jQuery:any;
   { path: '/eventos',   name: 'Event', component: Events },
     { path: '/chofer',   name: 'Drivers', component: Drivers },
 
-    { path: '/**', redirectTo: ['Dashboard'] }
+    { path: '/**', redirectTo: ['Dashboard'] },
+//  { path: '/chofer',   name: 'Chofer', component: Chofer },
+  { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
@@ -431,6 +436,12 @@ export class AppComponent extends RestController implements OnInit{
                 'key':'Reportes',
                 'treeview':[
                     {
+                        'visible':this.myglobal.existsPermission("MEN_OP_AUD"),
+                        'icon':'fa fa-list',
+                        'title':'Operacion auditoria',
+                        'routerLink':'OperationAudit'
+                    },
+                    {
                         'visible':this.myglobal.existsPermission("MEN_CAJA"),
                         'icon':'fa fa-list',
                         'title':'Caja',
@@ -445,13 +456,13 @@ export class AppComponent extends RestController implements OnInit{
                     {
                         'visible':this.myglobal.existsPermission("MEN_REP_GROUPS"),
                         'icon':'fa fa-truck',
-                        'title':'Grupos',
+                        'title':'Descarga por grupos',
                         'routerLink':'ReporteGrupos'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_DESC_GROUPS"),
                         'icon':'fa fa-user',
-                        'title':'Descarga por grupos',
+                        'title':'Grupos por peso',
                         'routerLink':'ReporteDescargasGrupos'
                     },
                     {
@@ -507,11 +518,18 @@ export class AppComponent extends RestController implements OnInit{
                     || this.myglobal.existsPermission("MEN_RULE")  || this.myglobal.existsPermission("MEN_GROUPS")
                     || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                     || this.myglobal.existsPermission("MEN_TIP_RECARGA")  || this.myglobal.existsPermission("MEN_TIP_BAS")
-                    || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT") ,
+                    || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT")
+                    || this.myglobal.existsPermission("MEN_CHOFER"),
                 'icon':'fa fa-gears',
                 'title':'Configuración',
                 'key':'Configuración',
                 'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CHOFER"),
+                        'icon':'fa fa-car',
+                        'title':'Chofer',
+                        'routerLink':'Chofer'
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_ANTENAS"),
                         'icon':'fa fa-crosshairs',

@@ -162,10 +162,10 @@ export class RestController implements OnInit {
                     }
                     else if(max > list.list.length){
                         max=list.list.length;
-                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where);
+                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,successCallback);
                     }
                     else {
-                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where);
+                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,successCallback);
                     }
                 }
 

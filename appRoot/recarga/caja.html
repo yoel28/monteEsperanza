@@ -8,18 +8,47 @@
                 <tooltip code="INFO_75"></tooltip>
             </div>
             <div class="box-body"><tooltip code="INFO_82"></tooltip>
-                <div class="col-lg-12">
-                    <div class="form-group input-icon right col-lg-3">
-                        <div class="input-icon right">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                            <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Hoy" type="text" class="form-control">
+                <div class="col-lg-12 noprint">
+                    <form role="form" [ngFormModel]="form" (submit)="loadCaja($event)">
+                        <div class="form-group input-icon right col-lg-2">
+                            Lapso
+                            <div class="input-icon right">
+                                <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                    <option data-hidden="true" value="-1"></option>
+                                    <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-lg-5">
+                            Rango
+                            <div daterangepicker [params]="paramsDate" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event)">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                    <span *ngIf="dateStart.value && dateEnd.value">
+                                        {{(dateStart.value || 'Inicio') +' - '+ (dateEnd.value || 'Fin') }}
+                                    </span>
+                                    <span *ngIf="!dateStart.value">
+                                        Seleccione un periodo
+                                    </span><b class="caret"></b>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 center-margin padding-top">
+                            <button (click)="loadCaja($event)" type="button" class="btn btn-success pull-right"
+                                    id="cntrlsubmit" [disabled]="!form.valid">
+                                <i class="fa fa-bank"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div  class="col-lg-12" style="margin-top: 10pt">
+                <div id="reporte" class="col-lg-12" style="margin-top: 10pt">
                     <div *ngIf="myglobal.existsPermission('109')">
+                        <div *ngIf="dataList.list">
+                            <h1><strong>Cierre de caja desde&nbsp;</strong> {{dateStart.value +' hasta '+ dateEnd.value }}</h1>
+                        </div>
+
                         <div *ngIf="rechargeTotal.debe">
-                            <table class="table table-hover table-bordered">
+                            <table class="export table table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>&nbsp;</th>
@@ -45,24 +74,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div *ngIf="typeRecharge.list && dataList.count > 0">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th *ngFor="let data of typeRecharge.list">{{data.title}}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>TOTAL</td>
-                                    <th *ngFor="let data of typeRecharge.list">{{ (data.id==4?(data.total*-1):data.total) | number:'.0-2'}}</th>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <table class="table table-hover table-bordered">
+                        <div *ngIf="rechargeSum && rechargeSum[0]">
+                            <table class="export table table-hover table-bordered">
                                 <thead>
                                     <tr>
                                         <th>&nbsp;</th>
@@ -79,30 +92,31 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                         <div *ngIf=" dataList && dataList.count > 0 ">
-                            {{calcRecharges()}}
-                            <button class="btn-green btn pull-right" (click)="exportCSV('content',$event)">
-                                <i class="fa fa-print"></i>&nbsp;Exportar CSV
-                            </button>
-                            <table id="content"  class="table table-hover table-bordered">
-
+                            <div class="pull-right noprint">
+                                <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
+                                <i (click)="export('xls')" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
+                            </div>
+                            <table  class="export table table-hover table-bordered">
                                 <thead>
                                 <tr>
+                                    <th>#Ref o #Recibo</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
                                     <th>Cliente</th>
                                     <th>Veh. Placa</th>
-                                    <th>Fecha de transacci&oacute;n</th>
-                                    <th>#Ref o #Recibo</th>
-                                    <th>Fecha de referencia</th>
-                                    <th>Tipo</th>
-                                    <th>Descargado</th>
+                                    <th>Ruta</th>
+                                    <th>Comentario</th>
                                     <th>Debe</th>
                                     <th>Haber</th>
+                                    <th>Descargado</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngFor="let recharges of dataList.list">
                                 <tr [class.alert-error]="recharges.rechargeTypeId==4 && recharges.quantity>0">
+                                    <td>{{recharges.reference}}</td>
+                                    <td>{{recharges.operationId?formatDate(recharges.operationDateCreated,'DD/MM/YYYY, LT'):''}}</td>
+                                    <td>{{recharges.operationId?formatDate(recharges.dateCreated,'DD/MM/YYYY, LT'):''}}</td>
                                     <td>
                                         <a class="btn btn-box-tool"
                                            (click)="goTaquilla($event,recharges.companyId)">
@@ -111,26 +125,16 @@
                                         </a>
                                     </td>
                                     <td>{{recharges.vehiclePlate}}</td>
-                                    <td>
-                                        {{formatDate(recharges.dateCreated,'DD/MM/YYYY, LT')}}
-                                    </td>
-                                    <td>{{recharges.reference}}</td>
-                                    <td>
-                                        {{formatDate(recharges.referenceDate,'DD/MM/YYYY')}}
-                                    </td>
-                                    <td>
-                                        <i class="{{recharges.rechargeTypeIcon}}"> {{recharges.rechargeTypeTitle}}</i>
-                                    </td>
-                                    <td>
-                                        {{ (recharges.weight | number:'.0-3') || "&nbsp;"}} {{recharges.metric}}
-                                    </td>
+                                    <td>{{recharges.routeReference}}</td>
+                                    <td>{{recharges.operationComment}}</td>
                                     <td>{{recharges.rechargeTypeId!=4?(recharges.quantity | number:'.0-2')+" "+MONEY_METRIC_SHORT:"&nbsp;"}}</td>
                                     <td>{{recharges.rechargeTypeId==4?((recharges.quantity*-1) | number:'.0-2')+" "+MONEY_METRIC_SHORT:"&nbsp;"}}</td>
+                                    <td>{{ (recharges.weight | number:'.0-3') || "&nbsp;"}} {{recharges.metric}}</td>
                                 </tr>
                                 </tbody>
                                 <tfoot *ngIf="dataList && dataList.page.length > 1">
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="9">
                                         <div class="btn-group pull-right">
                                             <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                                                 {{val}}
@@ -141,6 +145,7 @@
                                 </tfoot>
                             </table>
                         </div>
+
                         <div *ngIf="dataList && dataList.count == 0">
                             <div class="alert alert-warning alert-dismissable">
                                 <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>

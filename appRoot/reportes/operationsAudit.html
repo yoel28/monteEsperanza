@@ -1,0 +1,164 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    {{viewOptions.title | translate }}
+                </h3>
+            </div>
+            <div *ngIf="permissions.list" class="box-body">
+                <div class="col-lg-12">
+                    <form role="form" [ngFormModel]="form" (submit)="loadAudit($event)">
+                        <div class="form-group input-icon right col-lg-2">
+                            Lapso
+                            <div class="input-icon right">
+                                <select [(ngModel)]="fechaSelect" (ngModelChange)="setFecha($event)" sm-dropdown
+                                        class="ui fluid search selection dropdown">
+                                    <option data-hidden="true" value="-1"></option>
+                                    <option *ngFor="let n of itemsDate" [attr.value]="n.id">{{n.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            Rango
+                            <div daterangepicker [params]="paramsDate"
+                                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%"
+                                 (fecha)="assignDate($event)">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                    <span *ngIf="dateStart.value && dateEnd.value">
+                                        {{(dateStart.value || 'Inicio') +' - '+ (dateEnd.value || 'Fin') }}
+                                    </span>
+                                    <span *ngIf="!dateStart.value">
+                                        Seleccione un periodo
+                                    </span><b class="caret"></b>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 center-margin padding-top">
+                            <button (click)="loadAudit($event)" type="button" class="btn btn-success pull-right"
+                                    id="cntrlsubmit" [disabled]="!form.valid">
+                                <i class="fa fa-bank"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div *ngIf="dataList && dataList.entradasNoRegistradas">
+                    <div class="pull-right">
+                        <a [attr.href]="url+'&formatType=pdf'" target="_blank"><i class="fa fa-file-pdf-o fa-2x"></i>&nbsp;</a>
+                        <a [attr.href]="url+'&formatType=xls'" target="_blank"><i class="fa fa-file-excel-o fa-2x"></i>&nbsp;</a>
+                    </div>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#section1" aria-controls="section1" role="tab" data-toggle="tab">
+                                    Entradas no registradas
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#section2" aria-controls="section2" role="tab" data-toggle="tab">
+                                    Operaciones autoenlazadas pendientes
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#section3" aria-controls="section3" role="tab" data-toggle="tab">
+                                    Operaciones autoenlazadas validas
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#section4" aria-controls="section4" role="tab" data-toggle="tab">
+                                    Operaciones manuales
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#section5" aria-controls="section5" role="tab" data-toggle="tab">
+                                    Operations sin pendiente
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            {{loadKeysDataList()}}
+
+                            <div role="tabpanel" class="tab-pane active" id="section1">
+                                <table class="table table-striped table-hover" *ngIf="dataList.entradasNoRegistradas.length > 0" >
+                                    <thead>
+                                        <tr>
+                                            <th *ngFor="let key of keysDataList.entradasNoRegistradas" >
+                                                {{rules[key].title}}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of dataList.entradasNoRegistradas">
+                                            <td *ngFor="let key of keysDataList.entradasNoRegistradas" >
+                                                {{getData(data[key],rules[key])}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <div *ngIf="dataList.entradasNoRegistradas.length == 0" class="alert alert-warning alert-dismissable">
+                                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                    <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                                </div>
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="section2">
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="section3">
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="section4">
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="section5">
+
+                                <table class="table table-striped table-hover" *ngIf="dataList.operationsSinPending.length > 0" >
+                                    <thead>
+                                    <tr>
+                                        <th *ngFor="let key of keysDataList.operationsSinPending" >
+                                            {{rules[key].title}}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of dataList.operationsSinPending">
+                                        <td *ngFor="let key of keysDataList.operationsSinPending" >
+                                            {{getData(data[key],rules[key])}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                                <div *ngIf="dataList.operationsSinPending.length == 0" class="alert alert-warning alert-dismissable">
+                                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                    <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div *ngIf="dataList && dataList.count == 0">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                        <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!permissions.list">
+                <div class="btn-red padding-error">
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{viewOptions.errors.title}}</strong></h5>
+                    {{viewOptions.errors.list}}
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
