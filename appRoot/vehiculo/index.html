@@ -214,7 +214,7 @@
                                                                 </button>
                                                                 <button (click)="dataSelect = data"
                                                                         *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
-                                                                        data-toggle="modal" data-target="#searchDrivers"
+                                                                        data-toggle="modal" data-target="#searchDriversAdd"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
                                                                 </button>
@@ -480,4 +480,7 @@
 </div>
 <div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
     <search [params]="searchDrivers" (result)="assignDriver($event)"></search>
+</div>
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
+    <search [params]="searchDriversAdd" (result)="assignChofer($event)"></search>
 </div>
