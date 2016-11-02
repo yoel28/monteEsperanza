@@ -8,13 +8,13 @@ export class MDrivers extends ModelBase{
         this.initModel();
     }
     initRules(){
-        this.rules['nombre']={
+        this.rules['name']={
             'type': 'text',
             'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'key': 'nombre',
+            'key': 'name',
             'title': 'Nombre',
             'placeholder': 'Ingrese Nombre',
             'msg':{
