@@ -71,7 +71,9 @@ export class Drivers extends ControllerBase implements OnInit {
         this.rulesSave=Object.assign({},this.rules);
         delete this.rulesSave.enabled;
     }
-    initParamsSearch() {}
+    initParamsSearch() {
+        this.paramsSearch.placeholder="Buscar chofer";
+    }
     initRuleObject() {}
     initPermissions() {}
     initRulesAudit() {}
