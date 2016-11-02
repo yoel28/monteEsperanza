@@ -49,7 +49,7 @@ export class MDrivers extends ModelBase{
         }
         this.rules['email']={
             'type': 'text',
-            'required':true,
+            'required':false,
             'email':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
