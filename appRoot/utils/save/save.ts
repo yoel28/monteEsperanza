@@ -114,7 +114,7 @@ export class Save extends RestController implements OnInit{
                         return null;
                     });
             }
-            if(that.rules[key].type=='email')
+            if(that.rules[key].email)
             {
                 validators.push(
                     (c:Control)=> {
@@ -255,6 +255,9 @@ export class Save extends RestController implements OnInit{
             })
             this.params.updateField=true;
         }
+    }
+    public getKeys(data){
+        return Object.keys(data || {});
     }
 }
 
