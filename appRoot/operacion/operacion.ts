@@ -354,7 +354,7 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': false, 'position': 11, 'title': 'Tipo de basura', 'key': 'trash'},
         {'visible': false, 'position': 12, 'title': 'Operador', 'key': 'usernameCreator'},
         {'visible': false, 'position': 13, 'title': 'Fecha de Entrada.', 'key': 'dateCreated'},
-        {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'name'},
+        {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'choferName'},
 
     ];
 

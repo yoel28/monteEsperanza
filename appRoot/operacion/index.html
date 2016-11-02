@@ -96,6 +96,9 @@
                                     <span   *ngSwitchWhen="'vehicle'">
                                         {{data.vehiclePlate}}
                                     </span>
+                                    <span   *ngSwitchWhen="'choferName'">
+                                        {{data.choferName}}
+                                    </span>
                                     <span   *ngSwitchWhen="'weightIn'">
                                         <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
                                            [disabled]="!permissions.update" [rules]="rules" field="weightIn"></a>
