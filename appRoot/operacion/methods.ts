@@ -48,6 +48,9 @@ export class OperacionSave extends RestController implements OnInit{
     ngAfterViewInit(){
         this.getInstance.emit(this);
     }
+    getKeys(data){
+        return Object.keys(data || {});
+    }
 
     initForm() {
         let that = this;
@@ -201,9 +204,19 @@ export class OperacionSave extends RestController implements OnInit{
     getDataSearch(data){
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         this.data[this.search.key].updateValue(data.detail);
+
+        if(this.search.key == 'vehicle'){
+            if(!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)){
+                this.searchId['chofer']={};
+                this.data['chofer'].updateValue(data.choferNombre);
+                this.searchId['chofer']={'id':data.choferId,'title':data.choferNombre,'detail':data.choferNombre,'default':true};
+            }
+
+        }
         this.checkBalance();
         this.dataList=[];
     }
+
     checkBalance(){
 
         if(this.searchId['company']){
