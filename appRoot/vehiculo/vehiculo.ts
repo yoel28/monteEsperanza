@@ -174,7 +174,7 @@ export class Vehiculo extends RestController implements OnInit{
     //Buscar Chofer ------------------------------------------
     public searchDrivers={
         title:"Chofer",
-        idModal:"searchDrivers",
+        idModal:"searchDriversNuevo",
         endpoint:"/search/drivers/",
         placeholder:"Ingrese Chofer",
         label:{name:"Nombre: ",},
