@@ -134,10 +134,9 @@ export abstract class ModelBase{
             'paramsSearch': this.paramsSearch,
             "permissions": this.permissions,
             'msg': {
-                'errors': {
-                    'object': 'la referencia no esta registrada',
-                    'required': 'El campo es obligatorio'
-                },
+                'error': 'El campo contiene errores',
+                'object': 'la referencia no esta registrada',
+                'required': 'El campo es obligatorio'
             }
         }
     }
