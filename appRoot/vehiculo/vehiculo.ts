@@ -15,7 +15,8 @@ import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Tooltip} from "../utils/tooltips/tooltips";
-import {DriversSave} from "../drivers/methods";
+import {MDrivers} from "../drivers/MDrivers";
+import {Save} from "../utils/save/save";
 
 declare var jQuery:any;
 declare var SystemJS:any;
@@ -24,7 +25,7 @@ declare var SystemJS:any;
     pipes:[Divide],
     templateUrl: SystemJS.map.app+'/vehiculo/index.html',
     styleUrls: [SystemJS.map.app+'/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter,Tooltip,DriversSave],
+    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter,Tooltip,Save],
 })
 export class Vehiculo extends RestController implements OnInit{
 
@@ -46,6 +47,7 @@ export class Vehiculo extends RestController implements OnInit{
         this.setEndpoint('/vehicles/');
     }
     ngOnInit(){
+        this.initModels();
         if (this.myglobal.existsPermission('69')) {
             if(this.params.get('companyId'))
                 this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
@@ -172,20 +174,12 @@ export class Vehiculo extends RestController implements OnInit{
     }
 
     //Buscar Chofer ------------------------------------------
-    public searchDrivers={
-        title:"Chofer",
-        idModal:"searchDriversNuevo",
-        endpoint:"/search/drivers/",
-        placeholder:"Ingrese Chofer",
-        label:{name:"Nombre: ",},
+    public mDrivers:any;
+    public initModels(){
+        this.mDrivers = new MDrivers(this.myglobal);
     }
     assignDriver(data){
-        let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
-            this.dataList.list[index] = response.json();
-            this.modal.dataList=[];
-        }
-        let body=Json.stringify({'chofer':data.id})
-        this.httputils.doPut('/vehicles/'+this.dataSelect.id,body,successCallBack,this.error)
+        let body=Json.stringify({'chofer':data.id});
+        return (this.httputils.onUpdate(this.endpoint + this.dataSelect.id, body, this.dataSelect));
     }
 }
