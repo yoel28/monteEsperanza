@@ -109,7 +109,7 @@ export class Save extends RestController implements OnInit{
                                 if(that.searchId[key].detail == c.value)
                                     return null;
                             }
-                            return {object: {valid: false}};
+                            return {object: {valid: true}};
                         }
                         return null;
                     });
@@ -118,8 +118,11 @@ export class Save extends RestController implements OnInit{
             {
                 validators.push(
                     (c:Control)=> {
-                        let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-                        return EMAIL_REGEXP.test(c.value) ? null : {email: {valid: false}};
+                        if(c.value && c.value.length > 0) {
+                            let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                            return EMAIL_REGEXP.test(c.value) ? null : {'email': {'valid': true}};
+                        }
+                        return null;
                     });
             }
             that.data[key] = new Control('',Validators.compose(validators));
