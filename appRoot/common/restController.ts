@@ -236,4 +236,10 @@ export class RestController implements OnInit {
         if(this.dataList.page.length > 1)
             this.dataList.list.pop();
     }
+    public setNull(data,key){
+        let json = {};
+        json[key] = null;
+        let body = JSON.stringify(json);
+        return (this.httputils.onUpdate(this.endpoint + data.id, body, data, this.error));
+    }
 }
