@@ -36,7 +36,6 @@ export class MDrivers extends ModelBase{
         }
         this.rules['direccion']={
             'type': 'text',
-            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
@@ -51,6 +50,7 @@ export class MDrivers extends ModelBase{
         this.rules['email']={
             'type': 'text',
             'required':true,
+            'email':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
@@ -60,6 +60,7 @@ export class MDrivers extends ModelBase{
             'placeholder': 'Ingrese el correo',
             'msg':{
                 'error':'Este campo es obligatorio',
+                'email':'Correo invalido',
             }
         }
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
