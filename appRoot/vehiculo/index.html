@@ -69,7 +69,7 @@
                                                 <div [imageSrc]="data.image || '/assets/img/truck-guest.png'" x-cropit
                                                      (saveImagen)="changeImage($event,data.id)">
                                                     <div class="cropit-preview center-block"></div>
-                                                    <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))" >
+                                                    <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('VEH_UPDATE'))" >
                                                         <div class="col-lg-6">
                                                             <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                             <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
@@ -79,7 +79,7 @@
                                                             <input type="range" class="cropit-image-zoom-input"/>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))">
+                                                    <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('VEH_UPDATE'))">
                                                         <div class="col-lg-6">
                                                             <input x-file type="file" class="cropit-image-input"/>
                                                         </div>
@@ -97,32 +97,32 @@
                                             <div class="row separacion">
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                                     <strong>
-                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('VEH_UPDATE')"
                                                            [data]="data" [rules]="rules" field="plate"></a>
 
                                                     </strong>
                                                     <p>
                                                         <strong>Peso neto/Tara:</strong>
-                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('VEH_UPDATE')"
                                                            [data]="data" [rules]="rules" field="weight"></a>
                                                     </p>
                                                     <p>
                                                         Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
                                                         <label>
 
-                                                            <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('72')"
+                                                            <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('VEH_UPDATE')"
                                                                     (click)="releaseTag(data)"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-minus text-red"></i>
                                                             </button>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('72')"
+                                                                    *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('VEH_UPDATE')"
                                                                     data-toggle="modal" data-target="#saveTagVehiculo"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
                                                             <tooltip code="INFO_124"></tooltip>
-                                                            <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')"
+                                                            <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('120')"
                                                                     (click)="dataSelect = data"
                                                                     data-toggle="modal" data-target="#searchTag"
                                                                     type="button" class="btn btn-box-tool">
@@ -139,14 +139,14 @@
                                                         <label>
 
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('30')"
+                                                                    *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('30')"
                                                                     data-toggle="modal" data-target="#saveTipoVehiculoAdd"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
                                                             <tooltip code="INFO_126"></tooltip>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')"
+                                                                    *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('32')"
                                                                     data-toggle="modal" data-target="#searchTipoVehiculo"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-search text-blue"></i>
@@ -176,14 +176,14 @@
                                                             <div class="box-tools">
 
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
+                                                                        *ngIf="myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
                                                                         data-toggle="modal" data-target="#saveEmpresaAdd"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
                                                                 <tooltip code="INFO_128"></tooltip>
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
+                                                                        *ngIf="myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
                                                                         data-toggle="modal" data-target="#searchEmpresaNueva"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
@@ -200,6 +200,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                    {{data.choferId?'Chofer':'No tiene chofer asignado'}}
                                                         <div class="pull-left">
                                                             <figure>
 
@@ -208,16 +209,27 @@
                                                             </figure>
                                                             <div class="box-tools">
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
-                                                                        data-toggle="modal" data-target="#saveDriversAdd"
-                                                                        type="button" class="btn btn-box-tool">
+                                                                        *ngIf="myglobal.existsPermission('VEH_UPDATE') && mDrivers.permissions.add"
+                                                                        data-toggle="modal" [attr.data-target]="'#'+mDrivers.paramsSave.idModal"
+                                                                        type="button" class="btn btn-box-tool"
+                                                                        title="Asignar un nuevo chofer"
+                                                                >
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
-                                                                        data-toggle="modal" data-target="#searchDriversNuevo"
-                                                                        type="button" class="btn btn-box-tool">
+                                                                        *ngIf="myglobal.existsPermission('VEH_UPDATE') && mDrivers.permissions.list"
+                                                                        data-toggle="modal" [attr.data-target]="'#'+mDrivers.paramsSearch.idModal"
+                                                                        type="button" class="btn btn-box-tool"
+                                                                        title="Asignar un chofer"
+                                                                >
                                                                     <i class="fa fa-search text-blue"></i>
+                                                                </button>
+                                                                <button *ngIf="data.choferId && myglobal.existsPermission('VEH_UPDATE')"
+                                                                        (click)="setNull(data,'chofer')"
+                                                                        type="button" class="btn btn-box-tool"
+                                                                        title="Liberar chofer"
+                                                                >
+                                                                    <i class="fa fa-minus text-red"></i>
                                                                 </button>
                                                             </div>
 
@@ -276,7 +288,7 @@
                                                             <div [imageSrc]="data.image || '/assets/img/truck-guest.png'" x-cropit
                                                                  (saveImagen)="changeImage($event,data.id)">
                                                                 <div class="cropit-preview center-block"></div>
-                                                                <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))" >
+                                                                <div class="col-lg-12 margenes" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('VEH_UPDATE'))" >
                                                                     <div class="col-lg-6">
                                                                         <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                         <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
@@ -286,7 +298,7 @@
                                                                         <input type="range" class="cropit-image-zoom-input"/>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('72'))">
+                                                                <div class="col-lg-12" [hidden]="!(myglobal.existsPermission('78') && myglobal.existsPermission('VEH_UPDATE'))">
                                                                     <div class="col-lg-6">
                                                                         <input x-file type="file" class="cropit-image-input"/>
                                                                     </div>
@@ -303,20 +315,20 @@
 
                                                     <div class="col-xs-12 col-sm-8 col-lg-12">
                                                         <strong>
-                                                            <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
+                                                            <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('VEH_UPDATE')"
                                                                [data]="data" [rules]="rules" field="plate"></a>
 
                                                         </strong>
                                                         <p>
                                                             <strong>Peso neto/Tara:</strong>
-                                                            <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('72')"
+                                                            <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('VEH_UPDATE')"
                                                                [data]="data" [rules]="rules" field="weight"></a>
                                                         </p>
                                                         <p>
                                                             Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
                                                             <label>
 
-                                                                <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('72')"
+                                                                <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && myglobal.existsPermission('VEH_UPDATE')"
                                                                         (click)="releaseTag(data)"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-minus text-red"></i>
@@ -324,13 +336,13 @@
                                                                 </button>
 
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('72')"
+                                                                        *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('VEH_UPDATE')"
                                                                         data-toggle="modal" data-target="#saveTagVehiculo"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                     <tooltip code="INFO_136"></tooltip>
                                                                 </button>
-                                                                <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')"
+                                                                <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('120')"
                                                                         (click)="dataSelect = data"
                                                                         data-toggle="modal" data-target="#searchTag"
                                                                         type="button" class="btn btn-box-tool">
@@ -347,14 +359,14 @@
                                                             <label>
 
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('30')"
+                                                                        *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('30')"
                                                                         data-toggle="modal" data-target="#saveTipoVehiculoAdd"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                     <tooltip code="INFO_138"></tooltip>
                                                                 </button>
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')"
+                                                                        *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('32')"
                                                                         data-toggle="modal" data-target="#searchTipoVehiculo"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
@@ -385,7 +397,7 @@
                                                             <div class="box-tools">
 
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
+                                                                        *ngIf="myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('74') && myglobal.existsPermission('68')"
                                                                         data-toggle="modal" data-target="#saveEmpresaAdd"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
@@ -393,7 +405,7 @@
                                                                 </button>
 
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
+                                                                        *ngIf="myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
                                                                         data-toggle="modal" data-target="#searchEmpresaNueva"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
@@ -458,27 +470,31 @@
         </div>
     </div>
 </div>
-<div *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('68')">
+<div *ngIf="myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('74') && myglobal.existsPermission('68')">
     <empresa-save idModal="saveEmpresaAdd" (save)="assignEmpresa($event)"></empresa-save>
 </div>
-<div *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('72')">
+<div *ngIf="myglobal.existsPermission('79') && myglobal.existsPermission('VEH_UPDATE')">
     <tag-save idModal="saveTagVehiculo" (save)="assignTagNuevo($event)"></tag-save>
 </div>
-<div *ngIf="myglobal.existsPermission('76') && myglobal.existsPermission('72') && myglobal.existsPermission('120')">
+<div *ngIf="myglobal.existsPermission('76') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('120')">
     <search [params]="searchTag" (result)="assignTag($event)"></search>
 </div>
-<div *ngIf="myglobal.existsPermission('72') && myglobal.existsPermission('74') && myglobal.existsPermission('80')">
+<div *ngIf="myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('74') && myglobal.existsPermission('80')">
     <search [params]="searchEmpresa" (result)="assignEmpresa($event)"></search>
 </div>
-<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('30')">
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('30')">
     <tipoVehiculo-save idModal="saveTipoVehiculoAdd" (save)="assignTipoVehiculo($event)"></tipoVehiculo-save>
 </div>
-<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
+<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('VEH_UPDATE') && myglobal.existsPermission('32')">
     <search [params]="searchTipoVehiculo" (result)="assignTipoVehiculo($event)"></search>
 </div>
-<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
-    <drivers-save idModal="saveDriversAdd" (save)="assignDriver($event)"></drivers-save>
+
+
+<div *ngIf="mDrivers.permissions.add">
+    <save [params]="mDrivers.paramsSave" [rules]="mDrivers.ruleSave" (save)="assignDriver($event)"> </save>
 </div>
-<div *ngIf="myglobal.existsPermission('75') && myglobal.existsPermission('72') && myglobal.existsPermission('32')">
-    <search [params]="searchDrivers" (result)="assignDriver($event)"></search>
+
+
+<div *ngIf="mDrivers.permissions.list">
+    <search [params]="mDrivers.paramsSearch" (result)="assignDriver($event)"></search>
 </div>
