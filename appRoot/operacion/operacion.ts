@@ -12,6 +12,7 @@ import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {MDrivers} from "../drivers/MDrivers";
 declare var SystemJS:any;
 
 @Component({
@@ -26,6 +27,7 @@ export class Operacion extends ControllerBase implements OnInit {
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
+    public mDrivers:any;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/',router, http, toastr, myglobal, translate);
@@ -33,6 +35,8 @@ export class Operacion extends ControllerBase implements OnInit {
 
     ngOnInit() {
         this.initModel();
+        this.initModelExternal();
+
         this.MONEY_METRIC_SHORT = this.myglobal.getParams('MONEY_METRIC_SHORT');
         this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF')
 
@@ -42,11 +46,16 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view6'))
-                this.view = JSON.parse(localStorage.getItem('view6'));
+            if (localStorage.getItem('view7'))
+                this.view = JSON.parse(localStorage.getItem('view7'));
             this.ordenView();
             this.loadData();
         }
+    }
+
+    public initModelExternal(){
+        this.mDrivers = new MDrivers(this.myglobal);
+        Object.assign(this.rules.chofer,this.mDrivers.ruleObject);
     }
 
     initViewOptions() {
@@ -102,12 +111,13 @@ export class Operacion extends ControllerBase implements OnInit {
                 'object': true,
                 'title': 'Vehículo',
                 'placeholder': 'Ingrese la placa del vehículo',
-                'permissions': '69',
+                'permissions': {'list':this.myglobal.existsPermission('VEH_LIST')},
                 'msg': {
                     'error': 'El vehículo contiene errores',
                     'notAuthorized': 'No tiene permisos de listar los vehículos',
                 },
             },
+            'chofer':{},
             'company': {
                 'type': 'text',
                 'required': true,
@@ -127,7 +137,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 'object': true,
                 'title': 'Cliente',
                 'placeholder': 'Ingrese el Codigo/RUC del cliente',
-                'permissions': '80',
+                'permissions':  {'list':this.myglobal.existsPermission('80')},
                 'msg': {
                     'error': 'El cliente contiene errores',
                     'notAuthorized': 'No tiene permisos de listar los clientes',
@@ -140,7 +150,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 'search':true,
                 'key': 'trashType',
                 'readOnly': false,
-                'permissions': '136',
+                'permissions': {'list':this.myglobal.existsPermission('136')},
                 'paramsSearch': {
                     'label': {'title': "Tipo: ", 'detail': "Referencia: "},
                     'endpoint': "/search/type/trash/",
@@ -174,7 +184,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 'object': true,
                 'title': 'Ruta',
                 'placeholder': 'Referencia de la ruta',
-                'permissions': '69',
+                'permissions': {'list':this.myglobal.existsPermission('69')},
                 'msg': {
                     'error': 'La ruta contiene errores',
                     'notAuthorized': 'No tiene permisos de listar las rutas',
@@ -344,6 +354,7 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': false, 'position': 11, 'title': 'Tipo de basura', 'key': 'trash'},
         {'visible': false, 'position': 12, 'title': 'Operador', 'key': 'usernameCreator'},
         {'visible': false, 'position': 13, 'title': 'Fecha de Entrada.', 'key': 'dateCreated'},
+        {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'name'},
 
     ];
 
@@ -390,7 +401,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view6', JSON.stringify(this.view))
+        localStorage.setItem('view7', JSON.stringify(this.view))
     }
 
     setVisibleView(data) {
@@ -400,7 +411,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view6', JSON.stringify(this.view))
+        localStorage.setItem('view7', JSON.stringify(this.view))
     }
 }
 
