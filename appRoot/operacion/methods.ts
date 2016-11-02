@@ -208,8 +208,8 @@ export class OperacionSave extends RestController implements OnInit{
         if(this.search.key == 'vehicle'){
             if(!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)){
                 this.searchId['chofer']={};
-                this.data['chofer'].updateValue(data.choferNombre);
-                this.searchId['chofer']={'id':data.choferId,'title':data.choferNombre,'detail':data.choferNombre,'default':true};
+                this.data['chofer'].updateValue(data.choferName);
+                this.searchId['chofer']={'id':data.choferId,'title':data.choferName,'detail':data.choferName,'default':true};
             }
 
         }
