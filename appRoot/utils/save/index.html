@@ -41,7 +41,9 @@
                                                         </select>
 
                                                         <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
-                                                            {{rules[key].msg.error || 'El campo contiene errores'}}
+                                                            <div *ngFor="let error of getKeys(data[key].errors || {})">
+                                                                {{rules[key].msg[error] || 'El campo contiene errores'}}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
