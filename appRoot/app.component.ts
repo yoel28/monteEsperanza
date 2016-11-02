@@ -132,9 +132,8 @@ export class AppComponent extends RestController implements OnInit{
     public mhelp:MHelp;
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
-      super(http)
+      super(http);
       let url="https://dev.aguaseo.com:8080";
-
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
