@@ -5,6 +5,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {ColorPicker} from "../../common/xeditable";
+import {CatalogApp} from "../../common/catalogApp";
 declare var SystemJS:any;
 @Component({
     selector: 'save',
@@ -24,6 +25,7 @@ export class Save extends RestController implements OnInit{
     }
     */
     public params:any={};
+    public msg:any = CatalogApp.msg;
     /*
      public rules={
          'vehicle':{
