@@ -17,9 +17,6 @@ export class MDrivers extends ModelBase{
             'key': 'name',
             'title': 'Nombre',
             'placeholder': 'Ingrese Nombre',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['telefono']={
             'type': 'text',
@@ -30,9 +27,6 @@ export class MDrivers extends ModelBase{
             'key': 'telefono',
             'title': 'Teléfono',
             'placeholder': 'Ingrese teléfono',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['direccion']={
             'type': 'text',
@@ -43,9 +37,6 @@ export class MDrivers extends ModelBase{
             'icon': 'fa fa-list',
             'title': 'Dirección',
             'placeholder': 'Ingrese Dirección',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['email']={
             'type': 'text',
@@ -58,10 +49,6 @@ export class MDrivers extends ModelBase{
             'icon': 'fa fa-list',
             'title': 'Correo',
             'placeholder': 'Ingrese el correo',
-            'msg':{
-                'error':'Este campo es obligatorio',
-                'email':'Correo invalido',
-            }
         }
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
