@@ -10,7 +10,7 @@ export abstract class ModelBase{
     public paramsSearch:any = {};
     public paramsSave:any = {};
     public ruleObject:any={};
-    public ruleSave:any={};
+    public rulesSave:any={};
 
     public configId = moment().valueOf();
     private rulesDefault:any = {};
