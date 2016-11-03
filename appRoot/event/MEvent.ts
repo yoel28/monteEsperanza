@@ -153,10 +153,9 @@ export class MEvent extends ModelBase{
         this.ruleObject.key="event";
     }
     initRulesSave() {
-        let _rules = Object.assign({},this.rules);
-        delete _rules.detail;
-        delete _rules.enable;
-        this.ruleSave = Object.assign({},_rules);
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave.detail;
+        delete this.rulesSave.enabled;
     }
     loadData()
     {
