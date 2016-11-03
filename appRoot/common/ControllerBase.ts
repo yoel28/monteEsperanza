@@ -73,6 +73,7 @@ export abstract class ControllerBase extends RestController {
         this.translate.use(userLang);
     }
     public initModel() {
+        this.initPermissions();
         this.initRules();
         this.initRulesAudit();
         this.initViewOptions();
@@ -82,7 +83,7 @@ export abstract class ControllerBase extends RestController {
         this.initParamsFilter();
         this.initRuleObject();
     };
-    
+    abstract initPermissions();
     abstract initRules();
     private _initRules() {
         this.rules["detail"] = {
