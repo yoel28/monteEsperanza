@@ -4,63 +4,22 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {ColorPicker} from "../../common/xeditable";
+import {Xcropit, Xfile, ColorPicker} from "../../common/xeditable";
 import {CatalogApp} from "../../common/catalogApp";
 declare var SystemJS:any;
 @Component({
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
-    directives:[ColorPicker],
+    directives:[Xcropit,Xfile,ColorPicker],
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
 export class Save extends RestController implements OnInit{
 
-    /*
-    public params = {
-        title: "Tipo de empresa",
-        idModal: "searchTipoEmpresa",
-        endpoint: "/search/type/companies/",
-    }
-    */
     public params:any={};
     public msg:any = CatalogApp.msg;
-    /*
-     public rules={
-         'vehicle':{
-             'type':'text',
-             'required':true,
-             'key':'vehicle',
-             'paramsSearch': {
-                 'label':{'title':"Placa: ",'detail':"Empresa: "},
-                 'endpoint':"/search/vehicles/",
-                 'where':'',
-                 'imageGuest':'/assets/img/truck-guest.png',
-                 'field':'vehicle.id',
-             },
-             'icon':'fa fa-truck',
-             'object':true,
-             'title':'Buscar vehículo',
-             'placeholder':'ingrese la placa del vehículo',
-             'permissions':'69',
-             'msg':{
-                 'error':'El vehiculo contiene errores',
-                 'notAuthorized':'No tiene permisos de listar los vehiculos',
-             },
-     },
-     'weightIn':{
-         'type':'number',
-         'required':true,
-         'key':'weightIn',
-         'icon':'fa fa-balance-scale',
-         'placeholder':'Ingrese el peso de entrada',
-         'msg':{
-            'error':'El peso debe ser numerico',
-            },
-         },
-     };
-    */
+
     public rules:any={};
     public id:string;
 
@@ -193,6 +152,7 @@ export class Save extends RestController implements OnInit{
     //Al hacer click en la lupa guarda los valores del objecto
     getLoadSearch(event,data){
         event.preventDefault();
+        this.findControl="";
         this.search=data;
         this.getSearch(event,"");
     }
@@ -245,7 +205,11 @@ export class Save extends RestController implements OnInit{
     setColor(data,key){
         this.data[key].updateValue(data);
     }
-    public setLoadDataModel = data =>
+    changeImage(data,key){
+        (<Control>this.form.controls[key]).updateValue(data);
+    }
+
+    setLoadDataModel(data)
     {
         this.resetForm();
         if(data.id)
