@@ -42,7 +42,7 @@
 
                                                         <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
                                                             <div *ngFor="let error of getKeys(data[key].errors || {})">
-                                                                {{rules[key].msg[error] || 'El campo contiene errores'}}
+                                                                {{msg[error] || 'El campo contiene errores'}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div *ngIf="rules[key].object && !rules[key].permissions.list" class="col-lg-12">
-                                    {{rules[key].msg.notAuthorized || 'Acceso no autorizado'}}
+                                    {{msg.notAuthorized || 'Acceso no autorizado'}}
                                 </div>
                             </div>
                         </form>
