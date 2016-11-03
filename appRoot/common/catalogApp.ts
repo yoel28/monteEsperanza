@@ -71,5 +71,18 @@ export class CatalogApp {
     {
         return {'format':"DD-MM-YYYY","minDate":"01-01-2016"};
     }
+    public static get msg():any
+    {
+        let msg:any = {};
+
+        msg.error="El campo contiene errores";
+        msg.required="Este campo es obligatorio";
+        msg.noAuthorized="No posee permisos para esta accion";
+        msg.object="La referencia no esta registrada";
+        msg.email="Correo electronico invalido";
+
+        return msg;
+
+    }
 
 }
