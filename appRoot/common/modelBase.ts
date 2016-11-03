@@ -11,6 +11,7 @@ export abstract class ModelBase{
     public paramsSave:any = {};
     public ruleObject:any={};
     public rulesSave:any={};
+    public msg:any={};
 
     public configId = moment().valueOf();
     private rulesDefault:any = {};
@@ -23,6 +24,7 @@ export abstract class ModelBase{
     }
 
     private _initModel(){
+        this._initMsg();
         this._initPermissions();
         this._initRules();
         this._initParamsSearch();
@@ -37,7 +39,13 @@ export abstract class ModelBase{
         this.initParamsSave();
         this.initRuleObject();
     }
-    
+
+    private _initMsg(){
+        this.msg.error="El campo contiene errores";
+        this.msg.required="Este campo es obligatorio";
+        this.msg.noAuthorized="No posee permisos para esta accion";
+        this.msg.object="La referencia no esta registrada";
+    }
     
     abstract initPermissions();
     private _initPermissions() {
@@ -66,9 +74,7 @@ export abstract class ModelBase{
             "key": "detail",
             "title": "detalle",
             "placeholder": "ingrese el detalle",
-            'msg': {
-                'errors': {},
-            }
+            'msg': {}
         };
         this.rulesDefault["enabled"] = {
             "update": (this.permissions.update && this.permissions.lock),
@@ -82,9 +88,7 @@ export abstract class ModelBase{
             "title": "Habilitado",
             "placeholder": "",
             'msg': {
-                'errors': {
-                    'required': 'El campo es obligatorio',
-                },
+                'required': this.msg.required
             }
         };
     }
@@ -100,7 +104,7 @@ export abstract class ModelBase{
             'label': {'title': "titulo: ", 'detail': "detalle: "},
             'msg': {
                 'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
+                    'noAuthorized': this.msg.noAuthorized,
                 },
             },
             'where': '',
@@ -134,9 +138,9 @@ export abstract class ModelBase{
             'paramsSearch': this.paramsSearch,
             "permissions": this.permissions,
             'msg': {
-                'error': 'El campo contiene errores',
-                'object': 'la referencia no esta registrada',
-                'required': 'El campo es obligatorio'
+                'error': this.msg.error,
+                'object': this.msg.object,
+                'required': this.msg.required
             }
         }
     }
@@ -144,4 +148,5 @@ export abstract class ModelBase{
     getRulesDefault(){
         return this.rulesDefault;
     }
+
 }
