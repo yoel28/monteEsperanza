@@ -56,7 +56,6 @@ export abstract class ControllerBase extends RestController {
         super(http, toastr);
         this.setEndpoint(endpoint);
         //Carga Configuracion por defecto
-        this._initPermissions(prefix);
         this._initRules();
         this._initRulesAudit();
         this._initViewOptions();
@@ -74,7 +73,6 @@ export abstract class ControllerBase extends RestController {
         this.translate.use(userLang);
     }
     public initModel() {
-        this.initPermissions();
         this.initRules();
         this.initRulesAudit();
         this.initViewOptions();
@@ -84,21 +82,7 @@ export abstract class ControllerBase extends RestController {
         this.initParamsFilter();
         this.initRuleObject();
     };
-    abstract initPermissions();
-    private _initPermissions(prefix) {
-        this.prefix = prefix;
-        this.permissions['list'] = this.myglobal.existsPermission(this.prefix + '_LIST');
-        this.permissions['add'] = this.myglobal.existsPermission(this.prefix + '_ADD');
-        this.permissions['update'] = this.myglobal.existsPermission(this.prefix + '_UPDATE');
-        this.permissions['delete'] = this.myglobal.existsPermission(this.prefix + '_DELETE');
-        this.permissions['filter'] = this.myglobal.existsPermission(this.prefix + '_FILTER');
-        this.permissions['lock'] = this.myglobal.existsPermission(this.prefix + '_LOCK');
-        this.permissions['warning'] = this.myglobal.existsPermission(this.prefix + '_WARNING');
-        this.permissions['search'] = this.myglobal.existsPermission(this.prefix + '_SEARCH');
-
-        this.permissions['visible'] = true;//this.myglobal.existsPermission(this.prefix + '_VISIBLE');
-        this.permissions['audit'] = this.myglobal.existsPermission(this.prefix + '_AUDICT');
-    }
+    
     abstract initRules();
     private _initRules() {
         this.rules["detail"] = {
