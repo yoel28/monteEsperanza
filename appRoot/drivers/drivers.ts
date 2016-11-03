@@ -74,7 +74,6 @@ export class Drivers extends ControllerBase implements OnInit {
         this.paramsSearch.placeholder="Buscar chofer";
     }
     initRuleObject() {}
-    initPermissions() {}
     initRulesAudit() {}
     initParamsSave() {
         this.paramsSave.title="Agregar información";

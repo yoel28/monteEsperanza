@@ -73,7 +73,6 @@ export class Caja extends ControllerBase implements OnInit {
         this.paramsSearch.placeholder="Buscar caja";
     }
     initRuleObject() {}
-    initPermissions() {}
     initRulesAudit() {}
     initParamsSave() {
         this.paramsSave.title="Agregar caja";

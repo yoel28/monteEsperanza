@@ -72,7 +72,6 @@ export class Help extends ControllerBase implements OnInit {
     }
     initParamsSearch() {}
     initRuleObject() {}
-    initPermissions() {}
     initRulesAudit() {}
     initParamsSave() {
         this.paramsSave.title="Agregar información";

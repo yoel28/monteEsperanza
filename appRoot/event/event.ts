@@ -74,7 +74,6 @@ export class Events extends ControllerBase implements OnInit {
     }
     initParamsSearch() {}
     initRuleObject() {}
-    initPermissions() {}
     initRulesAudit() {}
     initParamsSave() {
         this.paramsSave.title="Agregar evento"
