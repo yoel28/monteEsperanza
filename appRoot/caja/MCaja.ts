@@ -79,9 +79,8 @@ export class MCaja extends ModelBase{
         this.ruleObject.key="caja";
     }
     initRulesSave() {
-        let _rules = Object.assign({},this.rules);
-        delete _rules.enabled;
-        this.rulesSave = Object.assign({},_rules);
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave.enabled;
     }
 
 }

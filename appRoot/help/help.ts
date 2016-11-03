@@ -68,8 +68,7 @@ export class Help extends ControllerBase implements OnInit {
         this.rules = this.model.rules;
     }
     initRulesSave(){
-        this.rulesSave=Object.assign({},this.rules);
-        delete this.rulesSave.enabled;
+        this.rulesSave=this.model.rulesSave;
     }
     initParamsSearch() {}
     initRuleObject() {}
