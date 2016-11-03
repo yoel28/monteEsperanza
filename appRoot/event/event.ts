@@ -37,6 +37,9 @@ export class Events extends ControllerBase implements OnInit {
         this.loadPublicData();
         this.loadPage();
     }
+    initPermissions() {
+        this.permissions = this.model.permissions;
+    }
     initViewOptions() {
         this.max=10;
         

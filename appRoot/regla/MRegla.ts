@@ -53,9 +53,8 @@ export class MRegla extends ModelBase{
         this.ruleObject.keyDisplay = "ruleName";
     }
     initRulesSave() {
-        let _rules = Object.assign({},this.rules);
-        delete _rules.detail;
-        delete _rules.enable;
-        this.ruleSave = Object.assign({},_rules);
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave.detail;
+        delete this.rulesSave.enable;
     }
 }

@@ -35,6 +35,9 @@ export class Help extends ControllerBase implements OnInit {
         this.loadParamsTable();
         this.loadPage();
     }
+    initPermissions() {
+        this.permissions = this.model.permissions;
+    }
     initViewOptions() {
         this.max=10;
         
