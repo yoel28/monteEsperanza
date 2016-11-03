@@ -81,7 +81,7 @@ export class MDrivers extends ModelBase{
     initRulesSave() {
         let _rules = Object.assign({},this.rules);
         delete _rules.enabled;
-        this.ruleSave = Object.assign({},_rules);
+        this.rulesSave = Object.assign({},_rules);
     }
 
 }
