@@ -1,4 +1,5 @@
 import {globalService} from "./globalService";
+import {CatalogApp} from "./catalogApp";
 
 declare var moment:any;
 
@@ -11,7 +12,7 @@ export abstract class ModelBase{
     public paramsSave:any = {};
     public ruleObject:any={};
     public rulesSave:any={};
-    public msg:any={};
+    public msg:any=CatalogApp.msg;
 
     public configId = moment().valueOf();
     private rulesDefault:any = {};
@@ -24,7 +25,6 @@ export abstract class ModelBase{
     }
 
     private _initModel(){
-        this._initMsg();
         this._initPermissions();
         this._initRules();
         this._initParamsSearch();
@@ -40,13 +40,6 @@ export abstract class ModelBase{
         this.initRuleObject();
     }
 
-    private _initMsg(){
-        this.msg.error="El campo contiene errores";
-        this.msg.required="Este campo es obligatorio";
-        this.msg.noAuthorized="No posee permisos para esta accion";
-        this.msg.object="La referencia no esta registrada";
-    }
-    
     abstract initPermissions();
     private _initPermissions() {
         this.permissions['list'] = this.myglobal.existsPermission(this.prefix + '_LIST');
@@ -72,9 +65,8 @@ export abstract class ModelBase{
             'icon': 'fa fa-list',
             "type": "textarea",
             "key": "detail",
-            "title": "detalle",
+            "title": "Detalle",
             "placeholder": "ingrese el detalle",
-            'msg': {}
         };
         this.rulesDefault["enabled"] = {
             "update": (this.permissions.update && this.permissions.lock),
@@ -87,9 +79,6 @@ export abstract class ModelBase{
             "key": "enabled",
             "title": "Habilitado",
             "placeholder": "",
-            'msg': {
-                'required': this.msg.required
-            }
         };
     }
 
@@ -137,11 +126,6 @@ export abstract class ModelBase{
             "placeholder": "PlaceHolder default",
             'paramsSearch': this.paramsSearch,
             "permissions": this.permissions,
-            'msg': {
-                'error': this.msg.error,
-                'object': this.msg.object,
-                'required': this.msg.required
-            }
         }
     }
 
