@@ -1,104 +1,96 @@
 import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
+import {Router}           from '@angular/router-deprecated';
+import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {Xeditable} from "../common/xeditable";
-import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
+import { ControllerBase} from "../common/ControllerBase";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Filter} from "../utils/filter/filter";
+import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
+import {MRuta} from "./MRuta";
 import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
 
 @Component({
-    selector: 'ruta',
+    selector: 'route',
     templateUrl: SystemJS.map.app+'/ruta/index.html',
     styleUrls: [SystemJS.map.app+'/ruta/style.css'],
-    directives:[Xeditable,Filter,Save, Tooltip]
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save,Tooltip],
+    pipes: [TranslatePipe]
 })
-export class Ruta extends RestController implements OnInit{
+export class Ruta extends ControllerBase implements OnInit {
 
-    public dataSelect:any={};
-    public title="Rutas";
+    public dataSelect:any = {};
+    public paramsTable:any={};
+    public model;
 
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint("/routes/")
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('ROUTE', '/routes/',router, http, toastr, myglobal, translate);
+        this.model= new MRuta(myglobal);
     }
-    public params = {
-        title: "Rutas",
-        idModal: "save",
-        endpoint: "/routes/",
-    };
-
-    public rules={
-        'title':{
-            'type':'text',
-            'icon':'fa fa-font',
-            'key':'title',
-            'required':true,
-            'display':null,
-            'maxLength':'35',
-            'title':'Título',
-            'mode':'inline',
-            'placeholder': 'Título',
-            'search': true,
-            'msg':{
-                'error':'El título contiene errores',
-            }
-        },
-        'reference':{
-            'type':'text',
-            'icon':'fa fa-list',
-            'key':'reference',
-            'required':true,
-            'display':null,
-            'title':'Referencia',
-            'mode':'inline',
-            'placeholder': 'Referencia',
-            'search': true,
-            'msg':{
-                'error':'la referencia contiene errores',
-            }
-        },
-        'detail':{
-            'type':'textarea',
-            'icon':'fa fa-font',
-            'key':'detail',
-            'required':true,
-            'display':null,
-            'title':'Detalle',
-            'mode':'inline',
-            'placeholder': 'Detalle',
-            'showbuttons':true,
-            'search': true,
-            'msg':{
-                'error':'El detalle contiene errores',
-            }
-        },
-
-
-    };
     ngOnInit(){
-        if(this.myglobal.existsPermission('151')){
-            this.max = 10;
-            this.loadData();
-        }
+        this.initModel();
+        this.loadParamsTable();
+        this.loadPage();
     }
-    assignRuta(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+    initPermissions() {
+        this.permissions = this.model.permissions;
     }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar rutas",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
-    loadWhere(where) {
-        this.where = where;
-        this.loadData();
+    initViewOptions() {
+        this.max=10;
+
+        this.viewOptions["title"] = 'Ruta';
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.paramsSave.idModal
+        });
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.paramsFilter.idModal
+        });
+
     }
+    initRules() {
+        this.rules = this.model.rules;
+    }
+    initRulesSave(){
+        this.rulesSave=this.model.rulesSave;
+    }
+    initParamsSearch() {
+        this.paramsSearch.placeholder="Buscar ruta";
+    }
+    initRuleObject() {}
+    initRulesAudit() {}
+    initParamsSave() {
+        this.paramsSave.title="Agregar ruta";
+    }
+    initParamsFilter() {
+        this.paramsFilter.title="Filtrar ruta";
+    }
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.permissions.delete,
+            'message': '¿ Esta seguro de eliminar la ruta : ',
+            'keyAction':'reference'
+        };
+    }
+
 
 }
+
