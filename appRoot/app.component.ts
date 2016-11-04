@@ -52,8 +52,8 @@ import {Events} from "./event/event";
 import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
 import {Drivers} from "./drivers/drivers";
-
 import {OperationsAudit} from "./reportes/operationsAudit";
+import {Container} from "./container/container";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -121,6 +121,7 @@ declare var jQuery:any;
   { path: '/ayuda',   name: 'Help', component: Help },
   { path: '/eventos',   name: 'Event', component: Events },
   { path: '/chofer',   name: 'Drivers', component: Drivers },
+  { path: '/container',   name: 'Container', component: Container },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -133,7 +134,7 @@ export class AppComponent extends RestController implements OnInit{
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public operacion:Operacion) {
       super(http);
-      let url="https://dev.aguaseo.com:8080";
+      let url="http://192.168.1.101:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
@@ -174,13 +175,16 @@ export class AppComponent extends RestController implements OnInit{
     );//this.onSocket();
   }
     ngOnInit(){
-        this.operacion.initModel();
+        //this.operacion.initModel();
         this.mhelp =  new MHelp(this.myglobal);
-
-        this.rulesOperacion = this.operacion.rulesSave;
+       // this.rulesOperacion = this.operacion.rulesSave;
     }
     ngAfterViewInit(){
 
+    }
+    public initOperation(){
+        //this.operacion.initRules();
+        //this.rulesOperacion = this.operacion.rulesSave;
     }
     setInstance(instance,prefix){
         if(!this.myglobal.objectInstance[prefix])
@@ -514,11 +518,17 @@ export class AppComponent extends RestController implements OnInit{
                     || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                     || this.myglobal.existsPermission("MEN_TIP_RECARGA")  || this.myglobal.existsPermission("MEN_TIP_BAS")
                     || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT")
-                    || this.myglobal.existsPermission("MEN_CHOFER"),
+                    || this.myglobal.existsPermission("MEN_CHOFER")  || this.myglobal.existsPermission("MEN_CONTAINER"),
                 'icon':'fa fa-gears',
                 'title':'Configuración',
                 'key':'Configuración',
                 'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CONTAINER"),
+                        'icon':'fa fa-crosshairs',
+                        'title':'Container',
+                        'routerLink':'Container'
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_ANTENAS"),
                         'icon':'fa fa-crosshairs',
