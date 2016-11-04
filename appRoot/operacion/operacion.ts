@@ -12,7 +12,8 @@ import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
-import {MDrivers} from "../drivers/MDrivers";
+import {MOperacion} from "./MOperacion";
+
 declare var SystemJS:any;
 
 @Component({
@@ -24,10 +25,10 @@ declare var SystemJS:any;
     pipes: [TranslatePipe]
 })
 export class Operacion extends ControllerBase implements OnInit {
+    
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
-    public mDrivers:any;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/',router, http, toastr, myglobal, translate);
@@ -35,13 +36,13 @@ export class Operacion extends ControllerBase implements OnInit {
 
     ngOnInit() {
         this.initModel();
-        this.initModelExternal();
+        this.initViewOptions();
 
         this.MONEY_METRIC_SHORT = this.myglobal.getParams('MONEY_METRIC_SHORT');
         this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF')
 
-        if (this.permissions['list']) {
-            this.max = 10;
+        if (this.model.permissions['list']) {
+
             let start = moment().startOf('month').format('DD-MM-YYYY');
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
@@ -52,229 +53,50 @@ export class Operacion extends ControllerBase implements OnInit {
             this.loadData();
         }
     }
-
-    public initModelExternal(){
-        this.mDrivers = new MDrivers(this.myglobal);
-        Object.assign(this.rules.chofer,this.mDrivers.ruleObject);
+    initModel() {
+        this.model= new MOperacion(this.myglobal);
     }
+
 
     initViewOptions() {
         this.viewOptions["title"] = 'Operaciones';
+        this.viewOptions["buttons"] = [];
+        this.viewOptions["actions"] = {};
+
         this.viewOptions["buttons"].push({
-            'visible': this.permissions['add'],
+            'visible': this.model.permissions.add,
             'title': 'Agregar',
-            'class': 'btn btn-primary',
-            'icon': 'fa fa-plus',
-            'modal': this.paramsSave.idModal
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.model.paramsSave.idModal
         });
+
         this.viewOptions["buttons"].push({
-            'visible': this.permissions['filter'],
+            'visible': this.model.permissions.filter,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
-            'modal': this.paramsFilter.idModal
+            'modal': this.model.paramsSearch.idModal
         });
+
 
         this.viewOptions.actions.delete = {
             'title': 'Eliminar',
-            'visible': this.permissions.delete,
+            'visible': this.model.permissions.delete,
             'message': 'Estás seguro que deseas eliminar la operación con el recibo ',
             'keyAction': 'rechargeReference'
         };
 
         this.viewOptions.actions.print = {
-            'visible': this.permissions.print,
+            'visible': this.model.permissions.print,
         };
 
         this.viewOptions.actions.automatic = {
-            'visible': this.permissions.automatic,
+            'visible': this.model.permissions.automatic,
         };
 
 
     }
-    initRules() {
-        let modelRules = {
-            'vehicle': {
-                'type': 'text',
-                'required': true,
-                'search':true,
-                'readOnly': false,
-                'key': 'vehicle',
-                'paramsSearch': {
-                    'label': {'title': "Empresa: ", 'detail': "Placa: "},
-                    'endpoint': "/search/vehicles/",
-                    'where': '',
-                    'imageGuest': '/assets/img/truck-guest.png',
-                    'field': 'vehicle.id',
-                },
-                'icon': 'fa fa-truck',
-                'object': true,
-                'title': 'Vehículo',
-                'placeholder': 'Ingrese la placa del vehículo',
-                'permissions': {'list':this.myglobal.existsPermission('VEH_LIST')},
-                'msg': {
-                    'error': 'El vehículo contiene errores',
-                    'notAuthorized': 'No tiene permisos de listar los vehículos',
-                },
-            },
-            'chofer':{},
-            'company': {
-                'type': 'text',
-                'required': true,
-                'search':true,
-                'key': 'company',
-                'readOnly': false,
-                'checkBalance': true,
-                'checkBalancePermission': this.myglobal.existsPermission('160'),
-                'paramsSearch': {
-                    'label': {'title': "Nombre: ", 'detail': "Codigo: "},
-                    'endpoint': "/search/companies/",
-                    'where': '',
-                    'imageGuest': '/assets/img/company-guest.png',
-                    'field': 'company.id',
-                },
-                'icon': 'fa fa-building',
-                'object': true,
-                'title': 'Cliente',
-                'placeholder': 'Ingrese el Codigo/RUC del cliente',
-                'permissions':  {'list':this.myglobal.existsPermission('80')},
-                'msg': {
-                    'error': 'El cliente contiene errores',
-                    'notAuthorized': 'No tiene permisos de listar los clientes',
-                    'errorCheckBalance': "El cliente no tiene saldo suficiente"
-                },
-            },
-            'trashType': {
-                'type': 'text',
-                'required': true,
-                'search':true,
-                'key': 'trashType',
-                'readOnly': false,
-                'permissions': {'list':this.myglobal.existsPermission('136')},
-                'paramsSearch': {
-                    'label': {'title': "Tipo: ", 'detail': "Referencia: "},
-                    'endpoint': "/search/type/trash/",
-                    'where': '',
-                    'imageGuest': '/assets/img/trash-guest.png',
-                    'field': 'trashType.id',
-                },
-                'icon': 'fa fa-trash',
-                'object': true,
-                'title': 'Basura',
-                'placeholder': 'Referencia del tipo de basura',
-                'msg': {
-                    'error': 'El tipo de basura contiene errores',
-                    'notAuthorized': 'No tiene permisos de listar los tipos de basura',
-                },
-            },
-            'route': {
-                'type': 'text',
-                'required': true,
-                'search':true,
-                'key': 'route',
-                'readOnly': false,
-                'paramsSearch': {
-                    'label': {'title': "Ruta: ", 'detail': "Referencia: "},
-                    'endpoint': "/search/routes/",
-                    'where': '',
-                    'imageGuest': '/assets/img/truck-guest.png',
-                    'field': 'route.id',
-                },
-                'icon': 'fa fa-random',
-                'object': true,
-                'title': 'Ruta',
-                'placeholder': 'Referencia de la ruta',
-                'permissions': {'list':this.myglobal.existsPermission('69')},
-                'msg': {
-                    'error': 'La ruta contiene errores',
-                    'notAuthorized': 'No tiene permisos de listar las rutas',
-                },
-            },
-
-            'weightIn': {
-                'type': 'number',
-                'display': null,
-                'required': true,
-                'mode': 'inline',
-                'double': true,
-                'search': true,
-                'key': 'weightIn',
-                'readOnly': false,
-                'icon': 'fa fa-balance-scale',
-                'title': 'Peso E.',
-                'placeholder': 'Peso de entrada',
-                'msg': {
-                    'error': 'El peso debe ser numerico',
-                },
-                'refreshField':{
-                    'icon':'fa fa-refresh',
-                    'endpoint':'/weight/',
-                    'field':'weight',
-                }
-            },
-            'weightOut': {
-                'type': 'number',
-                'display': null,
-                'mode': 'inline',
-                'search': true,
-                'key': 'weightOut',
-                'readOnly': false,
-                'hidden': true,
-                'double': true,
-                'icon': 'fa fa-balance-scale',
-                'title': 'Peso S.',
-                'placeholder': 'Peso de salida',
-                'msg': {
-                    'error': 'El peso debe ser numerico',
-                },
-                'refreshField':{
-                    'icon':'fa fa-refresh',
-                    'endpoint':'/weight/',
-                    'field':'weight',
-                }
-            },
-            'dateCreated':{
-                'type': 'date',
-                'display': null,
-                'search': true,
-                'title': 'Fecha de entrada',
-            },
-            'comment': {
-                'type': 'textarea',
-                'key': 'description',
-                'icon': 'fa fa-font',
-                'title': 'Comentarios',
-                'placeholder': 'Ingrese un comentario',
-                'msg': {
-                    'error': 'El comentario contiene errores',
-                },
-            },
-        }
-        this.rules=Object.assign({}, modelRules, this.rules);
-    }
-    initRulesSave() {
-        this.rulesSave=Object.assign({},this.rules);
-        delete this.rulesSave.dateCreated;
-        delete this.rulesSave.enabled;
-        delete this.rulesSave.detail;
-        delete this.rulesSave.id;
-    }
-    initPermissions() {
-        this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
-        this.permissions['automatic'] = this.myglobal.existsPermission(this.prefix + '_AUTOMATIC');
-    }
-    initParamsSearch() {}
-    initRulesAudit() {}
-    initParamsSave() {}
-    initRuleObject() {
-        this.ruleObject.key = "operation";
-        this.ruleObject.title = "Operaciones";
-        this.ruleObject.placeholder = "Ingrese el codigo de la operacion";
-    }
-    initParamsFilter() {
-        this.paramsFilter.title = "Filtrar operaciones";
-    }
-
 
     @ViewChild(OperacionPrint)
     operacionPrint:OperacionPrint;
