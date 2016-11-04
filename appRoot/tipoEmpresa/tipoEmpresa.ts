@@ -1,69 +1,97 @@
 import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {TipoEmpresaSave} from "./methods";
+import {Router}           from '@angular/router-deprecated';
+import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
-import {Xeditable} from "../common/xeditable";
+import { ControllerBase} from "../common/ControllerBase";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Filter} from "../utils/filter/filter";
-import {Tooltip} from "../utils/tooltips/tooltips"
+import {Tables} from "../utils/tables/tables";
+import {Save} from "../utils/save/save";
+import {Tooltip} from "../utils/tooltips/tooltips";
+import {MTypeCompany} from "./MTypeCompany";
+
 declare var SystemJS:any;
 
 @Component({
     selector: 'tipoEmpresa',
     templateUrl: SystemJS.map.app+'/tipoEmpresa/index.html',
     styleUrls: [SystemJS.map.app+'/tipoEmpresa/style.css'],
-    directives: [TipoEmpresaSave,Xeditable,Filter,Tooltip],
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save,Tooltip],
+    pipes: [TranslatePipe]
 })
-export class TipoEmpresa extends RestController implements OnInit{
+export class TipoEmpresa extends ControllerBase implements OnInit {
 
-    public dataSelect:any={};
+    public dataSelect:any = {};
+    public paramsTable:any={};
+    public model;
 
-    public rules={
-        'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
-        'code':{'type':'text','display':null,'title':'Código','placeholder':'Código','search':true},
-        'detail':{'type':'text','display':null,'title':'nombre','placeholder':'Detalle','search':true},
-        'free':{'type':'select','display':null,'title':'Libre','mode':'inline',
-            'source': [
-                {'value': true, 'text':'Libre'},
-                {'value': false, 'text': 'Pago'},
-            ]
-        },
-        'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
-            'source': [
-                {'value': 'fa fa-building', 'text':'building'},
-                {'value': 'fa fa-building-o', 'text': 'building-o'},
-                {'value': 'fa fa-home', 'text': 'home'},
-            ]
-        },
-    }
-    constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/type/companies/');
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('GROUP','/type/companies/',router, http, toastr, myglobal, translate);
+        this.model= new MTypeCompany(myglobal);
     }
     ngOnInit(){
-        if (this.myglobal.existsPermission('36')) {
-            this.max=20;
-            this.loadData();
-        }
+        this.initModel();
+        this.loadParamsTable();
+        this.loadPage();
     }
-    assignTipoEmpresa(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+    initPermissions() {
+        this.permissions = this.model.permissions;
     }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar tipos de empresas",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
+    initViewOptions() {
+        this.max=10;
 
-    loadWhere(where) {
-        this.where = where;
-        if (this.myglobal.existsPermission('36')) {
-            this.loadData();
-        }
+        this.viewOptions["title"] = 'Grupos';
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.paramsSave.idModal
+        });
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.paramsFilter.idModal
+        });
+        
     }
+    initRules() {
+        this.rules = this.model.rules;
+    }
+    initRulesSave(){
+        this.rulesSave = this.model.rulesSave;
+    }
+    initParamsSearch() {
+        this.paramsSearch.placeholder="Buscar grupos";
+    }
+    initRuleObject() {}
+    initRulesAudit() {}
+    initParamsSave() {
+        this.paramsSave.title="Agregar grupo";
+    }
+    initParamsFilter() {
+        this.paramsFilter.title="Filtrar grupo";
+    }
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.permissions.delete,
+            'message': '¿ Esta seguro de eliminar el grupo : ',
+            'keyAction':'code'
+        };
+    }
+
+
 }
+
