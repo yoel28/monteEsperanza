@@ -16,6 +16,10 @@
                 <input *ngIf="rules[key].type == 'color' && rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
                 <label *ngIf="rules[key].type == 'color' && !rules[key].update" class="form-control">{{'#'+data[key]}}</label>
 
+                <button  *ngIf="rules[key].type =='boolean'" class="{{getBooleandData(key,data).class}}" (click)="onPatch(key,data)" [disabled]="getBooleandData(key,data).disabled">
+                    {{getBooleandData(key,data).text}}
+                </button>
+
                 <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
                  {{data[rules[key].keyDisplay]}}
                  <label>
@@ -33,7 +37,6 @@
 
                  </label>
              </a>
-             <button  *ngIf="!rules[key].object &&  rules[key].type =='boolean'" class="btn" [class.btn-green]="data[key]" [class.btn-red]="!data[key]" (click)="onPatch(key,data)">{{data[key]?rules[key].states[0]:rules[key].states[1]}}</button>
 
             </td>
             <td *ngIf="params.actions">
@@ -102,11 +105,13 @@
             </td>
         </tr>
     </tbody>
-    <tfoot *ngIf="dataList && dataList.page.length > 1">
+    <tfoot *ngIf="dataList && dataList.page && dataList.page.length > 1">
         <tr>
             <td [attr.colspan]="keyVisible().length + 1">
                 <div class="btn-group pull-right">
-
+                    <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                        {{val}}
+                    </button>
                 </div>
             </td>
         </tr>
