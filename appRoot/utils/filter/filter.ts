@@ -59,6 +59,11 @@ export class Filter extends RestController implements OnInit{
             {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
         ],
+        'boolean':[
+            {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
+            {'id':'ne','text':'Diferente que'},
+        ],
         'date':[
             {'id':'eq','text':'En rango'},
             {'id':'ne','text':'Fuera de rango'},
@@ -325,6 +330,9 @@ export class Filter extends RestController implements OnInit{
     }
     setValueSelect(data,key){
         this.data[key].updateValue(data);
+        if(data=='-1')
+            this.data[key].updateValue(null);
+
     }
 }
 
