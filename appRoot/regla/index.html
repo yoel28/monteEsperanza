@@ -14,56 +14,29 @@
                     </button>
                 </div>
             </div>
-            <div *ngIf="permissions.list"  class="box-body">
+            <div *ngIf="model.permissions.list" class="box-body">
                 <div *ngIf="dataList && dataList.count>0">
-                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable"></tables>
+                    <tables [dataList]="dataList" [rules]="model.rules" [params]="paramsTable"></tables>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
                         <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                        <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                        <strong><i class="fa fa-warning"></i></strong> {{msg.notFound}}
                     </div>
                 </div>
             </div>
-
-            <div *ngIf="!permissions.list">
+            <div *ngIf="!model.permissions.list">
                 <div class="btn-red padding-error">
-                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{viewOptions.errors.title}}</strong></h5>
-                    {{viewOptions.errors.list}}
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle}}</strong></h5>
+                    {{msg.noAuthorized}}
                 </div>
             </div>
-
         </div>
     </section>
 </div>
-<div *ngIf="permissions.add">
-    <save [params]="paramsSave" [rules]="rulesSave" (save)="setLoadData($event)"> </save>
+<div *ngIf="model.permissions.add">
+    <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)"></save>
 </div>
-<div *ngIf="permissions.filter">
-    <filter [params]="paramsFilter" [rules]="rules" (whereFilter)="loadWhere($event)"> </filter>
-</div>
-
-
-<div class="modal fade" [class.in]="modalIn" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" [style.display]="modalIn?'block':'none'">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header btn-red text-center">
-                <h4 class="modal-title"><i
-                        class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
-            </div>
-            <div class="modal-body">
-                El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que hace.
-            </div>
-            <div class="modal-footer">
-                <button (click)="onDashboard()" type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
-                    &nbsp;Salir
-                </button>
-
-                <button (click)="loadPage(true)"  data-dismiss="modal" type="button" class="btn btn-red fa fa-check">
-                    &nbsp;S&iacute;, estoy seguro
-                </button>
-            </div>
-        </div>
-    </div>
+<div *ngIf="model.permissions.filter">
+    <filter [params]="model.paramsSearch" [rules]="model.rules" (whereFilter)="loadWhere($event)"></filter>
 </div>

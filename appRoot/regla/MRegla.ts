@@ -50,6 +50,6 @@ export class MRegla extends ModelBase{
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.detail;
-        delete this.rulesSave.enable;
+        delete this.rulesSave.enabled;
     }
 }
