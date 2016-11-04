@@ -177,6 +177,8 @@ export class Save extends RestController implements OnInit{
     //accion seleccionar un item de un select
     setValueSelect(data,key){
         (<Control>this.form.controls[key]).updateValue(data);
+        if(data=='-1')
+            (<Control>this.form.controls[key]).updateValue(null);
     }
     resetForm(){
         let that=this;
