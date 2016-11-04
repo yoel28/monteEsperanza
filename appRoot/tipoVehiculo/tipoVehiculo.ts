@@ -1,59 +1,96 @@
 import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {TipoVehiculoSave} from "./methods";
+import {Router}           from '@angular/router-deprecated';
+import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
-import {Xeditable} from "../common/xeditable";
+import { ControllerBase} from "../common/ControllerBase";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Filter} from "../utils/filter/filter";
+import {Tables} from "../utils/tables/tables";
+import {Save} from "../utils/save/save";
 import {Tooltip} from "../utils/tooltips/tooltips";
+import {MTypeVehicle} from "./MTypeVehicle";
 declare var SystemJS:any;
+
 @Component({
-    selector: 'tipoVehiculo',
+    selector: 'tipoVehiculo|',
     templateUrl: SystemJS.map.app+'/tipoVehiculo/index.html',
     styleUrls: [SystemJS.map.app+'/tipoVehiculo/style.css'],
-    directives: [TipoVehiculoSave,Xeditable,Filter,Tooltip],
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save,Tooltip],
+    pipes: [TranslatePipe]
 })
-export class TipoVehiculo extends RestController implements OnInit{
+export class TipoVehiculo extends ControllerBase implements OnInit {
 
-    public rules={
-        'title':{'type':'text','display':null,'title':'Titulo','placeholder':'Titulo','search':true},
-        'detail':{'type':'text','display':null,'title':'nombre','placeholder':'Nombre de usuario','search':true},
-        'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
-            'source': [
-                {'value': 'fa fa-truck', 'text':'truck'},
-                {'value': 'fa fa-car', 'text': 'car'},
-                {'value': 'fa fa-bus', 'text': 'bus'},
-                {'value': 'fa fa-taxi', 'text': 'taxi'},
-            ]
-        },
-    }
-    public dataSelect:any={};
-    constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/type/vehicles/');
+    public dataSelect:any = {};
+    public paramsTable:any={};
+    public model;
+
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('TYPE_VEH','/type/vehicles/',router, http, toastr, myglobal, translate);
+        this.model= new MTypeVehicle(myglobal);
     }
     ngOnInit(){
-        if (this.myglobal.existsPermission('32')) {
-            this.loadData();
-        }
+        this.initModel();
+        this.loadParamsTable();
+        this.loadPage();
     }
-    assignTipoEmpresa(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+    initPermissions() {
+        this.permissions = this.model.permissions;
     }
-    public paramsFilter:any = {
-        title: "Filtrar tipos de vehiculos",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
+    initViewOptions() {
+        this.max=10;
 
-    loadWhere(where) {
-        this.where = where;
-        if (this.myglobal.existsPermission('32')) {
-            this.loadData();
-        }
+        this.viewOptions["title"] = 'Tipo de vehículo';
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.paramsSave.idModal
+        });
+
+        this.viewOptions["buttons"].push({
+            'visible': this.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.paramsFilter.idModal
+        });
+
     }
+    initRules() {
+        this.rules = this.model.rules;
+    }
+    initRulesSave(){
+        this.rulesSave=this.model.rulesSave;
+    }
+    initParamsSearch() {
+        this.paramsSearch.placeholder="Buscar tipo de vehículo";
+    }
+    initRuleObject() {}
+    initRulesAudit() {}
+    initParamsSave() {
+        this.paramsSave.title="Agregar tipo de vehículo";
+    }
+    initParamsFilter() {
+        this.paramsFilter.title="Filtrar tipo de vehículo";
+    }
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.permissions.delete,
+            'message': '¿ Esta seguro de eliminar el tipo  : ',
+            'keyAction':'title'
+        };
+    }
+
+
 }
+
