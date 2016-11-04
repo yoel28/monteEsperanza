@@ -3,7 +3,6 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">
-                    <!--<tooltip code="ICO_DELETE"></tooltip>-->
                     {{viewOptions.title | translate }}
                 </h3>
                 <div class="pull-right" *ngIf="viewOptions['buttons']">
@@ -15,31 +14,29 @@
                     </button>
                 </div>
             </div>
-            <div *ngIf="permissions.list"  class="box-body">
+            <div *ngIf="model.permissions.list" class="box-body">
                 <div *ngIf="dataList && dataList.count>0">
-                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable"></tables>
+                    <tables [dataList]="dataList" [rules]="model.rules" [params]="paramsTable"></tables>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
                         <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                        <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                        <strong><i class="fa fa-warning"></i></strong> {{msg.notFound}}
                     </div>
                 </div>
             </div>
-
-            <div *ngIf="!permissions.list">
+            <div *ngIf="!model.permissions.list">
                 <div class="btn-red padding-error">
-                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{viewOptions.errors.title}}</strong></h5>
-                    {{viewOptions.errors.list}}
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle}}</strong></h5>
+                    {{msg.noAuthorized}}
                 </div>
             </div>
-
         </div>
     </section>
 </div>
-<div *ngIf="permissions.add">
-    <save [params]="paramsSave" [rules]="rulesSave" (save)="setLoadData($event)"> </save>
+<div *ngIf="model.permissions.add">
+    <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)"></save>
 </div>
-<div *ngIf="permissions.filter">
-    <filter [params]="paramsFilter" [rules]="rules" (whereFilter)="loadWhere($event)"> </filter>
+<div *ngIf="model.permissions.filter">
+    <filter [params]="model.paramsSearch" [rules]="model.rules" (whereFilter)="loadWhere($event)"></filter>
 </div>
