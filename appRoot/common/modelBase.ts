@@ -33,6 +33,7 @@ export abstract class ModelBase{
     }
     public initModel(){
         this.initPermissions();
+        this.modelExternal();
         this.initRules();
         this.initRulesSave();
         this.initParamsSearch();
@@ -54,6 +55,7 @@ export abstract class ModelBase{
         this.permissions['audit'] = this.myglobal.existsPermission(this.prefix + '_AUDICT');
     }
 
+    abstract modelExternal();
     abstract initRules();
     abstract initRulesSave();
     private _initRules() {

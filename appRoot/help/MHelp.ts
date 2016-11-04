@@ -7,6 +7,7 @@ export class MHelp extends ModelBase{
         super('INFO','/infos/',myglobal);
         this.initModel();
     }
+    modelExternal() {}
     initRules(){
         this.rules['code']={
             'type': 'text',
@@ -18,9 +19,6 @@ export class MHelp extends ModelBase{
             'icon': 'fa fa-key',
             'title': 'Codigo',
             'placeholder': 'Ingrese el codigo',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['title']={
             'type': 'text',
@@ -32,9 +30,6 @@ export class MHelp extends ModelBase{
             'icon': 'fa fa-key',
             'title': 'Título',
             'placeholder': 'Ingrese el título',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['color']={
             'type': 'color',
@@ -46,9 +41,6 @@ export class MHelp extends ModelBase{
             'value':'00ff00',
             'title': 'Color',
             'placeholder': '#000',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['position']={
             'type': 'select',
@@ -65,9 +57,6 @@ export class MHelp extends ModelBase{
             'key': 'position',
             'title': 'Posición',
             'placeholder': 'Selecccione una posición',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['size']={
             'type': 'select',
@@ -87,9 +76,6 @@ export class MHelp extends ModelBase{
             'key': 'size',
             'title': 'Tamaño',
             'placeholder': 'Selecccione un tamaño',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['icon']={
             'type': 'select',
@@ -104,9 +90,6 @@ export class MHelp extends ModelBase{
             'key': 'icon',
             'title': 'Icono',
             'placeholder': 'Selecccione un icono',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         
         this.rules = Object.assign({},this.rules,this.getRulesDefault())

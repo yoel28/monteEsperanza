@@ -4,14 +4,13 @@ import {ModelBase} from "../common/modelBase";
 export class MOperationAudit extends ModelBase{
 
     public rules:any={};
-    public publicData:any={};
-    public _MRegla:any={};
 
     constructor(public myglobal:globalService){
         super('RE_AUDIT','/reports/operations/audit/',myglobal);
 
         this.initModel();
     }
+    modelExternal() {}
     initRules(){
 
         //region Atributos de entradasNoRegistradas

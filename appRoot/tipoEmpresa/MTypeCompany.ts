@@ -7,6 +7,9 @@ export class MTypeCompany extends ModelBase{
         super('GROUP','/type/companies/',myglobal);
         this.initModel();
     }
+
+    modelExternal() {}
+    
     initRules(){
 
         this.rules['title']={

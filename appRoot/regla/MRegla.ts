@@ -7,6 +7,7 @@ export class MRegla extends ModelBase{
         super('RULE','/rules/',myglobal);
         this.initModel();
     }
+    modelExternal() {}
     initRules(){
         this.rules['rule']={
             'type':'text',
@@ -18,9 +19,6 @@ export class MRegla extends ModelBase{
             'icon': 'fa fa-key',
             'title':'Regla',
             'placeholder':'Regla',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         };
         this.rules['name']={
             'type':'text',
@@ -32,9 +30,6 @@ export class MRegla extends ModelBase{
             'icon': 'fa fa-list',
             'title':'Nombre',
             'placeholder':'Nombre',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         };
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }

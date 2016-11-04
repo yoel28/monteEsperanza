@@ -7,6 +7,7 @@ export class MRuta extends ModelBase{
         super('ROUTE','/routes/',myglobal);
         this.initModel();
     }
+    modelExternal() {}
     initRules(){
         this.rules['title']={
             'type': 'text',
@@ -19,9 +20,6 @@ export class MRuta extends ModelBase{
             'key': 'title',
             'title': 'Título',
             'placeholder': 'Título',
-            'msg':{
-                'error':this.msg.error,
-            }
         };
         this.rules['reference']={
             'type': 'text',
@@ -33,9 +31,6 @@ export class MRuta extends ModelBase{
             'key': 'reference',
             'title': 'Referencia',
             'placeholder': 'Referencia',
-            'msg':{
-                'error':this.msg.error,
-            }
         };
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }

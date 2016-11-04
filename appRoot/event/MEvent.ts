@@ -8,16 +8,18 @@ import {MRegla} from "../regla/MRegla";
 export class MEvent extends ModelBase{
     public rules:any={};
     public publicData:any={};
-    public _MRegla:any={};
+    public regla:any={};
     public httpUtils:HttpUtils;
 
     constructor(public myglobal:globalService,public http:Http ){
         super('EVENT','/events/',myglobal);
         this.httpUtils = new HttpUtils(http);
-        this._MRegla = new MRegla(myglobal);
-
         this.initModel();
+        
         this.loadData();
+    }
+    modelExternal() {
+        this.regla = new MRegla(this.myglobal);
     }
     initRules(){
         this.rules['code']={
@@ -92,7 +94,7 @@ export class MEvent extends ModelBase{
                 'error':'Este campo es obligatorio',
             }
         }
-        this.rules['rule']=this._MRegla.ruleObject;
+        this.rules['rule']=this.regla.ruleObject;
         this.rules['rule'].required = true;
         this.rules['target']={
             'type': 'text',

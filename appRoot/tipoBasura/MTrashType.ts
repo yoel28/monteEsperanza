@@ -15,8 +15,7 @@ export class MTrashType extends ModelBase{
         this.initLoadParams();
         this.initModel();
     }
-    
-    
+    modelExternal() {}
     initRules(){
 
         this.rules['title']={
@@ -29,9 +28,6 @@ export class MTrashType extends ModelBase{
             'key': 'title',
             'title': 'Título',
             'placeholder': 'Título',
-            'msg':{
-                'error':this.msg.error,
-            }
         };
 
         this.rules['price']={
@@ -45,9 +41,6 @@ export class MTrashType extends ModelBase{
             'key': 'price',
             'title': 'Precio ('+this.MONEY_METRIC_SHORT+')',
             'placeholder': 'Precio',
-            'msg':{
-                'error':this.msg.error,
-            }
         };
 
         this.rules['min']={
@@ -61,9 +54,6 @@ export class MTrashType extends ModelBase{
             'key': 'min',
             'title': 'Peso mínimo ('+this.WEIGTH_METRIC_SHORT+')',
             'placeholder': 'Peso mínimo',
-            'msg':{
-                'error':this.msg.error,
-            }
         };
 
         this.rules['minPrice']={
@@ -77,9 +67,7 @@ export class MTrashType extends ModelBase{
             'key': 'minPrice',
             'title': 'Precio mínimo ('+this.MONEY_METRIC_SHORT+')',
             'placeholder': 'Precio mínimo',
-            'msg':{
-                'error':this.msg.error,
-            }
+
         };
 
         this.rules['reference']={
@@ -92,9 +80,6 @@ export class MTrashType extends ModelBase{
             'key': 'reference',
             'title': 'Referencia',
             'placeholder': 'Referencia',
-            'msg':{
-                'error':this.msg.error,
-            }
         };
         
         this.rules = Object.assign({},this.rules,this.getRulesDefault())

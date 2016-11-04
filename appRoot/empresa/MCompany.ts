@@ -9,9 +9,10 @@ export class MCompany extends ModelBase{
 
     constructor(public myglobal:globalService){
         super('COMPANY','/companies/',myglobal);
-        this.typeCompany = new MTypeCompany(this.myglobal);
-
         this.initModel();
+    }
+    modelExternal() {
+        this.typeCompany = new MTypeCompany(this.myglobal);
     }
     initRules(){
 

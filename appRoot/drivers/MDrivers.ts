@@ -7,6 +7,7 @@ export class MDrivers extends ModelBase{
         super('CHOFER','/drivers/',myglobal);
         this.initModel();
     }
+    modelExternal() {}
     initRules(){
         this.rules['name']={
             'type': 'text',
