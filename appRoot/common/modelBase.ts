@@ -75,7 +75,10 @@ export abstract class ModelBase{
             'required': true,
             'icon': 'fa fa-list',
             "type": "boolean",
-            'states': ["Habilitado", "Deshabilitado"],
+            'source': [
+                {'value':true,'text': 'Habilitado', 'class': 'btn btn-sm btn-green'},
+                {'value':false,'text': 'Deshabilitado', 'class': 'btn btn-sm btn-red'},
+            ],
             "key": "enabled",
             "title": "Habilitado",
             "placeholder": "",

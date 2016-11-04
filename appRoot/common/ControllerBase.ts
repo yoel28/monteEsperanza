@@ -55,6 +55,7 @@ export abstract class ControllerBase extends RestController {
     constructor(prefix, endpoint,public router: Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super(http, toastr);
         this.setEndpoint(endpoint);
+        this.prefix = prefix;
         //Carga Configuracion por defecto
         this._initRules();
         this._initRulesAudit();
