@@ -80,6 +80,8 @@ export class CatalogApp {
         msg.noAuthorized="No posee permisos para esta accion";
         msg.object="La referencia no esta registrada";
         msg.email="Correo electronico invalido";
+        msg.notFound="No se encontraron resultados";
+        msg.warningTitle="Advertencia";
 
         return msg;
 
