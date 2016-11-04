@@ -1,89 +1,75 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {TagSave} from "./methods";
-import {Search} from "../utils/search/search";
-import {globalService} from "../common/globalService";
+import {Component, OnInit,ViewChild,Injectable} from '@angular/core';
+import {Router}           from '@angular/router-deprecated';
+import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {globalService} from "../common/globalService";
+import { ControllerBase} from "../common/ControllerBase";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Filter} from "../utils/filter/filter";
-import {Xeditable} from "../common/xeditable";
+import {Tables} from "../utils/tables/tables";
+import {Save} from "../utils/save/save";
 import {Tooltip} from "../utils/tooltips/tooltips";
-declare var SystemJS:any;
+import {MDrivers} from "./MDrivers";
 
+declare var SystemJS:any;
 @Component({
     selector: 'tagRfid',
     templateUrl: SystemJS.map.app+'/tagRfid/index.html',
     styleUrls: [SystemJS.map.app+'/tagRfid/style.css'],
-    directives:[TagSave,Search,Filter,Xeditable,Tooltip],
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save,Tooltip],
+    pipes: [TranslatePipe]
 })
-export class TagRfid extends RestController implements OnInit{
-    @ViewChild(Search)
-    modal:Search;
-    public dataSelect:any={};
+export class TagRfid extends ControllerBase implements OnInit {
 
-    constructor(public router: Router,public http: Http, public toastr:ToastsManager, public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/rfids/');
-    }
-    public rules = {
-        'number': {
-            'type': 'text',
-            'display': null,
-            'title': 'Número del Tag',
-            'placeholder': 'Número del Tag',
-            'mode': 'inline',
-            'search': true
-        },
-    }
+    public dataSelect:any = {};
+    public paramsTable:any={};
 
-    ngOnInit() {
-        if (this.myglobal.existsPermission('120')) {
-            this.max = 10;
-            this.loadData();
-        }
-    }
-    assignTag(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
-    }
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('TAG', '/rfids/',router, http, toastr, myglobal, translate);
 
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar Tag",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
-    loadWhere(where) {
-        this.where = where;
-        if (this.myglobal.existsPermission('120'))
-            this.loadData();
     }
+    ngOnInit(){
+        this.initModel();
+        this.initViewOptions();
+        this.loadParamsTable();
+        this.loadPage();
+    }
+    initModel() {
+        this.model= new MDrivers(this.myglobal);
+    }
+    initViewOptions() {
+        this.viewOptions["title"] = 'Tag RFID';
+        this.viewOptions["buttons"] = [];
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.model.paramsSave.idModal
+        });
 
-    //Buscar vehiculos sin tag ---------------------------------------------
-    public searchVehicle={
-        title:"Vehiculo",
-        idModal:"searchVehicle",
-        endpoint:"/search/vehicles/",
-        placeholder:"Ingrese la placa del vehiculo",
-        label:{'name':"Empresa: ",'detail':"Placa: "},
-        where:"&where="+encodeURI("[['op':'isNull','field':'tag.id']]")
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.model.paramsSearch.idModal
+        });
     }
-    //asignar tag a vehiculo
-    assignVehicle(data){
-        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
-        this.onPatch('vehicle',this.dataList.list[index],data.id);
-        this.modal.dataList=[];
-    }
-    //liberar tag
-    releaseTag(data){
-        let successCallback= response => {
-            this.toastr.success('Tag RFID liberado','Notificación')
-            Object.assign(data,response.json())
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.model.permissions.delete,
+            'message': '¿ Esta seguro de eliminar el tag : ',
+            'keyAction':'number'
         };
-        let body = JSON.stringify({'vehicle':null})
-        this.httputils.doPut(this.endpoint+data.id,body,successCallback,this.error)
     }
+
 
 }
