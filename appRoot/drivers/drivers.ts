@@ -28,53 +28,35 @@ export class Drivers extends ControllerBase implements OnInit {
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('CHOFER', '/drivers/',router, http, toastr, myglobal, translate);
-        this.model= new MDrivers(myglobal);
+
     }
     ngOnInit(){
         this.initModel();
+        this.initViewOptions();
         this.loadParamsTable();
         this.loadPage();
     }
-    initPermissions() {
-        this.permissions = this.model.permissions;
+    initModel() {
+        this.model= new MDrivers(this.myglobal);
     }
     initViewOptions() {
-        this.max=10;
-
         this.viewOptions["title"] = 'Choferes';
-
+        this.viewOptions["buttons"] = [];
         this.viewOptions["buttons"].push({
-            'visible': this.permissions.add,
+            'visible': this.model.permissions.add,
             'title': 'Agregar',
             'class': 'btn btn-green',
             'icon': 'fa fa-save',
-            'modal': this.paramsSave.idModal
+            'modal': this.model.paramsSave.idModal
         });
 
         this.viewOptions["buttons"].push({
-            'visible': this.permissions.filter,
+            'visible': this.model.permissions.filter,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
-            'modal': this.paramsFilter.idModal
+            'modal': this.model.paramsSearch.idModal
         });
-    }
-    initRules() {
-        this.rules = this.model.rules;
-    }
-    initRulesSave(){
-        this.rulesSave = this.model.rulesSave;
-    }
-    initParamsSearch() {
-        this.paramsSearch.placeholder="Buscar chofer";
-    }
-    initRuleObject() {}
-    initRulesAudit() {}
-    initParamsSave() {
-        this.paramsSave.title="Agregar información";
-    }
-    initParamsFilter() {
-        this.paramsFilter.title="Filtrar choferes";
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -84,9 +66,9 @@ export class Drivers extends ControllerBase implements OnInit {
             "exp": "",
             'title': 'Eliminar',
             'idModal': this.prefix+'_'+this.configId+'_del',
-            'permission': this.permissions.delete,
-            'message': '¿ Esta seguro de eliminar la accion : ',
-            'keyAction':'code'
+            'permission': this.model.permissions.delete,
+            'message': '¿ Esta seguro de eliminar el chofer : ',
+            'keyAction':'name'
         };
     }
 
