@@ -4,10 +4,10 @@
             <div class="box">
                 <div class="box-header with-border">
                     <button *ngIf="myglobal.existsPermission('68')" type="button" class="btn btn-primary btn-green"
-                            data-toggle="modal" data-target="#saveEmpresa">
+                            data-toggle="modal" [attr.data-target]="'#'+paramsSave.idModal">
                         <i class="fa fa-plus"></i> Nuevo
                     </button>
-                    <button *ngIf="myglobal.existsPermission('91')" type="button" class="btn btn-primary btn-blue"
+                    <button *ngIf="permissions.filter" type="button" class="btn btn-primary btn-blue"
                             data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
                         <i class="fa fa-filter"></i>&nbsp;Filtrar
                     </button>
@@ -414,9 +414,10 @@
     <tipoEmpresa-save idModal="saveTipoEmpresa" (save)="assignTipoEmpresa($event)"></tipoEmpresa-save>
 </div>
 
-<div *ngIf="myglobal.existsPermission('68')">
-    <empresa-save idModal="saveEmpresa" (save)="assignEmpresa($event)"></empresa-save>
+<div *ngIf="permissions.add">
+    <save [params]="paramsSave" [rules]="rulesSave" (save)="setLoadData($event)"> </save>
 </div>
+
 
 <div *ngIf="myglobal.existsPermission('82')">
     <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
@@ -447,6 +448,6 @@
     <search [params]="searchTipoEmpresa" (result)="assignTipoEmpresa($event)"></search>
 </div>
 
-<div *ngIf="myglobal.existsPermission('91')">
+<div *ngIf="permissions.filter">
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>

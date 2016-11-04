@@ -2,8 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {Router, RouteParams} from "@angular/router-deprecated";
 import {Http} from "@angular/http";
 import {RestController} from "../common/restController";
-import {EmpresaSave} from "./methods";
-import {TipoEmpresaSave} from "../tipoEmpresa/methods";
 import {Search} from "../utils/search/search";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RecargaTimeLine} from "../recarga/methods";
@@ -11,108 +9,73 @@ import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
 import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
+import {MCompany} from "./MCompany";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Tables} from "../utils/tables/tables";
+import {Save} from "../utils/save/save";
+import {ControllerBase} from "../common/ControllerBase";
 declare var SystemJS:any;
 
 @Component({
-    selector: 'empresa',
-    pipes: [Divide],
+    selector: 'company',
     templateUrl: SystemJS.map.app+'/empresa/index.html',
     styleUrls: [SystemJS.map.app+'/empresa/style.css'],
-    directives: [EmpresaSave, TipoEmpresaSave, Search, Xeditable, Xfile, Xcropit,Filter]
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save, Search, Xeditable, Xfile, Xcropit,Filter],
+    pipes: [Divide,TranslatePipe],
 })
-export class Empresa extends RestController implements OnInit {
+export class Empresa extends ControllerBase implements OnInit {
+
+    public dataSelect:any = {};
+    public paramsTable:any={};
+
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('COMPANY', '/companies/',router, http, toastr, myglobal, translate);
+    }
+    ngOnInit(){
+        this.initModel();
+        this.initViewOptions();
+        this.loadParamsTable();
+        this.loadPage();
+    }
+    initModel() {
+        this.model= new MCompany(this.myglobal);
+    }
+    initViewOptions() {
+        this.viewOptions["title"] = 'Cliente';
+        this.viewOptions["buttons"]=[];
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.model.paramsSave.idModal
+        });
+
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.model.paramsSearch.idModal
+        });
+    }
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.model.permissions.delete,
+            'message': '¿ Esta seguro de eliminar el cliente : ',
+            'keyAction':'code'
+        };
+    }
 
     public typeView=1;
 
-    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService) {
-        super(http, toastr);
-        this.setEndpoint('/companies/');
-    }
-
-    ngOnInit() {
-        if (this.myglobal.existsPermission('80')) {
-            this.max = 12;
-            this.loadData();
-        }
-    }
-
-    public rules = {
-        'name': {
-            'type': 'text',
-            'display': null,
-            'title': 'Nombre del cliente',
-            'placeholder': 'Nombre',
-            'mode': 'inline',
-            'search': true
-        },
-        'ruc': {
-            'type': 'text',
-            'display': null,
-            'title': 'Ruc del cliente',
-            'mode': 'inline',
-            'placeholder': 'RUC',
-            'search': true
-        },
-        'code': {
-            'type': 'text',
-            'display': null,
-            'title': 'Codigo del cliente',
-            'mode': 'inline',
-            'placeholder': 'Código',
-            'search': true
-        },
-        'responsiblePerson': {
-            'type': 'text',
-            'display': null,
-            'title': 'Persona Responsable',
-            'placeholder': 'Responsable',
-            'mode': 'inline',
-            'search': true
-        },
-        'phone': {
-            'type': 'number',
-            'display': null,
-            'title': 'Teléfono',
-            'placeholder': 'Teléfono',
-            'mode': 'inline',
-            'search': false
-        },
-        'minBalance': {
-            'type': 'number',
-            'display': null,
-            'title': 'Balance mínimo',
-            'placeholder': 'Balance mínimo',
-            'mode': 'inline',
-            'search': true
-        },
-        'balance': {
-            'type': 'number',
-            'display': null,
-            'title': 'Balance',
-            'placeholder': 'Balance',
-            'double':true,
-            'mode': 'inline',
-            'search': true
-        },
-        'address': {
-            'type': 'text',
-            'display': null,
-            'title': 'Dirección',
-            'mode': 'inline',
-            'placeholder': 'Dirección',
-            'search': true
-        },
-        'debt': {
-            'type': 'number',
-            'step':'0.001',
-            'title': 'Deuda',
-            'placeholder': 'Deuda (Valores negativos)',
-            'double':true,
-            'search': true
-        },
-    };
-
-    public dataSelect:any={};
 
     public searchTipoEmpresa = {
         title: "Grupo",
@@ -166,18 +129,6 @@ export class Empresa extends RestController implements OnInit {
     loadImage(event, data) {
         event.preventDefault();
         this.onPatch('image', data, this.image[data.id]);
-    }
-
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar empresas",
-        idModal: "modalFilterCompanies",
-        endpoint: "",
-    };
-
-    loadWhere(where) {
-        this.where = where;
-        this.loadData();
     }
 
 }

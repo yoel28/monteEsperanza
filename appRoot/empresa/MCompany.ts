@@ -137,6 +137,7 @@ export class MCompany extends ModelBase{
         this.ruleObject.title="Compañia";
         this.ruleObject.placeholder="Ingrese compañia";
         this.ruleObject.key="company";
+        this.ruleObject.keyDisplay="companyRuc";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
