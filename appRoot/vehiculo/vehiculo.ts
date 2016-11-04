@@ -1,82 +1,82 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouteParams}           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
-import {RestController} from "../common/restController";
-import {VehiculoSave} from "./methods";
-import {EmpresaSave} from "../empresa/methods";
-import {TipoVehiculoSave} from "../tipoVehiculo/methods";
 import {TagSave} from "../tagRfid/methods";
 import {Search} from "../utils/search/search"
-import {Json} from "@angular/platform-browser/src/facade/lang";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {FormBuilder} from "@angular/common";
 import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
-import {Divide} from "../utils/pipe";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Tooltip} from "../utils/tooltips/tooltips";
-import {MDrivers} from "../drivers/MDrivers";
 import {Save} from "../utils/save/save";
-
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Tables} from "../utils/tables/tables";
+import {ControllerBase} from "../common/ControllerBase";
+import {MVehicle} from "./MVehicle";
+import {MDrivers} from "../drivers/MDrivers";
+import {MTypeVehicle} from "../tipoVehiculo/MTypeVehicle";
+import {MCompany} from "../empresa/MCompany";
 declare var jQuery:any;
 declare var SystemJS:any;
+
 @Component({
     selector: 'vehiculo',
-    pipes:[Divide],
     templateUrl: SystemJS.map.app+'/vehiculo/index.html',
-    styleUrls: [SystemJS.map.app+'/vehiculo/styleVehiculo.css'],
-    directives: [VehiculoSave,Search,TagSave,TipoVehiculoSave,EmpresaSave,Xeditable,Xcropit,Xfile,Filter,Tooltip,Save],
+    styleUrls: [SystemJS.map.app+'/vehiculo/style.css'],
+    directives: [Search,TagSave,Xeditable,Xcropit,Xfile,Filter,Tooltip,Save,Tables,Tooltip],
+    providers: [TranslateService],
+    pipes: [TranslatePipe]
 })
-export class Vehiculo extends RestController implements OnInit{
+export class Vehiculo extends ControllerBase implements OnInit{
 
-    @ViewChild(Search)
-    modal:Search;
     public typeView=1;
 
+    public dataSelect:any = {};
 
-    public rules={
-        'plate':{'type':'text','display':null,'title':'Placa del vehiculo','search': true,'placeholder': 'Placa'},
-        'weight':{'type':'number','display':null,'title':'Peso del vehiculo','search': true,'placeholder': 'Peso'},
-        'minBalance':{'type':'number','display':null,'title':'Balance minimo','search': true,'placeholder': 'Balance minimo'},
-        'balance':{'type':'number','display':null,'title':'Balance','search': true,'placeholder': 'Balance'},
-        
-    }
+    public vehicle:any;
+    public driver:any;
+    public typeVehicle:any;
+    public company:any;
 
-    constructor(public params:RouteParams,public router: Router,public http: Http,public toastr: ToastsManager,public _formBuilder: FormBuilder,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/vehicles/');
+    constructor(public params:RouteParams,public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('VEH', '/vehicles/',router, http, toastr, myglobal, translate);
     }
     ngOnInit(){
-        this.initModels();
-        if (this.myglobal.existsPermission('69')) {
-            if(this.params.get('companyId'))
-                this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
-            this.max = 12;
-            this.loadData();
-        }
+        this.initModel();
+        this.initViewOptions();
+        this.loadPage();
+        if(this.params.get('companyId'))
+            this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
     }
-    //parametros del filtro
-    public paramsFilter:any = {
-        title: "Filtrar vehiculos",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
+    initModel() {
+        this.model = new MVehicle(this.myglobal);
 
-    loadWhere(where) {
-        this.where = where;
-        if (this.myglobal.existsPermission('69')) {
-            this.loadData();
-        }
+        this.vehicle = new MVehicle(this.myglobal);
+        this.driver = new MDrivers(this.myglobal);
+        this.typeVehicle = new MTypeVehicle(this.myglobal);
+        this.company = new MCompany(this.myglobal);
     }
+    initViewOptions() {
+        this.viewOptions["title"] = 'Vehículos';
+        this.viewOptions["buttons"] = [];
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.model.paramsSave.idModal
+        });
 
-    assignVehiculo(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.model.paramsSearch.idModal
+        });
     }
-
-    //Buscar tag sin vehiculo ---------------------------------------------
-    public dataSelect:any={};
+    
+        //Buscar tag sin vehiculo ---------------------------------------------
 
     public searchTag={
         title:"Tag",
@@ -92,9 +92,8 @@ export class Vehiculo extends RestController implements OnInit{
             let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
             this.dataList.list[index].tagRFID = response.json().number;
             this.dataList.list[index].tagId = response.json().id;
-            this.modal.dataList=[];
         }
-        let body=Json.stringify({'vehicle':this.dataSelect.id})
+        let body=JSON.stringify({'vehicle':this.dataSelect.id})
         this.httputils.doPut('/rfids/'+data.id,body,successCallBack,this.error)
     }
     //liberar tag
@@ -123,44 +122,6 @@ export class Vehiculo extends RestController implements OnInit{
     }
 
 
-    //Buscar tipo vehiculo ---------------------------------------------
-    public searchTipoVehiculo={
-        title:"Tipo Vehiculo",
-        idModal:"searchTipoVehiculo",
-        endpoint:"/search/type/vehicles",
-        placeholder:"Seleccione un Tipo de vehiculo",
-        label:{name:"Numero: ",detail:"Detalle: "}
-    }
-    //asignar tag a vehiculo
-    assignTipoVehiculo(data){
-        let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
-            this.dataList.list[index] = response.json();
-            this.modal.dataList=[];
-        }
-        let body=Json.stringify({'vehicleType':data.id})
-        this.httputils.doPut('/vehicles/'+this.dataSelect.id,body,successCallBack,this.error)
-    }
-
-    //Buscar Empresa ---------------------------------------------
-    public searchEmpresa={
-        title:"Empresa nueva",
-        idModal:"searchEmpresaNueva",
-        endpoint:"/search/companies/",
-        placeholder:"Ingrese el RUC de la empresa",
-        label:{name:"Nombre: ",detail:"RUC: "},
-    }
-    //asignar empresa
-    assignEmpresa(data){
-        let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
-            this.dataList.list[index] = response.json();
-            this.modal.dataList=[];
-        }
-        let body=Json.stringify({'company':data.id})
-        this.httputils.doPut('/vehicles/'+this.dataSelect.id,body,successCallBack,this.error)
-    }
-
     //cambiar imagen
     public image:any=[];
     changeImage(data,id){
@@ -171,15 +132,5 @@ export class Vehiculo extends RestController implements OnInit{
     loadImage(event,data){
         event.preventDefault();
         this.onPatch('image',data,this.image[data.id]);
-    }
-
-    //Buscar Chofer ------------------------------------------
-    public mDrivers:any;
-    public initModels(){
-        this.mDrivers = new MDrivers(this.myglobal);
-    }
-    assignDriver(data){
-        let body=Json.stringify({'chofer':data.id});
-        return (this.httputils.onUpdate(this.endpoint + this.dataSelect.id, body, this.dataSelect));
     }
 }
