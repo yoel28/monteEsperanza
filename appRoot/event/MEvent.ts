@@ -15,7 +15,6 @@ export class MEvent extends ModelBase{
         super('EVENT','/events/',myglobal);
         this.httpUtils = new HttpUtils(http);
         this.initModel();
-        
         this.loadData();
     }
     modelExternal() {
@@ -31,10 +30,7 @@ export class MEvent extends ModelBase{
             'key': 'code',
             'icon': 'fa fa-key',
             'title': 'Codigo',
-            'placeholder': 'Ingrese el codigo',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
+            'placeholder': 'Codigo',
         }
         this.rules['actionType']={
             'type': 'select',
@@ -45,10 +41,7 @@ export class MEvent extends ModelBase{
             'source': [],
             'key': 'actionType',
             'title': 'Tipo de acción',
-            'placeholder': 'Selecccione una opcion',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
+            'placeholder': 'Selecccione un tipo de acccion',
         }
         this.rules['way']={
                 'type': 'select',
@@ -59,10 +52,7 @@ export class MEvent extends ModelBase{
                 'source': [],
                 'key': 'way',
                 'title': 'Canal',
-                'placeholder': 'Selecccione una opcion',
-                'msg':{
-                    'error':'Este campo es obligatorio',
-                }
+                'placeholder': 'Selecccione un canal',
             }
         this.rules['over']={
             'type': 'select',
@@ -74,9 +64,6 @@ export class MEvent extends ModelBase{
             'key': 'over',
             'title': 'Dominio',
             'placeholder': 'Seleccione un dominio',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
 
         this.rules['message']={
@@ -90,9 +77,6 @@ export class MEvent extends ModelBase{
             'icon': 'fa fa-key',
             'title': 'Mensaje',
             'placeholder': 'Ingrese el mensaje',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
         this.rules['rule']=this.regla.ruleObject;
         this.rules['rule'].required = true;
@@ -105,10 +89,7 @@ export class MEvent extends ModelBase{
             'key': 'target',
             'icon': 'fa fa-key',
             'title': 'Objectivo',
-            'placeholder': 'Ingrese el objetivo',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
+            'placeholder': 'Objetivo',
         }
         this.rules['title']={
             'type': 'text',
@@ -119,10 +100,7 @@ export class MEvent extends ModelBase{
             'key': 'title',
             'icon': 'fa fa-key',
             'title': 'Titulo',
-            'placeholder': 'Ingrese el titulo',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
+            'placeholder': 'Titulo',
         }
         this.rules['icon']={
             'type': 'text',
@@ -134,9 +112,6 @@ export class MEvent extends ModelBase{
             'icon': 'fa fa-key',
             'title': 'Icono',
             'placeholder': 'Ingrese el icono',
-            'msg':{
-                'error':'Este campo es obligatorio',
-            }
         }
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
