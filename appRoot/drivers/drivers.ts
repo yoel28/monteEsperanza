@@ -58,14 +58,6 @@ export class Drivers extends ControllerBase implements OnInit {
             'icon': 'fa fa-filter',
             'modal': this.paramsFilter.idModal
         });
-
-        this.viewOptions.actions.delete = {
-            'title': 'Eliminar',
-            'visible': this.permissions.delete,
-            'idModal': this.prefix+'_'+this.configId+'_del',
-            'message': 'Estás seguro que deseas eliminar chofer ',
-            'keyAction': 'code'
-        };
     }
     initRules() {
         this.rules = this.model.rules;
