@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
-import {RestController} from "../common/restController";
+import {Router}           from '@angular/router-deprecated';
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Search} from "../utils/search/search";
@@ -8,6 +8,9 @@ import {globalService} from "../common/globalService";
 import {Fecha} from "../utils/pipe";
 import {RecargaSave} from "../recarga/methods";
 import moment from "moment/moment";
+import {ControllerBase} from "../common/ControllerBase";
+import {TranslateService} from "ng2-translate/ng2-translate";
+import {MOperacion} from "./MOperacion";
 declare var SystemJS:any;
 
 @Component({
@@ -18,7 +21,7 @@ declare var SystemJS:any;
     outputs:['save','getInstance'],
     directives:[Search,RecargaSave],
 })
-export class OperacionSave extends RestController implements OnInit{
+export class OperacionSave extends ControllerBase implements OnInit{
 
     public idModal:string;
     public save:any;
@@ -33,17 +36,20 @@ export class OperacionSave extends RestController implements OnInit{
     data:any = [];
     keys:any = {};
 
-    
-
-    constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
-        super(http,toastr);
+    constructor(public _formBuilder: FormBuilder,public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('OP', '/operations/',router, http, toastr, myglobal, translate);
         this.save = new EventEmitter();
         this.getInstance = new EventEmitter();
     }
+
     ngOnInit(){
         this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
+        this.initModel();
         this.initForm();
+    }
+    initModel() {
+        this.model = new MOperacion(this.myglobal);
     }
     ngAfterViewInit(){
         this.getInstance.emit(this);
