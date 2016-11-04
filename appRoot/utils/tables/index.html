@@ -20,16 +20,10 @@
                     {{getBooleandData(key,data).text}}
                 </button>
 
-                <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
+                <a *ngIf="rules[key].object">
                  {{data[rules[key].keyDisplay]}}
                  <label>
                      <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
-                             (click)="loadSearchTable($event,key,data)"
-                             data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
-                         <i class="fa fa-search text-blue"></i>
-                     </button>
-
-                     <button *ngIf="rules[key].paramsSearch" type="button" class="btn btn-box-tool"
                              (click)="loadSearchTable($event,key,data)"
                              data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
                          <i class="fa fa-search text-blue"></i>

@@ -17,14 +17,14 @@ export class Tooltip implements OnInit{
     public permissions:any;
     public code="";
     public data:any={};
-    public mHelp:any;
+    public help:any;
     
 
     public configId=moment().valueOf();
 
     constructor(public myglobal:globalService) {
-        this.mHelp=new MHelp(myglobal);
-        this.permissions = Object.assign({},this.mHelp.permissions);
+        this.help=new MHelp(myglobal);
+        this.permissions = Object.assign({},this.help.permissions);
     }
     ngOnInit() {
         this.configId='TOOLTIP_'+this.configId+'_'+this.code;
@@ -44,8 +44,8 @@ export class Tooltip implements OnInit{
     edit(event,data){
         event.preventDefault();
         if(this.permissions.update){
-            if(this.myglobal.objectInstance[this.mHelp.prefix]){
-                this.myglobal.objectInstance[this.mHelp.prefix].setLoadDataModel(data);
+            if(this.myglobal.objectInstance[this.help.prefix]){
+                this.myglobal.objectInstance[this.help.prefix].setLoadDataModel(data);
             }
         }
     }
