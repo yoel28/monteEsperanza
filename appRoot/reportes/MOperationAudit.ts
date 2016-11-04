@@ -110,17 +110,4 @@ export class MOperationAudit extends ModelBase{
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
     }
 
-    initPermissions() {}
-
-    initParamsSearch() {
-        this.paramsSearch.title="Buscar operación";
-        this.paramsSearch.placeholder="Ingrese codigo de la operación";
-    }
-
-    initParamsSave() {}
-
-    initRuleObject() {}
-
-    initRulesSave() {}
-
 }

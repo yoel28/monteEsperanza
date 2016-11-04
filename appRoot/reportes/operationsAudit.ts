@@ -29,7 +29,6 @@ export class OperationsAudit extends ControllerBase{
     public dateStart:Control;
     public dateEnd:Control;
 
-    public model:any;
     public url:any;
 
     public paramsDate:any = CatalogApp.formatDateDDMMYYYY;
@@ -37,34 +36,18 @@ export class OperationsAudit extends ControllerBase{
 
     constructor(public router: Router,public http: Http,public _formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService,public translate:TranslateService) {
         super('RE_AUDIT','/reports/operations/audit',router,http,toastr,myglobal,translate);
-        this.model= new MOperationAudit(myglobal);
     }
     ngOnInit(){
         this.initModel();
+        this.initViewOptions();
         this.initForm();
     }
-
-    initPermissions() {}
-
-    initRules() {
-        this.rules = Object.assign({},this.model.rules)
+    initModel() {
+        this.model= new MOperationAudit(this.myglobal);
     }
-
-    initRulesAudit() {}
-
     initViewOptions() {
         this.viewOptions.title = "Auditoria de operaciones";
     }
-
-    initRulesSave() {}
-
-    initParamsSave() {}
-
-    initParamsSearch() {}
-
-    initParamsFilter() {}
-
-    initRuleObject() {}
 
     initForm()
     {
@@ -94,7 +77,7 @@ export class OperationsAudit extends ControllerBase{
 
     loadAudit()
     {
-        if(this.permissions.list)
+        if(this.model.permissions.list)
         {
             this.keysDataList={};
             this.dataList = Object.assign({});
@@ -118,7 +101,7 @@ export class OperationsAudit extends ControllerBase{
             this.getObjectKeys(this.dataList).forEach(key=>{
                 that.keysDataList[key]=[];
                 that.getObjectKeys(that.dataList[key][0]).forEach(subKey=>{
-                    if(that.rules[subKey])
+                    if(that.model.rules[subKey])
                         that.keysDataList[key].push(subKey);
                 });
             });

@@ -6,7 +6,7 @@
                     {{viewOptions.title | translate }}
                 </h3>
             </div>
-            <div *ngIf="permissions.list" class="box-body">
+            <div *ngIf="model.permissions.list" class="box-body">
                 <div class="col-lg-12">
                     <form role="form" [ngFormModel]="form" (submit)="loadAudit($event)">
                         <div class="form-group input-icon right col-lg-2">
@@ -101,7 +101,7 @@
                                 </table>
                                 <div *ngIf="dataList.entradasNoRegistradas.length == 0" class="alert alert-warning alert-dismissable">
                                     <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                                    <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                                    <strong><i class="fa fa-warning"></i></strong> {{msg.notFound}}
                                 </div>
 
                             </div>
@@ -135,7 +135,7 @@
                                 </table>
                                 <div *ngIf="dataList.operationsSinPending.length == 0" class="alert alert-warning alert-dismissable">
                                     <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                                    <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                                    <strong><i class="fa fa-warning"></i></strong> {{msg.notFound}}
                                 </div>
                             </div>
                         </div>
@@ -147,18 +147,17 @@
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
                         <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                        <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                        <strong><i class="fa fa-warning"></i></strong> {{msg.notFound}}
                     </div>
                 </div>
             </div>
 
-            <div *ngIf="!permissions.list">
+            <div *ngIf="!model.permissions.list">
                 <div class="btn-red padding-error">
-                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{viewOptions.errors.title}}</strong></h5>
-                    {{viewOptions.errors.list}}
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle}}</strong></h5>
+                    {{msg.noAuthorized}}
                 </div>
             </div>
-
         </div>
     </section>
 </div>
