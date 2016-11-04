@@ -83,6 +83,8 @@ export class MTrashType extends ModelBase{
         };
         
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
+
+        this.rules['detail'].required=true;
     }
     initPermissions() {}
     initParamsSearch() {
@@ -101,7 +103,6 @@ export class MTrashType extends ModelBase{
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.enabled;
     }
-
 
     initLoadParams(){
         this.WEIGTH_METRIC_SHORT=this.myglobal.getParams('WEIGTH_METRIC_SHORT');
