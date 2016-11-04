@@ -109,5 +109,18 @@ export class MOperationAudit extends ModelBase{
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
     }
+    initPermissions() {
+    }
 
+    initRulesSave() {
+    }
+
+    initParamsSearch() {
+    }
+
+    initParamsSave() {
+    }
+
+    initRuleObject() {
+    }
 }
