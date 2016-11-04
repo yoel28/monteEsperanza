@@ -122,7 +122,7 @@ export abstract class ModelBase{
         this.ruleObject = {
             'icon': 'fa fa-list',
             "type": "text",
-            "required":false,
+            "required":true,
             "visible":true,
             "key": "keyDefault",
             "keyDisplay": "keyDefault",
