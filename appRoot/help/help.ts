@@ -24,63 +24,37 @@ export class Help extends ControllerBase implements OnInit {
 
     public dataSelect:any = {};
     public paramsTable:any={};
-    public model;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('INFO', '/infos/',router, http, toastr, myglobal, translate);
-        this.model= new MHelp(myglobal);
     }
     ngOnInit(){
         this.initModel();
+        this.initViewOptions();
         this.loadParamsTable();
         this.loadPage();
     }
-    initPermissions() {
-        this.permissions = this.model.permissions;
+    initModel() {
+        this.model= new MHelp(this.myglobal);
     }
     initViewOptions() {
-        this.max=10;
-        
         this.viewOptions["title"] = 'Informacion (Ayudas)';
-
+        this.viewOptions["buttons"] = [];
         this.viewOptions["buttons"].push({
-            'visible': this.permissions.add,
+            'visible': this.model.permissions.add,
             'title': 'Agregar',
             'class': 'btn btn-green',
             'icon': 'fa fa-save',
-            'modal': this.paramsSave.idModal
+            'modal': this.model.paramsSave.idModal
         });
 
         this.viewOptions["buttons"].push({
-            'visible': this.permissions.filter,
+            'visible': this.model.permissions.filter,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
-            'modal': this.paramsFilter.idModal
+            'modal': this.model.paramsSearch.idModal
         });
-        
-        this.viewOptions.actions.delete = {
-            'title': 'Eliminar',
-            'visible': this.permissions.delete,
-            'idModal': this.prefix+'_'+this.configId+'_del',
-            'message': 'Estás seguro que deseas eliminar la ayuda ',
-            'keyAction': 'code'
-        };
-    }
-    initRules() {
-        this.rules = this.model.rules;
-    }
-    initRulesSave(){
-        this.rulesSave=this.model.rulesSave;
-    }
-    initParamsSearch() {}
-    initRuleObject() {}
-    initRulesAudit() {}
-    initParamsSave() {
-        this.paramsSave.title="Agregar información";
-    }
-    initParamsFilter() {
-        this.paramsFilter.title="Filtrar ayudas";
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -90,7 +64,7 @@ export class Help extends ControllerBase implements OnInit {
             "exp": "",
             'title': 'Eliminar',
             'idModal': this.prefix+'_'+this.configId+'_del',
-            'permission': this.permissions.delete,
+            'permission': this.model.permissions.delete,
             'message': '¿ Esta seguro de eliminar la accion : ',
             'keyAction':'code'
         };

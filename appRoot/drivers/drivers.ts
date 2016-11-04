@@ -24,7 +24,6 @@ export class Drivers extends ControllerBase implements OnInit {
 
     public dataSelect:any = {};
     public paramsTable:any={};
-    public model;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('CHOFER', '/drivers/',router, http, toastr, myglobal, translate);

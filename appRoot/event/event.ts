@@ -25,7 +25,6 @@ export class Events extends ControllerBase implements OnInit {
     public dataSelect:any = {};
     public paramsTable:any={};
     public dataPublic:any={};
-    public model:any;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('EVENT', '/events/',router, http, toastr, myglobal, translate);
