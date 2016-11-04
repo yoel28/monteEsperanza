@@ -1,6 +1,5 @@
 import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
-import {HttpUtils} from "../common/http-utils";
 
 export class MOperationAudit extends ModelBase{
 
