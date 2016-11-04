@@ -23,60 +23,41 @@ declare var SystemJS:any;
 })
 export class TipoEmpresa extends ControllerBase implements OnInit {
 
+
     public dataSelect:any = {};
     public paramsTable:any={};
-    public model;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('GROUP','/type/companies/',router, http, toastr, myglobal, translate);
-        this.model= new MTypeCompany(myglobal);
     }
     ngOnInit(){
         this.initModel();
+        this.initViewOptions();
         this.loadParamsTable();
         this.loadPage();
     }
-    initPermissions() {
-        this.permissions = this.model.permissions;
+    initModel() {
+        this.model= new MTypeCompany(this.myglobal);
     }
     initViewOptions() {
-        this.max=10;
-
         this.viewOptions["title"] = 'Grupos';
-
+        this.viewOptions["buttons"] = [];
         this.viewOptions["buttons"].push({
-            'visible': this.permissions.add,
+            'visible': this.model.permissions.add,
             'title': 'Agregar',
             'class': 'btn btn-green',
             'icon': 'fa fa-save',
-            'modal': this.paramsSave.idModal
+            'modal': this.model.paramsSave.idModal
         });
 
         this.viewOptions["buttons"].push({
-            'visible': this.permissions.filter,
+            'visible': this.model.permissions.filter,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
-            'modal': this.paramsFilter.idModal
+            'modal': this.model.paramsSearch.idModal
         });
         
-    }
-    initRules() {
-        this.rules = this.model.rules;
-    }
-    initRulesSave(){
-        this.rulesSave = this.model.rulesSave;
-    }
-    initParamsSearch() {
-        this.paramsSearch.placeholder="Buscar grupos";
-    }
-    initRuleObject() {}
-    initRulesAudit() {}
-    initParamsSave() {
-        this.paramsSave.title="Agregar grupo";
-    }
-    initParamsFilter() {
-        this.paramsFilter.title="Filtrar grupo";
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -86,7 +67,7 @@ export class TipoEmpresa extends ControllerBase implements OnInit {
             "exp": "",
             'title': 'Eliminar',
             'idModal': this.prefix+'_'+this.configId+'_del',
-            'permission': this.permissions.delete,
+            'permission': this.model.permissions.delete,
             'message': '¿ Esta seguro de eliminar el grupo : ',
             'keyAction':'code'
         };
