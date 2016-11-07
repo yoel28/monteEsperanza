@@ -128,6 +128,7 @@ export abstract class ModelBase{
             "keyDisplay": "keyDefault",
             "title": "TipoDefault",
             'object': true,
+            'code': 'default',
             "placeholder": "PlaceHolder default",
             'paramsSearch': this.paramsSearch,
             "permissions": this.permissions,
@@ -137,5 +138,16 @@ export abstract class ModelBase{
     getRulesDefault(){
         return this.rulesDefault;
     }
+
+    public setDataField(id,key,value?,callback?,data?){
+        let json = {};
+        json[key] = value || null;
+        let body = JSON.stringify(json);
+        return (this.myglobal.httputils.onUpdate(this.endpoint + id, body,{}).then(response=>{
+            if(callback)
+                callback(response,data);
+        }));
+    }
+
 
 }
