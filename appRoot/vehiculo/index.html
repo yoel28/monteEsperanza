@@ -111,26 +111,31 @@
                                                     <p>
                                                         Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
                                                         <label>
-
-                                                            <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && model.permissions.update"
-                                                                    (click)="releaseTag(data)"
-                                                                    type="button" class="btn btn-box-tool">
-                                                                <i class="fa fa-minus text-red"></i>
-                                                            </button>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="myglobal.existsPermission('79') && model.permissions.update"
-                                                                    data-toggle="modal" data-target="#saveTagVehiculo"
-                                                                    type="button" class="btn btn-box-tool">
+                                                                    *ngIf="model.permissions.update && tag.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+tag.paramsSave.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar un nuevo tag"
+                                                            >
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
-                                                            <tooltip code="INFO_124"></tooltip>
-                                                            <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && model.permissions.update && myglobal.existsPermission('120')"
-                                                                    (click)="dataSelect = data"
-                                                                    data-toggle="modal" data-target="#searchTag"
-                                                                    type="button" class="btn btn-box-tool">
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && tag.permissions.list"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar un tag"
+                                                            >
                                                                 <i class="fa fa-search text-blue"></i>
                                                             </button>
-                                                            <tooltip code="INFO_125"></tooltip>
+                                                            <button *ngIf="data.tagRFID && tag.permissions.update"
+                                                                    (click)="setDataFieldReference(tag,data,true,syncTag)"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Liberar chofer"
+                                                            >
+                                                                <i class="fa fa-minus text-red"></i>
+                                                            </button>
+
+
                                                         </label>
                                                     </p>
                                                     <p>
@@ -329,28 +334,31 @@
                                                         <p>
                                                             Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
                                                             <label>
-
-                                                                <button *ngIf="data.tagRFID && myglobal.existsPermission('77') && model.permissions.update"
-                                                                        (click)="releaseTag(data)"
-                                                                        type="button" class="btn btn-box-tool">
-                                                                    <i class="fa fa-minus text-red"></i>
-                                                                    <tooltip code="INFO_135"></tooltip>
-                                                                </button>
-
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="myglobal.existsPermission('79') && model.permissions.update"
-                                                                        data-toggle="modal" data-target="#saveTagVehiculo"
-                                                                        type="button" class="btn btn-box-tool">
+                                                                        *ngIf="model.permissions.update && tag.permissions.add"
+                                                                        data-toggle="modal" [attr.data-target]="'#'+tag.paramsSave.idModal"
+                                                                        type="button" class="btn btn-box-tool"
+                                                                        title="Asignar un nuevo tag"
+                                                                >
                                                                     <i class="fa fa-plus text-green"></i>
-                                                                    <tooltip code="INFO_136"></tooltip>
                                                                 </button>
-                                                                <button *ngIf="!data.tagRFID && myglobal.existsPermission('76') && model.permissions.update && myglobal.existsPermission('120')"
-                                                                        (click)="dataSelect = data"
-                                                                        data-toggle="modal" data-target="#searchTag"
-                                                                        type="button" class="btn btn-box-tool">
+                                                                <button (click)="dataSelect = data"
+                                                                        *ngIf="model.permissions.update && tag.permissions.list"
+                                                                        data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"
+                                                                        type="button" class="btn btn-box-tool"
+                                                                        title="Asignar un tag"
+                                                                >
                                                                     <i class="fa fa-search text-blue"></i>
-                                                                    <tooltip code="INFO_137"></tooltip>
                                                                 </button>
+                                                                <button *ngIf="data.tagRFID && tag.permissions.update"
+                                                                        (click)="setDataFieldReference(tag,data,true,syncTag)"
+                                                                        type="button" class="btn btn-box-tool"
+                                                                        title="Liberar chofer"
+                                                                >
+                                                                    <i class="fa fa-minus text-red"></i>
+                                                                </button>
+
+
                                                             </label>
                                                         </p>
                                                         <p>
@@ -488,6 +496,10 @@
     <div *ngIf="company.permissions.add">
         <save [params]="company.paramsSave" [rules]="company.rulesSave" (save)="onPatchId($event,'company',dataSelect)"> </save>
     </div>
+    <div *ngIf="tag.permissions.add">
+        <save [params]="tag.paramsSave" [rules]="tag.rulesSave" (save)="setDataFieldReference(tag,$event,null,syncTag)"> </save>
+    </div>
+
 
 
     <div *ngIf="driver.permissions.list">
@@ -498,6 +510,9 @@
     </div>
     <div *ngIf="company.permissions.list">
         <search [params]="company.paramsSearch" (result)="onPatchId($event,'company',dataSelect)"></search>
+    </div>
+    <div *ngIf="tag.permissions.list">
+        <search [params]="tag.paramsSearch" (result)="setDataFieldReference(tag,$event,null,syncTag)"></search>
     </div>
 
 </div>
