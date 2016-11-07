@@ -1,4 +1,4 @@
-import {Component, OnInit,ViewChild,Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -9,7 +9,7 @@ import {Filter} from "../utils/filter/filter";
 import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {Tooltip} from "../utils/tooltips/tooltips";
-import {MDrivers} from "./MDrivers";
+import {MTag} from "./MTag";
 
 declare var SystemJS:any;
 @Component({
@@ -21,8 +21,7 @@ declare var SystemJS:any;
     pipes: [TranslatePipe]
 })
 export class TagRfid extends ControllerBase implements OnInit {
-
-    public dataSelect:any = {};
+    
     public paramsTable:any={};
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
@@ -36,7 +35,7 @@ export class TagRfid extends ControllerBase implements OnInit {
         this.loadPage();
     }
     initModel() {
-        this.model= new MDrivers(this.myglobal);
+        this.model= new MTag(this.myglobal);
     }
     initViewOptions() {
         this.viewOptions["title"] = 'Tag RFID';
