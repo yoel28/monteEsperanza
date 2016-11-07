@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouteParams}           from '@angular/router-deprecated';
 import { Http} from '@angular/http';
-import {TagSave} from "../tagRfid/methods";
 import {Search} from "../utils/search/search"
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Xeditable, Xfile, Xcropit} from "../common/xeditable";
@@ -16,6 +15,7 @@ import {MVehicle} from "./MVehicle";
 import {MDrivers} from "../drivers/MDrivers";
 import {MTypeVehicle} from "../tipoVehiculo/MTypeVehicle";
 import {MCompany} from "../empresa/MCompany";
+import {MTag} from "../tagRfid/MTag";
 declare var jQuery:any;
 declare var SystemJS:any;
 
@@ -23,7 +23,7 @@ declare var SystemJS:any;
     selector: 'vehiculo',
     templateUrl: SystemJS.map.app+'/vehiculo/index.html',
     styleUrls: [SystemJS.map.app+'/vehiculo/style.css'],
-    directives: [Search,TagSave,Xeditable,Xcropit,Xfile,Filter,Tooltip,Save,Tables,Tooltip],
+    directives: [Search,Xeditable,Xcropit,Xfile,Filter,Tooltip,Save,Tables,Tooltip],
     providers: [TranslateService],
     pipes: [TranslatePipe]
 })
@@ -37,6 +37,7 @@ export class Vehiculo extends ControllerBase implements OnInit{
     public driver:any;
     public typeVehicle:any;
     public company:any;
+    public tag:any;
 
     constructor(public params:RouteParams,public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('VEH', '/vehicles/',router, http, toastr, myglobal, translate);
@@ -55,6 +56,11 @@ export class Vehiculo extends ControllerBase implements OnInit{
         this.driver = new MDrivers(this.myglobal);
         this.typeVehicle = new MTypeVehicle(this.myglobal);
         this.company = new MCompany(this.myglobal);
+        this.tag = new MTag(this.myglobal);
+
+
+        this.tag.paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'tag.id']]");
+
     }
     initViewOptions() {
         this.viewOptions["title"] = 'Vehículos';
@@ -75,52 +81,15 @@ export class Vehiculo extends ControllerBase implements OnInit{
             'modal': this.model.paramsSearch.idModal
         });
     }
-    
-        //Buscar tag sin vehiculo ---------------------------------------------
 
-    public searchTag={
-        title:"Tag",
-        idModal:"searchTag",
-        endpoint:"/search/rfids/",
-        placeholder:"Seleccione un Tag",
-        label:{name:"Numero: ",detail:"Detalle: "},
-        where:"&where="+encodeURI("[['op':'isNull','field':'vehicle.id']]")
-    }
-    //asignar tag a vehiculo
-    assignTag(data){
-        let successCallBack = response=>{
-            let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
-            this.dataList.list[index].tagRFID = response.json().number;
-            this.dataList.list[index].tagId = response.json().id;
+    syncTag(value, data){
+        data.tagRFID = null;
+        data.tagId = null;
+        if(value.vehiclePlate == data.plate){
+            data.tagRFID = value.number;
+            data.tagId = value.id;
         }
-        let body=JSON.stringify({'vehicle':this.dataSelect.id})
-        this.httputils.doPut('/rfids/'+data.id,body,successCallBack,this.error)
     }
-    //liberar tag
-    releaseTag(data){
-        let successCallback= response => {
-            data.tagRFID=null;
-            this.toastr.success('Tag liberado','Notificación')
-
-        };
-        let body = JSON.stringify({'vehicle':null})
-        this.httputils.doPut('/rfids/'+data.tagId,body,successCallback,this.error)
-    }
-    //asignar tag nuevo
-    assignTagNuevo(data){
-        let index = this.dataList.list.findIndex(obj => obj.id == this.dataSelect.id);
-        if(this.dataList.list[index].tagRFID)
-        {
-            let successCallback= response => {
-                this.assignTag(data);
-            };
-            let body = JSON.stringify({'vehicle':null})
-            this.httputils.doPut('/rfids/'+this.dataList.list[index].tagId,body,successCallback,this.error)
-        }
-        else
-            this.assignTag(data);
-    }
-
 
     //cambiar imagen
     public image:any=[];
