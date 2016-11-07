@@ -57,6 +57,8 @@ export class MDrivers extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar Choferes";
         this.paramsSearch.placeholder="Ingrese chofer";
+        this.paramsSearch.label.title="Nombre: ";
+        this.paramsSearch.label.detail="Nombre: "
     }
     initParamsSave() {
         this.paramsSave.title="Agregar chofer"

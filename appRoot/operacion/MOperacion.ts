@@ -5,6 +5,7 @@ import {MTrashType} from "../tipoBasura/MTrashType";
 import {MCompany} from "../empresa/MCompany";
 import {MDrivers} from "../drivers/MDrivers";
 import {MVehicle} from "../vehiculo/MVehicle";
+import {MContainer} from "../container/MContainer";
 
 export class MOperacion extends ModelBase{
     public rules={};
@@ -14,6 +15,7 @@ export class MOperacion extends ModelBase{
     public company:any;
     public chofer:any;
     public vehicle:any;
+    public container:any;
 
     constructor(public myglobal:globalService){
         super('OP','/operations/',myglobal);
@@ -25,14 +27,17 @@ export class MOperacion extends ModelBase{
         this.company = new MCompany(this.myglobal);
         this.chofer = new MDrivers(this.myglobal);
         this.vehicle = new MVehicle(this.myglobal);
+        this.container = new MContainer(this.myglobal);
     }
     initRules(){
 
         this.rules['vehicle']=this.vehicle.ruleObject;
 
-        this.rules['container']=this.vehicle.ruleObject;
+        this.rules['container']=this.container.ruleObject;
 
         this.rules ['chofer']=this.chofer.ruleObject;
+        this.rules ['chofer'].keyDisplay="choferName";
+
 
         this.rules ['company']=this.company.ruleObject;
 

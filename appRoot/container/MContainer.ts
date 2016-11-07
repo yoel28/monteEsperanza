@@ -45,6 +45,8 @@ export class MContainer extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar container";
         this.paramsSearch.placeholder="Ingrese container";
+        this.paramsSearch.label.title="Código: ";
+        this.paramsSearch.label.detail="Titulo: ";
     }
     initParamsSave() {
         this.paramsSave.title="Agregar container"

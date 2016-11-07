@@ -38,6 +38,8 @@ export class MRuta extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar ruta";
         this.paramsSearch.placeholder="Ingrese ruta";
+        this.paramsSearch.label.title="Nombre: ";
+        this.paramsSearch.label.detail="Código: ";
     }
     initParamsSave() {
         this.paramsSave.title="Agregar ruta"

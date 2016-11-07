@@ -129,6 +129,8 @@ export class MCompany extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar  compañia";
         this.paramsSearch.placeholder="Ingrese codigo de compañia";
+        this.paramsSearch.label.title="Nombre: ";
+        this.paramsSearch.label.detail="RUC: "
     }
     initParamsSave() {
         this.paramsSave.title="Agregar compañia"

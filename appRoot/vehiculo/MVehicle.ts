@@ -85,6 +85,8 @@ export class MVehicle extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar vehículo";
         this.paramsSearch.placeholder="Ingrese vehículo";
+        this.paramsSearch.label.title="Cliente: ";
+        this.paramsSearch.label.detail="Placa: "
     }
     initParamsSave() {
         this.paramsSave.title="Agregar vehículo"

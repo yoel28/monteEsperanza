@@ -90,6 +90,9 @@ export class MTrashType extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar tipo de basura";
         this.paramsSearch.placeholder="Ingrese tipo de basura";
+        this.paramsSearch.label.title="Nombre: ";
+        this.paramsSearch.label.detail="Código: ";
+
     }
     initParamsSave() {
         this.paramsSave.title="Agregar tipo de basura"
