@@ -17,6 +17,16 @@ export class MTag extends ModelBase{
         this.container = new MContainer(this.myglobal);
     }
     initRules(){
+
+        this.rules['vehicle']=this.vehicle.ruleObject;
+        this.rules['vehicle'].unique=true;
+        this.rules['vehicle'].keyDisplay="vehiclePlate";
+
+        this.rules['container']=this.container.ruleObject;
+        this.rules['container'].unique=true;
+        this.rules['container'].keyDisplay="containerCode";
+
+
         this.rules['number']={
             'type': 'text',
             'required':true,
@@ -26,7 +36,8 @@ export class MTag extends ModelBase{
             'key': 'number',
             'title': 'Número del Tag',
             'placeholder': 'Número del Tag',
-        }
+        };
+
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
     initPermissions() {}
@@ -42,11 +53,14 @@ export class MTag extends ModelBase{
         this.ruleObject.title="Tag RFID";
         this.ruleObject.placeholder="Ingrese tag RFID";
         this.ruleObject.key="rfid";
+        this.ruleObject.code="tagId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.enabled;
         delete this.rulesSave.detail;
+        delete this.rulesSave['vehicle'];
+        delete this.rulesSave['container'];
     }
 
 }
