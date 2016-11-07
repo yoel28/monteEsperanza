@@ -48,7 +48,8 @@ export abstract class ControllerBase extends RestController {
     });
     public model:any={};
     public msg:any =  CatalogApp.msg;
-
+    public dataSelect:any = {};
+    
     constructor(prefix, endpoint,public router: Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super(http, toastr);
         this.setEndpoint(endpoint);
@@ -101,11 +102,13 @@ export abstract class ControllerBase extends RestController {
         }
         return "-";
     }
+    
     public changeFormatDate(id) {
         if (!this.formatDateId[id])
             this.formatDateId[id] = {'value': false};
         this.formatDateId[id].value = !this.formatDateId[id].value;
     }
+    
     public viewChangeDate(date) {
         //<i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange" (click)="changeFormatDate(data.id)"></i>
         var diff = moment().valueOf() - moment(date).valueOf();
@@ -125,7 +128,26 @@ export abstract class ControllerBase extends RestController {
             this.loadData();
         }
     }
+    public setDataFieldReference(model,data,setNull=false,callback)
+    {
+        let value=null;
+        let that = this;
 
+        if(!setNull)//no colocar valor nulo
+        {
+            value=this.dataSelect.id;
+            if(that.dataSelect[model.ruleObject.code]!=null && model.rules[this.model.ruleObject.key].unique)
+                model.setDataField(that.dataSelect[model.ruleObject.code],this.model.ruleObject.key,null,callback,that.dataSelect).then(
+                    response=>{
+                        model.setDataField(data.id,that.model.ruleObject.key,value,callback,that.dataSelect);
+                });
+            else
+                model.setDataField(data.id,that.model.ruleObject.key,value,callback,that.dataSelect);
+        }
+        else
+            model.setDataField(data[model.ruleObject.code],that.model.ruleObject.key,null,callback,data);
+
+    }
     public onDashboard(){
         let link = ['Dashboard', {}];
         this.router.navigate(link);
