@@ -83,8 +83,8 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions.actions.delete = {
             'title': 'Eliminar',
             'visible': this.model.permissions.delete,
-            'message': 'Estás seguro que deseas eliminar la operación con el recibo ',
-            'keyAction': 'rechargeReference'
+            'message': 'Estás seguro que deseas eliminar la operación con del vehículo ',
+            'keyAction': 'vehiclePlate'
         };
 
         this.viewOptions.actions.print = {
