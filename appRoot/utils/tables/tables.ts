@@ -6,6 +6,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xeditable, ColorPicker} from "../../common/xeditable";
 import {Search} from "../search/search";
+import {Save} from "../save/save";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -14,7 +15,7 @@ declare var moment:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','rulesSearch','dataList'],
-    directives:[Xeditable,ColorPicker,Search]
+    directives:[Xeditable,ColorPicker,Search,Save]
 })
 
 
@@ -69,9 +70,17 @@ export class Tables extends RestController implements OnInit {
         this.searchTable.field =  key;
         this.searchTableData=data;
     }
+    loadSaveModal(event,key,data){
+        event.preventDefault();
+        this.dataSave = Object.assign({},this.rules[key]);
+        this.dataSelect = data;
+    }
     
     getDataSearch(data){
         this.onPatch(this.searchTable.field,this.searchTableData,data.id);
+    }
+    getSaveObject(data){
+        this.onPatch(this.dataSave.key,this.dataSelect,data.id);
     }
 
     actionPermissionKey() 
