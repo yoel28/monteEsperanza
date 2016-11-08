@@ -17,7 +17,7 @@ declare var SystemJS:any;
     selector: 'operacion-save',
     templateUrl: SystemJS.map.app+'/operacion/save.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
-    inputs:['idModal','inAnt','rules'],
+    inputs:['idModal','inAnt'],
     outputs:['save','getInstance'],
     directives:[Search,RecargaSave],
 })
@@ -27,7 +27,6 @@ export class OperacionSave extends ControllerBase implements OnInit{
     public save:any;
     public getInstance:any;
     public inAnt:any={};
-    public rules:any={};
 
     public pending=0;
     public baseWeight=1;
@@ -54,24 +53,21 @@ export class OperacionSave extends ControllerBase implements OnInit{
     ngAfterViewInit(){
         this.getInstance.emit(this);
     }
-    getKeys(data){
-        return Object.keys(data || {});
-    }
 
     initForm() {
         let that = this;
-        this.keys = Object.keys(this.rules);
-        Object.keys(this.rules).forEach((key)=> {
+        this.keys = Object.keys(this.model.rulesSave);
+        Object.keys(this.model.rulesSave).forEach((key)=> {
 
             that.data[key] = [];
             let validators=[];
-            if(that.rules[key].required)
+            if(that.model.rulesSave[key].required)
                 validators.push(Validators.required);
-            if(that.rules[key].maxLength)
-                validators.push(Validators.maxLength(that.rules[key].maxLength));
-            if(that.rules[key].minLength)
-                validators.push(Validators.minLength(that.rules[key].minLength));
-            if(that.rules[key].object)
+            if(that.model.rulesSave[key].maxLength)
+                validators.push(Validators.maxLength(that.model.rulesSave[key].maxLength));
+            if(that.model.rulesSave[key].minLength)
+                validators.push(Validators.minLength(that.model.rulesSave[key].minLength));
+            if(that.model.rulesSave[key].object)
             {
                 validators.push(
                     (c:Control)=> {
@@ -85,7 +81,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
                         return null;
                     });
             }
-            if(that.rules[key].type=='email')
+            if(that.model.rulesSave[key].type=='email')
             {
                 validators.push(
                     (c:Control)=> {
@@ -97,17 +93,17 @@ export class OperacionSave extends ControllerBase implements OnInit{
                     });
             }
             that.data[key] = new Control(null,Validators.compose(validators));
-            if(that.rules[key].value)
-                that.data[key].updateValue(that.rules[key].value);
+            if(that.model.rulesSave[key].value)
+                that.data[key].updateValue(that.model.rulesSave[key].value);
 
-            if(that.rules[key].object)
+            if(that.model.rulesSave[key].object)
             {
                 that.data[key].valueChanges.subscribe((value: string) => {
                     if(value && value.length > 0){
-                        that.search=that.rules[key];
+                        that.search=that.model.rulesSave[key];
                         that.findControl = value;
                         that.dataList=[];
-                        that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
+                        that.setEndpoint(that.model.rulesSave[key].paramsSearch.endpoint+value);
                         if( !that.searchId[key]){
                             that.loadData();
                         }
@@ -143,10 +139,10 @@ export class OperacionSave extends ControllerBase implements OnInit{
         let body = this.form.value;
 
         Object.keys(body).forEach((key:string)=>{
-            if(that.rules[key].object){
+            if(that.model.rulesSave[key].object){
                 body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
             }
-            if(that.rules[key].type == 'number' && body[key]!=""){
+            if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
             }
         });
@@ -218,7 +214,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)){
                 this.searchId['chofer']={};
                 this.data['chofer'].updateValue(data.choferName);
-                this.searchId['chofer']={'id':data.choferId,'title':data.choferName,'detail':data.choferName,'default':true};
+                this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName,'default':true};
             }
 
         }
@@ -266,7 +262,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
             this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
             this.data['vehicle'].updateValue(data.vehiclePlate);
-            this.rules['vehicle'].readOnly=true;
+            this.model.rulesSave['vehicle'].readOnly=true;
 
             this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
             this.data['company'].updateValue(data.companyRUC);
@@ -276,15 +272,15 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(data.weightOut){
                 this.data['weightOut'].updateValue(data.weightOut);
 
-                this.rules['weightOut'].readOnly=true;
-                this.rules['weightIn'].readOnly=true;
+                this.model.rulesSave['weightOut'].readOnly=true;
+                this.model.rulesSave['weightIn'].readOnly=true;
                 
-                this.rules['weightOut'].hidden=false;
+                this.model.rulesSave['weightOut'].hidden=false;
             }
 
             if(this.myglobal.existsPermission('OP_EDIT_WEIGHT')){
-                this.rules['weightIn'].readOnly=false;
-                this.rules['weightOut'].readOnly=false;
+                this.model.rulesSave['weightIn'].readOnly=false;
+                this.model.rulesSave['weightOut'].readOnly=false;
             }
 
             this.checkBalance();
@@ -299,26 +295,35 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
         this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
         this.data['vehicle'].updateValue(data.vehiclePlate);
-        this.rules['vehicle'].readOnly=true;
+        this.model.rulesSave['vehicle'].readOnly=false;
+
+        this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
+        this.data['container'].updateValue(data.containerCode);
+        this.model.rulesSave['container'].readOnly=false;
+
+        this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName};
+        this.data['chofer'].updateValue(data.choferName);
+        this.model.rulesSave['chofer'].readOnly=false;
 
         this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
         this.data['company'].updateValue(data.companyRUC);
-        this.rules['company'].readOnly=true;
+        this.model.rulesSave['company'].readOnly=false;
 
         this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
         this.data['trashType'].updateValue(data.trashTypeReference);
-        this.rules['trashType'].readOnly=true;
+        this.model.rulesSave['trashType'].readOnly=false;
 
         this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
         this.data['route'].updateValue(data.routeReference);
-        this.rules['route'].readOnly=true;
+        this.model.rulesSave['route'].readOnly=false;
 
         this.data['weightIn'].updateValue(data.weightIn);
-        this.rules['weightIn'].readOnly=true;
+        this.model.rulesSave['weightIn'].readOnly=true;
 
         this.data['weightOut'].updateValue(this.weightOut);
-        this.rules['weightOut'].readOnly=false;
-        this.rules['weightOut'].hidden=false;
+        this.model.rulesSave['weightOut'].required=true;
+        this.model.rulesSave['weightOut'].readOnly=false;
+        this.model.rulesSave['weightOut'].hidden=false;
 
         this.data['comment'].updateValue(data.comment);
 
@@ -351,10 +356,10 @@ export class OperacionSave extends ControllerBase implements OnInit{
             (<Control>that.data[key]).updateValue(null);
             (<Control>that.data[key]).setErrors(null);
             that.data[key]._pristine=true;
-            if(that.rules[key].readOnly)
-                that.rules[key].readOnly=false;
+            if(that.model.rulesSave[key].readOnly)
+                that.model.rulesSave[key].readOnly=false;
         })
-        this.rules['weightOut'].hidden=true;
+        this.model.rulesSave['weightOut'].hidden=true;
         this.listOperations=false;
     }
     @ViewChild(RecargaSave)
