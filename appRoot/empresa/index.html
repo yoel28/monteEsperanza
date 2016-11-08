@@ -3,14 +3,16 @@
         <div class="">
             <div class="box">
                 <div class="box-header with-border">
-                    <button *ngIf="myglobal.existsPermission('68')" type="button" class="btn btn-primary btn-green"
-                            data-toggle="modal" [attr.data-target]="'#'+paramsSave.idModal">
-                        <i class="fa fa-plus"></i> Nuevo
+                    <h3 class="box-title">
+                        {{viewOptions.title | translate }}
+                    </h3>
+                    <button *ngFor="let buttom of getViewOptionsButtons()"
+                            class="{{buttom.class}}" type="button" data-toggle="modal"
+                            [attr.data-target]="'#'+buttom.modal">
+                        <i class="{{buttom.icon}}"></i>
+                        {{buttom.title | translate}}
                     </button>
-                    <button *ngIf="permissions.filter" type="button" class="btn btn-primary btn-blue"
-                            data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
-                        <i class="fa fa-filter"></i>&nbsp;Filtrar
-                    </button>
+
                     <button *ngIf="myglobal.existsPermission('204')" type="button"
                             class="btn btn-primary btn-red" (click)="goMorosos($event)">
                         <i class="fa fa-archive"></i>&nbsp;Morosos
@@ -26,7 +28,7 @@
                     </button>
 
 
-                    <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="pull-right">
+                    <div *ngIf="dataList.list && model.permissions.list" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
                              class="btn-group pull-right">
                             <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button"
@@ -38,7 +40,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div *ngIf="typeView==1"  class="box-body">
-                    <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="panel-group" id="accordion">
+                    <div *ngIf="dataList.list && model.permissions.list" class="panel-group" id="accordion">
                         <div *ngFor="let data of dataList.list " class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title row">
@@ -51,12 +53,12 @@
                                     </div>
                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                                         <div class="btn-group">
-                                            <label *ngIf="myglobal.existsPermission('84')">
+                                            <label *ngIf="model.permissions.lock">
                                                 <a (click)="onLock('enabled',data)">
                                                     <span class="fa {{data.enabled?'fa-lock':'fa-unlock'}}"></span>
                                                 </a>
                                             </label>
-                                            <label *ngIf="myglobal.existsPermission('82')">
+                                            <label *ngIf="model.permissions.delete">
                                                 <a data-toggle="modal"
                                                    (click)="dataSelect = data"
                                                    [attr.data-target]="'#modalDelete'">
@@ -77,7 +79,7 @@
                                                      (saveImagen)="changeImage($event,data.id)">
                                                     <div class="cropit-preview center-block"></div>
                                                     <div class="col-lg-12 margenes"
-                                                         [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                         [hidden]="! (myglobal.existsPermission('86') && model.permissions.update)">
                                                         <div class="col-lg-6">
                                                             <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                             <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
@@ -88,7 +90,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12"
-                                                         [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                         [hidden]="! (myglobal.existsPermission('86') && model.permissions.update)">
                                                         <div class="col-lg-6">
                                                             <input x-file type="file"
                                                                    class="cropit-image-input"/>
@@ -108,41 +110,41 @@
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                                     <p>
                                                         <strong>
-                                                            <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                            <a x-editable [disabled]="!model.permissions.update"
                                                                [endpoint]="endpoint" [function]="onEditable"
-                                                               [data]="data" [rules]="rules" field="name"></a>
+                                                               [data]="data" [rules]="model.rules" field="name"></a>
                                                         </strong>
                                                     </p>
                                                     <p>
                                                         <strong>RUC: </strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="ruc"></a>
+                                                           [rules]="model.rules" field="ruc"></a>
                                                     </p>
                                                     <p>
                                                         <strong>C&oacute;digo: </strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="code"></a>
+                                                           [rules]="model.rules" field="code"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Responsable:</strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="responsiblePerson"></a>
+                                                           [rules]="model.rules" field="responsiblePerson"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Tel&eacute;fonos:</strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="phone"></a>
+                                                           [rules]="model.rules" field="phone"></a>
                                                     </p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                                     <p>
                                                         <strong>Balance M&iacute;nimo:</strong>
-                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('83')"
-                                                           [data]="data" [rules]="rules" field="minBalance"></a>
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!model.permissions.update"
+                                                           [data]="data" [rules]="model.rules" field="minBalance"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Deuda:&nbsp;</strong>
@@ -150,33 +152,37 @@
                                                     </p>
                                                     <p>
                                                         <strong>Direcci&oacute;n:</strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="address"></a>
+                                                           [rules]="model.rules" field="address"></a>
                                                     </p>
                                                     <p><strong>Grupo:</strong>
                                                         {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
                                                         <label>
-                                                            <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
-                                                                    (click)="dataSelect = data.id"
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && typeCompany.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSave.idModal"
                                                                     type="button" class="btn btn-box-tool"
-                                                                    data-toggle="modal" data-target="#searchTipoEmpresa">
+                                                                    title="Asignar un nuevo grupo"
+                                                            >
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && typeCompany.permissions.search"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSearch.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar un grupo"
+                                                            >
                                                                 <i class="fa fa-search text-blue"></i>
                                                             </button>
 
-                                                            <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')"
-                                                                    (click)="dataSelect = data.id"
-                                                                    type="button" class="btn btn-box-tool"
-                                                                    data-toggle="modal" data-target="#saveTipoEmpresa">
-                                                                <i class="fa fa-plus text-green"></i>
-                                                            </button>
                                                         </label>
                                                     </p>
                                                     <p>
                                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                                                 [class.btn-green]="data.enabled"
                                                                 [class.btn-red]="!data.enabled"
-                                                                [disabled]="!(myglobal.existsPermission('84'))">
+                                                                [disabled]="!(model.permissions.lock)">
                                                             {{data.enabled?"Habilitado":"Bloqueado"}}
                                                         </button>
                                                     </p>
@@ -222,7 +228,7 @@
                 </div>
 
                 <div *ngIf="typeView==2">
-                    <div *ngIf="dataList.list && myglobal.existsPermission('80')" class="box-body">
+                    <div *ngIf="dataList.list && model.permissions.list" class="box-body">
                     <div *ngFor="let i of [0,3,6,9]" class="row">
                         <div *ngFor="let data of dataList.list | slice:i:i+3">
                             <div class="col-lg-4">
@@ -230,7 +236,7 @@
                                     <div class="panel-body">
                                         <div class="profile">
                                             <div style="margin-bottom: 15px" class="row">
-                                                <div *ngIf="myglobal.existsPermission('84') || myglobal.existsPermission('82')"
+                                                <div *ngIf="model.permissions.lock || model.permissions.delete"
                                                      class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="btn-group dropdown pull-right">
                                                         <button type="button" data-toggle="dropdown"
@@ -239,13 +245,13 @@
                                                             <i class="fa fa-gears fa-lg"></i>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu text-left submenu-config">
-                                                            <li *ngIf="myglobal.existsPermission('84')">
+                                                            <li *ngIf="model.permissions.lock">
                                                                 <a (click)="onLock('enabled',data)">
                                                                     <span class="fa fa-warning"></span>
                                                                     &nbsp;{{data.enabled?"Bloquear":"Habilitar"}}
                                                                 </a>
                                                             </li>
-                                                            <li *ngIf="myglobal.existsPermission('82')">
+                                                            <li *ngIf="model.permissions.delete">
                                                                 <a data-toggle="modal"
                                                                    (click)="dataSelect = data"
                                                                    [attr.data-target]="'#modalDelete'">
@@ -264,7 +270,7 @@
                                                              (saveImagen)="changeImage($event,data.id)">
                                                             <div class="cropit-preview center-block"></div>
                                                             <div class="col-lg-12 margenes"
-                                                                 [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                                 [hidden]="! (myglobal.existsPermission('86') && model.permissions.update)">
                                                                 <div class="col-lg-6">
                                                                     <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                     <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
@@ -275,7 +281,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12"
-                                                                 [hidden]="! (myglobal.existsPermission('86') && myglobal.existsPermission('83'))">
+                                                                 [hidden]="! (myglobal.existsPermission('86') && model.permissions.update)">
                                                                 <div class="col-lg-6">
                                                                     <input x-file type="file"
                                                                            class="cropit-image-input"/>
@@ -294,61 +300,64 @@
                                                 <div class="col-xs-12 col-sm-8 col-lg-12">
                                                     <p>
                                                         <strong>
-                                                            <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                            <a x-editable [disabled]="!model.permissions.update"
                                                                [endpoint]="endpoint" [function]="onEditable"
-                                                               [data]="data" [rules]="rules" field="name"></a>
+                                                               [data]="data" [rules]="model.rules" field="name"></a>
                                                         </strong>
                                                     </p>
                                                     <p>
                                                         <strong>RUC: </strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="ruc"></a>
+                                                           [rules]="model.rules" field="ruc"></a>
                                                     </p>
                                                     <p>
                                                         <strong>C&oacute;digo: </strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="code"></a>
+                                                           [rules]="model.rules" field="code"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Responsable:</strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="responsiblePerson"></a>
+                                                           [rules]="model.rules" field="responsiblePerson"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Tel&eacute;fonos:</strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="phone"></a>
+                                                           [rules]="model.rules" field="phone"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Balance M&iacute;nimo:</strong>
-                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!myglobal.existsPermission('83')"
-                                                           [data]="data" [rules]="rules" field="minBalance"></a>
+                                                        <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!model.permissions.update"
+                                                           [data]="data" [rules]="model.rules" field="minBalance"></a>
                                                     </p>
                                                     <p>
                                                         <strong>Direcci&oacute;n:</strong>
-                                                        <a x-editable [disabled]="!myglobal.existsPermission('83')"
+                                                        <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
-                                                           [rules]="rules" field="address"></a>
+                                                           [rules]="model.rules" field="address"></a>
                                                     </p>
                                                     <p><strong>Grupo:</strong>
                                                         {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
                                                         <label>
-                                                            <button *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')"
-                                                                    (click)="dataSelect = data.id"
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && typeCompany.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSave.idModal"
                                                                     type="button" class="btn btn-box-tool"
-                                                                    data-toggle="modal" data-target="#searchTipoEmpresa">
-                                                                <i class="fa fa-search text-blue"></i>
-                                                            </button>
-
-                                                            <button *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')"
-                                                                    (click)="dataSelect = data.id"
-                                                                    type="button" class="btn btn-box-tool"
-                                                                    data-toggle="modal" data-target="#saveTipoEmpresa">
+                                                                    title="Asignar un nuevo grupo"
+                                                            >
                                                                 <i class="fa fa-plus text-green"></i>
+                                                            </button>
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && typeCompany.permissions.search"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSearch.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar un grupo"
+                                                            >
+                                                                <i class="fa fa-search text-blue"></i>
                                                             </button>
                                                         </label>
                                                     </p>
@@ -356,7 +365,7 @@
                                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                                                 [class.btn-green]="data.enabled"
                                                                 [class.btn-red]="!data.enabled"
-                                                                [disabled]="!(myglobal.existsPermission('84'))"
+                                                                [disabled]="!(model.permissions.lock)"
                                                         >
                                                             {{data.enabled?"Habilitado":"Bloqueado"}}
                                                         </button>
@@ -410,16 +419,26 @@
     </section>
 </div>
 
-<div *ngIf="myglobal.existsPermission('37') && myglobal.existsPermission('83')">
-    <tipoEmpresa-save idModal="saveTipoEmpresa" (save)="assignTipoEmpresa($event)"></tipoEmpresa-save>
+<div *ngIf="model.permissions.update">
+
+    <div *ngIf="typeCompany.permissions.add">
+        <save [params]="typeCompany.paramsSave" [rules]="typeCompany.rulesSave" (save)="onPatchId($event,'companyType',dataSelect)"> </save>
+    </div>
+    <div *ngIf="typeCompany.permissions.search">
+        <search [params]="typeCompany.paramsSearch" (result)="onPatchId($event,'companyType',dataSelect)"></search>
+    </div>
 </div>
 
-<div *ngIf="permissions.add">
-    <save [params]="paramsSave" [rules]="rulesSave" (save)="setLoadData($event)"> </save>
+
+<div *ngIf="model.permissions.add">
+    <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)"></save>
+</div>
+<div *ngIf="model.permissions.filter">
+    <filter [params]="model.paramsSearch" [rules]="model.rules" (whereFilter)="loadWhere($event)"></filter>
 </div>
 
 
-<div *ngIf="myglobal.existsPermission('82')">
+<div *ngIf="model.permissions.delete">
     <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -442,12 +461,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<div *ngIf="myglobal.existsPermission('36') && myglobal.existsPermission('83')">
-    <search [params]="searchTipoEmpresa" (result)="assignTipoEmpresa($event)"></search>
-</div>
-
-<div *ngIf="permissions.filter">
-    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
