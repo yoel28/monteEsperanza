@@ -127,17 +127,17 @@ export class MCompany extends ModelBase{
     }
     initPermissions() {}
     initParamsSearch() {
-        this.paramsSearch.title="Buscar  compañia";
-        this.paramsSearch.placeholder="Ingrese codigo de compañia";
+        this.paramsSearch.title="Buscar  cliente";
+        this.paramsSearch.placeholder="Ingrese codigo del cliente";
         this.paramsSearch.label.title="Nombre: ";
         this.paramsSearch.label.detail="RUC: "
     }
     initParamsSave() {
-        this.paramsSave.title="Agregar compañia"
+        this.paramsSave.title="Agregar cliente"
     }
     initRuleObject() {
-        this.ruleObject.title="Compañia";
-        this.ruleObject.placeholder="Ingrese compañia";
+        this.ruleObject.title="Cliente";
+        this.ruleObject.placeholder="Ingrese el cliente";
         this.ruleObject.key="company";
         this.ruleObject.keyDisplay="companyRuc";
     }
