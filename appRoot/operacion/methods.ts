@@ -222,11 +222,22 @@ export class OperacionSave extends ControllerBase implements OnInit{
             }
 
         }
+
+        if(this.search.key == 'container'){
+            if(!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)){
+                this.searchId['company']={};
+                this.data['company'].updateValue(data.companyRuc);
+                this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'default':true};
+            }
+
+        }
+
         this.checkBalance();
         this.dataList=[];
     }
 
     checkBalance(){
+        
 
         if(this.searchId['company']){
             let balance=parseFloat(this.searchId['company'].balance || '0');
