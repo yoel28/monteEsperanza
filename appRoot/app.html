@@ -1,5 +1,6 @@
 <div class="wrapper" *ngIf="myglobal.init">
     <div *ngIf="validToken()">
+        {{loadPage()}}
         <header class="main-header">
             <a href="#" [routerLink]="['Dashboard']" class="logo">
                 <span class="logo-mini">
@@ -92,8 +93,12 @@
         </aside>
     </div>
     <router-outlet></router-outlet>
-    {{loadPage()}}
-    <save [rulesrulesrules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
+
+    <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
+
+    <div *ngIf="operation && operation.permissions.add">
+        <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
+    </div>
 
 </div>
 <div class="main-footer-container noprint" *ngIf="validToken() && myglobal.init">
