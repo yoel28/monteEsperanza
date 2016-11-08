@@ -39,7 +39,7 @@ export abstract class ModelBase{
         this.initParamsSearch();
         this.initParamsSave();
         this.initRuleObject();
-        this.loadRuleObjectRulesSave();
+        this.loadObjectRule();
     }
 
     abstract initPermissions();
@@ -132,17 +132,22 @@ export abstract class ModelBase{
             'object': true,
             'code': 'default',
             "placeholder": "PlaceHolder default",
-            'paramsSearch': this.paramsSearch,
-            "permissions": this.permissions
+            'paramsSearch': {},
+            "permissions": {},
+            "rulesSave":{},
+            "paramsSave":{}
         }
     }
 
     getRulesDefault(){
         return this.rulesDefault;
     }
-    private loadRuleObjectRulesSave(){
-        this.ruleObject.rulesSave={};
-        Object.assign(this.ruleObject.rulesSave,this.rulesSave);
+    private loadObjectRule(){
+        this.ruleObject.rulesSave = this.rulesSave;
+        this.ruleObject.paramsSave = this.paramsSave;
+        this.ruleObject.permissions = this.permissions;
+        this.ruleObject.paramsSearch = this.paramsSearch;
+
     }
 
     public setDataField(id,key,value?,callback?,data?){
