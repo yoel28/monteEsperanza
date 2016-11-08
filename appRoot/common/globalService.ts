@@ -10,6 +10,7 @@ export class globalService extends RestController{
     user:any=[];
     params:any={};
     help:any={};
+    rules:any={};
     permissions:any=[];
     allPermissions:any={};
     init=false;
@@ -20,6 +21,7 @@ export class globalService extends RestController{
         'permissions':{'status':false,'title':'Consultando  permisos'},
         'params':{'status':false,'title':'Consultando  parametros'},
         'help':{'status':false,'title':'Consultando  ayudas'},
+        'rules':{'status':false,'title':'Consultando  reglas'},
     };
 
     objectInstance:any={};//lista de instancias creadas
@@ -43,6 +45,7 @@ export class globalService extends RestController{
         this.loadMyPermissions();
         this.loadParams();
         this.loadTooltips();
+        this.loadRules();
     }
     initFinish(reverse=false){
         if(reverse)
@@ -52,8 +55,9 @@ export class globalService extends RestController{
             this.status.permissions.status=false;
             this.status.params.status=false;
             this.status.help.status=false;
+            this.status.rules.status=false;
         }
-        if(this.status.token.status && this.status.user.status  && this.status.permissions.status && this.status.params.status && this.status.help.status)
+        if(this.status.token.status && this.status.user.status  && this.status.permissions.status && this.status.params.status && this.status.help.status && this.status.rules.status)
             this.init=true;
     }
     countInitSession(){
@@ -114,6 +118,15 @@ export class globalService extends RestController{
         };
         this.httputils.doGet('/params?max=1000',successCallback,this.error);
     }
+    loadRules(){
+        let that = this;
+        let successCallback= response => {
+            Object.assign(that.rules,response.json().list);
+            that.status.rules.status=true;
+            that.initFinish();
+        };
+        this.httputils.doGet('/rules?max=1000',successCallback,this.error);
+    }
     loadTooltips(){
         let that = this;
         let successCallback= response => {
@@ -137,6 +150,18 @@ export class globalService extends RestController{
         Object.keys(this.params).forEach(index=>{
             if(that.params[index].key==key){
                 valor=that.params[index].value;
+                return;
+            }
+        })
+        return valor;
+    }
+
+    getRule(key){
+        let that = this;
+        let valor="";
+        Object.keys(this.rules).forEach(index=>{
+            if(that.rules[index].key==key){
+                valor=that.rules[index].value;
                 return;
             }
         })
