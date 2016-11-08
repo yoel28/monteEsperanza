@@ -157,7 +157,7 @@
     </section>
 </div>
 <div *ngIf="model.permissions.add">
-    <operacion-save [(idModal)]="model.paramsSave.idModal" [rules]="model.rulesSave" (save)="assignData($event)"></operacion-save>
+    <operacion-save [(idModal)]="model.paramsSave.idModal" (save)="assignData($event)"></operacion-save>
 </div>
 
 <div *ngIf="model.permissions.filter">
