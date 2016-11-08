@@ -20,7 +20,7 @@
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}&nbsp;
                         <div *ngIf="buttom.quickFilters" class="btn-group dropdown">
-                            &nbsp;<span data-toggle="dropdown" class="fa fa-angle-down"></span>
+                            &nbsp;<span data-toggle="dropdown" class="fa fa-angle-down fa-lg"></span>
                             <ul role="menu" class="dropdown-menu pull-right submenu-config" >
                                 <li *ngFor="let quickFilter of buttom.quickFilters" [class.btn-blue]="list==quickFilter.id" >
                                     <a  (click)="loadDataPendings($event,quickFilter)">
@@ -105,7 +105,7 @@
                                 <span *ngIf="(data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Validado</span>
                                 <span *ngIf="(!data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Sin validar</span>
 
-                                <span *ngIf="data.enabled && data.vehicleId && data.dateIn" class="label bg-purple font-12pt margin-right-2">Sin registrar</span>
+                                <span *ngIf="data.enabled && data.vehicleId && data.dateIn && !data.operationId && !data.operationRegistroId" class="label bg-purple font-12pt margin-right-2">Sin registrar</span>
 
                                 <span *ngIf="!data.enabled && !data.operationId" class="label bg-red font-12pt margin-right-2">Rechazado</span>
 
@@ -124,6 +124,9 @@
                                         </a>
                                         <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" href="#" title="Rechazar">
                                             &nbsp;<span class="fa fa-ban fa-lg"></span>
+                                        </a>
+                                        <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
+                                            &nbsp;<span class="fa fa-check fa-lg"></span>
                                         </a>
                                     </label>
                                 </div>
@@ -167,7 +170,7 @@
                                             <span *ngIf="(data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Validado</span>
                                             <span *ngIf="(!data.operationId && data.operationRegistroId)" class="label label-green font-12pt margin-right-2">Sin validar</span>
 
-                                            <span *ngIf="data.enabled && data.vehicleId && data.dateIn" class="label bg-purple font-12pt margin-right-2">Sin registrar</span>
+                                            <span *ngIf="data.enabled && data.vehicleId && data.dateIn && !data.operationId && !data.operationRegistroId" class="label bg-purple font-12pt margin-right-2">Sin registrar</span>
 
                                             <span *ngIf="!data.enabled && !data.operationId" class="label bg-red font-12pt margin-right-2">Rechazado</span>
 
@@ -188,6 +191,9 @@
                                                 </a>
                                                 <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" title="Rechazar" href="#">
                                                     &nbsp;<span class="fa fa-ban fa-lg"></span>
+                                                </a>
+                                                <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
+                                                    &nbsp;<span class="fa fa-check fa-lg"></span>
                                                 </a>
                                             </label>
                                         </div>
@@ -337,8 +343,8 @@
 <div *ngIf="model.permissions.print">
     <operacion-print ></operacion-print>
 </div>
-<div *ngIf="model.permissions.add">
-    <operacion-save [(idModal)]="viewOptions.actions.load.modalId" [rules]="operation.rulesSave" [inAnt]="dataOperation" (save)="liberar($event)"> </operacion-save>
+<div *ngIf="operation.permissions.add">
+    <operacion-save [(idModal)]="viewOptions.actions.load.modalId" (save)="liberar($event)"> </operacion-save>
 </div>
 <div *ngIf="model.permissions.filter">
     <filter [rules]="model.rules" [params]="model.paramsSearch" (whereFilter)="loadWhere2($event)"></filter>
