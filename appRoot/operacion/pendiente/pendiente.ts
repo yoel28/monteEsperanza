@@ -8,6 +8,7 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {OperacionSave, OperacionPrint} from "../methods";
 import {Filter} from "../../utils/filter/filter";
 import {MPendiente} from "./MPendiente";
+import {MOperacion} from "../MOperacion";
 declare var SystemJS:any;
 
 @Component({
@@ -20,10 +21,10 @@ declare var SystemJS:any;
 })
 export class OperacionPendiente extends ControllerBase implements OnInit {
    
-
-    public dataSelect:any = {};
     public typeView=2;
     public baseWeight=1;
+    
+    public operation:any;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('PEND', '/pendings/',router, http, toastr, myglobal, translate);
@@ -34,12 +35,14 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         
         this.initModel();
+        this.initViewOptions();
 
         this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
-        this.loadData();
+        this.loadPage();
     }
     initModel() {
         this.model = new MPendiente(this.myglobal);
+        this.operation = new MOperacion(this.myglobal);
     }
 
     public list='pendings';
@@ -55,6 +58,8 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
 
     initViewOptions() {
         this.viewOptions["title"] = 'Operaciones pendientes';
+        this.viewOptions["buttons"] = [];
+
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.filter,
             'title': 'Filtrar',
@@ -127,6 +132,7 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
             ]
         });
 
+        this.viewOptions.actions={};
         this.viewOptions.actions.delete = {
             'title': 'Eliminar',
             'visible': this.model.permissions.delete,
