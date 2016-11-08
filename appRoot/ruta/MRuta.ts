@@ -51,6 +51,7 @@ export class MRuta extends ModelBase{
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
+        this.rulesSave['detail'].required=true;
         delete this.rulesSave.enabled;
     }
 
