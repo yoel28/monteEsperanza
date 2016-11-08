@@ -39,6 +39,7 @@ export abstract class ModelBase{
         this.initParamsSearch();
         this.initParamsSave();
         this.initRuleObject();
+        this.loadRuleObjectRulesSave();
     }
 
     abstract initPermissions();
@@ -121,6 +122,7 @@ export abstract class ModelBase{
     private _initRuleObject() {
         this.ruleObject = {
             'icon': 'fa fa-list',
+            'update':false,
             "type": "text",
             "required":true,
             "visible":true,
@@ -131,12 +133,16 @@ export abstract class ModelBase{
             'code': 'default',
             "placeholder": "PlaceHolder default",
             'paramsSearch': this.paramsSearch,
-            "permissions": this.permissions,
+            "permissions": this.permissions
         }
     }
 
     getRulesDefault(){
         return this.rulesDefault;
+    }
+    private loadRuleObjectRulesSave(){
+        this.ruleObject.rulesSave={};
+        Object.assign(this.ruleObject.rulesSave,this.rulesSave);
     }
 
     public setDataField(id,key,value?,callback?,data?){
