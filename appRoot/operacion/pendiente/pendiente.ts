@@ -143,6 +143,9 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
             'visible': this.model.permissions.add,
             'modalId':'cargaPendiente'
         };
+        this.viewOptions.actions.loadAuto = {
+            'visible': this.model.permissions.update,
+        };
         this.viewOptions.actions.rechazar = {
             'visible': this.model.permissions.update,
         };
@@ -194,5 +197,15 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
                 this.operacionPrint.data=response.json();
         };
         this.httputils.doGet('/operations/'+data.operationId,successCallback,this.error)
+    }
+    onLockAuto(data, event) {
+        if (event)
+            event.preventDefault();
+        let json = {};
+        json['enabled'] = false;
+        json['operationId'] = data.operationRegistroId;
+
+        let body = JSON.stringify(json);
+        return (this.httputils.onUpdate("/lock" + this.endpoint + data.id, body, data, this.error));
     }
 }
