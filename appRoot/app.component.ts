@@ -54,6 +54,7 @@ import {Save} from "./utils/save/save";
 import {Drivers} from "./drivers/drivers";
 import {OperationsAudit} from "./reportes/operationsAudit";
 import {Container} from "./container/container";
+import {MOperacion} from "./operacion/MOperacion";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -132,8 +133,10 @@ export class AppComponent extends RestController implements OnInit {
     public menu_list:string = "";
 
     public help:MHelp;
+    public operation:MHelp;
 
-    constructor(public router:Router, http:Http, public myglobal:globalService, public toastr:ToastsManager, public operacion:Operacion) {
+
+    constructor(public router:Router, http:Http, public myglobal:globalService, public toastr:ToastsManager) {
         super(http);
         let url = "https://dev.aguaseo.com:8080";
         localStorage.setItem('urlAPI', url + '/api');
@@ -173,23 +176,16 @@ export class AppComponent extends RestController implements OnInit {
     }
 
     ngOnInit() {
-        //this.operacion.initModel();
-        this.help = new MHelp(this.myglobal);
-        // this.rulesOperacion = this.operacion.rulesSave;
+        
     }
 
     ngAfterViewInit() {
 
     }
 
-    public initOperation() {
-        //this.operacion.initRules();
-        //this.rulesOperacion = this.operacion.rulesSave;
-    }
-
     setInstance(instance, prefix) {
         if (!this.myglobal.objectInstance[prefix])
-            this.myglobal.objectInstance[prefix] = {}
+            this.myglobal.objectInstance[prefix] = {};
         this.myglobal.objectInstance[prefix] = instance;
     }
 
@@ -241,7 +237,8 @@ export class AppComponent extends RestController implements OnInit {
     activeMenuId:string;
 
     activeMenu(event, id) {
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         if (this.activeMenuId == id)
             this.activeMenuId = "";
         else
@@ -274,6 +271,7 @@ export class AppComponent extends RestController implements OnInit {
     }
 
     outAnt(event, myglobal, data?) {
+        this.activeMenu(null,null);
         event.preventDefault();
         if (myglobal.objectInstance['OP']) {
             myglobal.objectInstance['OP'].loadOutAnt(null, data);
@@ -311,10 +309,15 @@ export class AppComponent extends RestController implements OnInit {
         this.menu_modal = this.myglobal.getParams('MENU_MODAL');
         this.menu_list = this.myglobal.getParams('MENU_LIST');
         this.loadMenu();
+        this.initModels();
 
         if (this.menu_list != '' && this.menu_list != '1') {
             jQuery('body').addClass('no-menu');
         }
+    }
+    initModels(){
+        this.help = new MHelp(this.myglobal);
+        this.operation = new MOperacion(this.myglobal);
     }
 
     public menuItems = [];
