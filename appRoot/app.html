@@ -7,59 +7,24 @@
                 </span>
                 <span class="logo-lg"> <img src="assets/img/logo-blanco.png" class="img-responsive col-lg-10 col-md-10 col-sm-10 col-xs-6"> </span>
             </a>
-
-            <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
                 <a *ngIf="menu_list=='1'" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
-                <!-- Button trigger menu modal -->
                 <button *ngIf="menu_modal=='1'" type="button" class="btn btn-blue glyphicon glyphicon-th"  style="font-size: x-large" data-toggle="modal" data-target="#myMenu">
                 </button>
-                <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-
-                        <!-- Notifications Menu -->
-                        <li class="dropdown notifications-menu">
-                            <!-- Menu toggle button -->
-                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-                            <!--<i class="fa fa-bell-o"></i>-->
-                            <!--<span class="label label-warning">10</span>-->
-                            <!--</a>-->
-                            <ul class="dropdown-menu">
-                                <!--<li class="header">You have 10 notifications</li>-->
-                                <li>
-                                    <!-- Inner Menu: contains the notifications -->
-                                    <ul class="menu">
-                                        <li><!-- start notification -->
-                                            <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                        <!-- end notification -->
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">View all</a></li>
-                            </ul>
-                        </li>
-                        <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
-                            <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <!-- The user image in the navbar-->
                                 <img src="{{myglobal.user.image?myglobal.user.image:'assets/img/user-guest.png'}}"
                                      class="user-image" alt="User Image">
-                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">{{myglobal.user.username}}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <!-- The user image in the menu -->
                                 <li class="user-header">
                                     <img src="{{myglobal.user.image?myglobal.user.image:'assets/img/user-guest.png'}}" class="img-circle" alt="User Image">
                                 </li>
-                                <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a href="#" (click)='profile($event)'
@@ -84,22 +49,16 @@
             </nav>
         </header>
         <aside *ngIf="menu_list=='1'" class="main-sidebar">
-            <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-                <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
-
                     <div class="pull-left image">
                         <img src="{{myglobal.user.image?myglobal.user.image:'assets/img/user-guest.png'}}"
                              class="img-circle">
                     </div>
                     <div class="pull-left info">
                         <p>{{myglobal.user.name}}</p>
-                        <!-- Status -->
                         <i class="fa fa-building text-success"></i> {{myglobal.user.companyName}}
-                        <!--<p><a href="#" (click)="loadPermisos($event)"><i class="fa fa-refresh">Permisos</i></a></p>-->
                     </div>
-
                 </div>
                 <ul class="sidebar-menu" >
                     <li class="header" ><i class="fa fa-circle text-success"></i> {{myglobal.user.email}}</li>
@@ -129,14 +88,13 @@
                         </ul>
                     </li>
                 </ul>
-                <!-- /.sidebar-menu -->
             </section>
-            <!-- /.sidebar -->
         </aside>
     </div>
     <router-outlet></router-outlet>
     {{loadMenuMain()}}
     <save [rules]="mhelp.rulesSave" [params]="mhelp.paramsSave" (getInstance)="setInstance($event,mhelp.prefix)" ></save>
+
 </div>
 <div class="main-footer-container noprint" *ngIf="validToken() && myglobal.init">
     <footer class="main-footer">
@@ -184,9 +142,6 @@
     </div>
 </aside>
 
-<!-- ./wrapper -->
-
-<!-- Modal menu -->
 <div *ngIf="menu_modal=='1'" class="modal fade" id="myMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -218,4 +173,4 @@
             </div>
         </div>
     </div>
-</div><!--End menu modal-->
+</div>
