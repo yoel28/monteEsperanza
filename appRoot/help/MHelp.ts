@@ -106,6 +106,8 @@ export class MHelp extends ModelBase{
         this.ruleObject.title="Ayuda";
         this.ruleObject.placeholder="Ingrese codigo de la ayuda";
         this.ruleObject.key="help";
+        this.ruleObject.keyDisplay="helpCode";
+        this.ruleObject.keyDisplay="helpId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

@@ -55,6 +55,8 @@ export class MTypeVehicle extends ModelBase{
         this.ruleObject.title="Tipo de vehículo";
         this.ruleObject.placeholder="Ingrese  el tipo de vehículo";
         this.ruleObject.key="vehicleType";
+        this.ruleObject.keyDisplay="vehicleTypeTitle";
+        this.ruleObject.code="vehicleTypeId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

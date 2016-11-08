@@ -59,10 +59,13 @@ export class MVehicle extends ModelBase{
         };
 
         this.rules['vehicleType'] = this.vehicleType.ruleObject;
+        this.rules['vehicleType'].update=this.permissions.update;
 
         this.rules['company']=this.company.ruleObject;
+        this.rules['company'].update=this.permissions.update;
 
         this.rules['chofer']=this.driver.ruleObject;
+        this.rules['chofer'].update=this.permissions.update;
 
         this.rules['minBalance']={
             'type': 'number',
@@ -95,6 +98,7 @@ export class MVehicle extends ModelBase{
         this.ruleObject.title="Vehículo";
         this.ruleObject.placeholder="Ingrese vehículo";
         this.ruleObject.key="vehicle";
+        this.ruleObject.code="vehicleId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

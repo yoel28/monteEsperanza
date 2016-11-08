@@ -77,9 +77,12 @@ export class MEvent extends ModelBase{
             'icon': 'fa fa-key',
             'title': 'Mensaje',
             'placeholder': 'Ingrese el mensaje',
-        }
+        };
+
         this.rules['rule']=this.regla.ruleObject;
         this.rules['rule'].required = true;
+        this.rules['rule'].update=this.permissions.update;
+
         this.rules['target']={
             'type': 'text',
             'required':true,
@@ -128,6 +131,8 @@ export class MEvent extends ModelBase{
         this.ruleObject.title="Eventos";
         this.ruleObject.placeholder="Ingrese codigo del evento";
         this.ruleObject.key="event";
+        this.ruleObject.keyDisplay="eventCode";
+        this.ruleObject.code="eventId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

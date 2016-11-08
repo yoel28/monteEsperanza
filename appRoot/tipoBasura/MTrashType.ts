@@ -101,6 +101,8 @@ export class MTrashType extends ModelBase{
         this.ruleObject.title="Tipo de basura";
         this.ruleObject.placeholder="Ingrese tipo de basura";
         this.ruleObject.key="trashType";
+        this.ruleObject.keyDisplay="trashTypeReference";
+        this.ruleObject.code="trashTypeId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

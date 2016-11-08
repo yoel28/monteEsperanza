@@ -119,7 +119,9 @@ export class MCompany extends ModelBase{
             'title': 'Deuda (Valores negativos)',
             'placeholder': 'Deuda',
         };
+
         this.rules['companyType'] = this.typeCompany.ruleObject;
+        this.rules['companyType'].update=this.permissions.update;
         this.rules['companyType'].required = true;
 
 
@@ -140,6 +142,8 @@ export class MCompany extends ModelBase{
         this.ruleObject.placeholder="Ingrese el cliente";
         this.ruleObject.key="company";
         this.ruleObject.keyDisplay="companyRuc";
+        this.ruleObject.code="companyId";
+
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

@@ -32,20 +32,24 @@ export class MOperacion extends ModelBase{
     initRules(){
 
         this.rules['vehicle']=this.vehicle.ruleObject;
+        this.rules['vehicle'].update=this.permissions.update;
 
         this.rules['container']=this.container.ruleObject;
         this.rules['container'].required=false;
+        this.rules['container'].update=this.permissions.update;
 
 
-        this.rules ['chofer']=this.chofer.ruleObject;
-        this.rules ['chofer'].keyDisplay="choferName";
+        this.rules['chofer']=this.chofer.ruleObject;
+        this.rules['chofer'].update=this.permissions.update;
 
+        this.rules['company']=this.company.ruleObject;
+        this.rules['company'].update=this.permissions.update;
 
-        this.rules ['company']=this.company.ruleObject;
+        this.rules['trashType']=this.trashType.ruleObject;
+        this.rules['trashType'].update=this.permissions.update;
 
-        this.rules ['trashType']=this.trashType.ruleObject;
-
-        this.rules ['route']=this.route.ruleObject;
+        this.rules['route']=this.route.ruleObject;
+        this.rules['route'].update=this.permissions.update;
 
         this.rules['weightIn']={
                 'type': 'number',
@@ -129,6 +133,7 @@ export class MOperacion extends ModelBase{
         this.ruleObject.title="Operaciones";
         this.ruleObject.placeholder="Ingrese el codigo de la operacion";
         this.ruleObject.key="operation";
+        this.ruleObject.code="operationId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

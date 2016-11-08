@@ -48,6 +48,8 @@ export class MRuta extends ModelBase{
         this.ruleObject.title="Ruta";
         this.ruleObject.placeholder="Ingrese ruta";
         this.ruleObject.key="route";
+        this.ruleObject.keyDisplay="routeReference";
+        this.ruleObject.code="routeId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

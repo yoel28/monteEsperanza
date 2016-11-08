@@ -46,6 +46,7 @@ export class MRegla extends ModelBase{
         this.ruleObject.placeholder="Ingrese codigo de la regla";
         this.ruleObject.key="rule";
         this.ruleObject.keyDisplay = "ruleName";
+        this.ruleObject.code = "ruleId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

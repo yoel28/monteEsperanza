@@ -38,6 +38,7 @@ export class MContainer extends ModelBase{
             'placeholder': 'Ingrese titulo',
         };
         this.rules['company'] =  this.company.ruleObject;
+        this.rules['company'].update=this.permissions.update;
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
@@ -55,6 +56,8 @@ export class MContainer extends ModelBase{
         this.ruleObject.title="Container";
         this.ruleObject.placeholder="Ingrese container";
         this.ruleObject.key="container";
+        this.ruleObject.keyDisplay="containerCode";
+        this.ruleObject.code="containerId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

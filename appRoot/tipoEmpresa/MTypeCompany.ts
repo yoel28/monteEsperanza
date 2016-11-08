@@ -91,6 +91,8 @@ export class MTypeCompany extends ModelBase{
         this.ruleObject.title="Grupo";
         this.ruleObject.placeholder="Ingrese grupo";
         this.ruleObject.key="companyType";
+        this.ruleObject.keyDisplay="companyTypeCode";
+        this.ruleObject.code="companyTypeId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

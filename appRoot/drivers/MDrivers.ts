@@ -67,6 +67,8 @@ export class MDrivers extends ModelBase{
         this.ruleObject.title="Chofer";
         this.ruleObject.placeholder="Ingrese chofer";
         this.ruleObject.key="chofer";
+        this.ruleObject.keyDisplay="choferName";
+        this.ruleObject.code="choferId";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

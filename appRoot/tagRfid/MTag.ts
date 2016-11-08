@@ -21,10 +21,15 @@ export class MTag extends ModelBase{
         this.rules['vehicle']=this.vehicle.ruleObject;
         this.rules['vehicle'].unique=true;
         this.rules['vehicle'].keyDisplay="vehiclePlate";
+        this.rules['vehicle'].required=false;
+        this.rules['vehicle'].update=this.permissions.update;
+        
 
         this.rules['container']=this.container.ruleObject;
         this.rules['container'].unique=true;
         this.rules['container'].keyDisplay="containerCode";
+        this.rules['container'].required=false;
+        this.rules['container'].update=this.permissions.update;
 
 
         this.rules['number']={
@@ -54,6 +59,7 @@ export class MTag extends ModelBase{
         this.ruleObject.placeholder="Ingrese tag RFID";
         this.ruleObject.key="rfid";
         this.ruleObject.code="tagId";
+        this.ruleObject.keyDisplay="tagNumber";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
