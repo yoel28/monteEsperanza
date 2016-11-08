@@ -34,6 +34,8 @@ export class MOperacion extends ModelBase{
         this.rules['vehicle']=this.vehicle.ruleObject;
 
         this.rules['container']=this.container.ruleObject;
+        this.rules['container'].required=false;
+
 
         this.rules ['chofer']=this.chofer.ruleObject;
         this.rules ['chofer'].keyDisplay="choferName";
@@ -109,7 +111,7 @@ export class MOperacion extends ModelBase{
             'placeholder': 'Ingrese un comentario',
         }
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.rules = Object.assign({},this.rules);
     }
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
