@@ -22,13 +22,30 @@
 
                 <a *ngIf="rules[key].object">
                  {{data[rules[key].keyDisplay]}}
-                 <label>
-                     <button *ngIf="rules[key].paramsSearch && rules[key].permissions.list" type="button" class="btn btn-box-tool"
+                 <label *ngIf="rules[key].update">
+<!--
+
+                     <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
+                             (click)="loadSaveModal($event,key,data)"
+                             data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
+                     >
+                         <i class="fa fa-plus text-green"></i>
+                     </button>
+-->
+
+                     <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
                              (click)="loadSearchTable($event,key,data)"
                              data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
                          <i class="fa fa-search text-blue"></i>
                      </button>
 
+                     <button *ngIf="data[rules[key].code] && !rules[key].required"
+                             (click)="setNull(data,key)"
+                             type="button" class="btn btn-box-tool"
+                             title="Liberar"
+                     >
+                         <i class="fa fa-minus text-red"></i>
+                     </button>
                  </label>
              </a>
 
@@ -137,16 +154,11 @@
         </div>
     </div>
 </div>
-<div *ngIf="searchTable.idModal">
+
+<div *ngIf="searchTable && searchTable.idModal">
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
 
-<!--
-<div *ngIf="dataSave && dataSave.params && dataSave.params.idModal">
-    <save [rules]="dataSave.rules" [params]="dataSave.params" (save)="asignData($event)"> </save>
+<div *ngIf="dataSave && dataSave.paramsSave">
+    <save [rules]="dataSave.rulesSave" [params]="dataSave.paramsSave" (save)="getSaveObject($event)"> </save>
 </div>
-
-<div>
-    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
-</div>
--->
