@@ -23,6 +23,7 @@ export class MTag extends ModelBase{
         this.rules['vehicle'].keyDisplay="vehiclePlate";
         this.rules['vehicle'].required=false;
         this.rules['vehicle'].update=this.permissions.update;
+        this.rules['vehicle'].disabled = "data.containerId?true:false";
         
 
         this.rules['container']=this.container.ruleObject;
@@ -30,7 +31,7 @@ export class MTag extends ModelBase{
         this.rules['container'].keyDisplay="containerCode";
         this.rules['container'].required=false;
         this.rules['container'].update=this.permissions.update;
-
+        this.rules['container'].disabled = "data.vehicleId?true:false";
 
         this.rules['number']={
             'type': 'text',
