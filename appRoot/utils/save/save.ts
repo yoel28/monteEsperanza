@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit,AfterViewInit} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
@@ -15,13 +15,14 @@ declare var SystemJS:any;
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
-export class Save extends RestController implements OnInit{
+export class Save extends RestController implements OnInit,AfterViewInit{
 
     public params:any={};
     public msg:any = CatalogApp.msg;
 
     public rules:any={};
     public id:string;
+    public dataSelect:any;
 
     public save:any;
     public getInstance:any;
@@ -46,6 +47,11 @@ export class Save extends RestController implements OnInit{
     }
     ngAfterViewInit(){
         this.getInstance.emit(this);
+        if(this.params.prefix && !this.myglobal.objectInstance[this.params.prefix])
+        {
+            this.myglobal.objectInstance[this.params.prefix]={};
+            this.myglobal.objectInstance[this.params.prefix]=this;
+        }
     }
 
     initForm() {
@@ -141,7 +147,7 @@ export class Save extends RestController implements OnInit{
 
         });
         if(this.params.updateField)
-            this.httputils.onUpdate(this.endpoint+this.id,JSON.stringify(body),{},this.error);
+            this.httputils.onUpdate(this.endpoint+this.id,JSON.stringify(body),this.dataSelect,this.error);
         else
             this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
@@ -225,6 +231,7 @@ export class Save extends RestController implements OnInit{
                 }
             })
             this.params.updateField=true;
+            Object.assign(this.dataSelect,data);
         }
     }
     public getKeys(data){
