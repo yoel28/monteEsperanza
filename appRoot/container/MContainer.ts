@@ -38,6 +38,7 @@ export class MContainer extends ModelBase{
             'placeholder': 'Ingrese titulo',
         };
         this.rules['company'] =  this.company.ruleObject;
+        this.rules['company'].required=false;
         this.rules['company'].update=this.permissions.update;
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
