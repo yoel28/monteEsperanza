@@ -9,6 +9,7 @@ import {Filter} from "../utils/filter/filter";
 import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {MContainer} from "./MContainer";
+import {MTag} from "../tagRfid/MTag";
 
 declare var SystemJS:any;
 
@@ -25,6 +26,8 @@ export class Container extends ControllerBase implements OnInit {
     public dataSelect:any = {};
     public paramsTable:any={};
 
+    public tag;
+
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('CONTAINER', '/containers/',router, http, toastr, myglobal, translate);
 
@@ -37,10 +40,19 @@ export class Container extends ControllerBase implements OnInit {
     }
     initModel() {
         this.model= new MContainer(this.myglobal);
+        this.tag = new MTag(this.myglobal);
+
+        this.model.rules = Object.assign({},{'tag':{}},this.model.rules);
+
+        this.model.rules['tag'] = this.tag.ruleObject;
+        this.model.rules['tag'].required = false;
+        this.model.rules['tag'].reference = true;
+        this.model.rules['tag'].model = this.tag;
+
     }
     initViewOptions() {
         this.max=10;
-        this.viewOptions["title"] = 'Container';
+        this.viewOptions["title"] = 'Contenedor';
         this.viewOptions["buttons"] = [];
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.add,
