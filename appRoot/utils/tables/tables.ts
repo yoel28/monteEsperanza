@@ -15,6 +15,7 @@ declare var moment:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','rulesSearch','dataList'],
+    outputs:['getInstance'],
     directives:[Xeditable,ColorPicker,Search,Save]
 })
 
@@ -37,6 +38,8 @@ export class Tables extends RestController implements OnInit {
     public keyActions =[];
     public configId=moment().valueOf();
 
+    public getInstance:any;
+
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
@@ -45,7 +48,11 @@ export class Tables extends RestController implements OnInit {
     ngOnInit()
     {
         this.keyActions=Object.keys(this.params.actions);
+        this.getInstance = new EventEmitter();
         this.setEndpoint(this.params.endpoint);
+    }
+    ngAfterViewInit() {
+        this.getInstance.emit(this);
     }
     
     keyVisible()
@@ -74,6 +81,11 @@ export class Tables extends RestController implements OnInit {
         event.preventDefault();
         this.dataSave = Object.assign({},this.rules[key]);
         this.dataSelect = data;
+    }
+    loadUpdateModal(event,data){
+        if(event)
+            event.preventDefault();
+        (<Save>this.myglobal.objectInstance[this.params.prefix+'_ADD']).setLoadDataModel(data);
     }
     
     getDataSearch(data){
@@ -114,6 +126,10 @@ export class Tables extends RestController implements OnInit {
         }
         return field;
 
+    }
+
+    getDisabledField(key,data){
+        return (eval(this.rules[key].disabled || 'false'));
     }
     
 
