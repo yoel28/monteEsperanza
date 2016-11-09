@@ -57,9 +57,7 @@ export class Vehiculo extends ControllerBase implements OnInit{
         this.typeVehicle = new MTypeVehicle(this.myglobal);
         this.company = new MCompany(this.myglobal);
         this.tag = new MTag(this.myglobal);
-
-
-        this.tag.paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'tag.id']]");
+        this.tag.paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'vehicle.id'],['op':'isNull','field':'container.id']]");
 
     }
     initViewOptions() {
