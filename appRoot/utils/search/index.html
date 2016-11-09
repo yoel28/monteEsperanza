@@ -29,7 +29,7 @@
                             </td>
                             <td>
                                 <strong>{{params.label.name}} {{data.title}}</strong><br>
-                                {{params.label.detail}} {{data.detail}}
+                                <span *ngIf="data.detail">{{params.label.detail}} {{data.detail}}</span>
                             </td>
                             <td style="vertical-align: middle;">
                                 <button (click)="getData(data)" data-dismiss="modal" type="button" class="btn btn-success">

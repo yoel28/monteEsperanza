@@ -30,7 +30,6 @@ export class Search extends RestController{
     }
     ngOnInit(){
         this.setEndpoint(this.params.endpoint);
-        this.loadData();
     }
     getSearch(search){
         this.endpoint=this.params.endpoint+search;
