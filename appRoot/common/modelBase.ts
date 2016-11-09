@@ -39,7 +39,9 @@ export abstract class ModelBase{
         this.initParamsSearch();
         this.initParamsSave();
         this.initRuleObject();
+
         this.loadObjectRule();
+        this.loadParamsSave();
     }
 
     abstract initPermissions();
@@ -147,7 +149,9 @@ export abstract class ModelBase{
         this.ruleObject.paramsSave = this.paramsSave;
         this.ruleObject.permissions = this.permissions;
         this.ruleObject.paramsSearch = this.paramsSearch;
-
+    }
+    private loadParamsSave(){
+        this.paramsSave.prefix = this.prefix+'_ADD';
     }
 
     public setDataField(id,key,value?,callback?,data?){
