@@ -11,43 +11,50 @@
         <tr *ngFor="let data of dataList.list">
             <td *ngFor="let key of keyVisible()">
 
-                <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' && rules[key].type !='color'" x-editable  [disabled]="!rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+                <span *ngIf="!getDisabledField(key,data)">
 
-                <input *ngIf="rules[key].type == 'color' && rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
-                <label *ngIf="rules[key].type == 'color' && !rules[key].update" class="form-control">{{'#'+data[key]}}</label>
+                    <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' && rules[key].type !='color'" x-editable  [disabled]="!rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
 
-                <button  *ngIf="rules[key].type =='boolean'" class="{{getBooleandData(key,data).class}}" (click)="onPatch(key,data)" [disabled]="getBooleandData(key,data).disabled">
-                    {{getBooleandData(key,data).text}}
-                </button>
 
-                <a *ngIf="rules[key].object">
-                 {{data[rules[key].keyDisplay]}}
-                 <label *ngIf="rules[key].update">
-<!--
+                    <input *ngIf="rules[key].type == 'color' && rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
+                    <label *ngIf="rules[key].type == 'color' && !rules[key].update" class="form-control">{{'#'+data[key]}}</label>
 
-                     <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
-                             (click)="loadSaveModal($event,key,data)"
-                             data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
-                     >
-                         <i class="fa fa-plus text-green"></i>
-                     </button>
--->
+                    <button  *ngIf="rules[key].type =='boolean'" class="{{getBooleandData(key,data).class}}" (click)="onPatch(key,data)" [disabled]="getBooleandData(key,data).disabled">
+                        {{getBooleandData(key,data).text}}
+                    </button>
 
-                     <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
-                             (click)="loadSearchTable($event,key,data)"
-                             data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
-                         <i class="fa fa-search text-blue"></i>
-                     </button>
+                    <a *ngIf="rules[key].object">
+                         {{data[rules[key].keyDisplay]}}
+                         <label *ngIf="rules[key].update">
 
-                     <button *ngIf="data[rules[key].code] && !rules[key].required"
-                             (click)="setNull(data,key)"
-                             type="button" class="btn btn-box-tool"
-                             title="Liberar"
-                     >
-                         <i class="fa fa-minus text-red"></i>
-                     </button>
-                 </label>
-             </a>
+
+                             <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
+                                     (click)="loadSaveModal($event,key,data)"
+                                     data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
+                             >
+                                 <i class="fa fa-plus text-green"></i>
+                             </button>
+
+
+                             <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
+                                     (click)="loadSearchTable($event,key,data)"
+                                     data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
+                                 <i class="fa fa-search text-blue"></i>
+                             </button>
+
+                             <button *ngIf="data[rules[key].code] && !rules[key].required"
+                                     (click)="setNull(data,key)"
+                                     type="button" class="btn btn-box-tool"
+                                     title="Liberar"
+                             >
+                                 <i class="fa fa-minus text-red"></i>
+                             </button>
+                         </label>
+                     </a>
+                </span>
+                <span *ngIf="getDisabledField(key,data)">
+                    <label class="label label-orange">N/A</label>
+                </span>
 
             </td>
             <td *ngIf="params.actions">
