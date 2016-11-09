@@ -24,6 +24,7 @@ export class MTag extends ModelBase{
         this.rules['vehicle'].required=false;
         this.rules['vehicle'].update=this.permissions.update;
         this.rules['vehicle'].disabled = "data.containerId?true:false";
+        this.rules['vehicle'].paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'tag.id']]");
         
 
         this.rules['container']=this.container.ruleObject;
@@ -32,6 +33,7 @@ export class MTag extends ModelBase{
         this.rules['container'].required=false;
         this.rules['container'].update=this.permissions.update;
         this.rules['container'].disabled = "data.vehicleId?true:false";
+        this.rules['container'].paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'tag.id']]");
 
         this.rules['number']={
             'type': 'text',
@@ -50,7 +52,7 @@ export class MTag extends ModelBase{
     initParamsSearch() {
         this.paramsSearch.title="Buscar Tag RFID";
         this.paramsSearch.placeholder="Ingrese tag RFID";
-        this.paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'tag.id']]");
+        this.paramsSearch.where=""
     }
     initParamsSave() {
         this.paramsSave.title="Agregar tag RFID"
