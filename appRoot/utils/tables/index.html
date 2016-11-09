@@ -26,29 +26,41 @@
                     <a *ngIf="rules[key].object">
                          {{data[rules[key].keyDisplay]}}
                          <label *ngIf="rules[key].update">
+                             <span *ngIf="!rules[key].reference">
+
+                                 <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
+                                         (click)="loadSaveModal($event,key,data)" title="Asignar nuevo"
+                                         data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
+                                 >
+                                     <i class="fa fa-plus text-green"></i>
+                                 </button>
 
 
-                             <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
-                                     (click)="loadSaveModal($event,key,data)"
-                                     data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
-                             >
-                                 <i class="fa fa-plus text-green"></i>
-                             </button>
+                                 <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
+                                         (click)="loadSearchTable($event,key,data)" title="Buscar"
+                                         data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
+                                     <i class="fa fa-search text-blue"></i>
+                                 </button>
 
+                                 <button *ngIf="data[rules[key].code] && !rules[key].required"
+                                         (click)="setNull(data,key)"
+                                         type="button" class="btn btn-box-tool"
+                                         title="Liberar"
+                                 >
+                                     <i class="fa fa-minus text-red"></i>
+                                 </button>
+                             </span>
+                             <span *ngIf="rules[key].reference && false">
 
-                             <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
-                                     (click)="loadSearchTable($event,key,data)"
-                                     data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
-                                 <i class="fa fa-search text-blue"></i>
-                             </button>
+                                 <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
+                                         (click)="loadSaveModal($event,key,data)"
+                                         data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
+                                 >
+                                     <i class="fa fa-plus text-green"></i>
+                                 </button>
 
-                             <button *ngIf="data[rules[key].code] && !rules[key].required"
-                                     (click)="setNull(data,key)"
-                                     type="button" class="btn btn-box-tool"
-                                     title="Liberar"
-                             >
-                                 <i class="fa fa-minus text-red"></i>
-                             </button>
+                             </span>
+
                          </label>
                      </a>
                 </span>
