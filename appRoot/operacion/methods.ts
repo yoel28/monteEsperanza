@@ -262,7 +262,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
             this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
             this.data['vehicle'].updateValue(data.vehiclePlate);
-            this.model.rulesSave['vehicle'].readOnly=true;
+            this.model.rulesSave['vehicle'].readOnly=false;
 
             this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
             this.data['company'].updateValue(data.companyRUC);
