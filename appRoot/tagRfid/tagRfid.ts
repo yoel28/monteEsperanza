@@ -68,6 +68,16 @@ export class TagRfid extends ControllerBase implements OnInit {
             'message': '¿ Esta seguro de eliminar el tag : ',
             'keyAction':'number'
         };
+        /*
+        this.paramsTable.actions.edit = {
+            "icon": "fa fa-pencil-square-o fa-lg",
+            "exp": "",
+            'title': 'Editar',
+            'idModal': this.prefix+'_'+this.configId+'_add',
+            'permission': this.model.permissions.update,
+        };*/
+        this.paramsTable.prefix=this.prefix;
+        
     }
 
 
