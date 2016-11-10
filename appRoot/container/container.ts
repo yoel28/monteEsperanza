@@ -47,7 +47,22 @@ export class Container extends ControllerBase implements OnInit {
         this.model.rules['tag'] = this.tag.ruleObject;
         this.model.rules['tag'].required = false;
         this.model.rules['tag'].reference = true;
+        this.model.rules['tag'].unique = true;
         this.model.rules['tag'].model = this.tag;
+        this.model.rules['tag'].model.paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'vehicle.id'],['op':'isNull','field':'container.id']]");
+
+
+
+        this.model.rules['tag'].callback = (value,dataSelect)=>{
+            dataSelect.tagNumber = null;
+            dataSelect.tagId = null;
+
+            if(value.containerCode == dataSelect.code){
+                dataSelect.tagNumber = value.number;
+                dataSelect.tagId = value.id;
+            }
+        }
+
 
     }
     initViewOptions() {
