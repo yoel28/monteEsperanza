@@ -14,7 +14,7 @@ declare var moment:any;
     selector: 'tables',
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
-    inputs:['params','rules','rulesSearch','dataList'],
+    inputs:['params','rules','rulesSearch','dataList','where'],
     outputs:['getInstance'],
     directives:[Xeditable,ColorPicker,Search,Save]
 })
