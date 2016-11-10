@@ -343,7 +343,7 @@
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
                                                                 <button (click)="dataSelect = data"
-                                                                        *ngIf="model.permissions.update && tag.permissions.list"
+                                                                        *ngIf="model.permissions.update && tag.permissions.search"
                                                                         data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"
                                                                         type="button" class="btn btn-box-tool"
                                                                         title="Asignar un tag"
@@ -502,16 +502,16 @@
 
 
 
-    <div *ngIf="driver.permissions.list">
+    <div *ngIf="driver.permissions.search">
         <search [params]="driver.paramsSearch" (result)="onPatchId($event,'chofer',dataSelect)"></search>
     </div>
-    <div *ngIf="typeVehicle.permissions.list">
+    <div *ngIf="typeVehicle.permissions.search">
         <search [params]="typeVehicle.paramsSearch" (result)="onPatchId($event,'vehicleType',dataSelect)"></search>
     </div>
-    <div *ngIf="company.permissions.list">
+    <div *ngIf="company.permissions.search">
         <search [params]="company.paramsSearch" (result)="onPatchId($event,'company',dataSelect)"></search>
     </div>
-    <div *ngIf="tag.permissions.list">
+    <div *ngIf="tag.permissions.search">
         <search [params]="tag.paramsSearch" (result)="setDataFieldReference(tag,$event,null,syncTag)"></search>
     </div>
 
