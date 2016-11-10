@@ -16,7 +16,7 @@
             </div>
             <div *ngIf="model.permissions.list" class="box-body">
                 <div *ngIf="dataList && dataList.count>0">
-                    <tables [dataList]="dataList" [rules]="model.rules" [params]="paramsTable" [where]="where"></tables>
+                    <tables [dataList]="dataList" [model]="model" [params]="paramsTable" [where]="where"></tables>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
