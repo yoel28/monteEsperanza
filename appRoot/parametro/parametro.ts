@@ -1,87 +1,73 @@
 import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {ParametroSave} from "./methods";
+import {Router}           from '@angular/router-deprecated';
+import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {Xeditable} from "../common/xeditable";
-import {Filter} from "../utils/filter/filter";
 import {globalService} from "../common/globalService";
+import { ControllerBase} from "../common/ControllerBase";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Filter} from "../utils/filter/filter";
+import {Tables} from "../utils/tables/tables";
+import {Save} from "../utils/save/save";
+import {Tooltip} from "../utils/tooltips/tooltips";
+import {MParams} from "./MParams";
 declare var SystemJS:any;
 
 @Component({
     selector: 'parametro',
     templateUrl: SystemJS.map.app+'/parametro/index.html',
     styleUrls: [SystemJS.map.app+'/parametro/style.css'],
-    directives:[ParametroSave,Xeditable,Filter]
+    providers: [TranslateService],
+    directives: [Filter,Tables,Save,Tooltip],
+    pipes: [TranslatePipe]
 })
-export class Parametro extends RestController implements OnInit{
+export class Parametro extends ControllerBase implements OnInit {
 
-    public dataSelect:any={};
+    public dataSelect:any = {};
+    public paramsTable:any={};
 
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/params/');
-    }
-    public rules={
-        'key':{'type':'text','display':null,'title':'Key','mode':'inline','placeholder': 'Clave', 'search': true},
-        'value':{'type':'text','display':null,'title':'Valor','mode':'inline','placeholder': 'Valor', 'search': true},
-        'detail':{
-            'type':'textarea',
-            'key':'detail',
-            'icon':'fa fa-list',
-            'required':true,
-            'display':null,
-            'title':'Detalle',
-            'mode':'inline',
-            'placeholder': 'Detalle',
-            'showbuttons':true,
-            'search': true,
-            'msg':{
-                'error':'El detalle contiene errores',
-            }
-        },
-        'type':{'type':'select','display':null,'title':'Tipo','mode':'inline','placeholder': 'Tipo', 'search': true,
-            'source': [
-                {'value': 'String', 'text': 'String'},
-                {'value': 'Long', 'text': 'Long'},
-                {'value': 'Double', 'text': 'Double'},
-                {'value': 'Date', 'text': 'Date'},
-            ]
-        },
-    };
-    public modalIn:boolean=true;
-    loadPage(event){
-        event.preventDefault();
-        this.modalIn=false;
-        if(this.myglobal.existsPermission('99')){
-            this.max = 10;
-            this.loadData();
-        }
-    }
-    onDashboard(event){
-        event.preventDefault();
-        let link = ['Dashboard', {}];
-        this.router.navigate(link);
+    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+        super('PARAM', '/params/',router, http, toastr, myglobal, translate);
+
     }
     ngOnInit(){
-
-
+        this.initModel();
+        this.initViewOptions();
+        this.loadParamsTable();
+        this.loadPage();
     }
-    assignParametro(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+    initModel() {
+        this.model= new MParams(this.myglobal);
     }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar parámetros",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
-    loadWhere(where) {
-        this.where = where;
-        this.loadData();
-    }
+    initViewOptions() {
+        this.viewOptions["title"] = 'Parámetros';
+        this.viewOptions["buttons"] = [];
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.add,
+            'title': 'Agregar',
+            'class': 'btn btn-green',
+            'icon': 'fa fa-save',
+            'modal': this.model.paramsSave.idModal
+        });
 
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.filter,
+            'title': 'Filtrar',
+            'class': 'btn btn-blue',
+            'icon': 'fa fa-filter',
+            'modal': this.model.paramsSearch.idModal
+        });
+    }
+    loadParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'idModal': this.prefix+'_'+this.configId+'_del',
+            'permission': this.model.permissions.delete,
+            'message': '¿ Esta seguro de eliminar el parámetro : ',
+            'keyAction':'key'
+        };
+    }
 }

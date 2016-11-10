@@ -122,7 +122,11 @@ export abstract class ControllerBase extends RestController {
     }
     
     public modalIn:boolean=true;
-    public loadPage(accept=false){
+    
+    public loadPage(event?,accept=false){
+        if(event)
+            event.preventDefault();
+
         if (!this.model.permissions.warning || accept) {
             this.modalIn=false;
             this.loadData();
@@ -148,7 +152,9 @@ export abstract class ControllerBase extends RestController {
             model.setDataField(data[model.ruleObject.code],that.model.ruleObject.key,null,callback,data);
 
     }
-    public onDashboard(){
+    public onDashboard(event){
+        if(event)
+            event.preventDefault();
         let link = ['Dashboard', {}];
         this.router.navigate(link);
     }

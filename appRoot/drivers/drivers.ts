@@ -17,7 +17,7 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/drivers/index.html',
     styleUrls: [SystemJS.map.app+'/drivers/style.css'],
     providers: [TranslateService],
-    directives: [Filter,Tables,Save],
+    directives: [Filter,Tables,Save,Tooltip],
     pipes: [TranslatePipe]
 })
 export class Drivers extends ControllerBase implements OnInit {

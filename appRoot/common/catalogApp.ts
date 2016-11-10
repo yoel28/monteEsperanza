@@ -82,6 +82,9 @@ export class CatalogApp {
         msg.email="Correo electronico invalido";
         msg.notFound="No se encontraron resultados";
         msg.warningTitle="Advertencia";
+        msg.warningBody="El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que hace.";
+        msg.warningButtonExit="Salir";
+        msg.warningButtonYes="Sí, estoy seguro";
 
         return msg;
 
