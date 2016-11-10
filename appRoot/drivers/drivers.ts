@@ -1,4 +1,4 @@
-import {Component, OnInit,ViewChild,Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
