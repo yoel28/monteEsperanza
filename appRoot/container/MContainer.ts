@@ -45,17 +45,17 @@ export class MContainer extends ModelBase{
     }
     initPermissions() {}
     initParamsSearch() {
-        this.paramsSearch.title="Buscar container";
-        this.paramsSearch.placeholder="Ingrese container";
+        this.paramsSearch.title="Buscar contenedor";
+        this.paramsSearch.placeholder="Ingrese contenedor";
         this.paramsSearch.label.title="Código: ";
         this.paramsSearch.label.detail="Titulo: ";
     }
     initParamsSave() {
-        this.paramsSave.title="Agregar container"
+        this.paramsSave.title="Agregar contenedor"
     }
     initRuleObject() {
-        this.ruleObject.title="Container";
-        this.ruleObject.placeholder="Ingrese container";
+        this.ruleObject.title="Contenedor";
+        this.ruleObject.placeholder="Ingrese contenedor";
         this.ruleObject.key="container";
         this.ruleObject.keyDisplay="containerCode";
         this.ruleObject.code="containerId";
