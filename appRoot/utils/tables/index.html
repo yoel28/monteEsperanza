@@ -70,7 +70,7 @@
                                       <i class="fa fa-search text-blue"></i>
                                   </button>
 
-                                 <button *ngIf="model.permissions.update && !model.rules[key].required"
+                                 <button *ngIf="model.permissions.update && !model.rules[key].required && data[model.rules[key].code]"
                                          (click)="loadDataFieldReference(data,key,true)"
                                          type="button" class="btn btn-box-tool"
                                          title="Liberar">
