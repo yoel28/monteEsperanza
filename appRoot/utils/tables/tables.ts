@@ -32,7 +32,7 @@ export class Tables extends RestController implements OnInit {
     public dataDelete:any={};
     public dataSelect:any={};
 
-    public dataReference :any={};//cargar data a referencias en otros metodos
+    public modelReference :any={};//cargar data a referencias en otros metodos
 
     public keyActions =[];
     public configId=moment().valueOf();
@@ -115,7 +115,15 @@ export class Tables extends RestController implements OnInit {
         return (eval(this.model.rules[key].disabled || 'false'));
     }
 
-    public setDataFieldReference(model,data,setNull=false,callback)
+    public loadDataFieldReference(data,key,setNull=false){
+        this.modelReference=Object.assign({},this.model.rules[key]);
+        this.dataSelect = data;
+        if(setNull)
+            this.setDataFieldReference(data,true);
+
+    }
+    
+    public setDataFieldReference(data,setNull=false)
     {
         let value=null;
         let that = this;
@@ -123,16 +131,16 @@ export class Tables extends RestController implements OnInit {
         if(!setNull)//no colocar valor nulo
         {
             value=this.dataSelect.id;
-            if(that.dataSelect[model.ruleObject.code]!=null && model.rules[this.model.ruleObject.key].unique)
-                model.setDataField(that.dataSelect[model.ruleObject.code],this.model.ruleObject.key,null,callback,that.dataSelect).then(
+            if(that.dataSelect[that.modelReference.code]!=null && that.modelReference.unique)
+                that.modelReference.model.setDataField(that.dataSelect[that.modelReference.code],that.model.ruleObject.key,null,that.modelReference.callback,that.dataSelect).then(
                     response=>{
-                        model.setDataField(data.id,that.model.ruleObject.key,value,callback,that.dataSelect);
+                        that.modelReference.model.setDataField(data.id,that.model.ruleObject.key,value,that.modelReference.callback,that.dataSelect);
                     });
             else
-                model.setDataField(data.id,that.model.ruleObject.key,value,callback,that.dataSelect);
+                that.modelReference.model.setDataField(data.id,that.model.ruleObject.key,value,that.modelReference.callback,that.dataSelect);
         }
         else
-            model.setDataField(data[model.ruleObject.code],that.model.ruleObject.key,null,callback,data);
+            that.modelReference.model.setDataField(data[that.modelReference.code],that.model.ruleObject.key,null,that.modelReference.callback,data);
 
     }
 
