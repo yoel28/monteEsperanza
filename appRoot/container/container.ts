@@ -94,7 +94,7 @@ export class Container extends ControllerBase implements OnInit {
             'title': 'Eliminar',
             'idModal': this.prefix+'_'+this.configId+'_del',
             'permission': this.model.permissions.delete,
-            'message': '¿ Esta seguro de eliminar el container : ',
+            'message': '¿ Esta seguro de eliminar el contenedor : ',
             'keyAction':'code'
         };
     }
