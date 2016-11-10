@@ -14,7 +14,7 @@ declare var moment:any;
     selector: 'tables',
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
-    inputs:['params','rules','rulesSearch','dataList','where'],
+    inputs:['params','model','dataList','where'],
     outputs:['getInstance'],
     directives:[Xeditable,ColorPicker,Search,Save]
 })
@@ -24,8 +24,7 @@ export class Tables extends RestController implements OnInit {
 
 
     public params:any={};
-    public rules:any={};
-    public rulesSearch:any={};
+    public model:any={};
     public searchId:any={};
     data:any = [];
     public keys:any = [];
@@ -33,7 +32,7 @@ export class Tables extends RestController implements OnInit {
     public dataDelete:any={};
     public dataSelect:any={};
 
-    public dataSave :any={};
+    public dataReference :any={};//cargar data a referencias en otros metodos
 
     public keyActions =[];
     public configId=moment().valueOf();
@@ -59,8 +58,8 @@ export class Tables extends RestController implements OnInit {
     {
         let data=[];
         let that=this;
-        Object.keys(this.rules).forEach((key)=>{
-            if(that.rules[key].visible)
+        Object.keys(this.model.rules).forEach((key)=>{
+            if(that.model.rules[key].visible)
                 data.push(key)
         });
         return data;
@@ -73,28 +72,13 @@ export class Tables extends RestController implements OnInit {
     loadSearchTable(event,key,data)
     {
         event.preventDefault();
-        this.searchTable =  Object.assign({},this.rules[key].paramsSearch);
+        this.searchTable =  Object.assign({},this.model.rules[key].paramsSearch);
         this.searchTable.field =  key;
         this.searchTableData=data;
     }
-    loadSaveModal(event,key,data){
-        event.preventDefault();
-        this.dataSave = Object.assign({},this.rules[key]);
-        this.dataSelect = data;
-    }
-    loadUpdateModal(event,data){
-        if(event)
-            event.preventDefault();
-        (<Save>this.myglobal.objectInstance[this.params.prefix+'_ADD']).setLoadDataModel(data);
-    }
-    
     getDataSearch(data){
         this.onPatch(this.searchTable.field,this.searchTableData,data.id);
     }
-    getSaveObject(data){
-        this.onPatch(this.dataSave.key,this.dataSelect,data.id);
-    }
-
     actionPermissionKey() 
     {
         let data=[];
@@ -107,7 +91,6 @@ export class Tables extends RestController implements OnInit {
         });
 
         return data;
-
     }
 
     getKeys(data)
@@ -118,20 +101,40 @@ export class Tables extends RestController implements OnInit {
     getBooleandData(key,data){
         let field = {'class':'btn btn-orange','text':'n/a','disabled':true};
 
-        if( (eval(this.rules[key].disabled || 'true')))
+        if( (eval(this.model.rules[key].disabled || 'true')))
         {
-            let index = this.rules[key].source.findIndex(obj => (obj.value == data[key] || obj.id == data[key]));
+            let index = this.model.rules[key].source.findIndex(obj => (obj.value == data[key] || obj.id == data[key]));
             if(index > -1)
-                return this.rules[key].source[index];
+                return this.model.rules[key].source[index];
         }
         return field;
 
     }
 
     getDisabledField(key,data){
-        return (eval(this.rules[key].disabled || 'false'));
+        return (eval(this.model.rules[key].disabled || 'false'));
     }
-    
+
+    public setDataFieldReference(model,data,setNull=false,callback)
+    {
+        let value=null;
+        let that = this;
+
+        if(!setNull)//no colocar valor nulo
+        {
+            value=this.dataSelect.id;
+            if(that.dataSelect[model.ruleObject.code]!=null && model.rules[this.model.ruleObject.key].unique)
+                model.setDataField(that.dataSelect[model.ruleObject.code],this.model.ruleObject.key,null,callback,that.dataSelect).then(
+                    response=>{
+                        model.setDataField(data.id,that.model.ruleObject.key,value,callback,that.dataSelect);
+                    });
+            else
+                model.setDataField(data.id,that.model.ruleObject.key,value,callback,that.dataSelect);
+        }
+        else
+            model.setDataField(data[model.ruleObject.code],that.model.ruleObject.key,null,callback,data);
+
+    }
 
 
 

@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th *ngFor="let key of keyVisible()" >
-                {{rules[key].title}}
+                {{model.rules[key].title}}
             </th>
             <th *ngIf="params.actions">&nbsp;</th>
         </tr>
@@ -13,36 +13,36 @@
 
                 <span *ngIf="!getDisabledField(key,data)">
 
-                    <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' && rules[key].type !='color'" x-editable  [disabled]="!rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+                    <a *ngIf="!model.rules[key].object &&  model.rules[key].type !='boolean' && model.rules[key].type !='color'" x-editable  [disabled]="!model.rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="model.rules" [field]="key"></a>
 
 
-                    <input *ngIf="rules[key].type == 'color' && rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
-                    <label *ngIf="rules[key].type == 'color' && !rules[key].update" class="form-control">{{'#'+data[key]}}</label>
+                    <input *ngIf="model.rules[key].type == 'color' && model.rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
+                    <label *ngIf="model.rules[key].type == 'color' && !model.rules[key].update" class="form-control">{{'#'+data[key]}}</label>
 
-                    <button  *ngIf="rules[key].type =='boolean'" class="{{getBooleandData(key,data).class}}" (click)="onPatch(key,data)" [disabled]="getBooleandData(key,data).disabled">
+                    <button  *ngIf="model.rules[key].type =='boolean'" class="{{getBooleandData(key,data).class}}" (click)="onPatch(key,data)" [disabled]="getBooleandData(key,data).disabled">
                         {{getBooleandData(key,data).text}}
                     </button>
 
-                    <a *ngIf="rules[key].object">
-                         {{data[rules[key].keyDisplay]}}
-                         <label *ngIf="rules[key].update">
-                             <span *ngIf="!rules[key].reference">
+                    <a *ngIf="model.rules[key].object">
+                         {{data[model.rules[key].keyDisplay]}}
+                         <label *ngIf="model.rules[key].update">
+                             <span *ngIf="!model.rules[key].reference">
 
-                                 <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
+                                 <button *ngIf="model.rules[key].paramsSave && model.rules[key].permissions.add" type="button" class="btn btn-box-tool"
                                          (click)="loadSaveModal($event,key,data)" title="Asignar nuevo"
-                                         data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
+                                         data-toggle="modal" [attr.data-target]="'#'+model.rules[key].paramsSave.idModal"
                                  >
                                      <i class="fa fa-plus text-green"></i>
                                  </button>
 
 
-                                 <button *ngIf="rules[key].paramsSearch && rules[key].permissions.search" type="button" class="btn btn-box-tool"
+                                 <button *ngIf="model.rules[key].paramsSearch && model.rules[key].permissions.search" type="button" class="btn btn-box-tool"
                                          (click)="loadSearchTable($event,key,data)" title="Buscar"
-                                         data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSearch.idModal">
+                                         data-toggle="modal" [attr.data-target]="'#'+model.rules[key].paramsSearch.idModal">
                                      <i class="fa fa-search text-blue"></i>
                                  </button>
 
-                                 <button *ngIf="data[rules[key].code] && !rules[key].required"
+                                 <button *ngIf="data[model.rules[key].code] && !model.rules[key].required"
                                          (click)="setNull(data,key)"
                                          type="button" class="btn btn-box-tool"
                                          title="Liberar"
@@ -50,11 +50,13 @@
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
                              </span>
-                             <span *ngIf="rules[key].reference && false">
+                             <span *ngIf="model.rules[key].reference">
 
-                                 <button *ngIf="rules[key].paramsSave && rules[key].permissions.add" type="button" class="btn btn-box-tool"
-                                         (click)="loadSaveModal($event,key,data)"
-                                         data-toggle="modal" [attr.data-target]="'#'+rules[key].paramsSave.idModal"
+                                 <button (click)="dataReference = data"
+                                         *ngIf="model.permissions.update && tag.permissions.add"
+                                         data-toggle="modal" [attr.data-target]="'#'+tag.paramsSave.idModal"
+                                         type="button" class="btn btn-box-tool"
+                                         title="Asignar un nuevo tag"
                                  >
                                      <i class="fa fa-plus text-green"></i>
                                  </button>
@@ -178,6 +180,6 @@
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
 
-<div *ngIf="dataSave && dataSave.paramsSave">
+<div *ngIf="dataReference && dataReference.paramsSave">
     <save [rules]="dataSave.rulesSave" [params]="dataSave.paramsSave" (save)="getSaveObject($event)"> </save>
 </div>
