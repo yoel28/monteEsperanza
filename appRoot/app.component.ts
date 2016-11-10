@@ -28,7 +28,7 @@ import {PermisosRol}         from './permiso/permiso';
 import {globalService} from "./common/globalService";
 import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {TipoBasura} from "./tipoBasura/tipoBasura";
-import {Antenna} from "./antena/antenna";
+import {Antenna} from "./antenna/antenna";
 import {Ruta} from "./ruta/ruta";
 import {RestController} from "./common/restController";
 import {Http} from "@angular/http";
