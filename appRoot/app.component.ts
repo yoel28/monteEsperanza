@@ -24,7 +24,7 @@ import {RecargaIngresos}         from './recarga/recarga';
 import {TagRfid}         from './tagRfid/tagRfid';
 import {Vehiculo}         from './vehiculo/vehiculo';
 import {Permiso}         from './permiso/permiso';
-import {PermisosRol}         from './permiso/permiso';
+import {PermisosRol}         from './permiso/permisos-rol/permisosRol';
 import {globalService} from "./common/globalService";
 import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {TipoBasura} from "./tipoBasura/tipoBasura";
