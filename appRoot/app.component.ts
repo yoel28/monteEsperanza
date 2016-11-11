@@ -403,7 +403,8 @@ export class AppComponent extends RestController implements OnInit {
             this.menuItems.push({
                 'visible': this.myglobal.existsPermission("MEN_USERS") || this.myglobal.existsPermission("MEN_CLIENTES")
                 || this.myglobal.existsPermission("MEN_VEH") || this.myglobal.existsPermission("MEN_TAG")
-                || this.myglobal.existsPermission("MEN_CHOFER"),
+                || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
+                || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -434,9 +435,27 @@ export class AppComponent extends RestController implements OnInit {
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_CHOFER"),
-                        'icon': 'fa fa-user',
+                        'icon': 'fa fa-group',
                         'title': 'Choferes',
                         'routerLink': 'Drivers'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_CONTAINER"),
+                        'icon': 'glyphicon glyphicon-inbox',
+                        'title': 'Container',
+                        'routerLink': 'Container'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_RUTAS"),
+                        'icon': 'fa fa-crosshairs',
+                        'title': 'Rutas',
+                        'routerLink': 'Ruta'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_TIP_VEH"),
+                        'icon': 'fa fa-user',
+                        'title': 'Tipo de vehículo',
+                        'routerLink': 'TipoVehiculo'
                     },
                 ]
 
@@ -530,20 +549,12 @@ export class AppComponent extends RestController implements OnInit {
             this.menuItems.push({
                 'visible': this.myglobal.existsPermission("MEN_ANTENAS") || this.myglobal.existsPermission("MEN_PARAM")
                 || this.myglobal.existsPermission("MEN_RULE") || this.myglobal.existsPermission("MEN_GROUPS")
-                || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                 || this.myglobal.existsPermission("MEN_TIP_RECARGA") || this.myglobal.existsPermission("MEN_TIP_BAS")
-                || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT")
-                || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER"),
+                || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT"),
                 'icon': 'fa fa-gears',
                 'title': 'Configuración',
                 'key': 'Configuración',
                 'treeview': [
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_CONTAINER"),
-                        'icon': 'fa fa-crosshairs',
-                        'title': 'Container',
-                        'routerLink': 'Container'
-                    },
                     {
                         'visible': this.myglobal.existsPermission("MEN_ANTENAS"),
                         'icon': 'fa fa-crosshairs',
@@ -567,18 +578,6 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-users',
                         'title': 'Grupo de clientes',
                         'routerLink': 'TipoEmpresa'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_RUTAS"),
-                        'icon': 'fa fa-crosshairs',
-                        'title': 'Rutas',
-                        'routerLink': 'Ruta'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_TIP_VEH"),
-                        'icon': 'fa fa-user',
-                        'title': 'Tipo de vehículo',
-                        'routerLink': 'TipoVehiculo'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_TIP_RECARGA"),
