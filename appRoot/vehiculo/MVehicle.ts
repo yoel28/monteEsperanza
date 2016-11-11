@@ -66,6 +66,7 @@ export class MVehicle extends ModelBase{
 
         this.rules['chofer']=this.driver.ruleObject;
         this.rules['chofer'].update=this.permissions.update;
+        this.rules['chofer'].required=false;
 
         this.rules['minBalance']={
             'type': 'number',
