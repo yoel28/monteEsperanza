@@ -47,8 +47,8 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view7'))
-                this.view = JSON.parse(localStorage.getItem('view7'));
+            if (localStorage.getItem('view8'))
+                this.view = JSON.parse(localStorage.getItem('view8'));
             this.ordenView();
             this.loadData();
         }
@@ -177,6 +177,7 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': false, 'position': 12, 'title': 'Operador', 'key': 'usernameCreator'},
         {'visible': false, 'position': 13, 'title': 'Fecha de Entrada.', 'key': 'dateCreated'},
         {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'choferName'},
+        {'visible': true, 'position': 15, 'title': 'Contenedor', 'key': 'containerCode'},
 
     ];
 
@@ -223,7 +224,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view7', JSON.stringify(this.view))
+        localStorage.setItem('view8', JSON.stringify(this.view))
     }
 
     setVisibleView(data) {
@@ -233,7 +234,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view7', JSON.stringify(this.view))
+        localStorage.setItem('view8', JSON.stringify(this.view))
     }
 }
 

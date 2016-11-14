@@ -65,6 +65,9 @@
                                     <span   *ngSwitchWhen="'companyTypeName'">
                                         {{data.companyTypeName}}
                                     </span>
+                                    <span   *ngSwitchWhen="'containerCode'">
+                                        {{data.containerCode}}
+                                    </span>
                                     <span   *ngSwitchWhen="'neto'">
                                         {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
                                     </span>
