@@ -56,7 +56,6 @@ export class Save extends RestController implements OnInit,AfterViewInit{
 
     initForm() {
         let that = this;
-        this.keys = Object.keys(this.rules);
         Object.keys(this.rules).forEach((key)=> {
 
             that.data[key] = [];
@@ -121,6 +120,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             }
 
         });
+        this.keys = Object.keys(this.rules);
         this.form = this._formBuilder.group(this.data);
     }
 
