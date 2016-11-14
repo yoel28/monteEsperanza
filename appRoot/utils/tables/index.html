@@ -192,6 +192,10 @@
     </div>
 </div>
 
+<div *ngFor="let key of getKeys(modelSave)">
+    <save [rules]="modelSave[key].rulesSave" [params]="modelSave[key].paramsSave" (save)="getDataSave($event,key)"> </save>
+</div>
+
 <div *ngIf="searchTable && searchTable.idModal">
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
