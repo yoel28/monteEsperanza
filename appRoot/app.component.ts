@@ -55,6 +55,7 @@ import {Drivers} from "./drivers/drivers";
 import {OperationsAudit} from "./reportes/operationsAudit";
 import {Container} from "./container/container";
 import {MOperacion} from "./operacion/MOperacion";
+import {AccessHistory} from "./empresa/accessHistory/accessHistory";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -85,6 +86,7 @@ declare var jQuery:any;
     {path: '/taquilla/:search', name: 'TaquillaSearh', component: Taquilla},
 
     {path: '/cliente', name: 'Empresa', component: Empresa},
+    {path: '/control', name: 'AccessHistory', component: AccessHistory},
     {path: '/cliente/morosos', name: 'EmpresaMorosos', component: EmpresaMorosos},
     {path: '/perfil', name: 'Profile', component: Profile},
     {path: '/cliente/:ruc', name: 'EmpresaTimeLine', component: EmpresaTimeLine},
@@ -463,11 +465,17 @@ export class AppComponent extends RestController implements OnInit {
             this.menuItems.push({
                 'visible': this.myglobal.existsPermission("MEN_CAJA") || this.myglobal.existsPermission("MEN_REP_RU") || this.myglobal.existsPermission("MEN_REP_GROUPS")
                 || this.myglobal.existsPermission("MEN_DESC_GROUPS") || this.myglobal.existsPermission("MEN_VEH") || this.myglobal.existsPermission("MEN_REP_CONSU_RUT")
-                || this.myglobal.existsPermission("MEN_REP_CONSU_BAS"),
+                || this.myglobal.existsPermission("MEN_REP_CONSU_BAS") || this.myglobal.existsPermission("MEN_ACCESS_CLIENT"),
                 'icon': 'fa fa-list',
                 'title': 'Reportes',
                 'key': 'Reportes',
                 'treeview': [
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_ACCESS_CLIENT"),
+                        'icon': 'fa fa-list',
+                        'title': 'Historial de clientes',
+                        'routerLink': 'AccessHistory'
+                    },
                     {
                         'visible': this.myglobal.existsPermission("MEN_OP_AUD"),
                         'icon': 'fa fa-list',
