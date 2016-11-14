@@ -40,6 +40,7 @@ export class MOperacion extends ModelBase{
 
 
         this.rules['chofer']=this.chofer.ruleObject;
+        this.rules['chofer'].required=false;
         this.rules['chofer'].update=this.permissions.update;
 
         this.rules['company']=this.company.ruleObject;
