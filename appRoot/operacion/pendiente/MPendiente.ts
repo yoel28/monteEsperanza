@@ -50,7 +50,7 @@ export class MPendiente extends ModelBase{
             'search': this.permissions.filter,
             'key': 'lotValIn',
             'icon': 'fa fa-clock-o',
-            'title': 'Tiempo E.',
+            'title': 'Lote E.',
             'placeholder': 'Lote de entrada',
         }
         this.rules['lotValOut']={
@@ -59,7 +59,7 @@ export class MPendiente extends ModelBase{
             'search': this.permissions.filter,
             'key': 'lotValOut',
             'icon': 'fa fa-clock-o',
-            'title': 'Tiempo E.',
+            'title': 'Lote S.',
             'placeholder': 'Lote de salida',
         }
         this.rules['weightIn']={
