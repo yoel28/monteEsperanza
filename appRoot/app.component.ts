@@ -55,7 +55,7 @@ import {Drivers} from "./drivers/drivers";
 import {OperationsAudit} from "./reportes/operationsAudit";
 import {Container} from "./container/container";
 import {MOperacion} from "./operacion/MOperacion";
-import {AccessHistory} from "./empresa/accessHistory/accessHistory";
+import {Register} from "./register/register";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -86,7 +86,7 @@ declare var jQuery:any;
     {path: '/taquilla/:search', name: 'TaquillaSearh', component: Taquilla},
 
     {path: '/cliente', name: 'Empresa', component: Empresa},
-    {path: '/control', name: 'AccessHistory', component: AccessHistory},
+    {path: '/control', name: 'Register', component: Register},
     {path: '/cliente/morosos', name: 'EmpresaMorosos', component: EmpresaMorosos},
     {path: '/perfil', name: 'Profile', component: Profile},
     {path: '/cliente/:ruc', name: 'EmpresaTimeLine', component: EmpresaTimeLine},
@@ -473,8 +473,8 @@ export class AppComponent extends RestController implements OnInit {
                     {
                         'visible': this.myglobal.existsPermission("MEN_ACCESS_CLIENT"),
                         'icon': 'fa fa-list',
-                        'title': 'Historial de clientes',
-                        'routerLink': 'AccessHistory'
+                        'title': 'Registro de acceso',
+                        'routerLink': 'Register'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_OP_AUD"),
