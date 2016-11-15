@@ -49,7 +49,7 @@ export class Tables extends RestController implements OnInit {
         this.keyActions=Object.keys(this.params.actions);
         this.getInstance = new EventEmitter();
         this.setEndpoint(this.params.endpoint);
-        this.getListObjectNotReference();
+        this.getListObjectNotReferenceSave();
     }
     ngAfterViewInit() {
         this.getInstance.emit(this);
@@ -103,15 +103,11 @@ export class Tables extends RestController implements OnInit {
 
         return data;
     }
-    getListObjectNotReference(){
+    getListObjectNotReferenceSave(){
         let that = this;
         Object.keys(this.model.rules).forEach(key=>{
-            if(that.model.rules[key].object && !that.model.rules[key].reference)
-            {
-                //that.modelSave[key]={};
+            if(that.model.rules[key].object && !that.model.rules[key].reference && that.model.rules[key].permissions.add)
                 that.modelSave[key]=that.model.rules[key];
-            }
-
         })
     }
 
