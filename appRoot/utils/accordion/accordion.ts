@@ -45,7 +45,7 @@ export class Accordion extends RestController implements OnInit,AfterViewInit {
 
     ngOnInit()
     {
-        this.keyActions=Object.keys(this.params.actions);
+        this.keyActions=Object.keys(this.params.actions || {});
         this.setEndpoint(this.model.endpoint);
         this.setEndpoint(this.params.endpoint);
     }
@@ -95,6 +95,9 @@ export class Accordion extends RestController implements OnInit,AfterViewInit {
         var diff = moment().valueOf() - moment(date).valueOf();
         return ((diff < parseFloat(this.myglobal.getParams('DATE_MAX_HUMAN'))))
     }
-    
+
+    public getObjectKey(data){
+        return Object.keys(data);
+    }
 
 }
