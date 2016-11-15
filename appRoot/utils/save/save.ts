@@ -4,14 +4,14 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {Xcropit, Xfile, ColorPicker} from "../../common/xeditable";
+import {Xcropit, Xfile, ColorPicker, Datepicker} from "../../common/xeditable";
 import {CatalogApp} from "../../common/catalogApp";
 declare var SystemJS:any;
 @Component({
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
-    directives:[Xcropit,Xfile,ColorPicker],
+    directives:[Xcropit,Xfile,ColorPicker,Datepicker],
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
@@ -158,6 +158,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     //Al hacer click en la lupa guarda los valores del objecto
     getLoadSearch(event,data){
         event.preventDefault();
+        this.max=5;
         this.findControl="";
         this.search=data;
         this.getSearch(event,"");
@@ -236,6 +237,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     }
     public getKeys(data){
         return Object.keys(data || {});
+    }
+    loadDate(data,key){
+        this.data[key].updateValue(data);
+
     }
 }
 
