@@ -72,6 +72,7 @@ export class CatalogApp {
     {
         return {'format':"DD-MM-YYYY","minDate":"01-01-2016"};
     }
+
     public static get msg():any
     {
         let msg:any = {};
@@ -123,4 +124,20 @@ export class CatalogApp {
             }
         }
     });
+
+    public static get formatDatePickerDDMMYYYY():any{
+        return {
+            'format': 'dd/mm/yyyy',
+            'startDate':'01/01/2016',
+            'startView': 2,
+            'minViewMode': 0,
+            'maxViewMode': 2,
+            'forceParse': false,
+            'language': "es",
+            'todayBtn': "linked",
+            'autoclose': true,
+            'todayHighlight': true,
+            'return': 'DD/MM/YYYY'
+        }
+    }
 }
