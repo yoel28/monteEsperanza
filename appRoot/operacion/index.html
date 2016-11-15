@@ -103,12 +103,14 @@
                                         {{data.choferName}}
                                     </span>
                                     <span   *ngSwitchWhen="'weightIn'">
-                                        <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
-                                           [disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>
+                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                           <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
+                                        {{data.weightIn}}
                                     </span>
                                     <span   *ngSwitchWhen="'weightOut'">
-                                        <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
-                                           [disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>
+                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                           <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
+                                        {{data.weightOut}}
                                     </span>
                                 </span>
                             </td>
@@ -124,6 +126,11 @@
 
                                         <a *ngIf="action == 'print' && data.rechargeId" (click)="onPrint(data)" title="Imprimir">
                                             <span class="fa fa-print fa-lg btn"></span>
+                                        </a>
+
+                                        <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
+                                           data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
+                                            <span class="fa fa-pencil-square-o fa-lg btn"></span>
                                         </a>
 
                                         <a *ngIf="action == 'automatic' && data.rechargeId && data.enabled && data.rechargeQuantity < 0"
