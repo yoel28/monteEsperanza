@@ -94,6 +94,11 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions.actions.automatic = {
             'visible': this.model.permissions.automatic,
         };
+        this.viewOptions.actions.edit = {
+            'visible': this.model.permissions.update,
+            'title':'editar',
+            'modal':this.myglobal.objectInstance['OP'].idModal,
+        };
 
 
     }
@@ -236,6 +241,14 @@ export class Operacion extends ControllerBase implements OnInit {
         })
         localStorage.setItem('view8', JSON.stringify(this.view))
     }
+
+    edit(data){
+        if (this.myglobal.objectInstance['OP']) {
+            //this.dataSelect = ;
+            this.myglobal.objectInstance['OP'].loadEdit(data);
+        }
+    }
+    
 }
 
 @Component({
