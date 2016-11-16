@@ -37,6 +37,8 @@ export class Accordion extends RestController implements OnInit,AfterViewInit {
 
     public getInstance:any;
 
+    public formatTime = CatalogApp.formatTime;
+
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
@@ -72,11 +74,7 @@ export class Accordion extends RestController implements OnInit,AfterViewInit {
             if (!force) {
                 var diff = moment().valueOf() - moment(date).valueOf();
                 if (diff < parseFloat(this.myglobal.getParams('DATE_MAX_HUMAN'))) {
-                    if (diff < 1800000)//menor a 30min
-                        return 'Hace ' + this.dateHmanizer(diff, {units: ['m', 's']})
-                    if (diff < 3600000) //menor a 1hora
-                        return 'Hace ' + this.dateHmanizer(diff, {units: ['m']})
-                    return 'Hace ' + this.dateHmanizer(diff, {units: ['h', 'm']})
+                    return 'Hace '+this.formatTime(diff);
                 }
             }
             return moment(date).format(format);

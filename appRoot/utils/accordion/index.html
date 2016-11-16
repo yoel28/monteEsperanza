@@ -54,6 +54,10 @@
                                 {{formatDate(data[key],'DD/MM/YYYY, LT',false,data.id)}}
                                 <i *ngIf="viewChangeDate(data[key])" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                             </label>
+
+                            <label class="title" *ngIf="model.rules[key].type == 'time'"><strong>{{model.rules[key].title }}:&nbsp;</strong>
+                                {{formatTime(data[key])}}
+                            </label>
                         </div>
                     </span>
                 </div>
