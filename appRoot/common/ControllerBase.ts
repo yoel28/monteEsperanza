@@ -86,7 +86,8 @@ export abstract class ControllerBase extends RestController {
     //enlace a restcontroller
     public setLoadData(data) {
         this.dataList.list.unshift(data);
-        if (this.dataList.count >= this.max)
+        this.dataList.count++;
+        if (this.dataList.count > this.max)
             this.dataList.list.pop();
     }
     
