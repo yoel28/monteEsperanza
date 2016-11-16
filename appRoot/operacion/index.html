@@ -139,6 +139,10 @@
                                             <span class="fa fa-money fa-lg btn"></span>
                                         </a>
 
+                                        <a *ngIf="action == 'close' && data.enabled" (click)="onPatch('enabled', data)" [attr.title]="viewOptions.actions.close.title">
+                                            <span  class="fa fa-lg btn fa-lock"></span>
+                                        </a>
+
                                     </label>
                                 </div>
                             </td>
