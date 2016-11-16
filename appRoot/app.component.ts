@@ -140,7 +140,7 @@ export class AppComponent extends RestController implements OnInit {
 
     constructor(public router:Router, http:Http, public myglobal:globalService, public toastr:ToastsManager) {
         super(http);
-        let url="https://dev.aguaseo.com:8080";
+        let url="http://192.168.1.144:8080";
         localStorage.setItem('urlAPI', url + '/api');
         localStorage.setItem('url', url);
 
@@ -273,7 +273,8 @@ export class AppComponent extends RestController implements OnInit {
     }
 
     outAnt(event, myglobal, data?) {
-        this.activeMenu(null,null);
+        if(this.activeMenu)
+            this.activeMenu(null,null);
         event.preventDefault();
         if (myglobal.objectInstance['OP']) {
             myglobal.objectInstance['OP'].loadOutAnt(null, data);
