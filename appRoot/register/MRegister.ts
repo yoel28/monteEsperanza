@@ -29,9 +29,12 @@ export class MRegister extends ModelBase{
 
         this.rules['chofer'] = this.chofer.ruleObject;
         this.rules['chofer'].required = false;
+        this.rules['chofer'].rulesSave['name'].title="Chofer";
 
         this.rules['company'] = this.company.ruleObject;
         this.rules['company'].required = false;
+        this.rules['company'].rulesSave['name'].title="Cliente";
+        this.rules['company'].rulesSave['code'].title="Codigo del cliente";
 
         this.rules['tag'] = this.company.ruleObject;
         this.rules['tag'].required = false;
@@ -87,24 +90,24 @@ export class MRegister extends ModelBase{
         };
 
         this.rules['timeIn']={
-            'type': 'number',
+            'type': 'time',
             'required':false,
             'step':'0',
             'search': this.permissions.filter,
             'key': 'timeIn',
             'icon': 'fa fa-clock-o',
-            'title': 'Tiempo E.',
-            'placeholder': 'Tiempo de entrada',
+            'title': 'Tiempo en vertedero',
+            'placeholder': 'Tiempo en vertedero',
         }
         this.rules['timeOut']={
-            'type': 'number',
+            'type': 'time',
             'required':false,
             'step':'0',
             'search': this.permissions.filter,
             'key': 'timeOut',
             'icon': 'fa fa-clock-o',
-            'title': 'Tiempo S.',
-            'placeholder': 'Tiempo de salida',
+            'title': 'Tiempo fuera de vertedero',
+            'placeholder': 'Tiempo fuera de vertedero',
         }
 
         this.rules['ubicacion'] = {
@@ -120,7 +123,7 @@ export class MRegister extends ModelBase{
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
 
-        this.rules['id']={'title':'Numero Transacción','type':'number'};
+        this.rules['id']={'title':'Número de transacción','type':'number'};
 
     }
     initPermissions() {}
