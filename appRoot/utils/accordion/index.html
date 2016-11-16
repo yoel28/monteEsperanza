@@ -46,8 +46,8 @@
         <div [attr.id]="'collapse'+data.id" class="panel-collapse collapse">
             <div class="panel-body">
                 <div class="col-lg-12">
-                    <span *ngFor="let key of getObjectKey(data)">
-                        <div *ngIf="model.rules[key] && !model.rules[key].object" class="col-lg-4">
+                    <span *ngFor="let key of getObjectKey(model.rules)">
+                        <div *ngIf="(data[key] || data[key]===undefined) && !model.rules[key].object" class="col-lg-4">
                             <label class="title" *ngIf="model.rules[key].type == 'text' || model.rules[key].type == 'number'"><strong>{{model.rules[key].title }}:&nbsp;</strong>{{data[key] || 'N/A'}}&nbsp;</label>
 
                             <label class="title" *ngIf="model.rules[key].type == 'date'"><strong>{{model.rules[key].title }}:&nbsp;</strong>
