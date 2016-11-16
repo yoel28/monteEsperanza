@@ -18,6 +18,8 @@ export class MRegister extends ModelBase{
         super('REG','/registries/',myglobal);
         this.initModel();
         this.extendRulesObjectInRules(this.rules);
+        this.rules['vehicle'].rulesSave['plate'].search=true;
+
     }
     modelExternal() {
         this.chofer = new MDrivers(this.myglobal);
@@ -27,21 +29,7 @@ export class MRegister extends ModelBase{
     }
     initRules() {
 
-        this.rules['chofer'] = this.chofer.ruleObject;
-        this.rules['chofer'].required = false;
-        this.rules['chofer'].rulesSave['name'].title="Chofer";
-
-        this.rules['company'] = this.company.ruleObject;
-        this.rules['company'].required = false;
-        this.rules['company'].rulesSave['name'].title="Cliente";
-        this.rules['company'].rulesSave['code'].title="Codigo del cliente";
-
-        this.rules['tag'] = this.company.ruleObject;
-        this.rules['tag'].required = false;
-
-        this.rules['vehicle'] = this.vehicle.ruleObject;
-        this.rules['vehicle'].required = false;
-
+        this.rules['id']={'title':'Número de transacción','type':'number'};
 
         this.rules['dateIn'] = {
             'type': 'date',
@@ -68,6 +56,50 @@ export class MRegister extends ModelBase{
             'placeholder': 'Salida',
         };
 
+        this.rules['ubicacion'] = {
+            'type': 'text',
+            'required': true,
+            'update': this.permissions.update,
+            'search': this.permissions.filter,
+            'visible': this.permissions.visible,
+            'key': 'ubicacion',
+            'title': 'Ubicación',
+            'placeholder': 'Ubicación',
+        };
+
+        this.rules['timeIn']={
+            'type': 'time',
+            'required':false,
+            'step':'0',
+            'search': this.permissions.filter,
+            'key': 'timeIn',
+            'icon': 'fa fa-clock-o',
+            'title': 'Tiempo en vertedero',
+            'placeholder': 'Tiempo en vertedero',
+        };
+        this.rules['timeOut']={
+            'type': 'time',
+            'required':false,
+            'step':'0',
+            'search': this.permissions.filter,
+            'key': 'timeOut',
+            'icon': 'fa fa-clock-o',
+            'title': 'Tiempo fuera de vertedero',
+            'placeholder': 'Tiempo fuera de vertedero',
+        };
+
+        this.rules['chofer'] = this.chofer.ruleObject;
+        this.rules['chofer'].required = false;
+        this.rules['chofer'].rulesSave['name'].title="Chofer";
+
+        this.rules['company'] = this.company.ruleObject;
+        this.rules['company'].required = false;
+        this.rules['company'].rulesSave['name'].title="Cliente";
+        this.rules['company'].rulesSave['code'].title="Codigo del cliente";
+
+        this.rules['tag'] = this.company.ruleObject;
+        this.rules['tag'].required = false;
+
         this.rules['lotValIn'] = {
             'type': 'number',
             'required':false,
@@ -89,41 +121,13 @@ export class MRegister extends ModelBase{
             'placeholder': 'Lote de salida',
         };
 
-        this.rules['timeIn']={
-            'type': 'time',
-            'required':false,
-            'step':'0',
-            'search': this.permissions.filter,
-            'key': 'timeIn',
-            'icon': 'fa fa-clock-o',
-            'title': 'Tiempo en vertedero',
-            'placeholder': 'Tiempo en vertedero',
-        }
-        this.rules['timeOut']={
-            'type': 'time',
-            'required':false,
-            'step':'0',
-            'search': this.permissions.filter,
-            'key': 'timeOut',
-            'icon': 'fa fa-clock-o',
-            'title': 'Tiempo fuera de vertedero',
-            'placeholder': 'Tiempo fuera de vertedero',
-        }
 
-        this.rules['ubicacion'] = {
-            'type': 'text',
-            'required': true,
-            'update': this.permissions.update,
-            'search': this.permissions.filter,
-            'visible': this.permissions.visible,
-            'key': 'ubicacion',
-            'title': 'Ubicación',
-            'placeholder': 'Ubicación',
-        };
+        this.rules['vehicle'] = this.vehicle.ruleObject;
+        this.rules['vehicle'].rulesSave['plate'].key="vehiclePlate";
+        this.rules['vehicle'].required = false;
+
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
-
-        this.rules['id']={'title':'Número de transacción','type':'number'};
 
     }
     initPermissions() {}
