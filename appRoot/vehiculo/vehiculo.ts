@@ -72,7 +72,7 @@ export class Vehiculo extends ControllerBase implements OnInit{
         });
 
         this.viewOptions["buttons"].push({
-            'visible': this.model.permissions.filter,
+            'visible': this.model.permissions.filter && this.model.permissions.list,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
