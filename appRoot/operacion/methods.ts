@@ -154,17 +154,24 @@ export class OperacionSave extends ControllerBase implements OnInit{
     patchForm(event){
         event.preventDefault();
         let that=this;
-        let json={};
-        json['comment'] = this.form.controls['comment'].value;
-        json['weightOut'] = parseFloat(this.form.controls['weightOut'].value);
-        let body = JSON.stringify(json);
+
+        let body = this.form.value;
+        Object.keys(body).forEach((key:string)=>{
+            if(that.model.rulesSave[key].object){
+                body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
+            }
+            if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
+                body[key]=parseFloat(body[key]);
+            }
+        });
         let successCallback= response => {
             that.resetForm();
+            Object.assign(that.dataSelect,response.json());
             if(that.toastr)
-                that.toastr.success('Actualizado con éxito','Notificación')
+                that.toastr.success('Actualizado con éxito','Notificación');
             that.onPrint(response.json());
         }
-        this.httputils.doPut('/operations/'+this.idOperacion,body,successCallback,this.error)
+        this.httputils.doPut('/operations/'+this.idOperacion,JSON.stringify(body),successCallback,this.error)
     }
     //print automatic
     @ViewChild(OperacionPrint)
@@ -191,6 +198,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         event.preventDefault();
         this.findControl="";
         this.search=data;
+        this.max = 5;
         this.getSearch(event,"");
     }
     //accion al dar click en el boton de buscar del formulario en el search
@@ -318,9 +326,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.model.rulesSave['route'].readOnly=false;
 
         this.data['weightIn'].updateValue(data.weightIn);
-        this.model.rulesSave['weightIn'].readOnly=true;
+        this.model.rulesSave['weightIn'].readOnly=false;
 
-        this.data['weightOut'].updateValue(this.weightOut);
+        this.data['weightOut'].updateValue(data.weightOut || this.weightOut);
         this.model.rulesSave['weightOut'].required=true;
         this.model.rulesSave['weightOut'].readOnly=false;
         this.model.rulesSave['weightOut'].hidden=false;
@@ -414,7 +422,11 @@ export class OperacionSave extends ControllerBase implements OnInit{
             dataOperation.operations.push(data);
             that.outAntena(dataOperation || {});
         }
-
+    }
+    loadEdit(data){
+        this.dataSelect = data;
+        this.resetForm();
+        this.getOperacion(this.dataSelect);
     }
 
 

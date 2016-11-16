@@ -6,7 +6,7 @@
                     <h3 class="box-title">
                         {{viewOptions.title | translate }}
                     </h3>
-                    <div class="pull-right" *ngIf="viewOptions['buttons']">
+                    <div class="pull-right no-print" *ngIf="viewOptions['buttons']">
                         <button *ngFor="let buttom of getViewOptionsButtons()"
                                 class="{{buttom.class}}" type="button" data-toggle="modal"
                                 [attr.data-target]="'#'+buttom.modal">
@@ -17,7 +17,7 @@
                 </div>
                 <div *ngIf="model.permissions.list" class="box-body">
                     <div *ngIf="dataList && dataList.count>0">
-                        <tables [dataList]="dataList" [model]="model" [params]="paramsTable" [where]="where"></tables>
+                        <accordion [dataList]="dataList" [model]="model" [params]="paramsAccordion" [where]="where"></accordion>
                     </div>
                     <div *ngIf="dataList && dataList.count == 0">
                         <div class="alert alert-warning alert-dismissable">
@@ -42,7 +42,6 @@
         <filter [params]="model.paramsSearch" [rules]="model.rules" (whereFilter)="loadWhere($event)"></filter>
     </div>
 </div>
-
 
 <div *ngIf="model.permissions.warning && modalIn" class="modal fade" [class.in]="modalIn" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" [style.display]="modalIn?'block':'none'">

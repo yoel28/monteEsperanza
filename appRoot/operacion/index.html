@@ -65,6 +65,9 @@
                                     <span   *ngSwitchWhen="'companyTypeName'">
                                         {{data.companyTypeName}}
                                     </span>
+                                    <span   *ngSwitchWhen="'containerCode'">
+                                        {{data.containerCode}}
+                                    </span>
                                     <span   *ngSwitchWhen="'neto'">
                                         {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
                                     </span>
@@ -100,12 +103,14 @@
                                         {{data.choferName}}
                                     </span>
                                     <span   *ngSwitchWhen="'weightIn'">
-                                        <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
-                                           [disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>
+                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                           <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
+                                        {{data.weightIn}}
                                     </span>
                                     <span   *ngSwitchWhen="'weightOut'">
-                                        <a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"
-                                           [disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>
+                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                           <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
+                                        {{data.weightOut}}
                                     </span>
                                 </span>
                             </td>
@@ -123,10 +128,19 @@
                                             <span class="fa fa-print fa-lg btn"></span>
                                         </a>
 
+                                        <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
+                                           data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
+                                            <span class="fa fa-pencil-square-o fa-lg btn"></span>
+                                        </a>
+
                                         <a *ngIf="action == 'automatic' && data.rechargeId && data.enabled && data.rechargeQuantity < 0"
                                            data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
                                            (click)="dataSelect = data" title="Recarga automatica">
                                             <span class="fa fa-money fa-lg btn"></span>
+                                        </a>
+
+                                        <a *ngIf="action == 'close' && data.enabled" (click)="onPatch('enabled', data)" [attr.title]="viewOptions.actions.close.title">
+                                            <span  class="fa fa-lg btn fa-lock"></span>
                                         </a>
 
                                     </label>

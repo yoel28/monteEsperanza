@@ -54,6 +54,15 @@ export class Filter extends RestController implements OnInit{
             {'id':'le','text':'Menor Igual'},
             {'id':'lt','text':'Menor que'},
         ],
+        'time':[
+            {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
+            {'id':'ne','text':'Diferente que'},
+            {'id':'ge','text':'Mayor Igual'},
+            {'id':'gt','text':'Mayor que'},
+            {'id':'le','text':'Menor Igual'},
+            {'id':'lt','text':'Menor que'},
+        ],
         'object':[
             {'id':'eq','text':'Igual que'},
             {'id':'isNull','text':'Nulo'},
@@ -231,7 +240,7 @@ export class Filter extends RestController implements OnInit{
                         whereTemp.value = whereTemp.value + "%";
                     }
 
-                    if (that.rules[key].type == 'number' && isNumeric(whereTemp.value))// tipo numerico...
+                    if ( (that.rules[key].type == 'number' || that.rules[key].type == 'time') && isNumeric(whereTemp.value))// tipo numerico...
                     {
                         whereTemp.value = parseFloat(whereTemp.value);
                         if (that.rules[key].double)

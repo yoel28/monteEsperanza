@@ -11,7 +11,7 @@ export class RestController implements OnInit {
     httputils:HttpUtils;
     endpoint:string;
     offset = 0;
-    max = 5;
+    max = 15;
     sort = "";//name field.
     order = "";//asc o desc
     page:any = [];

@@ -96,7 +96,7 @@
 
     <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
 
-    <div *ngIf="operation && operation.permissions.add">
+    <div *ngIf="operation && (operation.permissions.add || operation.permissions.update)">
         <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
     </div>
 

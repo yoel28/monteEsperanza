@@ -10,6 +10,7 @@ import {globalService} from "../common/globalService";
 import {Datepicker} from "../common/xeditable";
 import { Router }           from '@angular/router-deprecated';
 import moment from "moment/moment";
+import {CatalogApp} from "../common/catalogApp";
 declare var SystemJS:any;
 
 @Component({
@@ -106,18 +107,7 @@ export class RecargaSave extends RestController implements OnInit{
             }
         })
     }
-    public formatDateFact = {
-        format: "dd/mm/yyyy",
-        startDate:'01/01/2016',
-        startView: 2,
-        minViewMode: 0,
-        maxViewMode: 2,
-        forceParse: false,
-        language: "es",
-        todayBtn: "linked",
-        autoclose: true,
-        todayHighlight: true,
-    }
+    public formatDateFact = CatalogApp.formatDatePickerDDMMYYYY;
 
     loadFechaFac(data) {
         this.referenceDate.updateValue(data.date)

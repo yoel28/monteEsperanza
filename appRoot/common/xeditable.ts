@@ -35,7 +35,7 @@ export class Xeditable implements OnInit {
         jQuery(this.el.nativeElement).editable({
             type: that.rules[that.field].type || 'text',
             value: (that.rules[that.field].subKey?that.data[that.field][that.rules[that.field].subKey]:that.data[that.field]) || (that.field=='password'?"":"N/A"),
-            disabled: that.disabled,
+            disabled: that.data.enabled?that.disabled:(that.data.enabled==null?that.disabled:true),
             display: that.rules[that.field].display || null,
             showbuttons: that.rules[that.field].showbuttons || false,
             mode: that.rules[that.field].mode || 'inline',

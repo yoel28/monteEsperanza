@@ -164,5 +164,21 @@ export abstract class ModelBase{
         }));
     }
 
+    public extendRulesObjectInRules(rules){
+        let that = this;
+
+        Object.keys(rules).forEach(key=>{
+            if(rules[key].object){
+                Object.keys(rules[key].rulesSave).forEach(subKey=>{
+                    rules[key+that.capitalizeFirstLetter(subKey)] = rules[key].rulesSave[subKey];
+                    rules[key+that.capitalizeFirstLetter(subKey)].search=false;
+                })
+            }
+        })
+    }
+    public capitalizeFirstLetter (data) {
+        return data.charAt(0).toUpperCase() + data.slice(1);
+    }
+
 
 }

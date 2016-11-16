@@ -1,5 +1,6 @@
 declare var moment:any;
 declare var Table2Excel:any;
+declare var humanizeDuration:any;
 
 export class CatalogApp {
 
@@ -71,6 +72,7 @@ export class CatalogApp {
     {
         return {'format':"DD-MM-YYYY","minDate":"01-01-2016"};
     }
+
     public static get msg():any
     {
         let msg:any = {};
@@ -82,9 +84,69 @@ export class CatalogApp {
         msg.email="Correo electronico invalido";
         msg.notFound="No se encontraron resultados";
         msg.warningTitle="Advertencia";
+        msg.warningBody="El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que hace.";
+        msg.warningButtonExit="Salir";
+        msg.warningButtonYes="Sí, estoy seguro";
 
         return msg;
 
     }
 
+    public static dateHmanizer = humanizeDuration.humanizer({
+        language: 'shortEs',
+        round: true,
+        languages: {
+            shortEs: {
+                y: function () {
+                    return 'y'
+                },
+                mo: function () {
+                    return 'm'
+                },
+                w: function () {
+                    return 'Sem'
+                },
+                d: function () {
+                    return 'd'
+                },
+                h: function () {
+                    return 'hr'
+                },
+                m: function () {
+                    return 'min'
+                },
+                s: function () {
+                    return 'seg'
+                },
+                ms: function () {
+                    return 'ms'
+                },
+            }
+        }
+    });
+
+    public static get formatDatePickerDDMMYYYY():any{
+        return {
+            'format': 'dd/mm/yyyy',
+            'startDate':'01/01/2016',
+            'startView': 2,
+            'minViewMode': 0,
+            'maxViewMode': 2,
+            'forceParse': false,
+            'language': "es",
+            'todayBtn': "linked",
+            'autoclose': true,
+            'todayHighlight': true,
+            'return': 'DD/MM/YYYY'
+        }
+    }
+
+    //recibe un numerico en milisegundos
+    public static formatTime (time:number){
+        if (time < 1800000)//menor a 30min
+            return  this.dateHmanizer(time, {units: ['m', 's']});
+        if (time < 3600000) //menor a 1hora
+            return this.dateHmanizer(time, {units: ['m']});
+        return this.dateHmanizer(time, {units: ['h', 'm']});
+    }
 }

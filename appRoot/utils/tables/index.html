@@ -25,7 +25,7 @@
 
                     <a *ngIf="model.rules[key].object">
                          {{data[model.rules[key].keyDisplay]}}
-                         <label *ngIf="model.permissions.update">
+                         <label *ngIf="model.permissions.update && data.enabled">
                              <span *ngIf="!model.rules[key].reference">
 
                                  <button *ngIf="model.rules[key].paramsSave && model.rules[key].permissions.add" type="button" class="btn btn-box-tool"
@@ -190,6 +190,10 @@
             </div>
         </div>
     </div>
+</div>
+
+<div *ngFor="let key of getKeys(modelSave)">
+    <save [rules]="modelSave[key].rulesSave" [params]="modelSave[key].paramsSave" (save)="getDataSave($event,key)"> </save>
 </div>
 
 <div *ngIf="searchTable && searchTable.idModal">

@@ -1,4 +1,4 @@
-import {Component, OnInit,ViewChild,Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -17,7 +17,7 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/drivers/index.html',
     styleUrls: [SystemJS.map.app+'/drivers/style.css'],
     providers: [TranslateService],
-    directives: [Filter,Tables,Save],
+    directives: [Filter,Tables,Save,Tooltip],
     pipes: [TranslatePipe]
 })
 export class Drivers extends ControllerBase implements OnInit {

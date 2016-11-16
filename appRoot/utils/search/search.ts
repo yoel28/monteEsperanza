@@ -29,6 +29,7 @@ export class Search extends RestController{
         this.result = new EventEmitter();
     }
     ngOnInit(){
+        this.max = 5;
         this.setEndpoint(this.params.endpoint);
     }
     getSearch(search){

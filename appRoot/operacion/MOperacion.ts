@@ -121,6 +121,7 @@ export class MOperacion extends ModelBase{
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
         this.permissions['automatic'] = this.myglobal.existsPermission(this.prefix + '_AUTOMATIC');
+        this.permissions['close'] = this.myglobal.existsPermission(this.prefix + '_CLOSE');
 
     }
     initParamsSearch() {
