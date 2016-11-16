@@ -86,7 +86,7 @@ declare var jQuery:any;
     {path: '/taquilla/:search', name: 'TaquillaSearh', component: Taquilla},
 
     {path: '/cliente', name: 'Empresa', component: Empresa},
-    {path: '/control', name: 'Register', component: Register},
+    {path: '/registro', name: 'Register', component: Register},
     {path: '/cliente/morosos', name: 'EmpresaMorosos', component: EmpresaMorosos},
     {path: '/perfil', name: 'Profile', component: Profile},
     {path: '/cliente/:ruc', name: 'EmpresaTimeLine', component: EmpresaTimeLine},
@@ -140,7 +140,7 @@ export class AppComponent extends RestController implements OnInit {
 
     constructor(public router:Router, http:Http, public myglobal:globalService, public toastr:ToastsManager) {
         super(http);
-        let url="http://192.168.1.144:8080";
+        let url="https://dev.aguaseo.com:8080";
         localStorage.setItem('urlAPI', url + '/api');
         localStorage.setItem('url', url);
 
