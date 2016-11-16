@@ -99,7 +99,8 @@ export abstract class ControllerBase extends RestController {
 
         if (!this.model.permissions.warning || accept) {
             this.modalIn=false;
-            this.loadData();
+            if(this.model.permissions.list)
+                this.loadData();
         }
     }
     public setDataFieldReference(model,data,setNull=false,callback)
