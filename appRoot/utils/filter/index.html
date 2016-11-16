@@ -18,15 +18,21 @@
                                                 <div class="row">
                                                     <div class="col-lg-10">
 
-                                                        <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='textarea' " class="row" [class.object-invalid]="
+                                                        <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='time' || rules[key].type=='textarea' " class="row" [class.object-invalid]="
                                                             rules[key].object && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
                                                             <i class="{{rules[key].icon || 'fa fa-list'}}"></i>
-                                                            <input ngControl="{{key}}" class="form-control"
-                                                                   [(ngModel)]="data[key].value"
-                                                                   placeholder="{{rules[key].placeholder}}"
-                                                                   type="{{rules[key].type}}">
+                                                            <input  *ngIf="rules[key].type!='time'"
+                                                                    ngControl="{{key}}" class="form-control"
+                                                                    [(ngModel)]="data[key].value"
+                                                                    placeholder="{{rules[key].placeholder}}"
+                                                                    type="{{rules[key].type}}">
+                                                            <input  *ngIf="rules[key].type=='time'"
+                                                                    ngControl="{{key}}" class="form-control"
+                                                                    [(ngModel)]="data[key].value"
+                                                                    placeholder="{{rules[key].placeholder}}"
+                                                                    type="number">
 
                                                             <div [hidden]="data[key].valid ||data[key].pristine"
                                                                  class="alert alert-danger">
