@@ -43,7 +43,7 @@
                                             <div class="material-switch">
                                                 <input (click)="assignPermission(data.id)" value="{{data.id}}" [attr.id]="data.id" type="checkbox" [checked]="existsPermission(data.id)"/>
                                                 <label [attr.for]="data.id" class="label-success"></label>
-                                                &nbsp;<strong>{{data.title}}</strong>&nbsp;[{{data.id}}]
+                                                &nbsp;<strong>{{data.title}}</strong>&nbsp;[{{data.code}}]
                                             </div>
                                          </label>
                                     </div>

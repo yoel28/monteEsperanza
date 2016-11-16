@@ -133,6 +133,7 @@ export abstract class ModelBase{
             "title": "TipoDefault",
             'object': true,
             'code': 'default',
+            'prefix':'',
             "placeholder": "PlaceHolder default",
             'paramsSearch': {},
             "permissions": {},
@@ -149,6 +150,7 @@ export abstract class ModelBase{
         this.ruleObject.paramsSave = this.paramsSave;
         this.ruleObject.permissions = this.permissions;
         this.ruleObject.paramsSearch = this.paramsSearch;
+        this.ruleObject.prefix = this.prefix;
     }
     private loadParamsSave(){
         this.paramsSave.prefix = this.prefix+'_ADD';
