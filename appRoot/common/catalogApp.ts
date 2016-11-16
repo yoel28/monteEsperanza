@@ -140,4 +140,13 @@ export class CatalogApp {
             'return': 'DD/MM/YYYY'
         }
     }
+
+    //recibe un numerico en milisegundos
+    public static formatTime (time:number){
+        if (time < 1800000)//menor a 30min
+            return  this.dateHmanizer(time, {units: ['m', 's']});
+        if (time < 3600000) //menor a 1hora
+            return this.dateHmanizer(time, {units: ['m']});
+        return this.dateHmanizer(time, {units: ['h', 'm']});
+    }
 }
