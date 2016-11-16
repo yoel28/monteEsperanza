@@ -28,3 +28,7 @@ td.title-companygroup{
     color: white !important;
     -webkit-print-color-adjust: exact;
 }
+.collapse {
+    display: block !important;
+    height: auto !important;
+}
