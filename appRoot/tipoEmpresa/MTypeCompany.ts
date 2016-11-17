@@ -52,7 +52,7 @@ export class MTypeCompany extends ModelBase{
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'disabled':'data.free?false:true',
+            'disabled':'data.free',
             'source': [
                 {'value':true,'text': 'Credito', 'class': 'btn btn-sm btn-green'},
                 {'value':false,'text': 'Contado', 'class': 'btn btn-sm btn-blue'},
