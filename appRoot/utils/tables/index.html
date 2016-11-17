@@ -25,7 +25,7 @@
 
                     <a *ngIf="model.rules[key].object">
                          {{data[model.rules[key].keyDisplay]}}
-                         <label *ngIf="model.permissions.update && data.enabled">
+                         <label *ngIf="model.permissions.update && (data.enabled==true || data.enabled==null)">
                              <span *ngIf="!model.rules[key].reference">
 
                                  <button *ngIf="model.rules[key].paramsSave && model.rules[key].permissions.add" type="button" class="btn btn-box-tool"
@@ -97,7 +97,7 @@
                     </button>
                     <ul role="menu" class="dropdown-menu text-left submenu-config">
                         <li *ngFor="let key of actionPermissionKey()">
-                            <a *ngIf="key == 'delete'"
+                            <a *ngIf="key == 'delete' && data.enabled"
                                data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                                (click)="dataSelect = data" href="#">
                                 <i class="{{params.actions[key].icon}}"></i>
@@ -126,7 +126,7 @@
                 <div *ngIf="keyActions.length == 1" >
 
                    <div *ngFor="let key of actionPermissionKey()">
-                       <a *ngIf="key == 'delete'"
+                       <a *ngIf="key == 'delete'  && data.enabled"
                           data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                           (click)="dataSelect = data" href="#">
                            <i class="{{params.actions[key].icon}}"></i>
