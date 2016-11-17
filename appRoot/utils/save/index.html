@@ -43,7 +43,7 @@
 
                                                                 <select *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'"  [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown">
                                                                     <option value="-1">{{rules[key].placeholder || 'Seleccione una opción'}}</option>
-                                                                    <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" >{{n.text}}</option>
+                                                                    <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" ><i *ngIf="rules[key].icon" class="{{n.id || n.value}}">&nbsp;</i>{{n.text}}</option>
                                                                 </select>
 
                                                                 <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
