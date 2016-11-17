@@ -167,7 +167,7 @@
 </table>
 
 
-<div *ngIf="params && params.actions && params.actions.delete && params.actions.delete.permission">
+<div *ngIf="model.permissions.delete">
     <div class="modal fade" [attr.id]="params.actions.delete.idModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

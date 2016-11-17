@@ -123,7 +123,10 @@ export class Tables extends RestController implements OnInit {
         {
             let index = this.model.rules[key].source.findIndex(obj => (obj.value == data[key] || obj.id == data[key]));
             if(index > -1)
+            {
+                this.model.rules[key].source[index].disabled=!this.model.rules[key].update;
                 return this.model.rules[key].source[index];
+            }
         }
         return field;
 
