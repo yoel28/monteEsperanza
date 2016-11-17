@@ -119,7 +119,7 @@ export class Tables extends RestController implements OnInit {
     getBooleandData(key,data){
         let field = {'class':'btn btn-orange','text':'n/a','disabled':true};
 
-        if( (eval(this.model.rules[key].disabled || 'true')))
+        if( (!eval(this.model.rules[key].disabled || 'false')))
         {
             let index = this.model.rules[key].source.findIndex(obj => (obj.value == data[key] || obj.id == data[key]));
             if(index > -1)
