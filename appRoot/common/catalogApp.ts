@@ -141,6 +141,22 @@ export class CatalogApp {
         }
     }
 
+    public static get formatDatePickerDDMMYYYY2():any{
+        return {
+            'format': 'dd/mm/yyyy',
+            'startDate':'01/01/2016',
+            'startView': 2,
+            'minViewMode': 0,
+            'maxViewMode': 2,
+            'forceParse': false,
+            'language': "es",
+            'todayBtn': "linked",
+            'autoclose': true,
+            'todayHighlight': true,
+            'return': 'YYYY-MM-DD'
+        }
+    }
+
     //recibe un numerico en milisegundos
     public static formatTime (time:number){
         if (time < 1800000)//menor a 30min
