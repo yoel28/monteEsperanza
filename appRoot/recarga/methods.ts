@@ -107,7 +107,7 @@ export class RecargaSave extends RestController implements OnInit{
             }
         })
     }
-    public formatDateFact = CatalogApp.formatDatePickerDDMMYYYY;
+    public formatDateFact = CatalogApp.formatDatePickerDDMMYYYY2;
 
     loadFechaFac(data) {
         this.referenceDate.updateValue(data.date)
