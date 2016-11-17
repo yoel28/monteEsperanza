@@ -1,87 +1,54 @@
-import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {TipoRecargaSave} from "./methods";
-import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Component, OnInit,AfterViewInit} from '@angular/core';
 import {globalService} from "../common/globalService";
-import {Filter} from "../utils/filter/filter";
-import {Xeditable} from "../common/xeditable";
-import{Tooltip} from "../utils/tooltips/tooltips";
+import {BaseView} from "../utils/baseView/baseView";
+import {MtypeRecharge} from "./MtypeRecharge";
+
 declare var SystemJS:any;
 
 @Component({
-    selector: 'tipoRecarga',
-    templateUrl: SystemJS.map.app+'/tipoRecarga/index.html',
-    styleUrls: [SystemJS.map.app+'/tipoRecarga/style.css'],
-    directives: [TipoRecargaSave,Xeditable,Filter,Tooltip],
+    selector: 'tipo-recarga',
+    templateUrl:SystemJS.map.app+'/utils/baseView/base.html',
+    styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
+    directives: [BaseView],
 
 })
-export class TipoRecarga extends RestController implements OnInit{
-    
-    constructor(public router: Router,public http: Http, public toastr:ToastsManager, public myglobal:globalService) {
-        super(http);
-        this.setEndpoint('/type/recharges/');
+export class TipoRecarga implements OnInit,AfterViewInit {
 
-    }
-    public dataSelect:any={};
-    public rules = {
-        'title': {
-            'type': 'text',
-            'display': null,
-            'title': 'Titulo',
-            'placeholder': 'Titulo',
-            'mode': 'inline',
-            'search': true
-        },
-        'detail': {
-            'type': 'text',
-            'display': null,
-            'title': 'Detalle',
-            'placeholder': 'Detalle',
-            'mode': 'inline',
-            'search': true
-        },
-        'icon':{'type':'select','display':null,'title':'Icono','mode':'inline',
-            'source': [
-                {'value':'fa fa-cc-amex','text':'American express'},
-                {'value':'fa fa-cc-mastercard','text':'Master card'},
-                {'value':'fa fa-credit-card','text':'Credit card'},
-                {'value':'fa fa-cc-diners-club','text':'Diners club'},
-                {'value':'fa fa-cc-paypal','text':'Paypal'},
-                {'value':'fa fa-google-wallet','text':'Google wallet'},
-                {'value':'fa fa-cc-discover','text':'Discover'},
-                {'value':'fa fa-cc-stripe','text':'Stripe'},
-                {'value':'fa fa-paypal','text':'Paypal'},
-                {'value':'fa fa-cc-jcb','text':'Jcb'},
-                {'value':'fa fa-cc-visa','text':'Visa'},
-                {'value':'fa fa-money','text':'Money'},
-                {'value':'fa fa-refresh','text':'Transfer'},
-                {'value':'fa fa-reply','text':'Reply'}
-            ]
-        },
+    public instance:any = {};
+    public paramsTable:any = {};
+    public model:any;
+    public viewOptions:any = {};
 
+    constructor(public myglobal:globalService) {
     }
+
     ngOnInit() {
-        if(this.myglobal.existsPermission('116'))
-            this.loadData();
+        this.initModel();
+        this.initViewOptions();
+        this.loadParamsTable();
     }
 
-    assignTipoRecarga(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+    ngAfterViewInit():any {
+        this.instance = {
+            'model': this.model,
+            'viewOptions': this.viewOptions,
+            'paramsTable': this.paramsTable
+        };
     }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar tipos de recargas",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
 
-    loadWhere(where) {
-        this.where = where;
-        if(this.myglobal.existsPermission('116'))
-            this.loadData();
+    initModel():any {
+        this.model = new MtypeRecharge(this.myglobal);
+    }
+
+    initViewOptions() {
+        this.viewOptions["title"] = 'Tipo de recarga';
+    }
+
+    loadParamsTable() {
+        this.paramsTable.actions = {};
+        this.paramsTable.actions.delete = {
+            'message': '¿ Esta seguro de eliminar el tipo de recarga : ',
+            'keyAction': 'title'
+        };
     }
 }
