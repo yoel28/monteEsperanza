@@ -144,6 +144,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             if(that.rules[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
             }
+            if(that.rules[key].prefix && that.rules[key].type=='text' && body[key]!="")
+            {
+                body[key] = that.rules[key].prefix + body[key];
+            }
 
         });
         if(this.params.updateField)

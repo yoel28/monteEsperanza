@@ -5,8 +5,8 @@ import {BaseView} from "../utils/baseView/baseView";
 declare var SystemJS:any;
 @Component({
     selector: 'permission',
-    templateUrl: SystemJS.map.app+'/permiso/index.html',
-    styleUrls: [SystemJS.map.app+'/permiso/style.css'],
+    templateUrl:SystemJS.map.app+'/utils/baseView/base.html',
+    styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
     directives: [BaseView],
 })
 export class Permiso implements OnInit,AfterViewInit{

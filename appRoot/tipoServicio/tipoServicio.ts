@@ -1,182 +1,51 @@
-import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {Xeditable} from "../common/xeditable";
-import {Filter} from "../utils/filter/filter";
+import {Component, OnInit,AfterViewInit} from '@angular/core';
 import {globalService} from "../common/globalService";
-import {Save} from "../utils/save/save";
-import {Tooltip} from "../utils/tooltips/tooltips";
-declare var SystemJS:any;
+import {BaseView} from "../utils/baseView/baseView";
+import {MTypeService} from "./MTypeService";
 
+declare var SystemJS:any;
 @Component({
     selector: 'tipo-servicio',
-    templateUrl: SystemJS.map.app+'/tipoServicio/index.html',
-    styleUrls: [SystemJS.map.app+'/tipoServicio/style.css'],
-    directives:[Xeditable,Filter,Save,Tooltip]
+    templateUrl:SystemJS.map.app+'/utils/baseView/base.html',
+    styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
+    directives: [BaseView],
 })
-export class TipoServicio extends RestController implements OnInit{
+export class TipoServicio implements OnInit,AfterViewInit{
 
-    public dataSelect:any={};
+    public instance:any={};
+    public paramsTable:any={};
+    public model:any;
     public viewOptions:any={};
-    public permissions:any={};
 
-
-    public WEIGTH_METRIC_SHORT:string="";
-    public WEIGTH_METRIC:string="";
-    public MONEY_METRIC_SHORT:string="";
-    public MONEY_METRIC:string="";
-
-    constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint("/type/services/")
-    }
-    initViewOptions(){
-        this.viewOptions.title="Tipo de servicio";
-        this.viewOptions['errors']={}
-        this.viewOptions['errors'].title="ADVERTENCIA"
-        this.viewOptions['errors'].list="No tiene permisos para ver los tipos de servicios"
-
-    }
-    initPermissions(){
-        this.permissions['list']=this.myglobal.existsPermission('208');
-        this.permissions['add']=this.myglobal.existsPermission('207');
-        this.permissions['filter']=this.myglobal.existsPermission('213');
-        this.permissions['lock']=this.myglobal.existsPermission('211');
-        this.permissions['delete']=this.myglobal.existsPermission('209');
-        this.permissions['update']=this.myglobal.existsPermission('210');
-
-        this.permissions['actions']=this.permissions['delete'];
-
-
-    }
-    
-    public params = {
-        title: "Tipo de servicio",
-        idModal: "saveTypeServices",
-        endpoint: "/type/services/",
-    }
-
-    public rules={
-        'title':{
-            'type':'text',
-            'key':'title',
-            'icon':'fa fa-font',
-            'required':true,
-            'display':null,
-            'maxLength':'35',
-            'title':'Título',
-            'mode':'inline',
-            'placeholder': 'Titulo',
-            'msg':{
-                'error':'El título contiene errores',
-            },
-            'search': true
-        },
-        'code':{
-            'type':'text',
-            'key':'code',
-            'icon':'fa fa-key',
-            'required':true,
-            'display':null,
-            'maxLength':'35',
-            'title':'Codigo',
-            'mode':'inline',
-            'placeholder': 'Codigo',
-            'msg':{
-                'error':'El codigo contiene errores',
-            },
-            'search': true
-        },
-        'price':{
-            'type':'number',
-            'key':'price',
-            'icon':'fa fa-money',
-            'required':true,
-            'display':null,
-            'double':true,
-            'title':'Precio',
-            'mode':'inline',
-            'placeholder': 'Precio',
-            'search': true,
-            'msg':{
-                'error':'El precio debe ser numerico',
-            }
-        },
-        'detail':{
-            'type':'textarea',
-            'key':'detail',
-            'icon':'fa fa-list',
-            'display':null,
-            'title':'Detalle',
-            'mode':'inline',
-            'placeholder': 'Detalle',
-            'showbuttons':true,
-            'search': true,
-            'msg':{
-                'error':'El detalle contiene errores',
-            }
-        },
-    };
-    public ruleObject:any={}
+    constructor(public myglobal:globalService) {}
 
     ngOnInit(){
+        this.initModel();
         this.initViewOptions();
-        this.initPermissions();
-        this.initRuleObject();
-
-        if(this.permissions['list']){
-            this.max = 10;
-
-            this.WEIGTH_METRIC_SHORT=this.myglobal.getParams('WEIGTH_METRIC_SHORT');
-            this.WEIGTH_METRIC=this.myglobal.getParams('WEIGTH_METRIC');
-            this.MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
-            this.MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
-
-            this.loadData();
-        }
-
+        this.loadParamsTable();
     }
 
-    initRuleObject(){
-        this.ruleObject={
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "serviceType",
-            "title": "Tipo de servicio",
-            'object':true,
-            "placeholder": "Codigo del tipo de servicio",
-            'permissions':this.permissions,
-            'paramsSearch': {
-                'label':{'title':"tipo: ",'detail':"Codigo: "},
-                'endpoint':"/search/type/services/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png',
-                'field':'serviceType',
-            },
-            'search':true,
-            'msg':{
-                'errors':{
-                    'object':'La marca no esta registrado',
-                    'required':'El campo es obligatorio'
-                },
-            }
-        }
+    ngAfterViewInit():any {
+        this.instance = {
+            'model':this.model,
+            'viewOptions':this.viewOptions,
+            'paramsTable':this.paramsTable
+        };
     }
-    assignData(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
+    initModel():any {
+        this.model= new MTypeService(this.myglobal);
     }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar tipos de servicio",
-        idModal: "modalFilter",
-    };
-    loadWhere(where) {
-        this.where = where;
-        this.loadData();
+
+    initViewOptions() {
+        this.viewOptions["title"] = 'Tipos de servicios';
+    }
+
+    loadParamsTable(){
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            'message': '¿ Esta seguro de eliminar el tipo servicio: ',
+            'keyAction':'code'
+        };
     }
 
 }

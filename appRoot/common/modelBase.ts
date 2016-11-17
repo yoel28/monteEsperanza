@@ -7,6 +7,7 @@ export abstract class ModelBase{
 
     public prefix = "DEFAULT";
     public endpoint = "DEFAULT_ENDPOINT";
+    public completed=false;
     public permissions:any = {};
     public paramsSearch:any = {};
     public paramsSave:any = {};
@@ -31,7 +32,7 @@ export abstract class ModelBase{
         this._initParamsSave();
         this._initRuleObject();
     }
-    public initModel(){
+    public initModel(completed=true){
         this.initPermissions();
         this.modelExternal();
         this.initRules();
@@ -42,6 +43,8 @@ export abstract class ModelBase{
 
         this.loadObjectRule();
         this.loadParamsSave();
+
+        this.completed=completed;
     }
 
     abstract initPermissions();

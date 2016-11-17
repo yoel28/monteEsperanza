@@ -1,13 +1,13 @@
 import {Component, OnInit,AfterViewInit} from '@angular/core';
 import {globalService} from "../common/globalService";
-import {MAntenna} from "./MAntenna";
 import {BaseView} from "../utils/baseView/baseView";
-declare var SystemJS:any;
+import {MAntenna} from "./MAntenna";
 
+declare var SystemJS:any;
 @Component({
     selector: 'antenna',
-    templateUrl: SystemJS.map.app+'/antenna/index.html',
-    styleUrls: [SystemJS.map.app+'/antenna/style.css'],
+    templateUrl:SystemJS.map.app+'/utils/baseView/base.html',
+    styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
     directives: [BaseView],
 })
 export class Antenna implements OnInit,AfterViewInit{
@@ -18,11 +18,13 @@ export class Antenna implements OnInit,AfterViewInit{
     public viewOptions:any={};
 
     constructor(public myglobal:globalService) {}
+    
     ngOnInit(){
         this.initModel();
         this.initViewOptions();
         this.loadParamsTable();
     }
+    
     ngAfterViewInit():any {
         this.instance = {
             'model':this.model,
@@ -30,12 +32,15 @@ export class Antenna implements OnInit,AfterViewInit{
             'paramsTable':this.paramsTable
         };
     }
+    
     initModel():any {
         this.model= new MAntenna(this.myglobal);
     }
+    
     initViewOptions() {
         this.viewOptions["title"] = 'Antenas';
     }
+    
     loadParamsTable(){
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
@@ -43,7 +48,4 @@ export class Antenna implements OnInit,AfterViewInit{
             'keyAction':'reference'
         };
     }
-
-
 }
-

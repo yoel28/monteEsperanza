@@ -1,65 +1,51 @@
-import {Component, OnInit} from '@angular/core';
-import { Router }           from '@angular/router-deprecated';
-import { Http } from '@angular/http';
-import {RestController} from "../common/restController";
-import {RolSave} from "./methods";
-import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Component, OnInit,AfterViewInit} from '@angular/core';
 import {globalService} from "../common/globalService";
-import {Xeditable} from "../common/xeditable";
-import {Filter} from "../utils/filter/filter";
-import {Tooltip} from "../utils/tooltips/tooltips";
-declare var SystemJS:any;
+import {BaseView} from "../utils/baseView/baseView";
+import {MRol} from "./MRol";
 
+declare var SystemJS:any;
 @Component({
     selector: 'rol',
-    templateUrl: SystemJS.map.app+'/rol/index.html',
-    styleUrls: [SystemJS.map.app+'/rol/style.css'],
-    directives:[RolSave,Xeditable,Filter,Tooltip]
+    templateUrl:SystemJS.map.app+'/utils/baseView/base.html',
+    styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
+    directives: [BaseView],
 })
-export class Rol extends RestController implements OnInit{
+export class Rol implements OnInit,AfterViewInit{
 
-    public rules={
-        'authority':{'type':'text','display':null,'title':'Titulo','placeholder':'Nombre del perfil','search':true},
-    }
-    constructor(public router: Router,public http: Http,toastr:ToastsManager,public myglobal:globalService) {
-        super(http,toastr);
-        this.setEndpoint('/roles/');
-    }
-    //advertencia
-    public modalIn:boolean=true;
-    loadPage(event){
-        event.preventDefault();
-        this.modalIn=false;
-        if (this.myglobal.existsPermission('48')) {
-            this.loadData();
-        }
-    }
-    onDashboard(event){
-        event.preventDefault();
-        let link = ['Dashboard', {}];
-        this.router.navigate(link);
-    }
+    public instance:any={};
+    public paramsTable:any={};
+    public model:any;
+    public viewOptions:any={};
+
+    constructor(public myglobal:globalService) {}
 
     ngOnInit(){
-
-    }
-    assignRol(data){
-        this.dataList.list.unshift(data);
-        if(this.dataList.page.length > 1)
-            this.dataList.list.pop();
-    }
-    //Cargar Where del filter
-    public paramsFilter:any = {
-        title: "Filtrar roles",
-        idModal: "modalFilter",
-        endpoint: "",
-    };
-
-    loadWhere(where) {
-        this.where = where;
-        if (this.myglobal.existsPermission('48')) {
-            this.loadData();
-        }
+        this.initModel();
+        this.initViewOptions();
+        this.loadParamsTable();
     }
 
+    ngAfterViewInit():any {
+        this.instance = {
+            'model':this.model,
+            'viewOptions':this.viewOptions,
+            'paramsTable':this.paramsTable
+        };
+    }
+
+    initModel():any {
+        this.model= new MRol(this.myglobal);
+    }
+
+    initViewOptions() {
+        this.viewOptions["title"] = 'Roles';
+    }
+
+    loadParamsTable(){
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            'message': '¿ Esta seguro de eliminar el rol : ',
+            'keyAction':'authority'
+        };
+    }
 }
