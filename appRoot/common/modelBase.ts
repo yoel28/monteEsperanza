@@ -43,6 +43,7 @@ export abstract class ModelBase{
 
         this.loadObjectRule();
         this.loadParamsSave();
+        this.loadParamsSearch();
 
         this.completed=completed;
     }
@@ -108,8 +109,12 @@ export abstract class ModelBase{
                 },
             },
             'where': '',
-            'imageGuest': '/assets/img/truck-guest.png'
+            'imageGuest': '/assets/img/truck-guest.png',
+            'field':'any'
         };
+    }
+    private loadParamsSearch(){
+        this.paramsSearch.field = this.ruleObject.key+'.id';
     }
 
     abstract initParamsSave();
@@ -128,6 +133,7 @@ export abstract class ModelBase{
         this.ruleObject = {
             'icon': 'fa fa-list',
             'update':false,
+            'search':false,
             "type": "text",
             "required":true,
             "visible":true,
@@ -154,6 +160,8 @@ export abstract class ModelBase{
         this.ruleObject.permissions = this.permissions;
         this.ruleObject.paramsSearch = this.paramsSearch;
         this.ruleObject.prefix = this.prefix;
+        this.ruleObject.search = this.permissions.search;
+
     }
     private loadParamsSave(){
         this.paramsSave.prefix = this.prefix+'_ADD';
