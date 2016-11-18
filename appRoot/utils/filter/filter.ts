@@ -289,9 +289,11 @@ export class Filter extends RestController implements OnInit{
                         }
                     }
 
-                    if (that.rules[key].object && that.searchId[key] && that.searchId[key].id) // si es un objecto y existe el id
+                    if (that.rules[key].object) // si es un objecto y existe el id
                     {
-                        whereTemp.value = that.searchId[key].id;
+                        whereTemp.value=null;
+                        if(that.searchId[key] && that.searchId[key].id)
+                            whereTemp.value = that.searchId[key].id;
                     }
                 }
 
