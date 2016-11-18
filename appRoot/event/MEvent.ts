@@ -117,7 +117,8 @@ export class MEvent extends ModelBase{
             'placeholder': 'Ingrese el icono',
         }
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {
