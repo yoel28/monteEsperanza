@@ -35,6 +35,7 @@ export class MAntenna extends ModelBase{
             'placeholder': 'Selecccione un la dirección',
         };
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {
