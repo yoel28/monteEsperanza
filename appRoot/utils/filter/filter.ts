@@ -169,12 +169,15 @@ export class Filter extends RestController implements OnInit{
     getLoadSearch(event,data){
         event.preventDefault();
         this.findControl="";
+        this.dataList={};
         this.max=5;
         this.search=data;
+        this.getSearch();
     }
     //accion al dar click en el boton de buscar del formulario en el search
-    getSearch(event,value){
-        event.preventDefault();
+    getSearch(event?,value=''){
+        if(event)
+            event.preventDefault();
         this.setEndpoint(this.search.paramsSearch.endpoint+value);
         this.loadData();
     }

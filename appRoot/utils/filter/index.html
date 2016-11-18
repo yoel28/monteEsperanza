@@ -18,10 +18,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-10">
 
-                                                        <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='time' || rules[key].type=='textarea' " class="row" [class.object-invalid]="
-                                                            rules[key].object && data[key].value.length > 0 &&
-                                                            ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
-                                                        ">
+                                                        <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='time' || rules[key].type=='textarea' " class="row">
                                                             <i class="{{rules[key].icon || 'fa fa-list'}}"></i>
                                                             <input  *ngIf="rules[key].type!='time'"
                                                                     ngControl="{{key}}" class="form-control"
