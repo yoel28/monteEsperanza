@@ -1,7 +1,7 @@
 import {Component, OnInit,AfterViewInit} from '@angular/core';
 import {globalService} from "../common/globalService";
 import {BaseView} from "../utils/baseView/baseView";
-import {MTypeCompany} from "./MTypeCompany";
+import {MCompanyType} from "./MTypeCompany";
 
 declare var SystemJS:any;
 @Component({
@@ -34,7 +34,7 @@ export class TipoEmpresa implements OnInit,AfterViewInit{
     }
 
     initModel() {
-        this.model= new MTypeCompany(this.myglobal);
+        this.model= new MCompanyType(this.myglobal);
     }
     initViewOptions() {
         this.viewOptions["title"] = 'Grupos';

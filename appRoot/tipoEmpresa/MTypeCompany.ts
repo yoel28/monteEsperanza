@@ -1,7 +1,7 @@
 import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
-export class MTypeCompany extends ModelBase{
+export class MCompanyType extends ModelBase{
     public rules={};
     constructor(public myglobal:globalService){
         super('GROUP','/type/companies/',myglobal);
