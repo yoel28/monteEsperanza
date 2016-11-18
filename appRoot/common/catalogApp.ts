@@ -87,6 +87,7 @@ export class CatalogApp {
         msg.warningBody="El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que hace.";
         msg.warningButtonExit="Salir";
         msg.warningButtonYes="Sí, estoy seguro";
+        msg.fieldRequired="Todos los campos con (*) son obligatorios.";
 
         return msg;
 
