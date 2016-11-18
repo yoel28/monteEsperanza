@@ -54,8 +54,8 @@ export class MVehicle extends ModelBase{
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'weight',
-            'title': 'Peso',
-            'placeholder': 'Peso del vehículo',
+            'title': 'Peso Tara',
+            'placeholder': 'Peso Tara del vehículo',
         };
 
         this.rules['vehicleType'] = this.vehicleType.ruleObject;
