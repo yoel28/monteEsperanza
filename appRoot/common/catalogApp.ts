@@ -89,6 +89,7 @@ export class CatalogApp {
         msg.warningButtonYes="Sí, estoy seguro";
         msg.fieldRequired="Todos los campos con (*) son obligatorios.";
         msg.contactAdminPermission="contacte al administrador para activar el permiso";
+        msg.delete="Eliminar";
 
         return msg;
 
