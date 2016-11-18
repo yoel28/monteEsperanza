@@ -55,6 +55,7 @@ export class MOperacion extends ModelBase{
         this.rules['weightIn']={
                 'type': 'number',
                 'readOnly': false,
+                'step':'0.001',
                 'required':true,
                 'hidden': false,
                 'double': true,
@@ -75,6 +76,7 @@ export class MOperacion extends ModelBase{
         this.rules['weightOut']={
             'type': 'number',
             'readOnly': false,
+            'step':'0.001',
             'required':false,
             'hidden': true,
             'double': true,
