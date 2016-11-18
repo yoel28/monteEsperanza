@@ -4,7 +4,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        {{viewOptions.title | translate }}
+                        {{viewOptions.title | translate }}&nbsp;<tooltip code="CODE_42"></tooltip>
                     </h3>
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                                 class="{{buttom.class}}" type="button" data-toggle="modal"
@@ -22,7 +22,7 @@
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list-alt fa-lg text-blue"></i>
                     </button>
-                    <tooltip code="INFO_119"></tooltip>
+                    &nbsp;<tooltip code="CODE_43"></tooltip>
 
                     <div *ngIf="model.permissions.list" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
@@ -35,7 +35,6 @@
                     </div>
                 </div>
                 <div *ngIf="typeView==1"  class="box-body">
-                    <tooltip code="INFO_121"></tooltip>
                     <div *ngIf="dataList.list && model.permissions.list" class="panel-group" id="accordion">
                         <div *ngFor="let data of dataList.list " class="panel panel-default">
                             <div class="panel-heading">
@@ -75,7 +74,7 @@
                                                         <div class="col-lg-6">
                                                             <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                             <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
-                                                            <tooltip code="INFO_122"></tooltip>
+                                                            &nbsp;<tooltip code="CODE_44"></tooltip>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="range" class="cropit-image-zoom-input"/>
@@ -92,7 +91,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </div><tooltip code="INFO_123"></tooltip>
+                                                </div>
                                             </figure>
                                         </div>
                                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -151,14 +150,12 @@
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
-                                                            <tooltip code="INFO_126"></tooltip>
                                                             <button (click)="dataSelect = data"
                                                                     *ngIf="myglobal.existsPermission('75') && model.permissions.update && myglobal.existsPermission('32')"
                                                                     data-toggle="modal" [attr.data-target]="'#'+typeVehicle.paramsSearch.idModal"
                                                                     type="button" class="btn btn-box-tool">
                                                                 <i class="fa fa-search text-blue"></i>
                                                             </button>
-                                                            <tooltip code="INFO_127"></tooltip>
                                                         </label>
                                                     </p>
                                                     <p *ngIf="model.permissions.lock">
@@ -167,7 +164,6 @@
                                                                 [class.btn-red]="!data.enabled">
                                                             {{data.enabled?"Habilitado":"Bloqueado"}}
                                                         </button>
-                                                        <tooltip code="INFO_131"></tooltip>
                                                     </p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -188,14 +184,12 @@
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
-                                                                <tooltip code="INFO_128"></tooltip>
                                                                 <button (click)="dataSelect = data"
                                                                         *ngIf="model.permissions.update && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
                                                                         data-toggle="modal" [attr.data-target]="'#'+company.paramsSearch.idModal"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
                                                                 </button>
-                                                                <tooltip code="INFO_130"></tooltip>
                                                             </div>
 
                                                         </div>
@@ -266,7 +260,7 @@
                                                 <div style="margin-bottom: 15px" class="row">
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <div *ngIf="model.permissions.lock || myglobal.existsPermission('71')"
-                                                             class="btn-group dropdown pull-right"><tooltip code="INFO_132"></tooltip>
+                                                             class="btn-group dropdown pull-right">
                                                             <button type="button" data-toggle="dropdown"
                                                                     class="btn btn-box-tool dropdown-toggle" aria-haspopup="true"
                                                                     aria-expanded="false">
@@ -299,7 +293,7 @@
                                                                     <div class="col-lg-6">
                                                                         <button class="btn btn-box-tool fa fa-rotate-left rotate-ccw fa-fw"></button>
                                                                         <button class="btn btn-box-tool fa fa-rotate-right rotate-cw"></button>
-                                                                        <tooltip code="INFO_133"></tooltip>
+                                                                        &nbsp;<tooltip code="CODE_45"></tooltip>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <input type="range" class="cropit-image-zoom-input"/>
@@ -316,7 +310,7 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                            </div><tooltip code="INFO_134"></tooltip>
+                                                            </div>
                                                         </figure>
                                                     </div>
 
@@ -374,14 +368,12 @@
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
-                                                                <tooltip code="INFO_126"></tooltip>
                                                                 <button (click)="dataSelect = data"
                                                                         *ngIf="myglobal.existsPermission('75') && model.permissions.update && myglobal.existsPermission('32')"
                                                                         data-toggle="modal" [attr.data-target]="'#'+typeVehicle.paramsSearch.idModal"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
                                                                 </button>
-                                                                <tooltip code="INFO_127"></tooltip>
                                                             </label>
                                                         </p>
                                                         <p *ngIf="model.permissions.lock">
@@ -390,7 +382,6 @@
                                                                     [class.btn-red]="!data.enabled">
                                                                 {{data.enabled?"Habilitado":"Bloqueado"}}
                                                             </button>
-                                                            <tooltip code="INFO_140"></tooltip>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -412,15 +403,12 @@
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-plus text-green"></i>
                                                                 </button>
-                                                                <tooltip code="INFO_128"></tooltip>
                                                                 <button (click)="dataSelect = data"
                                                                         *ngIf="model.permissions.update && myglobal.existsPermission('74') && myglobal.existsPermission('80')"
                                                                         data-toggle="modal" [attr.data-target]="'#'+company.paramsSearch.idModal"
                                                                         type="button" class="btn btn-box-tool">
                                                                     <i class="fa fa-search text-blue"></i>
                                                                 </button>
-                                                                <tooltip code="INFO_130"></tooltip>
-
                                                             </div>
 
                                                         </div>

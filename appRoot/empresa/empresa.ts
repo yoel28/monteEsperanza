@@ -15,6 +15,7 @@ import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {ControllerBase} from "../common/ControllerBase";
 import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
 
 @Component({
@@ -22,7 +23,7 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/empresa/index.html',
     styleUrls: [SystemJS.map.app+'/empresa/style.css'],
     providers: [TranslateService],
-    directives: [Filter,Tables,Save, Search, Xeditable, Xfile, Xcropit,Filter],
+    directives: [Filter,Tables,Save, Search, Xeditable, Xfile, Xcropit,Filter,Tooltip],
     pipes: [Divide,TranslatePipe],
 })
 export class Empresa extends ControllerBase implements OnInit {

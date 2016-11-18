@@ -4,7 +4,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        {{viewOptions.title | translate }}
+                        {{viewOptions.title | translate }}&nbsp;<tooltip code="CODE_6"></tooltip>
                     </h3>
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
@@ -16,7 +16,7 @@
                     <button *ngIf="myglobal.existsPermission('204')" type="button"
                             class="btn btn-primary btn-red" (click)="goMorosos($event)">
                         <i class="fa fa-archive"></i>&nbsp;Morosos
-                    </button>
+                    </button>&nbsp;<tooltip code="CODE_7"></tooltip>
                     <button (click)="typeView = 1"
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list fa-lg text-blue"></i>
@@ -26,7 +26,7 @@
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list-alt fa-lg text-blue"></i>
                     </button>
-
+                    &nbsp;<tooltip code="CODE_8"></tooltip>
 
                     <div *ngIf="dataList.list && model.permissions.list" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
@@ -35,6 +35,7 @@
                                     class="btn btn-default">
                                 {{val}}
                             </button>
+                            &nbsp;<tooltip code="CODE_9"></tooltip>
                         </div>
                     </div>
                 </div>
