@@ -60,7 +60,7 @@ export class MTag extends ModelBase{
     initRuleObject() {
         this.ruleObject.title="Tag RFID";
         this.ruleObject.placeholder="Ingrese tag RFID";
-        this.ruleObject.key="rfid";
+        this.ruleObject.key="tag";
         this.ruleObject.code="tagId";
         this.ruleObject.keyDisplay="tagNumber";
     }
