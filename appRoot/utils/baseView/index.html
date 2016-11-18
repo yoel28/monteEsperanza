@@ -22,14 +22,14 @@
                     <div *ngIf="dataList && dataList.count == 0">
                         <div class="alert alert-warning alert-dismissable">
                             <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
-                            <strong><i class="fa fa-warning"></i></strong> {{msg.notFound}}
+                            <strong><i class="fa fa-warning"></i></strong> {{msg.notFound | translate}}
                         </div>
                     </div>
                 </div>
                 <div *ngIf="!model.permissions.list">
                     <div class="btn-red padding-error">
-                        <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle}}</strong></h5>
-                        {{msg.notAuthorized || 'Acceso no autorizado'}},&nbsp;contacte al administrador para activar el permiso {{model.prefix}}_LIST
+                        <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle | translate}}</strong></h5>
+                        {{ (msg.notAuthorized || 'Acceso no autorizado') | translate}},&nbsp; {{msg.contactAdminPermission | translate}} {{model.prefix}}_LIST
                     </div>
                 </div>
             </div>
@@ -50,18 +50,18 @@
         <div class="modal-content">
             <div class="modal-header btn-red text-center">
                 <h4 class="modal-title">
-                    <i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle | uppercase}}</strong></h4>
+                    <i class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle | translate | uppercase}}</strong></h4>
             </div>
             <div class="modal-body">
-                {{msg.warningBody}}
+                {{msg.warningBody | translate}}
             </div>
             <div class="modal-footer">
                 <button (click)="onDashboard($event)" type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
-                    &nbsp;{{msg.warningButtonExit}}
+                    &nbsp;{{msg.warningButtonExit | translate}}
                 </button>
 
                 <button (click)="loadPage($event,true)"  data-dismiss="modal" type="button" class="btn btn-red fa fa-check">
-                    &nbsp;{{msg.warningButtonYes}}
+                    &nbsp;{{msg.warningButtonYes | translate}}
                 </button>
             </div>
         </div>
