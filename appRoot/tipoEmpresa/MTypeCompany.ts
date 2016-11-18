@@ -11,17 +11,6 @@ export class MCompanyType extends ModelBase{
     modelExternal() {}
     
     initRules(){
-
-        this.rules['title']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'title',
-            'title': 'Título',
-            'placeholder': 'Título',
-        };
         this.rules['code']={
             'type': 'text',
             'required':true,
@@ -31,6 +20,16 @@ export class MCompanyType extends ModelBase{
             'key': 'code',
             'title': 'Código',
             'placeholder': 'Código',
+        };
+        this.rules['title']={
+            'type': 'text',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'title',
+            'title': 'Título',
+            'placeholder': 'Título',
         };
         this.rules['free']={
             'type': 'boolean',

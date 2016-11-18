@@ -46,7 +46,8 @@ export class MTag extends ModelBase{
             'placeholder': 'Número del Tag',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {
@@ -67,7 +68,6 @@ export class MTag extends ModelBase{
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.enabled;
-        delete this.rulesSave.detail;
         delete this.rulesSave['vehicle'];
         delete this.rulesSave['container'];
     }
