@@ -14,7 +14,7 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {ControllerBase} from "../common/ControllerBase";
-import {MTypeCompany} from "../tipoEmpresa/MTypeCompany";
+|import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
 declare var SystemJS:any;
 
 @Component({
@@ -28,7 +28,7 @@ declare var SystemJS:any;
 export class Empresa extends ControllerBase implements OnInit {
 
     public paramsTable:any={};
-    public typeCompany:any={};
+    public companyType:any={};
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('COMPANY', '/companies/',router, http, toastr, myglobal, translate);
@@ -42,7 +42,7 @@ export class Empresa extends ControllerBase implements OnInit {
     initModel() {
         this.model= new MCompany(this.myglobal);
         
-        this.typeCompany = new MTypeCompany(this.myglobal);
+        this.companyType = new MCompanyType(this.myglobal);
     }
     initViewOptions() {
         this.viewOptions["title"] = 'Cliente';
