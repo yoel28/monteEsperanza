@@ -154,10 +154,15 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button *ngIf="delete && id >= 0" (click)="loadDelete($event)" data-dismiss="modal" type="button" class="btn btn-success">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;Eliminar
+                    </button>
+
                     <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                             id="cntrlsubmit" [disabled]="!form.valid">
                         <i class="fa fa-save"></i>
-                        {{params.updateField?'Actualizar':'Registrar'}}
+                        &nbsp;{{params.updateField?'Actualizar':'Registrar'}}
                     </button>
                 </div>
             </div>
