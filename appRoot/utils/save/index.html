@@ -17,7 +17,7 @@
                                             <div class="form-group input-icon right" *ngIf="!rules[key].hidden">
                                                 <div class="col-lg-12">
                                                     <div class="row" *ngIf="rules[key].type!='image'">
-                                                        <div [class.col-lg-12]="!rules[key].object" [class.col-lg-10]="rules[key].object" >
+                                                        <div [class.col-lg-12]="!rules[key].object" [class.col-lg-10]="rules[key].object || rules[key].refreshField" >
                                                             <div class="input-group input-icon right form-group">
                                                                 <i class="{{rules[key].icon}} z-index"></i>
                                                                 <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
@@ -146,6 +146,9 @@
                                         </button>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-lg-12">
+                                {{msg.fieldRequired}}
                             </div>
                         </div>
                     </div>
