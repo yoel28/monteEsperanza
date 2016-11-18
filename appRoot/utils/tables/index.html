@@ -4,7 +4,7 @@
             <th *ngFor="let key of keyVisible()" >
                 {{model.rules[key].title}}
             </th>
-            <th *ngIf="params.actions">&nbsp;</th>
+            <th *ngIf="params.actions">&nbsp;<tooltip [code]="model.prefix+'_5'"></tooltip></th>
         </tr>
     </thead>
     <tbody>
@@ -51,6 +51,7 @@
                                  >
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
+                                 <tooltip [code]="model.prefix+'_6'"></tooltip>
                              </span>
                              <span *ngIf="model.rules[key].reference">
 
@@ -78,14 +79,13 @@
                                          title="Liberar">
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
-
+                                 <tooltip [code]="model.prefix+'_7'"></tooltip>
                              </span>
-
                          </label>
                      </a>
                 </span>
                 <span *ngIf="getDisabledField(key,data)">
-                    <label class="label label-orange">N/A</label>
+                    <label class="label label-orange">N/A</label><tooltip [code]="model.prefix+'_8'"></tooltip>
                 </span>
 
             </td>
@@ -162,6 +162,7 @@
                     <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                         {{val}}
                     </button>
+                    <tooltip [code]="model.prefix+'_9'"></tooltip>
                 </div>
             </td>
         </tr>
@@ -178,15 +179,15 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel"><i
-                            class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+                            class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle}}&nbsp;<tooltip [code]="model.prefix+'_10'"></tooltip></strong></h4>
                 </div>
                 <div class="modal-body">
                     {{params.actions.delete.message}} <strong>'{{dataSelect[params.actions.delete.keyAction]}}'</strong> ?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;{{msg.warningButtonExit}}</button>
                     <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
-                            class="btn btn-red fa fa-trash">&nbsp;Eliminar
+                            class="btn btn-red fa fa-trash">&nbsp;{{msg.delete}}
                     </button>
                 </div>
             </div>
