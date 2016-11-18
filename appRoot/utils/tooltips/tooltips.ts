@@ -45,7 +45,7 @@ export class Tooltip implements OnInit{
         event.preventDefault();
         if(this.permissions.update){
             if(this.myglobal.objectInstance[this.help.prefix]){
-                this.myglobal.objectInstance[this.help.prefix].setLoadDataModel(data);
+                this.myglobal.objectInstance[this.help.prefix].setLoadDataModel(data,true);
             }
         }
     }
