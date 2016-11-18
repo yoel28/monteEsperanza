@@ -14,7 +14,7 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {ControllerBase} from "../common/ControllerBase";
-|import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
+import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
 declare var SystemJS:any;
 
 @Component({
