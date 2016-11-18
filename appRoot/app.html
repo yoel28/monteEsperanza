@@ -94,7 +94,9 @@
     </div>
     <router-outlet></router-outlet>
 
-    <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
+    <div *ngIf="help && (help.permissions.add || help.permissions.update)">
+        <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
+    </div>
 
     <div *ngIf="operation && (operation.permissions.add || operation.permissions.update)">
         <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
