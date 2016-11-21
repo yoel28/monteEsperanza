@@ -8,6 +8,9 @@ import {CatalogApp} from "./catalogApp";
 
 declare var humanizeDuration:any;
 declare var moment:any;
+declare var jQuery:any;
+declare var Table2Excel:any;
+
 export abstract class ControllerBase extends RestController {
     
     public formatDateId:any = {};
@@ -128,5 +131,39 @@ export abstract class ControllerBase extends RestController {
             event.preventDefault();
         let link = ['Dashboard', {}];
         this.router.navigate(link);
+    }
+    
+    public export(type){
+        let that=this;
+        this.getLoadDataAll([],null,null,0,1000,null,()=>{
+                setTimeout(function(_jQuery=jQuery){
+                    if(type=='xls')
+                        that.exportXls();
+                    else if (type == 'print')
+                        that.exportPrint();
+                }, 3000)
+            }
+        )
+    }
+    public exportXls(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.configId,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
+    }
+    exportPrint(){
+        var printContents = document.getElementById("reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
     }
 }
