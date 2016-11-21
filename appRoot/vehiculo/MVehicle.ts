@@ -54,8 +54,8 @@ export class MVehicle extends ModelBase{
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'weight',
-            'title': 'Peso',
-            'placeholder': 'Peso del vehículo',
+            'title': 'Peso Tara',
+            'placeholder': 'Peso Tara del vehículo',
         };
 
         this.rules['vehicleType'] = this.vehicleType.ruleObject;
@@ -68,21 +68,6 @@ export class MVehicle extends ModelBase{
         this.rules['chofer'].update=this.permissions.update;
         this.rules['chofer'].required=false;
 
-        this.rules['minBalance']={
-            'type': 'number',
-            'step':'0.01',
-            "double":true,
-            'icon':'fa fa-font',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'minBalance',
-            'title': 'Balance minimo',
-            'placeholder': 'Balance minimo',
-        };
-
-
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
     initPermissions() {}
@@ -90,7 +75,7 @@ export class MVehicle extends ModelBase{
         this.paramsSearch.title="Buscar vehículo";
         this.paramsSearch.placeholder="Ingrese vehículo";
         this.paramsSearch.label.title="Cliente: ";
-        this.paramsSearch.label.detail="Placa: "
+        this.paramsSearch.label.detail="Placa: ";
     }
     initParamsSave() {
         this.paramsSave.title="Agregar vehículo"

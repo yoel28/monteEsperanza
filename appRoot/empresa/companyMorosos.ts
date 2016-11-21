@@ -5,13 +5,14 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {RecargaSave} from "../recarga/methods";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
 
 @Component({
     selector: 'empresa-moroso',
     templateUrl: SystemJS.map.app+'/empresa/morosos.html',
     styleUrls: [SystemJS.map.app+'/empresa/style.css'],
-    directives:[RecargaSave]
+    directives:[RecargaSave,Tooltip]
 })
 export class EmpresaMorosos extends RestController implements OnInit {
     public viewOptions:any={};

@@ -14,7 +14,7 @@ export class MEvent extends ModelBase{
     constructor(public myglobal:globalService,public http:Http ){
         super('EVENT','/events/',myglobal);
         this.httpUtils = new HttpUtils(http);
-        this.initModel();
+        this.initModel(false);
         this.loadData();
     }
     modelExternal() {
@@ -117,7 +117,8 @@ export class MEvent extends ModelBase{
             'placeholder': 'Ingrese el icono',
         }
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {
@@ -143,16 +144,17 @@ export class MEvent extends ModelBase{
     {
         let that = this;
         let successCallback= response => {
-            Object.assign(this.publicData,response.json())
-            this.publicData.domains.forEach(obj=>{
+            Object.assign(that.publicData,response.json())
+            that.publicData.domains.forEach(obj=>{
                 that.rules.over.source.push({'value':obj.name,'text':obj.logicalPropertyName});
             });
-            this.publicData.event.actionTypes.forEach(obj=>{
+            that.publicData.event.actionTypes.forEach(obj=>{
                 that.rules.actionType.source.push({'value':obj,'text':obj});
             });
-            this.publicData.event.wayTypes.forEach(obj=>{
+            that.publicData.event.wayTypes.forEach(obj=>{
                 that.rules.way.source.push({'value':obj,'text':obj});
             })
+            that.completed = true;
         }
         this.httpUtils.doGet(localStorage.getItem('url'),successCallback,null,true)
     }

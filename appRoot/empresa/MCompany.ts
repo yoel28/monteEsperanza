@@ -1,6 +1,6 @@
 import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
-import {MTypeCompany} from "../tipoEmpresa/MTypeCompany";
+import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
 
 export class MCompany extends ModelBase{
 
@@ -12,7 +12,7 @@ export class MCompany extends ModelBase{
         this.initModel();
     }
     modelExternal() {
-        this.typeCompany = new MTypeCompany(this.myglobal);
+        this.typeCompany = new MCompanyType(this.myglobal);
     }
     initRules(){
 
@@ -76,6 +76,7 @@ export class MCompany extends ModelBase{
         };
         this.rules['minBalance']={
             'type': 'number',
+            'step':'0.001',
             'required':true,
             'double':true,
             'update':this.permissions.update,

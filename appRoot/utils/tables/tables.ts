@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit,ViewChild} from "@angular/core";
-import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
+import {FormBuilder, ControlGroup} from "@angular/common";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -7,6 +7,8 @@ import {globalService} from "../../common/globalService";
 import {Xeditable, ColorPicker} from "../../common/xeditable";
 import {Search} from "../search/search";
 import {Save} from "../save/save";
+import {Tooltip} from "../tooltips/tooltips";
+import {CatalogApp} from "../../common/catalogApp";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -16,7 +18,7 @@ declare var moment:any;
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','model','dataList','where'],
     outputs:['getInstance'],
-    directives:[Xeditable,ColorPicker,Search,Save]
+    directives:[Xeditable,ColorPicker,Search,Save,Tooltip]
 })
 
 
@@ -38,7 +40,7 @@ export class Tables extends RestController implements OnInit {
     public configId=moment().valueOf();
 
     public getInstance:any;
-
+    public msg=CatalogApp.msg;
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
@@ -119,11 +121,14 @@ export class Tables extends RestController implements OnInit {
     getBooleandData(key,data){
         let field = {'class':'btn btn-orange','text':'n/a','disabled':true};
 
-        if( (eval(this.model.rules[key].disabled || 'true')))
+        if( (!eval(this.model.rules[key].disabled || 'false')))
         {
             let index = this.model.rules[key].source.findIndex(obj => (obj.value == data[key] || obj.id == data[key]));
             if(index > -1)
+            {
+                this.model.rules[key].source[index].disabled=!this.model.rules[key].update;
                 return this.model.rules[key].source[index];
+            }
         }
         return field;
 

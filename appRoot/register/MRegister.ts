@@ -18,8 +18,6 @@ export class MRegister extends ModelBase{
         super('REG','/registries/',myglobal);
         this.initModel();
         this.extendRulesObjectInRules(this.rules);
-        this.rules['vehicle'].rulesSave['plate'].search=true;
-
     }
     modelExternal() {
         this.chofer = new MDrivers(this.myglobal);
@@ -97,7 +95,7 @@ export class MRegister extends ModelBase{
         this.rules['company'].rulesSave['name'].title="Cliente";
         this.rules['company'].rulesSave['code'].title="Codigo del cliente";
 
-        this.rules['tag'] = this.company.ruleObject;
+        this.rules['tag'] = this.tag.ruleObject;
         this.rules['tag'].required = false;
 
         this.rules['lotValIn'] = {

@@ -46,7 +46,8 @@ export class MTag extends ModelBase{
             'placeholder': 'Número del Tag',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {
@@ -60,14 +61,13 @@ export class MTag extends ModelBase{
     initRuleObject() {
         this.ruleObject.title="Tag RFID";
         this.ruleObject.placeholder="Ingrese tag RFID";
-        this.ruleObject.key="rfid";
+        this.ruleObject.key="tag";
         this.ruleObject.code="tagId";
         this.ruleObject.keyDisplay="tagNumber";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.enabled;
-        delete this.rulesSave.detail;
         delete this.rulesSave['vehicle'];
         delete this.rulesSave['container'];
     }

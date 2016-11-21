@@ -87,6 +87,9 @@ export class CatalogApp {
         msg.warningBody="El cambio de estas configuraciones avanzadas puede ser perjudicial para la estabilidad, la seguridad y el rendimiento de esta aplicación. Sólo se debe continuar si está seguro de lo que hace.";
         msg.warningButtonExit="Salir";
         msg.warningButtonYes="Sí, estoy seguro";
+        msg.fieldRequired="Todos los campos con (*) son obligatorios.";
+        msg.contactAdminPermission="contacte al administrador para activar el permiso";
+        msg.delete="Eliminar";
 
         return msg;
 
@@ -138,6 +141,22 @@ export class CatalogApp {
             'autoclose': true,
             'todayHighlight': true,
             'return': 'DD/MM/YYYY'
+        }
+    }
+
+    public static get formatDatePickerDDMMYYYY2():any{
+        return {
+            'format': 'dd/mm/yyyy',
+            'startDate':'01/01/2016',
+            'startView': 2,
+            'minViewMode': 0,
+            'maxViewMode': 2,
+            'forceParse': false,
+            'language': "es",
+            'todayBtn': "linked",
+            'autoclose': true,
+            'todayHighlight': true,
+            'return': 'YYYY-MM-DD'
         }
     }
 

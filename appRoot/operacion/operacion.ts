@@ -13,6 +13,7 @@ import {NgSwitch, NgSwitchWhen} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
+import {Tooltip} from "../utils/tooltips/tooltips";
 
 declare var SystemJS:any;
 
@@ -21,7 +22,7 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/operacion/index.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     providers: [TranslateService],
-    directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen],
+    directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen,Tooltip],
     pipes: [TranslatePipe]
 })
 export class Operacion extends ControllerBase implements OnInit {
@@ -72,7 +73,7 @@ export class Operacion extends ControllerBase implements OnInit {
         });
 
         this.viewOptions["buttons"].push({
-            'visible': this.model.permissions.filter,
+            'visible': this.model.permissions.filter && this.model.permissions.list,
             'title': 'Filtrar',
             'class': 'btn btn-blue',
             'icon': 'fa fa-filter',
@@ -259,6 +260,7 @@ export class Operacion extends ControllerBase implements OnInit {
     selector: 'operacion-monitor',
     templateUrl: SystemJS.map.app+'/operacion/monitor.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
+    directives:[Tooltip],
     pipes: [Fecha]
 })
 export class OperacionMonitor extends RestController implements OnInit {

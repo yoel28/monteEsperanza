@@ -26,6 +26,7 @@ export class MTypeVehicle extends ModelBase{
         this.rules['icon']={
             'type': 'select',
             'required':true,
+            'icon':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,

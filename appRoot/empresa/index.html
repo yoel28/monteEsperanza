@@ -4,7 +4,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        {{viewOptions.title | translate }}
+                        {{viewOptions.title | translate }}&nbsp;<tooltip code="CODE_6"></tooltip>
                     </h3>
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
@@ -16,7 +16,7 @@
                     <button *ngIf="myglobal.existsPermission('204')" type="button"
                             class="btn btn-primary btn-red" (click)="goMorosos($event)">
                         <i class="fa fa-archive"></i>&nbsp;Morosos
-                    </button>
+                    </button>&nbsp;<tooltip code="CODE_7"></tooltip>
                     <button (click)="typeView = 1"
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list fa-lg text-blue"></i>
@@ -26,7 +26,7 @@
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list-alt fa-lg text-blue"></i>
                     </button>
-
+                    &nbsp;<tooltip code="CODE_8"></tooltip>
 
                     <div *ngIf="dataList.list && model.permissions.list" class="pull-right">
                         <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
@@ -35,6 +35,7 @@
                                     class="btn btn-default">
                                 {{val}}
                             </button>
+                            &nbsp;<tooltip code="CODE_9"></tooltip>
                         </div>
                     </div>
                 </div>
@@ -160,16 +161,16 @@
                                                         {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
                                                         <label>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="model.permissions.update && typeCompany.permissions.add"
-                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSave.idModal"
+                                                                    *ngIf="model.permissions.update && companyType.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+companyType.paramsSave.idModal"
                                                                     type="button" class="btn btn-box-tool"
                                                                     title="Asignar un nuevo grupo"
                                                             >
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="model.permissions.update && typeCompany.permissions.search"
-                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSearch.idModal"
+                                                                    *ngIf="model.permissions.update && companyType.permissions.search"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+companyType.paramsSearch.idModal"
                                                                     type="button" class="btn btn-box-tool"
                                                                     title="Asignar un grupo"
                                                             >
@@ -344,16 +345,16 @@
                                                         {{data.companyTypeTitle?data.companyTypeTitle:"N/A"}}
                                                         <label>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="model.permissions.update && typeCompany.permissions.add"
-                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSave.idModal"
+                                                                    *ngIf="model.permissions.update && companyType.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+companyType.paramsSave.idModal"
                                                                     type="button" class="btn btn-box-tool"
                                                                     title="Asignar un nuevo grupo"
                                                             >
                                                                 <i class="fa fa-plus text-green"></i>
                                                             </button>
                                                             <button (click)="dataSelect = data"
-                                                                    *ngIf="model.permissions.update && typeCompany.permissions.search"
-                                                                    data-toggle="modal" [attr.data-target]="'#'+typeCompany.paramsSearch.idModal"
+                                                                    *ngIf="model.permissions.update && companyType.permissions.search"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+companyType.paramsSearch.idModal"
                                                                     type="button" class="btn btn-box-tool"
                                                                     title="Asignar un grupo"
                                                             >
@@ -421,11 +422,11 @@
 
 <div *ngIf="model.permissions.update">
 
-    <div *ngIf="typeCompany.permissions.add">
-        <save [params]="typeCompany.paramsSave" [rules]="typeCompany.rulesSave" (save)="onPatchId($event,'companyType',dataSelect)"> </save>
+    <div *ngIf="companyType.permissions.add">
+        <save [params]="companyType.paramsSave" [rules]="companyType.rulesSave" (save)="onPatchId($event,'companyType',dataSelect)"> </save>
     </div>
-    <div *ngIf="typeCompany.permissions.search">
-        <search [params]="typeCompany.paramsSearch" (result)="onPatchId($event,'companyType',dataSelect)"></search>
+    <div *ngIf="companyType.permissions.search">
+        <search [params]="companyType.paramsSearch" (result)="onPatchId($event,'companyType',dataSelect)"></search>
     </div>
 </div>
 

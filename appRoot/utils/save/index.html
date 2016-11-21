@@ -17,7 +17,7 @@
                                             <div class="form-group input-icon right" *ngIf="!rules[key].hidden">
                                                 <div class="col-lg-12">
                                                     <div class="row" *ngIf="rules[key].type!='image'">
-                                                        <div [class.col-lg-12]="!rules[key].object" [class.col-lg-10]="rules[key].object" >
+                                                        <div [class.col-lg-12]="!rules[key].object" [class.col-lg-10]="rules[key].object || rules[key].refreshField" >
                                                             <div class="input-group input-icon right form-group">
                                                                 <i class="{{rules[key].icon}} z-index"></i>
                                                                 <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
@@ -43,7 +43,7 @@
 
                                                                 <select *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'"  [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown">
                                                                     <option value="-1">{{rules[key].placeholder || 'Seleccione una opción'}}</option>
-                                                                    <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" >{{n.text}}</option>
+                                                                    <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" ><i *ngIf="rules[key].icon" class="{{n.id || n.value}}">&nbsp;</i>{{n.text}}</option>
                                                                 </select>
 
                                                                 <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                         <div *ngIf="rules[key].object && !rules[key].permissions.list" class="col-lg-12">
-                                            {{msg.notAuthorized || 'Acceso no autorizado'}}
+                                            {{msg.notAuthorized || 'Acceso no autorizado'}}&nbsp;activar el permiso {{model.rules[key].prefix}}_SEARCH
                                         </div>
                                     </div>
                                 </div>
@@ -147,14 +147,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                {{msg.fieldRequired}}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button *ngIf="delete && id >= 0" (click)="loadDelete($event)" data-dismiss="modal" type="button" class="btn btn-success">
+                        <i class="fa fa-trash"></i>
+                        &nbsp;Eliminar
+                    </button>
+
                     <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                             id="cntrlsubmit" [disabled]="!form.valid">
                         <i class="fa fa-save"></i>
-                        {{params.updateField?'Actualizar':'Registrar'}}
+                        &nbsp;{{params.updateField?'Actualizar':'Registrar'}}
                     </button>
                 </div>
             </div>

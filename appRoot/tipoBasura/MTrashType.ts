@@ -18,6 +18,18 @@ export class MTrashType extends ModelBase{
     modelExternal() {}
     initRules(){
 
+        this.rules['reference']={
+            'type': 'text',
+            'icon':'fa fa-list',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'reference',
+            'title': 'Referencia',
+            'placeholder': 'Referencia',
+        };
+
         this.rules['title']={
             'type': 'text',
             'icon':'fa fa-font',
@@ -69,21 +81,8 @@ export class MTrashType extends ModelBase{
             'placeholder': 'Precio mínimo',
 
         };
-
-        this.rules['reference']={
-            'type': 'text',
-            'icon':'fa fa-list',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'reference',
-            'title': 'Referencia',
-            'placeholder': 'Referencia',
-        };
         
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
-
         this.rules['detail'].required=true;
     }
     initPermissions() {}

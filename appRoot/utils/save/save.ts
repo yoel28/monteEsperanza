@@ -22,7 +22,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
 
     public rules:any={};
     public id:string;
-    public dataSelect:any;
+    public dataSelect:any={};
 
     public save:any;
     public getInstance:any;
@@ -31,6 +31,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     data:any = [];
     keys:any = {};
     public baseWeight=1;
+    public delete=false;
 
 
 
@@ -144,6 +145,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             if(that.rules[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
             }
+            if(that.rules[key].prefix && that.rules[key].type=='text' && body[key]!="" && !that.rules[key].object)
+            {
+                body[key] = that.rules[key].prefix + body[key];
+            }
 
         });
         if(this.params.updateField)
@@ -191,6 +196,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         let that=this;
         this.search={};
         this.searchId={};
+        this.delete=false;
         this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
             (<Control>that.data[key]).updateValue(null);
@@ -199,6 +205,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             if(that.rules[key].readOnly)
                 that.rules[key].readOnly=false;
         })
+    }
+    loadDelete(event){
+        this.setEndpoint(this.params.endpoint);
+        this.onDelete(event,this.id);
     }
     refreshField(event,data){
         event.preventDefault();
@@ -218,22 +228,24 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         (<Control>this.form.controls[key]).updateValue(data);
     }
 
-    setLoadDataModel(data)
+    setLoadDataModel(data,_delete=false)
     {
+        let that = this;
         this.resetForm();
         if(data.id)
         {
             this.id = data.id;
             Object.keys(data).forEach(key=>{
-                if(this.data[key])
+                if(that.data[key])
                 {
-                    (<Control>this.form.controls[key]).updateValue(data[key]);
-                    this.data[key].updateValue(data[key]);
+                    (<Control>that.form.controls[key]).updateValue(data[key]);
+                    that.data[key].updateValue(data[key]);
                 }
             })
-            this.params.updateField=true;
+            that.params.updateField=true;
             Object.assign(this.dataSelect,data);
         }
+        this.delete = _delete;
     }
     public getKeys(data){
         return Object.keys(data || {});

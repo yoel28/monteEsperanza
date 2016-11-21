@@ -11,6 +11,7 @@ import {Datepicker} from "../common/xeditable";
 import { Router }           from '@angular/router-deprecated';
 import moment from "moment/moment";
 import {CatalogApp} from "../common/catalogApp";
+import {Tooltip} from "../utils/tooltips/tooltips";
 declare var SystemJS:any;
 
 @Component({
@@ -107,7 +108,7 @@ export class RecargaSave extends RestController implements OnInit{
             }
         })
     }
-    public formatDateFact = CatalogApp.formatDatePickerDDMMYYYY;
+    public formatDateFact = CatalogApp.formatDatePickerDDMMYYYY2;
 
     loadFechaFac(data) {
         this.referenceDate.updateValue(data.date)
@@ -200,6 +201,7 @@ declare var jQuery:any;
     selector: 'recarga-factura',
     templateUrl: SystemJS.map.app+'/recarga/facturas.html',
     styleUrls: [SystemJS.map.app+'/recarga/style.css'],
+    directives:[Tooltip],
     inputs:['params'],
     pipes: [Fecha],
 })

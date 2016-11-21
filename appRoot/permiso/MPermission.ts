@@ -58,7 +58,8 @@ export class MPermission extends ModelBase{
             'placeholder': 'Acción',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.rules['detail'].required=true;
     }
     initPermissions() {}
     initParamsSearch() {

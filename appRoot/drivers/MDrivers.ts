@@ -51,7 +51,8 @@ export class MDrivers extends ModelBase{
             'title': 'Correo',
             'placeholder': 'Ingrese el correo',
         }
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {

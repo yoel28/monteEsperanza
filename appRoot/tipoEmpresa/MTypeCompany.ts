@@ -1,7 +1,7 @@
 import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
-export class MTypeCompany extends ModelBase{
+export class MCompanyType extends ModelBase{
     public rules={};
     constructor(public myglobal:globalService){
         super('GROUP','/type/companies/',myglobal);
@@ -11,17 +11,6 @@ export class MTypeCompany extends ModelBase{
     modelExternal() {}
     
     initRules(){
-
-        this.rules['title']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'title',
-            'title': 'Título',
-            'placeholder': 'Título',
-        };
         this.rules['code']={
             'type': 'text',
             'required':true,
@@ -31,6 +20,16 @@ export class MTypeCompany extends ModelBase{
             'key': 'code',
             'title': 'Código',
             'placeholder': 'Código',
+        };
+        this.rules['title']={
+            'type': 'text',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'title',
+            'title': 'Título',
+            'placeholder': 'Título',
         };
         this.rules['free']={
             'type': 'boolean',
@@ -52,7 +51,7 @@ export class MTypeCompany extends ModelBase{
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'disabled':'data.free?false:true',
+            'disabled':'data.free',
             'source': [
                 {'value':true,'text': 'Credito', 'class': 'btn btn-sm btn-green'},
                 {'value':false,'text': 'Contado', 'class': 'btn btn-sm btn-blue'},

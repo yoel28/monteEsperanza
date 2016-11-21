@@ -4,7 +4,7 @@
             <th *ngFor="let key of keyVisible()" >
                 {{model.rules[key].title}}
             </th>
-            <th *ngIf="params.actions">&nbsp;</th>
+            <th *ngIf="params.actions">&nbsp;<tooltip [code]="model.prefix+'_5'"></tooltip></th>
         </tr>
     </thead>
     <tbody>
@@ -13,10 +13,12 @@
 
                 <span *ngIf="!getDisabledField(key,data)">
 
+                    <i *ngIf="model.rules[key].icon" class="{{data[key]}}">&nbsp;</i>
+
                     <a *ngIf="!model.rules[key].object &&  model.rules[key].type !='boolean' && model.rules[key].type !='color'" x-editable  [disabled]="!model.rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="model.rules" [field]="key"></a>
 
-
                     <input *ngIf="model.rules[key].type == 'color' && model.rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
+
                     <label *ngIf="model.rules[key].type == 'color' && !model.rules[key].update" class="form-control">{{'#'+data[key]}}</label>
 
                     <button  *ngIf="model.rules[key].type =='boolean'" class="{{getBooleandData(key,data).class}}" (click)="onPatch(key,data)" [disabled]="getBooleandData(key,data).disabled">
@@ -25,7 +27,7 @@
 
                     <a *ngIf="model.rules[key].object">
                          {{data[model.rules[key].keyDisplay]}}
-                         <label *ngIf="model.permissions.update && data.enabled">
+                         <label *ngIf="model.permissions.update && (data.enabled==true || data.enabled==null)">
                              <span *ngIf="!model.rules[key].reference">
 
                                  <button *ngIf="model.rules[key].paramsSave && model.rules[key].permissions.add" type="button" class="btn btn-box-tool"
@@ -49,6 +51,7 @@
                                  >
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
+                                 <tooltip [code]="model.prefix+'_6'"></tooltip>
                              </span>
                              <span *ngIf="model.rules[key].reference">
 
@@ -76,14 +79,13 @@
                                          title="Liberar">
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
-
+                                 <tooltip [code]="model.prefix+'_7'"></tooltip>
                              </span>
-
                          </label>
                      </a>
                 </span>
                 <span *ngIf="getDisabledField(key,data)">
-                    <label class="label label-orange">N/A</label>
+                    <label class="label label-orange">N/A</label><tooltip [code]="model.prefix+'_8'"></tooltip>
                 </span>
 
             </td>
@@ -97,7 +99,7 @@
                     </button>
                     <ul role="menu" class="dropdown-menu text-left submenu-config">
                         <li *ngFor="let key of actionPermissionKey()">
-                            <a *ngIf="key == 'delete'"
+                            <a *ngIf="key == 'delete' && data.enabled"
                                data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                                (click)="dataSelect = data" href="#">
                                 <i class="{{params.actions[key].icon}}"></i>
@@ -126,7 +128,7 @@
                 <div *ngIf="keyActions.length == 1" >
 
                    <div *ngFor="let key of actionPermissionKey()">
-                       <a *ngIf="key == 'delete'"
+                       <a *ngIf="key == 'delete'  && data.enabled"
                           data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                           (click)="dataSelect = data" href="#">
                            <i class="{{params.actions[key].icon}}"></i>
@@ -160,6 +162,7 @@
                     <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
                         {{val}}
                     </button>
+                    <tooltip [code]="model.prefix+'_9'"></tooltip>
                 </div>
             </td>
         </tr>
@@ -167,7 +170,7 @@
 </table>
 
 
-<div *ngIf="params && params.actions && params.actions.delete && params.actions.delete.permission">
+<div *ngIf="model.permissions.delete">
     <div class="modal fade" [attr.id]="params.actions.delete.idModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -176,15 +179,15 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel"><i
-                            class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+                            class="fa fa-warning"></i>&nbsp;<strong>{{msg.warningTitle}}&nbsp;<tooltip [code]="model.prefix+'_10'"></tooltip></strong></h4>
                 </div>
                 <div class="modal-body">
                     {{params.actions.delete.message}} <strong>'{{dataSelect[params.actions.delete.keyAction]}}'</strong> ?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;{{msg.warningButtonExit}}</button>
                     <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
-                            class="btn btn-red fa fa-trash">&nbsp;Eliminar
+                            class="btn btn-red fa fa-trash">&nbsp;{{msg.delete}}
                     </button>
                 </div>
             </div>

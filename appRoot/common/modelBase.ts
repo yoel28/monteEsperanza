@@ -7,6 +7,7 @@ export abstract class ModelBase{
 
     public prefix = "DEFAULT";
     public endpoint = "DEFAULT_ENDPOINT";
+    public completed=false;
     public permissions:any = {};
     public paramsSearch:any = {};
     public paramsSave:any = {};
@@ -31,7 +32,7 @@ export abstract class ModelBase{
         this._initParamsSave();
         this._initRuleObject();
     }
-    public initModel(){
+    public initModel(completed=true){
         this.initPermissions();
         this.modelExternal();
         this.initRules();
@@ -42,6 +43,9 @@ export abstract class ModelBase{
 
         this.loadObjectRule();
         this.loadParamsSave();
+        this.loadParamsSearch();
+
+        this.completed=completed;
     }
 
     abstract initPermissions();
@@ -105,8 +109,12 @@ export abstract class ModelBase{
                 },
             },
             'where': '',
-            'imageGuest': '/assets/img/truck-guest.png'
+            'imageGuest': '/assets/img/truck-guest.png',
+            'field':'any'
         };
+    }
+    private loadParamsSearch(){
+        this.paramsSearch.field = this.ruleObject.key+'.id';
     }
 
     abstract initParamsSave();
@@ -125,6 +133,7 @@ export abstract class ModelBase{
         this.ruleObject = {
             'icon': 'fa fa-list',
             'update':false,
+            'search':false,
             "type": "text",
             "required":true,
             "visible":true,
@@ -133,6 +142,7 @@ export abstract class ModelBase{
             "title": "TipoDefault",
             'object': true,
             'code': 'default',
+            'prefix':'',
             "placeholder": "PlaceHolder default",
             'paramsSearch': {},
             "permissions": {},
@@ -149,6 +159,9 @@ export abstract class ModelBase{
         this.ruleObject.paramsSave = this.paramsSave;
         this.ruleObject.permissions = this.permissions;
         this.ruleObject.paramsSearch = this.paramsSearch;
+        this.ruleObject.prefix = this.prefix;
+        this.ruleObject.search = this.permissions.search;
+
     }
     private loadParamsSave(){
         this.paramsSave.prefix = this.prefix+'_ADD';

@@ -6,7 +6,7 @@
             </div>
             <div class="col-lg-8">
                 <h1 class="title">
-                    <tooltip code="DASH_PRESENTACION"></tooltip>
+                    <tooltip code="CODE_1"></tooltip>&nbsp;
                     BIENVENIDOS A MONTE ESPERANZA
                 </h1>
                 <h3 class="subtitle">¿QU&Eacute; DESEA REALIZAR?</h3>
@@ -44,7 +44,7 @@
                                         <i class="fa fa-money"></i>
                                     </span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Saldo de los clientes</span>
+                            <span class="info-box-text">Saldo de los clientes&nbsp;<tooltip code="CODE_2"></tooltip></span>
                             <span class="info-box-number">{{noDebts.total|number:'.0-2' || '0' }}&nbsp;{{MONEY_METRIC_SHORT}}</span>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                         <i class="fa fa-money"></i>
                                     </span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Deuda de los clientes</span>
+                            <span class="info-box-text">Deuda de los clientes&nbsp;<tooltip code="CODE_3"></tooltip></span>
                             <span class="info-box-number">{{debts.total |number:'.0-2' || '0'}}&nbsp;{{MONEY_METRIC_SHORT}}</span>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">An&aacute;lisis de gesti&oacute;n</h3>
+                    <h3 class="box-title">An&aacute;lisis de gesti&oacute;n&nbsp;<tooltip code="CODE_4"></tooltip></h3>
                 </div>
                 <div class="box-body" >
                     <div class="row padding-bottom">
@@ -137,7 +137,7 @@
                     </div>
                     <div class="col-lg-12 border">
                         <div class="col-lg-3">
-                            <strong class="titulo-16">Consultar facturas</strong>
+                            <strong class="titulo-16">Consultar facturas&nbsp;<tooltip code="CODE_5"></tooltip></strong>
                         </div>
                         <div class="col-lg-7">
                             <form role="form" [ngFormModel]="form" (submit)="loadFacturas($event)">

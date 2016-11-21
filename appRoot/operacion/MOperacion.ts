@@ -55,6 +55,7 @@ export class MOperacion extends ModelBase{
         this.rules['weightIn']={
                 'type': 'number',
                 'readOnly': false,
+                'step':'0.001',
                 'required':true,
                 'hidden': false,
                 'double': true,
@@ -75,6 +76,7 @@ export class MOperacion extends ModelBase{
         this.rules['weightOut']={
             'type': 'number',
             'readOnly': false,
+            'step':'0.001',
             'required':false,
             'hidden': true,
             'double': true,
@@ -98,7 +100,7 @@ export class MOperacion extends ModelBase{
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'key': 'description',
+            'key': 'dateCreated',
             'icon':'fa fa-calendar',
             'title': 'Fecha de entrada',
             'placeholder': 'Fecha de entrada',
@@ -110,7 +112,7 @@ export class MOperacion extends ModelBase{
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'key': 'description',
+            'key': 'comment',
             'icon':'fa fa-font',
             'title': 'Comentarios',
             'placeholder': 'Ingrese un comentario',
