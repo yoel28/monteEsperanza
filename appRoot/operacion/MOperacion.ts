@@ -30,7 +30,10 @@ export class MOperacion extends ModelBase{
         this.container = new MContainer(this.myglobal);
     }
     initRules(){
-        
+
+        this.rules['vehicle']=this.vehicle.ruleObject;
+        this.rules['vehicle'].update=this.permissions.update;
+
         this.rules['dateCreated']={
             'type': 'date',
             'display': null,
@@ -41,10 +44,7 @@ export class MOperacion extends ModelBase{
             'icon':'fa fa-calendar',
             'title': 'Fecha de entrada',
             'placeholder': 'Fecha de entrada',
-        }
-
-        this.rules['vehicle']=this.vehicle.ruleObject;
-        this.rules['vehicle'].update=this.permissions.update;
+        };
 
         this.rules['container']=this.container.ruleObject;
         this.rules['container'].required=false;
