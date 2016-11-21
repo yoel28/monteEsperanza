@@ -48,8 +48,8 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view8'))
-                this.view = JSON.parse(localStorage.getItem('view8'));
+            if (localStorage.getItem('view9'))
+                this.view = JSON.parse(localStorage.getItem('view9'));
             this.ordenView();
             this.loadData();
         }
@@ -234,7 +234,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view8', JSON.stringify(this.view))
+        localStorage.setItem('view9', JSON.stringify(this.view))
     }
 
     setVisibleView(data) {
@@ -244,7 +244,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view8', JSON.stringify(this.view))
+        localStorage.setItem('view9', JSON.stringify(this.view))
     }
 
     edit(data){
