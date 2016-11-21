@@ -111,6 +111,11 @@
                                            <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
                                         {{data.weightIn}}
                                     </span>
+                                    <span   *ngSwitchWhen="'comment'">
+                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                        <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
+                                        {{data.comment}}
+                                    </span>
                                     <span   *ngSwitchWhen="'weightOut'">
                                         <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
                                            <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
