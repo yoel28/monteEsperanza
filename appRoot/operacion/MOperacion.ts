@@ -30,6 +30,18 @@ export class MOperacion extends ModelBase{
         this.container = new MContainer(this.myglobal);
     }
     initRules(){
+        
+        this.rules['dateCreated']={
+            'type': 'date',
+            'display': null,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'dateCreated',
+            'icon':'fa fa-calendar',
+            'title': 'Fecha de entrada',
+            'placeholder': 'Fecha de entrada',
+        }
 
         this.rules['vehicle']=this.vehicle.ruleObject;
         this.rules['vehicle'].update=this.permissions.update;
@@ -92,18 +104,6 @@ export class MOperacion extends ModelBase{
                 'endpoint':'/weight/',
                 'field':'weight',
             }
-        }
-
-        this.rules['dateCreated']={
-            'type': 'date',
-            'display': null,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'dateCreated',
-            'icon':'fa fa-calendar',
-            'title': 'Fecha de entrada',
-            'placeholder': 'Fecha de entrada',
         }
 
         this.rules['comment']={
