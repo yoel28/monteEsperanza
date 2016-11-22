@@ -27,13 +27,16 @@
                                                                 <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number' || rules[key].type == 'email' || rules[key].type == 'password'" ngControl="{{key}}" class="form-control"
                                                                        [(ngModel)]="data[key].value"
                                                                        placeholder="{{rules[key].placeholder}}"
-                                                                       type="{{rules[key].type}}" [attr.aria-describedby]="key">
+                                                                       type="{{rules[key].type}}" [attr.aria-describedby]="key"
+                                                                       [readonly]="rules[key].readOnly"
+                                                                >
 
                                                                 <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" [hex]="data[key]" readonly>
 
                                                                 <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                           [(ngModel)]="data[key].value"
-                                                                          placeholder="{{rules[key].placeholder}}">
+                                                                          placeholder="{{rules[key].placeholder}}"
+                                                                          [readonly]="rules[key].readOnly">
 
                                                                 </textarea>
 
@@ -41,9 +44,13 @@
                                                                        [format]="rules[key].format" (fecha)="loadDate($event,key)"
                                                                        [attr.value]="rules[key].title" type="text" class="form-control">
 
-                                                                <select *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'"  [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown">
+                                                                <select sm-dropdown *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'" [(ngModel)]="data[key].value" (ngModelChange)="setValueSelect($event,key)" (element)="setInstance($event,key)"  class="ui fluid search selection dropdown">
                                                                     <option value="-1">{{rules[key].placeholder || 'Seleccione una opción'}}</option>
-                                                                    <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" ><i *ngIf="rules[key].icon" class="{{n.id || n.value}}">&nbsp;</i>{{n.text}}</option>
+                                                                    <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value"
+                                                                            [selected]="data[key].value==n.id || data[key].value==n.value">
+                                                                            <i *ngIf="rules[key].icon" class="{{n.id || n.value}}">&nbsp;</i>
+                                                                                {{n.text}}
+                                                                    </option>
                                                                 </select>
 
                                                                 <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
