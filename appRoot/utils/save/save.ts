@@ -4,14 +4,15 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {Xcropit, Xfile, ColorPicker, Datepicker} from "../../common/xeditable";
+import {Xcropit, Xfile, ColorPicker, Datepicker, SMDropdown} from "../../common/xeditable";
 import {CatalogApp} from "../../common/catalogApp";
 declare var SystemJS:any;
+declare var moment:any;
 @Component({
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
-    directives:[Xcropit,Xfile,ColorPicker,Datepicker],
+    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown],
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
@@ -28,7 +29,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     public getInstance:any;
 
     form:ControlGroup;
-    data:any = [];
+    data:any = {};
+    instance:any={};
     keys:any = {};
     public baseWeight=1;
     public delete=false;
@@ -192,6 +194,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         if(data=='-1')
             (<Control>this.form.controls[key]).updateValue(null);
     }
+    public setInstance(instance,key):any{
+        this.instance[key]=instance;
+    }
+
     resetForm(){
         let that=this;
         this.search={};
@@ -240,6 +246,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                 {
                     (<Control>that.form.controls[key]).updateValue(data[key]);
                     that.data[key].updateValue(data[key]);
+                    if(that.rules[key] && that.rules[key].protected)
+                        that.rules[key].readOnly=true;
                 }
             })
             that.params.updateField=true;
