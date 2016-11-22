@@ -37,7 +37,7 @@ export class Tooltip implements OnInit{
         let that=this;
         if(this.data && this.data.id){
             jQuery('#'+this.configId).popover({
-                trigger: "click"
+                trigger: "focus"
             });
         }
     }

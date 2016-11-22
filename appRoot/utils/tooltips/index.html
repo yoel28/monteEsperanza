@@ -1,4 +1,4 @@
-<span *ngIf="data.id" data-html="true"  class="btn btn-box-tool  noprint"
+<button *ngIf="data.id" data-html="true"  class="btn btn-box-tool  noprint"
       [attr.id]="configId"
       [attr.data-placement]="data.position"
       [attr.title]="data.title"
@@ -7,4 +7,4 @@
 >
     <i *ngIf="permissions.update"  class="{{data.size}} {{data.icon}}" [style.color]="'#'+data.color" (click)="edit($event,data)" data-toggle="modal" [attr.data-target]="'#'+ myglobal.objectInstance['INFO'].params.idModal"></i>&nbsp;
     <i *ngIf="!permissions.update" class="{{data.size}} {{data.icon}}" [style.color]="'#'+data.color"></i>&nbsp;
-</span>
+</button>
