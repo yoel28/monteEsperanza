@@ -30,7 +30,6 @@ export class Save extends RestController implements OnInit,AfterViewInit{
 
     form:ControlGroup;
     data:any = {};
-    instance:any={};
     keys:any = {};
     public baseWeight=1;
     public delete=false;
@@ -193,9 +192,6 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         (<Control>this.form.controls[key]).updateValue(data);
         if(data=='-1')
             (<Control>this.form.controls[key]).updateValue(null);
-    }
-    public setInstance(instance,key):any{
-        this.instance[key]=instance;
     }
 
     resetForm(){

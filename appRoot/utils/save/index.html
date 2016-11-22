@@ -44,7 +44,7 @@
                                                                        [format]="rules[key].format" (fecha)="loadDate($event,key)"
                                                                        [attr.value]="rules[key].title" type="text" class="form-control">
 
-                                                                <select sm-dropdown *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'" [(ngModel)]="data[key].value" (ngModelChange)="setValueSelect($event,key)" (element)="setInstance($event,key)"  class="ui fluid search selection dropdown">
+                                                                <select sm-dropdown *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'" [(ngModel)]="data[key].value" (ngModelChange)="setValueSelect($event,key)" class="ui fluid search selection dropdown">
                                                                     <option value="-1">{{rules[key].placeholder || 'Seleccione una opción'}}</option>
                                                                     <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value"
                                                                             [selected]="data[key].value==n.id || data[key].value==n.value">
