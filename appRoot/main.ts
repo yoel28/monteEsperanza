@@ -6,7 +6,6 @@ import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF} from '@angular/c
 import { globalService }   from './common/globalService';
 import { AppComponent }   from './app.component';
 import { ToastsManager,ToastOptions } from 'ng2-toastr/ng2-toastr';
-import 'semantic';
 import {
     TranslateLoader, TranslateStaticLoader,
     TranslateService
