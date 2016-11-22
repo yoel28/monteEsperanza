@@ -65,7 +65,7 @@
 
                                                             <textarea *ngIf="model.rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                         [(ngModel)]="data[key].value"
-                                                                        placeholder="{{model.rules[key].placeholder}}"
+                                                                        placeholder="{{model.rules[key].placeholder}}" rows="5"
                                                                         ></textarea>
 
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">

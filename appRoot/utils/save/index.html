@@ -33,7 +33,7 @@
 
                                                                 <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" [hex]="data[key]" readonly>
 
-                                                                <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
+                                                                <textarea *ngIf="rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control" rows="5"
                                                                           [(ngModel)]="data[key].value"
                                                                           placeholder="{{rules[key].placeholder}}"
                                                                           [readonly]="rules[key].readOnly">
