@@ -9,6 +9,7 @@ import {globalService} from "../common/globalService";
 import {Tooltip} from "../utils/tooltips/tooltips";
 import {SMDropdown, DateRangepPicker} from "../common/xeditable";
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
+import {CatalogApp} from "../common/catalogApp";
 
 declare var jQuery:any;
 declare var SystemJS:any;
@@ -25,7 +26,7 @@ export class Caja extends RestController implements OnInit{
     public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
     public WEIGTH_METRIC_SHORT=this.myglobal.getParams('WEIGTH_METRIC_SHORT');
-    public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"}
+    public paramsDate=CatalogApp.formatDateDDMMYYYY;
 
 
     public rechargeTotal={};
