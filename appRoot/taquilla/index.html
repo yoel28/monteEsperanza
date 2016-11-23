@@ -119,6 +119,7 @@
                         </div>
                     </div><!--Fin de Datos de  camion-->
                     <div *ngIf="myglobal.existsPermission('109')">
+                        <find-range-date (dateRange)="loadDataRecargas($event)"></find-range-date>
                         <table id="content" class="table table-hover table-bordered">
 
                             <thead>
