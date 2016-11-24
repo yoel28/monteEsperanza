@@ -25,7 +25,8 @@
                             [attr.data-target]="'#'+buttom.modal">
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
-                    </button>
+                    </button>&nbsp;
+                    <tooltip code="CODE_46"></tooltip>
                 </div>
 
             </div>
@@ -51,7 +52,7 @@
                                 </div>
                             </td>
                             <th class="noprint" *ngIf="getViewOptionsActions().length > 0">
-                                Acciones
+                                Acciones&nbsp;<tooltip code="CODE_47"></tooltip>
                             </th>
                         </tr>
                         </thead>
@@ -111,6 +112,11 @@
                                            <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
                                         {{data.weightIn}}
                                     </span>
+                                    <span   *ngSwitchWhen="'comment'">
+                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                        <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
+                                        {{data.comment}}
+                                    </span>
                                     <span   *ngSwitchWhen="'weightOut'">
                                         <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
                                            <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
@@ -123,13 +129,10 @@
 
                                 <div class="btn-group">
                                     <label *ngFor="let action of getViewOptionsActions()" >
-                                        <a *ngIf="action == 'delete'" data-toggle="modal" [attr.data-target]="'#modalDelete'"
+
+                                        <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                            (click)="dataSelect = data" href="#" title="Eliminar">
                                             <span class="fa fa-trash fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'print' && data.rechargeId" (click)="onPrint(data)" title="Imprimir">
-                                            <span class="fa fa-print fa-lg btn"></span>
                                         </a>
 
                                         <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
@@ -137,15 +140,45 @@
                                             <span class="fa fa-pencil-square-o fa-lg btn"></span>
                                         </a>
 
-                                        <a *ngIf="action == 'automatic' && data.rechargeId && data.enabled && data.rechargeQuantity < 0"
+                                        <a *ngIf="action == 'close' && data.enabled && data.rechargeQuantity == 0" [attr.title]="viewOptions.actions.close.title"
+                                           data-toggle="modal" [attr.data-target]="'#modalClose'" (click)="dataSelect = data">
+                                            <span  class="fa fa-lg btn fa-lock"></span>
+                                        </a>
+
+                                        <a *ngIf="action == 'automatic' && !data.rechargePaid && data.rechargeQuantity != 0"
                                            data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
-                                           (click)="dataSelect = data" title="Recarga automatica">
+                                           (click)="dataSelect = data;dataSelect.option=1" title="Recarga automatica">
                                             <span class="fa fa-money fa-lg btn"></span>
                                         </a>
 
-                                        <a *ngIf="action == 'close' && data.enabled" (click)="onPatch('enabled', data)" [attr.title]="viewOptions.actions.close.title">
-                                            <span  class="fa fa-lg btn fa-lock"></span>
+                                        <a *ngIf="action == 'print' && data.rechargeId && !data.enabled" (click)="onPrint(data)" title="Imprimir">
+                                            <span class="fa fa-print fa-lg btn"></span>
                                         </a>
+
+                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity != 0"
+                                           (click)="dataSelect = data;dataSelect.option=2" title="Imprimir"
+                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                            <span class="fa fa-print fa-lg btn"></span>
+                                        </a>
+
+                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity == 0"
+                                           (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                            <span class="fa fa-print fa-lg btn"></span>
+                                        </a>
+
+                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && data.companyTypeCredit"
+                                           (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                            <span class="fa fa-print fa-lg btn"></span>
+                                        </a>
+
+                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && data.companyTypeFree"
+                                           (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                            <span class="fa fa-print fa-lg btn"></span>
+                                        </a>
+
 
                                     </label>
                                 </div>
@@ -212,7 +245,7 @@
 </div>
 
 <div *ngIf="model.permissions.automatic">
-    <div class="modal fade" [attr.id]="'modalAutomatic'" tabindex="-1" role="dialog"
+    <div class="modal fade" id="modalAutomatic" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -220,22 +253,72 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabe">
-                        <strong>CONFIRMAR PAGO</strong></h4>
+                        <strong>CONFIRMAR</strong></h4>
                 </div>
                 <div class="modal-body">
-                    ¿ Estás seguro que deseas realizar un pago automatico al cliente
-                    <strong>{{dataSelect.companyName}}&nbsp;({{dataSelect.companyRUC}})</strong> por
-                    {{(dataSelect.rechargeQuantity)*-1}} {{MONEY_METRIC_SHORT}}
-                    ?<br/>
-                    <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Recibo {{AUTOMATIC_RECHARGE_PREF}} {{dataSelect.rechargeReference}}" >
+
+                    <span *ngIf="dataSelect.option==1 || dataSelect.option==2">
+                        <span *ngIf="dataSelect.option==2" class="text-red">
+                            Debe realizar el pago de la operación<br>
+                        </span>
+
+                        ¿ Estás seguro que deseas realizar un pago automatico al cliente
+                        <strong>{{dataSelect.companyName}}&nbsp;({{dataSelect.companyRUC}})</strong> por
+                        {{(dataSelect.rechargeQuantity)*-1}} {{MONEY_METRIC_SHORT}}?<br/>
+                        <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Recibo {{AUTOMATIC_RECHARGE_PREF}} {{dataSelect.rechargeReference}}" >
+
+                        <span class="text-red">Esta operación no podrá ser modificada ni eliminada, luego de hacer click en {{dataSelect.option==1?'Pagar':'Pagar e imprimir'}}.</span>
+                    </span>
+
+                    <span *ngIf="dataSelect.option==3">
+                        Esta accion finalizara la operación con la referencia: {{dataSelect.rechargeReference}}<br>
+                        <span class="text-red">Esta operación no podrá ser modificada ni eliminada, luego de hacer click en Imprimir.</span>
+                    </span>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                    <button (click)="onRechargeAutomatic($event,dataSelect)" data-dismiss="modal" type="button"
-                            class="btn btn-green fa fa-money">&nbsp;Confirmar
+
+                    <button *ngIf="dataSelect.option==1" (click)="onRechargeAutomatic($event,dataSelect)" data-dismiss="modal" type="button"
+                            class="btn btn-green fa fa-print">&nbsp;Pagar
                     </button>
+
+                    <button *ngIf="dataSelect.option==2" (click)="onRechargeAutomatic($event,dataSelect);onPrint(dataSelect)" data-dismiss="modal" type="button"
+                            class="btn btn-green fa fa-print">&nbsp;Pagar e imprimir
+                    </button>
+
+                    <button *ngIf="dataSelect.option==3" (click)="onPatch('enabled',dataSelect);onPrint(dataSelect)" data-dismiss="modal" type="button"
+                            class="btn btn-green fa fa-print">&nbsp;Imprimir
+                    </button>
+
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalClose" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header btn-red text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    <i class="fa fa-warning"></i>&nbsp;
+                    <strong>ADVERTENCIA</strong>
+                </h4>
+            </div>
+            <div class="modal-body">
+                Esta accion finalizara la operación con la referencia: {{dataSelect.rechargeReference}}<br>
+                <span class="text-red">Esta operación no podrá ser modificada ni eliminada, luego de hacer click en finalizar.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;{{ 'Cancelar' | translate }}</button>
+                <button (click)="onPatch('enabled', dataSelect)" data-dismiss="modal" type="button"
+                        class="btn btn-red fa fa-lock">&nbsp;{{ 'Finalizar' | translate }}
+                </button>
             </div>
         </div>
     </div>

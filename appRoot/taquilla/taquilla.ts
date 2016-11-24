@@ -10,6 +10,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {OperacionPrint} from "../operacion/methods";
 import moment from "moment/moment";
 import{Tooltip} from "../utils/tooltips/tooltips";
+import {FindRangeDate} from "../utils/components/findRangeDate/findRangeDate";
 declare var jQuery:any;
 declare var SystemJS:any;
 
@@ -18,7 +19,7 @@ declare var SystemJS:any;
     pipes: [Fecha],
     templateUrl: SystemJS.map.app+'/taquilla/index.html',
     styleUrls: [SystemJS.map.app+'/taquilla/style.css'],
-    directives:[RecargaSave,OperacionPrint,Tooltip]
+    directives:[RecargaSave,OperacionPrint,Tooltip,FindRangeDate]
 })
 export class Taquilla extends RestController implements OnInit{
     public dataCompany:any = {};
@@ -28,8 +29,8 @@ export class Taquilla extends RestController implements OnInit{
     public search;
     public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
-    public AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF')
-
+    public AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF');
+    
 
     constructor(public params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
@@ -62,12 +63,19 @@ export class Taquilla extends RestController implements OnInit{
         }
 
     }
-    loadDataRecargas(){
+    loadDataRecargas(date?){
         if(this.myglobal.existsPermission('109')) {
             this.max=5;
             this.offset = 1;
             this.endpoint = "/search/recharges";
-            this.where ="&where="+encodeURI("[['op':'eq','field':'company.id','value':" + this.dataCompany.id + "l]]");
+            let tempWhere =[];
+            tempWhere.push({'op':'eq','field':'company.id','value':this.dataCompany.id});
+            if(date && date.value && date.value.start && date.value.end)
+            {
+                tempWhere.push({'value':date.value.start,'field':'dateCreated','type':'date','op':'ge'});
+                tempWhere.push({'value':date.value.end,'field':'dateCreated','type':'date','op':'le'});
+            }
+            this.where = "&where="+encodeURI(JSON.stringify(tempWhere).split('{').join('[').split('}').join(']'));
             this.loadData();
         }
     };

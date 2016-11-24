@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,HostListener} from '@angular/core';
 import {globalService} from "../../common/globalService";
 import {MHelp} from "../../help/MHelp";
 
@@ -37,7 +37,7 @@ export class Tooltip implements OnInit{
         let that=this;
         if(this.data && this.data.id){
             jQuery('#'+this.configId).popover({
-                trigger: "hover"
+                trigger: "manual"
             });
         }
     }
@@ -49,5 +49,21 @@ export class Tooltip implements OnInit{
             }
         }
     }
-
+    @HostListener('document:click', ['$event.target'])
+    public onClick(event) {
+        let btn = jQuery(event).parents('#'+this.configId);
+        if( (btn && btn.length > 0) || jQuery(event).attr('id') == this.configId ){
+            jQuery('#'+this.configId).popover('show');
+        }
+        else{
+            let exit= jQuery(event).parents('.popover');
+            if(exit && exit.length == 0)
+                jQuery('#'+this.configId).popover('destroy');
+        }
+    }
+    @HostListener('window:keydown', ['$event'])
+    keyboardInput(event: any) {
+        if(event.code == "Escape")
+            jQuery("[data-toggle='popover']").popover('destroy');
+    }
 }

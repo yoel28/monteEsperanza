@@ -48,8 +48,8 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view8'))
-                this.view = JSON.parse(localStorage.getItem('view8'));
+            if (localStorage.getItem('view10'))
+                this.view = JSON.parse(localStorage.getItem('view10'));
             this.ordenView();
             this.loadData();
         }
@@ -171,23 +171,24 @@ export class Operacion extends ControllerBase implements OnInit {
     
 
     public view = [
-        {'visible': true, 'position': 1, 'title': 'Fecha de transaccion', 'key': 'rechargeReferenceDate'},
+        {'visible': true, 'position': 1, 'title': 'Fecha de salida', 'key': 'rechargeReferenceDate'},
         {'visible': true, 'position': 2, 'title': 'Recibo', 'key': 'rechargeReference'},
         {'visible': true, 'position': 3, 'title': 'Monto', 'key': 'rechargeQuantity'},
         {'visible': true, 'position': 4, 'title': 'Vehiculo', 'key': 'vehicle'},
         {'visible': true, 'position': 5, 'title': 'Peso de entrada', 'key': 'weightIn'},
         {'visible': true, 'position': 6, 'title': 'Peso de salida', 'key': 'weightOut'},
-        {'visible': true, 'position': 7, 'title': 'Peso neto', 'key': 'neto'},
+        {'visible': true, 'position': 7, 'title': 'Descargado', 'key': 'neto'},
 
 
         {'visible': false, 'position': 8, 'title': 'Cliente', 'key': 'company'},
-        {'visible': false, 'position': 9, 'title': 'Grupos', 'key': 'companyTypeName'},
-        {'visible': false, 'position': 10, 'title': 'Rutas', 'key': 'route'},
+        {'visible': false, 'position': 9, 'title': 'Grupo', 'key': 'companyTypeName'},
+        {'visible': false, 'position': 10, 'title': 'Ruta', 'key': 'route'},
         {'visible': false, 'position': 11, 'title': 'Tipo de basura', 'key': 'trash'},
         {'visible': false, 'position': 12, 'title': 'Operador', 'key': 'usernameCreator'},
-        {'visible': false, 'position': 13, 'title': 'Fecha de Entrada.', 'key': 'dateCreated'},
+        {'visible': false, 'position': 13, 'title': 'Fecha de Entrada', 'key': 'dateCreated'},
         {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'choferName'},
         {'visible': true, 'position': 15, 'title': 'Contenedor', 'key': 'containerCode'},
+        {'visible': true, 'position': 16, 'title': 'Comentario', 'key': 'comment'},
 
     ];
 
@@ -234,7 +235,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view8', JSON.stringify(this.view))
+        localStorage.setItem('view10', JSON.stringify(this.view))
     }
 
     setVisibleView(data) {
@@ -244,7 +245,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view8', JSON.stringify(this.view))
+        localStorage.setItem('view10', JSON.stringify(this.view))
     }
 
     edit(data){

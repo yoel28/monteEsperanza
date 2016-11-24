@@ -320,6 +320,7 @@ export class AppComponent extends RestController implements OnInit {
     }
     initModels(){
         this.help = new MHelp(this.myglobal);
+        this.help.rules['code'].readOnly=true;
         this.help.paramsSave.updateField=true;
         this.operation = new MOperacion(this.myglobal);
     }

@@ -11,6 +11,8 @@ export class MHelp extends ModelBase{
     initRules(){
         this.rules['code']={
             'type': 'text',
+            'readOnly':false,
+            'protected':true,
             'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
