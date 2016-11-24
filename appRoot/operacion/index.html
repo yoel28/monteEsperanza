@@ -145,7 +145,7 @@
                                             <span  class="fa fa-lg btn fa-lock"></span>
                                         </a>
 
-                                        <a *ngIf="action == 'automatic' && !data.rechargePaid && data.rechargeQuantity != 0"
+                                        <a *ngIf="action == 'automatic' && data.rechargeId && !data.rechargePaid && data.rechargeQuantity != 0"
                                            data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
                                            (click)="dataSelect = data;dataSelect.option=1" title="Recarga automatica">
                                             <span class="fa fa-money fa-lg btn"></span>
