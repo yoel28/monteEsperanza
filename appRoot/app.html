@@ -1,6 +1,13 @@
 <div class="wrapper" *ngIf="myglobal.init">
     <div *ngIf="validToken()">
         {{loadPage()}}
+        <div *ngIf="help && (help.permissions.add || help.permissions.update)">
+            <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
+        </div>
+        <div *ngIf="operation && (operation.permissions.add || operation.permissions.update)">
+            <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
+        </div>
+
         <header class="main-header">
             <a href="#" [routerLink]="['Dashboard']" class="logo">
                 <span class="logo-mini">
@@ -93,14 +100,6 @@
         </aside>
     </div>
     <router-outlet></router-outlet>
-
-    <div *ngIf="help && (help.permissions.add || help.permissions.update)">
-        <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
-    </div>
-
-    <div *ngIf="operation && (operation.permissions.add || operation.permissions.update)">
-        <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
-    </div>
 
 </div>
 <div class="main-footer-container noprint" *ngIf="validToken() && myglobal.init">
