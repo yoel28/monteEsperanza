@@ -25,7 +25,8 @@
                             [attr.data-target]="'#'+buttom.modal">
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
-                    </button>
+                    </button>&nbsp;
+                    <tooltip code="CODE_46"></tooltip>
                 </div>
 
             </div>
@@ -51,7 +52,7 @@
                                 </div>
                             </td>
                             <th class="noprint" *ngIf="getViewOptionsActions().length > 0">
-                                Acciones
+                                Acciones&nbsp;<tooltip code="CODE_47"></tooltip>
                             </th>
                         </tr>
                         </thead>
