@@ -9,7 +9,7 @@ import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
 import moment from "moment/moment";
-import {NgSwitch, NgSwitchWhen} from "@angular/common";
+import {NgSwitch, NgSwitchWhen, Control, Validators} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
@@ -30,6 +30,7 @@ export class Operacion extends ControllerBase implements OnInit {
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
+    public commentDelete:Control;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/',router, http, toastr, myglobal, translate);
@@ -40,7 +41,8 @@ export class Operacion extends ControllerBase implements OnInit {
         this.initViewOptions();
 
         this.MONEY_METRIC_SHORT = this.myglobal.getParams('MONEY_METRIC_SHORT');
-        this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF')
+        this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF');
+        this.commentDelete = new Control(null,Validators.required);
 
         if (this.model.permissions['list']) {
 
@@ -48,14 +50,36 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view10'))
-                this.view = JSON.parse(localStorage.getItem('view10'));
+            if (localStorage.getItem('view11'))
+                this.view = JSON.parse(localStorage.getItem('view11'));
             this.ordenView();
             this.loadData();
         }
     }
     initModel() {
         this.model= new MOperacion(this.myglobal);
+
+    }
+    onPatchDelete(event = null, id) {
+        if (event)
+            event.preventDefault();
+
+        let body={};
+        let that= this;
+        body['comment']=this.commentDelete.value+'-----------------'+(this.dataSelect.comment || '');
+
+        let successCallback= response => {
+            Object.assign(that.dataSelect, response.json());
+            this.httputils.onDelete(this.endpoint + id, id, this.dataList.list, this.error);
+        }
+        this.httputils.doPut(this.endpoint+id,JSON.stringify(body),successCallback,this.error);
+    }
+    loadViewDelete(event){
+        if(event)
+            event.preventDefault();
+        this.viewDelete=!this.viewDelete;
+        this.loadData();
+
     }
 
 
@@ -168,6 +192,9 @@ export class Operacion extends ControllerBase implements OnInit {
     onKey(event:any) {
         this.codeReference = event.target.value;
     }
+    onKeyComment(event:any) {
+        this.commentDelete.updateValue(event.target.value);
+    }
     
 
     public view = [
@@ -189,6 +216,7 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'choferName'},
         {'visible': true, 'position': 15, 'title': 'Contenedor', 'key': 'containerCode'},
         {'visible': true, 'position': 16, 'title': 'Comentario', 'key': 'comment'},
+        {'visible': true, 'position': 17, 'title': 'Habilitado', 'key': 'enabled'},
 
     ];
 
@@ -235,7 +263,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view10', JSON.stringify(this.view))
+        localStorage.setItem('view11', JSON.stringify(this.view))
     }
 
     setVisibleView(data) {
@@ -245,7 +273,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view10', JSON.stringify(this.view))
+        localStorage.setItem('view11', JSON.stringify(this.view))
     }
 
     edit(data){
