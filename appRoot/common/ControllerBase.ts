@@ -166,4 +166,24 @@ export abstract class ControllerBase extends RestController {
         popupWin.document.head.innerHTML = (document.head.innerHTML);
         popupWin.document.close();
     }
+
+    getBooleandData(key,data){
+        let field = {'class':'btn btn-orange','text':'n/a','disabled':true};
+
+        if( (!eval(this.model.rules[key].disabled || 'false')))
+        {
+            let index = this.model.rules[key].source.findIndex(obj => (obj.value == data[key] || obj.id == data[key]));
+            if(index > -1)
+            {
+                this.model.rules[key].source[index].disabled=!this.model.rules[key].update;
+                return this.model.rules[key].source[index];
+            }
+        }
+        return field;
+
+    }
+
+    getDisabledField(key,data){
+        return (eval(this.model.rules[key].disabled || 'false'));
+    }
 }
