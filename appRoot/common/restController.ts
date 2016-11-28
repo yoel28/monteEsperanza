@@ -16,6 +16,7 @@ export class RestController implements OnInit {
     order = "";//asc o desc
     page:any = [];
     where:string = "";
+    viewDelete:boolean=false;
 
     constructor(public http:Http, public toastr?:ToastsManager) {
         this.httputils = new HttpUtils(http, toastr || null);
@@ -121,7 +122,7 @@ export class RestController implements OnInit {
             that.getLoadDataAll([], null, null, 0, 1000, null);
         else {
             this.getOffset(offset);
-            this.httputils.onLoadList(this.endpoint + "?max=" + this.max + "&offset=" + this.offset + this.where + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : ''), this.dataList, this.max, this.error).then(
+            this.httputils.onLoadList(this.endpoint + "?max=" + this.max + "&offset=" + this.offset + this.where + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : '')+(this.viewDelete?'&deleted=only':''), this.dataList, this.max, this.error).then(
                 response=> {
                     that.loadPager(that.dataList);
                 }, error=> {
