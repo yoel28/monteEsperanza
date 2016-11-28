@@ -241,13 +241,13 @@
                     ¿ {{viewOptions.actions.delete.message}} <strong>{{dataSelect[viewOptions.actions.delete.keyAction]}}</strong> ?
 
                     <textarea  [(ngModel)]="commentDelete.value" (keyup)="onKeyComment($event)" class="form-control" rows="5"
-                              placeholder="Por favor ingrese la razon por la que desea eliminar esta operación">
+                              placeholder="Por favor ingrese la razon por la que desea eliminar este registro">
                     </textarea>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;{{ 'Cancelar' | translate }}</button>
-                    <button (click)="onPatchDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
+                    <button (click)="onPatchDelete($event,dataSelect.id)" data-dismiss="modal" type="button" [disabled]="!commentDelete.valid"
                             class="btn btn-red fa fa-trash">&nbsp;{{ 'Eliminar' | translate }}
                     </button>
                 </div>
