@@ -124,7 +124,7 @@
                                     <span   *ngSwitchWhen="'weightOut'">
                                         <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
                                            <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
-                                        {{data.weightOut || data.vehicleWeight}}
+                                        {{data.weightOut}}
                                     </span>
                                     <span   *ngSwitchWhen="'enabled'">
                                         <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
