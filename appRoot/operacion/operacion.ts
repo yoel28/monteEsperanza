@@ -119,11 +119,15 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions.actions.automatic = {
             'visible': this.model.permissions.automatic,
         };
-        this.viewOptions.actions.edit = {
-            'visible': this.model.permissions.update,
-            'title':'editar',
-            'modal':this.myglobal.objectInstance['OP'].idModal,
-        };
+
+
+        if(this.model.permissions.update){
+            this.viewOptions.actions.edit = {
+                'visible': this.model.permissions.update,
+                'title':'editar',
+                'modal':this.myglobal.objectInstance['OP'].idModal,
+            };
+        }
         this.viewOptions.actions.close = {
             'visible': this.model.permissions.update && this.model.permissions.close,
             'title':'Finalizar operación',
