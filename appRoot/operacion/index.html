@@ -44,6 +44,11 @@
                     <table class="table export table-striped table-hover tarjeta">
                         <thead>
                         <tr>
+                            <td *ngIf="viewDelete">
+                                <span>
+                                    Eliminado
+                                </span>
+                            </td>
                             <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
                                 {{view.title}}
                                 <br/>
@@ -62,6 +67,12 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
+                            <td *ngIf="viewDelete">
+                                <span>
+                                    {{formatDate(data.dateUpdated,'DD/MM/YYYY, LT',false,data.id)}}
+                                    <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                </span>
+                            </td>
                             <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
                                 <span [ngSwitch]="view.key">
                                     <span  *ngSwitchWhen="'company'">
