@@ -30,7 +30,8 @@ export class Taquilla extends RestController implements OnInit{
     public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
     public MONEY_METRIC=this.myglobal.getParams('MONEY_METRIC');
     public AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF');
-    
+
+    public configId = moment().valueOf();
 
     constructor(public params:RouteParams,public router: Router,http: Http,_formBuilder: FormBuilder,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
@@ -55,14 +56,7 @@ export class Taquilla extends RestController implements OnInit{
         }
     }
 
-    @ViewChild(RecargaSave)
-    recargaSave:RecargaSave;
-    RecargarSaldo(data){
-        if(this.recargaSave){
-            this.recargaSave.setdata(data.id,data.debt+data.balance)
-        }
-
-    }
+    
     loadDataRecargas(date?){
         if(this.myglobal.existsPermission('109')) {
             this.max=5;

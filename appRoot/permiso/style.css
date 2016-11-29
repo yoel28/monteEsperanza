@@ -61,3 +61,34 @@
 .padding-error{
     padding: 5pt;
 }
+
+
+.bold {
+    font-weight: 600;
+    font-style: oblique;
+}
+tbody tr, thead tr {
+    cursor: pointer;
+}
+.block-module {
+    margin-bottom: 15px;
+    padding: 5px;
+    border: 2px solid rgb(232, 231, 231);
+}
+.btn.redondo {
+    -webkit-border-radius: 30px!important;
+    -moz-border-radius: 30px!important;
+    border-radius: 30px!important;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+.block-float{
+    position: fixed;
+    z-index: 2000;
+    bottom: 6%;
+    right: 1.5%;
+}
+.border-head{
+    background-color: rgba(20, 31, 11, 0.53);
+    color: white;
+}

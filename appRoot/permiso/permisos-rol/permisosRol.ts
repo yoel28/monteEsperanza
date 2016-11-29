@@ -3,17 +3,15 @@ import { Router }           from '@angular/router-deprecated';
 import { Http } from '@angular/http';
 import {RestController} from "../../common/restController";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {SELECT_DIRECTIVES} from "ng2-select/ng2-select";
 import {globalService} from "../../common/globalService";
 import {SMDropdown} from "../../common/xeditable";
-import {Save} from "../../utils/save/save";
 
 declare var SystemJS:any;
 @Component({
     selector: 'permission-role',
     templateUrl: SystemJS.map.app+'/permiso/permisos-rol/index.html',
     styleUrls: [SystemJS.map.app+'/permiso/style.css'],
-    directives: [SELECT_DIRECTIVES,Save,SMDropdown]
+    directives: [SMDropdown]
 })
 export class PermisosRol extends RestController implements OnInit{
 
@@ -31,8 +29,7 @@ export class PermisosRol extends RestController implements OnInit{
         event.preventDefault();
         this.modalIn=false;
         this.loadPermissions();
-        if(this.myglobal.existsPermission('48'))
-            this.loadRoles();
+        this.loadRoles();
     }
     onDashboard(event){
         event.preventDefault();
@@ -40,12 +37,30 @@ export class PermisosRol extends RestController implements OnInit{
         this.router.navigate(link);
     }
 
+    public dataPermissionsAll:any={};
+    loadPermissions(){
+        let that=this;
+        let successCallback= response => {
+            that.permissionsOrder(response.json());
+        };
+        this.httputils.doGet('/permissions?max=1000',successCallback,this.error)
+    }
+    permissionsOrder(data){
+        let that=this;
+        data.list.forEach(obj=>{
+            if(!that.dataPermissionsAll[obj.module])
+            {
+                that.dataPermissionsAll[obj.module]=[];
+            }
+            that.dataPermissionsAll[obj.module].push(obj);
+        });
+    }
 
     //Cargar Roles
     public items:any = [];
     public dataRoles:any=[];
     loadRoles(){
-        if(this.myglobal.existsPermission('48')){
+        if(this.myglobal.existsPermission(['ROLE_LIST'])){
             let successCallback= response => {
                 Object.assign(this.dataRoles, response.json());
                 this.items=[];
@@ -56,7 +71,6 @@ export class PermisosRol extends RestController implements OnInit{
             this.httputils.doGet('/roles/',successCallback,this.error)
         }
     }
-
     //Cargar Rol Seleccionado
     public role:any=[];
     public setRole(value){
@@ -69,16 +83,7 @@ export class PermisosRol extends RestController implements OnInit{
             }
         }
     }
-    //Cargar toda la Lista de permisos
-    public dataPermissionsAll:any=[];
-    loadPermissions(){
-        let successCallback= response => {
-            Object.assign(this.dataPermissionsAll, response.json());
-            this.findModules();
-        };
-        this.httputils.doGet('/permissions?sort=module&order=asc&max=1000',successCallback,this.error)
-    }
-    //Verificar Existencia del permiso
+
     public existsPermission(id){
         let index = this.role.permissions.findIndex(obj => obj.id == id);
         if(index > -1)
@@ -86,28 +91,24 @@ export class PermisosRol extends RestController implements OnInit{
         return false;
     }
 
-    //List Modules
-    public modules:any=[];
-    public findModules(){
-        this.dataPermissionsAll.list.forEach(obj=>{
-            if(this.modules.indexOf(obj.module)<0)
-                this.modules.push(obj.module);
-        });
+    getObjectKeys(data={}){
+        return Object.keys(data);
     }
-    //asignar un nuevo rol
-    assignRol(data){
-        this.items.unshift({'id':data.id,'text':data.authority});
-        this.dataRoles.list.push({'id':data.id,'permissions':[]})
-    }
+
+
     //Actualizar Permisos
     selectPermission(selectAll){
-        this.role.permissions=[];
+        let that=this;
+        that.role.permissions=[];
         if(selectAll){
-            this.dataPermissionsAll.list.forEach(obj=>{
-                this.role.permissions.push({'id':obj.id});
+            Object.keys(this.dataPermissionsAll).forEach(module=>{
+                that.dataPermissionsAll[module].forEach(data=>{
+                    that.role.permissions.push({'id':data.id});
+                });
             });
         }
     }
+
     //asignar permisos a un rol
     assignPermission(id){
         let index = this.role.permissions.findIndex(obj => obj.id == id);
@@ -115,8 +116,32 @@ export class PermisosRol extends RestController implements OnInit{
             this.role.permissions.splice(index,1);
         else
             this.role.permissions.push({'id':id});
-
     }
+
+    existAllPermissionsModule(module):boolean{
+        let that=this;
+        let assignAll=true;
+        this.dataPermissionsAll[module].forEach(data =>{
+            let index = that.role.permissions.findIndex(obj => obj.id == data.id);
+            if(index < 0)
+                return assignAll=false;
+        });
+        return assignAll;
+    }
+    assignPermissionModule(module,assign){
+        let that=this;
+        this.dataPermissionsAll[module].forEach(data =>{
+            let index = that.role.permissions.findIndex(obj => obj.id == data.id);
+            if(index < 0 && assign)
+                this.role.permissions.push({'id':data.id});
+            else if (index > -1 && !assign)
+                this.role.permissions.splice(index,1);
+        });
+    }
+
+
+
+
     //Guardar Permisos
     savePermissions(){
         let permissions=[];
@@ -131,9 +156,6 @@ export class PermisosRol extends RestController implements OnInit{
         }
         this.httputils.doPost('/role/'+this.role.id+'/permissions/',body,successCallback,this.error)
     }
-    //Cargar mis permisos
-    loadMyPermissions(){
-        this.myglobal.loadMyPermissions();
-    }
+
 
 }

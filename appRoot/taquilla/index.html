@@ -215,8 +215,8 @@
                                 <tr>
                                     <td><strong>Deuda: </strong></td>
                                     <td>{{dataCompany.debt | number:'.0-2'}}
-                                    <span class="btn" *ngIf="dataCompany.debt<0" (click)="RecargarSaldo(dataCompany)"
-                                          data-toggle="modal" data-target="#saveRecarga">
+                                    <span class="btn" *ngIf="dataCompany.debt<0" [attr.data-target]="'#'+configId+'_SAVE_RECHARGE'"
+                                          data-toggle="modal">
                                         &nbsp;<i class="fa fa-money text-green fa-lg"></i>
                                         Pagar deuda&nbsp;<tooltip code="CODE_35"></tooltip>
                                     </span>
@@ -233,7 +233,7 @@
                                 <button (click)="exportCSV()" type="button" class="btn btn-default">
                                     <i class="fa fa-download"></i>&nbsp;Exportar a CSV
                                 </button>
-                                <button type="button" class="btn  btn-success" data-toggle="modal" data-target="#saveRecarga"
+                                <button type="button" class="btn  btn-success" data-toggle="modal" [attr.data-target]="'#'+configId+'_SAVE_RECHARGE'"
                                         *ngIf="myglobal.existsPermission('111')">
                                     <i class="fa  fa-money fa-lg"></i> Recargar Saldo
                                 </button>
@@ -243,8 +243,8 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="myglobal.existsPermission('111')">
-                <recarga-save  idModal="saveRecarga" [idCompany]="dataCompany.id" (save)="assignRecarga($event)"> </recarga-save>
+            <div *ngIf="myglobal.existsPermission('111') && dataCompany.id">
+                <recarga-save  [idModal]="configId+'_SAVE_RECHARGE'" [idCompany]="dataCompany.id" [money]="dataCompany.debt<0?dataCompany.debt*-1:0" (save)="assignRecarga($event)"> </recarga-save>
             </div>
         </div>
     </section>

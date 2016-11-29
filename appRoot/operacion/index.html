@@ -26,6 +26,10 @@
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
                     </button>&nbsp;
+
+                    <button *ngIf="model.permissions.viewDelete" class="btn btn-red" [class.btn-outlined]="!viewDelete" type="button" [attr.title]="viewDelete?'Ocultar eliminados':'Ver eliminados'" (click)="loadViewDelete($event)">
+                        <i class=" fa fa-trash fa-lg"></i>
+                    </button>
                     <tooltip code="CODE_46"></tooltip>
                 </div>
 
@@ -40,6 +44,11 @@
                     <table class="table export table-striped table-hover tarjeta">
                         <thead>
                         <tr>
+                            <td *ngIf="viewDelete">
+                                <span>
+                                    Eliminado
+                                </span>
+                            </td>
                             <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
                                 {{view.title}}
                                 <br/>
@@ -51,13 +60,19 @@
                                     <span (click)="setOrden(view,'desc')" class="fa fa-caret-right btn"></span>
                                 </div>
                             </td>
-                            <th class="noprint" *ngIf="getViewOptionsActions().length > 0">
+                            <th class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete">
                                 Acciones&nbsp;<tooltip code="CODE_47"></tooltip>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let data of dataList.list">
+                            <td *ngIf="viewDelete">
+                                <span>
+                                    {{formatDate(data.dateUpdated,'DD/MM/YYYY, LT',false,data.id)}}
+                                    <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                </span>
+                            </td>
                             <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
                                 <span [ngSwitch]="view.key">
                                     <span  *ngSwitchWhen="'company'">
@@ -122,10 +137,17 @@
                                            <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
                                         {{data.weightOut}}
                                     </span>
+                                    <span   *ngSwitchWhen="'enabled'">
+                                        <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
+                                            {{getBooleandData('enabled',data).text}}
+                                        </button>
+                                    </span>
+
+
                                 </span>
                             </td>
 
-                            <td class="noprint" *ngIf="getViewOptionsActions().length > 0" style="vertical-align: middle">
+                            <td class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete" style="vertical-align: middle">
 
                                 <div class="btn-group">
                                     <label *ngFor="let action of getViewOptionsActions()" >
@@ -145,7 +167,7 @@
                                             <span  class="fa fa-lg btn fa-lock"></span>
                                         </a>
 
-                                        <a *ngIf="action == 'automatic' && !data.rechargePaid && data.rechargeQuantity != 0"
+                                        <a *ngIf="action == 'automatic' && data.rechargeId && !data.rechargePaid && data.rechargeQuantity != 0"
                                            data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
                                            (click)="dataSelect = data;dataSelect.option=1" title="Recarga automatica">
                                             <span class="fa fa-money fa-lg btn"></span>
@@ -228,10 +250,15 @@
                 </div>
                 <div class="modal-body">
                     ¿ {{viewOptions.actions.delete.message}} <strong>{{dataSelect[viewOptions.actions.delete.keyAction]}}</strong> ?
+
+                    <textarea  [(ngModel)]="commentDelete.value" (keyup)="onKeyComment($event)" class="form-control" rows="5"
+                              placeholder="Por favor ingrese la razon por la que desea eliminar este registro">
+                    </textarea>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;{{ 'Cancelar' | translate }}</button>
-                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
+                    <button (click)="onPatchDelete($event,dataSelect.id)" data-dismiss="modal" type="button" [disabled]="!commentDelete.valid"
                             class="btn btn-red fa fa-trash">&nbsp;{{ 'Eliminar' | translate }}
                     </button>
                 </div>

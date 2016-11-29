@@ -328,7 +328,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.data['weightIn'].updateValue(data.weightIn);
         this.model.rulesSave['weightIn'].readOnly=false;
 
-        this.data['weightOut'].updateValue(data.weightOut || this.weightOut);
+        this.data['weightOut'].updateValue(data.weightOut || this.weightOut || data.vehicleWeight);
         this.model.rulesSave['weightOut'].required=true;
         this.model.rulesSave['weightOut'].readOnly=false;
         this.model.rulesSave['weightOut'].hidden=false;
