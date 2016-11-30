@@ -50,8 +50,8 @@ export class MOperacion extends ModelBase{
             'search':this.permissions.filter,
             'key': 'r.reference',
             'icon':'fa fa-list',
-            'title': 'Referencia',
-            'placeholder': 'Referencia',
+            'title': 'Recibo',
+            'placeholder': 'Recibo',
         };
 
 
