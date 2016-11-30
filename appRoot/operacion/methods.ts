@@ -225,6 +225,12 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName,'default':true};
             }
 
+            if(!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)){
+                this.searchId['company']={};
+                this.data['company'].updateValue(data.companyRuc);
+                this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'default':true};
+            }
+
         }
 
         if(this.search.key == 'container'){
