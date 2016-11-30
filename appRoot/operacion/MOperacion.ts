@@ -50,8 +50,8 @@ export class MOperacion extends ModelBase{
             'search':this.permissions.filter,
             'key': 'r.reference',
             'icon':'fa fa-list',
-            'title': 'Referencia',
-            'placeholder': 'Referencia',
+            'title': 'Recibo',
+            'placeholder': 'Recibo',
         };
 
 
@@ -156,7 +156,7 @@ export class MOperacion extends ModelBase{
         delete this.rulesSave.enabled;
         delete this.rulesSave.detail;
         delete this.rulesSave.id;
-        delete this.rulesSave.reference;
+        delete this.rulesSave.recharge;
     }
 
 }
