@@ -30,7 +30,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     public pendingId=0;//Identificador cuando se lanza desde un pendiente
     public baseWeight=1;
-    
+    public noInWithoutOut=false;
+
     form:ControlGroup;
     data:any = [];
     keys:any = {};
@@ -43,6 +44,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     ngOnInit(){
         this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
+        this.noInWithoutOut = (this.myglobal.getParams('NO_IN_WITHOUT_OUT')=='true')?true:false;
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         this.initModel();
         this.initForm();
@@ -393,6 +395,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
             that.readOperations=true;
             if(that.dataList && that.dataList.salida && that.dataList.salida.operations && that.dataList.salida.operations.length == 0)
                 that.loadOperationIn(that.dataList.entrada);
+            if(that.dataList && that.dataList.salida && that.dataList.salida.operations && that.dataList.salida.operations.length == 1 && this.noInWithoutOut)
+                that.loadOperationOut(that.dataList.salida.operations[0]);
+
         };
         this.httputils.doGet('/read',successCallback,this.error);
     }
