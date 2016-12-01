@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, Injectable} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {RestController} from "../common/restController";
@@ -179,12 +179,15 @@ export class Operacion extends ControllerBase implements OnInit {
         this.router.navigate(link);
     }
 
-    public codeReference="";
+    public codeReference:Control = new Control(null,Validators.required);
+    onKey(event:any) {
+        this.codeReference.updateValue(event.target.value);
+    }
     onRechargeAutomatic(event, data) {
         let that = this;
         event.preventDefault();
         let json={};
-        json['reference']=this.codeReference.length>0? this.codeReference: (this.AUTOMATIC_RECHARGE_PREF+data.rechargeReference);
+        json['reference']=this.codeReference.value;
         let successCallback = response => {
             Object.assign(data, response.json());
             if (that.toastr)
@@ -193,9 +196,7 @@ export class Operacion extends ControllerBase implements OnInit {
         }
         this.httputils.doPost('/pay/' + data.id,JSON.stringify(json),successCallback, this.error);
     }
-    onKey(event:any) {
-        this.codeReference = event.target.value;
-    }
+
     onKeyComment(event:any) {
         this.commentDelete.updateValue(event.target.value);
     }
