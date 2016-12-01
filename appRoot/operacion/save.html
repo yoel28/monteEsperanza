@@ -28,10 +28,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngIf="!noInWithoutOut">
                                 <th class="text-center texto-head" colspan="6">Generar una nueva entrada</th>
                             </tr>
-                            <tr (click)="loadOperationIn(dataList.entrada)" title="crear entrada" class="cursor-pointer">
+                            <tr (click)="loadOperationIn(dataList.entrada)" title="crear entrada" class="cursor-pointer" *ngIf="!noInWithoutOut">
                                 <td>{{dataList.entrada.companyName}}</td>
                                 <td>{{dataList.entrada.companyRUC}}&nbsp;/&nbsp;{{dataList.entrada.companyCode}}</td>
                                 <td><span *ngIf="dataList.entrada.trashTypeId">{{dataList.entrada.trashTypeTitle}}&nbsp;({{dataList.entrada.trashTypeReference}})</span></td>
