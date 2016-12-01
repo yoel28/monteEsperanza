@@ -1,5 +1,5 @@
 <div class="modal fade" [attr.id]="idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" [class.modal-lg]="search.object" >
+    <div class="modal-dialog" [class.modal-lg]="search.object || readOperations" >
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -7,37 +7,64 @@
                 <h4 class="modal-title" id="myModalLabel">Uso de vertedero</h4>
             </div>
             <div class="modal-body">
-                <div *ngIf="listOperations">
-                    <table *ngIf="dataList && dataList.operations" class="table table-hover">
+                <div *ngIf="readOperations">
+                    <table *ngIf="dataList && dataList.salida && dataList.salida.operations.length>0" class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center texto-head" colspan="5"><strong>Seleccione una salida</strong></th>
+                                <th class="text-center texto-head" colspan="3">
+                                    <strong>Veh&iacute;culo:</strong>&nbsp;{{dataList.entrada.vehiclePlate}}
+                                </th>
+                                <th class="text-center texto-head" colspan="3">
+                                    <strong>Peso en balanza:</strong>&nbsp;{{dataList.salida.weightOut}}
+                                </th>
                             </tr>
                             <tr>
-                                <th>Veh&iacute;culo</th>
                                 <th>Cliente</th>
-                                <th>Ruta</th>
+                                <th>RUC / CODIGO</th>
                                 <th>Tipo de basura</th>
+                                <th>Contenedor</th>
+                                <th>Ruta</th>
                                 <th>Peso de entrada</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let op of dataList.operations" (click)="getOperacion(op)">
-                            <td>{{op.vehiclePlate}}</td>
-                            <td>{{op.companyName}}({{op.companyRuc}})</td>
-                            <td>{{op.routeTitle}}({{op.routeReference}})</td>
-                            <td>{{op.trashTypeTitle}}({{op.trashTypeReference}})</td>
-                            <td>{{op.weightIn}}&nbsp;{{op.metric}}</td>
-                        </tr>
+                            <tr>
+                                <th class="text-center texto-head" colspan="6">Generar una nueva entrada</th>
+                            </tr>
+                            <tr (click)="loadOperationIn(dataList.entrada)" title="crear entrada" class="cursor-pointer">
+                                <td>{{dataList.entrada.companyName}}</td>
+                                <td>{{dataList.entrada.companyRUC}}&nbsp;/&nbsp;{{dataList.entrada.companyCode}}</td>
+                                <td><span *ngIf="dataList.entrada.trashTypeId">{{dataList.entrada.trashTypeTitle}}&nbsp;({{dataList.entrada.trashTypeReference}})</span></td>
+                                <td><span *ngIf="dataList.entrada.containerId">{{dataList.entrada.containerTitle}}&nbsp;({{dataList.entrada.containerCode}})</span></td>
+                                <td></td>
+                                <td>{{dataList.entrada.weightIn}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center texto-head" colspan="6">Salidas pendientes</th>
+                            </tr>
+                            <tr *ngFor="let op of dataList.salida.operations" (click)="loadOperationOut(op)" title="Seleccionar salida" class="cursor-pointer">
+                                <td>{{op.companyName}}</td>
+                                <td>{{op.companyRUC}}&nbsp;/&nbsp;{{op.companyCode}}</td>
+                                <td>
+                                    <span *ngIf="op.trashTypeId">{{op.trashTypeTitle}}&nbsp;({{op.trashTypeReference}})</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="op.containerId">{{op.containerTitle}}&nbsp;({{op.containerCode}})</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="op.routeId">{{op.routeTitle}}&nbsp;({{op.routeReference}})</span>
+                                </td>
+                                <td>{{op.weightIn}} {{op.metric}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="(!dataList || !dataList.operations) && listOperations">
+                <div *ngIf="(!dataList || !dataList.entrada) && readOperations">
                     <div class="col-lg-12 text-foot">
-                        No existe ningun registro pendiente
+                        {{dataList.error || 'No existe ningun registro pendiente'}}
                     </div>
                 </div>
-                <div class="row" *ngIf="!listOperations">
+                <div class="row" *ngIf="!readOperations">
                     <div class="col-lg-12">
                         <form role="form" [ngFormModel]="form"  [class.col-lg-5]="search.object">
                             <div *ngFor="let key of keys">
@@ -168,23 +195,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-
-                <button *ngIf="idOperacion==-1 && listOperations" (click)="loadInAnt($event)" type="button" class="btn btn-blue">
+                <button *ngIf="readOperations" (click)="loadReadOperations($event)" type="button" class="btn btn-blue">
                     <i class="fa fa-refresh"></i>
-                    Buscar entradas
-                </button>
-                <button *ngIf="idOperacion==-2 && listOperations" (click)="loadOutAnt($event)" type="button" class="btn btn-blue">
-                    <i class="fa fa-refresh"></i>
-                    Buscar salidas
+                    Buscar antenas
                 </button>
 
-
-                <button *ngIf="idOperacion<0 && !listOperations" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                <button *ngIf="idOperacion<0 && !readOperations" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
                     Agregar entrada
                 </button>
-                <button *ngIf="idOperacion>=0 && !listOperations" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
+                <button *ngIf="idOperacion>=0 && !readOperations" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
                     Agregar salida
