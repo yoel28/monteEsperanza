@@ -230,7 +230,18 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.data['company'].updateValue(data.companyRuc);
                 this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'default':true};
             }
-
+            if(!this.searchId['trashType'] || (this.searchId['trashType'] && this.searchId['trashType'].default)){
+                this.searchId['trashType']={};
+                this.data['trashType'].updateValue(data.trashTypeReference);
+                this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference,'default':true};
+            }
+        }
+        if(this.search.key == 'company'){
+            if(!this.searchId['trashType'] || (this.searchId['trashType'] && this.searchId['trashType'].default)){
+                this.searchId['trashType']={};
+                this.data['trashType'].updateValue(data.trashTypeReference);
+                this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference,'default':true};
+            }
         }
 
         if(this.search.key == 'container'){
