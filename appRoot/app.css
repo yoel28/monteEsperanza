@@ -123,3 +123,16 @@
 .menu-modal i{
     font-size: 50pt;
 }
+.block-float2{
+    position: fixed;
+    z-index: 2000;
+    bottom: 6%;
+    right: 1.5%;
+}
+.btn.redondo {
+    -webkit-border-radius: 30px!important;
+    -moz-border-radius: 30px!important;
+    border-radius: 30px!important;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
