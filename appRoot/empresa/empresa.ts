@@ -16,6 +16,7 @@ import {Save} from "../utils/save/save";
 import {ControllerBase} from "../common/ControllerBase";
 import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
 import {Tooltip} from "../utils/tooltips/tooltips";
+import {MTrashType} from "../tipoBasura/MTrashType";
 declare var SystemJS:any;
 
 @Component({
@@ -30,6 +31,7 @@ export class Empresa extends ControllerBase implements OnInit {
 
     public paramsTable:any={};
     public companyType:any={};
+    public trashType:any={};
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('COMPANY', '/companies/',router, http, toastr, myglobal, translate);
@@ -44,6 +46,7 @@ export class Empresa extends ControllerBase implements OnInit {
         this.model= new MCompany(this.myglobal);
         
         this.companyType = new MCompanyType(this.myglobal);
+        this.trashType = new MTrashType(this.myglobal);
     }
     initViewOptions() {
         this.viewOptions["title"] = 'Cliente';
