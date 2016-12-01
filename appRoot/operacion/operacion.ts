@@ -89,7 +89,7 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions["actions"] = {};
 
         this.viewOptions["buttons"].push({
-            'visible': this.model.permissions.add,
+            'visible': this.model.permissions.add && !this.model.permissions.hiddenAdd,
             'title': 'Agregar',
             'class': 'btn btn-green',
             'icon': 'fa fa-save',
@@ -283,7 +283,6 @@ export class Operacion extends ControllerBase implements OnInit {
 
     edit(data){
         if (this.myglobal.objectInstance['OP']) {
-            //this.dataSelect = ;
             this.myglobal.objectInstance['OP'].loadEdit(data);
         }
     }
