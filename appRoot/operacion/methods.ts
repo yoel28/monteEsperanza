@@ -216,36 +216,36 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         this.data[this.search.key].updateValue(data.detail);
 
-        if(this.search.key == 'vehicle'){
-            if(!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)){
+        if(this.search.key == 'vehicle' || this.search.key == 'company' || this.search.key == 'container'){
+
+            if((!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)) && data.choferId){
                 this.searchId['chofer']={};
                 this.data['chofer'].updateValue(data.choferName);
                 this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName,'default':true};
             }
 
-            if(!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)){
+            if((!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)) && data.companyId){
                 this.searchId['company']={};
                 this.data['company'].updateValue(data.companyRuc);
                 this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'default':true};
             }
-            if(!this.searchId['trashType'] || (this.searchId['trashType'] && this.searchId['trashType'].default)){
+
+            if((!this.searchId['trashType'] || (this.searchId['trashType'] && this.searchId['trashType'].default)) && data.trashTypeId){
                 this.searchId['trashType']={};
                 this.data['trashType'].updateValue(data.trashTypeReference);
                 this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference,'default':true};
             }
-        }
-        if(this.search.key == 'company'){
-            if(!this.searchId['trashType'] || (this.searchId['trashType'] && this.searchId['trashType'].default)){
-                this.searchId['trashType']={};
-                this.data['trashType'].updateValue(data.trashTypeReference);
-                this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference,'default':true};
+
+            if((!this.searchId['route'] || (this.searchId['route'] && this.searchId['route'].default)) && data.routeId){
+                this.searchId['route']={};
+                this.data['route'].updateValue(data.routeReference);
+                this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference,'default':true};
             }
-        }
-        if(this.search.key == 'container'){
-            if(!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)){
-                this.searchId['company']={};
-                this.data['company'].updateValue(data.companyRuc);
-                this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'default':true};
+
+            if((!this.searchId['container'] || (this.searchId['container'] && this.searchId['container'].default)) && data.containerId){
+                this.searchId['container']={};
+                this.data['container'].updateValue(data.containerCode);
+                this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
             }
         }
 
@@ -289,6 +289,16 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(data.trashTypeId){
                 this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
                 this.data['trashType'].updateValue(data.trashTypeReference);
+            }
+
+            if(data.routeId){
+                this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
+                this.data['route'].updateValue(data.routeReference);
+            }
+
+            if(data.containerId){
+                this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
+                this.data['container'].updateValue(data.containerCode);
             }
 
             if(data.weightOut){
