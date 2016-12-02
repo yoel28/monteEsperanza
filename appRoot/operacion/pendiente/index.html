@@ -13,6 +13,12 @@
                     <i class="fa fa-list-alt fa-lg text-blue"></i>
                 </button>
 
+                <span *ngIf="url">
+                    <a [attr.href]="url+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>
+                    <a [attr.href]="url+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>
+                </span>
+
+
                 <div class="pull-right" *ngIf="viewOptions['buttons'].length > 0">
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
