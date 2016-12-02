@@ -183,15 +183,18 @@ export class Operacion extends ControllerBase implements OnInit {
     onKey(event:any) {
         this.codeReference.updateValue(event.target.value);
     }
-    onRechargeAutomatic(event, data) {
+    onRechargeAutomatic(event, data,print=false) {
         let that = this;
         event.preventDefault();
         let json={};
         json['reference']=this.codeReference.value;
         let successCallback = response => {
             Object.assign(data, response.json());
+            that.codeReference.updateValue(null);
             if (that.toastr)
                 that.toastr.success('Pago cargado con éxito', 'Notificación');
+            if(print)
+                that.onPrint(data);
 
         }
         this.httputils.doPost('/pay/' + data.id,JSON.stringify(json),successCallback, this.error);
