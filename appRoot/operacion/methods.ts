@@ -286,6 +286,11 @@ export class OperacionSave extends ControllerBase implements OnInit{
             this.data['weightIn'].updateValue(data.weightIn);
             this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
+            if(data.trashTypeId){
+                this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
+                this.data['trashType'].updateValue(data.trashTypeReference);
+            }
+
             if(data.weightOut){
                 this.data['weightOut'].updateValue(data.weightOut);
                 this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
