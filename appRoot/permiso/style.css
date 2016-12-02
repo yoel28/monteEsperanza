@@ -85,7 +85,7 @@ tbody tr, thead tr {
 .block-float{
     position: fixed;
     z-index: 2000;
-    bottom: 6%;
+    bottom: 15%;
     right: 1.5%;
 }
 .border-head{

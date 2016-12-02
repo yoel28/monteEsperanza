@@ -179,6 +179,36 @@
 
                                                         </label>
                                                     </p>
+                                                    <p><strong>Tipo de basura:</strong>
+                                                        {{data.trashTypeId?(data.trashTypeTitle+' ('+data.trashTypeReference+')'):"N/A"}}
+                                                        <label>
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && trashType.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+trashType.paramsSave.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar un nuevo tipo de basura"
+                                                            >
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && trashType.permissions.search"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+trashType.paramsSearch.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar un tipo de basura"
+                                                            >
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
+                                                            <button (click)="setNull(data,'trashType')"
+                                                                    *ngIf="model.permissions.update && !model.rules['trashType'].required && data.trashTypeId"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Eliminar tipo de basura"
+                                                            >
+                                                                <i class="text-red fa fa-minus"></i>
+                                                            </button>
+
+
+                                                        </label>
+                                                    </p>
                                                     <p>
                                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                                                 [class.btn-green]="data.enabled"
@@ -427,6 +457,13 @@
     </div>
     <div *ngIf="companyType.permissions.search">
         <search [params]="companyType.paramsSearch" (result)="onPatchId($event,'companyType',dataSelect)"></search>
+    </div>
+
+    <div *ngIf="trashType.permissions.add">
+        <save [params]="trashType.paramsSave" [rules]="trashType.rulesSave" (save)="onPatchId($event,'trashType',dataSelect)"> </save>
+    </div>
+    <div *ngIf="trashType.permissions.search">
+        <search [params]="trashType.paramsSearch" (result)="onPatchId($event,'trashType',dataSelect)"></search>
     </div>
 </div>
 

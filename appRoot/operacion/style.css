@@ -49,8 +49,9 @@
     margin-top: 30px;
 }
 .texto-head{
-    color: black;
+    color: white;
     font-weight: 600;
+    background-color: #7b7b7b;
 }
 .text-foot{
     color: red;
@@ -59,4 +60,7 @@
 .text-search{
     margin-left: 5pt;
     color: blue;
+}
+.cursor-pointer{
+    cursor: pointer;
 }

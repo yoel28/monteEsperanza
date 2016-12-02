@@ -39,7 +39,7 @@
                 <div>
                     <div class="pull-right noprint">
                         <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
-                        <i (click)="export('xls')" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
+                        <i (click)="export('xls')" class="btn fa fa-file-excel-o text-green fa-lg" title="Exportar"></i>
                     </div>
                     <table class="table export table-striped table-hover tarjeta">
                         <thead>
@@ -292,7 +292,7 @@
                         ¿ Estás seguro que deseas realizar un pago automatico al cliente
                         <strong>{{dataSelect.companyName}}&nbsp;({{dataSelect.companyRUC}})</strong> por
                         {{(dataSelect.rechargeQuantity)*-1}} {{MONEY_METRIC_SHORT}}?<br/>
-                        <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Recibo {{AUTOMATIC_RECHARGE_PREF}} {{dataSelect.rechargeReference}}" >
+                        <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Ingresar el numero de recibo de caja" >
 
                         <span class="text-red">Esta operación no podrá ser modificada ni eliminada, luego de hacer click en {{dataSelect.option==1?'Pagar':'Pagar e imprimir'}}.</span>
                     </span>
@@ -307,11 +307,11 @@
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
 
                     <button *ngIf="dataSelect.option==1" (click)="onRechargeAutomatic($event,dataSelect)" data-dismiss="modal" type="button"
-                            class="btn btn-green fa fa-print">&nbsp;Pagar
+                            class="btn btn-green fa fa-print" [disabled]="!codeReference.valid">&nbsp;Pagar
                     </button>
 
-                    <button *ngIf="dataSelect.option==2" (click)="onRechargeAutomatic($event,dataSelect);onPrint(dataSelect)" data-dismiss="modal" type="button"
-                            class="btn btn-green fa fa-print">&nbsp;Pagar e imprimir
+                    <button *ngIf="dataSelect.option==2" (click)="onRechargeAutomatic($event,dataSelect,true);" data-dismiss="modal" type="button"
+                            class="btn btn-green fa fa-print" [disabled]="!codeReference.valid">&nbsp;Pagar e imprimir
                     </button>
 
                     <button *ngIf="dataSelect.option==3" (click)="onPatch('enabled',dataSelect);onPrint(dataSelect)" data-dismiss="modal" type="button"

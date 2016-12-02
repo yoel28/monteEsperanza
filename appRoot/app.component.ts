@@ -265,19 +265,15 @@ export class AppComponent extends RestController implements OnInit {
 
     }
 
-    inAnt(event, myglobal) {
-        event.preventDefault();
-        if (myglobal.objectInstance['OP']) {
-            myglobal.objectInstance['OP'].loadInAnt();
-        }
-    }
-
     outAnt(event, myglobal, data?) {
         if(this.activeMenu)
             this.activeMenu(null,null);
         event.preventDefault();
         if (myglobal.objectInstance['OP']) {
-            myglobal.objectInstance['OP'].loadOutAnt(null, data);
+            if(data)
+                myglobal.objectInstance['OP'].loadOperationOut(data);
+            else
+                myglobal.objectInstance['OP'].loadReadOperations();
         }
     }
 
@@ -368,17 +364,9 @@ export class AppComponent extends RestController implements OnInit {
                         'routerLink': 'Servicio'
                     },
                     {
-                        'visible': this.myglobal.existsPermission("MEN_SEMI_ES"),
-                        'icon': 'fa fa-sign-in',
-                        'title': 'Entrada',
-                        'modal': true,
-                        'modalId': '#operacionManual',
-                        'function': this.inAnt
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_SEMI_SA"),
+                        'visible': this.myglobal.existsPermission("MEN_SEMI"),
                         'icon': 'fa fa-sign-out',
-                        'title': 'Salida',
+                        'title': 'OP. Semiauto',
                         'modal': true,
                         'modalId': '#operacionManual',
                         'function': this.outAnt

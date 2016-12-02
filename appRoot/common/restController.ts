@@ -251,7 +251,9 @@ export class RestController implements OnInit {
             this.dataList.list.pop();
     }
 
-    setNull(data, key) {
+    setNull(data, key,event?) {
+        if(event)
+            event.preventDefault();
         let json = {};
         json[key] = null;
         let body = JSON.stringify(json);

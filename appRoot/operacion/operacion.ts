@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, Injectable} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {RestController} from "../common/restController";
@@ -89,7 +89,7 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions["actions"] = {};
 
         this.viewOptions["buttons"].push({
-            'visible': this.model.permissions.add,
+            'visible': this.model.permissions.add && !this.model.permissions.hiddenAdd,
             'title': 'Agregar',
             'class': 'btn btn-green',
             'icon': 'fa fa-save',
@@ -179,23 +179,27 @@ export class Operacion extends ControllerBase implements OnInit {
         this.router.navigate(link);
     }
 
-    public codeReference="";
-    onRechargeAutomatic(event, data) {
+    public codeReference:Control = new Control(null,Validators.required);
+    onKey(event:any) {
+        this.codeReference.updateValue(event.target.value);
+    }
+    onRechargeAutomatic(event, data,print=false) {
         let that = this;
         event.preventDefault();
         let json={};
-        json['reference']=this.codeReference.length>0? this.codeReference: (this.AUTOMATIC_RECHARGE_PREF+data.rechargeReference);
+        json['reference']=this.codeReference.value;
         let successCallback = response => {
             Object.assign(data, response.json());
+            that.codeReference.updateValue(null);
             if (that.toastr)
                 that.toastr.success('Pago cargado con éxito', 'Notificación');
+            if(print)
+                that.onPrint(data);
 
         }
         this.httputils.doPost('/pay/' + data.id,JSON.stringify(json),successCallback, this.error);
     }
-    onKey(event:any) {
-        this.codeReference = event.target.value;
-    }
+
     onKeyComment(event:any) {
         this.commentDelete.updateValue(event.target.value);
     }
@@ -282,7 +286,6 @@ export class Operacion extends ControllerBase implements OnInit {
 
     edit(data){
         if (this.myglobal.objectInstance['OP']) {
-            //this.dataSelect = ;
             this.myglobal.objectInstance['OP'].loadEdit(data);
         }
     }

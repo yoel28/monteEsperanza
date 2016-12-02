@@ -16,7 +16,12 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <span class="subrayar">COMPROBANTE:</span>&nbsp;
-                    {{data.rechargeReference | uppercase}}
+                    {{data.rechargeReference | uppercase}}<br/>
+
+                    <span *ngIf="!data.rechargePaidDeleted && data.rechargePaidReference">
+                        <span class="subrayar">RECIBO DE CAJA:</span>&nbsp;
+                            {{data.rechargePaidReference | uppercase}}<br/>
+                    </span>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
