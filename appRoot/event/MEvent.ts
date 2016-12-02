@@ -85,6 +85,7 @@ export class MEvent extends ModelBase{
 
         this.rules['target']={
             'type': 'text',
+            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
@@ -105,7 +106,6 @@ export class MEvent extends ModelBase{
         };
         this.rules['title']={
             'type': 'text',
-            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
