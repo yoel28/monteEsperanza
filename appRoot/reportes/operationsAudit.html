@@ -45,13 +45,13 @@
 
                 <div class="col -lg-12" *ngIf="url && url2">
                     <div>
-                        <a [attr.href]="url+'&formatType=pdf'" target="_blank"><i class="fa fa-file-pdf-o fa-2x"></i>&nbsp;</a>
-                        <a [attr.href]="url+'&formatType=xls'" target="_blank"><i class="fa fa-file-excel-o fa-2x"></i>&nbsp;</a>
+                        <a [attr.href]="url+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>
+                        <a [attr.href]="url+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>
                         REPORTE DE AUDITORIA DE OPERACIONES<br/>
 
 
-                        <a [attr.href]="url2+'&formatType=pdf'" target="_blank"><i class="fa fa-file-pdf-o fa-2x"></i>&nbsp;</a>
-                        <a [attr.href]="url2+'&formatType=xls'" target="_blank"><i class="fa fa-file-excel-o fa-2x"></i>&nbsp;</a>
+                        <a [attr.href]="url2+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>
+                        <a [attr.href]="url2+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>
                         REPORTE DE OPERACIONES REALIZADAS
                     </div>
 

@@ -10,6 +10,7 @@ import {Filter} from "../../utils/filter/filter";
 import {MPendiente} from "./MPendiente";
 import {MOperacion} from "../MOperacion";
 declare var SystemJS:any;
+declare var moment:any;
 
 @Component({
     selector: 'operacion-pendiente',
@@ -25,6 +26,7 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
     public baseWeight=1;
     
     public operation:any;
+    public url:any;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('PEND', '/pendings/',router, http, toastr, myglobal, translate);
@@ -39,6 +41,10 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
 
         this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
         this.loadPage();
+        this.loadUrl();
+    }
+    loadUrl(){
+        this.url = localStorage.getItem('urlAPI') + this.endpoint + '?access_token=' + localStorage.getItem('bearer') + '&tz=' + (moment().format('Z')).replace(':', '') + this.where;
     }
     initModel() {
         this.model = new MPendiente(this.myglobal);
@@ -54,6 +60,7 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         this.list = data.id;
         this.where="&where="+encodeURI(data.where);
         this.loadData();
+        this.loadUrl();
     }
 
     initViewOptions() {
@@ -186,6 +193,7 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
     loadWhere2(data){
         this.list='';
         this.loadWhere(data);
+        this.loadUrl();
     }
     @ViewChild(OperacionPrint)
     operacionPrint:OperacionPrint;
