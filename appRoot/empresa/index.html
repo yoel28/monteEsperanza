@@ -209,6 +209,36 @@
 
                                                         </label>
                                                     </p>
+                                                    <p><strong>Ruta:</strong>
+                                                        {{data.routeId?(data.routeTitle+' ('+data.routeReference+')'):"N/A"}}
+                                                        <label>
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && route.permissions.add"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+route.paramsSave.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar una nueva ruta"
+                                                            >
+                                                                <i class="fa fa-plus text-green"></i>
+                                                            </button>
+                                                            <button (click)="dataSelect = data"
+                                                                    *ngIf="model.permissions.update && route.permissions.search"
+                                                                    data-toggle="modal" [attr.data-target]="'#'+route.paramsSearch.idModal"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Asignar una ruta"
+                                                            >
+                                                                <i class="fa fa-search text-blue"></i>
+                                                            </button>
+                                                            <button (click)="setNull(data,'route')"
+                                                                    *ngIf="model.permissions.update && !model.rules['route'].required && data.routeId"
+                                                                    type="button" class="btn btn-box-tool"
+                                                                    title="Eliminar ruta"
+                                                            >
+                                                                <i class="text-red fa fa-minus"></i>
+                                                            </button>
+
+
+                                                        </label>
+                                                    </p>
                                                     <p>
                                                         <button (click)="onLock('enabled',data)" class="btn btn-sm"
                                                                 [class.btn-green]="data.enabled"
@@ -464,6 +494,13 @@
     </div>
     <div *ngIf="trashType.permissions.search">
         <search [params]="trashType.paramsSearch" (result)="onPatchId($event,'trashType',dataSelect)"></search>
+    </div>
+
+    <div *ngIf="route.permissions.add">
+        <save [params]="route.paramsSave" [rules]="route.rulesSave" (save)="onPatchId($event,'route',dataSelect)"> </save>
+    </div>
+    <div *ngIf="route.permissions.search">
+        <search [params]="route.paramsSearch" (result)="onPatchId($event,'route',dataSelect)"></search>
     </div>
 </div>
 
