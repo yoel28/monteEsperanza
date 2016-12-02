@@ -106,7 +106,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 padding-top-4">
-                                                        <button *ngIf="model.rules[key].refreshField && !model.rules[key].readOnly" tabindex="-1"
+                                                        <button *ngIf="model.rules[key].refreshField " tabindex="-1"
                                                                 class="btn btn-box-tool fa {{model.rules[key].refreshField.icon}} text-blue"
                                                                 (click)="refreshField($event,model.rules[key])">
                                                         </button>
