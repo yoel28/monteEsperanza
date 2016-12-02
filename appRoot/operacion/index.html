@@ -310,7 +310,7 @@
                             class="btn btn-green fa fa-print" [disabled]="!codeReference.valid">&nbsp;Pagar
                     </button>
 
-                    <button *ngIf="dataSelect.option==2" (click)="onRechargeAutomatic($event,dataSelect);onPrint(dataSelect)" data-dismiss="modal" type="button"
+                    <button *ngIf="dataSelect.option==2" (click)="onRechargeAutomatic($event,dataSelect,true);" data-dismiss="modal" type="button"
                             class="btn btn-green fa fa-print" [disabled]="!codeReference.valid">&nbsp;Pagar e imprimir
                     </button>
 
