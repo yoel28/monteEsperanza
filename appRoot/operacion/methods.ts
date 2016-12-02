@@ -278,25 +278,18 @@ export class OperacionSave extends ControllerBase implements OnInit{
         if(data && data.vehicleId){
             this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
             this.data['vehicle'].updateValue(data.vehiclePlate);
-            this.model.rulesSave['vehicle'].readOnly=false;
+            this.model.rulesSave['vehicle'].readOnly=this.model.permissions.lockField;
 
             this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
             this.data['company'].updateValue(data.companyRUC);
 
             this.data['weightIn'].updateValue(data.weightIn);
+            this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
             if(data.weightOut){
                 this.data['weightOut'].updateValue(data.weightOut);
-
-                this.model.rulesSave['weightOut'].readOnly=true;
-                this.model.rulesSave['weightIn'].readOnly=true;
-                
+                this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
                 this.model.rulesSave['weightOut'].hidden=false;
-            }
-
-            if(this.myglobal.existsPermission('OP_EDIT_WEIGHT')){
-                this.model.rulesSave['weightIn'].readOnly=false;
-                this.model.rulesSave['weightOut'].readOnly=false;
             }
 
             this.checkBalance();
@@ -310,7 +303,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
         this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
         this.data['vehicle'].updateValue(data.vehiclePlate);
-        this.model.rulesSave['vehicle'].readOnly=false;
+        this.model.rulesSave['vehicle'].readOnly=this.model.permissions.lockField;
 
         this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
         this.data['container'].updateValue(data.containerCode);
@@ -333,11 +326,11 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.model.rulesSave['route'].readOnly=false;
 
         this.data['weightIn'].updateValue(data.weightIn);
-        this.model.rulesSave['weightIn'].readOnly=false;
+        this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
         this.data['weightOut'].updateValue(data.weightOut || data.vehicleWeight);
         this.model.rulesSave['weightOut'].required=true;
-        this.model.rulesSave['weightOut'].readOnly=false;
+        this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
         this.model.rulesSave['weightOut'].hidden=false;
 
         this.data['comment'].updateValue(data.comment);
