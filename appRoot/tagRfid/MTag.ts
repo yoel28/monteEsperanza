@@ -45,6 +45,15 @@ export class MTag extends ModelBase{
             'title': 'Número del Tag',
             'placeholder': 'Número del Tag',
         };
+        this.rules['code']={
+            'type': 'text',
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'code',
+            'title': 'Código',
+            'placeholder': 'Código de Tag',
+        };
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
         delete this.rules['detail'];
