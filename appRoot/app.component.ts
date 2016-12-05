@@ -1,4 +1,4 @@
-import {Component, provide, ViewChild, OnInit} from '@angular/core';
+import {Component, provide, ViewChild, OnInit, HostListener} from '@angular/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {contentHeaders} from './common/headers';
 import {AccountLogin}         from './account/account';
@@ -638,5 +638,8 @@ export class AppComponent extends RestController implements OnInit {
 
     replace(data:string) {
         return data.replace(/;/g, ' ');
+    }
+    @HostListener('window:offline') offline() {
+        this.toastr.error('Se a detectado un problema con el internet, Por favor conectarse a la red');
     }
 }

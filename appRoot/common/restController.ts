@@ -33,7 +33,9 @@ export class RestController implements OnInit {
         //this.sound(err.status);
         let that = this;
         if (that.toastr) {
-            if (err.json()) {
+            if(err.status == 200 && err.type==3)
+                that.toastr.error('Se a detectado un problema con el internet, Por favor conectarse a la red');
+            else if (err.json()) {
                 if (err.json().message && err.json().message.error)
                     that.toastr.error(err.json().message.error);
                 else if (err.json()._embedded && err.json()._embedded.errors) {
