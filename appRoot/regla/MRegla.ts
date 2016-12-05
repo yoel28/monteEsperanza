@@ -10,13 +10,14 @@ export class MRegla extends ModelBase{
     modelExternal() {}
     initRules(){
         this.rules['rule']={
-            'type':'text',
+            'type':'textarea',
             'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key':'rule',
             'icon': 'fa fa-key',
+            "showbuttons": true,
             'title':'Regla',
             'placeholder':'Regla',
         };
