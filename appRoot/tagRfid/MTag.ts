@@ -61,8 +61,10 @@ export class MTag extends ModelBase{
     initPermissions() {}
     initParamsSearch() {
         this.paramsSearch.title="Buscar Tag RFID";
-        this.paramsSearch.placeholder="Ingrese tag RFID";
-        this.paramsSearch.where=""
+        this.paramsSearch.placeholder="Ingrese tag RFID o Código";
+        this.paramsSearch.where="";
+        this.paramsSearch.label.detail = 'Tag: ';
+        this.paramsSearch.label.title = 'Código: ';
     }
     initParamsSave() {
         this.paramsSave.title="Agregar tag RFID"
