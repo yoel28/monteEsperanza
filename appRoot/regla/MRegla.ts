@@ -10,7 +10,7 @@ export class MRegla extends ModelBase{
     modelExternal() {}
     initRules(){
         this.rules['rule']={
-            'type':'text',
+            'type':'textarea',
             'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
