@@ -17,6 +17,7 @@ export class MRegla extends ModelBase{
             'visible':this.permissions.visible,
             'key':'rule',
             'icon': 'fa fa-key',
+            "showbuttons": true,
             'title':'Regla',
             'placeholder':'Regla',
         };
