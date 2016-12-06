@@ -1,4 +1,4 @@
-import {Component, provide, ViewChild, OnInit} from '@angular/core';
+import {Component, provide, ViewChild, OnInit, HostListener} from '@angular/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {contentHeaders} from './common/headers';
 import {AccountLogin}         from './account/account';
@@ -265,19 +265,15 @@ export class AppComponent extends RestController implements OnInit {
 
     }
 
-    inAnt(event, myglobal) {
-        event.preventDefault();
-        if (myglobal.objectInstance['OP']) {
-            myglobal.objectInstance['OP'].loadInAnt();
-        }
-    }
-
     outAnt(event, myglobal, data?) {
         if(this.activeMenu)
             this.activeMenu(null,null);
         event.preventDefault();
         if (myglobal.objectInstance['OP']) {
-            myglobal.objectInstance['OP'].loadOutAnt(null, data);
+            if(data)
+                myglobal.objectInstance['OP'].loadOperationOut(data);
+            else
+                myglobal.objectInstance['OP'].loadReadOperations();
         }
     }
 
@@ -368,17 +364,9 @@ export class AppComponent extends RestController implements OnInit {
                         'routerLink': 'Servicio'
                     },
                     {
-                        'visible': this.myglobal.existsPermission("MEN_SEMI_ES"),
-                        'icon': 'fa fa-sign-in',
-                        'title': 'Entrada',
-                        'modal': true,
-                        'modalId': '#operacionManual',
-                        'function': this.inAnt
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_SEMI_SA"),
+                        'visible': this.myglobal.existsPermission("MEN_SEMI"),
                         'icon': 'fa fa-sign-out',
-                        'title': 'Salida',
+                        'title': 'OP. Semiauto',
                         'modal': true,
                         'modalId': '#operacionManual',
                         'function': this.outAnt
@@ -650,5 +638,8 @@ export class AppComponent extends RestController implements OnInit {
 
     replace(data:string) {
         return data.replace(/;/g, ' ');
+    }
+    @HostListener('window:offline') offline() {
+        this.toastr.error('Se a detectado un problema con el internet, Por favor conectarse a la red');
     }
 }

@@ -51,7 +51,6 @@
                                  >
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
-                                 <tooltip [code]="model.prefix+'_6'"></tooltip>
                              </span>
                              <span *ngIf="model.rules[key].reference">
 
@@ -79,13 +78,12 @@
                                          title="Liberar">
                                      <i class="fa fa-minus text-red"></i>
                                  </button>
-                                 <tooltip [code]="model.prefix+'_7'"></tooltip>
                              </span>
                          </label>
                      </a>
                 </span>
                 <span *ngIf="getDisabledField(key,data)">
-                    <label class="label label-orange">N/A</label><tooltip [code]="model.prefix+'_8'"></tooltip>
+                    <label class="label label-orange">N/A</label>
                 </span>
 
             </td>

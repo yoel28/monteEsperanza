@@ -45,6 +45,15 @@ export class MOperacion extends ModelBase{
             'title': 'Fecha de entrada',
             'placeholder': 'Fecha de entrada',
         };
+        this.rules['recharge']={
+            'type': 'text',
+            'search':this.permissions.filter,
+            'key': 'r.reference',
+            'icon':'fa fa-list',
+            'title': 'Recibo',
+            'placeholder': 'Recibo',
+        };
+
 
         this.rules['container']=this.container.ruleObject;
         this.rules['container'].required=false;
@@ -116,14 +125,18 @@ export class MOperacion extends ModelBase{
             'icon':'fa fa-font',
             'title': 'Comentarios',
             'placeholder': 'Ingrese un comentario',
-        }
-
-        this.rules = Object.assign({},this.rules);
+        };
+        
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        delete this.rules['detail'];
     }
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
         this.permissions['automatic'] = this.myglobal.existsPermission(this.prefix + '_AUTOMATIC');
         this.permissions['close'] = this.myglobal.existsPermission(this.prefix + '_CLOSE');
+        this.permissions['viewDelete'] = this.myglobal.existsPermission(this.prefix + '_VIEWDELETE');
+        this.permissions['hiddenAdd'] = this.myglobal.existsPermission(this.prefix + '_HIDDEN_ADD');
+        this.permissions['lockField'] = this.myglobal.existsPermission(this.prefix + '_LOCK_FIELD');
 
     }
     initParamsSearch() {
@@ -145,6 +158,7 @@ export class MOperacion extends ModelBase{
         delete this.rulesSave.enabled;
         delete this.rulesSave.detail;
         delete this.rulesSave.id;
+        delete this.rulesSave.recharge;
     }
 
 }

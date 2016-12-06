@@ -45,6 +45,15 @@ export class MTag extends ModelBase{
             'title': 'Número del Tag',
             'placeholder': 'Número del Tag',
         };
+        this.rules['code']={
+            'type': 'text',
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'code',
+            'title': 'Código',
+            'placeholder': 'Código de Tag',
+        };
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
         delete this.rules['detail'];
@@ -52,8 +61,10 @@ export class MTag extends ModelBase{
     initPermissions() {}
     initParamsSearch() {
         this.paramsSearch.title="Buscar Tag RFID";
-        this.paramsSearch.placeholder="Ingrese tag RFID";
-        this.paramsSearch.where=""
+        this.paramsSearch.placeholder="Ingrese tag RFID o Código";
+        this.paramsSearch.where="";
+        this.paramsSearch.label.detail = 'Tag: ';
+        this.paramsSearch.label.title = 'Código: ';
     }
     initParamsSave() {
         this.paramsSave.title="Agregar tag RFID"

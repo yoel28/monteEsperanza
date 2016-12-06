@@ -30,6 +30,7 @@ export class OperationsAudit extends ControllerBase{
     public dateEnd:Control;
 
     public url:any;
+    public url2:any;
 
     public paramsDate:any = CatalogApp.formatDateDDMMYYYY;
     public itemsDate:any =  CatalogApp.itemsDate;
@@ -77,13 +78,15 @@ export class OperationsAudit extends ControllerBase{
 
     loadAudit()
     {
-        if(this.model.permissions.list)
-        {
-            this.keysDataList={};
+        if(this.model.permissions.list) {
+            this.keysDataList = {};
             this.dataList = Object.assign({});
-            this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+this.dateStart.value+"','type':'date'],['op':'lt','field':'dateCreated','value':'"+this.dateEnd.value+"','type':'date']]");
+            this.where = "&where=" + encodeURI("[['op':'ge','field':'dateCreated','value':'" + this.dateStart.value + "','type':'date'],['op':'lt','field':'dateCreated','value':'" + this.dateEnd.value + "','type':'date']]");
             this.loadData();
-            this.url = localStorage.getItem('urlAPI')+this.endpoint+'?access_token='+localStorage.getItem('bearer')+'&tz='+(moment().format('Z')).replace(':','')+this.where;
+            this.url = localStorage.getItem('urlAPI') + this.endpoint + '?access_token=' + localStorage.getItem('bearer') + '&tz=' + (moment().format('Z')).replace(':', '') + this.where;
+
+            this.url2 = localStorage.getItem('urlAPI') + '/reports/operations/trans/done' + '?access_token=' + localStorage.getItem('bearer') + '&tz=' + (moment().format('Z')).replace(':', '') + this.where;
+
         }
     }
 

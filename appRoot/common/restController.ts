@@ -16,6 +16,7 @@ export class RestController implements OnInit {
     order = "";//asc o desc
     page:any = [];
     where:string = "";
+    viewDelete:boolean=false;
 
     constructor(public http:Http, public toastr?:ToastsManager) {
         this.httputils = new HttpUtils(http, toastr || null);
@@ -32,7 +33,9 @@ export class RestController implements OnInit {
         //this.sound(err.status);
         let that = this;
         if (that.toastr) {
-            if (err.json()) {
+            if(err.status == 200 && err.type==3)
+                that.toastr.error('Se a detectado un problema con el internet, Por favor conectarse a la red');
+            else if (err.json()) {
                 if (err.json().message && err.json().message.error)
                     that.toastr.error(err.json().message.error);
                 else if (err.json()._embedded && err.json()._embedded.errors) {
@@ -121,7 +124,7 @@ export class RestController implements OnInit {
             that.getLoadDataAll([], null, null, 0, 1000, null);
         else {
             this.getOffset(offset);
-            this.httputils.onLoadList(this.endpoint + "?max=" + this.max + "&offset=" + this.offset + this.where + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : ''), this.dataList, this.max, this.error).then(
+            this.httputils.onLoadList(this.endpoint + "?max=" + this.max + "&offset=" + this.offset + this.where + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : '')+(this.viewDelete?'&deleted=only':''), this.dataList, this.max, this.error).then(
                 response=> {
                     that.loadPager(that.dataList);
                 }, error=> {
@@ -138,7 +141,7 @@ export class RestController implements OnInit {
             that.getLoadDataAll([], endpoint, list, 0, 1000, where);
         else {
             this.getOffset(offset, list, max);
-            this.httputils.onLoadList((endpoint || this.endpoint) + "?max=" + (max || this.max) + "&offset=" + (this.offset) + (where || this.where) + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : ''), (list || this.dataList), this.max, this.error).then(
+            this.httputils.onLoadList((endpoint || this.endpoint) + "?max=" + (max || this.max) + "&offset=" + (this.offset) + (where || this.where) + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : '')+(this.viewDelete?'&deleted=only':''), (list || this.dataList), this.max, this.error).then(
                 response=> {
                     that.loadPager(list || that.dataList);
                 }, error=> {
@@ -156,7 +159,7 @@ export class RestController implements OnInit {
         max = (max ? max : that.max);
         where = (where ? where : that.where);
         list.page = [];
-        this.httputils.onLoadList(endpoint + "?max=" + max + "&offset=" + offset + where, list, max, this.error).then(
+        this.httputils.onLoadList(endpoint + "?max=" + max + "&offset=" + offset + where+(this.viewDelete?'&deleted=only':''), list, max, this.error).then(
             response=> {
                 if (list.count > 0) {
                     data = data.concat(list.list);
@@ -250,7 +253,9 @@ export class RestController implements OnInit {
             this.dataList.list.pop();
     }
 
-    setNull(data, key) {
+    setNull(data, key,event?) {
+        if(event)
+            event.preventDefault();
         let json = {};
         json[key] = null;
         let body = JSON.stringify(json);

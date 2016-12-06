@@ -6,6 +6,15 @@
         </div>
         <div *ngIf="operation && (operation.permissions.add || operation.permissions.update)">
             <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
+
+            <div class="block-float2" *ngIf="myglobal.existsPermission('MEN_SEMI')">
+                <button class="redondo btn btn-green btn-outlined" title="OP. Semiauto" type="button"
+                        data-toggle="modal" data-target="#operacionManual"
+                        (click)="outAnt($event,myglobal)">
+                    <i class="fa fa-plus fa-lg"></i>
+                </button>&nbsp;
+
+            </div>
         </div>
 
         <header class="main-header">

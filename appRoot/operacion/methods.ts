@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, ViewChild} from "@angular/core";
+import {Component, EventEmitter, OnInit, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {Router}           from '@angular/router-deprecated';
 import {Http} from "@angular/http";
@@ -17,7 +17,7 @@ declare var SystemJS:any;
     selector: 'operacion-save',
     templateUrl: SystemJS.map.app+'/operacion/save.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
-    inputs:['idModal','inAnt'],
+    inputs:['idModal'],
     outputs:['save','getInstance'],
     directives:[Search,RecargaSave],
 })
@@ -28,9 +28,10 @@ export class OperacionSave extends ControllerBase implements OnInit{
     public getInstance:any;
     public inAnt:any={};
 
-    public pending=0;
+    public pendingId=0;//Identificador cuando se lanza desde un pendiente
     public baseWeight=1;
-    
+    public noInWithoutOut=false;
+
     form:ControlGroup;
     data:any = [];
     keys:any = {};
@@ -43,6 +44,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     ngOnInit(){
         this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
+        this.noInWithoutOut = (this.myglobal.getParams('NO_IN_WITHOUT_OUT')=='true')?true:false;
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
         this.initModel();
         this.initForm();
@@ -53,7 +55,6 @@ export class OperacionSave extends ControllerBase implements OnInit{
     ngAfterViewInit(){
         this.getInstance.emit(this);
     }
-
     initForm() {
         let that = this;
         this.keys = Object.keys(this.model.rulesSave);
@@ -124,6 +125,23 @@ export class OperacionSave extends ControllerBase implements OnInit{
     }
     public findControl:string="";
 
+    public getDataBody(){
+        let body = this.form.value;
+        let that=this;
+        Object.keys(body).forEach((key:string)=>{
+            if(that.model.rulesSave[key].object){
+                body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
+            }
+            if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
+                body[key]=parseFloat(body[key]);
+            }
+        });
+        if(this.pendingId>0)
+            body['pendingId']=this.pendingId;
+
+        return body;
+    }
+    //submit
     submitForm(event){
         event.preventDefault();
         let that = this;
@@ -133,37 +151,16 @@ export class OperacionSave extends ControllerBase implements OnInit{
             that.toastr.success('Guardado con éxito','Notificación')
         };
         this.setEndpoint('/operations/');
-        if(this.pending>0)
+        if(this.pendingId>0)
             this.setEndpoint('/operations/save/auto/');
-        
-        let body = this.form.value;
 
-        Object.keys(body).forEach((key:string)=>{
-            if(that.model.rulesSave[key].object){
-                body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
-            }
-            if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
-                body[key]=parseFloat(body[key]);
-            }
-        });
-        if(this.pending>0)
-            body['pendingId']=this.pending;
-
+        let body = this.getDataBody();
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
+    //patch
     patchForm(event){
         event.preventDefault();
         let that=this;
-
-        let body = this.form.value;
-        Object.keys(body).forEach((key:string)=>{
-            if(that.model.rulesSave[key].object){
-                body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
-            }
-            if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
-                body[key]=parseFloat(body[key]);
-            }
-        });
         let successCallback= response => {
             that.resetForm();
             Object.assign(that.dataSelect,response.json());
@@ -171,7 +168,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 that.toastr.success('Actualizado con éxito','Notificación');
             that.onPrint(response.json());
         }
-        this.httputils.doPut('/operations/'+this.idOperacion,JSON.stringify(body),successCallback,this.error)
+        let body = this.getDataBody();
+        this.setEndpoint('/operations/');
+        this.httputils.doPut(this.endpoint+this.idOperacion,JSON.stringify(body),successCallback,this.error)
     }
     //print automatic
     @ViewChild(OperacionPrint)
@@ -188,7 +187,6 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.operacionPrint.data=data
         }
     }
-
     //objecto del search actual
     public search:any={};
     //Lista de id search
@@ -218,22 +216,37 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
         this.data[this.search.key].updateValue(data.detail);
 
-        if(this.search.key == 'vehicle'){
-            if(!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)){
+        if(this.search.key == 'vehicle' || this.search.key == 'company' || this.search.key == 'container'){
+
+            if((!this.searchId['chofer'] || (this.searchId['chofer'] && this.searchId['chofer'].default)) && data.choferId){
                 this.searchId['chofer']={};
                 this.data['chofer'].updateValue(data.choferName);
                 this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName,'default':true};
             }
 
-        }
-
-        if(this.search.key == 'container'){
-            if(!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)){
+            if((!this.searchId['company'] || (this.searchId['company'] && this.searchId['company'].default)) && data.companyId){
                 this.searchId['company']={};
                 this.data['company'].updateValue(data.companyRuc);
                 this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRuc,'default':true};
             }
 
+            if((!this.searchId['trashType'] || (this.searchId['trashType'] && this.searchId['trashType'].default)) && data.trashTypeId){
+                this.searchId['trashType']={};
+                this.data['trashType'].updateValue(data.trashTypeReference);
+                this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference,'default':true};
+            }
+
+            if((!this.searchId['route'] || (this.searchId['route'] && this.searchId['route'].default)) && data.routeId){
+                this.searchId['route']={};
+                this.data['route'].updateValue(data.routeReference);
+                this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference,'default':true};
+            }
+
+            if((!this.searchId['container'] || (this.searchId['container'] && this.searchId['container'].default)) && data.containerId){
+                this.searchId['container']={};
+                this.data['container'].updateValue(data.containerCode);
+                this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
+            }
         }
 
         this.checkBalance();
@@ -241,8 +254,6 @@ export class OperacionSave extends ControllerBase implements OnInit{
     }
 
     checkBalance(){
-        
-
         if(this.searchId['company']){
             let balance=parseFloat(this.searchId['company'].balance || '0');
             let minBalance=parseFloat(this.searchId['company'].minBalance || '0');
@@ -257,53 +268,57 @@ export class OperacionSave extends ControllerBase implements OnInit{
             }
         }
     }
+
     public dataIn:any={};
-
     public idOperacion="-1";
-    public listOperations=false;
+    public readOperations=false;
 
-    inAntena(data){
+    loadOperationIn(data){
         this.resetForm();
         if(data && data.vehicleId){
-            this.listOperations=false;
-            this.dataList={};
-
             this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
             this.data['vehicle'].updateValue(data.vehiclePlate);
-            this.model.rulesSave['vehicle'].readOnly=false;
+            this.model.rulesSave['vehicle'].readOnly=this.model.permissions.lockField;
 
             this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
             this.data['company'].updateValue(data.companyRUC);
 
             this.data['weightIn'].updateValue(data.weightIn);
+            this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
+
+            if(data.trashTypeId){
+                this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
+                this.data['trashType'].updateValue(data.trashTypeReference);
+            }
+
+            if(data.routeId){
+                this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
+                this.data['route'].updateValue(data.routeReference);
+            }
+
+            if(data.containerId){
+                this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
+                this.data['container'].updateValue(data.containerCode);
+            }
 
             if(data.weightOut){
                 this.data['weightOut'].updateValue(data.weightOut);
-
-                this.model.rulesSave['weightOut'].readOnly=true;
-                this.model.rulesSave['weightIn'].readOnly=true;
-                
+                this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
                 this.model.rulesSave['weightOut'].hidden=false;
-            }
-
-            if(this.myglobal.existsPermission('OP_EDIT_WEIGHT')){
-                this.model.rulesSave['weightIn'].readOnly=false;
-                this.model.rulesSave['weightOut'].readOnly=false;
             }
 
             this.checkBalance();
         }
-        else{
-            this.listOperations=true;
-        }
     }
 
-    getOperacion(data){
+    loadOperationOut(data){
+        this.resetForm();
+
         this.idOperacion=data.id;
 
         this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
         this.data['vehicle'].updateValue(data.vehiclePlate);
-        this.model.rulesSave['vehicle'].readOnly=false;
+        this.model.rulesSave['vehicle'].readOnly=this.model.permissions.lockField;
 
         this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
         this.data['container'].updateValue(data.containerCode);
@@ -326,50 +341,35 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.model.rulesSave['route'].readOnly=false;
 
         this.data['weightIn'].updateValue(data.weightIn);
-        this.model.rulesSave['weightIn'].readOnly=false;
+        this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
-        this.data['weightOut'].updateValue(data.weightOut || this.weightOut);
+        this.data['weightOut'].updateValue(data.weightOut || data.vehicleWeight);
         this.model.rulesSave['weightOut'].required=true;
-        this.model.rulesSave['weightOut'].readOnly=false;
+        this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
         this.model.rulesSave['weightOut'].hidden=false;
 
         this.data['comment'].updateValue(data.comment);
 
-        this.listOperations=false;
     }
-    public weightOut:number;
 
-    outAntena(data){
-        this.resetForm();
-        if(data && data.operations && data.operations.length>1)
-        {
-            this.listOperations=true;
-            this.weightOut=data.weightOut;
-            Object.assign(this.dataList,data);
-        }
-        else{
-            if(data.operations)
-                this.getOperacion(data.operations[0]);
-            else
-                this.listOperations=true;
-
-        }
-    }
     resetForm(){
         let that=this;
         this.search={};
         this.searchId={};
         this.dataList={};
+        this.pendingId=0;
+        this.idOperacion="-1";
+        this.readOperations=false;
         Object.keys(this.data).forEach(key=>{
             (<Control>that.data[key]).updateValue(null);
             (<Control>that.data[key]).setErrors(null);
             that.data[key]._pristine=true;
             if(that.model.rulesSave[key].readOnly)
                 that.model.rulesSave[key].readOnly=false;
-        })
+        });
         this.model.rulesSave['weightOut'].hidden=true;
-        this.listOperations=false;
     }
+
     @ViewChild(RecargaSave)
     recargaSave:RecargaSave;
     getLoadRecharge(event,data){
@@ -380,55 +380,41 @@ export class OperacionSave extends ControllerBase implements OnInit{
         }
 
     }
+
     refreshField(event,data){
         event.preventDefault();
         let that = this;
         let successCallback= response => {
-            let val = response.json()[data.refreshField.field]
+            let val = response.json()[data.refreshField.field];
             if(data.refreshField.field=='weight')
-                val = val / this.baseWeight
+                val = val / this.baseWeight;
             that.data[data.key].updateValue(val);
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
     }
 
-    //cargar entradas desde la antena
-    loadInAnt(event?){
+    loadReadOperations(event){
         if(event)
             event.preventDefault();
-        this.idOperacion="-1";
+        this.resetForm();
         let that= this;
         let successCallback= response => {
-            let dataOperation=response.json();
-            that.inAntena(dataOperation['entrada']);
-        }
-        this.httputils.doGet('/in/operations',successCallback,this.error);
-    }
-    //cargar salidas desde la antena
-    loadOutAnt(event?,data?){
-        if(event)
-            event.preventDefault();
-        this.idOperacion="-2";
-        let that= this;
-        if(!data){
-            let successCallback= response => {
-                let dataOperation=response.json();
-                that.outAntena(dataOperation['salida'] || {});
-            }
-            this.httputils.doGet('/out/operations',successCallback,this.error);
-        }
-        else{
-            let dataOperation={'operations':[]};
-            dataOperation.operations.push(data);
-            that.outAntena(dataOperation || {});
-        }
-    }
-    loadEdit(data){
-        this.dataSelect = data;
-        this.resetForm();
-        this.getOperacion(this.dataSelect);
+            Object.assign(that.dataList,response.json());
+            that.readOperations=true;
+            if(that.dataList && that.dataList.salida && that.dataList.salida.operations && that.dataList.salida.operations.length == 0)
+                that.loadOperationIn(that.dataList.entrada);
+            if(that.dataList && that.dataList.salida && that.dataList.salida.operations && that.dataList.salida.operations.length == 1 && this.noInWithoutOut)
+                that.loadOperationOut(that.dataList.salida.operations[0]);
+
+        };
+        this.httputils.doGet('/read',successCallback,this.error);
     }
 
+    loadEdit(data){
+        this.dataSelect = data;
+        this.loadOperationOut(this.dataSelect);
+
+    }
 
 }
 

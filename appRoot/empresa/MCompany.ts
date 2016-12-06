@@ -1,11 +1,15 @@
 import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
+import {MTrashType} from "../tipoBasura/MTrashType";
+import {MRuta} from "../ruta/MRuta";
 
 export class MCompany extends ModelBase{
 
     public rules={};
     public typeCompany:any;
+    public trashType:any;
+    public route:any;
 
     constructor(public myglobal:globalService){
         super('COMPANY','/companies/',myglobal);
@@ -13,6 +17,8 @@ export class MCompany extends ModelBase{
     }
     modelExternal() {
         this.typeCompany = new MCompanyType(this.myglobal);
+        this.trashType = new MTrashType(this.myglobal);
+        this.route = new MRuta(this.myglobal);
     }
     initRules(){
 
@@ -124,6 +130,14 @@ export class MCompany extends ModelBase{
         this.rules['companyType'] = this.typeCompany.ruleObject;
         this.rules['companyType'].update=this.permissions.update;
         this.rules['companyType'].required = true;
+
+        this.rules['trashType'] = this.trashType.ruleObject;
+        this.rules['trashType'].update=this.permissions.update;
+        this.rules['trashType'].required = false;
+
+        this.rules['route'] = this.route.ruleObject;
+        this.rules['route'].update=this.permissions.update;
+        this.rules['route'].required = false;
 
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
