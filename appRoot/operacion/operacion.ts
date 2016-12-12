@@ -228,7 +228,9 @@ export class Operacion extends ControllerBase implements OnInit {
 
     ];
 
-    setOrden(data, dir) {
+    setOrden(data, dir,event) {
+        if(event)
+           event.stopPropagation();
         if (dir == "asc") {
             let pos = data.position - 1;
             this.view.forEach(key=> {
@@ -274,7 +276,9 @@ export class Operacion extends ControllerBase implements OnInit {
         localStorage.setItem('view11', JSON.stringify(this.view))
     }
 
-    setVisibleView(data) {
+    setVisibleView(data,event) {
+        if(event)
+            event.stopPropagation();
         this.view.forEach(key=> {
             if (key.key == data.key) {
                 key.visible = !key.visible;
