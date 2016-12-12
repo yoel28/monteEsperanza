@@ -64,3 +64,6 @@
 .cursor-pointer{
     cursor: pointer;
 }
+ul.submenu-config li{
+    min-width: 250px !important;
+}
