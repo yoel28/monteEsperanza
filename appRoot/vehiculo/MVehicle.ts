@@ -49,7 +49,6 @@ export class MVehicle extends ModelBase{
             'step':'0.0001',
             "double":true,
             'icon':'fa fa-font',
-            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
