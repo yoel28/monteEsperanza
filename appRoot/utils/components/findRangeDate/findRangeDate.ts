@@ -38,5 +38,6 @@ export class FindRangeDate implements OnInit,AfterViewInit {
     }
     assignDate(value){
         this.control.updateValue(value);
+        this.dateRange.emit(this.control);
     }
 }
