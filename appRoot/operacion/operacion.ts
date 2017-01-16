@@ -89,7 +89,7 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions["actions"] = {};
 
         this.viewOptions["buttons"].push({
-            'visible': this.model.permissions.add && !this.model.permissions.hiddenAdd,
+            'visible': this.model.permissions.add && this.model.permissions.viewAdd,
             'title': 'Agregar',
             'class': 'btn btn-green',
             'icon': 'fa fa-save',

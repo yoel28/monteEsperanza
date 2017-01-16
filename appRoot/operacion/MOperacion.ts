@@ -135,7 +135,7 @@ export class MOperacion extends ModelBase{
         this.permissions['automatic'] = this.myglobal.existsPermission(this.prefix + '_AUTOMATIC');
         this.permissions['close'] = this.myglobal.existsPermission(this.prefix + '_CLOSE');
         this.permissions['viewDelete'] = this.myglobal.existsPermission(this.prefix + '_VIEWDELETE');
-        this.permissions['hiddenAdd'] = this.myglobal.existsPermission(this.prefix + '_HIDDEN_ADD');
+        this.permissions['viewAdd'] = this.myglobal.existsPermission(this.prefix + '_VIEW_ADD');
         this.permissions['lockField'] = this.myglobal.existsPermission(this.prefix + '_LOCK_FIELD');
 
     }
