@@ -318,34 +318,34 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
         this.searchId['vehicle']={'id':data.vehicleId,'title':data.companyName,'detail':data.vehiclePlate};
         this.data['vehicle'].updateValue(data.vehiclePlate);
-        this.model.rulesSave['vehicle'].readOnly=this.model.permissions.lockField;
+        //this.model.rulesSave['vehicle'].readOnly=this.model.permissions.lockField;
 
         this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
         this.data['container'].updateValue(data.containerCode);
-        this.model.rulesSave['container'].readOnly=false;
+        //this.model.rulesSave['container'].readOnly=false;
 
         this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName};
         this.data['chofer'].updateValue(data.choferName);
-        this.model.rulesSave['chofer'].readOnly=false;
+        //this.model.rulesSave['chofer'].readOnly=false;
 
         this.searchId['company']={'id':data.companyId,'title':data.companyName,'detail':data.companyRUC,'balance':data.companyBalance || '0','minBalance':data.companyMinBalance || '0'};
         this.data['company'].updateValue(data.companyRUC);
-        this.model.rulesSave['company'].readOnly=false;
+        //this.model.rulesSave['company'].readOnly=false;
 
         this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
         this.data['trashType'].updateValue(data.trashTypeReference);
-        this.model.rulesSave['trashType'].readOnly=false;
+        //this.model.rulesSave['trashType'].readOnly=false;
 
         this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
         this.data['route'].updateValue(data.routeReference);
-        this.model.rulesSave['route'].readOnly=false;
+        //this.model.rulesSave['route'].readOnly=false;
 
         this.data['weightIn'].updateValue(data.weightIn);
-        this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
+        //this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
         this.data['weightOut'].updateValue(data.weightOut || data.vehicleWeight);
         this.model.rulesSave['weightOut'].required=true;
-        this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
+        //this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
         this.model.rulesSave['weightOut'].hidden=false;
 
         this.data['comment'].updateValue(data.comment);
@@ -364,8 +364,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
             (<Control>that.data[key]).updateValue(null);
             (<Control>that.data[key]).setErrors(null);
             that.data[key]._pristine=true;
-            if(that.model.rulesSave[key].readOnly)
+            if(that.model.rulesSave[key].readOnly && !that.model.rulesSave[key].protected)
                 that.model.rulesSave[key].readOnly=false;
+
         });
         this.model.rulesSave['weightOut'].hidden=true;
     }
