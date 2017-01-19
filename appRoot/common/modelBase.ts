@@ -132,6 +132,8 @@ export abstract class ModelBase{
     private _initRuleObject() {
         this.ruleObject = {
             'icon': 'fa fa-list',
+            'readOnly':false,
+            'protected':false,
             'update':false,
             'search':false,
             "type": "text",
