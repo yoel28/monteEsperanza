@@ -9,11 +9,12 @@
                                 aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-filter fa-lg"></i>
                         </button>
-                        <ul role="menu" class="dropdown-menu text-left submenu-config">
+                        <ul role="menu" class="dropdown-menu text-left submenu-config no-print">
                             <li *ngFor="let view of orderViewData" >
-                                <span (click)="setVisibleView(view)"
-                                      class="btn fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}">
-                                &nbsp;{{view.title}}</span>
+                                <span (click)="setVisibleView(view,$event)" class="btn fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}"></span>
+                                <span (click)="setOrden(view,'asc',$event)" class="fa fa-caret-left btn"></span>
+                                <span (click)="setOrden(view,'desc',$event)" class="fa fa-caret-right btn"></span>
+                                &nbsp;{{view.title}}
                             </li>
                         </ul>
                     </div>
@@ -51,14 +52,6 @@
                             </td>
                             <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
                                 {{view.title}}
-                                <br/>
-                                <div class="btn-group btn-box-tool row noprint">
-                                    <span (click)="setOrden(view,'asc')" class="fa fa-caret-left btn"></span>
-
-                                    <span (click)="setVisibleView(view)" class="fa fa-eye text-green btn"></span>
-
-                                    <span (click)="setOrden(view,'desc')" class="fa fa-caret-right btn"></span>
-                                </div>
                             </td>
                             <th class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete">
                                 Acciones&nbsp;<tooltip code="CODE_47"></tooltip>
@@ -69,7 +62,7 @@
                         <tr *ngFor="let data of dataList.list">
                             <td *ngIf="viewDelete">
                                 <span>
-                                    {{formatDate(data.dateUpdated,'DD/MM/YYYY, LT',false,data.id)}}
+                                    {{formatDate(data.dateUpdated,'DD/MM/YYYY, LT',true,data.id)}}
                                     <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                 </span>
                             </td>
@@ -92,7 +85,7 @@
                                         {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReferenceDate'">
-                                        {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT',false,data.id)}}
+                                        {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
                                         <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReference'">

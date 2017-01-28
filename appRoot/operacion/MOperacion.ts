@@ -32,6 +32,8 @@ export class MOperacion extends ModelBase{
     initRules(){
 
         this.rules['vehicle']=this.vehicle.ruleObject;
+        this.rules['vehicle'].readOnly=this.permissions['lockVeh'];
+        this.rules['vehicle'].protected=this.permissions['lockVeh'];
         this.rules['vehicle'].update=this.permissions.update;
 
         this.rules['dateCreated']={
@@ -75,7 +77,8 @@ export class MOperacion extends ModelBase{
 
         this.rules['weightIn']={
                 'type': 'number',
-                'readOnly': false,
+                'readOnly': this.permissions['lockWeight'],
+                'protected': this.permissions['lockWeight'],
                 'step':'0.001',
                 'required':true,
                 'hidden': false,
@@ -96,7 +99,8 @@ export class MOperacion extends ModelBase{
 
         this.rules['weightOut']={
             'type': 'number',
-            'readOnly': false,
+            'readOnly': this.permissions['lockWeight'],
+            'protected': this.permissions['lockWeight'],
             'step':'0.001',
             'required':false,
             'hidden': true,
@@ -135,8 +139,9 @@ export class MOperacion extends ModelBase{
         this.permissions['automatic'] = this.myglobal.existsPermission(this.prefix + '_AUTOMATIC');
         this.permissions['close'] = this.myglobal.existsPermission(this.prefix + '_CLOSE');
         this.permissions['viewDelete'] = this.myglobal.existsPermission(this.prefix + '_VIEWDELETE');
-        this.permissions['hiddenAdd'] = this.myglobal.existsPermission(this.prefix + '_HIDDEN_ADD');
-        this.permissions['lockField'] = this.myglobal.existsPermission(this.prefix + '_LOCK_FIELD');
+        this.permissions['viewAdd'] = this.myglobal.existsPermission(this.prefix + '_VIEW_ADD');
+        this.permissions['lockWeight'] = this.myglobal.existsPermission(this.prefix + '_LOCK_WEIGHT');
+        this.permissions['lockVeh'] = this.myglobal.existsPermission(this.prefix + '_LOCK_VEH');
 
     }
     initParamsSearch() {

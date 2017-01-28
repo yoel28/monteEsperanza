@@ -127,7 +127,7 @@ export class User extends RestController implements OnInit{
                 that.rules.roles.source.push({'value': obj.id, 'text': obj.authority});
             });
         };
-        this.httputils.doGet('/roles/', successCallback, this.error)
+        this.httputils.doGet('/roles/?max=1000', successCallback, this.error)
     }
 
     //Cargar Where del filter

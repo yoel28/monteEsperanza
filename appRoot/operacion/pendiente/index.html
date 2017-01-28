@@ -82,7 +82,7 @@
                             <td>{{data.vehiclePlate || '-'}}</td>
                             <td>{{data.tagRFID || '-'}}</td>
                             <td>
-                                {{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}
+                                {{formatDate(data.dateIn,'DD/MM/YYYY, LT',true,data.id)}}
                                 <i *ngIf="viewChangeDate(data.dateIn)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                             </td>
                             <td>{{ data.weightIn | number:'.0-3'}}</td>
@@ -90,7 +90,7 @@
                             <td>{{ data.lotValIn || '-'}}</td>
 
 
-                            <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}
+                            <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',true,data.id)}}
                                 <i *ngIf="viewChangeDate(data.dateOut)" class="fa fa-exchange  btn" (click)="changeFormatDate(data.id)"></i>
                             </td>
                             <td>{{ data.weightOut | number:'.0-3'}}</td>
@@ -162,8 +162,8 @@
                                     <div class="col-lg-10">
                                         <a  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
                                             <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
-                                            <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
-                                            <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',false,data.id)}}&nbsp;&nbsp;
+                                            <label class="title">Entrada:&nbsp;</label>{{formatDate(data.dateIn,'DD/MM/YYYY, LT',true,data.id)}}&nbsp;&nbsp;
+                                            <label class="title">Salida:&nbsp;</label>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',true,data.id)}}&nbsp;&nbsp;
                                             <label class="title">Placa:&nbsp;</label>{{data.vehiclePlate || '-'}}&nbsp;&nbsp;
 
                                             <span *ngIf="data.expired" class="label label-red font-12pt margin-right-2" title="La operación a expirado">Vencido</span>
