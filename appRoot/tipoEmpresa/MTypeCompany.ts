@@ -63,6 +63,7 @@ export class MCompanyType extends ModelBase{
         
         this.rules['ammount']={
             'type': 'number',
+            'double': true,
             'required':false,
             'update':this.permissions.update,
             'search':this.permissions.filter,
