@@ -88,3 +88,9 @@ body.no-menu .content-wrapper, body.no-menu .main-footer {
 .popover{
   max-width: none !important;
 }
+.label-black{
+  background-color: #000000 !important;
+}
+.label-light-pink{
+  background-color: #f95fa3 !important;
+}
