@@ -21,7 +21,8 @@ export class MParams extends ModelBase{
         };
 
         this.rules['value']={
-            'type': 'text',
+            'type': 'textarea',
+            'showbuttons':true,
             'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
