@@ -88,6 +88,12 @@ export class Vehiculo extends ControllerBase implements OnInit{
             data.tagId = value.id;
         }
     }
+    public releaseTag(tag:any,data,index){
+        let callback = (response,value)=>{
+            data['tags'].splice(index,1);
+        };
+        this.tag.setDataField(tag.id,'vehicle',null,callback,data)
+    }
 
     //cambiar imagen
     public image:any=[];
