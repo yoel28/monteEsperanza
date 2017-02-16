@@ -77,7 +77,7 @@ export abstract class ControllerBase extends RestController {
     
     public changeFormatDate(id) {
         if (!this.formatDateId[id])
-            this.formatDateId[id] = {'value': false};
+            this.formatDateId[id] = {'value': true};
         this.formatDateId[id].value = !this.formatDateId[id].value;
     }
     

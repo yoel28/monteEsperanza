@@ -68,7 +68,7 @@ export class PermisosRol extends RestController implements OnInit{
                     this.items.push({id:obj.id,text:obj.authority});
                 });
             };
-            this.httputils.doGet('/roles/',successCallback,this.error)
+            this.httputils.doGet('/roles/?max=1000',successCallback,this.error)
         }
     }
     //Cargar Rol Seleccionado

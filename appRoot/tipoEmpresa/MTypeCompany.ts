@@ -60,6 +60,19 @@ export class MCompanyType extends ModelBase{
             'title': 'Tipo de grupo',
             'placeholder': 'Seleccione el tipo de grupo',
         };
+        
+        this.rules['ammount']={
+            'type': 'number',
+            'double': true,
+            'required':false,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'ammount',
+            'title': 'Monto fijo',
+            'placeholder': 'Monto fijo',
+        };
+
         this.rules['icon']={
             'type': 'select',
             'required':true,

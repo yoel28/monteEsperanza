@@ -6,12 +6,18 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xcropit, Xfile, ColorPicker, Datepicker,SMDropdown} from "../../common/xeditable";
 import {CatalogApp} from "../../common/catalogApp";
+import {TagsInput} from "../../common/tagsinput";
+import 'rxjs/add/operator/debounceTime';
+
+
+
 declare var SystemJS:any;
+declare var jQuery:any;
 @Component({
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
-    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown],
+    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown,TagsInput],
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
@@ -32,6 +38,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     keys:any = {};
     public baseWeight=1;
     public delete=false;
+    public keyFindData='';
 
 
 
@@ -96,33 +103,64 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             if(that.rules[key].value)
                 that.data[key].updateValue(that.rules[key].value);
 
+            if(that.rules[key].callBack){
+                that.data[key]
+                    .valueChanges
+                    .debounceTime(500)
+                    .subscribe((value: string) => {
+                        if(value && value.length > 0){
+                            that.rules[key].callBack(that,value);
+                        }
+                    })
+            }
+
 
             if(that.rules[key].object)
             {
-                that.data[key].valueChanges.subscribe((value: string) => {
-                    if(value && value.length > 0){
-                        that.search=that.rules[key];
-                        that.findControl = value;
-                        that.dataList=[];
-                        that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
-                        if( !that.searchId[key]){
-                            that.loadData();
+                that.data[key]
+                    .valueChanges
+                    .debounceTime(500)
+                    .subscribe((value: string) => {
+                        if(value && value.length > 0){
+                            that.search=that.rules[key];
+                            that.findControl = value;
+                            that.dataList=[];
+                            that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
+                            if( !that.searchId[key]){
+                                that.loadData();
+                            }
+                            else if(that.searchId[key].detail != value){
+                                delete that.searchId[key];
+                                that.loadData();
+                            }
+                            else{
+                                this.findControl="";
+                                that.search = [];
+                            }
                         }
-                        else if(that.searchId[key].detail != value){
-                            delete that.searchId[key];
-                            that.loadData();
-                        }
-                        else{
-                            this.findControl="";
-                            that.search = [];
-                        }
-                    }
                 });
             }
 
         });
         this.keys = Object.keys(this.rules);
         this.form = this._formBuilder.group(this.data);
+    }
+    addTagManual(event,key){
+        if(event)
+            event.preventDefault();
+        let tag=jQuery('#'+key+'manual').val();
+        if(tag && tag.length)
+        {
+            jQuery('#'+key+'manual').val('');
+            this.rules[key].refreshField.instance.addValue(
+                {
+                    'id': 0,
+                    'value': tag,
+                    'title': 'Entrada manual'
+                }
+            );
+        }
+
     }
 
     public findControl:string="";
@@ -149,10 +187,21 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             {
                 body[key] = that.rules[key].prefix + body[key];
             }
+            if(that.rules[key].type=='list'){
+                let data=[];
+                if(that.data[key] && that.data[key].value && that.data[key].value.length){
+                    that.data[key].value.forEach(obj=>{
+                        data.push(obj.value || obj);
+                    });
+                }
+                body[key]=data;
+            }
 
         });
         if(this.params.updateField)
-            this.httputils.onUpdate(this.endpoint+this.id,JSON.stringify(body),this.dataSelect,this.error);
+            this.httputils.onUpdate(this.endpoint+this.id,JSON.stringify(body),this.dataSelect,this.error).then((respnse)=>{
+                that.resetForm();
+            });
         else
             this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
@@ -197,13 +246,20 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.search={};
         this.searchId={};
         this.delete=false;
+        this.id = null;
         this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
-            (<Control>that.data[key]).updateValue(null);
-            (<Control>that.data[key]).setErrors(null);
-            that.data[key]._pristine=true;
-            if(that.rules[key].readOnly)
-                that.rules[key].readOnly=false;
+            if(that.rules[key].type!='list'){
+                (<Control>that.data[key]).updateValue(that.rules[key].value);
+                (<Control>that.data[key]).setErrors(that.rules[key].value);
+                that.data[key]._pristine=true;
+                if(that.rules[key].readOnly)
+                    that.rules[key].readOnly=false;
+            }
+            else{
+                if(that.rules[key] && that.rules[key].refreshField && that.rules[key].refreshField.instance)
+                    that.rules[key].refreshField.instance.removeAll()
+            }
         })
     }
     loadDelete(event){
@@ -214,10 +270,16 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         event.preventDefault();
         let that = this;
         let successCallback= response => {
-            let val = response.json()[data.refreshField.field]
-            if(data.refreshField.field=='weight')
-                val = val / this.baseWeight
-            that.data[data.key].updateValue(val);
+            if(data.refreshField.callback)
+            {
+                data.refreshField.callback(data,response.json(),that.data[data.key]);
+            }
+            else {
+                let val = response.json()[data.refreshField.field]
+                if(data.refreshField.field=='weight')
+                    val = val / this.baseWeight
+                that.data[data.key].updateValue(val);
+            }
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
     }

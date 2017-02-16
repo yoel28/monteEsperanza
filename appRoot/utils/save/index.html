@@ -20,7 +20,7 @@
                                                         <div [class.col-lg-12]="!rules[key].object" [class.col-lg-10]="rules[key].object || rules[key].refreshField" >
                                                             <div class="input-group input-icon right form-group">
                                                                 <i class="{{rules[key].icon}} z-index"></i>
-                                                                <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
+                                                                <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}&nbsp;<span *ngIf="key == keyFindData" class="fa fa fa-spinner fa-spin"></span>
                                                                 <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
                                                                 </span>
 
@@ -39,6 +39,27 @@
                                                                           [readonly]="rules[key].readOnly">
 
                                                                 </textarea>
+
+                                                                <div *ngIf="rules[key].type == 'list'">
+                                                                    <input tags-input data-role="tagsinput"
+                                                                           placeholder="{{rules[key].placeholder}}"
+                                                                           type="text"
+                                                                           [attr.aria-describedby]="key"
+                                                                           [readonly]="true"
+                                                                           [control]="data[key]"
+                                                                           ngControl="{{key}}"
+                                                                           [(ngModel)]="data[key].value"
+                                                                           (instance)="rules[key].refreshField ?(rules[key].refreshField.instance=$event||null):null"
+                                                                    >
+                                                                    <form (submit)="addTagManual($event,key)" *ngIf="rules[key].refreshField.tagFree">
+                                                                        <input placeholder="{{rules[key].placeholder}} Manual"
+                                                                               type="text"
+                                                                               [attr.aria-describedby]="key"
+                                                                               [attr.id]="key+'manual'"
+                                                                               class="form-control"
+                                                                        >
+                                                                    </form>
+                                                                </div>
 
                                                                 <input *ngIf="rules[key].type == 'date'" datepicker
                                                                        [format]="rules[key].format" (fecha)="loadDate($event,key)"

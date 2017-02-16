@@ -3,6 +3,7 @@ import {ModelBase} from "../common/modelBase";
 import {MCompany} from "../empresa/MCompany";
 import {MDrivers} from "../drivers/MDrivers";
 import {MTypeVehicle} from "../tipoVehiculo/MTypeVehicle";
+import {Save} from "../utils/save/save";
 
 export class MVehicle extends ModelBase{
     public rules={};
@@ -21,6 +22,45 @@ export class MVehicle extends ModelBase{
         this.driver = new MDrivers(this.myglobal);
     }
     initRules(){
+        this.rules['tags'] = {
+            'type': 'list',
+            'maxLength': '35',
+            'prefix':'TAG',
+            'value':[],
+            'update': this.permissions.update,
+            'search': this.permissions.filter,
+            'visible': this.permissions.visible,
+            'key': 'tags',
+            'title': 'Tag',
+            'refreshField':{
+                'icon':'fa-refresh',
+                'endpoint':'/antennas/read',
+                'tagFree':this.permissions.tagFree || true, // TODO: quitar true
+                'instance':null,//tipo list van a mantener la instancia para poder manipular el objecto
+                'callback':function (rule,newData) {
+                    newData.forEach(ant=> {
+                        ant.tags.forEach(tag => {
+
+                            if(tag.plate){
+                                rule.refreshField.instance.addValue({
+                                    'id': -2,
+                                    'value': tag.epc,
+                                    'title': ant.way + '(' + (ant.reference) + ') Asignado al vehiculo '+tag.plate
+                                });
+                            }
+                            else {
+                                rule.refreshField.instance.addValue({
+                                    'id': ant.id,
+                                    'value': tag.epc,
+                                    'title': ant.way + '(' + (ant.reference) + ')'
+                                });
+                            }
+                        })
+                    });
+                },
+            },
+            'placeholder': 'Tags',
+        };
 
         this.rules['image']={
             'type': 'image',
@@ -33,6 +73,52 @@ export class MVehicle extends ModelBase{
 
         this.rules['plate']={
             'type': 'text',
+            'callBack':function(save:Save,value:string){
+                let where = "?where="+encodeURI('[["op":"eq","field":"plate","value":"'+value+'"]]');
+                let successCallback =(response)=>{
+                    save.keyFindData = '';
+                    let data = response.json();
+                    if(data.count == 1){
+                        data = data.list[0];
+                        save.id = data.id;
+                        save.params.updateField=true;
+                        Object.assign(save.dataSelect,data);
+
+                        save.data['weight'].updateValue(data.weight);
+
+                        data['tags'].forEach(tag=>{
+                            save.rules['tags'].refreshField.instance.addValue(
+                                {
+                                    'id': -1,
+                                    'value': tag.number,
+                                    'title': 'Tag Asignado'
+                                }
+                            );
+                        });
+
+
+                        save.search = {'key':'vehicleType'};
+                        save.getDataSearch({id:data.vehicleTypeId,title:data.vehicleTypeTitle,detail:data.vehicleTypeDetail});
+                        save.search = {'key':'company'};
+                        save.getDataSearch({id:data.companyId,title:data.companyName,detail:data.companyRuc});
+                        save.search = {'key':'chofer'};
+                        save.getDataSearch({id:data.choferId,title:data.choferPhone,detail:data.choferNombre});
+
+
+
+                    }
+                };
+                if(save.id){
+                    save.resetForm();
+                    save.data['plate'].updateValue(value);
+                }
+                else
+                {
+                    save.keyFindData = 'plate';
+                    save.httputils.doGet('/vehicles/'+where,successCallback,save.error);
+                }
+
+            },
             'icon':'fa fa-font',
             'required':true,
             'maxLength':'35',
@@ -69,7 +155,9 @@ export class MVehicle extends ModelBase{
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
-    initPermissions() {}
+    initPermissions() {
+        this.permissions['tagFree'] =  this.myglobal.existsPermission(this.prefix+'_TAG_FREE');
+    }
     initParamsSearch() {
         this.paramsSearch.title="Buscar vehículo";
         this.paramsSearch.placeholder="Ingrese vehículo";
@@ -87,7 +175,11 @@ export class MVehicle extends ModelBase{
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
+
+
+        delete this.rules['tags'];
         delete this.rulesSave.enabled;
+        delete this.rulesSave.image;
     }
 
 }
