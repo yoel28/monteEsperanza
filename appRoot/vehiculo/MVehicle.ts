@@ -38,26 +38,32 @@ export class MVehicle extends ModelBase{
                 'tagFree':this.permissions.tagFree || true, // TODO: quitar true
                 'instance':null,//tipo list van a mantener la instancia para poder manipular el objecto
                 'callback':function (rule,newData) {
-                    newData.forEach(ant=> {
-                        ant.tags.forEach(tag => {
+                    if(newData && newData.forEach){
+                        newData.forEach(ant=> {
+                            if(ant.tags){
+                                ant.tags.forEach(tag => {
 
-                            if(tag.plate){
-                                rule.refreshField.instance.addValue({
-                                    'id': -2,
-                                    'value': tag.epc,
-                                    'title': ant.way + '(' + (ant.reference) + ') Asignado al vehiculo '+tag.plate
-                                });
+                                    if(tag.plate){
+                                        rule.refreshField.instance.addValue({
+                                            'id': -2,
+                                            'value': tag.epc,
+                                            'title': ant.way + '(' + (ant.reference) + ') Asignado al vehiculo '+tag.plate
+                                        });
+                                    }
+                                    else {
+                                        rule.refreshField.instance.addValue({
+                                            'id': ant.id,
+                                            'value': tag.epc,
+                                            'title': ant.way + '(' + (ant.reference) + ')'
+                                        });
+                                    }
+                                })
                             }
-                            else {
-                                rule.refreshField.instance.addValue({
-                                    'id': ant.id,
-                                    'value': tag.epc,
-                                    'title': ant.way + '(' + (ant.reference) + ')'
-                                });
-                            }
-                        })
-                    });
-                },
+                        });
+                    }
+                    if(newData.error)
+                        this.myglobal.toastr.error(newData.error,'Notificación');
+                }.bind(this),
             },
             'placeholder': 'Tags',
         };
