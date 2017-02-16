@@ -352,7 +352,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     }
 
-    resetForm(){
+    resetForm(event?){
+        if(event)
+            event.preventDefault();
         let that=this;
         this.search={};
         this.searchId={};
@@ -397,7 +399,6 @@ export class OperacionSave extends ControllerBase implements OnInit{
     loadReadOperations(event){
         if(event)
             event.preventDefault();
-        this.resetForm();
         let that= this;
         let successCallback= response => {
             Object.assign(that.dataList,response.json());
@@ -406,9 +407,13 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 that.loadOperationIn(that.dataList.entrada);
             if(that.dataList && that.dataList.salida && that.dataList.salida.operations && that.dataList.salida.operations.length == 1 && this.noInWithoutOut)
                 that.loadOperationOut(that.dataList.salida.operations[0]);
-
         };
-        this.httputils.doGet('/read',successCallback,this.error);
+        if(!(this.data['vehicle'].valid && this.data['vehicle'].value && this.data['vehicle'].value.length))
+        {
+            that.resetForm();
+            this.httputils.doGet('/read',successCallback,this.error);
+        }
+
     }
 
     loadEdit(data){

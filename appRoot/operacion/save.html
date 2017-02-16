@@ -195,6 +195,11 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button (click)="resetForm($event)" type="button" data-dismiss="modal" class="btn btn-blue">
+                    <i class="fa fa-eraser"></i>
+                    Limpiar
+                </button>&nbsp;
+
                 <button *ngIf="readOperations" (click)="loadReadOperations($event)" type="button" class="btn btn-blue">
                     <i class="fa fa-refresh"></i>
                     Buscar antenas
