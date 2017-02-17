@@ -179,8 +179,8 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         event.preventDefault();
         this.dataOperation=data;
         if(this.operacionSave) {
-            this.operacionSave.pendingId=data.id;
             this.operacionSave.loadOperationIn(data);
+            this.operacionSave.pendingId=data.id;
         }
     }
     
