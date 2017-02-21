@@ -6,6 +6,7 @@ import {MCompany} from "../empresa/MCompany";
 import {MDrivers} from "../drivers/MDrivers";
 import {MVehicle} from "../vehiculo/MVehicle";
 import {MContainer} from "../container/MContainer";
+import {MPlace} from "../place/MPlace";
 
 export class MOperacion extends ModelBase{
     public rules={};
@@ -16,6 +17,7 @@ export class MOperacion extends ModelBase{
     public chofer:any;
     public vehicle:any;
     public container:any;
+    public place:any;
 
     constructor(public myglobal:globalService){
         super('OP','/operations/',myglobal);
@@ -28,6 +30,7 @@ export class MOperacion extends ModelBase{
         this.chofer = new MDrivers(this.myglobal);
         this.vehicle = new MVehicle(this.myglobal);
         this.container = new MContainer(this.myglobal);
+        this.place = new MPlace(this.myglobal);
     }
     initRules(){
 
@@ -75,6 +78,10 @@ export class MOperacion extends ModelBase{
         this.rules['route']=this.route.ruleObject;
         this.rules['route'].update=this.permissions.update;
 
+        this.rules['place']=this.place.ruleObject;
+        this.rules['place'].required=false;
+        this.rules['place'].update=this.permissions.update;
+
         this.rules['weightIn']={
                 'type': 'number',
                 'readOnly': this.permissions['lockWeight'],
@@ -95,7 +102,7 @@ export class MOperacion extends ModelBase{
                     'endpoint':'/weight/',
                     'field':'weight',
                 }
-            }
+            };
 
         this.rules['weightOut']={
             'type': 'number',
@@ -117,7 +124,7 @@ export class MOperacion extends ModelBase{
                 'endpoint':'/weight/',
                 'field':'weight',
             }
-        }
+        };
 
         this.rules['comment']={
             'type': 'textarea',
