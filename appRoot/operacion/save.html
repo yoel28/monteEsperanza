@@ -95,6 +95,27 @@
                                                                         placeholder="{{model.rules[key].placeholder}}" rows="5"
                                                                         ></textarea>
 
+                                                            <div *ngIf="model.rules[key].type == 'list' && place">
+                                                                <input tags-input data-role="tagsinput"
+                                                                       class="form-control"
+                                                                       placeholder="{{model.rules[key].placeholder}}"
+                                                                       type="text"
+                                                                       [attr.aria-describedby]="key"
+                                                                       [readonly]="true"
+                                                                       [control]="data[key]"
+                                                                       [type]="'inlist'"
+                                                                       [data]="place"
+                                                                       ngControl="{{key}}"
+                                                                       [(ngModel)]="data[key].value"
+                                                                       (instance)="model.rules[key].instance=$event"
+                                                                >
+                                                            </div>
+                                                            <input *ngIf="model.rules[key].type == 'list' && !place " class="form-control"
+                                                                   placeholder="No se han cargado lugares"
+                                                                   [readonly]="true"
+                                                            >
+
+
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
                                                                 <div *ngFor="let error of getObjectKeys(data[key].errors || {})">
                                                                     {{ msg[error] || 'El campo contiene errores'}}
@@ -106,19 +127,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 padding-top-4">
-                                                        <button *ngIf="model.rules[key].refreshField " tabindex="-1"
+                                                        <span *ngIf="model.rules[key].refreshField " tabindex="-1"
                                                                 class="btn btn-box-tool fa {{model.rules[key].refreshField.icon}} text-blue"
-                                                                (click)="refreshField($event,model.rules[key])">
-                                                        </button>
-                                                        <button *ngIf="model.rules[key].object && !model.rules[key].readOnly" tabindex="-1"
+                                                                (click)="refreshField(null,model.rules[key])">
+                                                        </span>
+                                                        <span *ngIf="model.rules[key].object && !model.rules[key].readOnly" tabindex="-1"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
-                                                                (click)="getLoadSearch($event,model.rules[key])">
-                                                        </button>
-                                                        <button *ngIf="model.rules[key].object && key=='company' && searchId[key]" tabindex="-1"
+                                                                (click)="getLoadSearch(null,model.rules[key])">
+                                                        </span>
+                                                        <span *ngIf="model.rules[key].object && key=='company' && searchId[key]" tabindex="-1"
                                                                 data-toggle="modal" data-target="#saveRecarga"
                                                                 class="btn btn-box-tool fa fa-money text-green"
-                                                                (click)="getLoadRecharge($event,searchId[key])">
-                                                        </button>
+                                                                (click)="getLoadRecharge(null,searchId[key])">
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
