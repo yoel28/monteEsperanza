@@ -81,6 +81,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
                                     return null;
                             }
                         }
+                        if(key == 'route')
+                            that.place=null;
                         delete that.searchId[key];
                         return null;
                     });
@@ -268,20 +270,41 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
 
         if(data.routePlaces || data.places){
-            this.loadPlace(data.routePlaces || data.places)
+            this.loadPlace((data.routePlaces || data.places),this.search.key)
         }
 
         this.checkBalance();
         this.dataList=[];
+        this.search={};
     }
 
-    public place:Object;
-    loadPlace(place){
-        this.place = null;
-        setTimeout((()=>{
-            this.place = {};
-            Object.assign(this.place,place)
-        },10).bind(this));
+    public place:any;
+    loadPlace(place,key){
+        if((this.searchId['route'] && this.searchId['route'].default) || key == 'route'){
+            this.place = null;
+            if(this.model.rules['place'] && this.model.rules['place'].instance)
+                this.model.rules['place'].instance.removeAll();
+            let that = this;
+            setTimeout(()=>{
+                that.place = [];
+                that.place = place;
+            },10);
+        }
+    }
+    loadPlaceAll(){
+        let that = this;
+        if(this.place && this.place.length){
+            setTimeout(()=>{
+                if(that.model.rules['place'] && that.model.rules['place'].instance){
+                    that.place.forEach(obj=>{
+                        that.model.rules['place'].instance.addValue(obj);
+                    })
+                }
+                else {
+                    that.loadPlaceAll();
+                }
+            },100);
+        }
     }
 
     checkBalance(){
@@ -369,7 +392,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
         this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
         this.data['route'].updateValue(data.routeReference);
-        //this.model.rulesSave['route'].readOnly=false;
+
+        this.place = data.place;
+        this.loadPlaceAll();
 
         this.data['weightIn'].updateValue(data.weightIn);
         //this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
