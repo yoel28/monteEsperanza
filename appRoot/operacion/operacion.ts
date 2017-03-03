@@ -120,6 +120,11 @@ export class Operacion extends ControllerBase implements OnInit {
             'visible': this.model.permissions.automatic,
         };
 
+        this.viewOptions.actions.image = {
+            'visible': this.model.permissions.image,
+            'server':this.myglobal.getParams('SERVER_IMAGE')
+        };
+
 
         if(this.model.permissions.update){
             this.viewOptions.actions.edit = {
