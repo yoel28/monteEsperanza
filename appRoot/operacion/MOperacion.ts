@@ -78,9 +78,21 @@ export class MOperacion extends ModelBase{
         this.rules['route']=this.route.ruleObject;
         this.rules['route'].update=this.permissions.update;
 
-        this.rules['place']=this.place.ruleObject;
-        this.rules['place'].required=false;
-        this.rules['place'].update=this.permissions.update;
+        this.rules['place'] = {
+            'type': 'list',
+            'maxLength': '35',
+            'prefix':'TAG',
+            'value':[],
+            'update': this.permissions.update,
+            'search': this.permissions.filter,
+            'visible': this.permissions.visible,
+            'key': 'place',
+            'title': 'Lugares',
+            'placeholder': 'Lugares',
+            'instance':null
+        };
+
+
 
         this.rules['weightIn']={
                 'type': 'number',
@@ -149,6 +161,7 @@ export class MOperacion extends ModelBase{
         this.permissions['viewAdd'] = this.myglobal.existsPermission(this.prefix + '_VIEW_ADD');
         this.permissions['lockWeight'] = this.myglobal.existsPermission(this.prefix + '_LOCK_WEIGHT');
         this.permissions['lockVeh'] = this.myglobal.existsPermission(this.prefix + '_LOCK_VEH');
+        this.permissions['image'] = this.myglobal.existsPermission(this.prefix + '_IMAGE') ;
 
     }
     initParamsSearch() {
