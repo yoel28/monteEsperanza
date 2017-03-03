@@ -149,6 +149,9 @@
                                            (click)="dataSelect = data" href="#" title="Eliminar">
                                             <span class="fa fa-trash fa-lg btn"></span>
                                         </a>
+                                        <a *ngIf="action == 'image'" target="_blank" href="{{viewOptions.actions.image.server+''+data.id}}" title="Ver imagenes">
+                                            <span class="fa fa-photo fa-lg btn"></span>
+                                        </a>
 
                                         <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
                                            data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
