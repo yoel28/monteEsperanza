@@ -103,7 +103,7 @@ export class MOperacion extends ModelBase{
                 'hidden': false,
                 'double': true,
                 'update':this.permissions.update,
-                'search':this.permissions.filter,
+                'search':this.permissions.filter && false,
                 'visible':this.permissions.visible,
                 'key': 'weightIn',
                 'icon':'fa fa-balance-scale',
