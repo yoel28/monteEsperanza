@@ -84,7 +84,7 @@ export class MOperacion extends ModelBase{
             'prefix':'TAG',
             'value':[],
             'update': this.permissions.update,
-            'search': this.permissions.filter,
+            'search': this.permissions.filter && false,
             'visible': this.permissions.visible,
             'key': 'place',
             'title': 'Lugares',
