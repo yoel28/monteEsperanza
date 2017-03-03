@@ -11,6 +11,9 @@ import moment from "moment/moment";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
+import 'rxjs/add/operator/debounceTime';
+import {TagsInput} from "../common/tagsinput";
+
 declare var SystemJS:any;
 
 @Component({
@@ -19,7 +22,7 @@ declare var SystemJS:any;
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     inputs:['idModal'],
     outputs:['save','getInstance'],
-    directives:[Search,RecargaSave],
+    directives:[Search,RecargaSave,TagsInput],
 })
 export class OperacionSave extends ControllerBase implements OnInit{
 
@@ -77,8 +80,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
                                 if(that.searchId[key].detail == c.value)
                                     return null;
                             }
-                            return {object: {valid: true}};
                         }
+                        delete that.searchId[key];
                         return null;
                     });
             }
@@ -97,9 +100,12 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(that.model.rulesSave[key].value)
                 that.data[key].updateValue(that.model.rulesSave[key].value);
 
-            if(that.model.rulesSave[key].object)
+            if(that.model.rulesSave[key].object && false)
             {
-                that.data[key].valueChanges.subscribe((value: string) => {
+                that.data[key]
+                    .valueChanges
+                    .debounceTime(3000)
+                    .subscribe((value: string) => {
                     if(value && value.length > 0){
                         that.search=that.model.rulesSave[key];
                         that.findControl = value;
@@ -130,7 +136,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         let that=this;
         Object.keys(body).forEach((key:string)=>{
             if(that.model.rulesSave[key].object){
-                body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
+                body[key]=that.searchId[key]?(that.searchId[key].id||body[key]): body[key];
             }
             if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
@@ -193,7 +199,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
     public searchId:any={};
     //Al hacer click en la lupa guarda los valores del objecto
     getLoadSearch(event,data){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         this.findControl="";
         this.search=data;
         this.max = 5;
@@ -201,7 +208,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         this.setEndpoint(this.search.paramsSearch.endpoint+value);
         this.loadData();
     }
@@ -249,8 +257,22 @@ export class OperacionSave extends ControllerBase implements OnInit{
             }
         }
 
+
+        if(data.routePlaces || data.places){
+            this.loadPlace(data.routePlaces || data.places)
+        }
+
         this.checkBalance();
         this.dataList=[];
+    }
+
+    public place:Object;
+    loadPlace(place){
+        this.place = null;
+        setTimeout((()=>{
+            this.place = {};
+            Object.assign(this.place,place)
+        },10).bind(this));
     }
 
     checkBalance(){
@@ -376,6 +398,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
     @ViewChild(RecargaSave)
     recargaSave:RecargaSave;
     getLoadRecharge(event,data){
+        if(event)
         event.preventDefault();
         if(this.recargaSave){
             this.recargaSave.idCompany=data.id;
@@ -384,8 +407,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     }
 
-    refreshField(event,data){
-        event.preventDefault();
+    refreshField(data){
         let that = this;
         let successCallback= response => {
             let val = response.json()[data.refreshField.field];
