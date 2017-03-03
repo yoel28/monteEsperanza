@@ -141,6 +141,15 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
             }
+            if(that.model.rules[key].type=='list'){
+                let data=[];
+                if(that.data[key] && that.data[key].value && that.data[key].value.length){
+                    that.data[key].value.forEach(obj=>{
+                        data.push(obj.value || obj);
+                    });
+                }
+                body[key]=data;
+            }
         });
         if(this.pendingId>0)
             body['pendingId']=this.pendingId;
@@ -385,12 +394,17 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.idOperacion="-1";
         this.readOperations=false;
         Object.keys(this.data).forEach(key=>{
-            (<Control>that.data[key]).updateValue(null);
-            (<Control>that.data[key]).setErrors(null);
-            that.data[key]._pristine=true;
-            if(that.model.rulesSave[key].readOnly && !that.model.rulesSave[key].protected)
-                that.model.rulesSave[key].readOnly=false;
-
+            if(that.model.rules[key].type!='list'){
+                (<Control>that.data[key]).updateValue(that.model.rules[key].value);
+                (<Control>that.data[key]).setErrors(that.model.rules[key].value);
+                that.data[key]._pristine=true;
+                if(that.model.rules[key].readOnly)
+                    that.model.rules[key].readOnly=false;
+            }
+            else{
+                if(that.model.rules[key] && that.model.rules[key].instance)
+                    that.model.rules[key].instance.removeAll()
+            }
         });
         this.model.rulesSave['weightOut'].hidden=true;
     }
