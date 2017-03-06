@@ -69,6 +69,7 @@ export class TagsInput implements OnInit{
         }
 
         that.control.updateValue(jQuery(that.el.nativeElement).tagsinput('items'));
+        that.addValueAll();
         this.instance.emit(this);
     }
     public addValue(data){
@@ -76,5 +77,12 @@ export class TagsInput implements OnInit{
     }
     public removeAll(){
         jQuery(this.el.nativeElement).tagsinput('removeAll');
+    }
+    public addValueAll(){
+        if(this.data && this.data.forEach){
+            this.data.forEach((obj=>{
+                this.addValue(obj);
+            }).bind(this));
+        }
     }
 }
