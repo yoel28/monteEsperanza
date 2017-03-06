@@ -376,6 +376,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
                 this.data['container'].updateValue(data.containerCode);
             }
+            if(data.containerInId){
+                this.searchId['container']={'id':data.containerInId,'title':data.containerInTitle,'detail':data.containerInCode};
+                this.data['container'].updateValue(data.containerInCode);
+            }
+            if(data.containerOutId){
+                this.searchId['container']={'id':data.containerOutId,'title':data.containerOutTitle,'detail':data.containerOutCode};
+                this.data['container'].updateValue(data.containerOutCode);
+            }
 
             if(data.weightOut){
                 this.data['weightOut'].updateValue(data.weightOut);
