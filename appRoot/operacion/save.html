@@ -80,6 +80,7 @@
                                                         ">
                                                             <i class="{{model.rules[key].icon || 'fa fa-list'}} z-index"></i>
                                                             <span class="input-group-addon" [attr.id]="key">{{model.rules[key].title}}
+                                                                &nbsp;<tooltip code="{{model.rules[key].tooltip  || 'SAVE_'+(key | uppercase)}}"></tooltip>
                                                             <label *ngIf="model.rules[key].required" class="text-red">&nbsp;*</label>
                                                             </span>
                                                             <input *ngIf="model.rules[key].type == 'text' || model.rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
@@ -88,6 +89,7 @@
                                                                    type="{{model.rules[key].type}}" [attr.aria-describedby]="key"
                                                                    step="any"
                                                                    [readonly]="model.rules[key].readOnly"
+                                                                   (keyup)="getLoadSearchKey($event,model.rules[key])"
                                                             >
 
                                                             <textarea *ngIf="model.rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
@@ -210,13 +212,16 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            {{msg.fieldRequired}}
+                            {{msg.fieldRequired}}<br>
+                            <span *ngIf="waitResponse"><i class="fa fa-spinner fa-spin" ></i>
+                            Por favor espere..
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button (click)="resetForm($event)" type="button" data-dismiss="modal" class="btn btn-blue">
+                <button (click)="resetForm($event)" type="button" data-dismiss="modal" class="btn btn-blue" [disabled]="waitResponse">
                     <i class="fa fa-eraser"></i>
                     Limpiar
                 </button>&nbsp;
@@ -226,13 +231,13 @@
                     Buscar antenas
                 </button>
 
-                <button *ngIf="idOperacion<0 && !readOperations" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
-                        [disabled]="!form.valid">
+                <button *ngIf="idOperacion<0 && !readOperations" (click)="submitForm($event)" type="button" class="btn btn-primary"
+                        [disabled]="!form.valid || waitResponse">
                     <i class="fa fa-save"></i>
                     Agregar entrada
                 </button>
-                <button *ngIf="idOperacion>=0 && !readOperations" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
-                        [disabled]="!form.valid">
+                <button *ngIf="idOperacion>=0 && !readOperations" (click)="patchForm($event)"  type="button" class="btn btn-primary"
+                        [disabled]="!form.valid || waitResponse">
                     <i class="fa fa-save"></i>
                     Agregar salida
                 </button>
