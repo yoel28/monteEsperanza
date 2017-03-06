@@ -13,8 +13,10 @@ import {TranslateService} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
 import 'rxjs/add/operator/debounceTime';
 import {TagsInput} from "../common/tagsinput";
+import {Tooltip} from "../utils/tooltips/tooltips";
 
 declare var SystemJS:any;
+declare var jQuery:any;
 
 @Component({
     selector: 'operacion-save',
@@ -22,7 +24,7 @@ declare var SystemJS:any;
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     inputs:['idModal'],
     outputs:['save','getInstance'],
-    directives:[Search,RecargaSave,TagsInput],
+    directives:[Search,RecargaSave,TagsInput,Tooltip],
 })
 export class OperacionSave extends ControllerBase implements OnInit{
 
@@ -79,6 +81,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
                             if(that.searchId[key]){
                                 if(that.searchId[key].detail == c.value)
                                     return null;
+                            }
+                            if(that.search && that.search.key && that.search.key == key){
+                                that.findControl = c.value;
                             }
                         }
                         if(key == 'route')
@@ -159,10 +164,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
         return body;
     }
     //submit
+
     submitForm(event){
         event.preventDefault();
         let that = this;
+        this.waitResponse = true;
         let successCallback= response => {
+            that.closeForm();
+            that.waitResponse = false;
             that.resetForm();
             that.save.emit(response.json());
             that.toastr.success('Guardado con éxito','Notificación')
@@ -174,11 +183,17 @@ export class OperacionSave extends ControllerBase implements OnInit{
         let body = this.getDataBody();
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
+    closeForm(){
+        jQuery('#'+this.idModal).modal('hide');
+    }
     //patch
     patchForm(event){
         event.preventDefault();
         let that=this;
+        this.waitResponse = true;
         let successCallback= response => {
+            that.closeForm();
+            that.waitResponse = false;
             that.resetForm();
             Object.assign(that.dataSelect,response.json());
             if(that.toastr)
@@ -212,10 +227,17 @@ export class OperacionSave extends ControllerBase implements OnInit{
     getLoadSearch(event,data){
         if(event)
             event.preventDefault();
-        this.findControl="";
+        this.findControl=this.data[data.key].value || '';
         this.search=data;
         this.max = 5;
-        this.getSearch(event,"");
+        this.getSearch(event,this.findControl);
+    }
+    getLoadSearchKey(event,data){
+       if(event && event.code && (event.code == 'Enter' || event.code == 'NumpadEnter')){
+           if(data.object){
+               this.getLoadSearch(null,data);
+           }
+       }
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
@@ -291,21 +313,21 @@ export class OperacionSave extends ControllerBase implements OnInit{
             },10);
         }
     }
-    loadPlaceAll(){
-        let that = this;
-        if(this.place && this.place.length){
-            setTimeout(()=>{
-                if(that.model.rules['place'] && that.model.rules['place'].instance){
-                    that.place.forEach(obj=>{
-                        that.model.rules['place'].instance.addValue(obj);
-                    })
-                }
-                else {
-                    that.loadPlaceAll();
-                }
-            },100);
-        }
-    }
+    // loadPlaceAll(){
+    //     let that = this;
+    //     if(this.place && this.place.length){
+    //         setTimeout(()=>{
+    //             if(that.model.rules['place'] && that.model.rules['place'].instance){
+    //                 that.place.forEach(obj=>{
+    //                     that.model.rules['place'].instance.addValue(obj);
+    //                 })
+    //             }
+    //             else {
+    //                 that.loadPlaceAll();
+    //             }
+    //         },100);
+    //     }
+    // }
 
     checkBalance(){
         if(this.searchId['company']){
@@ -394,7 +416,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.data['route'].updateValue(data.routeReference);
 
         this.place = data.place;
-        this.loadPlaceAll();
+        // this.loadPlaceAll();
 
         this.data['weightIn'].updateValue(data.weightIn);
         //this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
@@ -412,6 +434,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         if(event)
             event.preventDefault();
         let that=this;
+        this.waitResponse = false;
         this.search={};
         this.searchId={};
         this.dataList={};
@@ -446,7 +469,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     }
 
-    refreshField(data){
+    refreshField(event,data){
+        if(event)
+            event.preventDefault();
         let that = this;
         let successCallback= response => {
             let val = response.json()[data.refreshField.field];
