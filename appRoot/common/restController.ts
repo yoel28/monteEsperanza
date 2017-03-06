@@ -17,6 +17,7 @@ export class RestController implements OnInit {
     page:any = [];
     where:string = "";
     viewDelete:boolean=false;
+    waitResponse=false;
 
     constructor(public http:Http, public toastr?:ToastsManager) {
         this.httputils = new HttpUtils(http, toastr || null);
@@ -32,6 +33,7 @@ export class RestController implements OnInit {
     error = err => {
         //this.sound(err.status);
         let that = this;
+        this.waitResponse = false;
         if (that.toastr) {
             if(err.status == 200 && err.type==3)
                 that.toastr.error('Se a detectado un problema con el internet, Por favor conectarse a la red');
