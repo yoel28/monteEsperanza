@@ -16,12 +16,14 @@ declare var SystemJS:any;
 export class PermisosRol extends RestController implements OnInit{
 
     public dataSelect:any={};
+    public permissions:any={};
 
     constructor(public router: Router,public http: Http,public toastr: ToastsManager,public myglobal:globalService) {
         super(http,toastr);
     }
     ngOnInit(){
-
+        this.permissions['save'] = this.myglobal.existsPermission('ACL_UPDATE') ;
+        this.permissions['list'] = this.myglobal.existsPermission('MEN_ACL');
     }
     //advertencia
     public modalIn:boolean=true;
@@ -40,11 +42,14 @@ export class PermisosRol extends RestController implements OnInit{
     public dataPermissionsAll:any={};
     loadPermissions(){
         let that=this;
-        let successCallback= response => {
-            that.permissionsOrder(response.json());
-        };
-        this.httputils.doGet('/permissions?max=1000',successCallback,this.error)
+        if(this.myglobal.existsPermission('PERMISSION_LIST')){
+            let successCallback= response => {
+                that.permissionsOrder(response.json());
+            };
+            this.httputils.doGet('/permissions?max=1000',successCallback,this.error)
+        }
     }
+
     permissionsOrder(data){
         let that=this;
         data.list.forEach(obj=>{
@@ -71,6 +76,7 @@ export class PermisosRol extends RestController implements OnInit{
             this.httputils.doGet('/roles/?max=1000',successCallback,this.error)
         }
     }
+
     //Cargar Rol Seleccionado
     public role:any=[];
     public setRole(value){
@@ -144,17 +150,20 @@ export class PermisosRol extends RestController implements OnInit{
 
     //Guardar Permisos
     savePermissions(){
-        let permissions=[];
-        this.role.permissions.forEach(obj=>{
-            permissions.push(obj.id);
-        });
-        let body = JSON.stringify({'permissions':permissions});
-        let successCallback= response => {
-            let index = this.dataRoles.list.findIndex(obj => obj.id == this.role.id);
-            this.dataRoles.list[index].permissions = this.role.permissions;
-            this.toastr.success('Guardado con éxito')
+        if(this.permissions.save){
+            let permissions=[];
+            this.role.permissions.forEach(obj=>{
+                permissions.push(obj.id);
+            });
+            let body = JSON.stringify({'permissions':permissions});
+            let successCallback= response => {
+                let index = this.dataRoles.list.findIndex(obj => obj.id == this.role.id);
+                this.dataRoles.list[index].permissions = this.role.permissions;
+                this.toastr.success('Guardado con éxito')
+            }
+            this.httputils.doPost('/role/'+this.role.id+'/permissions/',body,successCallback,this.error)
         }
-        this.httputils.doPost('/role/'+this.role.id+'/permissions/',body,successCallback,this.error)
+
     }
 
 
