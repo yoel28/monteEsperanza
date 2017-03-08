@@ -240,7 +240,7 @@ export class DateRangepPicker implements OnInit {
             });
         jQuery(that.element).on('cancel.daterangepicker', function(ev, picker) {
             //do something, like clearing an input
-            that.fecha.emit({});
+            that.fecha.emit(null);
         });
     }
 }
