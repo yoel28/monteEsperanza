@@ -83,11 +83,11 @@ export class Caja extends RestController implements OnInit{
                 break;
             case "2" ://Semana Actual
                 this.dateStart.updateValue(moment().startOf('week').format('DD-MM-YYYY'));
-                this.dateEnd.updateValue(moment().endOf('week').format('DD-MM-YYYY'));
+                this.dateEnd.updateValue(moment().endOf('week').add(1,'day').format('DD-MM-YYYY'));
                 break;
             case "3" ://mes actual
                 this.dateStart.updateValue(moment().startOf('month').format('DD-MM-YYYY'));
-                this.dateEnd.updateValue(moment().endOf('month').format('DD-MM-YYYY'));
+                this.dateEnd.updateValue(moment().endOf('month').add(1,'day').format('DD-MM-YYYY'));
                 break;
             case "4" ://mes anterior
                 this.dateStart.updateValue(moment().subtract(1, 'month').startOf('month').format('DD-MM-YYYY'));
@@ -95,11 +95,11 @@ export class Caja extends RestController implements OnInit{
                 break;
             case "5" ://ultimos 3 meses
                 this.dateStart.updateValue(moment().subtract(3, 'month').startOf('month').format('DD-MM-YYYY'));
-                this.dateEnd.updateValue(moment().endOf('month').format('DD-MM-YYYY'));
+                this.dateEnd.updateValue(moment().add(1,'month').endOf('month').format('DD-MM-YYYY'));
                 break;
             case "6" ://ano actual
                 this.dateStart.updateValue(moment().startOf('year').format('DD-MM-YYYY'));
-                this.dateEnd.updateValue(moment().endOf('year').format('DD-MM-YYYY'));
+                this.dateEnd.updateValue(moment().endOf('year').add(1,'day').format('DD-MM-YYYY'));
                 break;
         }
         if(id!='-1')
