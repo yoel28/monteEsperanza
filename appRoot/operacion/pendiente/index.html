@@ -57,11 +57,13 @@
                             <th>Peso&nbsp;E.</th>
                             <th>Tiempo&nbsp;E.</th>
                             <th>Lote&nbsp;E.</th>
+                            <th>Contenedor&nbsp;E.</th>
 
                             <th>Fecha&nbsp;S.</th>
                             <th>Peso&nbsp;S.</th>
                             <th>Tiempo&nbsp;S.</th>
                             <th>Lote&nbsp;S.</th>
+                            <th>Contenedor&nbsp;S.</th>
 
                             <th>Descargado</th>
                             <th>Neto</th>
@@ -88,6 +90,7 @@
                             <td>{{ data.weightIn | number:'.0-3'}}</td>
                             <td>{{ data.timeBalIn || '-'}}</td>
                             <td>{{ data.lotValIn || '-'}}</td>
+                            <td>{{ data.containerInCode || '-'}}</td>
 
 
                             <td>{{formatDate(data.dateOut,'DD/MM/YYYY, LT',true,data.id)}}
@@ -96,6 +99,7 @@
                             <td>{{ data.weightOut | number:'.0-3'}}</td>
                             <td>{{ data.timeBalOut || '-'}} </td>
                             <td>{{ data.lotValOut || '-'}}</td>
+                            <td>{{ data.containerOutCode || '-'}}</td>
 
 
                             <td>{{ (data.weightIn - data.weightOut) | number:'.0-3'}}</td>
@@ -271,6 +275,16 @@
                                         <div class="col-lg-6">
                                             <strong>Tiempo S.:&nbsp;</strong>
                                             {{data.timeBalOut || '-'}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <strong>Contenedor E.:&nbsp;</strong>
+                                            {{data.containerInCode || '-'}}
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <strong>Contenedor S.:&nbsp;</strong>
+                                            {{data.containerOutCode || '-'}}
                                         </div>
                                     </div>
                                     <div class="col-lg-12">

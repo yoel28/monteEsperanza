@@ -50,8 +50,8 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view11'))
-                this.view = JSON.parse(localStorage.getItem('view11'));
+            if (localStorage.getItem('view12'))
+                this.view = JSON.parse(localStorage.getItem('view12'));
             this.ordenView();
             this.loadData();
         }
@@ -118,6 +118,11 @@ export class Operacion extends ControllerBase implements OnInit {
 
         this.viewOptions.actions.automatic = {
             'visible': this.model.permissions.automatic,
+        };
+
+        this.viewOptions.actions.image = {
+            'visible': this.model.permissions.image,
+            'server':this.myglobal.getParams('SERVER_IMAGE')
         };
 
 
@@ -225,9 +230,10 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': true, 'position': 15, 'title': 'Contenedor', 'key': 'containerCode'},
         {'visible': true, 'position': 16, 'title': 'Comentario', 'key': 'comment'},
         {'visible': true, 'position': 17, 'title': 'Habilitado', 'key': 'enabled'},
+        {'visible': true, 'position': 18, 'title': 'Lugar', 'key': 'place'},
 
     ];
-
+    public placeView:any={};
     setOrden(data, dir,event) {
         if(event)
            event.stopPropagation();
@@ -273,7 +279,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view11', JSON.stringify(this.view))
+        localStorage.setItem('view12', JSON.stringify(this.view))
     }
 
     setVisibleView(data,event) {
@@ -285,7 +291,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view11', JSON.stringify(this.view))
+        localStorage.setItem('view12', JSON.stringify(this.view))
     }
 
     edit(data){

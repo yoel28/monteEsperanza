@@ -11,7 +11,12 @@ import moment from "moment/moment";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
+import 'rxjs/add/operator/debounceTime';
+import {TagsInput} from "../common/tagsinput";
+import {Tooltip} from "../utils/tooltips/tooltips";
+
 declare var SystemJS:any;
+declare var jQuery:any;
 
 @Component({
     selector: 'operacion-save',
@@ -19,7 +24,7 @@ declare var SystemJS:any;
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     inputs:['idModal'],
     outputs:['save','getInstance'],
-    directives:[Search,RecargaSave],
+    directives:[Search,RecargaSave,TagsInput,Tooltip],
 })
 export class OperacionSave extends ControllerBase implements OnInit{
 
@@ -77,8 +82,13 @@ export class OperacionSave extends ControllerBase implements OnInit{
                                 if(that.searchId[key].detail == c.value)
                                     return null;
                             }
-                            return {object: {valid: true}};
+                            if(that.search && that.search.key && that.search.key == key){
+                                that.findControl = c.value;
+                            }
                         }
+                        if(key == 'route')
+                            that.place=null;
+                        delete that.searchId[key];
                         return null;
                     });
             }
@@ -97,9 +107,12 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(that.model.rulesSave[key].value)
                 that.data[key].updateValue(that.model.rulesSave[key].value);
 
-            if(that.model.rulesSave[key].object)
+            if(that.model.rulesSave[key].object && false)
             {
-                that.data[key].valueChanges.subscribe((value: string) => {
+                that.data[key]
+                    .valueChanges
+                    .debounceTime(3000)
+                    .subscribe((value: string) => {
                     if(value && value.length > 0){
                         that.search=that.model.rulesSave[key];
                         that.findControl = value;
@@ -130,10 +143,19 @@ export class OperacionSave extends ControllerBase implements OnInit{
         let that=this;
         Object.keys(body).forEach((key:string)=>{
             if(that.model.rulesSave[key].object){
-                body[key]=that.searchId[key]?(that.searchId[key].id||null): null;
+                body[key]=that.searchId[key]?(that.searchId[key].id||body[key]): body[key];
             }
             if(that.model.rulesSave[key].type == 'number' && body[key]!=""){
                 body[key]=parseFloat(body[key]);
+            }
+            if(that.model.rules[key].type=='list'){
+                let data=[];
+                if(that.data[key] && that.data[key].value && that.data[key].value.length){
+                    that.data[key].value.forEach(obj=>{
+                        data.push(obj.value || obj);
+                    });
+                }
+                body[key]=data;
             }
         });
         if(this.pendingId>0)
@@ -142,10 +164,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
         return body;
     }
     //submit
+
     submitForm(event){
         event.preventDefault();
         let that = this;
+        this.waitResponse = true;
         let successCallback= response => {
+            that.closeForm();
+            that.waitResponse = false;
             that.resetForm();
             that.save.emit(response.json());
             that.toastr.success('Guardado con éxito','Notificación')
@@ -157,11 +183,17 @@ export class OperacionSave extends ControllerBase implements OnInit{
         let body = this.getDataBody();
         this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
+    closeForm(){
+        jQuery('#'+this.idModal).modal('hide');
+    }
     //patch
     patchForm(event){
         event.preventDefault();
         let that=this;
+        this.waitResponse = true;
         let successCallback= response => {
+            that.closeForm();
+            that.waitResponse = false;
             that.resetForm();
             Object.assign(that.dataSelect,response.json());
             if(that.toastr)
@@ -193,15 +225,24 @@ export class OperacionSave extends ControllerBase implements OnInit{
     public searchId:any={};
     //Al hacer click en la lupa guarda los valores del objecto
     getLoadSearch(event,data){
-        event.preventDefault();
-        this.findControl="";
+        if(event)
+            event.preventDefault();
+        this.findControl=this.data[data.key].value || '';
         this.search=data;
         this.max = 5;
-        this.getSearch(event,"");
+        this.getSearch(event,this.findControl);
+    }
+    getLoadSearchKey(event,data){
+       if(event && event.code && (event.code == 'Enter' || event.code == 'NumpadEnter')){
+           if(data.object){
+               this.getLoadSearch(null,data);
+           }
+       }
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         this.setEndpoint(this.search.paramsSearch.endpoint+value);
         this.loadData();
     }
@@ -249,9 +290,44 @@ export class OperacionSave extends ControllerBase implements OnInit{
             }
         }
 
+
+        if(data.routePlaces || data.places){
+            this.loadPlace((data.routePlaces || data.places),this.search.key)
+        }
+
         this.checkBalance();
         this.dataList=[];
+        this.search={};
     }
+
+    public place:any;
+    loadPlace(place,key){
+        if((this.searchId['route'] && this.searchId['route'].default) || key == 'route'){
+            this.place = null;
+            if(this.model.rules['place'] && this.model.rules['place'].instance)
+                this.model.rules['place'].instance.removeAll();
+            let that = this;
+            setTimeout(()=>{
+                that.place = [];
+                that.place = place;
+            },10);
+        }
+    }
+    // loadPlaceAll(){
+    //     let that = this;
+    //     if(this.place && this.place.length){
+    //         setTimeout(()=>{
+    //             if(that.model.rules['place'] && that.model.rules['place'].instance){
+    //                 that.place.forEach(obj=>{
+    //                     that.model.rules['place'].instance.addValue(obj);
+    //                 })
+    //             }
+    //             else {
+    //                 that.loadPlaceAll();
+    //             }
+    //         },100);
+    //     }
+    // }
 
     checkBalance(){
         if(this.searchId['company']){
@@ -300,6 +376,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.searchId['container']={'id':data.containerId,'title':data.containerTitle,'detail':data.containerCode};
                 this.data['container'].updateValue(data.containerCode);
             }
+            if(data.containerInId){
+                this.searchId['container']={'id':data.containerInId,'title':data.containerInTitle,'detail':data.containerInCode};
+                this.data['container'].updateValue(data.containerInCode);
+            }
+            if(data.containerOutId){
+                this.searchId['container']={'id':data.containerOutId,'title':data.containerOutTitle,'detail':data.containerOutCode};
+                this.data['container'].updateValue(data.containerOutCode);
+            }
 
             if(data.weightOut){
                 this.data['weightOut'].updateValue(data.weightOut);
@@ -338,7 +422,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
         this.searchId['route']={'id':data.routeId,'title':data.routeTitle,'detail':data.routeReference};
         this.data['route'].updateValue(data.routeReference);
-        //this.model.rulesSave['route'].readOnly=false;
+
+        this.place = data.place;
+        // this.loadPlaceAll();
 
         this.data['weightIn'].updateValue(data.weightIn);
         //this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
@@ -356,6 +442,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         if(event)
             event.preventDefault();
         let that=this;
+        this.waitResponse = false;
         this.search={};
         this.searchId={};
         this.dataList={};
@@ -363,12 +450,17 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.idOperacion="-1";
         this.readOperations=false;
         Object.keys(this.data).forEach(key=>{
-            (<Control>that.data[key]).updateValue(null);
-            (<Control>that.data[key]).setErrors(null);
-            that.data[key]._pristine=true;
-            if(that.model.rulesSave[key].readOnly && !that.model.rulesSave[key].protected)
-                that.model.rulesSave[key].readOnly=false;
-
+            if(that.model.rules[key].type!='list'){
+                (<Control>that.data[key]).updateValue(that.model.rules[key].value);
+                (<Control>that.data[key]).setErrors(that.model.rules[key].value);
+                that.data[key]._pristine=true;
+                if(that.model.rules[key].readOnly)
+                    that.model.rules[key].readOnly=false;
+            }
+            else{
+                if(that.model.rules[key] && that.model.rules[key].instance)
+                    that.model.rules[key].instance.removeAll()
+            }
         });
         this.model.rulesSave['weightOut'].hidden=true;
     }
@@ -376,6 +468,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
     @ViewChild(RecargaSave)
     recargaSave:RecargaSave;
     getLoadRecharge(event,data){
+        if(event)
         event.preventDefault();
         if(this.recargaSave){
             this.recargaSave.idCompany=data.id;
@@ -385,7 +478,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
     }
 
     refreshField(event,data){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         let that = this;
         let successCallback= response => {
             let val = response.json()[data.refreshField.field];

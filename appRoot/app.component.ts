@@ -57,6 +57,7 @@ import {Container} from "./container/container";
 import {MOperacion} from "./operacion/MOperacion";
 import {Register} from "./register/register";
 import {ReporteClienteMensual} from "./reportes/mensualCliente/mensualCliente.component";
+import {Place} from "./place/place";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -98,6 +99,7 @@ declare var jQuery:any;
     {path: '/roles', name: 'Rol', component: Rol},
     {path: '/factura', name: 'RecargaIngresos', component: RecargaIngresos},
     {path: '/caja', name: 'Caja', component: Caja},
+    {path: '/lugar', name: 'Place', component: Place},
 
     {path: '/reporte/grupos', name: 'ReporteGrupos', component: ReporteGrupos},
     {path: '/reporte/grupos/rutas', name: 'GruposRutas', component: GruposRutas},
@@ -399,7 +401,7 @@ export class AppComponent extends RestController implements OnInit {
                 'visible': this.myglobal.existsPermission("MEN_USERS") || this.myglobal.existsPermission("MEN_CLIENTES")
                 || this.myglobal.existsPermission("MEN_VEH") || this.myglobal.existsPermission("MEN_TAG")
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
-                || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH"),
+                || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH") || this.myglobal.existsPermission("MEN_PLACE"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -451,6 +453,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-user',
                         'title': 'Tipo de vehículo',
                         'routerLink': 'TipoVehiculo'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_PLACE"),
+                        'icon': 'fa fa-user',
+                        'title': 'Lugares',
+                        'routerLink': 'Place'
                     },
                 ]
 
