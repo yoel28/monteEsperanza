@@ -17,29 +17,24 @@
             <div  class="modal-body row marginmodel">
                 <template [ngIf]="data && data.images && data.images.length > 0 && !data.selectFolder"]>
                     <div *ngFor="let image of data.images">
-                        <div class="col-md-4 " title="click para ver imagenes">
-
-                            <i  class="fa fa-folder-o fa-3x cursor" aria-hidden="true" (click)="openFolder(image.folder)"></i>
-                            <span class="cursor" (click)="openFolder(image.folder)">{{image.folder}}<br>{{image.created}}</span>
-
+                        <div *ngIf="image.folder!=''" class="col-md-4 " title="click para ver imagenes del dia {{image.created}}">
+                            <img src="/assets/img/others/folder_full_image.png"  class="cursor imagen"  (click)="openFolder(image.folder)"/>
+                            <span class="cursor" (click)="openFolder(image.folder)">{{image.folder}}</span>
                         </div>
                     </div>
                 </template>
 
                 <template [ngIf]="data.selectFolder && !data.selectImage">
                     <!--<span type="button" class="btn btn-info volver" (click)="data.selectFolder=null">volver</span>-->
-
-                        <img title="click para ver imagen completa" class="col-md-4 col-lg-4 col-xs-6 col-sm-6 cursor" *ngFor="let index of listImage" (click)="data.selectImage=index" [attr.src]="server+data.id+'/'+data.selectFolder+'/thumb'+index+'.jpg'" />
+                        <img title="click para ver imagen completa" class="col-md-4 col-lg-4 col-xs-6 col-sm-6 cursor imagen"
+                             *ngFor="let index of listImage" (click)="data.selectImage=index" [attr.src]="server+data.id+'/'+data.selectFolder+'/thumb'+index+'.jpg'" />
 
                 </template>
                 <template [ngIf]="data.selectFolder && data.selectImage">
                     <!--<span (click)="data.selectImage=null">volver</span>-->
-                    <img class="col-md-12 col-lg-12 col-xs-12 col-sm-12"  [attr.src]="server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'" />
+                    <img class="col-md-12 col-lg-12 col-xs-12 col-sm-12 imagen"  [attr.src]="server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'" />
                 </template>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
