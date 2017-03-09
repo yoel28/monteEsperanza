@@ -11,6 +11,26 @@ export class HttpUtils {
         return (isAbosulte?'':localStorage.getItem('urlAPI')) + endpoint;
     }
 
+    doGetFile(endpoint:string, successCallback, errorCallback ,isEndpointAbsolute = false) {
+        let that = this;
+        endpoint=this.createEndpoint(endpoint,isEndpointAbsolute);
+        return new Promise<any>((resolve, reject) => {
+            this.http.get(endpoint, {headers: contentHeaders})
+                .subscribe(
+                    response => {
+                        that.valideVersion();
+                        if (successCallback != null)
+                            successCallback(response);
+                        resolve(response);
+                    },
+                    error => {
+                        if (errorCallback != null)
+                            errorCallback(error);
+                        reject(error);
+                    }
+                )
+        });
+    }
     doGet(endpoint:string, successCallback, errorCallback ,isEndpointAbsolute = false) {
         let that = this;
         endpoint=this.createEndpoint(endpoint,isEndpointAbsolute);
