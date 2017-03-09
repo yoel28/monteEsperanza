@@ -14,15 +14,18 @@ import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
 import {Tooltip} from "../utils/tooltips/tooltips";
+import {galeriaComponent, IGaleriaData} from "./galeria/galeriaFolder";
+
 
 declare var SystemJS:any;
+declare var jQuery:any;
 
 @Component({
     selector: 'operacion',
     templateUrl: SystemJS.map.app+'/operacion/index.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     providers: [TranslateService],
-    directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen,Tooltip],
+    directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen,Tooltip,galeriaComponent],
     pipes: [TranslatePipe]
 })
 export class Operacion extends ControllerBase implements OnInit {
@@ -176,6 +179,44 @@ export class Operacion extends ControllerBase implements OnInit {
             }
             return this.httputils.doPut(endpoint + data.id, body, successCallback, error)
         }
+    }
+
+
+
+
+
+
+    //galeria por carpetas.
+    public dataGaleria:IGaleriaData;
+
+    galeriaFolder(id){
+        let that = this;
+        let successCallback= response => {
+             let data =  response._body.split('\n');
+             that.dataGaleria = {
+                    title: "Operacion: "+id,
+                    images:[],
+                    id:id,
+                    selectFolder:null,
+                    selectImage:null,
+             };
+             data.forEach(obj=>{
+                 let val = obj.split('/');
+                 that.dataGaleria.images.push({
+                     folder:val[0],
+                     created:val[1]
+                 });
+             });
+            jQuery('#myModal1').modal('show');
+        };
+        let error = err => {
+            this.waitResponse = false;
+            if (that.toastr) {
+                that.toastr.error('No se encontraron imagenes para esta operacion');
+            }
+        }
+        this.httputils.doGetFile(this.viewOptions.actions.image.server+id + '/file.txt',successCallback,error,true)
+
     }
 
     goTaquilla(event, companyId:string) {
