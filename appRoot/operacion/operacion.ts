@@ -194,7 +194,7 @@ export class Operacion extends ControllerBase implements OnInit {
         let successCallback= response => {
              let data =  response._body.split('\n');
              that.dataGaleria = {
-                    title: "Operacion: "+id,
+                    title: "Operación: "+id,
                     images:[],
                     id:id,
                     selectFolder:null,
@@ -202,17 +202,22 @@ export class Operacion extends ControllerBase implements OnInit {
              };
              data.forEach(obj=>{
                  let val = obj.split('/');
-                 that.dataGaleria.images.push({
-                     folder:val[0],
-                     created:val[1]
-                 });
+                  if(val[0]){
+                      that.dataGaleria.images.push({
+                          folder:val[0],
+                          created:val[1]
+
+                      });
+                  }
+
+
              });
             jQuery('#myModal1').modal('show');
         };
         let error = err => {
             this.waitResponse = false;
             if (that.toastr) {
-                that.toastr.error('No se encontraron imagenes para esta operacion');
+                that.toastr.error('No se encontraron imagenes para esta operación');
             }
         }
         this.httputils.doGetFile(this.viewOptions.actions.image.server+id + '/file.txt',successCallback,error,true)
