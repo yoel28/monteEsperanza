@@ -22,7 +22,7 @@ export class galeriaComponent implements OnInit {
     public data:IGaleriaData;
     public server:string;
     constructor(public myglobal:globalService){
-        this.server = this.myglobal.getParams('SERVER_IMAGE');
+            this.server = this.myglobal.getParams('SERVER_IMAGE');
     }
 
     public listImage=[1,2,3,4,5,6,7,8,9];
