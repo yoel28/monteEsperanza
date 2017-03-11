@@ -1,0 +1,56 @@
+.titulo{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+.marginmodel{
+    margin: 3%;
+}
+
+.volver{
+
+    /*text-align: center;*/
+    /*margin: 1%;*/
+    float: left !important;
+    font-size: 21px !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+    color: #b0bec5;
+    text-shadow: 0 1px 0 #161e16;
+    filter: alpha(opacity=20);
+     /*opacity: .2;*/
+}  .cursor{
+    cursor: pointer;
+   }
+   .imagen{
+        margin-bottom: 34px;
+
+   }
+
+   .carpeta {
+
+       display: block;
+       border: 1px solid #CCC;
+   }
+.carpeta:hover {
+    opacity: 1;
+    filter: alpha(opacity=1);
+    background-color: #3c8dbc;
+}
+
+   .carpetaimg{
+       display: block;
+       margin: 0 auto;
+       width: 50%;
+
+   }
+   .subtitulo{
+       display: block;
+       margin: 0 auto;
+       text-align: center;
+       margin-bottom: 10px;
+   }
+   .modalfull{
+       border-radius: 15px!important;
+   }

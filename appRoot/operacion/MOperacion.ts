@@ -6,6 +6,7 @@ import {MCompany} from "../empresa/MCompany";
 import {MDrivers} from "../drivers/MDrivers";
 import {MVehicle} from "../vehiculo/MVehicle";
 import {MContainer} from "../container/MContainer";
+import {MPlace} from "../place/MPlace";
 
 export class MOperacion extends ModelBase{
     public rules={};
@@ -16,6 +17,7 @@ export class MOperacion extends ModelBase{
     public chofer:any;
     public vehicle:any;
     public container:any;
+    public place:any;
 
     constructor(public myglobal:globalService){
         super('OP','/operations/',myglobal);
@@ -28,6 +30,7 @@ export class MOperacion extends ModelBase{
         this.chofer = new MDrivers(this.myglobal);
         this.vehicle = new MVehicle(this.myglobal);
         this.container = new MContainer(this.myglobal);
+        this.place = new MPlace(this.myglobal);
     }
     initRules(){
 
@@ -75,6 +78,22 @@ export class MOperacion extends ModelBase{
         this.rules['route']=this.route.ruleObject;
         this.rules['route'].update=this.permissions.update;
 
+        this.rules['place'] = {
+            'type': 'list',
+            'maxLength': '35',
+            'prefix':'TAG',
+            'value':[],
+            'update': this.permissions.update,
+            'search': this.permissions.filter && false,
+            'visible': this.permissions.visible,
+            'key': 'place',
+            'title': 'Lugares',
+            'placeholder': 'Lugares',
+            'instance':null
+        };
+
+
+
         this.rules['weightIn']={
                 'type': 'number',
                 'readOnly': this.permissions['lockWeight'],
@@ -84,7 +103,7 @@ export class MOperacion extends ModelBase{
                 'hidden': false,
                 'double': true,
                 'update':this.permissions.update,
-                'search':this.permissions.filter,
+                'search':this.permissions.filter && false,
                 'visible':this.permissions.visible,
                 'key': 'weightIn',
                 'icon':'fa fa-balance-scale',
@@ -95,7 +114,7 @@ export class MOperacion extends ModelBase{
                     'endpoint':'/weight/',
                     'field':'weight',
                 }
-            }
+            };
 
         this.rules['weightOut']={
             'type': 'number',
@@ -117,7 +136,7 @@ export class MOperacion extends ModelBase{
                 'endpoint':'/weight/',
                 'field':'weight',
             }
-        }
+        };
 
         this.rules['comment']={
             'type': 'textarea',
@@ -142,6 +161,7 @@ export class MOperacion extends ModelBase{
         this.permissions['viewAdd'] = this.myglobal.existsPermission(this.prefix + '_VIEW_ADD');
         this.permissions['lockWeight'] = this.myglobal.existsPermission(this.prefix + '_LOCK_WEIGHT');
         this.permissions['lockVeh'] = this.myglobal.existsPermission(this.prefix + '_LOCK_VEH');
+        this.permissions['image'] = this.myglobal.existsPermission(this.prefix + '_IMAGE') ;
 
     }
     initParamsSearch() {

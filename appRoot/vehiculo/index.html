@@ -143,7 +143,17 @@
                                                                 title="Asignar un nuevo tag"
                                                         >
                                                             <i class="fa fa-plus text-green"></i>
-                                                        </button>&nbsp;Tag RFID{{ data.tags.length == 0 ? ": N/A": ''}}<br>
+                                                        </button>
+                                                        <button (click)="dataSelect = data"
+                                                                *ngIf="model.permissions.update && tag.permissions.search"
+                                                                data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"
+                                                                type="button" class="btn btn-box-tool"
+                                                                title="Asignar un tag"
+                                                        >
+                                                            <i class="fa fa-search text-blue"></i>
+                                                        </button>
+
+                                                        &nbsp;Tag RFID{{ data.tags.length == 0 ? ": N/A": ''}}<br>
 
                                                         <label>
                                                             <span *ngFor="let obj of data.tags;let i = index">
