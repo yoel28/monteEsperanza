@@ -184,7 +184,9 @@ export class AppComponent extends RestController implements OnInit {
     ngOnInit() {
         
     }
-
+    addOperationGlobal(data){
+        this.myglobal.dataOperation.updateValue(data)
+    }
     ngAfterViewInit() {
 
     }

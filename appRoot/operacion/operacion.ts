@@ -42,6 +42,7 @@ export class Operacion extends ControllerBase implements OnInit {
     ngOnInit() {
         this.initModel();
         this.initViewOptions();
+        this.initGlobalData();
 
         this.MONEY_METRIC_SHORT = this.myglobal.getParams('MONEY_METRIC_SHORT');
         this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF');
@@ -59,6 +60,17 @@ export class Operacion extends ControllerBase implements OnInit {
             this.loadData();
         }
     }
+    initGlobalData(){
+        let that = this;
+        this.myglobal.dataOperation.valueChanges.subscribe(
+            (data:Object)=>{
+                if(data && typeof data == 'object'){
+                    that.assignData(data);
+                }
+            }
+        )
+    }
+
     initModel() {
         this.model= new MOperacion(this.myglobal);
 
