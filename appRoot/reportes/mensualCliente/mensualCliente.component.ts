@@ -9,18 +9,21 @@ import {RestController} from "../../common/restController";
 import {globalService} from "../../common/globalService";
 import {MCompany} from "../../empresa/MCompany";
 import {FindRangeDate} from "../../utils/components/findRangeDate/findRangeDate";
+import {datetimeComponent} from "../../utils/datetime/datetime";
 
 declare var SystemJS:any;
 declare var Table2Excel:any;
 declare var jQuery:any;
 
+
 @Component({
     selector: 'reporte-cliente-mensual',
     templateUrl: SystemJS.map.app+'/reportes/mensualCliente/index.html',
     styleUrls: [SystemJS.map.app+'/reportes/mensualCliente/style.css'],
-    directives : [FindRangeDate,Search,Tooltip]
+    directives : [FindRangeDate,Search,Tooltip,datetimeComponent]
 })
 export class ReporteClienteMensual extends RestController implements OnInit{
+
 
     public title:string;
     public url:string;
@@ -39,10 +42,14 @@ export class ReporteClienteMensual extends RestController implements OnInit{
 
     initForm(){}
 
+    debugLog(msg){
+        console.log(msg);
+    }
+
     public date:any;
     loadRange(date=null){
         if(date)
-            this.date = date.value;
+            this.date = date;
 
         if(this.valueSearch && this.valueSearch.id){
             let tempWhere =[];
