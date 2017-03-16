@@ -15,7 +15,13 @@
                             Cliente:&nbsp;{{ ( cliente && cliente.title)?cliente.title:"Buscar un cliente"}}
                             <button type="button" class="btn btn-box-tool fa fa-search text-blue"
                                     data-toggle="modal" [attr.data-target]="'#'+client.paramsSearch.idModal">
+                            </button>&nbsp;
+                            <button *ngIf="cliente && cliente.id"
+                                    (click)="cliente = null;loadRange(null)"
+                                    title="Ver todos"
+                                    type="button" class="btn btn-box-tool fa fa-minus text-red">
                             </button>
+
                         </div>
 
                     </div>
@@ -53,7 +59,7 @@
                                             <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">{{titles}} POR COBRADOR</span>
-                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <span  *ngIf="(cliente && cliente.id)" class="info-box-number">Cliente: {{cliente.title}}</span>
                                                 <div class="progress">
                                                     <div class="progress-bar" style="width: 100%"></div>
                                                 </div>
@@ -71,7 +77,7 @@
                                             <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">{{titles}} POR COBRADOR</span>
-                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <span  *ngIf="(cliente && cliente.id)" class="info-box-number">Cliente: {{cliente.title}}</span>
                                                 <div class="progress">
                                                     <div class="progress-bar" style="width: 100%"></div>
                                                 </div>
@@ -98,7 +104,7 @@
                                             <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">{{titles}} GENERALES</span>
-                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <span  *ngIf="(cliente && cliente.id)" class="info-box-number">Cliente: {{cliente.title}}</span>
                                                 <div class="progress">
                                                     <div class="progress-bar" style="width: 100%"></div>
                                                 </div>
@@ -116,7 +122,7 @@
                                             <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">{{titles}} GENERALES </span>
-                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <span  *ngIf="(cliente && cliente.id)" class="info-box-number">Cliente: {{cliente.title}}</span>
                                                 <div class="progress">
                                                     <div class="progress-bar" style="width: 100%"></div>
                                                 </div>
