@@ -9,7 +9,7 @@ import {RestController} from "../../common/restController";
 import {globalService} from "../../common/globalService";
 import {MCompany} from "../../empresa/MCompany";
 import {FindRangeDate} from "../../utils/components/findRangeDate/findRangeDate";
-import {datetimeComponent} from "../../utils/datetime/datetime";
+import {DatetimeComponent} from "../../utils/datetime/datetime";
 
 declare var SystemJS:any;
 declare var Table2Excel:any;
@@ -20,7 +20,7 @@ declare var jQuery:any;
     selector: 'reporte-cliente-mensual',
     templateUrl: SystemJS.map.app+'/reportes/mensualCliente/index.html',
     styleUrls: [SystemJS.map.app+'/reportes/mensualCliente/style.css'],
-    directives : [FindRangeDate,Search,Tooltip,datetimeComponent]
+    directives : [Search,Tooltip,DatetimeComponent]
 })
 export class ReporteClienteMensual extends RestController implements OnInit{
 
