@@ -16,11 +16,11 @@ declare var moment:any;
     templateUrl: SystemJS.map.app+'/utils/datetime/index.html',
     styleUrls: [SystemJS.map.app+'/utils/datetime/style.css'],
     directives:[FindRangeDate,Datepicker],
-    inputs:['data','params','control','rango'],
+    inputs:['data','params','control','type'],
     outputs:['output'],
 })
 
-export class datetimeComponent implements OnInit,AfterViewInit {
+export class DatetimeComponent implements OnInit,AfterViewInit {
 
     public type:string;
 
