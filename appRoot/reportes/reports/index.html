@@ -1,0 +1,145 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">{{titles}}</h3>
+            </div>
+            <div class="box-body">
+                <div class="row padding-bottom noprint">
+                    <div class="col-lg-8">
+                        <dateTime (output)="loadRange($event)"></dateTime>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="form-group input-icon right col-lg-12">
+                            Cliente:&nbsp;{{ ( cliente && cliente.title)?cliente.title:"Buscar un cliente"}}
+                            <button type="button" class="btn btn-box-tool fa fa-search text-blue"
+                                    data-toggle="modal" [attr.data-target]="'#'+client.paramsSearch.idModal">
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <div *ngIf="date">
+        <section class="content">
+            <div class="col-md-12">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <!--<li class="hidden"><a href="#credito" data-toggle="tab" aria-expanded="true">Informe Mensual Vertedero al credito </a></li>-->
+                        <li class="active"><a href="#cobrar" data-toggle="tab" aria-expanded="false">Informe por cobrador</a></li>
+                        <li class=""><a href="#general" data-toggle="tab" aria-expanded="false">Informe general</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!--<div class="tab-pane hidden" type="hidden" id="credito">-->
+                            <!--<div class="post">-->
+                                <!--<a [attr.href]="getUrl('/reports/monthly/type')" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>-->
+                                <!--<a [attr.href]="getUrl('/reports/monthly/type','xls')" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="tab-pane active" id="cobrar">
+
+                            <div class="box-body">
+
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <a [attr.href]="getUrl('/reports/debtsreports/')"  target="_blank" title="Exportar a pdf">
+                                        <div class="info-box bg-red">
+                                            <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">{{titles}} POR COBRADOR</span>
+                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                <span class="progress-description">
+                                                Descargar En PDF
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <a [attr.href]="getUrl('/reports/debtsreports/','xls')"  target="_blank" title="Exportar a exel">
+                                        <div class="info-box bg-success">
+                                            <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">{{titles}} POR COBRADOR</span>
+                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                <span class="progress-description">
+                                                Descargar En Exel
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+
+
+                                <!--<a [attr.href]="getUrl('/reports/debtsreports/','xls')" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>-->
+                        </div>
+
+                        <div class="tab-pane" id="general">
+
+                            <div class="box-body">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <a [attr.href]="getUrl('/reports/debtsreportsgeneral/')"  target="_blank" title="Exportar a pdf">
+                                        <div class="info-box bg-red">
+                                            <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">{{titles}} GENERALES</span>
+                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                <span class="progress-description">
+                                                    Descargar En PDF
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <a [attr.href]="getUrl('/reports/debtsreportsgeneral/','xls')"  target="_blank" title="Exportar a exel">
+                                        <div class="info-box bg-success">
+                                            <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">{{titles}} GENERALES </span>
+                                                <span  *ngIf="(valueSearch && valueSearch.id)" class="info-box-number">Cliente: {{valueSearch.title}}</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
+                                                <span class="progress-description">
+                                                    Descargar En Exel
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+        </section>
+    </div>
+
+    <div *ngIf="client && client.paramsSearch">
+        <search [params]="client.paramsSearch" (result)="assignSearch($event)"></search>
+    </div>
+</div>
