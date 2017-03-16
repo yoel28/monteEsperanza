@@ -32,7 +32,15 @@
                 </template>
                 <template [ngIf]="data.selectFolder && data.selectImage">
                     <!--<span (click)="data.selectImage=null">volver</span>-->
-                    <img class="col-md-12 col-lg-12 col-xs-12 col-sm-12 imagen"  [attr.src]="server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'" />
+
+
+
+                    <img class="col-md-12 col-lg-12 col-xs-12 col-sm-12 imagen"   [attr.src]="server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'" />
+                    <a class="ubica" target="_blank" href="{{server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'}}">
+                        <button type="button" class="btn btn-blue" >
+                            <i class="fa fa-arrows-alt"></i>
+                            Ver Completa
+                        </button></a>
                 </template>
 
             </div>

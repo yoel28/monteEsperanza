@@ -58,6 +58,7 @@ import {MOperacion} from "./operacion/MOperacion";
 import {Register} from "./register/register";
 import {ReporteClienteMensual} from "./reportes/mensualCliente/mensualCliente.component";
 import {Place} from "./place/place";
+import { ReportsComponents} from "./reportes/reports/reports.components";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -109,6 +110,7 @@ declare var jQuery:any;
     {path: '/reporte/basura', name: 'ReporteDescargasBasura', component: ReporteDescargasBasura},
     {path: '/reporte/operacion/auditoria', name: 'OperationAudit', component: OperationsAudit},
     {path: '/reporte/cliente/mensual', name: 'ReporteClienteMensual', component: ReporteClienteMensual},
+    {path: '/reporte/reports/Globales', name: 'ReportsComponents', component: ReportsComponents},
 
     {path: '/permisos', name: 'Permiso', component: Permiso},
     {path: '/permisos/rol', name: 'PermisoRol', component: PermisosRol},
@@ -479,6 +481,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-list',
                         'title': 'Registro por clientes',
                         'routerLink': 'ReporteClienteMensual'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_REPORTS_CLIENT") || true,
+                        'icon': 'fa fa-list',
+                        'title': 'Informes',
+                        'routerLink': 'ReportsComponents'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_ACCESS_CLIENT"),

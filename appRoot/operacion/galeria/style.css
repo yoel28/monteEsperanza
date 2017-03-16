@@ -54,3 +54,8 @@
    .modalfull{
        border-radius: 15px!important;
    }
+   .ubica{
+       display: block;
+       position: relative;
+       text-align: right;
+   }
