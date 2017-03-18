@@ -21,7 +21,7 @@ export class TagsInput implements OnInit{
     }
     ngOnInit(){
         let that=this;
-        if(this.type == 'object'){
+        if(this.type == 'text'){
             jQuery(this.el.nativeElement).tagsinput(
                 {
                     'tagClass': function(item) {

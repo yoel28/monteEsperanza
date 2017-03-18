@@ -1,0 +1,15 @@
+<template [ngIf]="type=='month'">
+    <div class="row padding-bottom">
+        <div class="col-lg-4">
+            <div class="input-icon right">
+                <i class="glyphicon glyphicon-calendar"></i>
+                <input  datepicker [format]="formatDate" (fecha)="loadFecha($event)" value="Ingresar un periodo" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template [ngIf]="type == 'range'">
+    <find-range-date (dateRange)="loadFecha($event)"></find-range-date>
+</template>

@@ -3,6 +3,7 @@ import {RestController} from "./restController";
 import {Http} from "@angular/http";
 import {contentHeaders} from "./headers";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Control} from "@angular/common";
 
 @Injectable()
 export class globalService extends RestController{
@@ -14,6 +15,8 @@ export class globalService extends RestController{
     permissions:any=[];
     allPermissions:any={};
     init=false;
+
+    dataOperation:Control;
 
     status={
         'token':{'status':false,'title':'Validando usuario'},
@@ -38,6 +41,7 @@ export class globalService extends RestController{
         if(localStorage.getItem('bearer')){
             this.initSession();
         }
+        this.dataOperation = new Control(null);
     }
     initSession(){
         this.initFinish(true);

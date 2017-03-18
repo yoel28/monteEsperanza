@@ -45,9 +45,10 @@ export class Vehiculo extends ControllerBase implements OnInit{
     ngOnInit(){
         this.initModel();
         this.initViewOptions();
-        this.loadPage();
+
         if(this.params.get('companyId'))
             this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
+        this.loadPage();
     }
     initModel() {
         this.model = new MVehicle(this.myglobal);

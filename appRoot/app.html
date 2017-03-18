@@ -5,7 +5,7 @@
             <save *ngIf="help" [rules]="help.rulesSave" [params]="help.paramsSave" (getInstance)="setInstance($event,help.prefix)" ></save>
         </div>
         <div *ngIf="operation && (operation.permissions.add || operation.permissions.update)">
-            <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" ></operacion-save>
+            <operacion-save idModal="operacionManual" (getInstance)="setInstance($event,'OP')" (save)="addOperationGlobal($event)" ></operacion-save>
 
             <div class="block-float2" *ngIf="myglobal.existsPermission('MEN_SEMI')">
                 <button class="redondo btn btn-green btn-outlined" title="OP. Semiauto" type="button"

@@ -195,6 +195,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
             that.closeForm();
             that.waitResponse = false;
             that.resetForm();
+            that.save.emit(response.json());
             Object.assign(that.dataSelect,response.json());
             if(that.toastr)
                 that.toastr.success('Actualizado con éxito','Notificación');
