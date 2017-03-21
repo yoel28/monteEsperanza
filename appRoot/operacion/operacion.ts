@@ -8,7 +8,6 @@ import {Xeditable} from "../common/xeditable";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
-import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen, Control, Validators} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
