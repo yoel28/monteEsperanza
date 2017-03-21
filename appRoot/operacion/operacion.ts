@@ -8,7 +8,6 @@ import {Xeditable} from "../common/xeditable";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
-import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen, Control, Validators} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
@@ -19,6 +18,7 @@ import {galeriaComponent, IGaleriaData} from "./galeria/galeriaFolder";
 
 declare var SystemJS:any;
 declare var jQuery:any;
+declare var moment:any;
 
 @Component({
     selector: 'operacion',
@@ -64,6 +64,12 @@ export class Operacion extends ControllerBase implements OnInit {
         let that = this;
         this.myglobal.dataOperation.valueChanges.subscribe(
             (data:Object)=>{
+                if(that.dataList && that.dataList.list)
+                {
+                    let index = that.dataList.list.findIndex(obj => obj.id == data['id']);
+                    if(index!=-1)
+                        that.dataList.list.splice(index,1);
+                }
                 if(data && typeof data == 'object'){
                     that.assignData(data);
                 }
@@ -162,6 +168,15 @@ export class Operacion extends ControllerBase implements OnInit {
     public onPrint(data) {
         if (this.operacionPrint)
             this.operacionPrint.data = data
+    }
+
+    get getUrl(){
+        return localStorage.getItem('urlAPI')
+                + this.endpoint
+                + '?access_token=' + localStorage.getItem('bearer')
+                + '&tz=' + (moment().format('Z')).replace(':', '')
+                + this.where
+                + '&lands=true';
     }
 
     public PrintAutomatic:string = "";
