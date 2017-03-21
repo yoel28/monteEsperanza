@@ -64,6 +64,12 @@ export class Operacion extends ControllerBase implements OnInit {
         let that = this;
         this.myglobal.dataOperation.valueChanges.subscribe(
             (data:Object)=>{
+                if(that.dataList && that.dataList.list)
+                {
+                    let index = that.dataList.list.findIndex(obj => obj.id == data['id']);
+                    if(index!=-1)
+                        that.dataList.list.splice(index,1);
+                }
                 if(data && typeof data == 'object'){
                     that.assignData(data);
                 }
