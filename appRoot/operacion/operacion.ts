@@ -19,6 +19,7 @@ import {galeriaComponent, IGaleriaData} from "./galeria/galeriaFolder";
 
 declare var SystemJS:any;
 declare var jQuery:any;
+declare var moment:any;
 
 @Component({
     selector: 'operacion',
@@ -162,6 +163,15 @@ export class Operacion extends ControllerBase implements OnInit {
     public onPrint(data) {
         if (this.operacionPrint)
             this.operacionPrint.data = data
+    }
+
+    get getUrl(){
+        return localStorage.getItem('urlAPI')
+                + this.endpoint
+                + '?access_token=' + localStorage.getItem('bearer')
+                + '&tz=' + (moment().format('Z')).replace(':', '')
+                + this.where
+                + '&lands=true';
     }
 
     public PrintAutomatic:string = "";

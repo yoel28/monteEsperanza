@@ -41,8 +41,14 @@
             <div *ngIf="model.permissions.list" class="box-body">
                 <div>
                     <div class="pull-right noprint">
+
+                        <a [attr.href]="getUrl+'&formatType=pdf'"  target="_blank" title="Exportar a pdf">
+                            <span><i class="fa fa-file-pdf-o fa-lg text-red"></i></span>
+                        </a>&nbsp;
+                        <a [attr.href]="getUrl+'&formatType=xls'"  target="_blank" title="Exportar a excel">
+                            <span><i class="fa fa-file-excel-o fa-lg text-green"></i></span>
+                        </a>
                         <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
-                        <i (click)="export('xls')" class="btn fa fa-file-excel-o text-green fa-lg" title="Exportar"></i>
                     </div>
                     <table class="table export table-striped table-hover tarjeta">
                         <thead>
@@ -94,7 +100,7 @@
                                         {{data.rechargeReference || "-"}}
                                     </span>
                                     <span   *ngSwitchWhen="'dateCreated'">
-                                        {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',false,data.id)}}
+                                        {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}
                                         <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'route'">
