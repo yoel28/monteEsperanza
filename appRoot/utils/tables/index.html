@@ -147,9 +147,14 @@
                            <span class="{{params.actions[key].icon}}"></span>
                            &nbsp;{{params.actions[key].title}}
                        </a>
+
                     </div>
                 </div>
-
+                    <div *ngIf="model.permissions.map && data.latitud != 0 && data.latitud < 180 &&  data.latitud >'-180' ">
+                        <button type="button" (click)="loadMap($event,data)" class="btn btn-social-icon btn-bitbucket" data-toggle="modal" data-target="#myModal">
+                            <i class="fa fa-map"></i>
+                        </button>
+                    </div>
             </td>
         </tr>
     </tbody>
@@ -192,6 +197,7 @@
         </div>
     </div>
 </div>
+<mapa *ngIf="coordMap" [params]="coordMap" ></mapa>
 
 <div *ngFor="let key of getKeys(modelSave)">
     <save [rules]="modelSave[key].rulesSave" [params]="modelSave[key].paramsSave" (save)="getDataSave($event,key)"> </save>
