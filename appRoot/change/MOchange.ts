@@ -35,8 +35,8 @@ export class MChange extends ModelBase {
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'ubicacion',
-            'title': 'Ubicacion',
-            'placeholder': 'Ubicacion',
+            'title': 'Ubicación',
+            'placeholder': 'Ubicación',
         };
         this.rules['latitud']={
             'type': 'number',
@@ -68,8 +68,8 @@ export class MChange extends ModelBase {
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'fullPercent',
-            'title': 'fullPercent',
-            'placeholder': 'fullPercent',
+            'title': 'Completado',
+            'placeholder': 'Completado',
         };
 
         this.rules['route'] = this.route.ruleObject;
@@ -90,23 +90,23 @@ export class MChange extends ModelBase {
         this.rules['containerIn'].update=this.permissions.update;
         this.rules['containerIn'].required = false;
         this.rules['containerIn'].paramsSearch.field='containerIn.id';
-        this.rules['containerIn'].paramsSearch.placeholder='ingrese container de entrada';
-        this.rules['containerIn'].title='Container Ent.';
+        this.rules['containerIn'].paramsSearch.placeholder='Ingrese contenedor de entrada';
+        this.rules['containerIn'].title='Contenedor Ent.';
         this.rules['containerIn'].code = 'containerInId';
         this.rules['containerIn'].key = 'containerIn';
         this.rules['containerIn'].keyDisplay = 'containerInCode';
-        this.rules['containerIn'].placeholder = 'ingrese container de entrada';
+        this.rules['containerIn'].placeholder = 'Ingrese contenedor de entrada';
 
         this.rules['containerOut'] = this.containerOut.ruleObject;
         this.rules['containerOut'].update=this.permissions.update;
         this.rules['containerOut'].required = false;
         this.rules['containerOut'].paramsSearch.field='containerOut.id';
-        this.rules['containerOut'].title='Container Sal.';
+        this.rules['containerOut'].title='Contenedor Sal.';
         this.rules['containerOut'].code = 'containerOutId';
         this.rules['containerOut'].key = 'containerOut';
         this.rules['containerOut'].keyDisplay = 'containerOutCode';
-        this.rules['containerOut'].paramsSearch.placeholder="Ingrese contenedor de salidad";
-        this.rules['containerOut'].placeholder="Ingrese contenedor de salidad";
+        this.rules['containerOut'].paramsSearch.placeholder="Ingrese contenedor de salida";
+        this.rules['containerOut'].placeholder="Ingrese contenedor de salida";
 
 
 
@@ -118,18 +118,14 @@ export class MChange extends ModelBase {
     }
     initParamsSearch() {
         this.paramsSearch.title="Buscar Movimientos de contenedores";
-        this.paramsSearch.placeholder="Ingrese changue";
+        this.paramsSearch.placeholder="Ingrese Movimiento";
         this.paramsSearch.label.title="Cliente: ";
         this.paramsSearch.label.detail="Placa: ";
-
     }
     initParamsSave() {
-        this.paramsSave.title="Agregar changue"
-
+        this.paramsSave.title="Agregar Movimiento"
     }
     initRuleObject() {
-
-
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
