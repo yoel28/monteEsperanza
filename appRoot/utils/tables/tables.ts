@@ -170,6 +170,8 @@ export class Tables extends RestController implements OnInit {
     }
     public coordMap:Object;
     loadMap(event,data){
+        if(event!=null)
+        event.preventDefault();
         this.coordMap={};
         this.coordMap['lat']=data.latitud;
         this.coordMap['lng']=data.longitud;
