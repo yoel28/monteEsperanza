@@ -45,7 +45,7 @@ export class ChangeComponents implements OnInit,AfterViewInit{
     loadParamsTable(){
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
-            'message': '¿ Esta seguro de eliminar la change : ',
+            'message': '¿ Esta seguro de eliminar el movimiento de  : ',
             'keyAction':'name'
         };
     }
