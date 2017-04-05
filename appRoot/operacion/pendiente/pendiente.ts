@@ -9,15 +9,17 @@ import {OperacionSave, OperacionPrint} from "../methods";
 import {Filter} from "../../utils/filter/filter";
 import {MPendiente} from "./MPendiente";
 import {MOperacion} from "../MOperacion";
+import {galeriaComponent, IGaleriaData} from "../galeria/galeriaFolder";
 declare var SystemJS:any;
 declare var moment:any;
+declare var jQuery:any;
 
 @Component({
     selector: 'operacion-pendiente',
     templateUrl: SystemJS.map.app+'/operacion/pendiente/index.html',
     styleUrls: [SystemJS.map.app+'/operacion/pendiente/style.css'],
     providers: [TranslateService],
-    directives: [OperacionSave,Filter,OperacionPrint],
+    directives: [OperacionSave,Filter,OperacionPrint,galeriaComponent],
     pipes: [TranslatePipe]
 })
 export class OperacionPendiente extends ControllerBase implements OnInit {
@@ -163,6 +165,11 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
             'visible': this.model.permissions.print,
         };
 
+        this.viewOptions.actions.image = {
+            'visible': this.model.permissions.image ,
+            'server':this.myglobal.getParams('SERVER_IMAGE_PENDING')
+        };
+
     }
 
     goTaquilla(event, companyId:string) {
@@ -216,4 +223,37 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         let body = JSON.stringify(json);
         return (this.httputils.onUpdate("/lock" + this.endpoint + data.id, body, data, this.error));
     }
+//galeria por carpetas.
+    public dataGaleria:IGaleriaData;
+
+    galeriaFolder(id){
+        let that = this;
+        let server = this.myglobal.getParams('SERVER_IMAGE_PENDING');
+
+        let successCallback= response => {
+            that.dataGaleria = {
+                title: "Lote: "+id,
+                server:server,
+                images:[{
+                    folder:id.toString(),
+                    created:''
+                }],
+                id:'',
+                selectFolder:id.toString(),
+                selectImage:null,
+            };
+            jQuery('#myModal1').modal('show');
+        };
+        let error = err => {
+            this.waitResponse = false;
+            if (that.toastr) {
+                that.toastr.error('No se encontraron imagenes para esta operación');
+            }
+        }
+        this.httputils.doGetFile(this.viewOptions.actions.image.server+id + '/thumb1.jpg',successCallback,error,true)
+
+    }
+
+
+
 }
