@@ -218,11 +218,13 @@ export class Operacion extends ControllerBase implements OnInit {
 
     galeriaFolder(id){
         let that = this;
+        let server = this.myglobal.getParams('SERVER_IMAGE');
         let successCallback= response => {
              let data =  response._body.split('\n');
              that.dataGaleria = {
                     title: "Operación: "+id,
                     images:[],
+                    server:server,
                     id:id,
                     selectFolder:null,
                     selectImage:null,
