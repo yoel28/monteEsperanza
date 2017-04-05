@@ -260,7 +260,9 @@
                                     <div class="col-lg-12">
                                         <div class="col-lg-6">
                                             <strong>Lote E.:&nbsp;</strong>
-                                            {{data.lotValIn || '-'}}
+                                            {{data.lotValIn || '-'}}<span (click)="galeriaFolder(data.lotValIn)" title="Ver imagenes">
+                                           <span class="fa fa-photo fa-lg btn"></span>
+                                        </span>
                                         </div>
                                         <div class="col-lg-6">
                                             <strong>Lote S.:&nbsp;</strong>
@@ -369,3 +371,4 @@
 <div *ngIf="model.permissions.filter">
     <filter [rules]="model.rules" [params]="model.paramsSearch" (whereFilter)="loadWhere2($event)"></filter>
 </div>
+<modalGaleriac  [data]="dataGaleria"></modalGaleriac>
