@@ -104,7 +104,7 @@
                                         <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'route'">
-                                        {{data.routeTitle}}&nbsp;({{data.routeReference}})
+                                        &nbsp;({{data.routeReference}})
                                     </span>
                                     <span   *ngSwitchWhen="'trash'">
                                         {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
