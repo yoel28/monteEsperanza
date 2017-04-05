@@ -6,6 +6,7 @@ declare var SystemJS:any;
 export interface IGaleriaData{
     title?:string;
     id:string,
+    server?:string;
     images:{ folder:string, created:string }[];
     selectFolder?:string
     selectImage?:string
@@ -20,9 +21,7 @@ export interface IGaleriaData{
 export class galeriaComponent implements OnInit {
 
     public data:IGaleriaData;
-    public server:string;
     constructor(public myglobal:globalService){
-            this.server = this.myglobal.getParams('SERVER_IMAGE');
     }
 
     public listImage=[1,2,3,4,5,6,7,8,9];
@@ -32,6 +31,9 @@ export class galeriaComponent implements OnInit {
     }
     ngOnInit(){
 
+    }
+    get server(){
+        return this.data?this.data.server:'';
     }
 
 }
