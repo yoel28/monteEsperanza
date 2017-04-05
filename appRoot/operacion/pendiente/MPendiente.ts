@@ -95,6 +95,7 @@ export class MPendiente extends ModelBase{
     }
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');
+        this.permissions['image'] = this.myglobal.existsPermission(this.prefix + '_IMAGE') ;
     }
     initParamsSearch() {
         this.paramsSearch.title="Buscar pendiente";
