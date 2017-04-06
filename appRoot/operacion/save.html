@@ -97,7 +97,7 @@
                                                                         placeholder="{{model.rules[key].placeholder}}" rows="5"
                                                                         ></textarea>
 
-                                                            <div *ngIf="model.rules[key].type == 'list' && place">
+                                                            <div *ngIf="model.rules[key].type == 'list' && textPlaces.length">
                                                                 <input tags-input data-role="tagsinput"
                                                                        class="form-control"
                                                                        placeholder="{{model.rules[key].placeholder}}"
@@ -112,10 +112,14 @@
                                                                        (instance)="model.rules[key].instance=$event"
                                                                 >
                                                             </div>
-                                                            <input *ngIf="model.rules[key].type == 'list' && !place " class="form-control"
+                                                            <input *ngIf="model.rules[key].type == 'list' && !textPlaces.length" class="form-control"
                                                                    placeholder="No se han cargado lugares"
                                                                    [readonly]="true"
                                                             >
+
+                                                            <!--<label  *ngIf="model.rules[key].type == 'list' && !place " >Ingresar '-' previamente para mostar lugares</label>-->
+
+
 
 
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
@@ -142,6 +146,14 @@
                                                                 class="btn btn-box-tool fa fa-money text-green"
                                                                 (click)="getLoadRecharge(null,searchId[key])">
                                                         </span>
+                                                        <!--&& !place-->
+                                                        <span *ngIf="model.rules[key].type == 'list' && textPlaces.length "  tabindex="-1"
+                                                              data-toggle="modal"  class="fa fa-info-circle text-blue fa-lg mause"
+                                                              [attr.title]="textPlaces"
+                                                              >
+                                                        </span>
+
+
                                                     </div>
                                                 </div>
                                             </div>
