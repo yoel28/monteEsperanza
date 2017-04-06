@@ -117,13 +117,13 @@ export class MChange extends ModelBase {
         this.permissions['map'] = this.myglobal.existsPermission(this.prefix + '_MAP');
     }
     initParamsSearch() {
-        this.paramsSearch.title="Buscar Movimientos de contenedores";
-        this.paramsSearch.placeholder="Ingrese Movimiento";
+        this.paramsSearch.title="Buscar movimientos de contenedores";
+        this.paramsSearch.placeholder="Ingrese movimiento";
         this.paramsSearch.label.title="Cliente: ";
         this.paramsSearch.label.detail="Placa: ";
     }
     initParamsSave() {
-        this.paramsSave.title="Agregar Movimiento"
+        this.paramsSave.title="Agregar movimiento"
     }
     initRuleObject() {
     }
