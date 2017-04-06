@@ -50,6 +50,8 @@ export class TagsInput implements OnInit{
 
         if(this.type=='inlist'){
 
+
+
             let place = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -69,11 +71,13 @@ export class TagsInput implements OnInit{
         }
 
         that.control.updateValue(jQuery(that.el.nativeElement).tagsinput('items'));
-        that.addValueAll();
+        // that.addValueAll();
         this.instance.emit(this);
     }
     public addValue(data){
-        jQuery(this.el.nativeElement).tagsinput('add', data);
+
+
+        jQuery(this.el.nativeElement).tagsinput('add',data);
     }
     public removeAll(){
         jQuery(this.el.nativeElement).tagsinput('removeAll');
