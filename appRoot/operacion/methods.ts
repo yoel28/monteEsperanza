@@ -301,6 +301,16 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.search={};
     }
 
+    get textPlaces(){
+        let data='';
+            if(this.place){
+                this.place.forEach(value=>{
+                    data+=(value.text+'\n');
+                })
+            }
+            return data;
+
+        }
     public place:any;
     loadPlace(place,key){
         if((this.searchId['route'] && this.searchId['route'].default) || key == 'route'){
