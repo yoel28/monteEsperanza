@@ -1,5 +1,5 @@
 import {Component, OnInit,ViewChild} from '@angular/core';
-import {Router}           from '@angular/router-deprecated';
+import {Router, RouteParams}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
@@ -30,18 +30,21 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
     public operation:any;
     public url:any;
 
-    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+    constructor(public params:RouteParams, public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('PEND', '/pendings/',router, http, toastr, myglobal, translate);
     }
+
     ngOnInit(){
 
         this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
-        
+
         this.initModel();
         this.initViewOptions();
-
         this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
+        if(this.params.get('where')){
+            this.where = "&where="+encodeURI(this.params.get('where'));
+        }
         this.loadPage();
         this.loadUrl();
     }
