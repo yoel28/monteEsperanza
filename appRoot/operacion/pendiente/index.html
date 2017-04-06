@@ -107,7 +107,7 @@
                             <td>
                                 <span *ngIf="data.expired" class="label label-red font-12pt margin-right-2" title="La operación a expirado">Vencido</span>
                                 <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt margin-right-2" title="La operación esta incompleta">Error</span>
-                                <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Devuelto</span>
+                                <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Aprobado</span>
 
                                 <span *ngIf="!data.enabled && data.operationId && !data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registrado Manual</span>
                                 <span *ngIf="!data.enabled && !data.operationId && data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registro automatico</span>
@@ -230,7 +230,7 @@
                                         <div class="col-lg-12">
                                             <p style="font-size: large">
                                                 <i *ngIf="!data.enabled" class="fa fa-user-secret" aria-hidden="true"></i>
-                                                {{data.enabled?'Devuelto':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
+                                                {{data.enabled?'Aprobado':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
                                                 a las <strong>{{formatDate(data.dateUpdated,'LT',true)}}</strong> por&nbsp;
                                                 <strong>{{data.usernameUpdater}}</strong>
                                             </p>
