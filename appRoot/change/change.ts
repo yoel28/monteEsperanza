@@ -46,7 +46,7 @@ export class ChangeComponents implements OnInit,AfterViewInit{
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
             'message': '¿ Esta seguro de eliminar el movimiento de  : ',
-            'keyAction':'name'
+            'keyAction':'ubicacion'
         };
     }
 }
