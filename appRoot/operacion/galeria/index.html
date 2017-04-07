@@ -1,0 +1,50 @@
+
+<div id="myModal1" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div *ngIf="data" class="modal-content modalfull">
+            <div class="modal-header ">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span *ngIf="data.selectFolder && !data.selectImage" type="button" class=" volver cursor" (click)="data.selectFolder=null">
+                    <i title="click para Regresar" class="fa fa-reply" aria-hidden="true"></i></span>
+
+                <span *ngIf="data.selectFolder && data.selectImage" type="button" class=" volver cursor" (click)="data.selectImage=null">
+                    <i title="click para Regresar" class="fa fa-reply" aria-hidden="true"></i></span>
+
+
+
+                <h4 class="modal-title titulo"> {{ ((data && data.title)?data.title:"Titulo indefinido") }}</h4>
+            </div>
+            <div  class="modal-body row marginmodel">
+                <template [ngIf]="data && data.images && data.images.length > 0 && !data.selectFolder"]>
+                    <div *ngFor="let image of data.images">
+                        <div *ngIf="image.folder!=''" class="col-md-4 carpeta " title="Ver evento {{image.created}}">
+                            <img src="/assets/img/others/folder_full_image.png"  class="cursor imagen carpetaimg"  (click)="openFolder(image.folder)"/>
+                            <span class="cursor subtitulo" (click)="openFolder(image.folder)">{{image.folder}}</span>
+                        </div>
+                    </div>
+                </template>
+
+                <template [ngIf]="data.selectFolder && !data.selectImage">
+                    <!--<span type="button" class="btn btn-info volver" (click)="data.selectFolder=null">volver</span>-->
+                        <img   title="click para ver imagen completa" class="col-md-4 col-lg-4 col-xs-6 col-sm-6 cursor imagen"
+                             *ngFor="let index of listImage" (click)="data.selectImage=index"   [attr.src]="server+data.id+'/'+data.selectFolder+'/thumb'+index+'.jpg'" />
+
+                </template>
+                <template [ngIf]="data.selectFolder && data.selectImage">
+                    <!--<span (click)="data.selectImage=null">volver</span>-->
+
+
+
+                    <img class="col-md-12 col-lg-12 col-xs-12 col-sm-12 imagen"   [attr.src]="server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'" />
+                    <a class="ubica" target="_blank" href="{{server+data.id+'/'+data.selectFolder+'/camara'+data.selectImage+'.jpg'}}">
+                        <button type="button" class="btn btn-blue" >
+                            <i class="fa fa-arrows-alt"></i>
+                            Ver Completa
+                        </button></a>
+                </template>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->

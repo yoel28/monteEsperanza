@@ -9,6 +9,7 @@ import {Search} from "../search/search";
 import {Save} from "../save/save";
 import {Tooltip} from "../tooltips/tooltips";
 import {CatalogApp} from "../../common/catalogApp";
+import {MapaComponents} from "../../mapa/mapa";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -18,7 +19,8 @@ declare var moment:any;
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','model','dataList','where'],
     outputs:['getInstance'],
-    directives:[Xeditable,ColorPicker,Search,Save,Tooltip]
+    directives:[Xeditable,ColorPicker,Search,Save,Tooltip,MapaComponents
+    ]
 })
 
 
@@ -165,6 +167,14 @@ export class Tables extends RestController implements OnInit {
         else
             that.modelReference.model.setDataField(data[that.modelReference.code],that.model.ruleObject.key,null,that.modelReference.callback,data);
 
+    }
+    public coordMap:Object;
+    loadMap(event,data){
+        if(event!=null)
+        event.preventDefault();
+        this.coordMap={};
+        this.coordMap['lat']=data.latitud;
+        this.coordMap['lng']=data.longitud;
     }
 
 

@@ -1,5 +1,5 @@
 import {Component, OnInit,ViewChild} from '@angular/core';
-import {Router}           from '@angular/router-deprecated';
+import {Router, RouteParams}           from '@angular/router-deprecated';
 import {Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
@@ -9,15 +9,17 @@ import {OperacionSave, OperacionPrint} from "../methods";
 import {Filter} from "../../utils/filter/filter";
 import {MPendiente} from "./MPendiente";
 import {MOperacion} from "../MOperacion";
+import {galeriaComponent, IGaleriaData} from "../galeria/galeriaFolder";
 declare var SystemJS:any;
 declare var moment:any;
+declare var jQuery:any;
 
 @Component({
     selector: 'operacion-pendiente',
     templateUrl: SystemJS.map.app+'/operacion/pendiente/index.html',
     styleUrls: [SystemJS.map.app+'/operacion/pendiente/style.css'],
     providers: [TranslateService],
-    directives: [OperacionSave,Filter,OperacionPrint],
+    directives: [OperacionSave,Filter,OperacionPrint,galeriaComponent],
     pipes: [TranslatePipe]
 })
 export class OperacionPendiente extends ControllerBase implements OnInit {
@@ -28,18 +30,21 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
     public operation:any;
     public url:any;
 
-    constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+    constructor(public params:RouteParams, public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('PEND', '/pendings/',router, http, toastr, myglobal, translate);
     }
+
     ngOnInit(){
 
         this.baseWeight = parseFloat(this.myglobal.getParams('BASE_WEIGHT_INDICADOR') || '1');
         this.baseWeight = this.baseWeight >0?this.baseWeight:1;
-        
+
         this.initModel();
         this.initViewOptions();
-
         this.where="&where="+encodeURI("[['op':'eq','field':'enabled','value':true],['op':'eq','field':'expired','value':false],['op':'isNotNull','field':'dateIn'],['op':'isNotNull','field':'vehicle']]");
+        if(this.params.get('where')){
+            this.where = "&where="+encodeURI(this.params.get('where'));
+        }
         this.loadPage();
         this.loadUrl();
     }
@@ -163,6 +168,11 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
             'visible': this.model.permissions.print,
         };
 
+        this.viewOptions.actions.image = {
+            'visible': this.model.permissions.image ,
+            'server':this.myglobal.getParams('SERVER_IMAGE_PENDING')
+        };
+
     }
 
     goTaquilla(event, companyId:string) {
@@ -179,8 +189,8 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         event.preventDefault();
         this.dataOperation=data;
         if(this.operacionSave) {
-            this.operacionSave.pendingId=data.id;
             this.operacionSave.loadOperationIn(data);
+            this.operacionSave.pendingId=data.id;
         }
     }
     
@@ -216,4 +226,37 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         let body = JSON.stringify(json);
         return (this.httputils.onUpdate("/lock" + this.endpoint + data.id, body, data, this.error));
     }
+//galeria por carpetas.
+    public dataGaleria:IGaleriaData;
+
+    galeriaFolder(id){
+        let that = this;
+        let server = this.myglobal.getParams('SERVER_IMAGE_PENDING');
+
+        let successCallback= response => {
+            that.dataGaleria = {
+                title: "Lote: "+id,
+                server:server,
+                images:[{
+                    folder:id.toString(),
+                    created:''
+                }],
+                id:'',
+                selectFolder:id.toString(),
+                selectImage:null,
+            };
+            jQuery('#myModal1').modal('show');
+        };
+        let error = err => {
+            this.waitResponse = false;
+            if (that.toastr) {
+                that.toastr.error('No se encontraron imagenes para esta operación');
+            }
+        }
+        this.httputils.doGetFile(this.viewOptions.actions.image.server+id + '/thumb1.jpg',successCallback,error,true)
+
+    }
+
+
+
 }

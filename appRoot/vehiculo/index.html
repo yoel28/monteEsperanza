@@ -108,36 +108,6 @@
                                                            [data]="data" [rules]="model.rules" field="weight"></a>
                                                     </p>
                                                     <p>
-                                                        Tag RFID: {{ data.tagRFID ? data.tagRFID:"N/A"}}
-                                                        <label>
-                                                            <button (click)="dataSelect = data"
-                                                                    *ngIf="model.permissions.update && tag.permissions.add"
-                                                                    data-toggle="modal" [attr.data-target]="'#'+tag.paramsSave.idModal"
-                                                                    type="button" class="btn btn-box-tool"
-                                                                    title="Asignar un nuevo tag"
-                                                            >
-                                                                <i class="fa fa-plus text-green"></i>
-                                                            </button>
-                                                            <button (click)="dataSelect = data"
-                                                                    *ngIf="model.permissions.update && tag.permissions.list"
-                                                                    data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"
-                                                                    type="button" class="btn btn-box-tool"
-                                                                    title="Asignar un tag"
-                                                            >
-                                                                <i class="fa fa-search text-blue"></i>
-                                                            </button>
-                                                            <button *ngIf="data.tagRFID && tag.permissions.update"
-                                                                    (click)="setDataFieldReference(tag,data,true,syncTag)"
-                                                                    type="button" class="btn btn-box-tool"
-                                                                    title="Liberar chofer"
-                                                            >
-                                                                <i class="fa fa-minus text-red"></i>
-                                                            </button>
-
-
-                                                        </label>
-                                                    </p>
-                                                    <p>
                                                         Tipo:&nbsp;
                                                         <i class="{{data.vehicleTypeIcon?data.vehicleTypeIcon:'fa truck'}}"></i>
                                                         <strong>{{data.vehicleTypeTitle}}</strong>
@@ -164,6 +134,52 @@
                                                                 [class.btn-red]="!data.enabled">
                                                             {{data.enabled?"Habilitado":"Bloqueado"}}
                                                         </button>
+                                                    </p>
+                                                    <p>
+                                                        <button (click)="dataSelect = data"
+                                                                *ngIf="model.permissions.update && tag.permissions.add"
+                                                                data-toggle="modal" [attr.data-target]="'#'+tag.paramsSave.idModal"
+                                                                type="button" class="btn btn-box-tool"
+                                                                title="Asignar un nuevo tag"
+                                                        >
+                                                            <i class="fa fa-plus text-green"></i>
+                                                        </button>
+                                                        <button (click)="dataSelect = data"
+                                                                *ngIf="model.permissions.update && tag.permissions.search"
+                                                                data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"
+                                                                type="button" class="btn btn-box-tool"
+                                                                title="Asignar un tag"
+                                                        >
+                                                            <i class="fa fa-search text-blue"></i>
+                                                        </button>
+
+                                                        &nbsp;Tag RFID{{ data.tags.length == 0 ? ": N/A": ''}}<br>
+
+                                                        <label>
+                                                            <span *ngFor="let obj of data.tags;let i = index">
+                                                                {{obj.number}}&nbsp;<i title="Liberar tag {{obj.number}}" *ngIf="model.permissions.update && tag.permissions.update" (click)="releaseTag(obj,data,i)" class="fa fa-minus text-red"></i><br>
+                                                            </span>
+
+
+
+                                                            <!--<button (click)="dataSelect = data"-->
+                                                                    <!--*ngIf="model.permissions.update && tag.permissions.list"-->
+                                                                    <!--data-toggle="modal" [attr.data-target]="'#'+tag.paramsSearch.idModal"-->
+                                                                    <!--type="button" class="btn btn-box-tool"-->
+                                                                    <!--title="Asignar un tag"-->
+                                                            <!--&gt;-->
+                                                                <!--<i class="fa fa-search text-blue"></i>-->
+                                                            <!--</button>-->
+                                                            <!--<button *ngIf="data.tagRFID && tag.permissions.update"-->
+                                                                    <!--(click)="setDataFieldReference(tag,data,true,syncTag)"-->
+                                                                    <!--type="button" class="btn btn-box-tool"-->
+                                                                    <!--title="Liberar chofer"-->
+                                                            <!--&gt;-->
+                                                                <!--<i class="fa fa-minus text-red"></i>-->
+                                                            <!--</button>-->
+
+
+                                                        </label>
                                                     </p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

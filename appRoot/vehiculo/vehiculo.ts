@@ -45,9 +45,10 @@ export class Vehiculo extends ControllerBase implements OnInit{
     ngOnInit(){
         this.initModel();
         this.initViewOptions();
-        this.loadPage();
+
         if(this.params.get('companyId'))
             this.where="&where="+encodeURI('[["op":"eq","field":"company.id","value":'+this.params.get('companyId')+']]');
+        this.loadPage();
     }
     initModel() {
         this.model = new MVehicle(this.myglobal);
@@ -87,6 +88,12 @@ export class Vehiculo extends ControllerBase implements OnInit{
             data.tagRFID = value.number;
             data.tagId = value.id;
         }
+    }
+    public releaseTag(tag:any,data,index){
+        let callback = (response,value)=>{
+            data['tags'].splice(index,1);
+        };
+        this.tag.setDataField(tag.id,'vehicle',null,callback,data)
     }
 
     //cambiar imagen

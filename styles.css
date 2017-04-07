@@ -88,3 +88,29 @@ body.no-menu .content-wrapper, body.no-menu .main-footer {
 .popover{
   max-width: none !important;
 }
+.label-black{
+  background-color: #000000 !important;
+}
+.label-light-pink{
+  background-color: #f95fa3 !important;
+}
+
+/*Estilos del tag select*/
+.tt-suggestion{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.tt-suggestion:hover{
+  background: #5bc0de;
+  cursor: pointer;
+}
+.tt-menu {
+  border: 1px solid;
+  background: rgba(0, 0, 0, 0.60);
+  color: white;
+  min-width: 150px;
+
+}
+.bootstrap-tagsinput{
+  width: 100%;
+}

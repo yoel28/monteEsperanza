@@ -120,6 +120,9 @@
                     </div><!--Fin de Datos de  camion-->
                     <div *ngIf="myglobal.existsPermission('109')">
                         <find-range-date (dateRange)="loadDataRecargas($event)"></find-range-date>
+                        <div class="table-responsive">
+
+
                         <table id="content" class="table table-hover table-bordered">
 
                             <thead>
@@ -181,6 +184,7 @@
                             </tr>
                             </tfoot>
                         </table>
+                        </div>
                     </div>
                     <div *ngIf="!myglobal.existsPermission('109')">
                         <div class="btn-red padding-error">
@@ -227,13 +231,13 @@
                                 </tbody>
                             </table>
                             <div class="row pull-right noprint">
-                                <button (click)="onPrint($event)" type="button" class="btn  btn-blue">
+                                <button (click)="onPrint($event)" type="button" class="btn  btn-blue ancho">
                                     <i class="fa  fa-print fa-lg"></i> Imprimir
                                 </button>
-                                <button (click)="exportCSV()" type="button" class="btn btn-default">
+                                <button (click)="exportCSV()" type="button" class="btn btn-default ancho">
                                     <i class="fa fa-download"></i>&nbsp;Exportar a CSV
                                 </button>
-                                <button type="button" class="btn  btn-success" data-toggle="modal" [attr.data-target]="'#'+configId+'_SAVE_RECHARGE'"
+                                <button type="button" class="btn  btn-success ancho" data-toggle="modal" [attr.data-target]="'#'+configId+'_SAVE_RECHARGE'"
                                         *ngIf="myglobal.existsPermission('111')">
                                     <i class="fa  fa-money fa-lg"></i> Recargar Saldo
                                 </button>

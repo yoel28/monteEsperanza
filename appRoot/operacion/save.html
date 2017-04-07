@@ -80,6 +80,7 @@
                                                         ">
                                                             <i class="{{model.rules[key].icon || 'fa fa-list'}} z-index"></i>
                                                             <span class="input-group-addon" [attr.id]="key">{{model.rules[key].title}}
+                                                                &nbsp;<tooltip code="{{model.rules[key].tooltip  || 'SAVE_'+(key | uppercase)}}"></tooltip>
                                                             <label *ngIf="model.rules[key].required" class="text-red">&nbsp;*</label>
                                                             </span>
                                                             <input *ngIf="model.rules[key].type == 'text' || model.rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
@@ -88,12 +89,38 @@
                                                                    type="{{model.rules[key].type}}" [attr.aria-describedby]="key"
                                                                    step="any"
                                                                    [readonly]="model.rules[key].readOnly"
+                                                                   (keyup)="getLoadSearchKey($event,model.rules[key])"
                                                             >
 
                                                             <textarea *ngIf="model.rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
                                                                         [(ngModel)]="data[key].value"
                                                                         placeholder="{{model.rules[key].placeholder}}" rows="5"
                                                                         ></textarea>
+
+                                                            <div *ngIf="model.rules[key].type == 'list' && textPlaces.length">
+                                                                <input tags-input data-role="tagsinput"
+                                                                       class="form-control"
+                                                                       placeholder="{{model.rules[key].placeholder}}"
+                                                                       type="text"
+                                                                       [attr.aria-describedby]="key"
+                                                                       [readonly]="true"
+                                                                       [control]="data[key]"
+                                                                       [type]="'inlist'"
+                                                                       [data]="place"
+                                                                       ngControl="{{key}}"
+                                                                       [(ngModel)]="data[key].value"
+                                                                       (instance)="model.rules[key].instance=$event"
+                                                                >
+                                                            </div>
+                                                            <input *ngIf="model.rules[key].type == 'list' && !textPlaces.length" class="form-control"
+                                                                   placeholder="No se han cargado lugares"
+                                                                   [readonly]="true"
+                                                            >
+
+                                                            <!--<label  *ngIf="model.rules[key].type == 'list' && !place " >Ingresar '-' previamente para mostar lugares</label>-->
+
+
+
 
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
                                                                 <div *ngFor="let error of getObjectKeys(data[key].errors || {})">
@@ -106,19 +133,27 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2 padding-top-4">
-                                                        <button *ngIf="model.rules[key].refreshField " tabindex="-1"
+                                                        <span *ngIf="model.rules[key].refreshField " tabindex="-1"
                                                                 class="btn btn-box-tool fa {{model.rules[key].refreshField.icon}} text-blue"
-                                                                (click)="refreshField($event,model.rules[key])">
-                                                        </button>
-                                                        <button *ngIf="model.rules[key].object && !model.rules[key].readOnly" tabindex="-1"
+                                                                (click)="refreshField(null,model.rules[key])">
+                                                        </span>
+                                                        <span *ngIf="model.rules[key].object && !model.rules[key].readOnly" tabindex="-1"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
-                                                                (click)="getLoadSearch($event,model.rules[key])">
-                                                        </button>
-                                                        <button *ngIf="model.rules[key].object && key=='company' && searchId[key]" tabindex="-1"
+                                                                (click)="getLoadSearch(null,model.rules[key])">
+                                                        </span>
+                                                        <span *ngIf="model.rules[key].object && key=='company' && searchId[key]" tabindex="-1"
                                                                 data-toggle="modal" data-target="#saveRecarga"
                                                                 class="btn btn-box-tool fa fa-money text-green"
-                                                                (click)="getLoadRecharge($event,searchId[key])">
-                                                        </button>
+                                                                (click)="getLoadRecharge(null,searchId[key])">
+                                                        </span>
+                                                        <!--&& !place-->
+                                                        <span *ngIf="model.rules[key].type == 'list' && textPlaces.length "  tabindex="-1"
+                                                              data-toggle="modal"  class="fa fa-info-circle text-blue fa-lg mause"
+                                                              [attr.title]="textPlaces"
+                                                              >
+                                                        </span>
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,24 +224,32 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            {{msg.fieldRequired}}
+                            {{msg.fieldRequired}}<br>
+                            <span *ngIf="waitResponse"><i class="fa fa-spinner fa-spin" ></i>
+                            Por favor espere..
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
+                <button (click)="resetForm($event)" type="button" data-dismiss="modal" class="btn btn-blue" [disabled]="waitResponse">
+                    <i class="fa fa-eraser"></i>
+                    Limpiar
+                </button>&nbsp;
+
                 <button *ngIf="readOperations" (click)="loadReadOperations($event)" type="button" class="btn btn-blue">
                     <i class="fa fa-refresh"></i>
                     Buscar antenas
                 </button>
 
-                <button *ngIf="idOperacion<0 && !readOperations" (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
-                        [disabled]="!form.valid">
+                <button *ngIf="idOperacion<0 && !readOperations" (click)="submitForm($event)" type="button" class="btn btn-primary"
+                        [disabled]="!form.valid || waitResponse">
                     <i class="fa fa-save"></i>
                     Agregar entrada
                 </button>
-                <button *ngIf="idOperacion>=0 && !readOperations" (click)="patchForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
-                        [disabled]="!form.valid">
+                <button *ngIf="idOperacion>=0 && !readOperations" (click)="patchForm($event)"  type="button" class="btn btn-primary"
+                        [disabled]="!form.valid || waitResponse">
                     <i class="fa fa-save"></i>
                     Agregar salida
                 </button>

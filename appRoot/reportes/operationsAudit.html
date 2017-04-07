@@ -44,20 +44,120 @@
                 </div>
 
                 <div class="col -lg-12" *ngIf="url && url2">
-                    <div>
-                        <a [attr.href]="url+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>
-                        <a [attr.href]="url+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>
-                        REPORTE DE AUDITORIA DE OPERACIONES<br/>
+
+                    <section class="content">
+                        <div class="col-md-12">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#cobrar" data-toggle="tab" aria-expanded="false">REPORTE DE AUDITORIA</a></li>
+                                    <li class=""><a href="#general" data-toggle="tab" aria-expanded="false">REPORTE DE OPERACIONES REALIZADAS</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="cobrar">
+
+                                        <div class="box-body">
+
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <a [attr.href]="url+'&formatType=pdf'"  target="_blank" title="Exportar a pdf">
+                                                    <div class="info-box bg-red">
+                                                        <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">REPORTE DE AUDITORIA</span>
+                                                            <span  *ngIf="" class="info-box-number">OPERACIONES  </span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" style="width: 100%"></div>
+                                                            </div>
+                                                            <span class="progress-description">
+                                                Descargar En PDF
+                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <a [attr.href]="url+'&formatType=xls'"  target="_blank" title="Exportar a exel">
+                                                    <div class="info-box bg-success">
+                                                        <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">REPORTE DE AUDITORIA</span>
+                                                            <span  *ngIf="" class="info-box-number">OPERACIONES </span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" style="width: 100%"></div>
+                                                            </div>
+                                                            <span class="progress-description">
+                                                Descargar En Exel
+                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane" id="general">
+
+                                        <div class="box-body">
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <a [attr.href]="url2+'&formatType=pdf'"  target="_blank" title="Exportar a pdf">
+                                                    <div class="info-box bg-red">
+                                                        <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text"> REPORTE DE OPERACIONES </span>
+                                                            <span  *ngIf="" class="info-box-number">REALIZADAS </span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" style="width: 100%"></div>
+                                                            </div>
+                                                            <span class="progress-description">
+                                                    Descargar En PDF
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <a [attr.href]="url2+'&formatType=xls'"  target="_blank" title="Exportar a exel">
+                                                    <div class="info-box bg-success">
+                                                        <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">REPORTE DE OPERACIONES </span>
+                                                            <span  *ngIf="" class="info-box-number">REALIZADAS </span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" style="width: 100%"></div>
+                                                            </div>
+                                                            <span class="progress-description">
+                                                    Descargar En Exel
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- /.nav-tabs-custom -->
+                        </div>
+                    </section>
 
 
-                        <a [attr.href]="url2+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>
-                        <a [attr.href]="url2+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>
-                        REPORTE DE OPERACIONES REALIZADAS
-                    </div>
+                            <!--&lt;!&ndash;<a [attr.href]="url+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a [attr.href]="url+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;REPORTE DE AUDITORIA DE OPERACIONES<br/>&ndash;&gt;-->
 
-                    <div>
 
-                    </div>
+                            <!--&lt;!&ndash;<a [attr.href]="url2+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a [attr.href]="url2+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;REPORTE DE OPERACIONES REALIZADAS&ndash;&gt;-->
+                        <!--</div>-->
+
+
                 </div>
                 <div *ngIf="dataList && dataList.entradasNoRegistradas && false">
                     <div class="pull-right">

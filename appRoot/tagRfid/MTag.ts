@@ -24,8 +24,7 @@ export class MTag extends ModelBase{
         this.rules['vehicle'].required=false;
         this.rules['vehicle'].update=this.permissions.update;
         this.rules['vehicle'].disabled = "data.containerId?true:false";
-        this.rules['vehicle'].paramsSearch.where="&where="+encodeURI("[['op':'isNull','field':'tag.id']]");
-        
+
 
         this.rules['container']=this.container.ruleObject;
         this.rules['container'].unique=true;
@@ -47,6 +46,7 @@ export class MTag extends ModelBase{
         };
         this.rules['code']={
             'type': 'text',
+            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,

@@ -20,6 +20,8 @@
                     </div>
                 </h3>
 
+                <modalGaleriac [data]="dataGaleria"></modalGaleriac>
+
                 <div class="pull-right noprint" *ngIf="viewOptions['buttons'].length > 0">
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
@@ -39,8 +41,14 @@
             <div *ngIf="model.permissions.list" class="box-body">
                 <div>
                     <div class="pull-right noprint">
+
+                        <a [attr.href]="getUrl+'&formatType=pdf'"  target="_blank" title="Exportar a pdf">
+                            <span><i class="fa fa-file-pdf-o fa-lg text-red"></i></span>
+                        </a>&nbsp;
+                        <a [attr.href]="getUrl+'&formatType=xls'"  target="_blank" title="Exportar a excel">
+                            <span><i class="fa fa-file-excel-o fa-lg text-green"></i></span>
+                        </a>
                         <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
-                        <i (click)="export('xls')" class="btn fa fa-file-excel-o text-green fa-lg" title="Exportar"></i>
                     </div>
                     <table class="table export table-striped table-hover tarjeta">
                         <thead>
@@ -85,18 +93,18 @@
                                         {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReferenceDate'">
-                                        {{formatDate(data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
+                                        {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
                                         <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'rechargeReference'">
                                         {{data.rechargeReference || "-"}}
                                     </span>
                                     <span   *ngSwitchWhen="'dateCreated'">
-                                        {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',false,data.id)}}
+                                        {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}
                                         <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
                                     </span>
                                     <span   *ngSwitchWhen="'route'">
-                                        {{data.routeTitle}}&nbsp;({{data.routeReference}})
+                                        &nbsp;({{data.routeReference}})
                                     </span>
                                     <span   *ngSwitchWhen="'trash'">
                                         {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
@@ -114,6 +122,16 @@
                                     </span>
                                     <span   *ngSwitchWhen="'choferName'">
                                         {{data.choferName}}
+                                    </span>
+                                    <span   *ngSwitchWhen="'place'">
+                                        <button class="btn btn-box-tool"
+                                                data-toggle="modal"
+                                                data-target="#listPlace"
+                                                (click)="placeView=data.place"
+                                                [disabled]="!(data.place && data.place.length)"
+                                        >
+                                            <i class="fa fa-list text-red"></i>
+                                        </button>
                                     </span>
                                     <span   *ngSwitchWhen="'weightIn'">
                                         <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
@@ -149,6 +167,12 @@
                                            (click)="dataSelect = data" href="#" title="Eliminar">
                                             <span class="fa fa-trash fa-lg btn"></span>
                                         </a>
+                                        <!--<a *ngIf="action == 'image'" target="_blank" href="{{viewOptions.actions.image.server+''+data.id}}" title="Ver imagenes">-->
+                                            <!--<span class="fa fa-photo fa-lg btn"></span>-->
+                                        <!--</a>-->
+                                        <span *ngIf="action == 'image'"  (click)="galeriaFolder(data.id)" title="Ver imagenes">
+                                           <span class="fa fa-photo fa-lg btn"></span>
+                                        </span>
 
                                         <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
                                            data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
@@ -193,7 +217,6 @@
                                            data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
                                             <span class="fa fa-print fa-lg btn"></span>
                                         </a>
-
 
                                     </label>
                                 </div>
@@ -343,3 +366,34 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="listPlace" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    <strong>Lugares</strong>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-hover" *ngIf="placeView.length">
+                    <tbody>
+                    <tr *ngFor="let data of placeView">
+                        <td>{{data.text}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span *ngIf="!placeView.length">
+                    No se encontraron lugares para este registro
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;{{ 'Salir' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+

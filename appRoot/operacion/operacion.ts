@@ -8,21 +8,24 @@ import {Xeditable} from "../common/xeditable";
 import {globalService} from "../common/globalService";
 import {Filter} from "../utils/filter/filter";
 import {Fecha} from "../utils/pipe";
-import moment from "moment/moment";
 import {NgSwitch, NgSwitchWhen, Control, Validators} from "@angular/common";
 import {ControllerBase} from "../common/ControllerBase";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {MOperacion} from "./MOperacion";
 import {Tooltip} from "../utils/tooltips/tooltips";
+import {galeriaComponent, IGaleriaData} from "./galeria/galeriaFolder";
+
 
 declare var SystemJS:any;
+declare var jQuery:any;
+declare var moment:any;
 
 @Component({
     selector: 'operacion',
     templateUrl: SystemJS.map.app+'/operacion/index.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
     providers: [TranslateService],
-    directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen,Tooltip],
+    directives: [OperacionSave, Xeditable, Filter, OperacionPrint, NgSwitch, NgSwitchWhen,Tooltip,galeriaComponent],
     pipes: [TranslatePipe]
 })
 export class Operacion extends ControllerBase implements OnInit {
@@ -39,6 +42,7 @@ export class Operacion extends ControllerBase implements OnInit {
     ngOnInit() {
         this.initModel();
         this.initViewOptions();
+        this.initGlobalData();
 
         this.MONEY_METRIC_SHORT = this.myglobal.getParams('MONEY_METRIC_SHORT');
         this.AUTOMATIC_RECHARGE_PREF = this.myglobal.getParams('AUTOMATIC_RECHARGE_PREF');
@@ -50,12 +54,29 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view11'))
-                this.view = JSON.parse(localStorage.getItem('view11'));
+            if (localStorage.getItem('view12'))
+                this.view = JSON.parse(localStorage.getItem('view12'));
             this.ordenView();
             this.loadData();
         }
     }
+    initGlobalData(){
+        let that = this;
+        this.myglobal.dataOperation.valueChanges.subscribe(
+            (data:Object)=>{
+                if(that.dataList && that.dataList.list)
+                {
+                    let index = that.dataList.list.findIndex(obj => obj.id == data['id']);
+                    if(index!=-1)
+                        that.dataList.list.splice(index,1);
+                }
+                if(data && typeof data == 'object'){
+                    that.assignData(data);
+                }
+            }
+        )
+    }
+
     initModel() {
         this.model= new MOperacion(this.myglobal);
 
@@ -120,6 +141,11 @@ export class Operacion extends ControllerBase implements OnInit {
             'visible': this.model.permissions.automatic,
         };
 
+        this.viewOptions.actions.image = {
+            'visible': this.model.permissions.image,
+            'server':this.myglobal.getParams('SERVER_IMAGE')
+        };
+
 
         if(this.model.permissions.update){
             this.viewOptions.actions.edit = {
@@ -142,6 +168,15 @@ export class Operacion extends ControllerBase implements OnInit {
     public onPrint(data) {
         if (this.operacionPrint)
             this.operacionPrint.data = data
+    }
+
+    get getUrl(){
+        return localStorage.getItem('urlAPI')
+                + this.endpoint
+                + '?access_token=' + localStorage.getItem('bearer')
+                + '&tz=' + (moment().format('Z')).replace(':', '')
+                + this.where
+                + '&lands=true';
     }
 
     public PrintAutomatic:string = "";
@@ -171,6 +206,51 @@ export class Operacion extends ControllerBase implements OnInit {
             }
             return this.httputils.doPut(endpoint + data.id, body, successCallback, error)
         }
+    }
+
+
+
+
+
+
+    //galeria por carpetas.
+    public dataGaleria:IGaleriaData;
+
+    galeriaFolder(id){
+        let that = this;
+        let server = this.myglobal.getParams('SERVER_IMAGE');
+        let successCallback= response => {
+             let data =  response._body.split('\n');
+             that.dataGaleria = {
+                    title: "Operación: "+id,
+                    images:[],
+                    server:server,
+                    id:id,
+                    selectFolder:null,
+                    selectImage:null,
+             };
+             data.forEach(obj=>{
+                 let val = obj.split('/');
+                  if(val[0]){
+                      that.dataGaleria.images.push({
+                          folder:val[0],
+                          created:val[1]
+
+                      });
+                  }
+
+
+             });
+            jQuery('#myModal1').modal('show');
+        };
+        let error = err => {
+            this.waitResponse = false;
+            if (that.toastr) {
+                that.toastr.error('No se encontraron imagenes para esta operación');
+            }
+        }
+        this.httputils.doGetFile(this.viewOptions.actions.image.server+id + '/file.txt',successCallback,error,true)
+
     }
 
     goTaquilla(event, companyId:string) {
@@ -225,9 +305,10 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': true, 'position': 15, 'title': 'Contenedor', 'key': 'containerCode'},
         {'visible': true, 'position': 16, 'title': 'Comentario', 'key': 'comment'},
         {'visible': true, 'position': 17, 'title': 'Habilitado', 'key': 'enabled'},
+        {'visible': true, 'position': 18, 'title': 'Lugar', 'key': 'place'},
 
     ];
-
+    public placeView:any={};
     setOrden(data, dir,event) {
         if(event)
            event.stopPropagation();
@@ -273,7 +354,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view11', JSON.stringify(this.view))
+        localStorage.setItem('view12', JSON.stringify(this.view))
     }
 
     setVisibleView(data,event) {
@@ -285,7 +366,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view11', JSON.stringify(this.view))
+        localStorage.setItem('view12', JSON.stringify(this.view))
     }
 
     edit(data){
