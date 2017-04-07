@@ -135,7 +135,8 @@
                                         <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" href="#" title="Rechazar">
                                             &nbsp;<span class="fa fa-ban fa-lg"></span>
                                         </a>
-                                        <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
+                                        <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"
+                                           (click)="onLockAuto(data,$event)" href="#" title="Validar">
                                             &nbsp;<span class="fa fa-check fa-lg"></span>
                                         </a>
                                     </label>
@@ -200,12 +201,12 @@
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
                                                 <a *ngIf="action == 'devolver' &&!data.touched  && !data.operationId"  (click)="onLock('touched',data,$event)" href="#">
-                                                    &nbsp;<span class="fa fa-check  fa-lg" title="Aprobar"></span>
+                                                    &nbsp;<span class="fa fa-check-square-o  fa-lg" title="Aprobar"></span>
                                                 </a>
                                                 <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" title="Rechazar" href="#">
                                                     &nbsp;<span class="fa fa-ban fa-lg"></span>
                                                 </a>
-                                                <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
+                                                <a *ngIf="action == 'loadAuto'&&data.touched   && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
                                                     &nbsp;<span class="fa fa-check text-green fa-lg"></span>
                                                 </a>
 
@@ -214,7 +215,7 @@
                                         <div class="btn-group" *ngIf="!data.enabled">
                                             <label *ngFor="let action of getViewOptionsActions()" >
                                                 <a *ngIf="action == 'devolver'  && !data.operationId"  (click)="onLock('enabled',data,$event)" href="#">
-                                                    &nbsp;<span class="fa fa-check fa-lg" title="Aprobar"></span>
+                                                    &nbsp;<span class="fa fa-check-square-o fa-lg" title="Aprobar"></span>
                                                 </a>
                                                 <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation($event,data)" title="Imprimir operaci&oacute;n" href="#">
                                                     &nbsp;<span class="fa fa-print fa-lg"></span>
@@ -264,13 +265,16 @@
                                     <div class="col-lg-12">
                                         <div class="col-lg-6">
                                             <strong>Lote E.:&nbsp;</strong>
-                                            {{data.lotValIn || '-'}}<span (click)="galeriaFolder(data.lotValIn)" title="Ver imagenes">
+                                            {{data.lotValIn || '-'}}<span *ngIf="data.lotValIn!=null" (click)="galeriaFolder(data.lotValIn)" title="Ver imagenes">
                                            <span class="fa fa-photo fa-lg btn"></span>
                                         </span>
                                         </div>
                                         <div class="col-lg-6">
                                             <strong>Lote S.:&nbsp;</strong>
                                             {{data.lotValOut || '-'}}
+                                            <span *ngIf="data.lotValOut!=null" (click)="galeriaFolder(data.lotValOut)" title="Ver imagenes">
+                                           <span class="fa fa-photo fa-lg btn"></span>
+                                                </span>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
