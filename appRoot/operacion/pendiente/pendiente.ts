@@ -158,11 +158,12 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
         this.viewOptions.actions.loadAuto = {
             'visible': this.model.permissions.update,
         };
-        this.viewOptions.actions.rechazar = {
-            'visible': this.model.permissions.update,
-        };
+
         this.viewOptions.actions.devolver = {
             'visible': this.model.permissions.lock,
+        };
+        this.viewOptions.actions.rechazar = {
+            'visible': this.model.permissions.update,
         };
         this.viewOptions.actions.print = {
             'visible': this.model.permissions.print,
@@ -221,7 +222,7 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
             event.preventDefault();
         let json = {};
         json['enabled'] = false;
-        json['operationId'] = data.operationRegistroId;
+        json['operation'] = data.operationRegistroId;
 
         let body = JSON.stringify(json);
         return (this.httputils.onUpdate("/lock" + this.endpoint + data.id, body, data, this.error));
@@ -231,7 +232,8 @@ export class OperacionPendiente extends ControllerBase implements OnInit {
 
     galeriaFolder(id){
         let that = this;
-        let server = this.myglobal.getParams('SERVER_IMAGE_PENDING');
+        let server =  this.viewOptions.actions.image.server;
+        //this.myglobal.getParams('SERVER_IMAGE_PENDING');
 
         let successCallback= response => {
             that.dataGaleria = {
