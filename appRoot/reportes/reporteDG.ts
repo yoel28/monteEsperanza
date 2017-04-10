@@ -162,6 +162,9 @@ export class ReporteDescargasGrupos extends RestController implements OnInit{
                 this.maxG=data[1]
             this.totalG+=data[2];
             this.count++;
+            if(this.count==1)
+                this.avgG=(this.totalG/12).toFixed(3);
+            else
             this.avgG=(this.totalG/this.count).toFixed(3);
         }
         else{
