@@ -1,4 +1,4 @@
-import {Component, OnInit,HostListener} from '@angular/core';
+import {Component, OnInit, HostListener, ViewChild, ElementRef} from '@angular/core';
 import {globalService} from "../../common/globalService";
 import {MHelp} from "../../help/MHelp";
 
@@ -13,57 +13,62 @@ declare var jQuery:any;
     inputs: ['code'],
 })
 export class Tooltip implements OnInit{
-
+    @ViewChild('btn') btn:ElementRef;
+    @ViewChild('btnSpan') btnSpan:ElementRef;
     public permissions:any;
     public code="";
     public data:any={};
     public help:any;
-    
+    public $btn;
+    private view:boolean = false;
 
-    public configId=moment().valueOf();
-
-    constructor(public myglobal:globalService) {
+    constructor(public myglobal:globalService, public elem:ElementRef) {
         this.help=new MHelp(myglobal);
         this.permissions = Object.assign({},this.help.permissions);
     }
     ngOnInit() {
-        this.configId='TOOLTIP_'+this.configId+'_'+this.code;
         if(this.code && this.code.length>0){
-            this.data=this.myglobal.getTooltip(this.code);
+            this.data = this.myglobal.getTooltip(this.code);
         }
     }
     ngAfterViewInit()
     {
-        let that=this;
-        if(this.data && this.data.id){
-            jQuery('#'+this.configId).popover({
-                trigger: "manual"
-            });
+        if(this.data.id && this.btn) {
+            this.$btn = jQuery(this.btn.nativeElement);
+            this.$btn.popover({trigger: "manual"});
         }
     }
     edit(event,data){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         if(this.permissions.update){
             if(this.myglobal.objectInstance[this.help.prefix]){
                 this.myglobal.objectInstance[this.help.prefix].setLoadDataModel(data,true);
             }
         }
     }
-    @HostListener('document:click', ['$event.target'])
-    public onClick(event) {
-        let btn = jQuery(event).parents('#'+this.configId);
-        if( (btn && btn.length > 0) || jQuery(event).attr('id') == this.configId ){
-            jQuery('#'+this.configId).popover('show');
-        }
-        else{
-            let exit= jQuery(event).parents('.popover');
-            if(exit && exit.length == 0)
-                jQuery('#'+this.configId).popover('destroy');
+
+    @HostListener('document:click', ['$event','$event.target'])
+    public onClick(event,element) {
+        if(this.data.id && this.view) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (!element.classList.contains('tooltip-element')) {
+                this.$btn.popover('destroy');
+                this.view = false;
+                console.log(this);
+            }
         }
     }
-    @HostListener('window:keydown', ['$event'])
-    keyboardInput(event: any) {
-        if(event.code == "Escape")
-            jQuery("[data-toggle='popover']").popover('destroy');
+
+    clickBtn(){
+        if(this.data.id){
+            if(this.view)
+                this.$btn.popover('destroy');
+            else
+                this.$btn.popover('show');
+            this.view = !this.view;
+        }
+
     }
 }
