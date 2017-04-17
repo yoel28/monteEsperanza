@@ -3,7 +3,6 @@ import {globalService} from "../../common/globalService";
 import {MHelp} from "../../help/MHelp";
 
 declare var SystemJS:any;
-declare var moment:any;
 declare var jQuery:any;
 
 @Component({
@@ -14,7 +13,7 @@ declare var jQuery:any;
 })
 export class Tooltip implements OnInit{
     @ViewChild('btn') btn:ElementRef;
-    @ViewChild('btnSpan') btnSpan:ElementRef;
+
     public permissions:any;
     public code="";
     public data:any={};
@@ -48,25 +47,26 @@ export class Tooltip implements OnInit{
         }
     }
 
-    @HostListener('document:click', ['$event','$event.target'])
-    public onClick(event,element) {
-        if(this.data.id && this.view) {
+    @HostListener('click',['$event']) onClick(event) {
+        if(this.data.id && this.view){
             event.preventDefault();
             event.stopImmediatePropagation();
-            if (!element.classList.contains('tooltip-element')) {
-                this.$btn.popover('destroy');
-                this.view = false;
-                console.log(this);
-            }
         }
     }
 
-    clickBtn(){
+    clickBtn(event){
+        event.preventDefault();
+        event.stopImmediatePropagation();
         if(this.data.id){
             if(this.view)
                 this.$btn.popover('destroy');
-            else
+            else{
                 this.$btn.popover('show');
+                jQuery(window).one('click',(event)=>{
+                    if(this.view)
+                        this.clickBtn(event);
+                });
+            }
             this.view = !this.view;
         }
 
