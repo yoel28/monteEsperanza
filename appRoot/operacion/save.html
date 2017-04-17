@@ -79,9 +79,10 @@
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
                                                             <i class="{{model.rules[key].icon || 'fa fa-list'}} z-index"></i>
-                                                            <span class="input-group-addon" [attr.id]="key">{{model.rules[key].title}}
-                                                                &nbsp;<tooltip code="{{model.rules[key].tooltip  || 'SAVE_'+(key | uppercase)}}"></tooltip>
-                                                            <label *ngIf="model.rules[key].required" class="text-red">&nbsp;*</label>
+                                                            <span class="input-group-addon" [attr.id]="key">
+                                                                {{model.rules[key].title}}&nbsp;
+                                                                <tooltip code="{{model.rules[key].tooltip  || 'SAVE_'+(key | uppercase)}}"></tooltip>
+                                                                <label *ngIf="model.rules[key].required" class="text-red">&nbsp;*</label>
                                                             </span>
                                                             <input *ngIf="model.rules[key].type == 'text' || model.rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
                                                                    [(ngModel)]="data[key].value"
