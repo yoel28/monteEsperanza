@@ -58,7 +58,7 @@
                             <a [attr.href]="getUrl+'&formatType=xls'"  target="_blank" title="Exportar a excel">
                                 <span><i class="fa fa-file-excel-o fa-lg text-green"></i></span>
                             </a>
-                            <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
+                            <i *ngIf="typeView==1" (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
                         </div>
                         <div *ngIf="typeView==1">
                             <table class="table export table-striped table-hover tarjeta">
@@ -238,102 +238,17 @@
                         </div>
                     </div>
                 </div>
-
             <!-- menu de acordion -->
-            <div *ngIf="typeView==2">
+            <div *ngIf="typeView==2" class="box-body">
                 <div class="panel-group" id="accordion">
                     <div *ngFor="let data of dataList.list" class="panel panel-default" >
                         <div class="panel-heading">
                             <h4 class="panel-title row">
-
-
-
                                 <div class="col-lg-10">
                                     <a  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
                                         <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
                                         <label class="title">Salida:&nbsp;</label> {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}&nbsp;&nbsp;
                                         <label class="title">Vehiculo:</label>{{data.vehiclePlate || '-'}}
-                                        <span [ngSwitch]="view.key">
-                                            <span  *ngSwitchWhen="'company'">
-                                                <a class="btn btn-box-tool"
-                                                   (click)="goTaquilla($event,data.companyId)">
-                                                {{data.companyName}}<br/>({{data.companyRUC}})
-                                                <i class="fa fa-external-link"></i>
-                                                </a>
-                                            </span>
-                                            <span   *ngSwitchWhen="'companyTypeName'">
-                                                {{data.companyTypeName}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'containerCode'">
-                                                {{data.containerCode}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'neto'">
-                                                {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'rechargeReferenceDate'">
-                                                {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
-                                                <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
-                                            </span>
-                                            <span   *ngSwitchWhen="'rechargeReference'">
-                                                {{data.rechargeReference || "-"}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'dateCreated'">
-                                                {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}
-                                                <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
-                                            </span>
-                                            <span   *ngSwitchWhen="'route'">
-                                                &nbsp;({{data.routeReference}})
-                                            </span>
-                                            <span   *ngSwitchWhen="'trash'">
-                                                {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
-                                            </span>
-                                            <span   *ngSwitchWhen="'usernameCreator'">
-                                                {{data.usernameCreator}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'rechargeQuantity'">
-                                                <span [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
-                                                    {{data.rechargeQuantity | number:'.0-2' || "-"}}
-                                                </span>
-                                            </span>
-                                            <span   *ngSwitchWhen="'vehicle'">
-                                                {{data.vehiclePlate}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'choferName'">
-                                                {{data.choferName}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'place'">
-                                                <button class="btn btn-box-tool"
-                                                        data-toggle="modal"
-                                                        data-target="#listPlace"
-                                                        (click)="placeView=data.place"
-                                                        [disabled]="!(data.place && data.place.length)"
-                                                >
-                                                    <i class="fa fa-list text-red"></i>
-                                                </button>
-                                            </span>
-                                            <span   *ngSwitchWhen="'weightIn'">
-                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
-                                                {{data.weightIn}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'comment'">
-                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
-                                                {{data.comment}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'weightOut'">
-                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
-                                                {{data.weightOut}}
-                                            </span>
-                                            <span   *ngSwitchWhen="'enabled'">
-                                                <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
-                                                    {{getBooleandData('enabled',data).text}}
-                                                </button>
-                                            </span>
-
-                                        </span>
-
                                     </a>
                                 </div>
                                 <td class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete" style="vertical-align: middle">
@@ -554,15 +469,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
 
             <!-- ./box-body -->
             <div *ngIf="model.permissions.list" class="box-footer with-border">
