@@ -246,9 +246,9 @@
                             <h4 class="panel-title row">
                                 <div class="col-lg-10">
                                     <a  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
-                                        <label class="title">C&oacute;digo:&nbsp;</label>{{data.id}}&nbsp;
-                                        <label class="title">Salida:&nbsp;</label> {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}&nbsp;&nbsp;
                                         <label class="title">Vehiculo:</label>{{data.vehiclePlate || '-'}}
+                                        <label class="title">&nbsp;Entrada:  {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}</label>
+                                        <label class="title">&nbsp;Salida:</label> {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}&nbsp;&nbsp;
                                     </a>
                                 </div>
                                 <td class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete" style="vertical-align: middle">
@@ -338,7 +338,7 @@
                                                      <strong>Cliente:&nbsp;</strong>
                                                     <a class="btn btn-box-tool"
                                                        (click)="goTaquilla($event,data.companyId)">
-                                                    {{data.companyName}}<br/>({{data.companyRUC}})
+                                                    {{data.companyName}}({{data.companyRUC}})
                                                     <i class="fa fa-external-link"></i>
                                                     </a>
                                                  </div>
@@ -453,7 +453,8 @@
                                             <span   *ngSwitchWhen="'enabled'">
                                                 <div class="col-lg-6">
                                                          <strong>Habilitado:</strong>
-                                                    <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
+                                                    <button [class.text-green]="data['enabled']" [class.text-red]="!data['enabled']"  class="btn btn-box-tool" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
+                                                        <i [class.fa-unlock]="data['enabled']" [class.fa-lock]="!data['enabled']" class="fa"></i>
                                                         {{getBooleandData('enabled',data).text}}
                                                     </button>
                                                 </div>
