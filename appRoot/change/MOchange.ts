@@ -28,16 +28,6 @@ export class MChange extends ModelBase {
     }
     initRules() {
 
-        this.rules['ubicacion']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'ubicacion',
-            'title': 'Ubicación',
-            'placeholder': 'Ubicación',
-        };
         this.rules['latitud']={
             'type': 'number',
             'double':true,

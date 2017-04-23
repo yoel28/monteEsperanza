@@ -29,7 +29,8 @@ declare var moment:any;
     pipes: [TranslatePipe]
 })
 export class Operacion extends ControllerBase implements OnInit {
-    
+
+    public typeView=2;
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
