@@ -9,6 +9,15 @@
                                 aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-filter fa-lg"></i>
                         </button>
+                        <button (click)="typeView = 1"
+                                type="button" class="btn btn-box-tool">
+                            <i class="fa fa-list fa-lg text-blue"></i>
+                        </button>
+
+                        <button (click)="typeView = 2"
+                                type="button" class="btn btn-box-tool">
+                            <i class="fa fa-list-alt fa-lg text-blue"></i>
+                        </button>
                         <ul role="menu" class="dropdown-menu text-left submenu-config no-print">
                             <li *ngFor="let view of orderViewData" >
                                 <span (click)="setVisibleView(view,$event)" class="btn fa {{view.visible?'text-green fa-eye':'text-red fa-eye-slash'}}"></span>
@@ -38,194 +47,430 @@
 
             </div>
             <!-- /.box-header -->
-            <div *ngIf="model.permissions.list" class="box-body">
-                <div>
-                    <div class="pull-right noprint">
 
-                        <a [attr.href]="getUrl+'&formatType=pdf'"  target="_blank" title="Exportar a pdf">
-                            <span><i class="fa fa-file-pdf-o fa-lg text-red"></i></span>
-                        </a>&nbsp;
-                        <a [attr.href]="getUrl+'&formatType=xls'"  target="_blank" title="Exportar a excel">
-                            <span><i class="fa fa-file-excel-o fa-lg text-green"></i></span>
-                        </a>
-                        <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
+                <div *ngIf="model.permissions.list" class="box-body">
+                    <div>
+                        <div class="pull-right noprint">
+
+                            <a [attr.href]="getUrl+'&formatType=pdf'"  target="_blank" title="Exportar a pdf">
+                                <span><i class="fa fa-file-pdf-o fa-lg text-red"></i></span>
+                            </a>&nbsp;
+                            <a [attr.href]="getUrl+'&formatType=xls'"  target="_blank" title="Exportar a excel">
+                                <span><i class="fa fa-file-excel-o fa-lg text-green"></i></span>
+                            </a>
+                            <i *ngIf="typeView==1" (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
+                        </div>
+                        <div *ngIf="typeView==1">
+                            <table class="table export table-striped table-hover tarjeta">
+                                <thead>
+                                <tr>
+                                    <td *ngIf="viewDelete">
+                                        <span>
+                                            Eliminado
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
+                                        {{view.title}}
+                                    </td>
+                                    <th class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete">
+                                        Acciones&nbsp;<tooltip code="CODE_47"></tooltip>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let data of dataList.list">
+                                    <td *ngIf="viewDelete">
+                                        <span>
+                                            {{formatDate(data.dateUpdated,'DD/MM/YYYY, LT',true,data.id)}}
+                                            <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
+                                        <span [ngSwitch]="view.key">
+                                            <span  *ngSwitchWhen="'company'">
+                                                <a class="btn btn-box-tool"
+                                                   (click)="goTaquilla($event,data.companyId)">
+                                                {{data.companyName}}<br/>({{data.companyRUC}})
+                                                <i class="fa fa-external-link"></i>
+                                                </a>
+                                            </span>
+                                            <span   *ngSwitchWhen="'companyTypeName'">
+                                                {{data.companyTypeName}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'containerCode'">
+                                                {{data.containerCode}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'neto'">
+                                                {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'rechargeReferenceDate'">
+                                                {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
+                                                <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                            </span>
+                                            <span   *ngSwitchWhen="'rechargeReference'">
+                                                {{data.rechargeReference || "-"}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'dateCreated'">
+                                                {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}
+                                                <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                            </span>
+                                            <span   *ngSwitchWhen="'route'">
+                                                &nbsp;({{data.routeReference}})
+                                            </span>
+                                            <span   *ngSwitchWhen="'trash'">
+                                                {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
+                                            </span>
+                                            <span   *ngSwitchWhen="'usernameCreator'">
+                                                {{data.usernameCreator}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'rechargeQuantity'">
+                                                <span [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
+                                                    {{data.rechargeQuantity | number:'.0-2' || "-"}}
+                                                </span>
+                                            </span>
+                                            <span   *ngSwitchWhen="'vehicle'">
+                                                {{data.vehiclePlate}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'choferName'">
+                                                {{data.choferName}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'place'">
+                                                <button class="btn btn-box-tool"
+                                                        data-toggle="modal"
+                                                        data-target="#listPlace"
+                                                        (click)="placeView=data.place"
+                                                        [disabled]="!(data.place && data.place.length)"
+                                                >
+                                                    <i class="fa fa-list text-red"></i>
+                                                </button>
+                                            </span>
+                                            <span   *ngSwitchWhen="'weightIn'">
+                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                                   <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
+                                                {{data.weightIn}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'comment'">
+                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
+                                                {{data.comment}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'weightOut'">
+                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                                   <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
+                                                {{data.weightOut}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'enabled'">
+                                                <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
+                                                    {{getBooleandData('enabled',data).text}}
+                                                </button>
+                                            </span>
+
+
+                                        </span>
+                                    </td>
+
+                                    <td class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete" style="vertical-align: middle">
+
+                                        <div class="btn-group">
+                                            <label *ngFor="let action of getViewOptionsActions()" >
+
+                                                <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                                   (click)="dataSelect = data" href="#" title="Eliminar">
+                                                    <span class="fa fa-trash fa-lg btn"></span>
+                                                </a>
+                                                <!--<a *ngIf="action == 'image'" target="_blank" href="{{viewOptions.actions.image.server+''+data.id}}" title="Ver imagenes">-->
+                                                    <!--<span class="fa fa-photo fa-lg btn"></span>-->
+                                                <!--</a>-->
+                                                <span *ngIf="action == 'image'"  (click)="galeriaFolder(data.id)" title="Ver imagenes">
+                                                   <span class="fa fa-photo fa-lg btn"></span>
+                                                </span>
+
+                                                <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
+                                                   data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
+                                                    <span class="fa fa-pencil-square-o fa-lg btn"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'close' && data.enabled && data.rechargeQuantity == 0" [attr.title]="viewOptions.actions.close.title"
+                                                   data-toggle="modal" [attr.data-target]="'#modalClose'" (click)="dataSelect = data">
+                                                    <span  class="fa fa-lg btn fa-lock"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'automatic' && data.rechargeId && !data.rechargePaid && data.rechargeQuantity != 0"
+                                                   data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
+                                                   (click)="dataSelect = data;dataSelect.option=1" title="Recarga automatica">
+                                                    <span class="fa fa-money fa-lg btn"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'print' && data.rechargeId && !data.enabled" (click)="onPrint(data)" title="Imprimir">
+                                                    <span class="fa fa-print fa-lg btn"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity != 0"
+                                                   (click)="dataSelect = data;dataSelect.option=2" title="Imprimir"
+                                                   data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                    <span class="fa fa-print fa-lg btn"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity == 0"
+                                                   (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                                   data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                    <span class="fa fa-print fa-lg btn"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && data.companyTypeCredit"
+                                                   (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                                   data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                    <span class="fa fa-print fa-lg btn"></span>
+                                                </a>
+
+                                                <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && data.companyTypeFree"
+                                                   (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                                   data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                    <span class="fa fa-print fa-lg btn"></span>
+                                                </a>
+
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <table class="table export table-striped table-hover tarjeta">
-                        <thead>
-                        <tr>
-                            <td *ngIf="viewDelete">
-                                <span>
-                                    Eliminado
-                                </span>
-                            </td>
-                            <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
-                                {{view.title}}
-                            </td>
-                            <th class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete">
-                                Acciones&nbsp;<tooltip code="CODE_47"></tooltip>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let data of dataList.list">
-                            <td *ngIf="viewDelete">
-                                <span>
-                                    {{formatDate(data.dateUpdated,'DD/MM/YYYY, LT',true,data.id)}}
-                                    <i *ngIf="viewChangeDate(data.dateUpdated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
-                                </span>
-                            </td>
-                            <td *ngFor="let view of orderViewData" [hidden]="!view.visible">
-                                <span [ngSwitch]="view.key">
-                                    <span  *ngSwitchWhen="'company'">
-                                        <a class="btn btn-box-tool"
-                                           (click)="goTaquilla($event,data.companyId)">
-                                        {{data.companyName}}<br/>({{data.companyRUC}})
-                                        <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </span>
-                                    <span   *ngSwitchWhen="'companyTypeName'">
-                                        {{data.companyTypeName}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'containerCode'">
-                                        {{data.containerCode}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'neto'">
-                                        {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'rechargeReferenceDate'">
-                                        {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
-                                        <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
-                                    </span>
-                                    <span   *ngSwitchWhen="'rechargeReference'">
-                                        {{data.rechargeReference || "-"}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'dateCreated'">
-                                        {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}
-                                        <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
-                                    </span>
-                                    <span   *ngSwitchWhen="'route'">
-                                        {{data.routeTitle}}&nbsp;({{data.routeReference}})
-                                    </span>
-                                    <span   *ngSwitchWhen="'trash'">
-                                        {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
-                                    </span>
-                                    <span   *ngSwitchWhen="'usernameCreator'">
-                                        {{data.usernameCreator}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'rechargeQuantity'">
-                                        <span [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
-                                            {{data.rechargeQuantity | number:'.0-2' || "-"}}
-                                        </span>
-                                    </span>
-                                    <span   *ngSwitchWhen="'vehicle'">
-                                        {{data.vehiclePlate}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'choferName'">
-                                        {{data.choferName}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'place'">
-                                        <button class="btn btn-box-tool"
-                                                data-toggle="modal"
-                                                data-target="#listPlace"
-                                                (click)="placeView=data.place"
-                                                [disabled]="!(data.place && data.place.length)"
-                                        >
-                                            <i class="fa fa-list text-red"></i>
-                                        </button>
-                                    </span>
-                                    <span   *ngSwitchWhen="'weightIn'">
-                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                           <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
-                                        {{data.weightIn}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'comment'">
-                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                        <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightIn"></a>-->
-                                        {{data.comment}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'weightOut'">
-                                        <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                           <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
-                                        {{data.weightOut}}
-                                    </span>
-                                    <span   *ngSwitchWhen="'enabled'">
-                                        <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
-                                            {{getBooleandData('enabled',data).text}}
-                                        </button>
-                                    </span>
-
-
-                                </span>
-                            </td>
-
-                            <td class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete" style="vertical-align: middle">
-
-                                <div class="btn-group">
-                                    <label *ngFor="let action of getViewOptionsActions()" >
-
-                                        <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                                           (click)="dataSelect = data" href="#" title="Eliminar">
-                                            <span class="fa fa-trash fa-lg btn"></span>
-                                        </a>
-                                        <!--<a *ngIf="action == 'image'" target="_blank" href="{{viewOptions.actions.image.server+''+data.id}}" title="Ver imagenes">-->
-                                            <!--<span class="fa fa-photo fa-lg btn"></span>-->
-                                        <!--</a>-->
-                                        <span *ngIf="action == 'image'"  (click)="galeriaFolder(data.id)" title="Ver imagenes">
-                                           <span class="fa fa-photo fa-lg btn"></span>
-                                        </span>
-
-                                        <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
-                                           data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
-                                            <span class="fa fa-pencil-square-o fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'close' && data.enabled && data.rechargeQuantity == 0" [attr.title]="viewOptions.actions.close.title"
-                                           data-toggle="modal" [attr.data-target]="'#modalClose'" (click)="dataSelect = data">
-                                            <span  class="fa fa-lg btn fa-lock"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'automatic' && data.rechargeId && !data.rechargePaid && data.rechargeQuantity != 0"
-                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
-                                           (click)="dataSelect = data;dataSelect.option=1" title="Recarga automatica">
-                                            <span class="fa fa-money fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'print' && data.rechargeId && !data.enabled" (click)="onPrint(data)" title="Imprimir">
-                                            <span class="fa fa-print fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity != 0"
-                                           (click)="dataSelect = data;dataSelect.option=2" title="Imprimir"
-                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
-                                            <span class="fa fa-print fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity == 0"
-                                           (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
-                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
-                                            <span class="fa fa-print fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && data.companyTypeCredit"
-                                           (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
-                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
-                                            <span class="fa fa-print fa-lg btn"></span>
-                                        </a>
-
-                                        <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && data.companyTypeFree"
-                                           (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
-                                           data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
-                                            <span class="fa fa-print fa-lg btn"></span>
-                                        </a>
-
-                                    </label>
+                </div>
+            <!-- menu de acordion -->
+            <div *ngIf="typeView==2" class="box-body">
+                <div class="panel-group" id="accordion">
+                    <div *ngFor="let data of dataList.list" class="panel panel-default" >
+                        <div class="panel-heading">
+                            <h4 class="panel-title row">
+                                <div class="col-lg-10">
+                                    <a  data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapse'+data.id">
+                                        <label class="title">Vehiculo:</label>{{data.vehiclePlate || '-'}}
+                                        <label class="title">&nbsp;Entrada:  {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}</label>
+                                        <label class="title">&nbsp;Salida:</label> {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}&nbsp;&nbsp;
+                                    </a>
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                <td class="noprint" *ngIf="getViewOptionsActions().length > 0 && !viewDelete" style="vertical-align: middle">
+
+                                    <div class="btn-group">
+                                        <label *ngFor="let action of getViewOptionsActions()" >
+
+                                            <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                               (click)="dataSelect = data" href="#" title="Eliminar">
+                                                <span class="fa fa-trash fa-lg btn"></span>
+                                            </a>
+                                            <!--<a *ngIf="action == 'image'" target="_blank" href="{{viewOptions.actions.image.server+''+data.id}}" title="Ver imagenes">-->
+                                            <!--<span class="fa fa-photo fa-lg btn"></span>-->
+                                            <!--</a>-->
+                                            <span *ngIf="action == 'image'"  (click)="galeriaFolder(data.id)" title="Ver imagenes">
+                                                   <span class="fa fa-photo fa-lg btn"></span>
+                                                </span>
+
+                                            <a *ngIf="action == 'edit' && data.enabled" (click)="edit(data)" [attr.title]="viewOptions.actions.edit.title"
+                                               data-toggle="modal" [attr.data-target]="'#'+viewOptions.actions.edit.modal">
+                                                <span class="fa fa-pencil-square-o fa-lg btn"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'close' && data.enabled && data.rechargeQuantity == 0" [attr.title]="viewOptions.actions.close.title"
+                                               data-toggle="modal" [attr.data-target]="'#modalClose'" (click)="dataSelect = data">
+                                                <span  class="fa fa-lg btn fa-lock"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'automatic' && data.rechargeId && !data.rechargePaid && data.rechargeQuantity != 0"
+                                               data-toggle="modal" [attr.data-target]="'#modalAutomatic'"
+                                               (click)="dataSelect = data;dataSelect.option=1" title="Recarga automatica">
+                                                <span class="fa fa-money fa-lg btn"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'print' && data.rechargeId && !data.enabled" (click)="onPrint(data)" title="Imprimir">
+                                                <span class="fa fa-print fa-lg btn"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity != 0"
+                                               (click)="dataSelect = data;dataSelect.option=2" title="Imprimir"
+                                               data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                <span class="fa fa-print fa-lg btn"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && !data.companyTypeCredit && data.rechargeQuantity == 0"
+                                               (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                               data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                <span class="fa fa-print fa-lg btn"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && !data.companyTypeFree && data.companyTypeCredit"
+                                               (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                               data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                <span class="fa fa-print fa-lg btn"></span>
+                                            </a>
+
+                                            <a *ngIf="action == 'print' && data.rechargeId && data.enabled  && data.companyTypeFree"
+                                               (click)="dataSelect = data;dataSelect.option=3" title="Imprimir"
+                                               data-toggle="modal" [attr.data-target]="'#modalAutomatic'">
+                                                <span class="fa fa-print fa-lg btn"></span>
+                                            </a>
+
+                                        </label>
+                                    </div>
+                                </td>
+
+                            </h4>
+                        </div>
+                        <div [attr.id]="'collapse'+data.id" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div *ngIf="data.touched">
+                                    <div class="col-lg-12">
+                                        <p style="font-size: large">
+                                            <i *ngIf="!data.enabled" class="fa fa-user-secret" aria-hidden="true"></i>
+                                            {{data.enabled?'Devuelto':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
+                                            a las <strong>{{formatDate(data.dateUpdated,'LT',true)}}</strong> por&nbsp;
+                                            <strong>{{data.usernameUpdater}}</strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div  class="col-lg-12">
+                                    <div *ngFor="let view of orderViewData" [hidden]="!view.visible" >
+                                        <span [ngSwitch]="view.key">
+
+                                            <span  *ngSwitchWhen="'company'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Cliente:&nbsp;</strong>
+                                                    <a class="btn btn-box-tool"
+                                                       (click)="goTaquilla($event,data.companyId)">
+                                                    {{data.companyName}}({{data.companyRUC}})
+                                                    <i class="fa fa-external-link"></i>
+                                                    </a>
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'companyTypeName'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Nombre de compañia:&nbsp;</strong>
+                                                    {{data.companyTypeName}}
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'containerCode'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Contenedor:&nbsp;</strong>
+                                                    {{data.containerCode}}
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'neto'">
+                                                <div class="col-lg-6">
+                                                     <strong>Descargado:&nbsp;</strong>
+                                                    {{( (data.weightIn || 0) - (data.weightOut || 0)) | number:'.0-3'}}
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'rechargeReferenceDate'">
+                                                <div class="col-lg-6">
+                                                     <strong>Fecha de Salida:&nbsp;</strong>
+                                                    {{formatDate(data.pendingId?data.dateUpdated:data.rechargeReferenceDate,'DD/MM/YYYY, LT',true,data.id)}}
+                                                    <i *ngIf="viewChangeDate(data.rechargeReferenceDate)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'rechargeReference'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Recibio:&nbsp;</strong>
+                                                    {{data.rechargeReference || "-"}}
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'dateCreated'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Fecha de entrada:&nbsp;</strong>
+                                                    {{formatDate(data.dateCreated,'DD/MM/YYYY, LT',true,data.id)}}
+                                                    <i *ngIf="viewChangeDate(data.dateCreated)" class="fa fa-exchange btn" (click)="changeFormatDate(data.id)"></i>
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'route'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Ruta:&nbsp;</strong>
+                                                    &nbsp;({{data.routeReference}})
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'trash'">
+                                                <div class="col-lg-6">
+                                                     <strong>Tipo de Basura:&nbsp;</strong>
+                                                    {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'usernameCreator'">
+                                                <div class="col-lg-6">
+                                                     <strong>Operador:</strong>
+                                                    {{data.usernameCreator}}
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'rechargeQuantity'">
+                                                <div class="col-lg-6">
+                                                     <strong>Monto:</strong>
+                                                    <span [class.text-red]="data.rechargeQuantity<0" [class.text-green]="data.rechargeQuantity>=0">
+                                                        {{data.rechargeQuantity | number:'.0-2' || "-"}}
+                                                    </span>
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'vehicle'">
+                                                <div class="col-lg-6">
+                                                     <strong>Vehiculo:</strong>
+                                                    {{data.vehiclePlate}}
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'choferName'">
+                                                <div class="col-lg-6">
+                                                     <strong>Chofer:</strong>
+                                                    {{data.choferName}}
+                                                </div>
+                                            </span>
+                                             <span   *ngSwitchWhen="'place'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Lugar:</strong>
+                                                        <button class="btn btn-box-tool"
+                                                                data-toggle="modal"
+                                                                data-target="#listPlace"
+                                                                (click)="placeView=data.place"
+                                                                [disabled]="!(data.place && data.place.length)"
+                                                        >
+                                                            <i class="fa fa-list text-red"></i>
+                                                        </button>
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'weightIn'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Peso de Entrada:</strong>
+                                                    {{data.weightIn}}
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'comment'">
+                                                 <div class="col-lg-6">
+                                                     <strong>Comentario:</strong>
+                                                    {{data.comment}}
+                                                 </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'weightOut'">
+                                                <div class="col-lg-6">
+                                                     <strong>Peso de Salida:</strong>
+                                                    {{data.weightOut}}
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'enabled'">
+                                                <div class="col-lg-6">
+                                                         <strong>Habilitado:</strong>
+                                                    <button [class.text-green]="data['enabled']" [class.text-red]="!data['enabled']"  class="btn btn-box-tool" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
+                                                        <i [class.fa-unlock]="data['enabled']" [class.fa-lock]="!data['enabled']" class="fa"></i>
+                                                        {{getBooleandData('enabled',data).text}}
+                                                    </button>
+                                                </div>
+                                            </span>
+                                            <span *ngIf="action == 'image'"  (click)="galeriaFolder(data.id)" title="Ver imagenes">
+                                                   <span class="fa fa-photo fa-lg btn"></span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <!-- ./box-body -->
             <div *ngIf="model.permissions.list" class="box-footer with-border">
                 <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">

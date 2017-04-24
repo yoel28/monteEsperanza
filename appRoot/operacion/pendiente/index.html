@@ -107,7 +107,7 @@
                             <td>
                                 <span *ngIf="data.expired" class="label label-red font-12pt margin-right-2" title="La operación a expirado">Vencido</span>
                                 <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt margin-right-2" title="La operación esta incompleta">Error</span>
-                                <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Devuelto</span>
+                                <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Aprobado</span>
 
                                 <span *ngIf="!data.enabled && data.operationId && !data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registrado Manual</span>
                                 <span *ngIf="!data.enabled && !data.operationId && data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registro automatico</span>
@@ -135,7 +135,8 @@
                                         <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" href="#" title="Rechazar">
                                             &nbsp;<span class="fa fa-ban fa-lg"></span>
                                         </a>
-                                        <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
+                                        <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"
+                                           (click)="onLockAuto(data,$event)" href="#" title="Validar">
                                             &nbsp;<span class="fa fa-check fa-lg"></span>
                                         </a>
                                     </label>
@@ -172,7 +173,7 @@
 
                                             <span *ngIf="data.expired" class="label label-red font-12pt margin-right-2" title="La operación a expirado">Vencido</span>
                                             <span *ngIf="!data.vehicleId || !data.dateIn" class="label label-red font-12pt margin-right-2" title="La operación esta incompleta">Error</span>
-                                            <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Devuelto</span>
+                                            <span *ngIf="data.touched && data.enabled" class="label label-yellow font-12pt margin-right-2" >Aprobado </span>
 
                                             <span *ngIf="!data.enabled && data.operationId && !data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registrado Manual</span>
                                             <span *ngIf="!data.enabled && !data.operationId && data.operationRegistroId" class="label label-blue font-12pt margin-right-2">Registro automatico</span>
@@ -199,18 +200,22 @@
                                                    [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Registrar">
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
+                                                <a *ngIf="action == 'devolver' &&!data.touched  && !data.operationId"  (click)="onLock('touched',data,$event)" href="#">
+                                                    &nbsp;<span class="fa fa-check-square-o  fa-lg" title="Aprobar"></span>
+                                                </a>
                                                 <a *ngIf="action == 'rechazar'"  (click)="onLock('enabled',data,$event)" title="Rechazar" href="#">
                                                     &nbsp;<span class="fa fa-ban fa-lg"></span>
                                                 </a>
-                                                <a *ngIf="action == 'loadAuto' && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
-                                                    &nbsp;<span class="fa fa-check fa-lg"></span>
+                                                <a *ngIf="action == 'loadAuto'&&data.touched   && data.enabled && data.operationRegistroId && !data.operationId"  (click)="onLockAuto(data,$event)" href="#" title="Validar">
+                                                    &nbsp;<span class="fa fa-check text-green fa-lg"></span>
                                                 </a>
+
                                             </label>
                                         </div>
                                         <div class="btn-group" *ngIf="!data.enabled">
                                             <label *ngFor="let action of getViewOptionsActions()" >
-                                                <a *ngIf="action == 'devolver' && !data.enabled && !data.operationId"  (click)="onLock('enabled',data,$event)" href="#">
-                                                    &nbsp;<span class="fa fa-undo fa-lg" title="Devolver"></span>
+                                                <a *ngIf="action == 'devolver'  && !data.operationId"  (click)="onLock('enabled',data,$event)" href="#">
+                                                    &nbsp;<span class="fa fa-check-square-o fa-lg" title="Aprobar"></span>
                                                 </a>
                                                 <a *ngIf="action == 'print' && data.operationId"  (click)="onPrintOperation($event,data)" title="Imprimir operaci&oacute;n" href="#">
                                                     &nbsp;<span class="fa fa-print fa-lg"></span>
@@ -226,7 +231,7 @@
                                         <div class="col-lg-12">
                                             <p style="font-size: large">
                                                 <i *ngIf="!data.enabled" class="fa fa-user-secret" aria-hidden="true"></i>
-                                                {{data.enabled?'Devuelto':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
+                                                {{data.enabled?'Aprobado':'Procesado'}}&nbsp;el&nbsp;<strong>{{formatDate(data.dateUpdated,'DD/MM/YYYY',true)}}</strong>,&nbsp;
                                                 a las <strong>{{formatDate(data.dateUpdated,'LT',true)}}</strong> por&nbsp;
                                                 <strong>{{data.usernameUpdater}}</strong>
                                             </p>
@@ -260,11 +265,16 @@
                                     <div class="col-lg-12">
                                         <div class="col-lg-6">
                                             <strong>Lote E.:&nbsp;</strong>
-                                            {{data.lotValIn || '-'}}
+                                            {{data.lotValIn || '-'}}<span *ngIf="data.lotValIn!=null" (click)="galeriaFolder(data.lotValIn)" title="Ver imagenes">
+                                           <span class="fa fa-photo fa-lg btn"></span>
+                                        </span>
                                         </div>
                                         <div class="col-lg-6">
                                             <strong>Lote S.:&nbsp;</strong>
                                             {{data.lotValOut || '-'}}
+                                            <span *ngIf="data.lotValOut!=null" (click)="galeriaFolder(data.lotValOut)" title="Ver imagenes">
+                                           <span class="fa fa-photo fa-lg btn"></span>
+                                                </span>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -369,3 +379,4 @@
 <div *ngIf="model.permissions.filter">
     <filter [rules]="model.rules" [params]="model.paramsSearch" (whereFilter)="loadWhere2($event)"></filter>
 </div>
+<modalGaleriac  [data]="dataGaleria"></modalGaleriac>

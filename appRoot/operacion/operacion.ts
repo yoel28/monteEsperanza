@@ -29,7 +29,8 @@ declare var moment:any;
     pipes: [TranslatePipe]
 })
 export class Operacion extends ControllerBase implements OnInit {
-    
+
+    public typeView=2;
     public dataSelect:any = {};
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
@@ -218,11 +219,13 @@ export class Operacion extends ControllerBase implements OnInit {
 
     galeriaFolder(id){
         let that = this;
+        let server = this.myglobal.getParams('SERVER_IMAGE');
         let successCallback= response => {
              let data =  response._body.split('\n');
              that.dataGaleria = {
                     title: "Operación: "+id,
                     images:[],
+                    server:server,
                     id:id,
                     selectFolder:null,
                     selectImage:null,

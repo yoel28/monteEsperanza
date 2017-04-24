@@ -147,9 +147,12 @@
                            <span class="{{params.actions[key].icon}}"></span>
                            &nbsp;{{params.actions[key].title}}
                        </a>
+
                     </div>
                 </div>
-
+                    <div *ngIf="model.permissions.map && data.latitud != null && data.latitud <= 180 &&  data.latitud >=-180 && data.latitud != 0">
+                            <i  (click)="loadMap($event,data)" class="fa fa-map-o cursor" data-toggle="modal" data-target="#myModal"></i>
+                    </div>
             </td>
         </tr>
     </tbody>
@@ -192,6 +195,7 @@
         </div>
     </div>
 </div>
+<mapa *ngIf="coordMap" [params]="coordMap" ></mapa>
 
 <div *ngFor="let key of getKeys(modelSave)">
     <save [rules]="modelSave[key].rulesSave" [params]="modelSave[key].paramsSave" (save)="getDataSave($event,key)"> </save>

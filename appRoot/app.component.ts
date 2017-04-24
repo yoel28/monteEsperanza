@@ -59,6 +59,8 @@ import {Register} from "./register/register";
 import {ReporteClienteMensual} from "./reportes/mensualCliente/mensualCliente.component";
 import {Place} from "./place/place";
 import { ReportsComponents} from "./reportes/reports/reports.components";
+import {ChangeComponents} from "./change/change";
+import {MapaComponents} from "./mapa/mapa";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -111,6 +113,11 @@ declare var jQuery:any;
     {path: '/reporte/operacion/auditoria', name: 'OperationAudit', component: OperationsAudit},
     {path: '/reporte/cliente/mensual', name: 'ReporteClienteMensual', component: ReporteClienteMensual},
     {path: '/reporte/reports/Globales', name: 'ReportsComponents', component: ReportsComponents},
+    {path: '/movimientos', name: 'ChangeComponents', component: ChangeComponents},
+    {path: '/mapa', name: 'MapaComponents', component: MapaComponents},
+
+
+
 
     {path: '/permisos', name: 'Permiso', component: Permiso},
     {path: '/permisos/rol', name: 'PermisoRol', component: PermisosRol},
@@ -405,7 +412,8 @@ export class AppComponent extends RestController implements OnInit {
                 'visible': this.myglobal.existsPermission("MEN_USERS") || this.myglobal.existsPermission("MEN_CLIENTES")
                 || this.myglobal.existsPermission("MEN_VEH") || this.myglobal.existsPermission("MEN_TAG")
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
-                || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH") || this.myglobal.existsPermission("MEN_PLACE"),
+                || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
+                || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -463,6 +471,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-user',
                         'title': 'Lugares',
                         'routerLink': 'Place'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_CHANGE"),
+                        'icon': 'fa fa-user',
+                        'title': 'Movimientos',
+                        'routerLink': 'ChangeComponents'
                     },
                 ]
 

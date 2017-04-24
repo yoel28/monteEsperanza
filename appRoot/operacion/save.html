@@ -79,9 +79,10 @@
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
                                                             <i class="{{model.rules[key].icon || 'fa fa-list'}} z-index"></i>
-                                                            <span class="input-group-addon" [attr.id]="key">{{model.rules[key].title}}
-                                                                &nbsp;<tooltip code="{{model.rules[key].tooltip  || 'SAVE_'+(key | uppercase)}}"></tooltip>
-                                                            <label *ngIf="model.rules[key].required" class="text-red">&nbsp;*</label>
+                                                            <span class="input-group-addon" [attr.id]="key">
+                                                                {{model.rules[key].title}}&nbsp;
+                                                                <tooltip code="{{model.rules[key].tooltip  || 'SAVE_'+(key | uppercase)}}"></tooltip>
+                                                                <label *ngIf="model.rules[key].required" class="text-red">&nbsp;*</label>
                                                             </span>
                                                             <input *ngIf="model.rules[key].type == 'text' || model.rules[key].type == 'number'" ngControl="{{key}}" class="form-control"
                                                                    [(ngModel)]="data[key].value"
@@ -97,7 +98,7 @@
                                                                         placeholder="{{model.rules[key].placeholder}}" rows="5"
                                                                         ></textarea>
 
-                                                            <div *ngIf="model.rules[key].type == 'list' && place">
+                                                            <div *ngIf="model.rules[key].type == 'list' && textPlaces.length">
                                                                 <input tags-input data-role="tagsinput"
                                                                        class="form-control"
                                                                        placeholder="{{model.rules[key].placeholder}}"
@@ -112,10 +113,14 @@
                                                                        (instance)="model.rules[key].instance=$event"
                                                                 >
                                                             </div>
-                                                            <input *ngIf="model.rules[key].type == 'list' && !place " class="form-control"
+                                                            <input *ngIf="model.rules[key].type == 'list' && !textPlaces.length" class="form-control"
                                                                    placeholder="No se han cargado lugares"
                                                                    [readonly]="true"
                                                             >
+
+                                                            <!--<label  *ngIf="model.rules[key].type == 'list' && !place " >Ingresar '-' previamente para mostar lugares</label>-->
+
+
 
 
                                                             <div [hidden]="data[key].valid ||data[key].pristine" class="alert alert-danger">
@@ -142,6 +147,14 @@
                                                                 class="btn btn-box-tool fa fa-money text-green"
                                                                 (click)="getLoadRecharge(null,searchId[key])">
                                                         </span>
+                                                        <!--&& !place-->
+                                                        <span *ngIf="model.rules[key].type == 'list' && textPlaces.length "  tabindex="-1"
+                                                              data-toggle="modal"  class="fa fa-info-circle text-blue fa-lg mause"
+                                                              [attr.title]="textPlaces"
+                                                              >
+                                                        </span>
+
+
                                                     </div>
                                                 </div>
                                             </div>
