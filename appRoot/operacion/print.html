@@ -46,9 +46,7 @@
                 {{data.trashTypeReference | uppercase}}&nbsp;{{data.trashTypeTitle | uppercase}}
             </div><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <span class="subrayar">LUGARES:</span>
-                <div *ngFor="let val of data.place">
-                    -{{val.text}}
-                </div>
+                {{place | uppercase}}
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <span class="subrayar">OBSERVACI&Oacute;N:</span>&nbsp;
