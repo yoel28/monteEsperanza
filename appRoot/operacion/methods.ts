@@ -556,6 +556,14 @@ export class OperacionPrint implements OnInit {
         this.data={};
 
     }
+    get place(){
+        let data=[];
+        this.data.place.forEach(obj=>{
+            data.push(obj.text);
+        })
+        return data.join(', ');
+    }
+
     formatDate(date,format){
         if(date)
             return moment(date).format(format);
