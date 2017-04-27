@@ -20,9 +20,9 @@ export class MPlace extends ModelBase{
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'key': 'title',
-            'title': 'codigo',
-            'placeholder': 'codigo',
+            'key': 'code',
+            'title': 'Código',
+            'placeholder': 'Código',
         };
 
         this.rules['title']={
