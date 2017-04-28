@@ -68,9 +68,11 @@ export class MOperacion extends ModelBase{
             'endpoint':'/read/containers/',
             'field':'containers',
             'callback':(form,data)=>{
-                form.searchId['container']={};
-                form.data['container'].updateValue(data.container.detail);
-                form.searchId['container']={'id':data.container.id,'title':data.container.title,'detail':data.container.detail};
+                if(data && data.container){
+                    form.searchId['container']={};
+                    form.data['container'].updateValue(data.container.detail);
+                    form.searchId['container']={'id':data.container.id,'title':data.container.title,'detail':data.container.detail};
+                }
             }
         };
 
