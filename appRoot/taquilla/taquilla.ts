@@ -25,6 +25,7 @@ export class Taquilla extends RestController implements OnInit{
     public dataCompany:any = {};
     public dataSelect:any = {};
     public dataCompanies:any = {};
+    public dataTotal:any = {};
     public permissions={};
     public search;
     public MONEY_METRIC_SHORT=this.myglobal.getParams('MONEY_METRIC_SHORT');
@@ -50,11 +51,26 @@ export class Taquilla extends RestController implements OnInit{
             let successCallback= response => {
                 Object.assign(this.dataCompany, response.json());
                 that.loadDataRecargas();
+                that.loadDataTotal();
             }
-            this.httputils.doGet("/companies/"+companyId,successCallback,this.error)
             this.dataCompanies = {};
+            this.httputils.doGet("/companies/"+companyId,successCallback,this.error)
         }
     }
+    public  total_client={};
+    loadDataTotal(date?){
+
+            let tempWhere =[];
+            tempWhere.push({'op':'eq','field':'company.id','value':this.dataCompany.id});
+            if(date && date.value && date.value.start && date.value.end)
+            {
+                tempWhere.push({'value':date.value.start,'field':'dateCreated','type':'date','op':'ge'});
+                tempWhere.push({'value':date.value.end,'field':'dateCreated','type':'date','op':'le'});
+            }
+            this.where = "&where="+encodeURI(JSON.stringify(tempWhere).split('{').join('[').split('}').join(']'));
+            this.onloadData("/total/recharges",this.total_client);
+
+    };
 
     
     loadDataRecargas(date?){
