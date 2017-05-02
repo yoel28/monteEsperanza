@@ -14,6 +14,17 @@ export class MPlace extends ModelBase{
     }
     initRules(){
 
+        this.rules['code']={
+            'type': 'text',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'code',
+            'title': 'Código',
+            'placeholder': 'Código',
+        };
+
         this.rules['title']={
             'type': 'text',
             'required':true,
@@ -28,7 +39,6 @@ export class MPlace extends ModelBase{
         this.rules['route'].required = true;
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
-        this.rules['detail'].required  = true;
     }
     initPermissions() {}
     initParamsSearch() {

@@ -63,6 +63,18 @@ export class MOperacion extends ModelBase{
         this.rules['container']=this.container.ruleObject;
         this.rules['container'].required=false;
         this.rules['container'].update=this.permissions.update;
+        this.rules['container'].refreshField={
+            'icon':'fa fa-refresh',
+            'endpoint':'/read/containers/',
+            'field':'containers',
+            'callback':(form,data)=>{
+                if(data && data.container){
+                    form.searchId['container']={};
+                    form.data['container'].updateValue(data.container.detail);
+                    form.searchId['container']={'id':data.container.id,'title':data.container.title,'detail':data.container.detail};
+                }
+            }
+        };
 
 
         this.rules['chofer']=this.chofer.ruleObject;
