@@ -493,10 +493,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
             event.preventDefault();
         let that = this;
         let successCallback= response => {
-            let val = response.json()[data.refreshField.field];
-            if(data.refreshField.field=='weight')
-                val = val / this.baseWeight;
-            that.data[data.key].updateValue(val);
+            if(data.refreshField.callback)
+                data.refreshField.callback(this,response.json());
+            else {
+                let val = response.json()[data.refreshField.field];
+                if(data.refreshField.field=='weight')
+                    val = val / this.baseWeight;
+                that.data[data.key].updateValue(val);
+            }
         }
         this.httputils.doGet(data.refreshField.endpoint,successCallback,this.error);
     }
@@ -556,6 +560,14 @@ export class OperacionPrint implements OnInit {
         this.data={};
 
     }
+    get place(){
+        let data=[];
+        this.data.place.forEach(obj=>{
+            data.push(obj.text);
+        })
+        return data.join(', ');
+    }
+
     formatDate(date,format){
         if(date)
             return moment(date).format(format);

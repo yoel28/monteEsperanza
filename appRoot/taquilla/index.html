@@ -208,6 +208,14 @@
                             <table class="table table-hover">
                                 <tbody>
                                 <tr>
+                                    <td><strong>Total Descarga: </strong></td>
+                                    <td>{{total_client.weigth | number:'.0-2'}} Ton</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Consumo: </strong></td>
+                                    <td>{{total_client.debe | number:'.0-2'}} $</td>
+                                </tr>
+                                <tr>
                                     <td><strong>Saldo m&iacute;nimo: </strong></td>
                                     <td>{{dataCompany.minBalance | number:'.0-2'}}</td>
                                 </tr>
