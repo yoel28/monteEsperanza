@@ -75,9 +75,9 @@ export class MZone extends ModelBase{
         this.rules['trashType']=this._trash.ruleObject;
         this.rules['trashType'].update=this.permissions.update;
 
-
-
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
+
+        delete this.rules['detail'];
     }
     initPermissions() {}
     initParamsSearch() {
