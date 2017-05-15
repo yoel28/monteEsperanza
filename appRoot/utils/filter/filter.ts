@@ -253,6 +253,11 @@ export class Filter extends RestController implements OnInit{
                         }
                     }
 
+                    if (that.rules[key].type == 'boolean' )
+                    {
+                        whereTemp.value = whereTemp.value == 'true';
+                    }
+
                     if (that.rules[key].type == 'date')//si es tipo date..
                     {
                         whereTemp.type='date';
