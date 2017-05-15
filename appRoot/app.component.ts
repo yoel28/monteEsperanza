@@ -61,6 +61,7 @@ import {Place} from "./place/place";
 import { ReportsComponents} from "./reportes/reports/reports.components";
 import {ChangeComponents} from "./change/change";
 import {MapaComponents} from "./mapa/mapa";
+import {Zone} from "./zone/zone";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -138,6 +139,7 @@ declare var jQuery:any;
     {path: '/eventos', name: 'Event', component: Events},
     {path: '/chofer', name: 'Drivers', component: Drivers},
     {path: '/container', name: 'Container', component: Container},
+    {path: '/zone', name: 'Zone', component: Zone},
     {path: '/**', redirectTo: ['Dashboard']}
 
 ])
@@ -413,7 +415,8 @@ export class AppComponent extends RestController implements OnInit {
                 || this.myglobal.existsPermission("MEN_VEH") || this.myglobal.existsPermission("MEN_TAG")
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
                 || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
-                || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE"),
+                || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE")
+                || this.myglobal.existsPermission("MEN_ZONE"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -477,6 +480,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-user',
                         'title': 'Movimientos',
                         'routerLink': 'ChangeComponents'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_ZONE"),
+                        'icon': 'fa fa-list',
+                        'title': 'Zonas',
+                        'routerLink': 'Zone'
                     },
                 ]
 
