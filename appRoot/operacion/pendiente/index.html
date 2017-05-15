@@ -128,7 +128,7 @@
                                            (click)="dataSelect = data" href="#" title="Eliminar">
                                             <span class="fa fa-trash fa-lg btn"></span>
                                         </a>
-                                        <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
+                                        <a *ngIf="action == 'load' && data.vehicleId"  (click)="cargarData($event,data)" data-toggle="modal"
                                            [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Procesar">
                                             <i class="fa fa-sign-in fa-lg"></i>
                                         </a>
@@ -196,7 +196,7 @@
                                                    (click)="dataSelect = data" href="#" title="Eliminar">
                                                     <span class="fa fa-trash fa-lg btn"></span>
                                                 </a>
-                                                <a *ngIf="action == 'load' && data.companyId"  (click)="cargarData($event,data)" data-toggle="modal"
+                                                <a *ngIf="action == 'load' && data.vehicleId"  (click)="cargarData($event,data)" data-toggle="modal"
                                                    [attr.data-target]="'#'+ viewOptions.actions.load.modalId" href="#" title="Registrar">
                                                     <i class="fa fa-sign-in fa-lg"></i>
                                                 </a>
