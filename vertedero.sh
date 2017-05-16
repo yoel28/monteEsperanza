@@ -8,11 +8,11 @@ token="50jislnq5vel576qcd4u9ba3063tq78g";
 
 #Modulos-------------------------------------------------------------------------------------------------------------------------------------
 declare -A Modulos;
-Modulos[0,0]="ZONE";	Modulos[0,1]="Zonas";			Modulos[0,2]="zone";
+Modulos[0,0]="PLANNING";	Modulos[0,1]="Planificación";			Modulos[0,2]="planning";
 
 #PREFIX			Modulo			Controlador
 #Modulos[0,0]="";	Modulos[0,1]="";	Modulos[0,2]="";
-for (( i=0; i<=1; i++ ));
+for (( i=0; i<1; i++ ));
 do
 	echo -e "\n\n${Modulos[$i,0]}---${Modulos[$i,1]}---${Modulos[$i,2]}\n";
 	curl  -H 'Content-Type: application/json' -H 'Accept: application/json' -H "Authorization: Bearer $token" -X POST -d "{'code':'${Modulos[$i,0]}_LIST','module':'${Modulos[$i,1]}','title':'Listar','controlador':'${Modulos[$i,2]}','accion':'index','detail':'Listar elementos'}"  -k $url
@@ -41,7 +41,7 @@ declare -A Menu;
 Menu[0,0]="MEN_CHOFER";Menu[0,1]="Chofer";
 Menu[1,0]="MEN_OP_AUD";Menu[1,1]="Auditoria de operaciones";
 Menu[2,0]="MEN_ZONE";Menu[2,1]="Zonas";
-Menu[3,0]="MEN_PLACE";Menu[3,1]="Lugares";
+Menu[3,0]="MEN_PLANNING";Menu[3,1]="Planificación";
 
 
 for (( i=0; i<=3; i++ ));
