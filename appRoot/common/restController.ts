@@ -161,7 +161,7 @@ export class RestController implements OnInit {
         max = (max ? max : that.max);
         where = (where ? where : that.where);
         list.page = [];
-        this.httputils.onLoadList(endpoint + "?max=" + max + "&offset=" + offset + where+(this.viewDelete?'&deleted=only':''), list, max, this.error).then(
+        return this.httputils.onLoadList(endpoint + "?max=" + max + "&offset=" + offset + where+(this.viewDelete?'&deleted=only':''), list, max, this.error).then(
             response=> {
                 if (list.count > 0) {
                     data = data.concat(list.list);
