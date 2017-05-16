@@ -27,35 +27,16 @@ export class MPlanning extends ModelBase{
     }
     initRules(){
 
-        this.rules['code']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'code',
-            'title': 'Código',
-            'placeholder': 'Código',
-        };
-
-        this.rules['title']={
-            'type': 'text',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'title',
-            'title': 'Título',
-            'placeholder': 'Título',
-        };
-
         this.rules['vehicle'] = this._vehicle.ruleObject;
         this.rules['vehicle'].required = true;
 
-        this.rules['chofer'] = this._chofer.ruleObject;
-        this.rules['chofer'].required = true;
+        this.rules['driver'] = this._chofer.ruleObject;
+        this.rules['driver'].required = true;
+        this.rules['driver'].key = 'driver';
+        this.rules['driver'].code = 'driverId';
+        this.rules['driver'].keyDisplay = 'driverName';
 
-        this.rules['ayudante'] = {
+        this.rules['helpers'] = {
             'type': 'list',
             'save':{
                 key:'id',
@@ -65,22 +46,22 @@ export class MPlanning extends ModelBase{
             'value':[],
             'update': this.permissions.update,
             'visible': this.permissions.visible,
-            'key': 'ayudante',
+            'key': 'helpers',
             'instance':null,
             'tagFree':this.permissions.tagFree || true,//TODO
-            'title': 'Ayudante',
-            'placeholder': 'Ayudante',
+            'title': 'Ayudantes',
+            'placeholder': 'Ayudantes',
             callback:(save:Save,value:string='')=>{
                 let data:any={};
                 this.myglobal.onloadData('/search/drivers/'+value,data).then(
                     response=>{
                         if(data.count == 1 || (data.count && this._paramsAdd)){
                             data.list.forEach(value =>{
-                                this.rules['ayudante'].instance.addValue(
+                                this.rules['helpers'].instance.addValue(
                                     {
                                         'id': value.id,
-                                        'value': value.title,
-                                        'title': value.detail
+                                        'value': value.detail,
+                                        'title': value.title
                                     }
                                 );
                             });
@@ -92,12 +73,6 @@ export class MPlanning extends ModelBase{
                 )
             }
         };
-
-
-
-        // this.rules['ayudante'] = this._ayudante.ruleObject;
-        // this.rules['ayudante'].required = true;
-        // this.rules['ayudante'].title = 'Ayudantes';
 
         this.rules['route'] = this._route.ruleObject;
         this.rules['route'].required = true;
