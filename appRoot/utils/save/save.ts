@@ -152,13 +152,19 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         if(tag && tag.length)
         {
             jQuery('#'+key+'manual').val('');
-            this.rules[key].refreshField.instance.addValue(
-                {
-                    'id': 0,
-                    'value': tag,
-                    'title': 'Entrada manual'
-                }
-            );
+            if(this.rules[key].callback){
+                this.rules[key].callback(this,tag);
+            }
+            else{
+                this.rules[key].instance.addValue(
+                    {
+                        'id': 0,
+                        'value': tag,
+                        'title': 'Entrada manual'
+                    }
+                );
+            }
+
         }
 
     }
@@ -191,7 +197,12 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                 let data=[];
                 if(that.data[key] && that.data[key].value && that.data[key].value.length){
                     that.data[key].value.forEach(obj=>{
-                        data.push(obj.value || obj);
+                        if(that.rules[key].save){
+                            data.push(obj[that.rules[key].save.key]);
+
+                        }else{
+                            data.push(obj.value || obj);
+                        }
                     });
                 }
                 body[key]=data;
@@ -257,8 +268,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                     that.rules[key].readOnly=false;
             }
             else{
-                if(that.rules[key] && that.rules[key].refreshField && that.rules[key].refreshField.instance)
-                    that.rules[key].refreshField.instance.removeAll()
+                if(that.rules[key] && that.rules[key].instance)
+                    that.rules[key].instance.removeAll()
             }
         })
     }
