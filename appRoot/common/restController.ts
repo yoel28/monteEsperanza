@@ -140,10 +140,10 @@ export class RestController implements OnInit {
         let that = this;
 
         if (offset && offset == '#')
-            that.getLoadDataAll([], endpoint, list, 0, 1000, where);
+            return that.getLoadDataAll([], endpoint, list, 0, 1000, where);
         else {
             this.getOffset(offset, list, max);
-            this.httputils.onLoadList((endpoint || this.endpoint) + "?max=" + (max || this.max) + "&offset=" + (this.offset) + (where || this.where) + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : '')+(this.viewDelete?'&deleted=only':''), (list || this.dataList), this.max, this.error).then(
+            return this.httputils.onLoadList((endpoint || this.endpoint) + "?max=" + (max || this.max) + "&offset=" + (this.offset) + (where || this.where) + (this.sort.length > 0 ? '&sort=' + this.sort : '') + (this.order.length > 0 ? '&order=' + this.order : '')+(this.viewDelete?'&deleted=only':''), (list || this.dataList), this.max, this.error).then(
                 response=> {
                     that.loadPager(list || that.dataList);
                 }, error=> {
