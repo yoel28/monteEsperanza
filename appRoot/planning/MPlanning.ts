@@ -71,7 +71,7 @@ export class MPlanning extends ModelBase{
             'title': 'Ayudante',
             'placeholder': 'Ayudante',
             callback:(save:Save,value:string='')=>{
-                let data={};
+                let data:any={};
                 this.myglobal.onloadData('/search/drivers/'+value,data).then(
                     response=>{
                         if(data.count == 1 || (data.count && this._paramsAdd)){
