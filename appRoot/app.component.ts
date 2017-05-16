@@ -62,6 +62,7 @@ import { ReportsComponents} from "./reportes/reports/reports.components";
 import {ChangeComponents} from "./change/change";
 import {MapaComponents} from "./mapa/mapa";
 import {Zone} from "./zone/zone";
+import {Planning} from "./planning/planning";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -140,6 +141,7 @@ declare var jQuery:any;
     {path: '/chofer', name: 'Drivers', component: Drivers},
     {path: '/container', name: 'Container', component: Container},
     {path: '/zone', name: 'Zone', component: Zone},
+    {path: '/planning', name: 'Planning', component: Planning},
     {path: '/**', redirectTo: ['Dashboard']}
 
 ])
@@ -486,6 +488,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-list',
                         'title': 'Zonas',
                         'routerLink': 'Zone'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_PLANNING"),
+                        'icon': 'fa fa-list',
+                        'title': 'Planificación',
+                        'routerLink': 'Planning'
                     },
                 ]
 
