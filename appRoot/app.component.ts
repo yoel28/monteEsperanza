@@ -418,7 +418,7 @@ export class AppComponent extends RestController implements OnInit {
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
                 || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                 || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE")
-                || this.myglobal.existsPermission("MEN_ZONE"),
+                || this.myglobal.existsPermission("MEN_ZONE") || this.myglobal.existsPermission("MEN_PLANNING"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
