@@ -49,9 +49,9 @@
                                                                            [control]="data[key]"
                                                                            ngControl="{{key}}"
                                                                            [(ngModel)]="data[key].value"
-                                                                           (instance)="rules[key].refreshField ?(rules[key].refreshField.instance=$event||null):null"
+                                                                           (instance)="rules[key].instance=$event"
                                                                     >
-                                                                    <form (submit)="addTagManual($event,key)" *ngIf="rules[key].refreshField.tagFree">
+                                                                    <form (submit)="addTagManual($event,key)" *ngIf="rules[key].tagFree">
                                                                         <input placeholder="{{rules[key].placeholder}} Manual"
                                                                                type="text"
                                                                                [attr.aria-describedby]="key"
