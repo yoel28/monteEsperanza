@@ -38,6 +38,8 @@ export class MPlanning extends ModelBase{
 
         this.rules['helpers'] = {
             'type': 'list',
+            'showbuttons':true,
+            'mode':'popup',
             'save':{
                 key:'id',
             },
