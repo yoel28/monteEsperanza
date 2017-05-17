@@ -107,32 +107,6 @@ export class OperacionSave extends ControllerBase implements OnInit{
             if(that.model.rulesSave[key].value)
                 that.data[key].updateValue(that.model.rulesSave[key].value);
 
-            if(that.model.rulesSave[key].object && false)
-            {
-                that.data[key]
-                    .valueChanges
-                    .debounceTime(3000)
-                    .subscribe((value: string) => {
-                    if(value && value.length > 0){
-                        that.search=that.model.rulesSave[key];
-                        that.findControl = value;
-                        that.dataList=[];
-                        that.setEndpoint(that.model.rulesSave[key].paramsSearch.endpoint+value);
-                        if( !that.searchId[key]){
-                            that.loadData();
-                        }
-                        else if(that.searchId[key].detail != value){
-                            delete that.searchId[key];
-                            that.loadData();
-                        }
-                        else{
-                            this.findControl="";
-                            that.search = [];
-                        }
-                    }
-                });
-            }
-
         });
         this.form = this._formBuilder.group(this.data);
     }
