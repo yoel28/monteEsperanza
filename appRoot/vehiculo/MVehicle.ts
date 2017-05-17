@@ -178,6 +178,7 @@ export class MVehicle extends ModelBase{
         this.ruleObject.placeholder="Ingrese vehículo";
         this.ruleObject.key="vehicle";
         this.ruleObject.code="vehicleId";
+        this.ruleObject.keyDisplay="vehiclePlate";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
