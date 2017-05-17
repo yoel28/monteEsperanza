@@ -33,13 +33,13 @@ export class Xeditable implements OnInit {
             that.disabled = that.rules[that.field].disabled!=null ? that.rules[that.field].disabled : ( that.data.enabled ? !that.data.enabled : false)
 
         jQuery(this.el.nativeElement).editable({
-            type: that.rules[that.field].type || 'text',
-            value: (that.rules[that.field].subKey?that.data[that.field][that.rules[that.field].subKey]:(that.data[that.field]!=null?that.data[that.field]:(that.field=='password'?"":"N/A"))),
+            type: that._type,
+            value: that._value,
             disabled: that.data.enabled?that.disabled:(that.data.enabled==null?that.disabled:true),
             display: that.rules[that.field].display || null,
             showbuttons: that.rules[that.field].showbuttons || false,
             mode: that.rules[that.field].mode || 'inline',
-            source:that.rules[that.field].source || null,
+            source:that._source,
             step:that.rules[that.field].step||"0.001",
             validate: function (newValue) {
                 if(that.function)
@@ -54,6 +54,29 @@ export class Xeditable implements OnInit {
                 }
             }
         });
+    }
+
+    private get _source(){
+        if(this.rules[this.field].type == 'list'){
+            return this.rules[this.field].source || this.data[this.field];
+        }
+        return this.rules[this.field].source || null;
+    }
+    private get _type(){
+        if(this.rules[this.field].type == 'list')
+            return 'checklist';
+
+        return this.rules[this.field].type || 'text'
+    }
+    private get _value(){
+        if(this._type == 'checklist'){
+            let data=[];
+            this.data[this.field].forEach(val=>{
+                data.push(val.id || val.value || val);
+            });
+            return data;
+        }
+        return this.data[this.field]!=null?(this.data[this.field]):(this.field=='password'?"":"N/A")
     }
 }
 
