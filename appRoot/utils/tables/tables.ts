@@ -19,8 +19,7 @@ declare var moment:any;
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','model','dataList','where'],
     outputs:['getInstance'],
-    directives:[Xeditable,ColorPicker,Search,Save,Tooltip,MapaComponents
-    ]
+    directives:[Xeditable,ColorPicker,Search,Save,Tooltip,MapaComponents]
 })
 
 
