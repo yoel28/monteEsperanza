@@ -175,6 +175,12 @@ export class Tables extends RestController implements OnInit {
         this.coordMap['lat']=data.latitud;
         this.coordMap['lng']=data.longitud;
     }
+    formatDate(data,rule){
+        if(data){
+            return moment(data).format(rule.format || 'DD-MM-YYYY, LT');
+        }
+        return '-';
+    }
 
 
 
