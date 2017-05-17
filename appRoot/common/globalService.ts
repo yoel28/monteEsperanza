@@ -148,16 +148,14 @@ export class globalService extends RestController{
     }
 
 
-    getParams(key){
-        let that = this;
-        let valor="";
+    getParams(key,_default:any=''){
         Object.keys(this.params).forEach(index=>{
-            if(that.params[index].key==key){
-                valor=that.params[index].value;
+            if(this.params[index].key==key){
+                _default=this.params[index].value;
                 return;
             }
-        })
-        return valor;
+        });
+        return _default;
     }
 
     getRule(key){
