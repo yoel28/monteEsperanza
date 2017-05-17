@@ -35,6 +35,8 @@ export class MPlanning extends ModelBase{
         this.rules['driver'].key = 'driver';
         this.rules['driver'].code = 'driverId';
         this.rules['driver'].keyDisplay = 'driverName';
+        this.rules['driver'].paramsSearch.where="[['op':'eq','field':'avaliable','value':true]]";
+
 
         this.rules['helpers'] = {
             'type': 'list',
@@ -78,6 +80,17 @@ export class MPlanning extends ModelBase{
 
         this.rules['route'] = this._route.ruleObject;
         this.rules['route'].required = true;
+
+        this.rules['dateCreated']={
+            'type': 'date',
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'dateCreated',
+            'format':'DD-MM-YYYY, LT',
+            'icon':'fa fa-calendar',
+            'title': 'Creación',
+            'placeholder': 'Creación',
+        };
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
     }
