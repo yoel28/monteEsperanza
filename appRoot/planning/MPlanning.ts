@@ -98,7 +98,7 @@ export class MPlanning extends ModelBase{
         delete this.rulesSave.enabled;
         delete this.rulesSave.dateCreated;
         delete this.rulesSave.usernameCreator;
-        delete this.rulesSave.helpers;
+        // delete this.rulesSave.helpers;
     }
     initHelpers(){
         let data:any={};
@@ -107,8 +107,9 @@ export class MPlanning extends ModelBase{
             response=>{
                 data.list.forEach(val=>{
                     this.rules['helpers'].source.push({
-                        id: val.id,
-                        text: (val.detail)+(val.title?(' ('+val.title+')'):'')
+                        'id': val.id,
+                        'value': val.id,
+                        'text': (val.detail)+(val.title?(' ('+val.title+')'):'')
                     });
                 });
                 this.completed = true;
