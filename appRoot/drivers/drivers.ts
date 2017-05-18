@@ -38,13 +38,13 @@ export class Drivers implements OnInit,AfterViewInit{
     }
 
     initViewOptions() {
-        this.viewOptions["title"] = 'Choferes';
+        this.viewOptions["title"] = 'Tripulación';
     }
 
     loadParamsTable(){
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
-            'message': '¿ Esta seguro de eliminar el chofer : ',
+            'message': '¿ Esta seguro de eliminar el Tripulante : ',
             'keyAction':'name'
         };
     }
