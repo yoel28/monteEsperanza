@@ -450,7 +450,7 @@ export class AppComponent extends RestController implements OnInit {
                     {
                         'visible': this.myglobal.existsPermission("MEN_CHOFER"),
                         'icon': 'fa fa-group',
-                        'title': 'Choferes',
+                        'title': 'Tripulación',
                         'routerLink': 'Drivers'
                     },
                     {
