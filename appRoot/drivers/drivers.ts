@@ -44,7 +44,7 @@ export class Drivers implements OnInit,AfterViewInit{
     loadParamsTable(){
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
-            'message': '¿ Esta seguro de eliminar el chofer : ',
+            'message': '¿ Esta seguro de eliminar el Tripulante : ',
             'keyAction':'name'
         };
     }
