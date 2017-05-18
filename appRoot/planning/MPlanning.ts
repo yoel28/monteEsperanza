@@ -17,7 +17,8 @@ export class MPlanning extends ModelBase{
 
     constructor(public myglobal:globalService){
         super('PLANNING','/plannings/',myglobal);
-        this.initModel();
+        this.initModel(false);
+        this.initHelpers();
     }
     modelExternal() {
         this._vehicle = new MVehicle(this.myglobal);
@@ -39,43 +40,15 @@ export class MPlanning extends ModelBase{
 
 
         this.rules['helpers'] = {
-            'type': 'list',
-            'showbuttons':true,
-            'mode':'popup',
-            'save':{
-                key:'id',
-            },
-            'maxLength': '35',
-            'prefix':'PLANNING',
-            'value':[],
-            'update': this.permissions.update,
-            'visible': this.permissions.visible,
-            'key': 'helpers',
-            'instance':null,
-            'tagFree':this.permissions.tagFree || true,//TODO
-            'title': 'Ayudantes',
-            'placeholder': 'Ayudantes',
-            callback:(save:Save,value:string='')=>{
-                let data:any={};
-                this.myglobal.onloadData('/search/drivers/'+value,data).then(
-                    response=>{
-                        if(data.count == 1 || (data.count && this._paramsAdd)){
-                            data.list.forEach(value =>{
-                                this.rules['helpers'].instance.addValue(
-                                    {
-                                        'id': value.id,
-                                        'value': value.detail,
-                                        'title': value.title
-                                    }
-                                );
-                            });
-                            return;
-                        }
-                        this.myglobal.toastr.info('Se encontro '+data.count+' coincidencia(s)','Informacion');
-
-                    }
-                )
-            }
+            type: 'select2',
+            showbuttons:true,
+            mode:'popup',
+            source: [],
+            update: this.permissions.update,
+            visible: this.permissions.visible,
+            key: 'helpers',
+            title: 'Ayudantes',
+            placeholder: 'Ayudantes',
         };
 
         this.rules['route'] = this._route.ruleObject;
@@ -90,6 +63,16 @@ export class MPlanning extends ModelBase{
             'icon':'fa fa-calendar',
             'title': 'Creación',
             'placeholder': 'Creación',
+        };
+
+        this.rules['usernameCreator']={
+            'type': 'text',
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'usernameCreator',
+            'icon':'fa fa-user',
+            'title': 'Creador',
+            'placeholder': 'Creador',
         };
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
@@ -112,5 +95,23 @@ export class MPlanning extends ModelBase{
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.enabled;
+        delete this.rulesSave.dateCreated;
+        delete this.rulesSave.usernameCreator;
+        delete this.rulesSave.helpers;
+    }
+    initHelpers(){
+        let data:any={};
+        this.myglobal.max = 1000;
+        this.myglobal.onloadData('/search/drivers/',data).then(
+            response=>{
+                data.list.forEach(val=>{
+                    this.rules['helpers'].source.push({
+                        id: val.id,
+                        text: (val.detail)+(val.title?(' ('+val.title+')'):'')
+                    });
+                });
+                this.completed = true;
+            }
+        )
     }
 }
