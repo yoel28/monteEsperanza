@@ -170,6 +170,10 @@ export class Operacion extends ControllerBase implements OnInit {
             'visible': this.model.permissions.automatic,
         };
 
+        this.viewOptions.actions.pending = {
+            'visible': this.myglobal.existsPermission('PEND_LIST'),
+        };
+
         this.viewOptions.actions.image = {
             'visible': this.model.permissions.image,
             'server':this.myglobal.getParams('SERVER_IMAGE')
@@ -189,6 +193,9 @@ export class Operacion extends ControllerBase implements OnInit {
         };
 
 
+    }
+    private _getUrlPend(data){
+        return "#/operacion/pendiente?where=[['op':'eq','field':'id','value':"+data.pendingId+"]]";
     }
 
     @ViewChild(OperacionPrint)
