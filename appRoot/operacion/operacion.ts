@@ -96,13 +96,6 @@ export class Operacion extends ControllerBase implements OnInit {
         }
         this.httputils.doPut(this.endpoint+id,JSON.stringify(body),successCallback,this.error);
     }
-    loadViewDelete(event){
-        if(event)
-            event.preventDefault();
-        this.viewDelete=!this.viewDelete;
-        this.loadData();
-
-    }
 
 
     initViewOptions() {
@@ -113,18 +106,53 @@ export class Operacion extends ControllerBase implements OnInit {
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.add && this.model.permissions.viewAdd,
             'title': 'Agregar',
-            'class': 'btn btn-green',
-            'icon': 'fa fa-save',
-            'modal': this.model.paramsSave.idModal
+            'class': 'btn text-green btn-box-tool',
+            'icon': 'fa fa-plus',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                jQuery('#'+this.model.paramsSave.idModal).modal('show');
+            }
         });
-
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.filter && this.model.permissions.list,
             'title': 'Filtrar',
-            'class': 'btn btn-blue',
+            'class': 'btn text-blue btn-box-tool',
             'icon': 'fa fa-filter',
-            'modal': this.model.paramsSearch.idModal
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                jQuery('#'+this.model.paramsSearch.idModal).modal('show');
+            }
         });
+        // <button [attr.title]="viewDelete?'Ocultar eliminados':'Ver eliminados'" (click)="loadViewDelete($event)">
+
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.list && this.model.permissions.viewDelete,
+            'title': ()=>{
+                return this.viewDelete?'Ocultar eliminados':'Ver eliminados';
+            },
+            'class':  ()=>{
+                if(!this.viewDelete)
+                    return 'btn text-grey btn-box-tool ';
+                return 'btn text-red btn-box-tool';
+            },
+            'icon': 'fa fa-trash',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                this.viewDelete=!this.viewDelete;
+                this.loadData();
+            }
+        });
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.list,
+            'title': 'Actualizar',
+            'class': 'btn text-blue btn-box-tool',
+            'icon': 'fa fa-refresh',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                this.loadData();
+            }
+        });
+
 
 
         this.viewOptions.actions.delete = {
