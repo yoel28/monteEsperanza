@@ -170,7 +170,10 @@
 
                                         <div class="btn-group">
                                             <label *ngFor="let action of getViewOptionsActions()" >
-
+                                                <a *ngIf="action == 'pending' && data.pendingId" title="Ver operacion pendiente"
+                                                   [attr.href]="_getUrlPend(data)" target="_blank">
+                                                    <span class="fa fa-file-o fa-lg btn"></span>
+                                                </a>
                                                 <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                                    (click)="dataSelect = data" href="#" title="Eliminar">
                                                     <span class="fa fa-trash fa-lg btn"></span>
@@ -252,7 +255,10 @@
 
                                     <div class="btn-group">
                                         <label *ngFor="let action of getViewOptionsActions()" >
-
+                                            <a *ngIf="action == 'pending' && data.pendingId" title="Ver operacion pendiente"
+                                               [attr.href]="_getUrlPend(data)" target="_blank">
+                                                <span class="fa fa-file-o fa-lg btn"></span>
+                                            </a>
                                             <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                                (click)="dataSelect = data" href="#" title="Eliminar">
                                                 <span class="fa fa-trash fa-lg btn"></span>
