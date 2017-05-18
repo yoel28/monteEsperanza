@@ -30,6 +30,12 @@ export class MPlanning extends ModelBase{
 
         this.rules['vehicle'] = this._vehicle.ruleObject;
         this.rules['vehicle'].required = true;
+        this.rules['vehicle'].callBack= (save:Save,value:string)=>{
+            let data  = save.searchId['vehicle']?save.searchId['vehicle'].data:null;
+            if(data && !data.available){
+                this.myglobal.toastr.warning('Posee una planificacion cargada que sera desactivada','Advertencia: vehiculo '+data.plate);
+            }
+        };
 
         this.rules['driver'] = this._chofer.ruleObject;
         this.rules['driver'].required = true;
