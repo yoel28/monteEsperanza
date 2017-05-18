@@ -47,5 +47,6 @@ export class Planning implements OnInit,AfterViewInit{
             'message': '¿ Esta seguro de eliminar la planificación: ',
             'keyAction':'title'
         };
+        this.paramsTable.where = "&where="+encodeURI("[['op':'eq','field':'enabled','value':true]]");
     }
 }
