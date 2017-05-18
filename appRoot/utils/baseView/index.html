@@ -8,10 +8,10 @@
                     </h3>
                     <div class="pull-right" *ngIf="viewOptions['buttons']">
                         <button *ngFor="let buttom of getViewOptionsButtons()"
-                                class="{{buttom.class}}" type="button" data-toggle="modal"
-                                [attr.data-target]="'#'+buttom.modal">
+                                class="{{buttom.class.call?buttom.class.call():buttom.class}}" type="button"
+                                (click)="buttom.callback($event)"
+                                [attr.title]="(buttom.title.call?buttom.title.call():buttom.title | translate)">
                             <i class="{{buttom.icon}}"></i>
-                            {{buttom.title | translate}}
                         </button>
                         <tooltip [code]="model.prefix+'_2'"></tooltip>
                     </div>
