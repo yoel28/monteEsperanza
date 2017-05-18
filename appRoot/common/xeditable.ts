@@ -49,6 +49,17 @@ export class Xeditable implements OnInit {
             validate: function (newValue) {
                 if(that.function)
                 {
+                    if(that._type == 'select2'){
+                        let data=[];
+                        newValue = newValue.split(',');
+                        newValue.forEach(val=>{
+                            if(!isNaN(parseFloat(val))){
+                                data.push(parseFloat(val));
+                            }
+                        });
+                        newValue = data;
+                    }
+
                     that.function(that.field, that.data, newValue, that.endpoint).then(
                         function (value) {
                             return;
