@@ -80,6 +80,8 @@ export class BaseView extends ControllerBase implements OnInit {
                 'keyAction':this.instance.paramsTable.actions.delete.keyAction
             };
         }
+        if(this.instance.paramsTable && this.instance.paramsTable.where)
+            this.where = this.instance.paramsTable.where;
         
     }
 
