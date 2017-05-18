@@ -62,7 +62,7 @@ export class Xeditable implements OnInit {
 
                     that.function(that.field, that.data, newValue, that.endpoint).then(
                         function (value) {
-                            return;
+                            jQuery(that.el.nativeElement).editable('setValue', value[that.field], true);
                         }, function (reason) {
                             jQuery(that.el.nativeElement).editable('setValue', that.data[that.field], true);
                         }
@@ -86,11 +86,7 @@ export class Xeditable implements OnInit {
     }
     private get _value(){
         if(this._type == 'select2'){
-            let data=[];
-            this.data[this.field].forEach(val=>{
-                data.push(val.id || val.value || val);
-            });
-            return data;
+            return this.data[this.field];
         }
         return this.data[this.field]!=null?(this.data[this.field]):(this.field=='password'?"":"N/A")
     }
