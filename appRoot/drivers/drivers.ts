@@ -38,7 +38,7 @@ export class Drivers implements OnInit,AfterViewInit{
     }
 
     initViewOptions() {
-        this.viewOptions["title"] = 'Choferes';
+        this.viewOptions["title"] = 'Tripulación';
     }
 
     loadParamsTable(){
