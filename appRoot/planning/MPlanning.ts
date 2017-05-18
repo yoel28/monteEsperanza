@@ -76,6 +76,7 @@ export class MPlanning extends ModelBase{
         };
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.rules['enabled'].search = this.permissions.filter;
     }
     initPermissions() {}
     initParamsSearch() {
