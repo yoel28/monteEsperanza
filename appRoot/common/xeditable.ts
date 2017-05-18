@@ -41,6 +41,11 @@ export class Xeditable implements OnInit {
             mode: that.rules[that.field].mode || 'inline',
             source:that._source,
             step:that.rules[that.field].step||"0.001",
+            select2: {
+                width:350,
+                multiple:true,
+                placeholder: that.rules[that.field].placeholder,
+            },
             validate: function (newValue) {
                 if(that.function)
                 {
@@ -69,7 +74,7 @@ export class Xeditable implements OnInit {
         return this.rules[this.field].type || 'text'
     }
     private get _value(){
-        if(this._type == 'checklist'){
+        if(this._type == 'select2'){
             let data=[];
             this.data[this.field].forEach(val=>{
                 data.push(val.id || val.value || val);
