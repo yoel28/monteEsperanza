@@ -207,6 +207,15 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                 }
                 body[key]=data;
             }
+            if(that.rules[key].type=='select2'){
+                let data=[];
+                if(that.data[key] && that.data[key].value && that.data[key].value.length){
+                    that.data[key].value.forEach(obj=>{
+                        data.push(+(obj.id || obj.value))
+                    });
+                }
+                body[key]=data;
+            }
 
         });
         if(this.params.updateField)
@@ -221,8 +230,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     //Lista de id search
     public searchId:any={};
     //Al hacer click en la lupa guarda los valores del objecto
-    getLoadSearch(event,data){
-        event.preventDefault();
+    getLoadSearch(data){
         this.max=5;
         this.findControl="";
         this.search=data;
@@ -277,8 +285,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.setEndpoint(this.params.endpoint);
         this.onDelete(event,this.id);
     }
-    refreshField(event,data){
-        event.preventDefault();
+    refreshField(data){
+
         let that = this;
         let successCallback= response => {
             if(data.refreshField.callback)
