@@ -359,7 +359,8 @@ export class AppComponent extends RestController implements OnInit {
             this.menuItems.push({
                 'visible': this.myglobal.existsPermission("MEN_OP") || this.myglobal.existsPermission("MEN_OP_PEN") || this.myglobal.existsPermission("MEN_SERV")
                 || this.myglobal.existsPermission("MEN_RECARGAS") || this.myglobal.existsPermission("MEN_INGRESOS") || this.myglobal.existsPermission("MEN_LIBRO")
-                || this.myglobal.existsPermission("MEN_SEMI_ES") || this.myglobal.existsPermission("MEN_SEMI_SA"),
+                || this.myglobal.existsPermission("MEN_SEMI_ES") || this.myglobal.existsPermission("MEN_SEMI_SA")
+                || this.myglobal.existsPermission("MEN_PLANNING"),
                 'icon': 'fa fa-gears',
                 'title': 'Transacciones',
                 'key': 'Transacciones',
@@ -375,6 +376,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-user',
                         'title': 'Operación Pendiente',
                         'routerLink': 'OperacionPendiente'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_PLANNING"),
+                        'icon': 'fa fa-list',
+                        'title': 'Planificación',
+                        'routerLink': 'Planning'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_SERV"),
@@ -418,7 +425,7 @@ export class AppComponent extends RestController implements OnInit {
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
                 || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                 || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE")
-                || this.myglobal.existsPermission("MEN_ZONE") || this.myglobal.existsPermission("MEN_PLANNING"),
+                || this.myglobal.existsPermission("MEN_ZONE"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -488,12 +495,6 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-list',
                         'title': 'Zonas',
                         'routerLink': 'Zone'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_PLANNING"),
-                        'icon': 'fa fa-list',
-                        'title': 'Planificación',
-                        'routerLink': 'Planning'
                     },
                 ]
 
