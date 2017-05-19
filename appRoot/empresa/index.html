@@ -7,16 +7,14 @@
                         {{viewOptions.title | translate }}&nbsp;<tooltip code="CODE_6"></tooltip>
                     </h3>
                     <button *ngFor="let buttom of getViewOptionsButtons()"
-                            class="{{buttom.class}}" type="button" data-toggle="modal"
-                            [attr.data-target]="'#'+buttom.modal">
+                            class="{{buttom.class.call?buttom.class.call():buttom.class}}" type="button"
+                            (click)="buttom.callback($event)"
+                            [attr.title]="(buttom.title.call?buttom.title.call():buttom.title | translate)">
                         <i class="{{buttom.icon}}"></i>
-                        {{buttom.title | translate}}
                     </button>
 
-                    <button *ngIf="myglobal.existsPermission('204')" type="button"
-                            class="btn btn-primary btn-red" (click)="goMorosos($event)">
-                        <i class="fa fa-archive"></i>&nbsp;Morosos
-                    </button>&nbsp;<tooltip code="CODE_7"></tooltip>
+
+                    &nbsp;<tooltip code="CODE_7"></tooltip>
                     <button (click)="typeView = 1"
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list fa-lg text-blue"></i>
@@ -139,6 +137,16 @@
                                                         <a x-editable [disabled]="!model.permissions.update"
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="model.rules" field="phone"></a>
+                                                    </p>
+
+                                                    <p *ngIf="false">
+                                                        <strong>Ubicaci&oacute;n:</strong>
+                                                        <button data-target="#modalLocation"
+                                                                data-toggle="modal"
+                                                                class="btn btn-box-tool"
+                                                                (click)="_getLocation($event,data)">
+                                                            <i class="fa fa-map-pin"></i>&nbsp;Ver
+                                                        </button>
                                                     </p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -390,6 +398,15 @@
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="model.rules" field="phone"></a>
                                                     </p>
+                                                    <p  *ngIf="false">
+                                                        <strong>Ubicaci&oacute;n:</strong>
+                                                        <button data-target="#modalLocation"
+                                                                data-toggle="modal"
+                                                                class="btn btn-box-tool"
+                                                                (click)="_getLocation($event,data)">
+                                                            <i class="fa fa-map-pin"></i>&nbsp;Ver
+                                                        </button>
+                                                    </p>
                                                     <p>
                                                         <strong>Balance M&iacute;nimo:</strong>
                                                         <a x-editable [endpoint]="endpoint" [function]="onEditable" [disabled]="!model.permissions.update"
@@ -537,3 +554,33 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="_location">
+    <div class="modal fade" [attr.id]="'modalLocation'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <i class="fa fa-warning"></i>&nbsp;
+                        <strong>UBICACI&Oacute;N</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
+                        &nbsp;Cancelar
+                    </button>
+
+                    <button *ngIf="model.permissions.update"
+                            (click)="onDelete($event,dataSelect.id)"
+                            data-dismiss="modal" type="button" class="btn btn-blue fa fa-save">&nbsp;Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
