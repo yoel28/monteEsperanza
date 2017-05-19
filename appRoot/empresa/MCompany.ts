@@ -57,7 +57,7 @@ export class MCompany extends ModelBase{
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'code',
-            'title': 'Codigo',
+            'title': 'Código',
             'placeholder': 'Código',
         };
         this.rules['responsiblePerson']={
@@ -127,6 +127,16 @@ export class MCompany extends ModelBase{
             'placeholder': 'Deuda',
         };
 
+        this.rules['location']={
+            'type': 'location',
+            'getValue':()=>{},
+            'update':this.permissions.update,
+            'visible':this.permissions.visible,
+            'key': 'location',
+            'title': 'Ubicación',
+            'placeholder': 'Ubicación',
+        };
+
         this.rules['companyType'] = this.typeCompany.ruleObject;
         this.rules['companyType'].update=this.permissions.update;
         this.rules['companyType'].required = true;
@@ -142,7 +152,9 @@ export class MCompany extends ModelBase{
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
-    initPermissions() {}
+    initPermissions() {
+        this.permissions['morosos']=this.myglobal.existsPermission('COMPANY_MOROSOS')
+    }
     initParamsSearch() {
         this.paramsSearch.title="Buscar  cliente";
         this.paramsSearch.placeholder="Ingrese codigo del cliente";
@@ -164,7 +176,9 @@ export class MCompany extends ModelBase{
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave.enabled;
         delete this.rulesSave.balance;
+        delete this.rulesSave.image;
         delete this.rulesSave.debt;
+        delete this.rulesSave.location;
         delete this.rulesSave.detail;
     }
 
