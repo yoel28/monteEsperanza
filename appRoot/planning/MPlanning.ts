@@ -4,6 +4,7 @@ import {MRuta} from "../ruta/MRuta";
 import {MVehicle} from "../vehiculo/MVehicle";
 import {MDrivers} from "../drivers/MDrivers";
 import {Save} from "../utils/save/save";
+import {BaseView} from "../utils/baseView/baseView";
 
 export class MPlanning extends ModelBase{
     public rules={};
@@ -33,7 +34,7 @@ export class MPlanning extends ModelBase{
         this.rules['vehicle'].callBack= (save:Save,value:string)=>{
             let data  = save.searchId['vehicle']?save.searchId['vehicle'].data:null;
             if(data && !data.available){
-                this.myglobal.toastr.warning('Posee una planificacion cargada que sera desactivada','Advertencia: vehiculo '+data.plate);
+                this.myglobal.toastr.warning('Posee una planificacion cargada que sera desactivada','Advertencia: vehiculo '+data.detail);
             }
         };
 
@@ -42,7 +43,6 @@ export class MPlanning extends ModelBase{
         this.rules['driver'].key = 'driver';
         this.rules['driver'].code = 'driverId';
         this.rules['driver'].keyDisplay = 'driverName';
-        this.rules['driver'].paramsSearch.where="[['op':'eq','field':'avaliable','value':true]]";
 
 
         this.rules['helpers'] = {
@@ -50,6 +50,7 @@ export class MPlanning extends ModelBase{
             showbuttons:true,
             mode:'popup',
             source: [],
+            instance:null,
             update: this.permissions.update,
             visible: this.permissions.visible,
             key: 'helpers',
@@ -90,7 +91,16 @@ export class MPlanning extends ModelBase{
         this.paramsSearch.placeholder="Ingrese una planificación";
     }
     initParamsSave() {
-        this.paramsSave.title="Agregar planificación"
+        this.paramsSave.title="Agregar planificación";
+        this.paramsSave.afterSave = (bv:BaseView,data:any)=>{
+            bv.dataList.list.forEach((obj,i)=>{
+                let plate = obj.vehiclePlate == data.vehiclePlate;
+                let id = obj.id != data.id;
+                if(plate && id){
+                    bv.dataList.list.splice(i,1);
+                }
+            })
+        };
     }
     initRuleObject() {
         this.ruleObject.title="Planificación";
