@@ -9,7 +9,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of dataList.list">
-            <td *ngFor="let key of keyVisible()">
+            <td *ngFor="let key of keyVisible()" [class.check]="model.rules[key].check">
 
                 <span *ngIf="!getDisabledField(key,data)">
 
