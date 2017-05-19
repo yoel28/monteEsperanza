@@ -249,9 +249,9 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.dataList={};
     }
     //accion al seleccion un parametro del search
-    getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
-        (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
+    getDataSearch(data:any,key?:string){
+        this.searchId[this.search.key || key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
+        (<Control>this.form.controls[this.search.key || key]).updateValue(data.detail);
         this.dataList=[];
     }
     //accion seleccionar un item de un select
@@ -268,7 +268,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.id = null;
         this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
-            if(that.rules[key].type!='list'){
+            if(that.rules[key].type!='list' && that.rules[key].type!='select2'){
                 (<Control>that.data[key]).updateValue(that.rules[key].value);
                 (<Control>that.data[key]).setErrors(that.rules[key].value);
                 that.data[key]._pristine=true;
