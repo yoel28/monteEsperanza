@@ -101,6 +101,13 @@
                     </button>
                     <ul role="menu" class="dropdown-menu text-left submenu-config">
                         <li *ngFor="let key of actionPermissionKey()">
+                            <a *ngIf="key == 'duplicate'"
+                               data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
+                               (click)="params.actions[key].callback(baseView,data)" href="#">
+                                <i class="{{params.actions[key].icon}}"></i>
+                                &nbsp;{{params.actions[key].title}}
+                            </a>
+
                             <a *ngIf="key == 'delete' && data.enabled"
                                data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                                (click)="dataSelect = data" href="#">
