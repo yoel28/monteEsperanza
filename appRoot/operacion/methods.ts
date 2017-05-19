@@ -19,6 +19,47 @@ declare var SystemJS:any;
 declare var jQuery:any;
 
 @Component({
+    selector: 'operacion-print',
+    templateUrl: SystemJS.map.app+'/operacion/print.html',
+    styleUrls: [SystemJS.map.app+'/operacion/style.css'],
+    inputs:['data'],
+    pipes:[Fecha],
+})
+export class OperacionPrint implements OnInit {
+    public data:any={};
+
+    constructor() {
+    }
+    ngOnInit(){
+
+    }
+
+    onPrint(){
+        var printContents = document.getElementById("operacion").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+        this.data={};
+
+    }
+    get place(){
+        let data=[];
+        this.data.place.forEach(obj=>{
+            data.push(obj.text);
+        })
+        return data.join(', ');
+    }
+
+    formatDate(date,format){
+        if(date)
+            return moment(date).format(format);
+        return "";
+    }
+}
+
+@Component({
     selector: 'operacion-save',
     templateUrl: SystemJS.map.app+'/operacion/save.html',
     styleUrls: [SystemJS.map.app+'/operacion/style.css'],
@@ -208,11 +249,11 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.getSearch(event,this.findControl);
     }
     getLoadSearchKey(event,data){
-       if(event && event.code && (event.code == 'Enter' || event.code == 'NumpadEnter')){
-           if(data.object){
-               this.getLoadSearch(null,data);
-           }
-       }
+        if(event && event.code && (event.code == 'Enter' || event.code == 'NumpadEnter')){
+            if(data.object){
+                this.getLoadSearch(null,data);
+            }
+        }
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
@@ -277,14 +318,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
 
     get textPlaces(){
         let data='';
-            if(this.place){
-                this.place.forEach(value=>{
-                    data+=(value.text+'\n');
-                })
-            }
-            return data;
-
+        if(this.place){
+            this.place.forEach(value=>{
+                data+=(value.text+'\n');
+            })
         }
+        return data;
+
+    }
     public place:any;
     loadPlace(place,key){
         if((this.searchId['route'] && this.searchId['route'].default) || key == 'route'){
@@ -454,7 +495,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
     recargaSave:RecargaSave;
     getLoadRecharge(event,data){
         if(event)
-        event.preventDefault();
+            event.preventDefault();
         if(this.recargaSave){
             this.recargaSave.idCompany=data.id;
             this.recargaSave.company.updateValue(data.id);
@@ -506,46 +547,3 @@ export class OperacionSave extends ControllerBase implements OnInit{
     }
 
 }
-
-
-@Component({
-    selector: 'operacion-print',
-    templateUrl: SystemJS.map.app+'/operacion/print.html',
-    styleUrls: [SystemJS.map.app+'/operacion/style.css'],
-    inputs:['data'],
-    pipes:[Fecha],
-})
-export class OperacionPrint implements OnInit {
-    public data:any={};
-
-    constructor() {
-    }
-    ngOnInit(){
-
-    }
-
-    onPrint(){
-        var printContents = document.getElementById("operacion").innerHTML;
-        var popupWin = window.open('', '_blank');
-        popupWin.document.open();
-        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
-        popupWin.document.head.innerHTML = (document.head.innerHTML);
-        popupWin.document.close();
-        this.data={};
-
-    }
-    get place(){
-        let data=[];
-        this.data.place.forEach(obj=>{
-            data.push(obj.text);
-        })
-        return data.join(', ');
-    }
-
-    formatDate(date,format){
-        if(date)
-            return moment(date).format(format);
-        return "";
-    }
-}
-
