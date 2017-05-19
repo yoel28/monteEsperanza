@@ -10,6 +10,7 @@ import {Save} from "../save/save";
 import {Tooltip} from "../tooltips/tooltips";
 import {CatalogApp} from "../../common/catalogApp";
 import {MapaComponents} from "../../mapa/mapa";
+import {BaseView} from "../baseView/baseView";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -17,7 +18,7 @@ declare var moment:any;
     selector: 'tables',
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
-    inputs:['params','model','dataList','where'],
+    inputs:['params','model','dataList','where','baseView'],
     outputs:['getInstance'],
     directives:[Xeditable,ColorPicker,Search,Save,Tooltip,MapaComponents]
 })
@@ -28,6 +29,7 @@ export class Tables extends RestController implements OnInit {
 
     public params:any={};
     public model:any={};
+    public baseView:BaseView;
     public searchId:any={};
     data:any = [];
     public keys:any = [];
@@ -45,12 +47,12 @@ export class Tables extends RestController implements OnInit {
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
+        this.getInstance = new EventEmitter();
     }
 
     ngOnInit()
     {
         this.keyActions=Object.keys(this.params.actions);
-        this.getInstance = new EventEmitter();
         this.setEndpoint(this.params.endpoint);
         this.getListObjectNotReferenceSave();
     }
