@@ -1,0 +1,13 @@
+.btn-group .btn-box-tool {
+    font-size: 14px !important;
+}
+
+.btn-group ul.dropdown-menu.submenu-config {
+    min-width: 260px;
+}
+.check {
+    background: rgba(0, 187, 0, 0.18);
+}
+.btn-group button{
+    margin-top: -5px;
+}
