@@ -29,6 +29,9 @@ export class BaseView extends ControllerBase implements OnInit {
     public dataSelect:any = {};
     public paramsTable:any={};
 
+    public tables:Tables;
+    public save:Save;
+
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('NOPREFIX','/NOENDPOINT/',router, http, toastr, myglobal, translate);
     }
@@ -39,6 +42,16 @@ export class BaseView extends ControllerBase implements OnInit {
         this.loadParamsTable();
         this.loadPage();
     }
+    private get _baseView(){
+        return this;
+    }
+
+    public setLoadData(data){
+        super.setLoadData(data);
+        if(this.model.paramsSave && this.model.paramsSave.afterSave)
+            this.model.paramsSave.afterSave(this,data)
+    }
+
     initModel() {
         this.model = this.instance.model;
     }
@@ -84,6 +97,7 @@ export class BaseView extends ControllerBase implements OnInit {
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
         this.paramsTable.actions={};
+        Object.assign(this.paramsTable.actions,this.instance.paramsTable.actions);
 
         if(this.instance.paramsTable && this.instance.paramsTable.actions && this.instance.paramsTable.actions.delete )
         {
@@ -97,6 +111,9 @@ export class BaseView extends ControllerBase implements OnInit {
                 'keyAction':this.instance.paramsTable.actions.delete.keyAction
             };
         }
+
+
+
         if(this.instance.paramsTable && this.instance.paramsTable.where)
             this.where = this.instance.paramsTable.where;
         
