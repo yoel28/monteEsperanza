@@ -52,6 +52,50 @@ export class BaseView extends ControllerBase implements OnInit {
             this.model.paramsSave.afterSave(this,data)
     }
 
+    private get _rulesList():string[]{
+        return Object.keys(this.model.rules)
+    }
+    private _fnChangePosition(event, key, action) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        let keys = this.getObjectKeys(this.model.rules);
+        let index = keys.findIndex(obj => obj == key);
+        if ((index > 0 && action == 'up') || (index < this.getObjectKeys(this.model.rules).length - 1) && action == 'down') {
+            let temp = {};
+            let that = this;
+            if (action == 'up') {
+                keys[index] = keys[index - 1];
+                keys[index - 1] = key;
+            }
+            else if (action == 'down') {
+                keys[index] = keys[index + 1];
+                keys[index + 1] = key;
+            }
+            keys.forEach(obj => {
+                temp[obj] = [];
+                temp[obj] = that.model.rules[obj];
+            });
+            that.model.rules = {};
+            Object.assign(that.model.rules, temp);
+        }
+    }
+    setCheckField(event, data) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        data.check = !data.check;
+    }
+    setVisibleField(event, data) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        data.visible = !data.visible;
+    }
+
     initModel() {
         this.model = this.instance.model;
     }
