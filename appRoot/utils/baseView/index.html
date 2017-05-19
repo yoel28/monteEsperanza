@@ -18,7 +18,7 @@
                 </div>
                 <div *ngIf="model.permissions.list" class="box-body">
                     <div *ngIf="dataList && dataList.count>0">
-                        <tables [dataList]="dataList" [model]="model" [params]="paramsTable" [where]="where"></tables>
+                        <tables (getInstance)="tables=$event" [baseView]="_baseView" [dataList]="dataList" [model]="model" [params]="paramsTable" [where]="where"></tables>
                     </div>
                     <div *ngIf="dataList && dataList.count == 0">
                         <div class="alert alert-warning alert-dismissable">
@@ -37,7 +37,7 @@
         </section>
     </div>
     <div *ngIf="model.permissions.add">
-        <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)"></save>
+        <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)" (getInstance)="save = $event"></save>
     </div>
     <div *ngIf="model.permissions.filter">
         <filter [params]="model.paramsSearch" [rules]="model.rules" (whereFilter)="loadWhere($event)"></filter>
