@@ -388,6 +388,11 @@ export class OperacionSave extends ControllerBase implements OnInit{
             this.data['weightIn'].updateValue(data.weightIn);
             this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
+            if(data.choferId){
+                this.searchId['chofer']={'id':data.choferId,'title':data.choferTelefono,'detail':data.choferName};
+                this.data['chofer'].updateValue(data.choferName);
+            }
+
             if(data.trashTypeId){
                 this.searchId['trashType']={'id':data.trashTypeId,'title':data.trashTypeTitle,'detail':data.trashTypeReference};
                 this.data['trashType'].updateValue(data.trashTypeReference);
@@ -416,6 +421,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.model.rulesSave['weightOut'].readOnly=this.model.permissions.lockField;
                 this.model.rulesSave['weightOut'].hidden=false;
             }
+
+            this.loadPlace(data.places.concat(data.placesPosible),'route');
 
             this.checkBalance();
         }
