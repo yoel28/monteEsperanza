@@ -137,6 +137,9 @@ export class BaseView extends ControllerBase implements OnInit {
                 this.loadData();
             }
         });
+
+        if(this.instance.viewOptions.buttons && this.instance.viewOptions.buttons.length)
+            this.viewOptions["buttons"] = this.viewOptions["buttons"].concat(this.instance.viewOptions.buttons);
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
