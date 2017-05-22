@@ -58,7 +58,7 @@
                     <div class="pull-right" *ngIf="viewOptions['buttons']">
                         <button *ngFor="let buttom of getViewOptionsButtons()"
                                 class="{{buttom.class.call?buttom.class.call():buttom.class}}" type="button"
-                                (click)="buttom.callback($event)"
+                                (click)="buttom.callback($event,_baseView)"
                                 [attr.title]="(buttom.title.call?buttom.title.call():buttom.title | translate)">
                             <i class="{{buttom.icon}}"></i>
                         </button>
