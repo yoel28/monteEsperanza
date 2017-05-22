@@ -199,6 +199,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+
+                    <button (click)="resetForm($event)" type="button" class="btn btn-blue" title="Limpiar">
+                        <i class="fa fa-eraser"></i>
+                    </button>
+
                     <button *ngIf="delete && id >= 0" (click)="loadDelete($event)" data-dismiss="modal" type="button" class="btn btn-success">
                         <i class="fa fa-trash"></i>
                         &nbsp;Eliminar
