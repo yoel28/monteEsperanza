@@ -260,7 +260,9 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         if(data=='-1')
             (<Control>this.form.controls[key]).updateValue(null);
     }
-    resetForm(){
+    resetForm(event?:Event){
+        if(event)
+            event.preventDefault();
         let that=this;
         this.search={};
         this.searchId={};
