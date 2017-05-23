@@ -7,3 +7,6 @@
 .form-margin{
     margin-bottom: 10pt;
 }
+.form-group {
+    margin-bottom: 5px !important;
+}
