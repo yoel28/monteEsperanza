@@ -16,3 +16,16 @@
 .alert{
     margin-bottom: 0px !important;
 }
+.form-group {
+    margin-bottom: 5px !important;
+}
+.input-group-addon {
+    padding: 6px 10px;
+    font-size: 12px;
+}
+.form-control {
+    font-size: 12px;
+}
+.alert {
+    padding: 0 0 2px 16px;
+}
