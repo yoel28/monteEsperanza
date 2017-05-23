@@ -29,6 +29,17 @@ export class MPlanning extends ModelBase{
     }
     initRules(){
 
+        this.rules['dateCreated']={
+            'type': 'date',
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'dateCreated',
+            'format':'DD-MM-YYYY, LT',
+            'icon':'fa fa-calendar',
+            'title': 'Creación',
+            'placeholder': 'Creación',
+        };
+
         this.rules['vehicle'] = this._vehicle.ruleObject;
         this.rules['vehicle'].required = true;
         this.rules['vehicle'].callBack= (save:Save,value:string)=>{
@@ -38,12 +49,14 @@ export class MPlanning extends ModelBase{
             }
         };
 
+        this.rules['route'] = this._route.ruleObject;
+        this.rules['route'].required = true;
+
         this.rules['driver'] = this._chofer.ruleObject;
         this.rules['driver'].required = true;
         this.rules['driver'].key = 'driver';
         this.rules['driver'].code = 'driverId';
         this.rules['driver'].keyDisplay = 'driverName';
-
 
         this.rules['helpers'] = {
             type: 'select2',
@@ -58,19 +71,7 @@ export class MPlanning extends ModelBase{
             placeholder: 'Ayudantes',
         };
 
-        this.rules['route'] = this._route.ruleObject;
-        this.rules['route'].required = true;
-
-        this.rules['dateCreated']={
-            'type': 'date',
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'dateCreated',
-            'format':'DD-MM-YYYY, LT',
-            'icon':'fa fa-calendar',
-            'title': 'Creación',
-            'placeholder': 'Creación',
-        };
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
 
         this.rules['usernameCreator']={
             'type': 'text',
@@ -82,7 +83,6 @@ export class MPlanning extends ModelBase{
             'placeholder': 'Creador',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
         this.rules['enabled'].search = this.permissions.filter;
     }
     initPermissions() {}
