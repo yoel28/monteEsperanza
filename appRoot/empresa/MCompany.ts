@@ -72,7 +72,6 @@ export class MCompany extends ModelBase{
         };
         this.rules['phone']={
             'type': 'text',
-            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
@@ -83,7 +82,6 @@ export class MCompany extends ModelBase{
         this.rules['minBalance']={
             'type': 'number',
             'step':'0.001',
-            'required':true,
             'double':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
@@ -105,7 +103,6 @@ export class MCompany extends ModelBase{
         };
         this.rules['address']={
             'type': 'text',
-            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
@@ -139,7 +136,7 @@ export class MCompany extends ModelBase{
 
         this.rules['companyType'] = this.typeCompany.ruleObject;
         this.rules['companyType'].update=this.permissions.update;
-        this.rules['companyType'].required = true;
+        this.rules['companyType'].required = false;
 
         this.rules['trashType'] = this.trashType.ruleObject;
         this.rules['trashType'].update=this.permissions.update;
@@ -174,6 +171,7 @@ export class MCompany extends ModelBase{
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave.image;
         delete this.rulesSave.enabled;
         delete this.rulesSave.balance;
         delete this.rulesSave.image;
