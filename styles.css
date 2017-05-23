@@ -114,3 +114,10 @@ body.no-menu .content-wrapper, body.no-menu .main-footer {
 .bootstrap-tagsinput{
   width: 100%;
 }
+@media (max-width: 768px) {
+  .btn {
+    padding: 2px 6px;
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+}
