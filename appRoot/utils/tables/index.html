@@ -9,13 +9,17 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of dataList.list">
-            <td *ngFor="let key of keyVisible()">
+            <td *ngFor="let key of keyVisible()" [class.check]="model.rules[key].check">
 
                 <span *ngIf="!getDisabledField(key,data)">
 
                     <i *ngIf="model.rules[key].icon" class="{{data[key]}}">&nbsp;</i>
 
-                    <a *ngIf="!model.rules[key].object &&  model.rules[key].type !='boolean' && model.rules[key].type !='color'" x-editable  [disabled]="!model.rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="model.rules" [field]="key"></a>
+                    <template [ngIf]="model.rules[key].type =='date'">
+                        {{formatDate(data[key],model.rules[key])}}
+                    </template>
+
+                    <a *ngIf="!model.rules[key].object &&  model.rules[key].type !='date' && model.rules[key].type !='boolean' && model.rules[key].type !='color'" x-editable  [disabled]="!model.rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="model.rules" [field]="key"></a>
 
                     <input *ngIf="model.rules[key].type == 'color' && model.rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
 
@@ -97,6 +101,13 @@
                     </button>
                     <ul role="menu" class="dropdown-menu text-left submenu-config">
                         <li *ngFor="let key of actionPermissionKey()">
+                            <a *ngIf="key == 'duplicate'"
+                               data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
+                               (click)="params.actions[key].callback(baseView,data)" href="#">
+                                <i class="{{params.actions[key].icon}}"></i>
+                                &nbsp;{{params.actions[key].title}}
+                            </a>
+
                             <a *ngIf="key == 'delete' && data.enabled"
                                data-toggle="modal" [attr.data-target]="'#'+params.actions[key].idModal"
                                (click)="dataSelect = data" href="#">

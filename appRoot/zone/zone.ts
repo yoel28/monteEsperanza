@@ -1,16 +1,16 @@
 import {Component, OnInit,AfterViewInit} from '@angular/core';
 import {globalService} from "../common/globalService";
-import {MDrivers} from "./MDrivers";
 import {BaseView} from "../utils/baseView/baseView";
-
+import {MZone} from "./MZone";
 declare var SystemJS:any;
+
 @Component({
-    selector: 'drivers',
+    selector: 'zone',
     templateUrl:SystemJS.map.app+'/utils/baseView/base.html',
     styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
     directives: [BaseView],
 })
-export class Drivers implements OnInit,AfterViewInit{
+export class Zone implements OnInit,AfterViewInit{
 
     public instance:any={};
     public paramsTable:any={};
@@ -32,20 +32,24 @@ export class Drivers implements OnInit,AfterViewInit{
             'paramsTable':this.paramsTable
         };
     }
-    
-    initModel():any {
-        this.model= new MDrivers(this.myglobal);
+
+    initModel() {
+        this.model= new MZone(this.myglobal);
     }
 
     initViewOptions() {
-        this.viewOptions["title"] = 'Tripulación';
+        this.viewOptions["title"] = 'Zona';
     }
 
     loadParamsTable(){
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
-            'message': '¿ Esta seguro de eliminar el Tripulante : ',
-            'keyAction':'name'
+            'message': '¿ Esta seguro de eliminar la zona  : ',
+            'keyAction':'code'
         };
     }
+
+
 }
+
+

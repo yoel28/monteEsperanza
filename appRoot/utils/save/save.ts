@@ -152,13 +152,19 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         if(tag && tag.length)
         {
             jQuery('#'+key+'manual').val('');
-            this.rules[key].refreshField.instance.addValue(
-                {
-                    'id': 0,
-                    'value': tag,
-                    'title': 'Entrada manual'
-                }
-            );
+            if(this.rules[key].callback){
+                this.rules[key].callback(this,tag);
+            }
+            else{
+                this.rules[key].instance.addValue(
+                    {
+                        'id': 0,
+                        'value': tag,
+                        'title': 'Entrada manual'
+                    }
+                );
+            }
+
         }
 
     }
@@ -191,7 +197,21 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                 let data=[];
                 if(that.data[key] && that.data[key].value && that.data[key].value.length){
                     that.data[key].value.forEach(obj=>{
-                        data.push(obj.value || obj);
+                        if(that.rules[key].save){
+                            data.push(obj[that.rules[key].save.key]);
+
+                        }else{
+                            data.push(obj.value || obj);
+                        }
+                    });
+                }
+                body[key]=data;
+            }
+            if(that.rules[key].type=='select2'){
+                let data=[];
+                if(that.data[key] && that.data[key].value && that.data[key].value.length){
+                    that.data[key].value.forEach(obj=>{
+                        data.push(+(obj.id || obj.value))
                     });
                 }
                 body[key]=data;
@@ -210,8 +230,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     //Lista de id search
     public searchId:any={};
     //Al hacer click en la lupa guarda los valores del objecto
-    getLoadSearch(event,data){
-        event.preventDefault();
+    getLoadSearch(data){
         this.max=5;
         this.findControl="";
         this.search=data;
@@ -230,9 +249,9 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.dataList={};
     }
     //accion al seleccion un parametro del search
-    getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
-        (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
+    getDataSearch(data:any,key?:string){
+        this.searchId[this.search.key || key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
+        (<Control>this.form.controls[this.search.key || key]).updateValue(data.detail);
         this.dataList=[];
     }
     //accion seleccionar un item de un select
@@ -241,7 +260,9 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         if(data=='-1')
             (<Control>this.form.controls[key]).updateValue(null);
     }
-    resetForm(){
+    resetForm(event?:Event){
+        if(event)
+            event.preventDefault();
         let that=this;
         this.search={};
         this.searchId={};
@@ -249,7 +270,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.id = null;
         this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
-            if(that.rules[key].type!='list'){
+            if(that.rules[key].type!='list' && that.rules[key].type!='select2'){
                 (<Control>that.data[key]).updateValue(that.rules[key].value);
                 (<Control>that.data[key]).setErrors(that.rules[key].value);
                 that.data[key]._pristine=true;
@@ -257,8 +278,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                     that.rules[key].readOnly=false;
             }
             else{
-                if(that.rules[key] && that.rules[key].refreshField && that.rules[key].refreshField.instance)
-                    that.rules[key].refreshField.instance.removeAll()
+                if(that.rules[key] && that.rules[key].instance)
+                    that.rules[key].instance.removeAll()
             }
         })
     }
@@ -266,8 +287,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.setEndpoint(this.params.endpoint);
         this.onDelete(event,this.id);
     }
-    refreshField(event,data){
-        event.preventDefault();
+    refreshField(data){
+
         let that = this;
         let successCallback= response => {
             if(data.refreshField.callback)
@@ -315,6 +336,18 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     loadDate(data,key){
         this.data[key].updateValue(data);
 
+    }
+    private _classCol(lg = 12, md = 12, sm = 12, xs = 12) {
+        let _lg = lg == 0 ? 'hidden-lg' : 'col-lg-' + lg;
+        let _md = md == 0 ? 'hidden-md' : 'col-md-' + md;
+        let _sm = sm == 0 ? 'hidden-sm' : 'col-sm-' + sm;
+        let _xs = xs == 0 ? 'hidden-xs' : 'col-xs-' + xs;
+
+        return ' ' + _lg + ' ' + _md + ' ' + _sm + ' ' + _xs;
+    }
+
+    private _classOffset(lg = 0, md = 0, sm = 0, xs = 0) {
+        return ' col-lg-offset-' + lg + ' col-md-offset-' + md + ' col-sm-offset-' + sm + ' col-xs-offset-' + xs;
     }
 }
 

@@ -92,6 +92,10 @@ export class MPendiente extends ModelBase{
             'search': this.permissions.filter,
             'title': 'Fecha de salida',
         }
+
+        Object.assign(this.rules,this.getRulesDefault());
+        this.rules['enabled'].search=this.permissions.filter;
+        delete this.rules['detail'];
     }
     initPermissions() {
         this.permissions['print'] = this.myglobal.existsPermission(this.prefix + '_PRINT');

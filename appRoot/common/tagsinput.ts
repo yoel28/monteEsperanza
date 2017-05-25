@@ -57,7 +57,9 @@ export class TagsInput implements OnInit{
             place.initialize();
 
             jQuery(this.el.nativeElement).tagsinput({
-                itemValue: 'value',
+                itemValue: function(item) {
+                    return item.id || item.value;
+                },
                 itemText: 'text',
                 typeaheadjs: {
                     name: 'place',

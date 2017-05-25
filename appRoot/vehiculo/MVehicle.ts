@@ -31,12 +31,12 @@ export class MVehicle extends ModelBase{
             'search': this.permissions.filter,
             'visible': this.permissions.visible,
             'key': 'tags',
+            'instance':null,
+            'tagFree':this.permissions.tagFree,
             'title': 'Tag',
             'refreshField':{
                 'icon':'fa-refresh',
                 'endpoint':'/antennas/read',
-                'tagFree':this.permissions.tagFree || true, // TODO: quitar true
-                'instance':null,//tipo list van a mantener la instancia para poder manipular el objecto
                 'callback':function (rule,newData) {
                     if(newData && newData.forEach){
                         newData.forEach(ant=> {
@@ -44,14 +44,14 @@ export class MVehicle extends ModelBase{
                                 ant.tags.forEach(tag => {
 
                                     if(tag.plate){
-                                        rule.refreshField.instance.addValue({
+                                        rule.instance.addValue({
                                             'id': -2,
                                             'value': tag.epc,
                                             'title': ant.way + '(' + (ant.reference) + ') Asignado al vehiculo '+tag.plate
                                         });
                                     }
                                     else {
-                                        rule.refreshField.instance.addValue({
+                                        rule.instance.addValue({
                                             'id': ant.id,
                                             'value': tag.epc,
                                             'title': ant.way + '(' + (ant.reference) + ')'
@@ -178,6 +178,7 @@ export class MVehicle extends ModelBase{
         this.ruleObject.placeholder="Ingrese vehículo";
         this.ruleObject.key="vehicle";
         this.ruleObject.code="vehicleId";
+        this.ruleObject.keyDisplay="vehiclePlate";
     }
     initRulesSave() {
         this.rulesSave = Object.assign({},this.rules);

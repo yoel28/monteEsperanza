@@ -18,7 +18,13 @@ import {MCompanyType} from "../tipoEmpresa/MTypeCompany";
 import {Tooltip} from "../utils/tooltips/tooltips";
 import {MTrashType} from "../tipoBasura/MTrashType";
 import {MRuta} from "../ruta/MRuta";
+import {
+    ILocation,
+    LocationPickerComponent
+} from "../com.zippyttech.ui/components/locationPicker/locationPicker.component";
 declare var SystemJS:any;
+declare var jQuery:any;
+declare var moment:any;
 
 @Component({
     selector: 'company',
@@ -34,6 +40,8 @@ export class Empresa extends ControllerBase implements OnInit {
     public companyType:any={};
     public trashType:any={};
     public route:any={};
+
+    private _location:ILocation;
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('COMPANY', '/companies/',router, http, toastr, myglobal, translate);
@@ -54,21 +62,66 @@ export class Empresa extends ControllerBase implements OnInit {
     initViewOptions() {
         this.viewOptions["title"] = 'Cliente';
         this.viewOptions["buttons"]=[];
+
+
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.add,
             'title': 'Agregar',
-            'class': 'btn btn-green',
-            'icon': 'fa fa-save',
-            'modal': this.model.paramsSave.idModal
+            'class': 'btn text-green btn-box-tool',
+            'icon': 'fa fa-plus',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                jQuery('#'+this.model.paramsSave.idModal).modal('show');
+            }
         });
-
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.filter && this.model.permissions.list,
             'title': 'Filtrar',
-            'class': 'btn btn-blue',
+            'class': 'btn text-blue btn-box-tool',
             'icon': 'fa fa-filter',
-            'modal': this.model.paramsSearch.idModal
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                jQuery('#'+this.model.paramsSearch.idModal).modal('show');
+            }
         });
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.list,
+            'title': 'Actualizar',
+            'class': 'btn text-blue btn-box-tool',
+            'icon': 'fa fa-refresh',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                this.loadData();
+            }
+        });
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.morosos,
+            'title': 'Ver morosos',
+            'class': 'btn text-red btn-box-tool',
+            'icon': 'fa fa-archive',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                this.router.navigate(['EmpresaMorosos']);
+            }
+        });
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.list,
+            'title': 'Exportar en formato XLS',
+            'class': 'btn text-green btn-box-tool',
+            'icon': 'fa fa-file-excel-o',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                let url = localStorage.getItem('urlAPI') +
+                    this.endpoint +
+                    '?access_token=' + localStorage.getItem('bearer') +
+                    this.where+
+                    '&formatType=xls' +
+                    '&tz=' + moment().format('Z').replace(':', '');
+                window.open(url, '_blank');
+            }
+        });
+
+
     }
     loadParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -86,6 +139,18 @@ export class Empresa extends ControllerBase implements OnInit {
 
     public typeView=1;
 
+    private _getLocation(event:Event,data:Object){
+        if(data){
+            this._location={
+                data:{
+                    lat:0,
+                    lng:0
+                }
+            };
+            return;
+        }
+        this._location=null;
+    }
 
     public searchTipoEmpresa = {
         title: "Grupo",
@@ -121,11 +186,6 @@ export class Empresa extends ControllerBase implements OnInit {
         let link = ['EmpresaTimeLine', {ruc: companyRuc}];
         this.router.navigate(link);
     }
-    goMorosos(event){
-        event.preventDefault();
-        let link = ['EmpresaMorosos'];
-        this.router.navigate(link);
-    }
 
     //cambiar imagen de una empresa
     public image:any = [];
@@ -140,7 +200,18 @@ export class Empresa extends ControllerBase implements OnInit {
         event.preventDefault();
         this.onPatch('image', data, this.image[data.id]);
     }
+    private _classCol(lg = 12, md = 12, sm = 12, xs = 12) {
+        let _lg = lg == 0 ? 'hidden-lg' : 'col-lg-' + lg;
+        let _md = md == 0 ? 'hidden-md' : 'col-md-' + md;
+        let _sm = sm == 0 ? 'hidden-sm' : 'col-sm-' + sm;
+        let _xs = xs == 0 ? 'hidden-xs' : 'col-xs-' + xs;
 
+        return ' ' + _lg + ' ' + _md + ' ' + _sm + ' ' + _xs;
+    }
+
+    private _classOffset(lg = 0, md = 0, sm = 0, xs = 0) {
+        return ' col-lg-offset-' + lg + ' col-md-offset-' + md + ' col-sm-offset-' + sm + ' col-xs-offset-' + xs;
+    }
 }
 
 @Component({

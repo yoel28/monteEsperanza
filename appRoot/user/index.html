@@ -146,6 +146,27 @@
                                                                class="btn btn-box-tools text-red fa fa-minus"></a>
                                                         </label>
                                                     </p>
+
+                                                    <p><strong>Zona:</strong> <span *ngIf="user.zoneId"> {{user.zoneName}}&nbsp;({{user.zoneCode}}) </span>
+                                                        <label>
+
+                                                            <a *ngIf="myglobal.existsPermission('USER_UPDATE') && myglobal.existsPermission('ZONE_SEARCH')"
+                                                               (click)="dataSelect = user"
+                                                               class="btn btn-box-tools text-blue fa fa-search"
+                                                               data-toggle="modal" data-target="#searchZone"></a>
+
+                                                            <a *ngIf="myglobal.existsPermission('USER_UPDATE') && myglobal.existsPermission('ZONE_ADD')"
+                                                               (click)="dataSelect = user"
+                                                               class="btn btn-box-tools text-green fa fa-plus"
+                                                               data-toggle="modal" [attr.data-target]="'#'+_zone.paramsSave.idModal"></a>
+
+                                                            <a *ngIf="user.zoneId && myglobal.existsPermission('USER_UPDATE')"
+                                                               (click)="releaseZone(user)"
+                                                               class="btn btn-box-tools text-red fa fa-minus"></a>
+
+                                                        </label>
+                                                    </p>
+
                                                     <p *ngIf="dataRoles && dataRoles.count>0">
                                                         <strong class="col-lg-2">Rol:</strong>
                                                         <span class="col-lg-10">
@@ -443,8 +464,16 @@
     <empresa-save idModal="newEmpresa" (save)="assignCompany($event)"></empresa-save>
 </div>
 
+<div *ngIf="myglobal.existsPermission('USER_UPDATE') && myglobal.existsPermission('ZONE_ADD')">
+    <save [params]="_zone.paramsSave" [rules]="_zone.rulesSave" (save)="assignZone($event)"></save>
+</div>
+
 <div *ngIf="myglobal.existsPermission('63') && myglobal.existsPermission('60') && myglobal.existsPermission('80')">
     <search [params]="searchEmpresa" (result)="assignCompany($event)"></search>
+</div>
+
+<div *ngIf="myglobal.existsPermission('USER_UPDATE') && myglobal.existsPermission('ZONE_SEARCH')">
+    <search [params]="searchZone" (result)="assignZone($event)"></search>
 </div>
 
 <div *ngIf="myglobal.existsPermission('66')">

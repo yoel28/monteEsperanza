@@ -33,15 +33,12 @@
 
                 <div class="pull-right noprint" *ngIf="viewOptions['buttons'].length > 0">
                     <button *ngFor="let buttom of getViewOptionsButtons()"
-                            class="{{buttom.class}}" type="button" data-toggle="modal"
-                            [attr.data-target]="'#'+buttom.modal">
+                            class="{{buttom.class.call?buttom.class.call():buttom.class}}" type="button"
+                            (click)="buttom.callback($event)"
+                            [attr.title]="(buttom.title.call?buttom.title.call():buttom.title | translate)">
                         <i class="{{buttom.icon}}"></i>
-                        {{buttom.title | translate}}
-                    </button>&nbsp;
-
-                    <button *ngIf="model.permissions.viewDelete" class="btn btn-red" [class.btn-outlined]="!viewDelete" type="button" [attr.title]="viewDelete?'Ocultar eliminados':'Ver eliminados'" (click)="loadViewDelete($event)">
-                        <i class=" fa fa-trash fa-lg"></i>
                     </button>
+
                     <tooltip code="CODE_46"></tooltip>
                 </div>
 
@@ -173,7 +170,10 @@
 
                                         <div class="btn-group">
                                             <label *ngFor="let action of getViewOptionsActions()" >
-
+                                                <a *ngIf="action == 'pending' && data.pendingId" title="Ver operacion pendiente"
+                                                   [attr.href]="_getUrlPend(data)" target="_blank">
+                                                    <span class="fa fa-file-o fa-lg btn"></span>
+                                                </a>
                                                 <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                                    (click)="dataSelect = data" href="#" title="Eliminar">
                                                     <span class="fa fa-trash fa-lg btn"></span>
@@ -255,7 +255,10 @@
 
                                     <div class="btn-group">
                                         <label *ngFor="let action of getViewOptionsActions()" >
-
+                                            <a *ngIf="action == 'pending' && data.pendingId" title="Ver operacion pendiente"
+                                               [attr.href]="_getUrlPend(data)" target="_blank">
+                                                <span class="fa fa-file-o fa-lg btn"></span>
+                                            </a>
                                             <a *ngIf="action == 'delete' && data.enabled" data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                                (click)="dataSelect = data" href="#" title="Eliminar">
                                                 <span class="fa fa-trash fa-lg btn"></span>
@@ -345,7 +348,7 @@
                                             </span>
                                             <span   *ngSwitchWhen="'companyTypeName'">
                                                  <div class="col-lg-6">
-                                                     <strong>Nombre de compañia:&nbsp;</strong>
+                                                     <strong>Grupo:&nbsp;</strong>
                                                     {{data.companyTypeName}}
                                                  </div>
                                             </span>

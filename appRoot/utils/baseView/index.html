@@ -6,19 +6,68 @@
                     <h3 class="box-title">
                         {{viewOptions.title | translate }}<tooltip [code]="model.prefix+'_1'"></tooltip>
                     </h3>
+
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false" [attr.title]="'Ordenar'| translate">
+                            <i class="fa fa-wrench"></i>
+                        </button>
+                        <ul class="dropdown-menu submenu-config" role="menu">
+                            <li *ngFor="let key of _rulesList" class="text-blue flex"
+                                [class.check]="model.rules[key].check">
+
+                                <button class="btn btn-box-tool fa"
+                                        [class.fa-eye-slash]="!model.rules[key].visible"
+                                        [class.text-red]="!model.rules[key].visible"
+                                        [class.fa-eye]="model.rules[key].visible"
+                                        [class.text-green]="model.rules[key].visible"
+                                        (click)="setVisibleField($event,model.rules[key])"
+                                        title="{{ (model.rules[key].visible?'Visible':'Oculto') | translate}}">
+                                </button>
+                                <button (click)="_fnChangePosition($event,key,'up')"
+                                        class="btn btn-box-tool fa fa-angle-up"
+                                        [attr.title]="'Subir' | translate"></button>&nbsp;
+                                <button (click)="_fnChangePosition($event,key,'down')"
+                                        class="btn btn-box-tool fa fa-angle-down"
+                                        [attr.title]="'Bajar' | translate"></button>&nbsp;
+                                <span class="btn" (click)="setCheckField($event,model.rules[key])">{{model.rules[key].title}}</span>
+
+                            </li>
+                            <li *ngIf="false">
+                                <button (click)="savePreference()" class="btn btn-box-tool"
+                                        [attr.title]="'save'| translate">
+                                    <i class="fa fa-save"></i>&nbsp;{{'custom.savePreferences' | translate}}
+                                </button>
+                                <button (click)="savePreference(true)" class="btn btn-box-tool"
+                                        [attr.title]="'custom.deletedPreferences' | translate">
+                                    &nbsp;<i class="fa fa-trash"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+
+
+
+
+
                     <div class="pull-right" *ngIf="viewOptions['buttons']">
                         <button *ngFor="let buttom of getViewOptionsButtons()"
-                                class="{{buttom.class}}" type="button" data-toggle="modal"
-                                [attr.data-target]="'#'+buttom.modal">
+                                class="{{buttom.class.call?buttom.class.call():buttom.class}}" type="button"
+                                (click)="buttom.callback($event,_baseView)"
+                                [attr.title]="(buttom.title.call?buttom.title.call():buttom.title | translate)">
                             <i class="{{buttom.icon}}"></i>
-                            {{buttom.title | translate}}
                         </button>
                         <tooltip [code]="model.prefix+'_2'"></tooltip>
                     </div>
                 </div>
                 <div *ngIf="model.permissions.list" class="box-body">
                     <div *ngIf="dataList && dataList.count>0">
-                        <tables [dataList]="dataList" [model]="model" [params]="paramsTable" [where]="where"></tables>
+                        <tables (getInstance)="tables=$event" [baseView]="_baseView" [dataList]="dataList" [model]="model" [params]="paramsTable" [where]="where"></tables>
                     </div>
                     <div *ngIf="dataList && dataList.count == 0">
                         <div class="alert alert-warning alert-dismissable">
@@ -37,7 +86,7 @@
         </section>
     </div>
     <div *ngIf="model.permissions.add">
-        <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)"></save>
+        <save [params]="model.paramsSave" [rules]="model.rulesSave" (save)="setLoadData($event)" (getInstance)="save = $event"></save>
     </div>
     <div *ngIf="model.permissions.filter">
         <filter [params]="model.paramsSearch" [rules]="model.rules" (whereFilter)="loadWhere($event)"></filter>
