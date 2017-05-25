@@ -153,8 +153,18 @@
                                             </span>
                                             <span   *ngSwitchWhen="'weightOut'">
                                                 <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
-                                                   <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
+                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
                                                 {{data.weightOut}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'pendingWeightIn'">
+                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
+                                                {{data.pendingWeightIn}}
+                                            </span>
+                                            <span   *ngSwitchWhen="'pendingWeightOut'">
+                                                <!--<a x-editable [endpoint]="endpoint" [function]="onEditableWeight" [data]="data"-->
+                                                <!--[disabled]="!model.permissions.update" [rules]="model.rules" field="weightOut"></a>-->
+                                                {{data.pendingWeightOut}}
                                             </span>
                                             <span   *ngSwitchWhen="'enabled'">
                                                 <button  class="{{getBooleandData('enabled',data).class}}" (click)="onLock('enabled',data)" [disabled]="getBooleandData('enabled',data).disabled || viewDelete">
@@ -451,6 +461,18 @@
                                                 <div class="col-lg-6">
                                                      <strong>Peso de Salida:</strong>
                                                     {{data.weightOut}}
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'pendingWeightIn'">
+                                                <div class="col-lg-6">
+                                                     <strong>Peso A. de entrada:</strong>
+                                                    {{data.pendingWeightIn}}
+                                                </div>
+                                            </span>
+                                            <span   *ngSwitchWhen="'pendingWeightOut'">
+                                                <div class="col-lg-6">
+                                                     <strong>Peso A. de salida:</strong>
+                                                    {{data.pendingWeightOut}}
                                                 </div>
                                             </span>
                                             <span   *ngSwitchWhen="'enabled'">
