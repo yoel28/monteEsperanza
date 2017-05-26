@@ -35,6 +35,7 @@ export class Operacion extends ControllerBase implements OnInit {
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
     public commentDelete:Control;
+    private viewVersion = 'view::13.0'
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/',router, http, toastr, myglobal, translate);
@@ -55,8 +56,8 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view12'))
-                this.view = JSON.parse(localStorage.getItem('view12'));
+            if (localStorage.getItem(this.viewVersion))
+                this.view = JSON.parse(localStorage.getItem(this.viewVersion));
             this.ordenView();
             this.loadData();
         }
@@ -393,7 +394,7 @@ export class Operacion extends ControllerBase implements OnInit {
             })
         }
         console.log(this.orderViewData);
-        localStorage.setItem('view12', JSON.stringify(this.view))
+        localStorage.setItem(this.viewVersion, JSON.stringify(this.view))
     }
 
     setVisibleView(data,event) {
@@ -405,7 +406,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view12', JSON.stringify(this.view))
+        localStorage.setItem(this.viewVersion, JSON.stringify(this.view))
     }
 
     edit(data){
