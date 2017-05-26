@@ -150,6 +150,40 @@ export class MOperacion extends ModelBase{
             }
         };
 
+        this.rules['pendingWeightIn']={
+            'type': 'number',
+            'readOnly': true,
+            'protected': true,
+            'step':'0.001',
+            'required':false,
+            'double': true,
+            'update':false,
+            'search':false,
+            'hidden': true,
+            'key': 'pendingWeightIn',
+            'visible':this.permissions.visible,
+            'icon':'fa fa-balance-scale',
+            'title': 'Peso automatico E.',
+            'placeholder': 'Peso automatico de entrada',
+        };
+
+        this.rules['pendingWeightOut']={
+            'type': 'number',
+            'readOnly': true,
+            'protected': true,
+            'step':'0.001',
+            'required':false,
+            'double': true,
+            'update':false,
+            'search':false,
+            'key': 'pendingWeightOut',
+            'visible':this.permissions.visible,
+            'hidden': true,
+            'icon':'fa fa-balance-scale',
+            'title': 'Peso automatico S.',
+            'placeholder': 'Peso automatico de salida',
+        };
+
         this.rules['comment']={
             'type': 'textarea',
             'required':false,

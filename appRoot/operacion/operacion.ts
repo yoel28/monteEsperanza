@@ -35,6 +35,7 @@ export class Operacion extends ControllerBase implements OnInit {
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
     public commentDelete:Control;
+    private viewVersion = 'view::13.0'
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/',router, http, toastr, myglobal, translate);
@@ -55,8 +56,8 @@ export class Operacion extends ControllerBase implements OnInit {
             let end = moment().endOf('month').add('1','day').format('DD-MM-YYYY');
 
             this.where="&where="+encodeURI("[['op':'ge','field':'dateCreated','value':'"+start+"','type':'date'],['op':'le','field':'dateCreated','value':'"+end+"','type':'date']]");
-            if (localStorage.getItem('view12'))
-                this.view = JSON.parse(localStorage.getItem('view12'));
+            if (localStorage.getItem(this.viewVersion))
+                this.view = JSON.parse(localStorage.getItem(this.viewVersion));
             this.ordenView();
             this.loadData();
         }
@@ -328,20 +329,22 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': true, 'position': 4, 'title': 'Vehiculo', 'key': 'vehicle'},
         {'visible': true, 'position': 5, 'title': 'Peso de entrada', 'key': 'weightIn'},
         {'visible': true, 'position': 6, 'title': 'Peso de salida', 'key': 'weightOut'},
-        {'visible': true, 'position': 7, 'title': 'Descargado', 'key': 'neto'},
 
+        {'visible': true, 'position': 7, 'title': 'Peso A. de entrada', 'key': 'pendingWeightIn'},
+        {'visible': true, 'position': 8, 'title': 'Peso A. de salida', 'key': 'pendingWeightOut'},
 
-        {'visible': false, 'position': 8, 'title': 'Cliente', 'key': 'company'},
-        {'visible': false, 'position': 9, 'title': 'Grupo', 'key': 'companyTypeName'},
-        {'visible': false, 'position': 10, 'title': 'Ruta', 'key': 'route'},
-        {'visible': false, 'position': 11, 'title': 'Tipo de basura', 'key': 'trash'},
-        {'visible': false, 'position': 12, 'title': 'Operador', 'key': 'usernameCreator'},
-        {'visible': false, 'position': 13, 'title': 'Fecha de Entrada', 'key': 'dateCreated'},
-        {'visible': true, 'position': 14, 'title': 'Chofer', 'key': 'choferName'},
-        {'visible': true, 'position': 15, 'title': 'Contenedor', 'key': 'containerCode'},
-        {'visible': true, 'position': 16, 'title': 'Comentario', 'key': 'comment'},
-        {'visible': true, 'position': 17, 'title': 'Habilitado', 'key': 'enabled'},
-        {'visible': true, 'position': 18, 'title': 'Lugar', 'key': 'place'},
+        {'visible': true, 'position': 9, 'title': 'Descargado', 'key': 'neto'},
+        {'visible': false, 'position': 10, 'title': 'Cliente', 'key': 'company'},
+        {'visible': false, 'position': 11, 'title': 'Grupo', 'key': 'companyTypeName'},
+        {'visible': false, 'position': 12, 'title': 'Ruta', 'key': 'route'},
+        {'visible': false, 'position': 13, 'title': 'Tipo de basura', 'key': 'trash'},
+        {'visible': false, 'position': 14, 'title': 'Operador', 'key': 'usernameCreator'},
+        {'visible': false, 'position': 15, 'title': 'Fecha de Entrada', 'key': 'dateCreated'},
+        {'visible': true, 'position': 16, 'title': 'Chofer', 'key': 'choferName'},
+        {'visible': true, 'position': 17, 'title': 'Contenedor', 'key': 'containerCode'},
+        {'visible': true, 'position': 18, 'title': 'Comentario', 'key': 'comment'},
+        {'visible': true, 'position': 19, 'title': 'Habilitado', 'key': 'enabled'},
+        {'visible': true, 'position': 20, 'title': 'Lugar', 'key': 'place'},
 
     ];
     public placeView:any={};
@@ -390,7 +393,8 @@ export class Operacion extends ControllerBase implements OnInit {
                 }
             })
         }
-        localStorage.setItem('view12', JSON.stringify(this.view))
+        console.log(this.orderViewData);
+        localStorage.setItem(this.viewVersion, JSON.stringify(this.view))
     }
 
     setVisibleView(data,event) {
@@ -402,7 +406,7 @@ export class Operacion extends ControllerBase implements OnInit {
                 return;
             }
         })
-        localStorage.setItem('view12', JSON.stringify(this.view))
+        localStorage.setItem(this.viewVersion, JSON.stringify(this.view))
     }
 
     edit(data){
