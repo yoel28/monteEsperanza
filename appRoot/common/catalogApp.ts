@@ -95,38 +95,40 @@ export class CatalogApp {
 
     }
 
-    public static dateHmanizer = humanizeDuration.humanizer({
-        language: 'shortEs',
-        round: true,
-        languages: {
-            shortEs: {
-                y: function () {
-                    return 'y'
-                },
-                mo: function () {
-                    return 'm'
-                },
-                w: function () {
-                    return 'Sem'
-                },
-                d: function () {
-                    return 'd'
-                },
-                h: function () {
-                    return 'hr'
-                },
-                m: function () {
-                    return 'min'
-                },
-                s: function () {
-                    return 'seg'
-                },
-                ms: function () {
-                    return 'ms'
-                },
+    public static get dateHmanizer(){
+        return humanizeDuration.humanizer({
+            language: 'shortEs',
+            round: true,
+            languages: {
+                shortEs: {
+                    y: function () {
+                        return 'y'
+                    },
+                    mo: function () {
+                        return 'm'
+                    },
+                    w: function () {
+                        return 'Sem'
+                    },
+                    d: function () {
+                        return 'd'
+                    },
+                    h: function () {
+                        return 'hr'
+                    },
+                    m: function () {
+                        return 'min'
+                    },
+                    s: function () {
+                        return 'seg'
+                    },
+                    ms: function () {
+                        return 'ms'
+                    },
+                }
             }
-        }
-    });
+        });
+    }
 
     public static get formatDatePickerDDMMYYYY():any{
         return {

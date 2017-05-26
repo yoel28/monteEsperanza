@@ -386,6 +386,9 @@ export class OperacionSave extends ControllerBase implements OnInit{
             this.data['company'].updateValue(data.companyRUC);
 
             this.data['weightIn'].updateValue(data.weightIn);
+
+            this.data['comment'].updateValue(data.comment);
+
             this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
 
             if(data.choferId){

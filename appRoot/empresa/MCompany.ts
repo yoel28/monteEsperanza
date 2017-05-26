@@ -126,7 +126,15 @@ export class MCompany extends ModelBase{
 
         this.rules['location']={
             'type': 'location',
-            'getValue':()=>{},
+            'getValue':(data:Object):Object=>{
+                try{
+                    let values = JSON.parse(data['location']);
+                    return values;
+                }
+                catch (e){
+
+                }
+            },
             'update':this.permissions.update,
             'visible':this.permissions.visible,
             'key': 'location',
