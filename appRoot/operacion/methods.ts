@@ -425,7 +425,10 @@ export class OperacionSave extends ControllerBase implements OnInit{
                 this.model.rulesSave['weightOut'].hidden=false;
             }
 
-            this.loadPlace(data.places.concat(data.placesPosible|[]),'route');
+            
+            if(data.placesPosible){
+               this.loadPlace(data.places.concat(data.placesPosible),'route');
+            }
 
             this.checkBalance();
         }
