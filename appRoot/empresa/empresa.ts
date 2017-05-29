@@ -120,6 +120,22 @@ export class Empresa extends ControllerBase implements OnInit {
                 window.open(url, '_blank');
             }
         });
+        this.viewOptions["buttons"].push({
+            'visible': this.model.permissions.list,
+            'title': 'Exportar en formato PDF',
+            'class': 'btn text-red btn-box-tool',
+            'icon': 'fa fa-file-pdf-o',
+            'callback':(event:Event)=>{
+                event.preventDefault();
+                let url = localStorage.getItem('urlAPI') +
+                    this.endpoint +
+                    '?access_token=' + localStorage.getItem('bearer') +
+                    this.where+
+                    '&formatType=pdf' +
+                    '&tz=' + moment().format('Z').replace(':', '');
+                window.open(url, '_blank');
+            }
+        });
 
 
     }
