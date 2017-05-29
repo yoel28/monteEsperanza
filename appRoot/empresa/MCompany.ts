@@ -48,6 +48,7 @@ export class MCompany extends ModelBase{
             'visible':this.permissions.visible,
             'key': 'ruc',
             'title': 'RUC',
+            'setEqual':'code',
             'placeholder': 'RUC',
         };
         this.rules['code']={
@@ -126,7 +127,15 @@ export class MCompany extends ModelBase{
 
         this.rules['location']={
             'type': 'location',
-            'getValue':()=>{},
+            'getValue':(data:Object):Object=>{
+                try{
+                    let values = JSON.parse(data['location']);
+                    return values;
+                }
+                catch (e){
+
+                }
+            },
             'update':this.permissions.update,
             'visible':this.permissions.visible,
             'key': 'location',
@@ -178,6 +187,7 @@ export class MCompany extends ModelBase{
         delete this.rulesSave.debt;
         delete this.rulesSave.location;
         delete this.rulesSave.detail;
+        delete this.rulesSave.code
     }
 
 }

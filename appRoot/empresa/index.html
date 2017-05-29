@@ -148,7 +148,7 @@
                                                         {{data.debt}}
                                                     </p>
 
-                                                    <p *ngIf="false">
+                                                    <p>
                                                         <strong>Ubicaci&oacute;n:</strong>
                                                         <button data-target="#modalLocation"
                                                                 data-toggle="modal"
@@ -397,7 +397,7 @@
                                                            [endpoint]="endpoint" [function]="onEditable" [data]="data"
                                                            [rules]="model.rules" field="phone"></a>
                                                     </p>
-                                                    <p  *ngIf="false">
+                                                    <p>
                                                         <strong>Ubicaci&oacute;n:</strong>
                                                         <button data-target="#modalLocation"
                                                                 data-toggle="modal"
@@ -553,19 +553,19 @@
     </div>
 </div>
 
-<div *ngIf="_location">
+<div>
     <div class="modal fade" [attr.id]="'modalLocation'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">
-                        <i class="fa fa-warning"></i>&nbsp;
+                        <i class="fa fa-globe text-blue"></i>&nbsp;
                         <strong>UBICACI&Oacute;N</strong>
                     </h4>
                 </div>
-                <div class="modal-body">
-
+                <div class="modal-body" *ngIf="_location">
+                    <location-picker [params]="_location"></location-picker>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">
@@ -573,7 +573,7 @@
                     </button>
 
                     <button *ngIf="model.permissions.update"
-                            (click)="onDelete($event,dataSelect.id)"
+                            (click)="onSaveLocation($event)"
                             data-dismiss="modal" type="button" class="btn btn-blue fa fa-save">&nbsp;Guardar
                     </button>
                 </div>

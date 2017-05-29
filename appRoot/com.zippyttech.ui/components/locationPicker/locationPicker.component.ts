@@ -2,13 +2,10 @@ import {AfterViewInit, Component, EventEmitter} from '@angular/core';
 import {API} from '../../../com.zippyttech.utils/catalog/defaultAPI';
 import {globalService} from "../../../common/globalService";
 
-
-let jQuery:any;
-let google:any;
-let moment:any;
-
-let jqueryui:any;
-let addresspicker:any;
+declare var SystemJS:any;
+declare var jQuery:any;
+declare var google:any;
+declare var moment:any;
 
 export interface ILocation {
     regionBias?: string,
@@ -41,8 +38,8 @@ export interface ILocation {
 
 @Component({
     selector: 'location-picker',
-    templateUrl: './index.html',
-    styleUrls: ['./style.css'],
+    templateUrl: SystemJS.map.app+'/com.zippyttech.ui/components/locationPicker/index.html',
+    styleUrls: [ SystemJS.map.app+'/com.zippyttech.ui/components/locationPicker/style.css'],
     inputs: ['params', 'model'],
     outputs: ['result', 'getInstance'],
 })
@@ -50,7 +47,7 @@ export class LocationPickerComponent implements AfterViewInit {
 
     public params: ILocation = {};
 
-    public configId = moment().valueOf();
+    private _configId = moment().valueOf();
 
     public result: any;
     public getInstance: any;
@@ -105,27 +102,22 @@ export class LocationPickerComponent implements AfterViewInit {
 
     }
 
-    initModel() {
-        this.checkParams();
-    }
-
     initLocation() {
 
         let that = this;
 
-
-        let elementsView = {'map': '#' + that.configId + 'map'};
+        let elementsView = {'map': '#' + that._configId + 'map'};
         that.params.elements.forEach(key => {
-            elementsView[key] = '#' + that.configId + key;
+            elementsView[key] = '#' + that._configId + key;
         });
 
-        let addresspicker = jQuery('#' + this.configId + 'addresspicker').addresspicker({});
+        let addresspicker = jQuery('#' + this._configId + 'addresspicker').addresspicker({});
 
-        this.mapGoogle = jQuery('#' + this.configId + 'addresspicker_map').addresspicker({
+        this.mapGoogle = jQuery('#' + this._configId + 'addresspicker_map').addresspicker({
             regionBias: that.params.regionBias,
             updateCallback: (geocodeResult, parsedGeocodeResult) => {
                 if (that.params && that.params.debug) {
-                    jQuery('#' + that.configId + 'callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+                    jQuery('#' + that._configId + 'callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
                 }
                 if (this.params.reverse) {
                     that.dataLocation = parsedGeocodeResult
@@ -142,18 +134,19 @@ export class LocationPickerComponent implements AfterViewInit {
 
 
         if (this.params && this.params.reverse) {
-            jQuery('#' + that.configId + 'reverseGeocode').change(function () {
-                jQuery('#' + that.configId + 'addresspicker_map').addresspicker('option', 'reverseGeocode', (jQuery(this).val() === 'true'));
+            jQuery('#' + that._configId + 'reverseGeocode').change(function () {
+                jQuery('#' + that._configId + 'addresspicker_map').addresspicker('option', 'reverseGeocode', (jQuery(this).val() === 'true'));
             });
         }
 
         if (this.params && this.params.zoom && this.params.zoom.visible) {
-            let map = jQuery('#' + that.configId + 'addresspicker_map').addresspicker('map');
+            let map = jQuery('#' + that._configId + 'addresspicker_map').addresspicker('map');
             google.maps.event.addListener(map, 'idle', function () {
-                jQuery('#' + that.configId + 'zoom').val(map.getZoom());
+                jQuery('#' + that._configId + 'zoom').val(map.getZoom());
             });
         }
         this.setMarker();
+        // this._getLocation();
     }
 
     setMarker() {
@@ -168,12 +161,12 @@ export class LocationPickerComponent implements AfterViewInit {
                 };
             }.bind(this));
 
-            google.maps.event.addListener(this.mapGoogle.addresspicker('map'), 'center_changed', function () {
+            google.maps.event.addListener(this.mapGoogle.addresspicker('map'), 'center_changed', () => {
                 this.params.data = {
                     lat: this.marker.getPosition().lat(),
                     lng: this.marker.getPosition().lng()
                 };
-            }.bind(this));
+            });
 
         } else {
             this.checkParams();
@@ -187,17 +180,32 @@ export class LocationPickerComponent implements AfterViewInit {
         this.mapGoogle.addresspicker('updatePosition');
 
     }
+    private _getLocation(event?:Event) {
+        if(event)
+            event.preventDefault();
 
-    ngAfterViewInit() {
-        setTimeout(function () {
-            this.initLocation()
-        }.bind(this), 1000);
-        this.params.instance = this;
-        this.getInstance.emit(this);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position =>
+                {
+                    this.params.center = {
+                        lat:position.coords.latitude,
+                        lng:position.coords.longitude
+                    };
+                    this.setMarker();
+                }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
     }
 
-    getSearch(search) {
-
+    ngAfterViewInit() {
+        this.checkParams();
+        setTimeout(()=>{
+            this.initLocation()
+        }, 1000);
+        this.params.instance = this;
+        this.getInstance.emit(this);
     }
 
     getData(data) {

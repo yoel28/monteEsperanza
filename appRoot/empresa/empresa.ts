@@ -31,7 +31,7 @@ declare var moment:any;
     templateUrl: SystemJS.map.app+'/empresa/index.html',
     styleUrls: [SystemJS.map.app+'/empresa/style.css'],
     providers: [TranslateService],
-    directives: [Filter,Tables,Save, Search, Xeditable, Xfile, Xcropit,Filter,Tooltip],
+    directives: [Filter,Tables,Save, Search, Xeditable, Xfile, Xcropit,Filter,Tooltip,LocationPickerComponent],
     pipes: [Divide,TranslatePipe],
 })
 export class Empresa extends ControllerBase implements OnInit {
@@ -156,16 +156,18 @@ export class Empresa extends ControllerBase implements OnInit {
     public typeView=1;
 
     private _getLocation(event:Event,data:Object){
+        this._location=null;
         if(data){
-            this._location={
-                data:{
-                    lat:0,
-                    lng:0
-                }
-            };
+            setTimeout(()=>{
+                this.dataSelect = data;
+                this._location={
+                    data:this.model.rules['location'].getValue(data),
+                    center:this.model.rules['location'].getValue(data)
+                };
+            }, 500);
             return;
         }
-        this._location=null;
+
     }
 
     public searchTipoEmpresa = {
@@ -216,6 +218,14 @@ export class Empresa extends ControllerBase implements OnInit {
         event.preventDefault();
         this.onPatch('image', data, this.image[data.id]);
     }
+
+    onSaveLocation(event){
+        if(event)
+            event.preventDefault();
+        let data  = this._location.data;
+        this.onPatch('location',this.dataSelect,JSON.stringify(data));
+    }
+
     private _classCol(lg = 12, md = 12, sm = 12, xs = 12) {
         let _lg = lg == 0 ? 'hidden-lg' : 'col-lg-' + lg;
         let _md = md == 0 ? 'hidden-md' : 'col-md-' + md;
