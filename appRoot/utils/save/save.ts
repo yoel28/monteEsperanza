@@ -217,6 +217,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                 body[key]=data;
             }
 
+            if(that.rules[key].setEqual){
+                body[that.rules[key].setEqual]=body[key];
+            }
+
         });
         if(this.params.updateField)
             this.httputils.onUpdate(this.endpoint+this.id,JSON.stringify(body),this.dataSelect,this.error).then((respnse)=>{
