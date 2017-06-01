@@ -92,8 +92,7 @@ export class MRegister extends ModelBase{
 
         this.rules['company'] = this.company.ruleObject;
         this.rules['company'].required = false;
-        this.rules['company'].rulesSave['name'].title="Cliente";
-        this.rules['company'].rulesSave['code'].title="Codigo del cliente";
+        this.rules['company'].title="Codigo del cliente";
 
         this.rules['tag'] = this.tag.ruleObject;
         this.rules['tag'].required = false;
