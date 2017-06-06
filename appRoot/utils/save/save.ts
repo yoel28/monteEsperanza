@@ -201,7 +201,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                             data.push(obj[that.rules[key].save.key]);
 
                         }else{
-                            data.push(obj.value || obj);
+                            that.rules[key].onlyId?data.push(+(obj.value || obj)):data.push(obj.value || obj)
                         }
                     });
                 }
@@ -254,10 +254,25 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data:any,key?:string){
-        this.searchId[this.search.key || key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
-        (<Control>this.form.controls[this.search.key || key]).updateValue(data.detail);
-        this.dataList=[];
+        (<Control>this.form.controls[this.search.key || key]).updateValue(this.rules[this.search.key || key].value);
+
+        setTimeout(()=>{
+            this.searchId[this.search.key || key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
+            (<Control>this.form.controls[this.search.key || key]).updateValue(data.detail);
+            this.dataList=[];
+        },100);
     }
+
+    getDisabled(rule:any){
+        if(rule.disabled){
+            return rule.disabled(this);
+        }
+        return false;
+    }
+    isValid(key:string):boolean{
+        return this.form.controls[key].valid;
+    }
+
     //accion seleccionar un item de un select
     setValueSelect(data,key){
         (<Control>this.form.controls[key]).updateValue(data);
