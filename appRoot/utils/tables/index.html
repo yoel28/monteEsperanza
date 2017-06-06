@@ -19,7 +19,7 @@
                         {{formatDate(data[key],model.rules[key])}}
                     </template>
 
-                    <a *ngIf="!model.rules[key].object &&  model.rules[key].type !='date' && model.rules[key].type !='boolean' && model.rules[key].type !='color'" x-editable  [disabled]="!model.rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="model.rules" [field]="key"></a>
+                    <a *ngIf="!model.rules[key].object &&  model.rules[key].type !='date' && model.rules[key].type !='datetime' && model.rules[key].type !='boolean' && model.rules[key].type !='color'" x-editable  [disabled]="!model.rules[key].update"  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="model.rules" [field]="key"></a>
 
                     <input *ngIf="model.rules[key].type == 'color' && model.rules[key].update" color-picker readonly [style.background-color]="'#'+data[key]" [attr.value]="'#'+data[key]" (color)="onPatch(key,data,$event)">
 
