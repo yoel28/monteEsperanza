@@ -59,10 +59,14 @@ export class Xeditable implements OnInit {
                         });
                         newValue = data;
                     }
+                    if(that._type == 'checklist' && that.rules[that.field].onlyId){
+                        newValue = newValue.map(Number);
+                    }
+
 
                     that.function(that.field, that.data, newValue, that.endpoint).then(
                         function (value) {
-                            jQuery(that.el.nativeElement).editable('setValue', value[that.field], true);
+                            jQuery(that.el.nativeElement).editable('setValue', that._parseNewValue(value[that.field]), true);
                         }, function (reason) {
                             jQuery(that.el.nativeElement).editable('setValue', that.data[that.field], true);
                         }
@@ -72,10 +76,21 @@ export class Xeditable implements OnInit {
         });
     }
 
+    private _parseNewValue(data:any){
+       if(this._type == 'checklist'){
+           return data.map(({value})=>(<number>value));
+       }
+       return data;
+    }
+
     private get _source(){
         if(this.rules[this.field].type == 'list'){
+            if(this.rules[this.field].subtype == 'inlist' &&  this.rules[this.field].list){
+                return this.data[this.rules[this.field].list] || []
+            }
             return this.rules[this.field].source || this.data[this.field];
         }
+
         return this.rules[this.field].source || null;
     }
     private get _type(){
@@ -87,6 +102,10 @@ export class Xeditable implements OnInit {
     private get _value(){
         if(this._type == 'select2'){
             return this.data[this.field];
+        }
+        if(this._type == 'checklist'){
+            let data = this.data[this.field].map(({value})=>(<number>value));
+            return data;
         }
         return this.data[this.field]!=null?(this.data[this.field]):(this.field=='password'?"":"N/A")
     }
