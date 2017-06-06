@@ -20,7 +20,16 @@
                                                         <div class="{{(rules[key].object || rules[key].refreshField)?_classCol(10,10,10,10):_classCol()}}" >
                                                             <div class="input-group input-icon right form-group">
                                                                 <i class="{{rules[key].icon}} z-index"></i>
-                                                                <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}&nbsp;<span *ngIf="key == keyFindData" class="fa fa fa-spinner fa-spin"></span>
+                                                                <span class="input-group-addon" [attr.id]="key">
+                                                                    {{rules[key].title}}&nbsp;
+                                                                    <span *ngIf="key == keyFindData" class="fa fa fa-spinner fa-spin"></span>
+                                                                    <template [ngIf]="rules[key].help">
+                                                                        <span *ngIf="rules[key].help.length "  tabindex="-1"
+                                                                              class="fa fa-info-circle text-blue fa-lg cursor"
+                                                                              [attr.title]="rules[key].help"
+                                                                        >
+                                                                        </span>
+                                                                    </template>
                                                                 <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
                                                                 </span>
 
@@ -40,17 +49,21 @@
 
                                                                 </textarea>
 
-                                                                <div *ngIf="rules[key].type == 'list'">
+                                                                <div *ngIf="rules[key].type == 'list' && !getDisabled(rules[key])">
                                                                     <input tags-input data-role="tagsinput"
+                                                                           class="form-control"
                                                                            placeholder="{{rules[key].placeholder}}"
                                                                            type="text"
                                                                            [attr.aria-describedby]="key"
                                                                            [readonly]="true"
                                                                            [control]="data[key]"
+                                                                           [type]="rules[key].subtype"
+                                                                           [data]="rules[key].source"
                                                                            ngControl="{{key}}"
                                                                            [(ngModel)]="data[key].value"
                                                                            (instance)="rules[key].instance=$event"
                                                                     >
+
                                                                     <form (submit)="addTagManual($event,key)" *ngIf="rules[key].tagFree">
                                                                         <input placeholder="{{rules[key].placeholder}} Manual"
                                                                                type="text"
