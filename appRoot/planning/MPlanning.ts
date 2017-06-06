@@ -119,6 +119,28 @@ export class MPlanning extends ModelBase{
             'instance':null
         };
 
+        this.rules['startDate']={
+            'type': 'datetime',
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'startDate',
+            'format':'DD-MM-YYYY, LT',
+            'icon':'fa fa-calendar',
+            'title': 'Inicia',
+            'placeholder': 'Inicia',
+        };
+        this.rules['endDate']={
+            'type': 'datetime',
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'endDate',
+            'format':'DD-MM-YYYY, LT',
+            'icon':'fa fa-calendar',
+            'title': 'Finaliza',
+            'placeholder': 'Finaliza',
+        };
+
+
         this.rules['enabled'].search = this.permissions.filter;
     }
     initPermissions() {}
