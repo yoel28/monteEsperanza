@@ -51,6 +51,13 @@ export class MPlanning extends ModelBase{
 
         this.rules['route'] = this._route.ruleObject;
         this.rules['route'].required = true;
+        this.rules['route'].callBack= (s:Save,value:string)=>{
+            if(this.rules['places'].instance)
+            {
+                this.rules['places'].instance.removeAll();
+            }
+        };
+
 
         this.rules['driver'] = this._chofer.ruleObject;
         this.rules['driver'].required = true;
@@ -81,6 +88,35 @@ export class MPlanning extends ModelBase{
             'icon':'fa fa-user',
             'title': 'Creador',
             'placeholder': 'Creador',
+        };
+
+        this.rules['places'] = {
+            'type': 'list',
+            'subtype':'inlist',
+            'disabled':(f:Save)=>{
+                if(f.isValid('route') && f.searchId['route']){
+                    this.rules['places'].source = f.searchId['route'].data.places;
+                    this.rules['places'].help = this.rules['places'].source.map(({text})=>text).join('\n');
+
+                };
+                return !f.isValid('route');
+            },
+            'help':'',
+            'mode':'popup',
+            'showbuttons':true,
+            'onlyId':true,
+            'list':'placesPosible',
+            'maxLength': '35',
+            'prefix':'TAG',
+            'value':[],
+            'source':[],
+            'update': this.permissions.update,
+            'search': this.permissions.filter && false,
+            'visible': this.permissions.visible,
+            'key': 'places',
+            'title': 'Lugares',
+            'placeholder': 'Lugares',
+            'instance':null
         };
 
         this.rules['enabled'].search = this.permissions.filter;
