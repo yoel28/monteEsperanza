@@ -8,6 +8,7 @@ import {Xcropit, Xfile, ColorPicker, Datepicker,SMDropdown} from "../../common/x
 import {CatalogApp} from "../../common/catalogApp";
 import {TagsInput} from "../../common/tagsinput";
 import 'rxjs/add/operator/debounceTime';
+import {DateTimePicker} from "../datetime/datetime";
 
 
 
@@ -17,7 +18,7 @@ declare var jQuery:any;
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
-    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown,TagsInput],
+    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown,TagsInput,DateTimePicker],
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
