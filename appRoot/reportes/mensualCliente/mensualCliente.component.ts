@@ -51,27 +51,27 @@ export class ReporteClienteMensual extends RestController implements OnInit{
         if(date)
             this.date = date;
 
+        let tempWhere =[];
         if(this.valueSearch && this.valueSearch.id){
-            let tempWhere =[];
             tempWhere.push({'op':'eq','field':'company.id','value':this.valueSearch.id});
-            if(this.date && this.date.start && this.date.end)
-            {
-                tempWhere.push({'value':this.date.start,'field':'dateCreated','type':'date','op':'ge'});
-                tempWhere.push({'value':this.date.end,'field':'dateCreated','type':'date','op':'le'});
-            }
-            this.where = "&where="+encodeURI(JSON.stringify(tempWhere).split('{').join('[').split('}').join(']'));
-
-            this.url = localStorage.getItem('urlAPI') + this.endpoint + '?access_token=' + localStorage.getItem('bearer') + '&tz=' + (moment().format('Z')).replace(':', '') + this.where;
         }
+        if(this.date && this.date.start && this.date.end)
+        {
+            tempWhere.push({'value':this.date.start,'field':'dateCreated','type':'date','op':'ge'});
+            tempWhere.push({'value':this.date.end,'field':'dateCreated','type':'date','op':'le'});
+        }
+        this.where = "&where="+encodeURI(JSON.stringify(tempWhere).split('{').join('[').split('}').join(']'));
+
+        this.url = localStorage.getItem('urlAPI') + this.endpoint + '?access_token=' + localStorage.getItem('bearer') + '&tz=' + (moment().format('Z')).replace(':', '') + this.where;
     }
     assignSearch(data){
         Object.assign(this.valueSearch,data);
         this.loadRange();
     }
-    isValid():boolean{
-        if(this.valueSearch && this.valueSearch.title)
-            return true;
-        return false;
-    }
+    // isValid():boolean{
+    //     if(this.valueSearch && this.valueSearch.title)
+    //         return true;
+    //     return false;
+    // }
 
 }
