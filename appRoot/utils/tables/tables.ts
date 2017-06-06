@@ -137,8 +137,10 @@ export class Tables extends RestController implements OnInit {
 
     }
 
-    getDisabledField(key,data){
-        return (eval(this.model.rules[key].disabled || 'false'));
+    getDisabledField(key:string,data:Object){
+        if(typeof this.model.rules[key].disabled == 'string' )
+            return (eval(this.model.rules[key].disabled));
+        return false;
     }
 
     public loadDataFieldReference(data,key,setNull=false){
