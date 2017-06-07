@@ -1,7 +1,7 @@
 import {Component, OnInit,AfterViewInit} from '@angular/core';
-import {globalService} from "../common/globalService";
-import {BaseView} from "../utils/baseView/baseView";
-import {MPlanning} from "./MPlanning";
+import {BaseView} from "../../../utils/baseView/baseView";
+import {globalService} from "../../../common/globalService";
+import {PlanningModel} from "./planning.model";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -12,7 +12,7 @@ declare var moment:any;
     styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
     directives: [BaseView],
 })
-export class Planning implements OnInit,AfterViewInit{
+export class PlanningComponent implements OnInit,AfterViewInit{
 
     public instance:any={};
     public paramsTable:any={};
@@ -36,7 +36,7 @@ export class Planning implements OnInit,AfterViewInit{
     }
 
     initModel():any {
-        this.model= new MPlanning(this.myglobal);
+        this.model= new PlanningModel(this.myglobal);
     }
 
     initViewOptions() {

@@ -1,18 +1,20 @@
-import {globalService} from "../common/globalService";
-import {ModelBase} from "../common/modelBase";
-import {MRuta} from "../ruta/MRuta";
-import {MVehicle} from "../vehiculo/MVehicle";
-import {MDrivers} from "../drivers/MDrivers";
-import {Save} from "../utils/save/save";
-import {BaseView} from "../utils/baseView/baseView";
+import {ModelBase} from "../../../common/modelBase";
+import {MVehicle} from "../../../vehiculo/MVehicle";
+import {MDrivers} from "../../../drivers/MDrivers";
+import {MRuta} from "../../../ruta/MRuta";
+import {globalService} from "../../../common/globalService";
+import {Save} from "../../../utils/save/save";
+import {BaseView} from "../../../utils/baseView/baseView";
+import {ScheduleModel} from "../schedule/schedule.model";
 
-export class MPlanning extends ModelBase{
+export class PlanningModel extends ModelBase{
     public rules={};
 
     private _vehicle:MVehicle;
     private _chofer:MDrivers;
     private _ayudante:MDrivers;
     private _route:MRuta;
+    private _schedule:ScheduleModel;
 
     private _paramsAdd = this.myglobal.getParams('LIST_ADD_ALL')=='true';
 
@@ -26,6 +28,7 @@ export class MPlanning extends ModelBase{
         this._chofer = new MDrivers(this.myglobal);
         this._ayudante = new MDrivers(this.myglobal);
         this._route = new MRuta(this.myglobal);
+        this._schedule = new ScheduleModel(this.myglobal);
     }
     initRules(){
 
@@ -119,26 +122,8 @@ export class MPlanning extends ModelBase{
             'instance':null
         };
 
-        this.rules['startDate']={
-            'type': 'datetime',
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'startDate',
-            'format':'DD-MM-YYYY, LT',
-            'icon':'fa fa-calendar',
-            'title': 'Inicia',
-            'placeholder': 'Inicia',
-        };
-        this.rules['endDate']={
-            'type': 'datetime',
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'endDate',
-            'format':'DD-MM-YYYY, LT',
-            'icon':'fa fa-calendar',
-            'title': 'Finaliza',
-            'placeholder': 'Finaliza',
-        };
+        this.rules['schedule'] = this._schedule.ruleObject;
+        this.rules['schedule'].required = true;
 
 
         this.rules['enabled'].search = this.permissions.filter;
