@@ -8,7 +8,7 @@ import {Xcropit, Xfile, ColorPicker, Datepicker,SMDropdown} from "../../common/x
 import {CatalogApp} from "../../common/catalogApp";
 import {TagsInput} from "../../common/tagsinput";
 import 'rxjs/add/operator/debounceTime';
-import {DateTimePicker} from "../datetime/datetime";
+import {DateTimePicker} from "../../com.zippyttech.ui/directive/date-time-picker/date-time-picker";
 
 
 
