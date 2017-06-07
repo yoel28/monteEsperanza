@@ -5,24 +5,51 @@ declare var jQuery:any;
 
 @Directive({
     selector: "[date-time-picker]",
-    inputs:['format'],
-    outputs:['fecha']
+    inputs:['rule'],
+    outputs:['change','hide']
 })
 export class DateTimePicker implements OnInit {
 
-    public format:any = {};
-    public fecha:any;
-    public element:any;
+    public rule:any = {};
+
+    public change:EventEmitter<string>;
+    public hide:EventEmitter<string>;
+
     constructor(public el: ElementRef) {
-        this.fecha = new EventEmitter();
+        this.change = new EventEmitter();
+        this.hide = new EventEmitter();
     }
     ngOnInit(){
-        let that = this;
-        that.element = jQuery(this.el.nativeElement).datetimepicker();
-        jQuery(this.el.nativeElement).datetimepicker().on('dp.change',  (ev) => {
-            that.fecha.emit(moment(ev.date).format('YYYY-MM-DD HH:mm:ssX'));
-            console.log(moment(ev.date).format('YYYY-MM-DD HH:mmZ'))
+
+        jQuery(this.el.nativeElement).datetimepicker({
+            format:(this.rule.formatView || false)
         });
+
+        jQuery(this.el.nativeElement).datetimepicker().on('dp.change',  (ev) => {
+            let data =  moment(ev.date).format('YYYY-MM-DD HH:mm:ssX');
+            if(this.rule.formatOut){
+                if(typeof this.rule.formatOut === 'string'){
+                    data =  moment(ev.date).format(this.rule.formatOut)
+                }
+                if(typeof this.rule.formatOut === 'function'){
+                    data =  this.rule.formatOut(ev.date);
+                }
+            }
+            this.change.emit(data);
+        });
+        jQuery(this.el.nativeElement).datetimepicker().on('dp.hide',  (ev) => {
+            let data =  moment(ev.date).format('YYYY-MM-DD HH:mm:ssX');
+            if(this.rule.formatOut){
+                if(typeof this.rule.formatOut === 'string'){
+                    data =  moment(ev.date).format(this.rule.formatOut)
+                }
+                if(typeof this.rule.formatOut === 'function'){
+                    data =  this.rule.formatOut(ev.date);
+                }
+            }
+            this.hide.emit(data);
+        });
+
     }
 }
 
