@@ -9,3 +9,8 @@ th.check {
 td.check {
     background: rgba(0, 187, 0, 0.18);
 }
+.text-picker{
+    background-color: transparent;
+    border:0;
+    cursor: pointer;
+}
