@@ -53,7 +53,6 @@ import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
 import {Drivers} from "./drivers/drivers";
 import {OperationsAudit} from "./reportes/operationsAudit";
-import {Container} from "./container/container";
 import {MOperacion} from "./operacion/MOperacion";
 import {Register} from "./register/register";
 import {ReporteClienteMensual} from "./reportes/mensualCliente/mensualCliente.component";
@@ -63,6 +62,7 @@ import {ChangeComponents} from "./change/change";
 import {MapaComponents} from "./mapa/mapa";
 import {Zone} from "./zone/zone";
 import {Planning} from "./planning/planning";
+import {ContainerComponent} from "./com.zippyttech.vertedero/catalog/container/container.component";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -139,7 +139,7 @@ declare var jQuery:any;
     {path: '/ayuda', name: 'Help', component: Help},
     {path: '/eventos', name: 'Event', component: Events},
     {path: '/chofer', name: 'Drivers', component: Drivers},
-    {path: '/container', name: 'Container', component: Container},
+    {path: '/container', name: 'ContainerComponent', component: ContainerComponent},
     {path: '/zone', name: 'Zone', component: Zone},
     {path: '/planning', name: 'Planning', component: Planning},
     {path: '/**', redirectTo: ['Dashboard']}
@@ -463,7 +463,7 @@ export class AppComponent extends RestController implements OnInit {
                         'visible': this.myglobal.existsPermission("MEN_CONTAINER"),
                         'icon': 'glyphicon glyphicon-inbox',
                         'title': 'Container',
-                        'routerLink': 'Container'
+                        'routerLink': 'ContainerComponent'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_RUTAS"),

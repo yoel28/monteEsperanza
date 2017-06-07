@@ -5,8 +5,8 @@ import {MTrashType} from "../tipoBasura/MTrashType";
 import {MCompany} from "../empresa/MCompany";
 import {MDrivers} from "../drivers/MDrivers";
 import {MVehicle} from "../vehiculo/MVehicle";
-import {MContainer} from "../container/MContainer";
 import {MPlace} from "../place/MPlace";
+import {ContainerModel} from "../com.zippyttech.vertedero/catalog/container/container.model";
 
 export class MOperacion extends ModelBase{
     public rules={};
@@ -29,7 +29,7 @@ export class MOperacion extends ModelBase{
         this.company = new MCompany(this.myglobal);
         this.chofer = new MDrivers(this.myglobal);
         this.vehicle = new MVehicle(this.myglobal);
-        this.container = new MContainer(this.myglobal);
+        this.container = new ContainerModel(this.myglobal);
         this.place = new MPlace(this.myglobal);
     }
     initRules(){

@@ -3,7 +3,7 @@ import {ModelBase} from "../common/modelBase";
 import {MRuta} from "../ruta/MRuta";
 import {MVehicle} from "../vehiculo/MVehicle";
 import {MCompany} from "../empresa/MCompany";
-import {MContainer} from "../container/MContainer";
+import {ContainerModel} from "../com.zippyttech.vertedero/catalog/container/container.model";
 
 export class MChange extends ModelBase {
 
@@ -22,8 +22,8 @@ export class MChange extends ModelBase {
         this.route = new MRuta(this.myglobal);
         this.vehicle = new MVehicle(this.myglobal);
         this.company = new MCompany(this.myglobal);
-        this.containerOut = new MContainer(this.myglobal);
-        this.containerIn = new MContainer(this.myglobal);
+        this.containerOut = new ContainerModel(this.myglobal);
+        this.containerIn = new ContainerModel(this.myglobal);
 
     }
     initRules() {

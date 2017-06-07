@@ -1,7 +1,7 @@
 import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 import {MVehicle} from "../vehiculo/MVehicle";
-import {MContainer} from "../container/MContainer";
+import {ContainerModel} from "../com.zippyttech.vertedero/catalog/container/container.model";
 
 export class MTag extends ModelBase{
     public rules={};
@@ -14,7 +14,7 @@ export class MTag extends ModelBase{
     }
     modelExternal() {
         this.vehicle = new MVehicle(this.myglobal);
-        this.container = new MContainer(this.myglobal);
+        this.container = new ContainerModel(this.myglobal);
     }
     initRules(){
 
