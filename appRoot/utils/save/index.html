@@ -96,7 +96,7 @@
                                                                        [attr.value]="rules[key].title" type="text" class="form-control">
 
                                                                 <template [ngIf]="rules[key].type == 'datetime'" >
-                                                                    <input date-time-picker type='text' class="form-control" (fecha)="loadDate($event,key)"/>
+                                                                    <input date-time-picker type='text' class="form-control" [rule]="rules[key]" (change)="loadDate($event,key)" />
                                                                 </template>
 
                                                                 <select sm-dropdown *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'" [(ngModel)]="data[key].value" (ngModelChange)="setValueSelect($event,key)" class="ui fluid search selection dropdown">
