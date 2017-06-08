@@ -125,6 +125,28 @@ export class PlanningModel extends ModelBase{
         this.rules['schedule'] = this._schedule.ruleObject;
         this.rules['schedule'].required = true;
 
+        this.rules['scheduleDate']={
+            'type': 'date',
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'scheduleDate',
+            'format':{
+                format: "dd/mm/yyyy",
+                formatInput: "YYYYMMDD",
+                formatView: "DD/MM/YYYY",
+                todayBtn: "linked",
+                language: "es",
+                forceParse: false,
+                autoclose: true,
+                todayHighlight: true,
+                return: 'YYYYMMDD',
+                type:'number'
+            },
+            'icon':'fa fa-calendar',
+            'title': 'Fecha',
+            'placeholder': 'Fecha',
+        };
+
 
         this.rules['enabled'].search = this.permissions.filter;
     }
