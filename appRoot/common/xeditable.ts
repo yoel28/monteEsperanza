@@ -236,11 +236,16 @@ export class Datepicker implements OnInit {
             autoclose: that.format.autoclose,
             todayHighlight: that.format.todayHighlight,
             startDate:that.format.startDate,
-            endDate:new Date(),
+            // endDate:new Date(),
         });
         jQuery(this.el.nativeElement).datepicker().on('changeDate', function (ev) {
-            if(that.format.return)
+            if(that.format.return) {
+                if(that.format.type == 'number'){
+                    that.fecha.emit({'date':+moment.utc(ev.date).format(that.format.return),'key':ev.target.accessKey});
+                    return;
+                }
                 that.fecha.emit({'date':moment.utc(ev.date).format(that.format.return),'key':ev.target.accessKey});
+            }
             else
                 that.fecha.emit({'date':ev.date,'key':ev.target.accessKey});
         })
