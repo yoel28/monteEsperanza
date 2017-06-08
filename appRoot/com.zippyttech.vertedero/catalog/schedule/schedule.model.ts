@@ -64,7 +64,7 @@ export class ScheduleModel extends ModelBase{
             'search': this.permissions.filter,
             'visible': this.permissions.visible,
             'key': 'duration',
-            'title': 'Duración',
+            'title': 'Duración (Minutos)',
             'placeholder': 'Duración (minutos)',
         };
 
