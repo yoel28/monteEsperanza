@@ -8,7 +8,7 @@ token="50jislnq5vel576qcd4u9ba3063tq78g";
 
 #Modulos-------------------------------------------------------------------------------------------------------------------------------------
 declare -A Modulos;
-Modulos[0,0]="PLANNING";	Modulos[0,1]="Planificación";			Modulos[0,2]="planning";
+Modulos[0,0]="SCHEDULE";	Modulos[0,1]="Horarios";			Modulos[0,2]="schedule";
 
 #PREFIX			Modulo			Controlador
 #Modulos[0,0]="";	Modulos[0,1]="";	Modulos[0,2]="";
@@ -41,7 +41,7 @@ declare -A Menu;
 Menu[0,0]="MEN_CHOFER";Menu[0,1]="Chofer";
 Menu[1,0]="MEN_OP_AUD";Menu[1,1]="Auditoria de operaciones";
 Menu[2,0]="MEN_ZONE";Menu[2,1]="Zonas";
-Menu[3,0]="MEN_PLANNING";Menu[3,1]="Planificación";
+Menu[3,0]="MEN_SCHEDULE";Menu[3,1]="Horarios";
 
 
 for (( i=0; i<=3; i++ ));
