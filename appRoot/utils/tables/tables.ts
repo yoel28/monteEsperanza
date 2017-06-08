@@ -182,7 +182,18 @@ export class Tables extends RestController implements OnInit {
     }
     formatDate(data,rule){
         if(data){
-            return moment(data).format(rule.format || 'DD-MM-YYYY, LT');
+            if(rule.format && typeof rule.format === 'string')
+                return moment(data).format(rule.format || 'DD-MM-YYYY, LT');
+
+            if(rule.format && typeof rule.format === 'object'){
+                if(rule.format.formatView && rule.format.formatInput)
+                {
+                    return moment(data, rule.format.formatInput).format(rule.format.formatView);
+                }
+                return moment(data).format(rule.format.format || 'DD-MM-YYYY, LT');
+            }
+
+            return moment(data).format('DD-MM-YYYY, LT');
         }
         return '-';
     }
