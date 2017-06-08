@@ -127,6 +127,7 @@ export class PlanningModel extends ModelBase{
 
         this.rules['scheduleDate']={
             'type': 'date',
+            'required':true,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'scheduleDate',
@@ -167,8 +168,9 @@ export class PlanningModel extends ModelBase{
         this.paramsSave.afterSave = (bv:BaseView,data:any)=>{
             bv.dataList.list.forEach((obj,i)=>{
                 let plate = obj.vehiclePlate == data.vehiclePlate;
+                let schedule = obj.scheduleId == data.scheduleId;
                 let id = obj.id != data.id;
-                if(plate && id){
+                if(plate && id && schedule){
                     bv.dataList.list.splice(i,1);
                 }
             })
