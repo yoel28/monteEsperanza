@@ -354,7 +354,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         return Object.keys(data || {});
     }
     loadDate(data,key){
-        this.data[key].updateValue(data);
+        if(typeof data == 'object')
+            this.data[key].updateValue(data.date);
+        else
+            this.data[key].updateValue(data);
 
     }
     private _classCol(lg = 12, md = 12, sm = 12, xs = 12) {
