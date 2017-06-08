@@ -35,7 +35,7 @@ export class PlanningModel extends ModelBase{
         this.rules['dateCreated']={
             'type': 'date',
             'search':this.permissions.filter,
-            'visible':this.permissions.visible,
+            'visible':false,
             'key': 'dateCreated',
             'format':'DD-MM-YYYY, LT',
             'icon':'fa fa-calendar',
@@ -86,7 +86,7 @@ export class PlanningModel extends ModelBase{
         this.rules['usernameCreator']={
             'type': 'text',
             'search':this.permissions.filter,
-            'visible':this.permissions.visible,
+            'visible':false,
             'key': 'usernameCreator',
             'icon':'fa fa-user',
             'title': 'Creador',
@@ -98,7 +98,7 @@ export class PlanningModel extends ModelBase{
             'subtype':'inlist',
             'disabled':(f:Save)=>{
                 if(f.isValid('route') && f.searchId['route']){
-                    this.rules['places'].source = f.searchId['route'].data.places;
+                    this.rules['places'].source = f.searchId['route'].data.placesPosible || f.searchId['route'].data.places;
                     this.rules['places'].help = this.rules['places'].source.map(({text})=>text).join('\n');
 
                 };
@@ -149,6 +149,13 @@ export class PlanningModel extends ModelBase{
 
 
         this.rules['enabled'].search = this.permissions.filter;
+        this.rules['detail'].title = "Observación";
+        this.rules['detail'].placeholder = "Ingrese una observación";
+
+
+        //detall observacion.
+        //userCreator
+        //duplicar
     }
     initPermissions() {}
     initParamsSearch() {
