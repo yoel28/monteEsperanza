@@ -428,7 +428,20 @@ export class OperacionSave extends ControllerBase implements OnInit{
             this.loadPlace(data.places.concat(data.placesPosible || []),'route');
 
             this.checkBalance();
+
+            this.loadPlaces(data.places);
+
         }
+    }
+
+    loadPlaces(data:Object []){
+        setTimeout(()=>{
+            if(this.model.rules['place'].instance){
+                data.forEach(obj=>{
+                    this.model.rules['place'].instance.addValue(obj);
+                });
+            }
+        },500);
     }
 
     loadOperationOut(data){
@@ -460,7 +473,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.data['route'].updateValue(data.routeReference);
 
         this.place = data.place;
-        // this.loadPlaceAll();
+        this.loadPlace(data.places.concat(data.placesPosible || []),'route');
 
         this.data['weightIn'].updateValue(data.weightIn);
         //this.model.rulesSave['weightIn'].readOnly=this.model.permissions.lockField;
@@ -471,6 +484,8 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.model.rulesSave['weightOut'].hidden=false;
 
         this.data['comment'].updateValue(data.comment);
+
+        this.loadPlaces(data.places);
 
     }
 
