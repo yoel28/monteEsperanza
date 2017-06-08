@@ -93,9 +93,8 @@ export class PlanningComponent implements OnInit,AfterViewInit{
             callback:(bv:BaseView,data:any)=>{
                 bv.save.resetForm();
                 bv.save.getDataSearch({id:data.vehicleId,detail:data.vehiclePlate},'vehicle');
+                bv.save.getDataSearch({id:data.routeId,detail:data.routeReference,placesPosible:data.placesPosible},'route');
                 bv.save.getDataSearch({id:data.driverId,detail:data.driverName},'driver');
-                bv.save.getDataSearch({id:data.routeId,detail:data.routeReference},'route');
-                bv.save.setValueSelect(data.detail,'detail');
 
                 data.helpers.forEach(value=>{
                     let index = this.model.rules['helpers'].source.findIndex(obj => (obj.id == value ));
@@ -105,7 +104,18 @@ export class PlanningComponent implements OnInit,AfterViewInit{
                         );
                     }
 
-                })
+                });
+
+                bv.save.getDataSearch({id:data.scheduleId,detail:data.scheduleCode},'schedule');
+                bv.save.setValueSelect(data.detail,'detail');
+
+                setTimeout(()=>{
+                    data.places.forEach(value=>{
+                        if(this.model.rules['places'].instance)
+                            this.model.rules['places'].instance.addValue(value);
+                    });
+
+                },1000);
 
             }
         };
