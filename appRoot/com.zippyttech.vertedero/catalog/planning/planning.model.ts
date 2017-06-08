@@ -169,8 +169,10 @@ export class PlanningModel extends ModelBase{
             bv.dataList.list.forEach((obj,i)=>{
                 let plate = obj.vehiclePlate == data.vehiclePlate;
                 let schedule = obj.scheduleId == data.scheduleId;
+                let date = obj.scheduleDate == data.scheduleDate;
+
                 let id = obj.id != data.id;
-                if(plate && id && schedule){
+                if(plate && id && schedule && date){
                     bv.dataList.list.splice(i,1);
                 }
             })
