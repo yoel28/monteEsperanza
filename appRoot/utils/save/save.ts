@@ -290,7 +290,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.id = null;
         this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
-            if(that.rules[key].type!='list' && that.rules[key].type!='select2'){
+            if(that.rules[key].type!='list' && that.rules[key].type!='select2' && that.rules[key].type!='date'){
                 (<Control>that.data[key]).updateValue(that.rules[key].value);
                 (<Control>that.data[key]).setErrors(that.rules[key].value);
                 that.data[key]._pristine=true;
@@ -299,7 +299,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             }
             else{
                 if(that.rules[key] && that.rules[key].instance)
-                    that.rules[key].instance.removeAll()
+                    that.rules[key].instance.removeAll();
+
             }
         })
     }
