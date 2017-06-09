@@ -8,7 +8,7 @@ import {Tooltip} from "../../utils/tooltips/tooltips";
 import {RestController} from "../../common/restController";
 import {globalService} from "../../common/globalService";
 import {MCompany} from "../../empresa/MCompany";
-import {DateTimePicker} from "../../com.zippyttech.ui/directive/date-time-picker/date-time-picker";
+import {DateRangeComponent} from "../../com.zippyttech.ui/components/date-range/date-range";
 
 declare var SystemJS:any;
 declare var Table2Excel:any;
@@ -19,7 +19,7 @@ declare var jQuery:any;
     selector: 'reporte-cliente-mensual',
     templateUrl: SystemJS.map.app+'/reportes/mensualCliente/index.html',
     styleUrls: [SystemJS.map.app+'/reportes/mensualCliente/style.css'],
-    directives : [Search,Tooltip,DateTimePicker]
+    directives : [Search,Tooltip,DateRangeComponent]
 })
 export class ReporteClienteMensual extends RestController implements OnInit{
 
