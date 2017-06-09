@@ -56,17 +56,41 @@ export class ScheduleModel extends ModelBase{
             'title': 'Inicio',
             'placeholder': 'Inicio',
         };
-        this.rules['duration'] = {
-            'type': 'number',
-            'step':'0',
+
+
+        this.rules['endTime'] = {
+            'type': 'datetime',
+            'formatView':'HH:mm',
+            'formatInput':(data?:number):string=>{
+                if(data!=null && data <100)
+                    return 'mm';
+                return 'hmm';
+            },
+            'formatOut':(data:any):number=>{
+                return +moment(data).format('HHmm');
+            },
             'required': true,
             'update': this.permissions.update,
             'search': this.permissions.filter,
             'visible': this.permissions.visible,
-            'key': 'duration',
-            'title': 'Duración (Minutos)',
-            'placeholder': 'Duración (minutos)',
+            'key': 'endTime',
+            'title': 'Fin',
+            'placeholder': 'Fin',
         };
+
+
+
+        // this.rules['duration'] = {
+        //     'type': 'number',
+        //     'step':'0',
+        //     'required': true,
+        //     'update': this.permissions.update,
+        //     'search': this.permissions.filter,
+        //     'visible': this.permissions.visible,
+        //     'key': 'duration',
+        //     'title': 'Duración (Minutos)',
+        //     'placeholder': 'Duración (minutos)',
+        // };
 
         this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
