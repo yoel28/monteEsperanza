@@ -1,12 +1,12 @@
 import {Search} from "../../utils/search/search";
 import {Tooltip} from "../../utils/tooltips/tooltips";
-import {DatetimeComponent} from "../../utils/datetime/datetime";
 import {OnInit, Component} from "@angular/core";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {MCompany} from "../../empresa/MCompany";
+import {DateRangeComponent} from "../../com.zippyttech.ui/components/date-range/date-range";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -15,7 +15,7 @@ declare var moment:any;
     selector: 'reports-view',
     templateUrl: SystemJS.map.app+'/reportes/reports/index.html',
     styleUrls: [SystemJS.map.app+'/reportes/reports/style.css'],
-    directives : [Search,Tooltip,DatetimeComponent]
+    directives : [Search,Tooltip,DateRangeComponent]
 })
 
 export class ReportsComponents extends RestController implements OnInit {

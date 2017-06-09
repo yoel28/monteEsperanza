@@ -1,7 +1,7 @@
 import {Component, OnInit,AfterViewInit} from '@angular/core';
-import {globalService} from "../common/globalService";
-import {BaseView} from "../utils/baseView/baseView";
-import {MPlanning} from "./MPlanning";
+import {BaseView} from "../../../utils/baseView/baseView";
+import {globalService} from "../../../common/globalService";
+import {PlanningModel} from "./planning.model";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -12,7 +12,7 @@ declare var moment:any;
     styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
     directives: [BaseView],
 })
-export class Planning implements OnInit,AfterViewInit{
+export class PlanningComponent implements OnInit,AfterViewInit{
 
     public instance:any={};
     public paramsTable:any={};
@@ -36,7 +36,7 @@ export class Planning implements OnInit,AfterViewInit{
     }
 
     initModel():any {
-        this.model= new MPlanning(this.myglobal);
+        this.model= new PlanningModel(this.myglobal);
     }
 
     initViewOptions() {
@@ -93,9 +93,8 @@ export class Planning implements OnInit,AfterViewInit{
             callback:(bv:BaseView,data:any)=>{
                 bv.save.resetForm();
                 bv.save.getDataSearch({id:data.vehicleId,detail:data.vehiclePlate},'vehicle');
+                bv.save.getDataSearch({id:data.routeId,detail:data.routeReference,placesPosible:data.placesPosible},'route');
                 bv.save.getDataSearch({id:data.driverId,detail:data.driverName},'driver');
-                bv.save.getDataSearch({id:data.routeId,detail:data.routeReference},'route');
-                bv.save.setValueSelect(data.detail,'detail');
 
                 data.helpers.forEach(value=>{
                     let index = this.model.rules['helpers'].source.findIndex(obj => (obj.id == value ));
@@ -105,7 +104,18 @@ export class Planning implements OnInit,AfterViewInit{
                         );
                     }
 
-                })
+                });
+
+                bv.save.getDataSearch({id:data.scheduleId,detail:data.scheduleCode},'schedule');
+                bv.save.setValueSelect(data.detail,'detail');
+
+                setTimeout(()=>{
+                    data.places.forEach(value=>{
+                        if(this.model.rules['places'].instance)
+                            this.model.rules['places'].instance.addValue(value);
+                    });
+
+                },1000);
 
             }
         };

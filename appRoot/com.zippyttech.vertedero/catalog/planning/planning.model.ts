@@ -1,18 +1,20 @@
-import {globalService} from "../common/globalService";
-import {ModelBase} from "../common/modelBase";
-import {MRuta} from "../ruta/MRuta";
-import {MVehicle} from "../vehiculo/MVehicle";
-import {MDrivers} from "../drivers/MDrivers";
-import {Save} from "../utils/save/save";
-import {BaseView} from "../utils/baseView/baseView";
+import {ModelBase} from "../../../common/modelBase";
+import {MVehicle} from "../../../vehiculo/MVehicle";
+import {MDrivers} from "../../../drivers/MDrivers";
+import {MRuta} from "../../../ruta/MRuta";
+import {globalService} from "../../../common/globalService";
+import {Save} from "../../../utils/save/save";
+import {BaseView} from "../../../utils/baseView/baseView";
+import {ScheduleModel} from "../schedule/schedule.model";
 
-export class MPlanning extends ModelBase{
+export class PlanningModel extends ModelBase{
     public rules={};
 
     private _vehicle:MVehicle;
     private _chofer:MDrivers;
     private _ayudante:MDrivers;
     private _route:MRuta;
+    private _schedule:ScheduleModel;
 
     private _paramsAdd = this.myglobal.getParams('LIST_ADD_ALL')=='true';
 
@@ -26,13 +28,14 @@ export class MPlanning extends ModelBase{
         this._chofer = new MDrivers(this.myglobal);
         this._ayudante = new MDrivers(this.myglobal);
         this._route = new MRuta(this.myglobal);
+        this._schedule = new ScheduleModel(this.myglobal);
     }
     initRules(){
 
         this.rules['dateCreated']={
             'type': 'date',
             'search':this.permissions.filter,
-            'visible':this.permissions.visible,
+            'visible':false,
             'key': 'dateCreated',
             'format':'DD-MM-YYYY, LT',
             'icon':'fa fa-calendar',
@@ -51,6 +54,13 @@ export class MPlanning extends ModelBase{
 
         this.rules['route'] = this._route.ruleObject;
         this.rules['route'].required = true;
+        this.rules['route'].callBack= (s:Save,value:string)=>{
+            if(this.rules['places'].instance)
+            {
+                this.rules['places'].instance.removeAll();
+            }
+        };
+
 
         this.rules['driver'] = this._chofer.ruleObject;
         this.rules['driver'].required = true;
@@ -76,14 +86,77 @@ export class MPlanning extends ModelBase{
         this.rules['usernameCreator']={
             'type': 'text',
             'search':this.permissions.filter,
-            'visible':this.permissions.visible,
+            'visible':false,
             'key': 'usernameCreator',
             'icon':'fa fa-user',
             'title': 'Creador',
             'placeholder': 'Creador',
         };
 
+        this.rules['places'] = {
+            'type': 'list',
+            'subtype':'inlist',
+            'disabled':(f:Save)=>{
+                if(f.isValid('route') && f.searchId['route']){
+                    this.rules['places'].source = f.searchId['route'].data.placesPosible || f.searchId['route'].data.places;
+                    this.rules['places'].help = this.rules['places'].source.map(({text})=>text).join('\n');
+
+                };
+                return !f.isValid('route');
+            },
+            'help':'',
+            'mode':'popup',
+            'showbuttons':true,
+            'onlyId':true,
+            'list':'placesPosible',
+            'maxLength': '35',
+            'prefix':'TAG',
+            'value':[],
+            'source':[],
+            'update': this.permissions.update,
+            'search': this.permissions.filter && false,
+            'visible': this.permissions.visible,
+            'key': 'places',
+            'title': 'Lugares',
+            'placeholder': 'Lugares',
+            'instance':null
+        };
+
+        this.rules['schedule'] = this._schedule.ruleObject;
+        this.rules['schedule'].required = true;
+
+        this.rules['scheduleDate']={
+            'type': 'date',
+            'required':true,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'scheduleDate',
+            'format':{
+                format: "dd/mm/yyyy",
+                formatInput: "YYYYMMDD",
+                formatView: "DD/MM/YYYY",
+                todayBtn: "linked",
+                language: "es",
+                forceParse: false,
+                autoclose: true,
+                todayHighlight: true,
+                return: 'YYYYMMDD',
+                type:'number'
+            },
+            'icon':'fa fa-calendar',
+            'title': 'Fecha',
+            'placeholder': 'Fecha',
+        };
+
+
         this.rules['enabled'].search = this.permissions.filter;
+        this.rules['detail'].title = "Observación";
+        this.rules['detail'].placeholder = "Ingrese una observación";
+
+
+        //detall observacion.
+        //userCreator
+        //duplicar
     }
     initPermissions() {}
     initParamsSearch() {
@@ -95,8 +168,11 @@ export class MPlanning extends ModelBase{
         this.paramsSave.afterSave = (bv:BaseView,data:any)=>{
             bv.dataList.list.forEach((obj,i)=>{
                 let plate = obj.vehiclePlate == data.vehiclePlate;
+                let schedule = obj.scheduleId == data.scheduleId;
+                let date = obj.scheduleDate == data.scheduleDate;
+
                 let id = obj.id != data.id;
-                if(plate && id){
+                if(plate && id && schedule && date){
                     bv.dataList.list.splice(i,1);
                 }
             })

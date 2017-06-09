@@ -48,6 +48,7 @@ export class MCompany extends ModelBase{
             'visible':this.permissions.visible,
             'key': 'ruc',
             'title': 'RUC',
+            'setEqual':'code',
             'placeholder': 'RUC',
         };
         this.rules['code']={
@@ -62,7 +63,6 @@ export class MCompany extends ModelBase{
         };
         this.rules['responsiblePerson']={
             'type': 'text',
-            'required':true,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
@@ -186,6 +186,7 @@ export class MCompany extends ModelBase{
         delete this.rulesSave.debt;
         delete this.rulesSave.location;
         delete this.rulesSave.detail;
+        delete this.rulesSave.code;
     }
 
 }

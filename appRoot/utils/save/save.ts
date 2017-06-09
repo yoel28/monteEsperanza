@@ -8,6 +8,7 @@ import {Xcropit, Xfile, ColorPicker, Datepicker,SMDropdown} from "../../common/x
 import {CatalogApp} from "../../common/catalogApp";
 import {TagsInput} from "../../common/tagsinput";
 import 'rxjs/add/operator/debounceTime';
+import {DateTimePicker} from "../../com.zippyttech.ui/directive/date-time-picker/date-time-picker";
 
 
 
@@ -17,7 +18,7 @@ declare var jQuery:any;
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
-    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown,TagsInput],
+    directives:[Xcropit,Xfile,ColorPicker,Datepicker,SMDropdown,TagsInput,DateTimePicker],
     inputs:['params','rules'],
     outputs:['save','getInstance'],
 })
@@ -201,7 +202,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                             data.push(obj[that.rules[key].save.key]);
 
                         }else{
-                            data.push(obj.value || obj);
+                            that.rules[key].onlyId?data.push(+(obj.value || obj)):data.push(obj.value || obj)
                         }
                     });
                 }
@@ -215,6 +216,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                     });
                 }
                 body[key]=data;
+            }
+
+            if(that.rules[key].setEqual){
+                body[that.rules[key].setEqual]=body[key];
             }
 
         });
@@ -250,10 +255,25 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data:any,key?:string){
-        this.searchId[this.search.key || key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
-        (<Control>this.form.controls[this.search.key || key]).updateValue(data.detail);
-        this.dataList=[];
+        (<Control>this.form.controls[this.search.key || key]).updateValue(this.rules[this.search.key || key].value);
+
+        setTimeout(()=>{
+            this.searchId[this.search.key || key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null,data:data};
+            (<Control>this.form.controls[this.search.key || key]).updateValue(data.detail);
+            this.dataList=[];
+        },100);
     }
+
+    getDisabled(rule:any){
+        if(rule.disabled){
+            return rule.disabled(this);
+        }
+        return false;
+    }
+    isValid(key:string):boolean{
+        return this.form.controls[key].valid;
+    }
+
     //accion seleccionar un item de un select
     setValueSelect(data,key){
         (<Control>this.form.controls[key]).updateValue(data);
@@ -270,7 +290,7 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         this.id = null;
         this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
-            if(that.rules[key].type!='list' && that.rules[key].type!='select2'){
+            if(that.rules[key].type!='list' && that.rules[key].type!='select2' && that.rules[key].type!='date'){
                 (<Control>that.data[key]).updateValue(that.rules[key].value);
                 (<Control>that.data[key]).setErrors(that.rules[key].value);
                 that.data[key]._pristine=true;
@@ -279,7 +299,8 @@ export class Save extends RestController implements OnInit,AfterViewInit{
             }
             else{
                 if(that.rules[key] && that.rules[key].instance)
-                    that.rules[key].instance.removeAll()
+                    that.rules[key].instance.removeAll();
+
             }
         })
     }
@@ -334,7 +355,10 @@ export class Save extends RestController implements OnInit,AfterViewInit{
         return Object.keys(data || {});
     }
     loadDate(data,key){
-        this.data[key].updateValue(data);
+        if(typeof data == 'object')
+            this.data[key].updateValue(data.date);
+        else
+            this.data[key].updateValue(data);
 
     }
     private _classCol(lg = 12, md = 12, sm = 12, xs = 12) {

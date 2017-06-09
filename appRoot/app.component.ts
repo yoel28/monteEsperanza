@@ -53,7 +53,6 @@ import {MHelp} from "./help/MHelp";
 import {Save} from "./utils/save/save";
 import {Drivers} from "./drivers/drivers";
 import {OperationsAudit} from "./reportes/operationsAudit";
-import {Container} from "./container/container";
 import {MOperacion} from "./operacion/MOperacion";
 import {Register} from "./register/register";
 import {ReporteClienteMensual} from "./reportes/mensualCliente/mensualCliente.component";
@@ -62,7 +61,9 @@ import { ReportsComponents} from "./reportes/reports/reports.components";
 import {ChangeComponents} from "./change/change";
 import {MapaComponents} from "./mapa/mapa";
 import {Zone} from "./zone/zone";
-import {Planning} from "./planning/planning";
+import {ContainerComponent} from "./com.zippyttech.vertedero/catalog/container/container.component";
+import {PlanningComponent} from "./com.zippyttech.vertedero/catalog/planning/planning.component";
+import {ScheduleComponent} from "./com.zippyttech.vertedero/catalog/schedule/schedule.component";
 
 declare var SockJS:any;
 declare var Stomp:any;
@@ -139,9 +140,10 @@ declare var jQuery:any;
     {path: '/ayuda', name: 'Help', component: Help},
     {path: '/eventos', name: 'Event', component: Events},
     {path: '/chofer', name: 'Drivers', component: Drivers},
-    {path: '/container', name: 'Container', component: Container},
+    {path: '/container', name: 'ContainerComponent', component: ContainerComponent},
     {path: '/zone', name: 'Zone', component: Zone},
-    {path: '/planning', name: 'Planning', component: Planning},
+    {path: '/planning', name: 'PlanningComponent', component: PlanningComponent},
+    {path: '/schedule', name: 'ScheduleComponent', component: ScheduleComponent},
     {path: '/**', redirectTo: ['Dashboard']}
 
 ])
@@ -335,7 +337,6 @@ export class AppComponent extends RestController implements OnInit {
     }
     initModels(){
         this.help = new MHelp(this.myglobal);
-        this.help.rules['code'].readOnly=true;
         this.help.paramsSave.updateField=true;
         this.operation = new MOperacion(this.myglobal);
     }
@@ -381,7 +382,7 @@ export class AppComponent extends RestController implements OnInit {
                         'visible': this.myglobal.existsPermission("MEN_PLANNING"),
                         'icon': 'fa fa-list',
                         'title': 'Planificación',
-                        'routerLink': 'Planning'
+                        'routerLink': 'PlanningComponent'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_SERV"),
@@ -425,7 +426,7 @@ export class AppComponent extends RestController implements OnInit {
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
                 || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                 || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE")
-                || this.myglobal.existsPermission("MEN_ZONE"),
+                || this.myglobal.existsPermission("MEN_ZONE") || this.myglobal.existsPermission("MEN_SCHEDULE"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -464,7 +465,7 @@ export class AppComponent extends RestController implements OnInit {
                         'visible': this.myglobal.existsPermission("MEN_CONTAINER"),
                         'icon': 'glyphicon glyphicon-inbox',
                         'title': 'Container',
-                        'routerLink': 'Container'
+                        'routerLink': 'ContainerComponent'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_RUTAS"),
@@ -495,6 +496,12 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-list',
                         'title': 'Zonas',
                         'routerLink': 'Zone'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_SCHEDULE"),
+                        'icon': 'fa fa-calendar',
+                        'title': 'Horarios',
+                        'routerLink': 'ScheduleComponent'
                     },
                 ]
 

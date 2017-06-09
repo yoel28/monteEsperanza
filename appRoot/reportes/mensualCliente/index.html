@@ -2,13 +2,15 @@
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{title}}&nbsp;<tooltip code="CODE_28"></tooltip></h3>
+                <h3 class="box-title">{{title}}&nbsp;
+                    <tooltip code="CODE_28"></tooltip>
+                </h3>
             </div>
             <div class="box-body">
                 <div class="row padding-bottom noprint">
                     <div class="col-lg-12">
                         <!-- [type]="'range'"-->
-                        <dateTime (output)="loadRange($event)"  [type]="'range'" ></dateTime>
+                        <dateTime (output)="loadRange($event)" [type]="'range'"></dateTime>
                     </div>
 
                     <div class="form-group input-icon right col-lg-12">
@@ -19,57 +21,52 @@
                     </div>
                 </div>
 
-                <div style="align-content: center" *ngIf="(valueSearch && valueSearch.id)">
+                <div style="align-content: center" *ngIf="(valueSearch && valueSearch.id)"></div>
 
-     <span *ngIf="url">
+                <span *ngIf="url">
 
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <a [attr.href]="url+'&formatType=pdf&lands=true'" (click)="debugLog(url+'&formatType=pdf&lands=true')" target="_blank" title="Exportar a pdf">
-              <div class="info-box bg-red">
-                <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
-                <div class="info-box-content">
-                      <span class="info-box-text">{{title}}</span>
-                  <span class="info-box-number">Cliente: {{valueSearch.title}}</span>
-                  <div class="progress">
-                    <div class="progress-bar" style="width: 100%"></div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <a [attr.href]="url+'&formatType=pdf&lands=true'" (click)="debugLog(url+'&formatType=pdf&lands=true')"
+               target="_blank" title="Exportar a pdf">
+                  <div class="info-box bg-red">
+                    <span class="info-box-icon"><i class="fa fa-file-pdf-o"></i></span>
+                    <div class="info-box-content">
+                          <span class="info-box-text">{{title}}</span>
+                      <span class="info-box-number">Cliente: {{valueSearch.title || 'Todos'}}</span>
+                      <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                      </div>
+                          <span class="progress-description">
+                            Descargar En PDF
+                          </span>
+                    </div>
                   </div>
-                      <span class="progress-description">
-                        Descargar En PDF
-                      </span>
-                </div>
-              </div>
-        </a>
-                            <!-- /.info-box -->
-      </div>
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <a [attr.href]="url+'&formatType=xls&lands=true'" (click)="debugLog(url+'&formatType=pdf&lands=true')" target="_blank" title="Exportar a excel">
-              <div class="info-box bg-success">
-                <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
-                <div class="info-box-content">
-                      <span class="info-box-text">{{title}}</span>
-                  <span class="info-box-number">Cliente: {{valueSearch.title}}</span>
-                  <div class="progress">
-                    <div class="progress-bar" style="width: 100%"></div>
+            </a>
+              <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <a [attr.href]="url+'&formatType=xls&lands=true'" (click)="debugLog(url+'&formatType=pdf&lands=true')"
+               target="_blank" title="Exportar a excel">
+                  <div class="info-box bg-success">
+                    <span class="info-box-icon"><i class="fa fa-file-excel-o"></i></span>
+                    <div class="info-box-content">
+                          <span class="info-box-text">{{title}}</span>
+                      <span class="info-box-number">Cliente: {{valueSearch.title || 'Todos'}}</span>
+                      <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                      </div>
+                          <span class="progress-description">
+                            Descargar En Excel
+                          </span>
+                    </div>
                   </div>
-                      <span class="progress-description">
-                        Descargar En Exel
-                      </span>
-                </div>
-              </div>
-        </a>
-                            <!-- /.info-box -->
-      </div>
+            </a>
+              <!-- /.info-box -->
+          </div>
+     </span>
 
-                    </span>
+            </div>
 
-                </div>
-            </div>
-            <div *ngIf="false">
-                <div class="btn-red padding-error">
-                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
-                    No tiene permisos para ver esta pagina
-                </div>
-            </div>
         </div>
     </section>
 </div>

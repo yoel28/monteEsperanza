@@ -1,49 +1,35 @@
 import {Component, EventEmitter, OnInit,AfterViewInit} from "@angular/core";
 import {Control} from "@angular/common";
-import {SMDropdown, DateRangepPicker, Datepicker} from "../../common/xeditable";
-import {globalService} from "../../common/globalService";
-import {CatalogApp} from "../../common/catalogApp";
-import {HttpUtils} from "../../common/http-utils";
-import {FindRangeDate} from "../components/findRangeDate/findRangeDate";
+import {Datepicker} from "../../../common/xeditable";
+import {FindRangeDate} from "../../../utils/components/findRangeDate/findRangeDate";
+import {globalService} from "../../../common/globalService";
+
+
 declare var SystemJS:any;
 declare var moment:any;
 
-
-
-
 @Component({
-    selector: 'dateTime',
-    templateUrl: SystemJS.map.app+'/utils/datetime/index.html',
-    styleUrls: [SystemJS.map.app+'/utils/datetime/style.css'],
+    selector: 'date-range',
+    templateUrl: SystemJS.map.app+'/com.zippyttech.ui/components/date-range/index.html',
+    styleUrls: [SystemJS.map.app+'/com.zippyttech.ui/components/date-range/style.css'],
     directives:[FindRangeDate,Datepicker],
     inputs:['data','params','control','type'],
     outputs:['output'],
 })
-
-export class DatetimeComponent implements OnInit,AfterViewInit {
-
+export class DateRangeComponent implements OnInit,AfterViewInit {
     public type:string;
-
     public output:any;
-
     constructor(public myglobal:globalService) {
         this.output = new EventEmitter();
     }
     ngOnInit(){
-
-
         if(!this.type)
             this.type = this.myglobal.getParams('DateTimeType');
-
         if(this.type == '' || !(this.type=='month' || this.type=='range'))
             this.type = 'month';
-
     }
     ngAfterViewInit(){
-
     }
-
-
     public formatDate = {
         format: "mm/yyyy",
         startDate:'01/2016',
@@ -55,9 +41,8 @@ export class DatetimeComponent implements OnInit,AfterViewInit {
         forceParse: false,
         autoclose: true,
         todayHighlight: true,
-       // return: 'DD/MM/YYYY',
+        // return: 'DD/MM/YYYY',
     }
-
     loadFecha(data:Object | Control) {
         if(data.constructor.name == 'Control'){
             this.output.emit(data['value'])
@@ -69,7 +54,5 @@ export class DatetimeComponent implements OnInit,AfterViewInit {
             range.end   = moment(data['date']).add(1,'month').startOf('month').format('DD-MM-YYYY');
             this.output.emit(range);
         }
-
     }
 }
-

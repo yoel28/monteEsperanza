@@ -11,6 +11,7 @@ import {Tooltip} from "../tooltips/tooltips";
 import {CatalogApp} from "../../common/catalogApp";
 import {MapaComponents} from "../../mapa/mapa";
 import {BaseView} from "../baseView/baseView";
+import {DateTimePicker} from "../../com.zippyttech.ui/directive/date-time-picker/date-time-picker";
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -20,7 +21,7 @@ declare var moment:any;
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','model','dataList','where','baseView'],
     outputs:['getInstance'],
-    directives:[Xeditable,ColorPicker,Search,Save,Tooltip,MapaComponents]
+    directives:[Xeditable,ColorPicker,Search,Save,Tooltip,MapaComponents,DateTimePicker]
 })
 
 
@@ -137,8 +138,10 @@ export class Tables extends RestController implements OnInit {
 
     }
 
-    getDisabledField(key,data){
-        return (eval(this.model.rules[key].disabled || 'false'));
+    getDisabledField(key:string,data:Object){
+        if(typeof this.model.rules[key].disabled == 'string' )
+            return (eval(this.model.rules[key].disabled));
+        return false;
     }
 
     public loadDataFieldReference(data,key,setNull=false){
@@ -179,7 +182,27 @@ export class Tables extends RestController implements OnInit {
     }
     formatDate(data,rule){
         if(data){
-            return moment(data).format(rule.format || 'DD-MM-YYYY, LT');
+            if(rule.format && typeof rule.format === 'string')
+                return moment(data).format(rule.format || 'DD-MM-YYYY, LT');
+
+            if(rule.format && typeof rule.format === 'object'){
+                if(rule.format.formatView && rule.format.formatInput)
+                {
+                    return moment(data, rule.format.formatInput).format(rule.format.formatView);
+                }
+                return moment(data).format(rule.format.format || 'DD-MM-YYYY, LT');
+            }
+
+            return moment(data).format('DD-MM-YYYY, LT');
+        }
+        return '-';
+    }
+    formatDateTime(data,rule){
+        if(data!=null){
+            if(typeof rule.formatInput === 'string')
+                return moment(data, rule.formatInput).format(rule.formatView);
+            if(typeof rule.formatInput === 'function')
+                return moment(data, rule.formatInput(data)).format(rule.formatView);
         }
         return '-';
     }

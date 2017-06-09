@@ -1,8 +1,8 @@
 import {Component, OnInit,AfterViewInit} from '@angular/core';
-import {globalService} from "../common/globalService";
-import {MContainer} from "./MContainer";
-import {MTag} from "../tagRfid/MTag";
-import {BaseView} from "../utils/baseView/baseView";
+import {BaseView} from "../../../utils/baseView/baseView";
+import {globalService} from "../../../common/globalService";
+import {MTag} from "../../../tagRfid/MTag";
+import {ContainerModel} from "./container.model";
 
 declare var SystemJS:any;
 @Component({
@@ -11,7 +11,7 @@ declare var SystemJS:any;
     styleUrls: [SystemJS.map.app+'/utils/baseView/style.css'],
     directives: [BaseView],
 })
-export class Container implements OnInit,AfterViewInit{
+export class ContainerComponent implements OnInit,AfterViewInit{
 
     public instance:any={};
     public paramsTable:any={};
@@ -37,7 +37,7 @@ export class Container implements OnInit,AfterViewInit{
     
     initModel() {
         
-        this.model= new MContainer(this.myglobal);
+        this.model= new ContainerModel(this.myglobal);
         this.tag = new MTag(this.myglobal);
 
         this.model.rules = Object.assign({},{'tag':{}},this.model.rules);

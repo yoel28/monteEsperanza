@@ -1,8 +1,8 @@
-import {globalService} from "../common/globalService";
-import {ModelBase} from "../common/modelBase";
-import {MCompany} from "../empresa/MCompany";
+import {ModelBase} from "../../../common/modelBase";
+import {globalService} from "../../../common/globalService";
+import {MCompany} from "../../../empresa/MCompany";
 
-export class MContainer extends ModelBase{
+export class ContainerModel extends ModelBase{
     public rules={};
 
     public company;

@@ -20,7 +20,16 @@
                                                         <div class="{{(rules[key].object || rules[key].refreshField)?_classCol(10,10,10,10):_classCol()}}" >
                                                             <div class="input-group input-icon right form-group">
                                                                 <i class="{{rules[key].icon}} z-index"></i>
-                                                                <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}&nbsp;<span *ngIf="key == keyFindData" class="fa fa fa-spinner fa-spin"></span>
+                                                                <span class="input-group-addon" [attr.id]="key">
+                                                                    {{rules[key].title}}&nbsp;
+                                                                    <span *ngIf="key == keyFindData" class="fa fa fa-spinner fa-spin"></span>
+                                                                    <template [ngIf]="rules[key].help">
+                                                                        <span *ngIf="rules[key].help.length "  tabindex="-1"
+                                                                              class="fa fa-info-circle text-blue fa-lg cursor"
+                                                                              [attr.title]="rules[key].help"
+                                                                        >
+                                                                        </span>
+                                                                    </template>
                                                                 <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
                                                                 </span>
 
@@ -40,17 +49,21 @@
 
                                                                 </textarea>
 
-                                                                <div *ngIf="rules[key].type == 'list'">
+                                                                <div *ngIf="rules[key].type == 'list' && !getDisabled(rules[key])">
                                                                     <input tags-input data-role="tagsinput"
+                                                                           class="form-control"
                                                                            placeholder="{{rules[key].placeholder}}"
                                                                            type="text"
                                                                            [attr.aria-describedby]="key"
                                                                            [readonly]="true"
                                                                            [control]="data[key]"
+                                                                           [type]="rules[key].subtype"
+                                                                           [data]="rules[key].source"
                                                                            ngControl="{{key}}"
                                                                            [(ngModel)]="data[key].value"
                                                                            (instance)="rules[key].instance=$event"
                                                                     >
+
                                                                     <form (submit)="addTagManual($event,key)" *ngIf="rules[key].tagFree">
                                                                         <input placeholder="{{rules[key].placeholder}} Manual"
                                                                                type="text"
@@ -81,6 +94,10 @@
                                                                 <input *ngIf="rules[key].type == 'date'" datepicker
                                                                        [format]="rules[key].format" (fecha)="loadDate($event,key)"
                                                                        [attr.value]="rules[key].title" type="text" class="form-control">
+
+                                                                <template [ngIf]="rules[key].type == 'datetime'" >
+                                                                    <input date-time-picker type='text' class="form-control" [rule]="rules[key]" (change)="loadDate($event,key)" />
+                                                                </template>
 
                                                                 <select sm-dropdown *ngIf="rules[key].type == 'select' || rules[key].type == 'boolean'" [(ngModel)]="data[key].value" (ngModelChange)="setValueSelect($event,key)" class="ui fluid search selection dropdown">
                                                                     <option value="-1">{{rules[key].placeholder || 'Seleccione una opción'}}</option>

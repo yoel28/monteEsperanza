@@ -32,7 +32,8 @@ export class MVehicle extends ModelBase{
             'visible': this.permissions.visible,
             'key': 'tags',
             'instance':null,
-            'tagFree':this.permissions.tagFree,
+            'subtype':'text',
+            'tagFree':this.permissions.tagFree || true,
             'title': 'Tag',
             'refreshField':{
                 'icon':'fa-refresh',
