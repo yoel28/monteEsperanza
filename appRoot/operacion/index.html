@@ -114,6 +114,11 @@
                                             <span   *ngSwitchWhen="'route'">
                                                 &nbsp;({{data.routeReference}})
                                             </span>
+
+                                            <span   *ngSwitchWhen="'pendingRouteCode'">
+                                                &nbsp;({{data.pendingRouteCode}})
+                                            </span>
+
                                             <span   *ngSwitchWhen="'trash'">
                                                 {{data.trashTypeTitle}}&nbsp;({{data.trashTypeReference}})
                                             </span>
@@ -365,7 +370,7 @@
                                             <span   *ngSwitchWhen="'containerCode'">
                                                  <div class="col-lg-6">
                                                      <strong>Contenedor:&nbsp;</strong>
-                                                    {{data.containerCode}}
+                                                    {{data.containerCode || 'N/A'}}
                                                  </div>
                                             </span>
                                             <span   *ngSwitchWhen="'neto'">
@@ -400,6 +405,15 @@
                                                     &nbsp;({{data.routeReference}})
                                                  </div>
                                             </span>
+
+                                            <span   *ngSwitchWhen="'pendingRouteCode'">
+                                                <div class="col-lg-6">
+                                                     <strong>{{model.rules['pendingRouteCode'].title}}:&nbsp;</strong>
+                                                    &nbsp;{{data.pendingRouteCode || 'N/A'}}
+                                                 </div>
+                                            </span>
+
+
                                             <span   *ngSwitchWhen="'trash'">
                                                 <div class="col-lg-6">
                                                      <strong>Tipo de Basura:&nbsp;</strong>
@@ -429,7 +443,7 @@
                                             <span   *ngSwitchWhen="'choferName'">
                                                 <div class="col-lg-6">
                                                      <strong>Chofer:</strong>
-                                                    {{data.choferName}}
+                                                    {{data.choferName || 'N/A'}}
                                                 </div>
                                             </span>
                                              <span   *ngSwitchWhen="'place'">
@@ -454,25 +468,25 @@
                                             <span   *ngSwitchWhen="'comment'">
                                                  <div class="col-lg-6">
                                                      <strong>Comentario:</strong>
-                                                    {{data.comment}}
+                                                    {{data.comment || '-'}}
                                                  </div>
                                             </span>
                                             <span   *ngSwitchWhen="'weightOut'">
                                                 <div class="col-lg-6">
                                                      <strong>Peso de Salida:</strong>
-                                                    {{data.weightOut}}
+                                                    {{data.weightOut || '-'}}
                                                 </div>
                                             </span>
                                             <span   *ngSwitchWhen="'pendingWeightIn'">
                                                 <div class="col-lg-6">
-                                                     <strong>Peso A. de entrada:</strong>
-                                                    {{data.pendingWeightIn}}
+                                                     <strong>Peso Auto. de entrada:</strong>
+                                                    {{data.pendingWeightIn || '-'}}
                                                 </div>
                                             </span>
                                             <span   *ngSwitchWhen="'pendingWeightOut'">
                                                 <div class="col-lg-6">
-                                                     <strong>Peso A. de salida:</strong>
-                                                    {{data.pendingWeightOut}}
+                                                     <strong>Peso Auto. de salida:</strong>
+                                                    {{data.pendingWeightOut || '-'}}
                                                 </div>
                                             </span>
                                             <span   *ngSwitchWhen="'enabled'">

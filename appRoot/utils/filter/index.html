@@ -65,8 +65,8 @@
                                                 <select [(ngModel)]="data[key+'Cond'].value"
                                                         (ngModelChange)="setCondicion($event,key)" sm-dropdown
                                                         class="ui fluid search selection dropdown">
-                                                    <option *ngFor="let n of cond[rules[key].object?'object':rules[key].type]"
-                                                            [attr.value]="n.id">{{n.text}}
+                                                    <option *ngFor="let n of cond[rules[key].object?'object':rules[key].type]" [attr.value]="n.id" [selected]="n.id == data[key+'Cond'].value">
+                                                        {{n.text}}
                                                     </option>
                                                 </select>
                                             </div>

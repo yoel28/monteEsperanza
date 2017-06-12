@@ -35,7 +35,7 @@ export class Operacion extends ControllerBase implements OnInit {
     public MONEY_METRIC_SHORT:string = "";
     public AUTOMATIC_RECHARGE_PREF="";
     public commentDelete:Control;
-    private viewVersion = 'view::13.0'
+    private viewVersion = 'view::15';
 
     constructor(public router:Router, public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super('OP', '/operations/',router, http, toastr, myglobal, translate);
@@ -345,6 +345,7 @@ export class Operacion extends ControllerBase implements OnInit {
         {'visible': true, 'position': 18, 'title': 'Comentario', 'key': 'comment'},
         {'visible': true, 'position': 19, 'title': 'Habilitado', 'key': 'enabled'},
         {'visible': true, 'position': 20, 'title': 'Lugar', 'key': 'place'},
+        {'visible': true, 'position': 21, 'title': 'Ruta automatica', 'key': 'pendingRouteCode'},
 
     ];
     public placeView:any={};
