@@ -132,7 +132,10 @@ export class Filter extends RestController implements OnInit{
                 that.data[key] = new Control("");
 
                 that.data[key+'Cond'] = [];
-                that.data[key+'Cond'] = new Control("eq");
+                let condicion = "eq";
+                if(that.rules[key].type == 'text' || that.rules[key].type == 'textarea')
+                    condicion = '%ilike%';
+                that.data[key+'Cond'] = new Control(condicion);
                 if(that.rules[key].object)
                 {
                     that.data[key].valueChanges.subscribe((value: string) => {
