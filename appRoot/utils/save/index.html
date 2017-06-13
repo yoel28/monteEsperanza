@@ -9,8 +9,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div>
-                            <form role="form" [ngFormModel]="form" [hidden]="search.object"  *ngIf="keys && keys.length > 0">
+                        <div *ngIf="keys && keys.length > 0">
+                            <form role="form" [ngFormModel]="form" [hidden]="search.object" >
                                 <div  *ngFor="let key of keys">
                                     <div *ngIf="rules[key]">
                                         <div *ngIf="!rules[key].object || (rules[key].object && rules[key].permissions.list)">
@@ -33,12 +33,24 @@
                                                                 <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
                                                                 </span>
 
+                                                                <template [ngIf]="rules[key].object" >
+                                                                    <input *ngIf="rules[key].type == 'text'"
+                                                                           ngControl="{{key}}"
+                                                                           class="form-control"
+                                                                           [(ngModel)]="data[key].value"
+                                                                           placeholder="{{rules[key].placeholder}}"
+                                                                           type="{{rules[key].type}}"
+                                                                           (keyup.enter)="getLoadSearch(rules[key],data[key].value)"
+                                                                           [readonly]="rules[key].readOnly">
+                                                                </template>
+                                                                <template [ngIf]="!rules[key].object" >
+
                                                                 <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number' || rules[key].type == 'email' || rules[key].type == 'password'" ngControl="{{key}}" class="form-control"
                                                                        [(ngModel)]="data[key].value"
                                                                        placeholder="{{rules[key].placeholder}}"
-                                                                       type="{{rules[key].type}}" [attr.aria-describedby]="key"
-                                                                       [readonly]="rules[key].readOnly"
-                                                                >
+                                                                       type="{{rules[key].type}}"
+                                                                       [readonly]="rules[key].readOnly">
+                                                                </template>
 
                                                                 <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" [hex]="data[key]" readonly>
 
@@ -163,7 +175,7 @@
                                         <strong>{{search.title}}</strong><br/>
                                         <div class="input-group input-group-sm">
                                             <input #find type="text" class="form-control" tabindex="-1"
-                                                   placeholder="{{ search.placeholder}}" value="{{findControl}}">
+                                                   placeholder="{{ search.placeholder}}" value="{{findControl}}" accesskey="inputSearch">
                                                 <span class="input-group-btn">
                                                     <button (click)="getSearch($event,find.value)" type="button"
                                                             class="btn btn-info btn-flat">
