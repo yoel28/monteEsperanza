@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
 import {SMDropdown, DateRangepPicker} from "../../common/xeditable";
 import {RestController} from "../../common/restController";
@@ -8,6 +8,7 @@ import {globalService} from "../../common/globalService";
 import {isNumeric} from "rxjs/util/isNumeric";
 
 declare var SystemJS:any;
+declare var jQuery:any;
 @Component({
     selector: 'filter',
     templateUrl: SystemJS.map.app+'/utils/filter/index.html',
@@ -107,7 +108,7 @@ export class Filter extends RestController implements OnInit{
         ],
     }
     //foormato de fecha
-    public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"}
+    public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"};
     public date={};
     //Lista de id search
     public searchId:any={};
@@ -169,13 +170,19 @@ export class Filter extends RestController implements OnInit{
     }
 
     //Al hacer click en la lupa guarda los valores del objecto
-    getLoadSearch(event,data){
-        event.preventDefault();
+    @ViewChild('find') find:ElementRef;
+
+    getLoadSearch(data){
+
         this.findControl="";
         this.dataList={};
         this.max=5;
         this.search=data;
         this.getSearch();
+        setTimeout(()=>{
+            if(this.find && this.find.nativeElement)
+             this.find.nativeElement.focus();
+        },500);
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event?,value=''){
@@ -276,6 +283,7 @@ export class Filter extends RestController implements OnInit{
 
                             whereTemp2.field = whereTemp.field;
                             whereTemp2.type = whereTemp.type;
+
                         }
                         if (this.data[key + 'Cond'].value == 'ne')// para fechas fuera del rango
                         {
@@ -295,6 +303,7 @@ export class Filter extends RestController implements OnInit{
 
                             whereTemp2=null;
                         }
+
                     }
 
                     if (that.rules[key].object) // si es un objecto y existe el id
@@ -314,6 +323,14 @@ export class Filter extends RestController implements OnInit{
                     whereTemp=Object.assign({},{'join':that.rules[key].join,'where':[whereTemp]});
                     if(whereTemp2)
                         whereTemp2=Object.assign({},{'join':that.rules[key].join,'where':[whereTemp2]});
+                }
+
+                if(that.rules[key].whereparse){
+                    if(whereTemp)
+                        Object.assign(whereTemp,that.rules[key].whereparse(whereTemp));
+                    if(whereTemp2)
+                        Object.assign(whereTemp2,that.rules[key].whereparse(whereTemp2));
+
                 }
 
                 dataWhere.push(whereTemp);
