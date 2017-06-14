@@ -70,3 +70,6 @@ ul.submenu-config li{
 .mause{
     cursor: pointer;
 }
+.form-group{
+    margin-bottom: 6px;
+}
