@@ -115,8 +115,8 @@
                                                 &nbsp;({{data.routeReference}})
                                             </span>
 
-                                            <span   *ngSwitchWhen="'pendingRouteCode'">
-                                                &nbsp;({{data.pendingRouteCode}})
+                                            <span   *ngSwitchWhen="'pendingRouteReference'">
+                                                &nbsp;({{data.pendingRouteReference}})
                                             </span>
 
                                             <span   *ngSwitchWhen="'trash'">
@@ -406,10 +406,10 @@
                                                  </div>
                                             </span>
 
-                                            <span   *ngSwitchWhen="'pendingRouteCode'">
+                                            <span   *ngSwitchWhen="'pendingRouteReference'">
                                                 <div class="col-lg-6">
-                                                     <strong>{{model.rules['pendingRouteCode'].title}}:&nbsp;</strong>
-                                                    &nbsp;{{data.pendingRouteCode || 'N/A'}}
+                                                     <strong>{{model.rules['pendingRouteReference'].title}}:&nbsp;</strong>
+                                                    &nbsp;{{data.pendingRouteReference || 'N/A'}}
                                                  </div>
                                             </span>
 
