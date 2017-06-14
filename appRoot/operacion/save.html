@@ -90,7 +90,7 @@
                                                                    type="{{model.rules[key].type}}" [attr.aria-describedby]="key"
                                                                    step="any"
                                                                    [readonly]="model.rules[key].readOnly"
-                                                                   (keyup)="getLoadSearchKey($event,model.rules[key])"
+                                                                   (keyup.enter)="getLoadSearchKey(model.rules[key])"
                                                             >
 
                                                             <textarea *ngIf="model.rules[key].type == 'textarea'" ngControl="{{key}}" class="form-control"
