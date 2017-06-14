@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit,AfterViewInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, AfterViewInit, ViewChild, ElementRef} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
@@ -123,20 +123,13 @@ export class Save extends RestController implements OnInit,AfterViewInit{
                     .debounceTime(500)
                     .subscribe((value: string) => {
                         if(value && value.length > 0){
-                            that.search=that.rules[key];
-                            that.findControl = value;
-                            that.dataList=[];
-                            that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
-                            if( !that.searchId[key]){
-                                that.loadData();
-                            }
-                            else if(that.searchId[key].detail != value){
-                                delete that.searchId[key];
-                                that.loadData();
-                            }
-                            else{
-                                this.findControl="";
-                                that.search = [];
+                            if(that.searchId[key]){
+                                if(that.searchId[key].detail != value){
+                                    delete that.searchId[key];
+                                }
+                                else{
+                                    that.search = [];
+                                }
                             }
                         }
                 });
@@ -235,15 +228,23 @@ export class Save extends RestController implements OnInit,AfterViewInit{
     //Lista de id search
     public searchId:any={};
     //Al hacer click en la lupa guarda los valores del objecto
-    getLoadSearch(data){
+
+    @ViewChild('find') find:ElementRef;
+    getLoadSearch(data,value=''){
         this.max=5;
-        this.findControl="";
+        this.findControl=value;
         this.search=data;
-        this.getSearch(event,"");
+        this.dataList = [];
+        this.getSearch(null,value);
+        setTimeout(()=>{
+            if(this.find && this.find.nativeElement)
+                this.find.nativeElement.focus();
+        },500);
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
-        event.preventDefault();
+        if(event)
+            event.preventDefault();
         this.setEndpoint(this.search.paramsSearch.endpoint+value);
         this.loadData();
     }
