@@ -140,26 +140,13 @@ export class Filter extends RestController implements OnInit{
                 if(that.rules[key].object)
                 {
                     that.data[key].valueChanges.subscribe((value: string) => {
-                        if(value && value.length > 0){
-                            that.search=that.rules[key];
-                            that.findControl = value;
-                            that.dataList=[];
-                            that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
-                            if( !that.searchId[key]){
-                                that.loadData();
-                            }
-                            else if(that.searchId[key].detail != value){
-                                that.loadData();
+                        if(that.searchId[key]){
+                            if(that.searchId[key].detail != value){
                                 delete that.searchId[key];
                             }
                             else{
-                                this.findControl="";
                                 that.search = [];
                             }
-                        }else{
-                            that.findControl="";
-                            if(that.searchId[key])
-                                delete that.searchId[key];
                         }
                     });
                 }
@@ -172,13 +159,13 @@ export class Filter extends RestController implements OnInit{
     //Al hacer click en la lupa guarda los valores del objecto
     @ViewChild('find') find:ElementRef;
 
-    getLoadSearch(data){
+    getLoadSearch(data,find=""){
 
-        this.findControl="";
+        this.findControl=find;
         this.dataList={};
         this.max=5;
         this.search=data;
-        this.getSearch();
+        this.getSearch(null, this.findControl);
         setTimeout(()=>{
             if(this.find && this.find.nativeElement)
              this.find.nativeElement.focus();
