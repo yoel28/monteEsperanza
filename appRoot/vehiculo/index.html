@@ -13,6 +13,11 @@
                             {{buttom.title | translate}}
                     </button>
 
+                    <span (click)="loadData()"
+                          class="btn btn-box-tool">
+                        <i class="fa fa-refresh text-blue"></i>
+                    </span>
+
                     <button (click)="typeView = 1"
                             type="button" class="btn btn-box-tool">
                         <i class="fa fa-list fa-lg text-blue"></i>
