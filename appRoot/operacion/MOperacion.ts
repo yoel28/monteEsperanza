@@ -184,11 +184,11 @@ export class MOperacion extends ModelBase{
             'placeholder': 'Peso automatico de salida',
         };
 
-        this.rules['pendingRouteCode']={
+        this.rules['pendingRouteReference']={
             'type': 'text',
             'update':false,
             'search':false,
-            'key': 'pendingRouteCode',
+            'key': 'pendingRouteReference',
             'visible':this.permissions.visible,
             'title': 'Ruta automatica',
             'placeholder': 'Ruta automatica',
@@ -240,7 +240,7 @@ export class MOperacion extends ModelBase{
         delete this.rulesSave.detail;
         delete this.rulesSave.id;
         delete this.rulesSave.recharge;
-        delete this.rulesSave.pendingRouteCode;
+        delete this.rulesSave.pendingRouteReference;
     }
 
 }

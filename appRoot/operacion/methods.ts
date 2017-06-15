@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, ViewChild, ChangeDetectorRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, ViewChild, ChangeDetectorRef, ElementRef} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {Router}           from '@angular/router-deprecated';
 import {Http} from "@angular/http";
@@ -240,6 +240,7 @@ export class OperacionSave extends ControllerBase implements OnInit{
     //Lista de id search
     public searchId:any={};
     //Al hacer click en la lupa guarda los valores del objecto
+    @ViewChild('find') find:ElementRef;
     getLoadSearch(event,data){
         if(event)
             event.preventDefault();
@@ -247,12 +248,14 @@ export class OperacionSave extends ControllerBase implements OnInit{
         this.search=data;
         this.max = 5;
         this.getSearch(event,this.findControl);
+        setTimeout(()=>{
+            if(this.find && this.find.nativeElement)
+                this.find.nativeElement.focus();
+        },500);
     }
-    getLoadSearchKey(event,data){
-        if(event && event.code && (event.code == 'Enter' || event.code == 'NumpadEnter')){
-            if(data.object){
-                this.getLoadSearch(null,data);
-            }
+    getLoadSearchKey(data){
+        if(data.object){
+            this.getLoadSearch(null,data);
         }
     }
     //accion al dar click en el boton de buscar del formulario en el search

@@ -7,6 +7,7 @@ import {Save} from "../../../utils/save/save";
 import {BaseView} from "../../../utils/baseView/baseView";
 import {ScheduleModel} from "../schedule/schedule.model";
 
+declare var moment:any;
 export class PlanningModel extends ModelBase{
     public rules={};
 
@@ -142,6 +143,19 @@ export class PlanningModel extends ModelBase{
                 todayHighlight: true,
                 return: 'YYYYMMDD',
                 type:'number'
+            },
+            'whereparse':(data:any):Object=>{
+                if(data.or){
+                    data.or[0].value = +moment(data.or[0].value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
+                    data.or[0].type = 'integer';
+
+                    data.or[1].value = +moment(data.or[1].value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
+                    data.or[1].type = 'integer';
+                }else {
+                    data.value = +moment(data.value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
+                    data.type = 'integer';
+                }
+                return data;
             },
             'icon':'fa fa-calendar',
             'title': 'Fecha',
