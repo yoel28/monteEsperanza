@@ -108,7 +108,7 @@ export class ScheduleModel extends ModelBase{
         this.ruleObject.title="Horario";
         this.ruleObject.placeholder="Ingrese horario";
         this.ruleObject.key="schedule";
-        this.ruleObject.keyDisplay="scheduleCode";
+        this.ruleObject.keyDisplay="scheduleTitle";
         this.ruleObject.code="scheduleId";
     }
     initRulesSave() {
