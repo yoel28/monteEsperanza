@@ -426,7 +426,9 @@ export class AppComponent extends RestController implements OnInit {
                 || this.myglobal.existsPermission("MEN_CHOFER") || this.myglobal.existsPermission("MEN_CONTAINER")
                 || this.myglobal.existsPermission("MEN_RUTAS") || this.myglobal.existsPermission("MEN_TIP_VEH")
                 || this.myglobal.existsPermission("MEN_PLACE")|| this.myglobal.existsPermission("MEN_CHANGE")
-                || this.myglobal.existsPermission("MEN_ZONE") || this.myglobal.existsPermission("MEN_SCHEDULE"),
+                || this.myglobal.existsPermission("MEN_ZONE") || this.myglobal.existsPermission("MEN_SCHEDULE")
+                || this.myglobal.existsPermission("MEN_GROUPS") || this.myglobal.existsPermission("MEN_TIP_RECARGA")
+                || this.myglobal.existsPermission("MEN_TIP_BAS") || this.myglobal.existsPermission("MEN_TIP_SERV"),
                 'icon': 'fa fa-gears',
                 'title': 'Administración',
                 'key': 'Administración',
@@ -502,6 +504,30 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-calendar',
                         'title': 'Horarios',
                         'routerLink': 'ScheduleComponent'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_GROUPS"),
+                        'icon': 'fa fa-users',
+                        'title': 'Grupo de clientes',
+                        'routerLink': 'TipoEmpresa'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_TIP_RECARGA"),
+                        'icon': 'fa fa-user',
+                        'title': 'Tipo de recarga',
+                        'routerLink': 'TipoRecarga'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_TIP_BAS"),
+                        'icon': 'fa fa-trash',
+                        'title': 'Tipo de basura',
+                        'routerLink': 'TipoBasura'
+                    },
+                    {
+                        'visible': this.myglobal.existsPermission("MEN_TIP_SERV"),
+                        'icon': 'fa fa-archive',
+                        'title': 'Tipo de servicio',
+                        'routerLink': 'TipoServicio'
                     },
                 ]
 
@@ -613,9 +639,7 @@ export class AppComponent extends RestController implements OnInit {
             });
             this.menuItems.push({
                 'visible': this.myglobal.existsPermission("MEN_ANTENAS") || this.myglobal.existsPermission("MEN_PARAM")
-                || this.myglobal.existsPermission("MEN_RULE") || this.myglobal.existsPermission("MEN_GROUPS")
-                || this.myglobal.existsPermission("MEN_TIP_RECARGA") || this.myglobal.existsPermission("MEN_TIP_BAS")
-                || this.myglobal.existsPermission("MEN_TIP_SERV") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT"),
+                || this.myglobal.existsPermission("MEN_RULE") || this.myglobal.existsPermission("MEN_INFO") || this.myglobal.existsPermission("MEN_EVENT"),
                 'icon': 'fa fa-gears',
                 'title': 'Configuración',
                 'key': 'Configuración',
@@ -637,30 +661,6 @@ export class AppComponent extends RestController implements OnInit {
                         'icon': 'fa fa-user',
                         'title': 'Regla',
                         'routerLink': 'Regla'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_GROUPS"),
-                        'icon': 'fa fa-users',
-                        'title': 'Grupo de clientes',
-                        'routerLink': 'TipoEmpresa'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_TIP_RECARGA"),
-                        'icon': 'fa fa-user',
-                        'title': 'Tipo de recarga',
-                        'routerLink': 'TipoRecarga'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_TIP_BAS"),
-                        'icon': 'fa fa-trash',
-                        'title': 'Tipo de basura',
-                        'routerLink': 'TipoBasura'
-                    },
-                    {
-                        'visible': this.myglobal.existsPermission("MEN_TIP_SERV"),
-                        'icon': 'fa fa-archive',
-                        'title': 'Tipo de servicio',
-                        'routerLink': 'TipoServicio'
                     },
                     {
                         'visible': this.myglobal.existsPermission("MEN_INFO"),
