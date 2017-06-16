@@ -19,11 +19,26 @@
 
                                                         <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='time' || rules[key].type=='textarea' " class="row">
                                                             <i class="{{rules[key].icon || 'fa fa-list'}}"></i>
-                                                            <input  *ngIf="rules[key].type!='time'"
-                                                                    ngControl="{{key}}" class="form-control"
-                                                                    [(ngModel)]="data[key].value"
-                                                                    placeholder="{{rules[key].placeholder}}"
-                                                                    type="{{rules[key].type}}">
+
+
+                                                            <template [ngIf]="rules[key].object" >
+                                                                <input  *ngIf="rules[key].type!='time'"
+                                                                        ngControl="{{key}}" class="form-control"
+                                                                        [(ngModel)]="data[key].value"
+                                                                        (keyup.enter)="getLoadSearch(rules[key],data[key].value)"
+                                                                        placeholder="{{rules[key].placeholder}}"
+                                                                        type="{{rules[key].type}}">
+                                                            </template>
+
+                                                            <template [ngIf]="!rules[key].object" >
+                                                                <input  *ngIf="rules[key].type!='time'"
+                                                                        ngControl="{{key}}" class="form-control"
+                                                                        [(ngModel)]="data[key].value"
+                                                                        placeholder="{{rules[key].placeholder}}"
+                                                                        type="{{rules[key].type}}">
+                                                            </template>
+
+
                                                             <input  *ngIf="rules[key].type=='time'"
                                                                     ngControl="{{key}}" class="form-control"
                                                                     [(ngModel)]="data[key].value"
@@ -56,7 +71,7 @@
                                                     <div class="{{_classCol(2,2,2,2)}} padding-top-4">
                                                         <span *ngIf="rules[key].object"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
-                                                                (click)="getLoadSearch(rules[key])">
+                                                                (click)="getLoadSearch(rules[key],data[key].value)">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -118,7 +133,7 @@
                             <div *ngIf="!dataList.count" class="{{_classCol()}}">
                                 {{dataList.count==0?"No se ha encontrado ningún resultado":"Ingrese valor para buscar"}}
                             </div>
-                            <div class="{{_classCol()}}">
+                            <div class="{{_classCol()}} padding-bottom-4">
                                 <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
                                      class="btn-group pull-right">
                                     <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page"

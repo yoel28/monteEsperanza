@@ -11,3 +11,6 @@
 .btn-group button{
     margin-top: -5px;
 }
+.box-body{
+    overflow: auto;
+}

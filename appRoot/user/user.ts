@@ -59,7 +59,7 @@ export class User extends RestController implements OnInit{
             'placeholder': 'Nombre de usuario',
             'search': true
         },
-        'email': {'type': 'email', 'display': null, 'title': 'Correo', 'placeholder': 'Correo', 'search': true},
+        'email': {'type': 'text', 'email':true, 'display': null, 'title': 'Correo', 'placeholder': 'Correo', 'search': true},
         'password': {
             'type': 'password',
             'display': null,
