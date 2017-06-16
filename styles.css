@@ -121,3 +121,6 @@ body.no-menu .content-wrapper, body.no-menu .main-footer {
     font-size: 12px;
   }
 }
+.wrapper{
+  min-height: 980px;
+}
