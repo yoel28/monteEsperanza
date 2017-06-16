@@ -16,34 +16,38 @@
                 <span (click)="loadData()"
                       class="btn btn-box-tool">
                         <i class="fa fa-refresh text-blue"></i>
-                    </span>
-
-                <span *ngIf="url">
-                    <a [attr.href]="url+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o fa-2x text-red"></i>&nbsp;</a>
-                    <a [attr.href]="url+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o fa-2x text-green"></i>&nbsp;</a>
                 </span>
 
+                <div class="pull-right">
+                    <div  *ngIf="viewOptions['buttons'].length > 0">
+                        <button *ngFor="let buttom of getViewOptionsButtons()"
+                                class="btn btn-box-tool" type="button" data-toggle="modal"
+                                [attr.data-target]="'#'+buttom.modal" [attr.title]="buttom.title | translate">
+                            <i class="{{buttom.icon}} text-blue"></i>
+                            &nbsp;
+                            <div *ngIf="buttom.quickFilters" class="btn-group dropdown">
+                                &nbsp;<span data-toggle="dropdown" class="fa fa-angle-down fa-lg"></span>
+                                <ul role="menu" class="dropdown-menu pull-right submenu-config" >
+                                    <li *ngFor="let quickFilter of buttom.quickFilters" [class.btn-blue]="list==quickFilter.id" >
+                                        <a  (click)="loadDataPendings($event,quickFilter)">
+                                            <i class="fa fa-list"></i>
+                                            &nbsp;{{quickFilter.title}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>
 
-                <div class="pull-right" *ngIf="viewOptions['buttons'].length > 0">
-                    <button *ngFor="let buttom of getViewOptionsButtons()"
-                            class="btn btn-box-tool" type="button" data-toggle="modal"
-                            [attr.data-target]="'#'+buttom.modal" [attr.title]="buttom.title | translate">
-                        <i class="{{buttom.icon}} text-blue"></i>
-                        &nbsp;
-                        <div *ngIf="buttom.quickFilters" class="btn-group dropdown">
-                            &nbsp;<span data-toggle="dropdown" class="fa fa-angle-down fa-lg"></span>
-                            <ul role="menu" class="dropdown-menu pull-right submenu-config" >
-                                <li *ngFor="let quickFilter of buttom.quickFilters" [class.btn-blue]="list==quickFilter.id" >
-                                    <a  (click)="loadDataPendings($event,quickFilter)">
-                                        <i class="fa fa-list"></i>
-                                        &nbsp;{{quickFilter.title}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </button>
+                    </div>
+
+                    <span *ngIf="url">
+                        <a [attr.href]="url+'&formatType=pdf'" target="_blank" title="Exportar a pdf"><i class="fa fa-file-pdf-o  text-red"></i>&nbsp;</a>
+                        <a [attr.href]="url+'&formatType=xls'" target="_blank" title="Exportar a excel"><i class="fa fa-file-excel-o  text-green"></i>&nbsp;</a>
+                    </span>
 
                 </div>
+
+
 
 
             </div>
