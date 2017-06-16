@@ -176,7 +176,13 @@ export class Filter extends RestController implements OnInit{
         if(event)
             event.preventDefault();
         this.setEndpoint(this.search.paramsSearch.endpoint+value);
-        this.loadData();
+        this.loadData().then(
+            response=>{
+               if(this.dataList && this.dataList.count == 1){
+                   this.getDataSearch(this.dataList.list[0]);
+               }
+            }
+        );
     }
     //accion al dar click en el boton de cerrar el formulario
     searchQuit(event){

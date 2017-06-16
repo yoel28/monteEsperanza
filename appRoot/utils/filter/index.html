@@ -133,7 +133,7 @@
                             <div *ngIf="!dataList.count" class="{{_classCol()}}">
                                 {{dataList.count==0?"No se ha encontrado ningún resultado":"Ingrese valor para buscar"}}
                             </div>
-                            <div class="{{_classCol()}}">
+                            <div class="{{_classCol()}} padding-bottom-4">
                                 <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0"
                                      class="btn-group pull-right">
                                     <button (click)="loadData(val)" [class.btn-green]="val==((offset/max)+1)" *ngFor="let val of dataList.page"
