@@ -172,7 +172,7 @@ export class RecargaTimeLine extends RestController implements OnInit{
             this.loadData();
     }
     loadData(){
-        this.httputils.onLoadList(this.endpoint+this.params.ruc+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
+        return this.httputils.onLoadList(this.endpoint+this.params.ruc+`?sort=id&order=desc&max=${this.params.max}&offset=${this.params.offset}`,this.dataList,this.error);
     }
     addtimeLine(event){
         event.preventDefault();
