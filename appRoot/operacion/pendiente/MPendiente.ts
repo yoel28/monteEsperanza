@@ -16,7 +16,16 @@ export class MPendiente extends ModelBase{
     initRules(){
 
         this.rules['vehicle']= this.vehicle.ruleObject;
-
+        this.rules['dateIn']={
+            'type': 'date',
+            'search': this.permissions.filter,
+            'title': 'Fecha de entrada.',
+        }
+        this.rules['dateOut']={
+            'type': 'date',
+            'search': this.permissions.filter,
+            'title': 'Fecha de salida',
+        }
         this.rules['tagRFID']={
                 'type': 'text',
                 'search': this.permissions.filter,
@@ -82,16 +91,7 @@ export class MPendiente extends ModelBase{
             'title': 'Peso S.',
             'placeholder': 'Ingrese el peso de salida',
         }
-        this.rules['dateIn']={
-            'type': 'date',
-            'search': this.permissions.filter,
-            'title': 'Fecha de entrada.',
-        }
-        this.rules['dateOut']={
-            'type': 'date',
-            'search': this.permissions.filter,
-            'title': 'Fecha de salida',
-        }
+
 
         Object.assign(this.rules,this.getRulesDefault());
         this.rules['enabled'].search=this.permissions.filter;
