@@ -67,16 +67,16 @@ export class Vehiculo extends ControllerBase implements OnInit{
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.add,
             'title': 'Agregar',
-            'class': 'btn btn-green',
-            'icon': 'fa fa-save',
+            'class': 'btn btn-box-tool',
+            'icon': 'fa fa-plus text-green',
             'modal': this.model.paramsSave.idModal
         });
 
         this.viewOptions["buttons"].push({
             'visible': this.model.permissions.filter && this.model.permissions.list,
             'title': 'Filtrar',
-            'class': 'btn btn-blue',
-            'icon': 'fa fa-filter',
+            'class': 'btn btn-box-tool',
+            'icon': 'fa fa-filter text-blue',
             'modal': this.model.paramsSearch.idModal
         });
     }

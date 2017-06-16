@@ -26,10 +26,10 @@
 
                 <div class="pull-right" *ngIf="viewOptions['buttons'].length > 0">
                     <button *ngFor="let buttom of getViewOptionsButtons()"
-                            class="{{buttom.class}}" type="button" data-toggle="modal"
-                            [attr.data-target]="'#'+buttom.modal">
-                        <i class="{{buttom.icon}}"></i>
-                        {{buttom.title | translate}}&nbsp;
+                            class="btn btn-box-tool" type="button" data-toggle="modal"
+                            [attr.data-target]="'#'+buttom.modal" [attr.title]="buttom.title | translate">
+                        <i class="{{buttom.icon}} text-blue"></i>
+                        &nbsp;
                         <div *ngIf="buttom.quickFilters" class="btn-group dropdown">
                             &nbsp;<span data-toggle="dropdown" class="fa fa-angle-down fa-lg"></span>
                             <ul role="menu" class="dropdown-menu pull-right submenu-config" >

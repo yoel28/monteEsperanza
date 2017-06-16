@@ -8,9 +8,8 @@
                     </h3>
                     <button *ngFor="let buttom of getViewOptionsButtons()"
                                 class="{{buttom.class}}" type="button" data-toggle="modal"
-                                [attr.data-target]="'#'+buttom.modal">
+                                [attr.data-target]="'#'+buttom.modal" [attr.title]="buttom.title | translate">
                             <i class="{{buttom.icon}}"></i>
-                            {{buttom.title | translate}}
                     </button>
 
                     <span (click)="loadData()"
