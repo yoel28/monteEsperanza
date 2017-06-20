@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MParams extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('PARAM','/params/',myglobal);
         this.initModel();
@@ -48,7 +48,9 @@ export class MParams extends ModelBase{
             'title': 'Tipo',
             'placeholder': 'Selecccione un Tipo',
         };
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+
+        this.mergeRules();
+
     }
     initPermissions() {}
     initParamsSearch() {

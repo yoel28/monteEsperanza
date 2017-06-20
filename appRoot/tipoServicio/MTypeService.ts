@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MTypeService extends ModelBase{
-    public rules={};
+    
     constructor(public myglobal:globalService){
         super('TSERV','/type/services/',myglobal);
         this.initModel();
@@ -47,7 +47,8 @@ export class MTypeService extends ModelBase{
             'placeholder': 'Precio',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.mergeRules();
+        
     }
     initPermissions() {}
     initParamsSearch() {

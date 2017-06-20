@@ -9,7 +9,6 @@ import {ScheduleModel} from "../schedule/schedule.model";
 
 declare var moment:any;
 export class PlanningModel extends ModelBase{
-    public rules={};
 
     private _vehicle:MVehicle;
     private _chofer:MDrivers;
@@ -118,7 +117,7 @@ export class PlanningModel extends ModelBase{
             placeholder: 'Ayudantes',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
 
         this.rules['usernameCreator']={
             'type': 'text',

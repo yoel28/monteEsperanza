@@ -6,7 +6,7 @@ import {MRegla} from "../regla/MRegla";
 
 
 export class MEvent extends ModelBase{
-    public rules:any={};
+
     public publicData:any={};
     public regla:any={};
     public httpUtils:HttpUtils;
@@ -127,7 +127,8 @@ export class MEvent extends ModelBase{
             'placeholder': 'Ingrese el icono',
         }
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
+
         delete this.rules['detail'];
     }
     initPermissions() {}
@@ -156,13 +157,13 @@ export class MEvent extends ModelBase{
         let successCallback= response => {
             Object.assign(that.publicData,response.json())
             that.publicData.domains.forEach(obj=>{
-                that.rules.over.source.push({'value':obj.name,'text':obj.logicalPropertyName});
+                that.rules['over'].source.push({'value':obj.name,'text':obj.logicalPropertyName});
             });
             that.publicData.event.actionTypes.forEach(obj=>{
-                that.rules.actionType.source.push({'value':obj,'text':obj});
+                that.rules['actionType'].source.push({'value':obj,'text':obj});
             });
             that.publicData.event.wayTypes.forEach(obj=>{
-                that.rules.way.source.push({'value':obj,'text':obj});
+                that.rules['way'].source.push({'value':obj,'text':obj});
             })
             that.completed = true;
         }

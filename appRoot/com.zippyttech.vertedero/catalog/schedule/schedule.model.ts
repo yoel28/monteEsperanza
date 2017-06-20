@@ -4,7 +4,6 @@ import {globalService} from "../../../common/globalService";
 declare var moment:any;
 
 export class ScheduleModel extends ModelBase{
-    public rules={};
 
     constructor(public myglobal:globalService){
         super('SCHEDULE','/schedules/',myglobal);
@@ -92,7 +91,7 @@ export class ScheduleModel extends ModelBase{
         //     'placeholder': 'Duración (minutos)',
         // };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.mergeRules();
     }
     initPermissions() {}
     initParamsSearch() {

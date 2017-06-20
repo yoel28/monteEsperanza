@@ -14,6 +14,7 @@ export abstract class ModelBase{
     public ruleObject:any={};
     public rulesSave:any={};
     public msg:any=CatalogApp.msg;
+    public rules={};
 
     public configId = moment().valueOf();
     private rulesDefault:any = {};
@@ -46,6 +47,10 @@ export abstract class ModelBase{
         this.loadParamsSearch();
 
         this.completed=completed;
+    }
+
+    public mergeRules(){
+        this.rules = Object.assign({},this.rules,this.getRulesDefault());
     }
 
     abstract initPermissions();

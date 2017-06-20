@@ -3,7 +3,7 @@ import {ModelBase} from "../common/modelBase";
 import {MTypeService} from "../tipoServicio/MTypeService";
 
 export class MService extends ModelBase{
-    public rules={};
+
     public tipoServicio;
 
     public MONEY_METRIC_SHORT:string="";
@@ -80,8 +80,8 @@ export class MService extends ModelBase{
             }
         };
 
+        this.mergeRules();
         
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
     initPermissions() {}
     initParamsSearch() {

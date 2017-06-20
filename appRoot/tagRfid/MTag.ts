@@ -4,7 +4,6 @@ import {MVehicle} from "../vehiculo/MVehicle";
 import {ContainerModel} from "../com.zippyttech.vertedero/catalog/container/container.model";
 
 export class MTag extends ModelBase{
-    public rules={};
 
     public vehicle:any;
     public container:any;
@@ -54,8 +53,8 @@ export class MTag extends ModelBase{
             'title': 'Código',
             'placeholder': 'Código de Tag',
         };
+        this.mergeRules();
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
         delete this.rules['detail'];
     }
     initPermissions() {}

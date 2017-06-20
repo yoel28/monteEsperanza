@@ -2,7 +2,6 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MTrashType extends ModelBase{
-    public rules={};
 
     public WEIGTH_METRIC_SHORT:string="";
     public WEIGTH_METRIC:string="";
@@ -81,8 +80,9 @@ export class MTrashType extends ModelBase{
             'placeholder': 'Precio mínimo',
 
         };
-        
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+
+        this.mergeRules();
+
         this.rules['detail'].required=true;
     }
     initPermissions() {}

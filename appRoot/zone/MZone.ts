@@ -4,7 +4,6 @@ import {MCompany} from "../empresa/MCompany";
 import {MTrashType} from "../tipoBasura/MTrashType";
 
 export class MZone extends ModelBase{
-    public rules={};
 
     private _company:MCompany;
     private _trash:MTrashType;
@@ -75,7 +74,7 @@ export class MZone extends ModelBase{
         this.rules['trashType']=this._trash.ruleObject;
         this.rules['trashType'].update=this.permissions.update;
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
 
         delete this.rules['detail'];
     }

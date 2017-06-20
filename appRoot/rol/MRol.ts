@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MRol extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('ROLE','/roles/',myglobal);
         this.initModel();
@@ -20,7 +20,9 @@ export class MRol extends ModelBase{
             'prefix':'ROLE_',
             'placeholder': 'Nombre del perfil',
         };
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+
+        this.mergeRules();
+
         delete this.rules['detail'];
     }
     initPermissions() {}

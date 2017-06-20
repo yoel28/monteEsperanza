@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MtypeRecharge extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('TRECARG','/type/recharges/',myglobal);
         this.initModel();
@@ -46,7 +46,9 @@ export class MtypeRecharge extends ModelBase{
             'title': 'Icono',
             'placeholder': 'Selecccione un un icono',
         };
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+
+        this.mergeRules();
+
     }
     initPermissions() {}
     initParamsSearch() {

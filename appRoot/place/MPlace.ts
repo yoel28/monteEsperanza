@@ -3,7 +3,7 @@ import {ModelBase} from "../common/modelBase";
 import {MRuta} from "../ruta/MRuta";
 
 export class MPlace extends ModelBase{
-    public rules={};
+
     private route;
     constructor(public myglobal:globalService){
         super('PLACE','/places/',myglobal);
@@ -38,7 +38,8 @@ export class MPlace extends ModelBase{
         this.rules['route'] = this.route.ruleObject;
         this.rules['route'].required = true;
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
+
     }
     initPermissions() {}
     initParamsSearch() {

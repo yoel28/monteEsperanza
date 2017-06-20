@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MDrivers extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('CHOFER','/drivers/',myglobal);
         this.initModel();
@@ -51,7 +51,9 @@ export class MDrivers extends ModelBase{
             'title': 'Correo',
             'placeholder': 'Ingrese el correo',
         }
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+
+        this.mergeRules();
+
         delete this.rules['detail'];
     }
     initPermissions() {}

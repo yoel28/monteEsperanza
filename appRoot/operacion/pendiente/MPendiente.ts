@@ -3,7 +3,6 @@ import {ModelBase} from "../../common/modelBase";
 import {MVehicle} from "../../vehiculo/MVehicle";
 
 export class MPendiente extends ModelBase{
-    public rules={};
 
     public vehicle:any;
     constructor(public myglobal:globalService){
@@ -92,8 +91,8 @@ export class MPendiente extends ModelBase{
             'placeholder': 'Ingrese el peso de salida',
         }
 
+        this.mergeRules();
 
-        Object.assign(this.rules,this.getRulesDefault());
         this.rules['enabled'].search=this.permissions.filter;
         delete this.rules['detail'];
     }

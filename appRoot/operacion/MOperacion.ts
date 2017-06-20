@@ -9,7 +9,6 @@ import {MPlace} from "../place/MPlace";
 import {ContainerModel} from "../com.zippyttech.vertedero/catalog/container/container.model";
 
 export class MOperacion extends ModelBase{
-    public rules={};
 
     public route:any;
     public trashType:any;
@@ -205,8 +204,9 @@ export class MOperacion extends ModelBase{
             'title': 'Comentarios',
             'placeholder': 'Ingrese un comentario',
         };
-        
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+
+        this.mergeRules();
+
         delete this.rules['detail'];
     }
     initPermissions() {

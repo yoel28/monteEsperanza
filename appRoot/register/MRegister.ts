@@ -7,7 +7,6 @@ import {MVehicle} from "../vehiculo/MVehicle";
 import {CatalogApp} from "../common/catalogApp";
 
 export class MRegister extends ModelBase{
-    public rules={};
 
     public chofer:any;
     public company:any;
@@ -123,8 +122,7 @@ export class MRegister extends ModelBase{
         this.rules['vehicle'].rulesSave['plate'].key="vehiclePlate";
         this.rules['vehicle'].required = false;
 
-
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
 
     }
     initPermissions() {}

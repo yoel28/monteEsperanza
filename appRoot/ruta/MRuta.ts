@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MRuta extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('ROUTE','/routes/',myglobal);
         this.initModel();
@@ -32,7 +32,9 @@ export class MRuta extends ModelBase{
             'title': 'Referencia',
             'placeholder': 'Referencia',
         };
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+
+        this.mergeRules();
+
     }
     initPermissions() {}
     initParamsSearch() {

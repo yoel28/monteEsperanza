@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MAntenna extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('ANT','/antennas/',myglobal);
         this.initModel();
@@ -34,7 +34,7 @@ export class MAntenna extends ModelBase{
             'title': 'Dirección',
             'placeholder': 'Selecccione un la dirección',
         };
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.mergeRules();
         delete this.rules['detail'];
     }
     initPermissions() {}

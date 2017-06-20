@@ -6,7 +6,6 @@ import {MRuta} from "../ruta/MRuta";
 
 export class MCompany extends ModelBase{
 
-    public rules={};
     public typeCompany:any;
     public trashType:any;
     public route:any;
@@ -154,8 +153,8 @@ export class MCompany extends ModelBase{
         this.rules['route'].update=this.permissions.update;
         this.rules['route'].required = false;
 
+        this.mergeRules();
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
     }
     initPermissions() {
         this.permissions['morosos']=this.myglobal.existsPermission('COMPANY_MOROSOS')

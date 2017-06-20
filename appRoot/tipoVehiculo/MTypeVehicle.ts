@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MTypeVehicle extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('TYPE_VEH','/type/vehicles/',myglobal);
         this.initModel();
@@ -41,7 +41,8 @@ export class MTypeVehicle extends ModelBase{
             'placeholder': 'Seleccione un icono',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
+
         this.rules['detail'].required=true;
     }
     initPermissions() {}
