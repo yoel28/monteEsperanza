@@ -69,6 +69,42 @@ export class PlanningModel extends ModelBase{
         this.rules['driver'].code = 'driverId';
         this.rules['driver'].keyDisplay = 'driverName';
 
+        this.rules['scheduleDate']={
+            'type': 'date',
+            'required':true,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'scheduleDate',
+            'format':{
+                format: "dd/mm/yyyy",
+                formatInput: "YYYYMMDD",
+                formatView: "DD/MM/YYYY",
+                todayBtn: "linked",
+                language: "es",
+                forceParse: false,
+                autoclose: true,
+                todayHighlight: true,
+                return: 'YYYYMMDD',
+                type:'number'
+            },
+            'whereparse':(data:any):Object=>{
+                if(data.or){
+                    data.or[0].value = +moment(data.or[0].value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
+                    data.or[0].type = 'integer';
+
+                    data.or[1].value = +moment(data.or[1].value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
+                    data.or[1].type = 'integer';
+                }else {
+                    data.value = +moment(data.value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
+                    data.type = 'integer';
+                }
+                return data;
+            },
+            'icon':'fa fa-calendar',
+            'title': 'Fecha',
+            'placeholder': 'Fecha',
+        };
+
         this.rules['helpers'] = {
             type: 'select2',
             showbuttons:true,
@@ -125,43 +161,6 @@ export class PlanningModel extends ModelBase{
 
         this.rules['schedule'] = this._schedule.ruleObject;
         this.rules['schedule'].required = true;
-
-        this.rules['scheduleDate']={
-            'type': 'date',
-            'required':true,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'key': 'scheduleDate',
-            'format':{
-                format: "dd/mm/yyyy",
-                formatInput: "YYYYMMDD",
-                formatView: "DD/MM/YYYY",
-                todayBtn: "linked",
-                language: "es",
-                forceParse: false,
-                autoclose: true,
-                todayHighlight: true,
-                return: 'YYYYMMDD',
-                type:'number'
-            },
-            'whereparse':(data:any):Object=>{
-                if(data.or){
-                    data.or[0].value = +moment(data.or[0].value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
-                    data.or[0].type = 'integer';
-
-                    data.or[1].value = +moment(data.or[1].value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
-                    data.or[1].type = 'integer';
-                }else {
-                    data.value = +moment(data.value, 'DD-MM-YYYY').format(this.rules['scheduleDate'].format.return);
-                    data.type = 'integer';
-                }
-                return data;
-            },
-            'icon':'fa fa-calendar',
-            'title': 'Fecha',
-            'placeholder': 'Fecha',
-        };
-
 
         this.rules['enabled'].search = this.permissions.filter;
         this.rules['detail'].title = "Observación";
