@@ -6,6 +6,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {isNumeric} from "rxjs/util/isNumeric";
+import {TagsInput} from "../../common/tagsinput";
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -13,7 +14,7 @@ declare var jQuery:any;
     selector: 'filter',
     templateUrl: SystemJS.map.app+'/utils/filter/index.html',
     styleUrls: [SystemJS.map.app+'/utils/filter/style.css'],
-    directives:[SMDropdown,DateRangepPicker],
+    directives:[SMDropdown,DateRangepPicker,TagsInput],
     inputs: ['rules', 'params'],
     outputs: ['whereFilter'],
 })
@@ -34,6 +35,10 @@ export class Filter extends RestController implements OnInit{
     public search:any={};
     //lista de operadores condicionales
     public  cond = {
+        'list':[
+            {'id':'and','text':'Contiene Todos'},
+            {'id':'or','text':'Contiene Alguno'},
+        ],
         'text': [
             {'id':'eq','text':'Igual que'},
             {'id':'isNull','text':'Nulo'},
@@ -136,6 +141,9 @@ export class Filter extends RestController implements OnInit{
                 let condicion = "eq";
                 if((that.rules[key].type == 'text' || that.rules[key].type == 'textarea') && !that.rules[key].object)
                     condicion = '%ilike%';
+                if(that.rules[key].type == 'list')
+                    condicion='and';
+
                 that.data[key+'Cond'] = new Control(condicion);
                 if(that.rules[key].object)
                 {
@@ -320,13 +328,13 @@ export class Filter extends RestController implements OnInit{
 
                 if(that.rules[key].whereparse){
                     if(whereTemp)
-                        Object.assign(whereTemp,that.rules[key].whereparse(whereTemp));
+                        whereTemp = that.rules[key].whereparse(whereTemp);
                     if(whereTemp2)
-                        Object.assign(whereTemp2,that.rules[key].whereparse(whereTemp2));
+                        whereTemp2 = that.rules[key].whereparse(whereTemp2);
 
                 }
-
-                dataWhere.push(whereTemp);
+                if(whereTemp)
+                    dataWhere.push(whereTemp);
                 if(whereTemp2)
                 {
                     dataWhere.push(whereTemp2);
