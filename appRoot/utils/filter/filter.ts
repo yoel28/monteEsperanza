@@ -351,8 +351,15 @@ export class Filter extends RestController implements OnInit{
         this.searchId={};
         this.keys.forEach(key=>{
             if(this.form.controls[key]){
-                (<Control>this.form.controls[key]).updateValue("");
-                (<Control>this.form.controls[key]).setErrors(null);
+                if(this.rules[key].type!='list'){
+                    (<Control>this.form.controls[key]).updateValue("");
+                    (<Control>this.form.controls[key]).setErrors(null);
+                }
+                else{
+                    if(this.rules[key].instance)
+                        this.rules[key].instance.removeAll();
+                }
+
             }
         })
         this.whereFilter.emit("");
