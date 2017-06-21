@@ -95,12 +95,23 @@ export class MOperacion extends ModelBase{
             'prefix':'TAG',
             'value':[],
             'update': this.permissions.update,
-            'search': this.permissions.filter && false,
+            'search': this.permissions.filter,
             'visible': this.permissions.visible,
             'key': 'place',
             'title': 'Lugares',
             'placeholder': 'Lugares',
-            'instance':null
+            'instance':null,
+            'whereparse':(where:any)=>{
+                let data;
+                if(where && where.value && where.value.length){
+                    data = {join:'places',where:{}};
+                    data.where[where.op]=[];
+                    where.value.forEach(obj=>{
+                        data.where[where.op].push({field:'title',op:'ilike',value:'%'+obj+'%'});
+                    })
+                }
+                return data;
+            }
         };
 
 
