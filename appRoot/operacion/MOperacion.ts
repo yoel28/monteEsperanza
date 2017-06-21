@@ -104,11 +104,12 @@ export class MOperacion extends ModelBase{
             'whereparse':(where:any)=>{
                 let data;
                 if(where && where.value && where.value.length){
-                    data = {join:'places',where:{}};
-                    data.where[where.op]=[];
+                    let cond = [];
                     where.value.forEach(obj=>{
-                        data.where[where.op].push({field:'title',op:'ilike',value:'%'+obj+'%'});
-                    })
+                        cond.push({field:'title',op:'ilike',value:'%'+obj+'%'});
+                    });
+                    data = {join:'places',where:[{}]};
+                    data.where[0][where.op]=cond;
                 }
                 return data;
             }
