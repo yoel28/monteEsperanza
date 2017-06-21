@@ -64,7 +64,7 @@
                                                                 <div *ngIf="rules[key].type == 'list' && !getDisabled(rules[key])">
                                                                     <input tags-input data-role="tagsinput"
                                                                            class="form-control"
-                                                                           placeholder="{{rules[key].placeholder}}"
+                                                                           [rule]="rules[key]"
                                                                            type="text"
                                                                            [attr.aria-describedby]="key"
                                                                            [readonly]="true"
