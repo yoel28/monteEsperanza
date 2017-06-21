@@ -17,7 +17,7 @@
                                                 <div class="row">
                                                     <div class="{{_classCol(10,10,10,10)}}">
 
-                                                        <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='time' || rules[key].type=='textarea' " class="row">
+                                                        <div *ngIf="rules[key].type=='text' || rules[key].type=='number' || rules[key].type=='time' || rules[key].type=='textarea' || rules[key].type=='list' " class="row">
                                                             <i class="{{rules[key].icon || 'fa fa-list'}}"></i>
 
 
@@ -31,11 +31,27 @@
                                                             </template>
 
                                                             <template [ngIf]="!rules[key].object" >
-                                                                <input  *ngIf="rules[key].type!='time'"
+                                                                <input  *ngIf="rules[key].type!='time' && rules[key].type!='list'"
                                                                         ngControl="{{key}}" class="form-control"
                                                                         [(ngModel)]="data[key].value"
                                                                         placeholder="{{rules[key].placeholder}}"
                                                                         type="{{rules[key].type}}">
+                                                            </template>
+
+
+
+                                                            <template [ngIf]="rules[key].type == 'list'">
+                                                                <input tags-input data-role="tagsinput"
+                                                                       class="form-control"
+                                                                       [rule]="rules[key]"
+                                                                       [attr.aria-describedby]="key"
+                                                                       [readonly]="true"
+                                                                       [control]="data[key]"
+                                                                       [type]="'free'"
+                                                                       ngControl="{{key}}"
+                                                                       [(ngModel)]="data[key].value"
+                                                                       (instance)="rules[key].instance=$event"
+                                                                >
                                                             </template>
 
 
