@@ -6,7 +6,7 @@ declare var jQuery:any;
 declare var Bloodhound:any;
 @Directive({
     selector: "[tags-input]",
-    inputs:['control','type','data'],
+    inputs:['control','type','data','rule'],
     outputs:['instance']
 })
 export class TagsInput implements OnInit{
@@ -14,6 +14,7 @@ export class TagsInput implements OnInit{
     public data=[];
     public instance:any;
     public control:Control;
+    public rule:Object;
 
     constructor(public el: ElementRef,public gs: globalService) {
         this.instance = new EventEmitter();
@@ -68,6 +69,19 @@ export class TagsInput implements OnInit{
                 }
             });
         }
+
+        if(this.type=='free'){
+            jQuery(this.el.nativeElement).tagsinput({});
+        }
+
+        if(this.rule){
+            setTimeout(()=>{
+                let $el = jQuery(this.el.nativeElement).tagsinput('input');
+                $el[0].placeholder = this.rule['placeholder'];
+            },100);
+        }
+
+
 
         that.control.updateValue(jQuery(that.el.nativeElement).tagsinput('items'));
         // that.addValueAll();
