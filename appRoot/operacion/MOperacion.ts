@@ -7,6 +7,7 @@ import {MDrivers} from "../drivers/MDrivers";
 import {MVehicle} from "../vehiculo/MVehicle";
 import {MPlace} from "../place/MPlace";
 import {ContainerModel} from "../com.zippyttech.vertedero/catalog/container/container.model";
+import {Filter} from "../utils/filter/filter";
 
 export class MOperacion extends ModelBase{
 
@@ -88,6 +89,31 @@ export class MOperacion extends ModelBase{
 
         this.rules['route']=this.route.ruleObject;
         this.rules['route'].update=this.permissions.update;
+        this.rules['route'].events = {
+            'filterChange':(f:Filter,value:string)=>{
+                if(this.rules['place'].search){
+
+                    if(f.searchId['route'] && f.searchId['route'].data.places && f.searchId['route'].data.places.length){
+                        this.rules['place'].value = f.searchId['route'].data.places;
+                        this.rules['place'].search = false;
+                        setTimeout(()=>{
+                            this.rules['place'].search = this.permissions.filter;
+                        },100);
+                    }
+                    if(!f.searchId['route'] && this.rules['place'].value.length){
+                        if(this.rules['place'].instance)
+                            this.rules['place'].instance.removeAll();
+                        this.rules['place'].value = [];
+                        this.rules['place'].search = false;
+
+                        setTimeout(()=>{
+                            this.rules['place'].search = this.permissions.filter;
+                        },100);
+                    }
+
+                }
+            }
+        };
 
         this.rules['place'] = {
             'type': 'list',
@@ -106,7 +132,13 @@ export class MOperacion extends ModelBase{
                 if(where && where.value && where.value.length){
                     let cond = [];
                     where.value.forEach(obj=>{
-                        cond.push({field:'title',op:'ilike',value:'%'+obj+'%'});
+                        if(obj['value']){
+                            cond.push({field:'id',op:'eq',value:obj.value});
+                        }
+                        else {
+                            cond.push({field:'title',op:'ilike',value:'%'+obj+'%'});
+                        }
+
                     });
                     data = {join:'places',where:[{}]};
                     data.where[0][where.op]=cond;
