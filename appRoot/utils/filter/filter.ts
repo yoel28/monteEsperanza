@@ -111,7 +111,7 @@ export class Filter extends RestController implements OnInit{
             {'id':'ilike%','text': 'Comienza con(i)'},
             {'id':'%ilike','text': 'Termina en(i)'}
         ],
-    }
+    };
     //foormato de fecha
     public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"};
     public date={};
@@ -158,6 +158,12 @@ export class Filter extends RestController implements OnInit{
                         }
                     });
                 }
+
+                if(that.rules[key].events && that.rules[key].events.filterChange){
+                    that.data[key].valueChanges.subscribe((value: string) => {
+                        that.rules[key].events.filterChange(this,value);
+                    })
+                }
             }
         });
         this.form = this._formBuilder.group(this.data);
@@ -200,7 +206,7 @@ export class Filter extends RestController implements OnInit{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail};
+        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'data':data};
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
