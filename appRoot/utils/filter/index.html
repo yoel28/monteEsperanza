@@ -44,6 +44,7 @@
                                                                 <input tags-input data-role="tagsinput"
                                                                        class="form-control"
                                                                        [rule]="rules[key]"
+                                                                       [data]="rules[key].value"
                                                                        [attr.aria-describedby]="key"
                                                                        [readonly]="true"
                                                                        [control]="data[key]"
