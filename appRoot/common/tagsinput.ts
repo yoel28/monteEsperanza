@@ -49,7 +49,7 @@ export class TagsInput implements OnInit{
             );
         }
 
-        if(this.type=='inlist'){
+        if(this.type=='inlist' || (this.type=='free' && this.data && this.data.length)){
             let place = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -70,7 +70,7 @@ export class TagsInput implements OnInit{
             });
         }
 
-        if(this.type=='free'){
+        if(this.type=='free' && !this.data.length){
             jQuery(this.el.nativeElement).tagsinput({});
         }
 
