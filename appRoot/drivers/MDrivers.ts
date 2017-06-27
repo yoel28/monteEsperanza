@@ -26,8 +26,8 @@ export class MDrivers extends ModelBase{
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
             'key': 'telefono',
-            'title': 'Teléfono',
-            'placeholder': 'Ingrese teléfono',
+            'title': 'Cédula',
+            'placeholder': 'Ingrese la cédula',
         }
         this.rules['direccion']={
             'type': 'text',
