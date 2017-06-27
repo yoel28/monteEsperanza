@@ -47,5 +47,23 @@ export class Place implements OnInit,AfterViewInit{
             'message': '¿ Esta seguro de eliminar el lugar : ',
             'keyAction':'title'
         };
+        this.paramsTable.actions.duplicate = {
+            permission:this.model.permissions.add,
+            idModal:this.model.paramsSave.idModal,
+            icon:'fa fa-files-o',
+            title:'Duplicar',
+            callback:(bv:BaseView,data:any)=>{
+                bv.save.resetForm();
+
+                bv.save.getDataSearch({id:data.routeId,detail:data.routeReference,placesPosible:data.placesPosible},'route');
+
+                bv.save.setValueSelect(data.code,'code');
+                bv.save.setValueSelect(data.title,'title');
+
+            }
+        };
+
+
+
     }
 }
