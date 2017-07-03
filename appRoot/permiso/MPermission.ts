@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MPermission extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('PERMISSION','/permissions/',myglobal);
         this.initModel();
@@ -58,7 +58,8 @@ export class MPermission extends ModelBase{
             'placeholder': 'Acción',
         };
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
+
         this.rules['detail'].required=true;
     }
     initPermissions() {}

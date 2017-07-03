@@ -3,8 +3,6 @@ import {ModelBase} from "../common/modelBase";
 
 export class MOperationAudit extends ModelBase{
 
-    public rules:any={};
-
     constructor(public myglobal:globalService){
         super('RE_AUDIT','/reports/operations/audit/',myglobal);
 
@@ -107,7 +105,7 @@ export class MOperationAudit extends ModelBase{
         vehicleId:54
         */
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault());
+        this.mergeRules();
     }
     initPermissions() {
     }

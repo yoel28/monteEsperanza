@@ -3,7 +3,6 @@ import {globalService} from "../../../common/globalService";
 import {MCompany} from "../../../empresa/MCompany";
 
 export class ContainerModel extends ModelBase{
-    public rules={};
 
     public company;
     constructor(public myglobal:globalService){
@@ -41,7 +40,8 @@ export class ContainerModel extends ModelBase{
         this.rules['company'].required=false;
         this.rules['company'].update=this.permissions.update;
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.mergeRules();
+        
     }
     initPermissions() {}
     initParamsSearch() {

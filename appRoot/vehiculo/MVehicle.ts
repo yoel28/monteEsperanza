@@ -6,7 +6,6 @@ import {MTypeVehicle} from "../tipoVehiculo/MTypeVehicle";
 import {Save} from "../utils/save/save";
 
 export class MVehicle extends ModelBase{
-    public rules={};
 
     public vehicleType:any;
     public company:any;
@@ -160,7 +159,8 @@ export class MVehicle extends ModelBase{
         this.rules['chofer'].update=this.permissions.update;
         this.rules['chofer'].required=false;
 
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+        this.mergeRules();
+
     }
     initPermissions() {
         this.permissions['tagFree'] =  this.myglobal.existsPermission(this.prefix+'_TAG_FREE');

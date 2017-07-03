@@ -12,7 +12,7 @@ export class MChange extends ModelBase {
     private company;
     private containerOut;
     private containerIn;
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('CHANGES','/changes/',myglobal);
         this.initModel();

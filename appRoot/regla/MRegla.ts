@@ -2,7 +2,7 @@ import {globalService} from "../common/globalService";
 import {ModelBase} from "../common/modelBase";
 
 export class MRegla extends ModelBase{
-    public rules={};
+
     constructor(public myglobal:globalService){
         super('RULE','/rules/',myglobal);
         this.initModel();
@@ -32,7 +32,9 @@ export class MRegla extends ModelBase{
             'title':'Nombre',
             'placeholder':'Nombre',
         };
-        this.rules = Object.assign({},this.rules,this.getRulesDefault())
+
+        this.mergeRules();
+
     }
     initPermissions() {}
     initParamsSearch() {

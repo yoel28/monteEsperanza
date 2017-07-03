@@ -6,6 +6,7 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {isNumeric} from "rxjs/util/isNumeric";
+import {TagsInput} from "../../common/tagsinput";
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -13,7 +14,7 @@ declare var jQuery:any;
     selector: 'filter',
     templateUrl: SystemJS.map.app+'/utils/filter/index.html',
     styleUrls: [SystemJS.map.app+'/utils/filter/style.css'],
-    directives:[SMDropdown,DateRangepPicker],
+    directives:[SMDropdown,DateRangepPicker,TagsInput],
     inputs: ['rules', 'params'],
     outputs: ['whereFilter'],
 })
@@ -34,6 +35,10 @@ export class Filter extends RestController implements OnInit{
     public search:any={};
     //lista de operadores condicionales
     public  cond = {
+        'list':[
+            {'id':'and','text':'Contiene Todos'},
+            {'id':'or','text':'Contiene Alguno'},
+        ],
         'text': [
             {'id':'eq','text':'Igual que'},
             {'id':'isNull','text':'Nulo'},
@@ -106,7 +111,7 @@ export class Filter extends RestController implements OnInit{
             {'id':'ilike%','text': 'Comienza con(i)'},
             {'id':'%ilike','text': 'Termina en(i)'}
         ],
-    }
+    };
     //foormato de fecha
     public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"};
     public date={};
@@ -136,6 +141,9 @@ export class Filter extends RestController implements OnInit{
                 let condicion = "eq";
                 if((that.rules[key].type == 'text' || that.rules[key].type == 'textarea') && !that.rules[key].object)
                     condicion = '%ilike%';
+                if(that.rules[key].type == 'list')
+                    condicion='and';
+
                 that.data[key+'Cond'] = new Control(condicion);
                 if(that.rules[key].object)
                 {
@@ -149,6 +157,12 @@ export class Filter extends RestController implements OnInit{
                             }
                         }
                     });
+                }
+
+                if(that.rules[key].events && that.rules[key].events.filterChange){
+                    that.data[key].valueChanges.subscribe((value: string) => {
+                        that.rules[key].events.filterChange(this,value);
+                    })
                 }
             }
         });
@@ -192,7 +206,7 @@ export class Filter extends RestController implements OnInit{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail};
+        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'data':data};
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
@@ -320,13 +334,13 @@ export class Filter extends RestController implements OnInit{
 
                 if(that.rules[key].whereparse){
                     if(whereTemp)
-                        Object.assign(whereTemp,that.rules[key].whereparse(whereTemp));
+                        whereTemp = that.rules[key].whereparse(whereTemp);
                     if(whereTemp2)
-                        Object.assign(whereTemp2,that.rules[key].whereparse(whereTemp2));
+                        whereTemp2 = that.rules[key].whereparse(whereTemp2);
 
                 }
-
-                dataWhere.push(whereTemp);
+                if(whereTemp)
+                    dataWhere.push(whereTemp);
                 if(whereTemp2)
                 {
                     dataWhere.push(whereTemp2);
@@ -343,8 +357,15 @@ export class Filter extends RestController implements OnInit{
         this.searchId={};
         this.keys.forEach(key=>{
             if(this.form.controls[key]){
-                (<Control>this.form.controls[key]).updateValue("");
-                (<Control>this.form.controls[key]).setErrors(null);
+                if(this.rules[key].type!='list'){
+                    (<Control>this.form.controls[key]).updateValue("");
+                    (<Control>this.form.controls[key]).setErrors(null);
+                }
+                else{
+                    if(this.rules[key].instance)
+                        this.rules[key].instance.removeAll();
+                }
+
             }
         })
         this.whereFilter.emit("");
