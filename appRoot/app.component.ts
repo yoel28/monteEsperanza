@@ -162,7 +162,6 @@ export class AppComponent extends RestController implements OnInit {
         let url="https://dev.aguaseo.com:8080";
         localStorage.setItem('urlAPI', url + '/api');
         localStorage.setItem('url', url);
-
         let that = this;
         router.subscribe(
             function (data) {
